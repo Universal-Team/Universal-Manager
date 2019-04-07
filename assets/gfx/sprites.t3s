@@ -1,0 +1,7 @@
+--atlas -f rgba8888 -z auto
+bs_background.png
+dot.png
+loading_bg.png
+page_button.png
+page_button_small.png
+top_bg.png
