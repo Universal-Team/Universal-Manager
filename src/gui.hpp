@@ -36,5 +36,9 @@ class Gui
     void startframe(void);
 
 	void endframe(void);
+
+    void guiprint(const char* text, float xloc, float yloc, float scaleX, float scaleY);
+
+	void guiprintColor(const char* text, float xloc, float yloc, float scaleX, float scaleY, u32 color);
     };
 #endif
