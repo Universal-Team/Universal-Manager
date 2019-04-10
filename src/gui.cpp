@@ -115,3 +115,4 @@ static void drawImageLayered(int image_id, float x, float y, float layer)
 {
 	C2D_DrawImageAt(C2D_SpriteSheetGetImage(spriteSheet, image_id), x, y, layer, NULL, 1.0f, 1.0f);
 }
+
