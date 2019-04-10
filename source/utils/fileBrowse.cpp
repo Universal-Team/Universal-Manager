@@ -49,7 +49,7 @@ void findNdsFiles(vector<DirEntry>& dirContents)
 			stat(pent->d_name, &st);
 			dirEntry.name = pent->d_name;
 			char scanningMessage[512];
-			snprintf(scanningMessage, sizeof(scanningMessage), "der NDS Roms Ordner wird durchsucht...\n\nDies kann etwas dauern.\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
+			snprintf(scanningMessage, sizeof(scanningMessage), "Searching for NDS ROMs...\n\nThis may take a bit.\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
 			displayBottomMsg(scanningMessage);
 			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
 				if(!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {

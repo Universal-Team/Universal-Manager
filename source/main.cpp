@@ -123,7 +123,7 @@ void screenon()
 void displayBottomMsg(const char* text) {
 	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
 	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
+	pp2d_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
 	pp2d_end_draw();
 }
 
