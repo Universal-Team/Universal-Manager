@@ -17,3 +17,24 @@ typedef enum {
 	TOP_BACKGROUND,
 } Gui_Sprites;
 
+class Gui
+{
+	public:
+	Gui(void);
+	
+	~Gui(void);
+	
+	void Drawui(void);
+
+    int UpdaterGFX(void);
+
+    void CloseupdaterGFX(void);
+
+    private:
+    void textinit(void);
+
+    void startframe(void);
+
+	void endframe(void);
+    };
+#endif
