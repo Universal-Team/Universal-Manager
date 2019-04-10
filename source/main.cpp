@@ -159,10 +159,10 @@ int main()
 				pp2d_load_texture_png(buttontex, "romfs:/graphics/Buttons/page_button.png");
 				pp2d_load_texture_png(extrasmallbuttontex, "romfs:/graphics/Buttons/BS_2page_extra_small_button.png");
 				pp2d_load_texture_png(smallbuttontex, "romfs:/graphics/Buttons/page_button_small.png");
-                pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/Ultimate-Updater/BS_loading_background.png");
-			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/Ultimate-Updater/top_bg.png");
-			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/Ultimate-Updater/BS_background.png");
-			    pp2d_load_texture_png(dot, "romfs:/graphics/Ultimate-Updater/dot.png");
+                pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
+			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
+			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
+			    pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
 	
 	Result res = 0;
 	graphicsInit();
