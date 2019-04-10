@@ -26,7 +26,7 @@ class Gui
 	
 	void Drawui(void);
 
-    int UpdaterGFX(void);
+    int InitUpdaterGFX(void);
 
     void CloseupdaterGFX(void);
 
