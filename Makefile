@@ -30,8 +30,30 @@ include $(DEVKITARM)/3ds_rules
 #     - <Project name>.png
 #     - icon.png
 #     - <libctru folder>/default_icon.png
+
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+# External tools
+#---------------------------------------------------------------------------------
+ifeq ($(OS),Windows_NT)
+MAKEROM 	?= ../tools/makerom.exe
+BANNERTOOL 	?= ../tools/bannertool.exe
+3DSTOOL     ?= ../tools/3dstool.exe
+
+else
+MAKEROM 	?= makerom
+BANNERTOOL 	?= bannertool
+3DSTOOL     ?= 3dstool
+
+endif
+#---------------------------------------------------------------------------------
+# Version number
+#---------------------------------------------------------------------------------
+
+VERSION_MAJOR := 1
+VERSION_MINOR := 0
+VERSION_MICRO := 0
+#---------------------------------------------------------------------------------
+TARGET		:=	Universal-Updater
 BUILD		:=	build
 SOURCES		:=	source source/json source/utils source/sound source/pp2d
 DATA		:=	data
@@ -40,6 +62,12 @@ GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
+APP_AUTHOR	:=	VoltZ
+APP_DESCRIPTION :=  	Universal-Updater! ;)
+ICON		:=	app/icon.png
+BNR_IMAGE	:=  app/banner.png
+BNR_AUDIO	:=	app/BannerAudio.wav
+RSF_FILE	:=	app/build-cia.rsf
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -57,7 +85,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lstdc++ -lcitro2d -lcitro3d -lctru -lm \
+LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro2d -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctru -lm -lstdc++
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -161,26 +189,23 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-$(BUILD):
-	@mkdir -p $@
-
-ifneq ($(GFXBUILD),$(BUILD))
-$(GFXBUILD):
-	@mkdir -p $@
-endif
-
-ifneq ($(DEPSDIR),$(BUILD))
-$(DEPSDIR):
-	@mkdir -p $@
-endif
-
-#---------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
+	@rm -fr $(BUILD) $(TARGET).elf
+	@rm -fr $(OUTDIR)
+
+
+#---------------------------------------------------------------------------------
+cia: $(BUILD)
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile cia
+
+#---------------------------------------------------------------------------------
+3dsx: $(BUILD)
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile 3dsx
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
@@ -189,17 +214,25 @@ $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
 	@tex3ds -i $< -H $(BUILD)/$*.h -d $(DEPSDIR)/$*.d -o $(GFXBUILD)/$*.t3x
 
 #---------------------------------------------------------------------------------
+$(BUILD):
+	@[ -d $@ ] || mkdir -p $@
+
+#---------------------------------------------------------------------------------
 else
 
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-$(OUTPUT).3dsx	:	$(OUTPUT).elf $(_3DSXDEPS)
-
-$(OFILES_SOURCES) : $(HFILES)
+all: $(OUTPUT).cia $(OUTPUT).elf $(OUTPUT).3dsx
 
 $(OUTPUT).elf	:	$(OFILES)
 
+$(OUTPUT).cia	:	$(OUTPUT).elf $(OUTPUT).smdh
+	$(BANNERTOOL) makebanner -i "../app/banner.png" -a "../app/BannerAudio.wav" -o "../app/banner.bin"
+
+	$(BANNERTOOL) makesmdh -i "../app/icon.png" -s "Universal-Updater" -l "Universal-Updater! ;)." -p "$(APP_AUTHOR)" -o "../app/icon.bin"
+
+	$(MAKEROM) -f cia -target t -exefslogo -o "../Universal-Updater.cia" -elf "../Universal-Updater.elf" -rsf "../app/build-cia.rsf" -banner "../app/banner.bin" -icon "../app/icon.bin" -logo "../app/logo.bcma.lz" -DAPP_ROMFS="$(TOPDIR)/$(ROMFS)" -major $(VERSION_MAJOR) -minor $(VERSION_MINOR) -micro $(VERSION_MICRO) -DAPP_VERSION_MAJOR="$(VERSION_MAJOR)"
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
 #---------------------------------------------------------------------------------

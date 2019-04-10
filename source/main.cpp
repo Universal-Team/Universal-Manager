@@ -17,6 +17,7 @@
 #include "settings.h"
 #include "download.hpp"
 #include "inifile.h"
+#include "datetime.h"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
@@ -220,6 +221,8 @@ int main()
 			pp2d_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
+		pp2d_draw_on(GFX_TOP, GFX_LEFT);
+		pp2d_draw_text(140, 8, 0.9f, 0.9f, WHITE, getTime().c_str());
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
 		pp2d_draw_texture(subbgtex, 0, 0);
 
