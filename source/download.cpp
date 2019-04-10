@@ -953,7 +953,7 @@ void downloadBoxart(void) {
 
 	displayBottomMsg("Now Searching for ROMs.\n");
 
-	chdir("sdmc:/");
+	chdir("sdmc:/roms/nds");
 	findNdsFiles(dirContents);
 
 	for(int i=0;i<(int)dirContents.size();i++) {
