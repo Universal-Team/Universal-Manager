@@ -281,7 +281,7 @@ void downloadFailed(void) {
 }
 
 void doneMsg(void) {
-	displayBottomMsg("Fertig!");
+	displayBottomMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -606,7 +606,7 @@ void drawMessageText(int position)
 	pp2d_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
     for (int i = 0; i < (int)_topText.size() && i < 10; i++)
     {
-		pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, BLACK, _topText[i+position].c_str());
+		pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
     }
 	pp2d_end_draw();
 }
