@@ -33,7 +33,7 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src src/json src/utils src/sound src/pp2d
+SOURCES		:=	source source/json source/utils source/sound source/pp2d
 DATA		:=	data
 INCLUDES	:=	include include/json include/utils include/sound include/pp2d
 GRAPHICS	:=	assets/gfx
