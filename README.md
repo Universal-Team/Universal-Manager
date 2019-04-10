@@ -1,3 +1,5 @@
-# Updater
+# Universal-Updater
 
-The Developement is currently on hold. The next work would be as soon as possible.
+Rename the Updater to Universal-Updater.
+
+There is a Rewrite planned to switch the Graphics from PP2D to Citro2D.
