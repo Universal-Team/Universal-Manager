@@ -1,6 +1,4 @@
-/* This File is part of Universal-Upater!
-* Diese Datei ist Teil von Universal-Updater!
- */
+
 
 #ifndef _INIFILE_H_
 #define _INIFILE_H_

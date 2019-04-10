@@ -1,6 +1,4 @@
-/* This File is part of Universal-Upater!
-* Diese Datei ist Teil von Universal-Updater!
- */
+
 
 #ifndef NLOHMANN_JSON_HPP
 #define NLOHMANN_JSON_HPP

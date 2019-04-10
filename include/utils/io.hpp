@@ -1,6 +1,4 @@
-/* This File is part of Universal-Upater!
-* Diese Datei ist Teil von Universal-Updater!
- */
+
 
 #ifndef IO_HPP
 #define IO_HPP

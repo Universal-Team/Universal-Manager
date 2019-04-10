@@ -1,7 +1,5 @@
 
-/* This File is part of Universal-Upater!
-* Diese Datei ist Teil von Universal-Updater!
- */
+
 
 #ifndef _JSON_H
 #define _JSON_H

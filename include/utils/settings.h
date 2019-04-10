@@ -1,6 +1,4 @@
-/* This File is part of Universal-Upater!
-* Diese Datei ist Teil von Universal-Updater!
- */
+
 
 #ifndef DSIMENUPP_SETTINGS_H
 #define DSIMENUPP_SETTINGS_H
