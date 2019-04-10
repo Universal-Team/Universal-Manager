@@ -647,7 +647,7 @@ std::string latestPKSMRelease(void) {
 
 std::string latestPKSMNightly(void) {
 	if (latestPKSMNightlyCache == "")
-		latestPKSMNightlyCache = getLatestCommit("SuperSaiyajinVoltZ/Ultimate-Updater-Repo", "sha").substr(0,7);
+		latestPKSMNightlyCache = getLatestCommit("SuperSaiyajinVoltZ/PKSM-Nightlies", "sha").substr(0,7);
 	return latestPKSMNightlyCache;
 }
 
@@ -825,7 +825,7 @@ void updatePKSM(bool nightly) {
 	if(nightly) {
 		displayBottomMsg("Downloading PKSM...\n"
 						"(Nightly)\n\nDies wird etwas dauern.");
-		if (downloadToFile("https://github.com/SuperSaiyajinVoltZ/Ultimate-Updater-Repo/blob/master/PKSM/PKSM.cia?raw=true", "/PKSM-Nightly.cia") != 0) {
+		if (downloadToFile("https://github.com/SuperSaiyajinVoltZ/PKSM-Nightlies/blob/master/PKSM.cia?raw=true", "/PKSM-Nightly.cia") != 0) {
 			downloadFailed();
 			return;
 		}

@@ -342,7 +342,7 @@ int main()
 				case 5:
 					if(dspfirmfound) {
 					}
-					showCommitInfo("SuperSaiyajinVoltZ/Ultimate-Updater-Repo");
+					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies");
 					break;
 					case 6:
 					if(dspfirmfound) {
