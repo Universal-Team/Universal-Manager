@@ -1,3 +1,3 @@
 # Universal-Updater
 
-There is a Rewrite planned to switch the Graphics from PP2D to Citro2D.
+This will be the Branch for the Citro2D Graphic Rewrite. If the Rewrite is done, it would be PR to the master Branch.
