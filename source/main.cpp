@@ -230,35 +230,39 @@ int main()
 		pp2d_draw_texture(subbgtex, 0, 0);
 
 		// Draw buttons
-		for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
-			if (menuSelection == i) {
-				// Button is highlighted.
-				pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
-			} else {
-				// Button is not highlighted. Darken the texture.
-				if (buttonShading) {
-					pp2d_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
-				} else {
+		if(menuPage == 0) {
+			for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
+				if (menuSelection == i) {
+					// Button is highlighted.
 					pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+				} else {
+					// Button is not highlighted. Darken the texture.
+					if (buttonShading) {
+						pp2d_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
+					} else {
+						pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+					}
+				}
+				// Draw a dot if an update is availible
+				if(updateAvailable[i]) {
+					pp2d_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
+				}
+
+				// Determine the text height.
+				// NOTE: Button texture size is 132x34.
+				const int h = 32;
+
+				// Draw the title.
+				int y = buttons2[i].y + ((40 - h) / 2);
+				int x_from_width = buttons2[i].x + title_spacing[i];
+				pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
+
+				if(!(i%2)) {
+					pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
 				}
 			}
-			// Draw a dot if an update is availible
-			if(updateAvailable[i]) {
-				pp2d_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
-			}
+		} else if (menuPage == 1) {
 
-			// Determine the text height.
-			// NOTE: Button texture size is 132x34.
-			const int h = 32;
-
-			// Draw the title.
-			int y = buttons2[i].y + ((40 - h) / 2);
-			int x_from_width = buttons2[i].x + title_spacing[i];
-			pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
-
-			if(!(i%2)) {
-				pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
-			}
 		}
 		pp2d_end_draw();
 		
@@ -268,6 +272,12 @@ int main()
 				fadealpha = 0;
 				fadein = false;
 			}
+		}
+
+		if (hDown & KEY_R) {
+			if(menuPage<1)	menuPage++;
+		} else if (hDown & KEY_L) {
+			if(menuPage>0)	menuPage--;
 		}
 
 		if (hDown & KEY_UP) {
