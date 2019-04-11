@@ -28,6 +28,21 @@ bool updatingSelf = false;
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};
+struct {
+	int x;
+	int y;
+} buttons[] = {
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	{ 220, 128},
+	{ 129, 168},
+	{ 220, 168},
+	{ 129, 208},
+	{ 220, 208},
+};
 
 struct {
 	int x;
@@ -59,6 +74,20 @@ size_t button_tex2[] = {
 };
 
 
+const char *button_titles[] = {
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",	
+	"Release",
+	"Nightly",
+	"Example",
+	"Example",
+
+};
+
 const char *button_titles2[] = {
 	"Release",
 	"Nightly",
@@ -85,6 +114,14 @@ const int title_spacing[] = {
 	10,
 	10,
 };
+
+const char *row_titles[] = {
+	"TWL Menu++",
+	"Bootstrap",
+	"PKSM",
+	"Luma",
+	"Downloads",
+};	
 
 const char *row_titles2[] = {
 	"TWL Menu++",
@@ -319,6 +356,7 @@ int main()
 
 		if (hDown & KEY_Y || showMessage) {
 			switch (menuSelection)
+			if (menuPage == 0) {
 			{
 				case 0:
 					if(dspfirmfound) {
@@ -368,6 +406,7 @@ int main()
 			showMessage = false;
 		}
 
+		if (menuPage == 0) {
 		if (setOption) {
 			switch (menuSelection) {
 				case 0:	// TWiLight release
@@ -436,7 +475,7 @@ int main()
 						}
 						updateLuma(false);
 					break;
-				case 7:	// LumaNightly
+				case 7:	// Luma Nightly
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
@@ -457,6 +496,115 @@ int main()
 					}
 					break;
 					case 9:	// usrcheat.dat
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updateCheats();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				default:
+					if(dspfirmfound) {
+					}
+					break;
+			}
+			setOption = false;
+		}
+
+	}
+
+		else if (menuPage == 1) {
+		if (setOption) {
+			switch (menuSelection) {
+				case 0:	// TWiLight release
+					if(checkWifiStatus()){ // For testing
+						if(dspfirmfound) {
+						}
+						updateTWiLight(false);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 1:	// TWiLight nightly
+					if(checkWifiStatus()){ // For testing
+						if(dspfirmfound) {
+						}
+						updateTWiLight(true);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 2:	// nds-bootstrap release
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updateBootstrap(false);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 3:	// nds-bootstrap nightly
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updateBootstrap(true);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 4:	// PKSM Release
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updatePKSM(false);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 5:	// PKSM nightly
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updatePKSM(true);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 6:	// Luma Release
+					 if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updateLuma(false);
+					break;
+				case 7:	// Luma Nightly
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						updateLuma(true);
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+					case 8:	// Example
+					//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						downloadBoxart();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+					case 9:	// Example
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
