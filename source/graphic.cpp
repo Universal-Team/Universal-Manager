@@ -40,13 +40,14 @@ void pp2d_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 	pp2d_texture_draw();
 }
 
-size_t loadingbgtex = 29;
-size_t topbgtex = 30;
-size_t subbgtex = 31;
-size_t buttontex = 32;
-size_t extrasmallbuttontex = 33;
-size_t smallbuttontex = 34;
-size_t dot = 35;
+size_t loadingbgtex = 1;
+size_t topbgtex = 2;
+size_t subbgtex = 3;
+size_t buttontex = 4;
+size_t extrasmallbuttontex = 5;
+size_t smallbuttontex = 6;
+size_t dot = 7;
+size_t pageframe = 8;
 
 void graphicsInit(void) {
 }

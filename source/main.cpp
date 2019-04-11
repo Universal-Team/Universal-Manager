@@ -58,6 +58,7 @@ size_t button_tex2[] = {
 	extrasmallbuttontex,
 };
 
+
 const char *button_titles2[] = {
 	"Release",
 	"Nightly",
@@ -131,6 +132,7 @@ void displayBottomMsg(const char* text) {
 // Version numbers.
 
 int menuSelection = 0;
+int menuPage = 0;
 
 int main()
 {
@@ -164,6 +166,7 @@ int main()
 			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
 			    pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
+				pp2d_load_texture_png(pageframe, "romfs:/graphics/Page_Number_Frame.png");
 	
 	Result res = 0;
 	graphicsInit();

@@ -14,6 +14,7 @@ extern size_t buttontex;
 extern size_t extrasmallbuttontex;
 extern size_t smallbuttontex;
 extern size_t dot;
+extern size_t pageframe;
 
 
 extern void graphicsInit(void);
