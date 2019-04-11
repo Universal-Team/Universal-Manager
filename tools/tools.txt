@@ -1,0 +1,1 @@
+To compile the CIA File, you need to put `bannertool.exe` `makerom.exe` and `3dstool.exe` inside the `tools` Folder.

@@ -274,18 +274,14 @@ bool checkWifiStatus(void) {
 }
 
 void downloadFailed(void) {
-	displayBottomMsg("Download failed!\n"
-	"Dies passiert manchmal\n"
-	"Wegen Github's schlechter\n"
-	"         API...\n\n"
-	"Versuche es später nochmal.");
+	displayBottomMsg("Download failed!\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void doneMsg(void) {
-	displayBottomMsg("Fertig!");
+	displayBottomMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -607,10 +603,10 @@ void drawMessageText(int position)
 {
 	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
 	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(18, 24, .7, .7, BLACK, jsonName.c_str());
+	pp2d_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
     for (int i = 0; i < (int)_topText.size() && i < 10; i++)
     {
-		pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, BLACK, _topText[i+position].c_str());
+		pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
     }
 	pp2d_end_draw();
 }
@@ -717,40 +713,36 @@ void checkForUpdates() {
 
 void updateBootstrap(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("NDS-Bootstrap wird heruntergeladen...\n"
+		displayBottomMsg("Downloading NDS-Bootstrap\n"
 						"(Nightly)");
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/nds-bootstrap.7z?raw=true", "/nds-bootstrap-nightly.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("NDS-Bootstrap wird extrahiert...\n"
+		displayBottomMsg("Now extracting.\n"
 						"(Nightly)");
 		extractArchive("/nds-bootstrap-nightly.7z", "nds-bootstrap/", "/_nds/");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/nds-bootstrap-nightly.7z");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledVersion("NDS-BOOTSTRAP-NIGHTLY", latestBootstrapNightly());
 		saveUpdateData();
 		updateAvailable[3] = false;
 	} else {	
-		displayBottomMsg("NDS-Bootstrap wird heruntergeladen...\n"
+		displayBottomMsg("Downloading NDS-Bootstrap\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/ahezard/nds-bootstrap", "nds-bootstrap\\.zip", "/nds-bootstrap-release.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("NDS-Bootstrap wird extrahiert...\n"
+		displayBottomMsg("Now extracting.\n"
 						"(Release)");
 		extractArchive("/nds-bootstrap-release.zip", "/", "/_nds/");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/nds-bootstrap-release.zip");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledVersion("NDS-BOOTSTRAP-RELEASE", latestBootstrapRelease());
 		saveUpdateData();
 		updateAvailable[2] = false;
@@ -760,19 +752,19 @@ void updateBootstrap(bool nightly) {
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("TWiLightMenu++ wird heruntergeladen...\n"
-						"(Nightly)\n\nDies wird etwas dauern.");
+		displayBottomMsg("Now Downloading TWiLightMenu++\n"
+						"(Nightly)\n\nThis may take a while.");
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("TWiLightMenu++ wird extrahiert...\n"
-						"(Nightly)\n\nDies wird etwas dauern..");
+		displayBottomMsg("Now extracting.\n"
+						"(Nightly)\n\nThis may take a while.");
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
 
-		displayBottomMsg("Game booter.cia wird installiert...\n"
+		displayBottomMsg("Now installing the CIAs.\n"
 						"(Nightly)");
 		// installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -781,38 +773,33 @@ void updateTWiLight(bool nightly) {
 		deleteFile("sdmc:/TWiLight Menu.cia");
 		deleteFile("sdmc:/TWiLight Menu - Game booter.cia");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledChannel("TWILIGHTMENU", "nightly");
 		setInstalledVersion("TWILIGHTMENU", latestMenuNightly());
 		saveUpdateData();
 		updateAvailable[1] = false;
 	} else {
-		displayBottomMsg("TWiLightMenu++ wird heruntergeladen...\n"
-						"(Release)\n\nDies wird etwas dauern.");
+		displayBottomMsg("Downloading TWiLightMenu++\n"
+						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/RocketRobz/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("TWiLightMenu++ wird extrahiert...\n"
-						"(Release)\n\nDies wird etwas dauern.");
+		displayBottomMsg("Now extracting.\n"
+						"(Release)\n\nThis may take a while.");
 		extractArchive("/TWiLightMenu-release.7z", "_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-release.7z", "3DS - CFW users/", "/");
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
 
-		displayBottomMsg("TWiLight Menu.cia wird installiert...\n"
+		displayBottomMsg("Now installing the CIAs.\n"
 						"(Release)");
 		installCia("/TWiLight Menu.cia");
-		displayBottomMsg("Game booter.cia wird installiert...\n"
-						"(Release)");
 		installCia("/TWiLight Menu - Game booter.cia");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/TWiLightMenu-release.7z");
 		deleteFile("sdmc:/TWiLight Menu.cia");
 		deleteFile("sdmc:/TWiLight Menu - Game booter.cia");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledChannel("TWILIGHTMENU", "release");
 		setInstalledVersion("TWILIGHTMENU", latestMenuRelease());
 		saveUpdateData();
@@ -824,7 +811,7 @@ void updateTWiLight(bool nightly) {
 void updatePKSM(bool nightly) {
 	if(nightly) {
 		displayBottomMsg("Downloading PKSM...\n"
-						"(Nightly)\n\nDies wird etwas dauern.");
+						"(Nightly)\n\nThis may take a while.");
 		if (downloadToFile("https://github.com/SuperSaiyajinVoltZ/PKSM-Nightlies/blob/master/PKSM.cia?raw=true", "/PKSM-Nightly.cia") != 0) {
 			downloadFailed();
 			return;
@@ -832,34 +819,30 @@ void updatePKSM(bool nightly) {
 
 		displayBottomMsg("Installing PKSM CIA...\n"
 						"(Nightly)\n\n\n\n\n\n\n\n\n\n"
-						"Dies wird etwas dauern.");
+						"This may take a while.");
 		installCia("/PKSM-Nightly.cia");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/PKSM-Nightly.cia");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledChannel("PKSM", "nightly");
 		setInstalledVersion("PKSM", latestPKSMNightly());
 		saveUpdateData();
 		updateAvailable[5] = false;
 	} else {
-		displayBottomMsg("PKSM wird heruntergeladen...\n"
-						"(Release)\n\nDies kann etwas dauern.");
+		displayBottomMsg("Downloading PKSM\n"
+						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("PKSM wird installiert...\n"
+		displayBottomMsg("Installing PKSM.cia\n"
 						"(Release)\n\n\n\n\n\n\n\n\n\n"
-						"Dies wird etwas dauern.");
+						"This may take a while..");
 		installCia("/PKSM-Release.cia");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/PKSM-Release.cia");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledChannel("PKSM", "release");
 		setInstalledVersion("PKSM", latestPKSMRelease());
 		saveUpdateData();
@@ -869,17 +852,16 @@ void updatePKSM(bool nightly) {
 }
 
 void updateCheats(void) {
-	displayBottomMsg("DSJ's usrcheat.dat wird heruntergeladen...\n");	// This needs to be manually changed when the usrcheat.dat in TWLBot get's updated
+	displayBottomMsg("Downloading DSJ's Usrcheat.dat\n");	// This needs to be manually changed when the usrcheat.dat in TWLBot get's updated
 	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayBottomMsg("usrcheat.dat wird extrahiert...\n"
-					"\nDies wird etwas dauern.");
+	displayBottomMsg("Now extracting...\n"
+					"\nThis may take a while.");
 	extractArchive("/usrcheat.dat.7z", "usrcheat.dat", "/_nds/TWiLightMenu/extras/usrcheat.dat");
 
-	displayBottomMsg("Lösche unnötige Daten...\n");
 	deleteFile("sdmc:/usrcheat.dat.7z");
 
 	doneMsg();
@@ -969,14 +951,14 @@ void downloadBoxart(void) {
 
 	vector<DirEntry> dirContents;
 
-	displayBottomMsg("der NDS Roms Ordner wird durchsucht...\n");
+	displayBottomMsg("Now Searching for ROMs.\n");
 
 	chdir("sdmc:/roms/nds");
 	findNdsFiles(dirContents);
 
 	for(int i=0;i<(int)dirContents.size();i++) {
 		char downloadMessage[50];
-		snprintf(downloadMessage, sizeof(downloadMessage), "Downloade \"%s.bmp\"...\n", dirContents[i].tid);
+		snprintf(downloadMessage, sizeof(downloadMessage), "Downloading \"%s.bmp\"...\n", dirContents[i].tid);
 		displayBottomMsg(downloadMessage);
 
 		const char *ba_region = getBoxartRegion(dirContents[i].tid[3]);
@@ -992,7 +974,7 @@ void downloadBoxart(void) {
 	chdir("sdmc:/_nds/TWiLightMenu/boxart/");
 	getDirectoryContents(dirContents);
 
-	displayBottomMsg("Ungültige Boxarts werden gelöscht.");
+	displayBottomMsg("Delete corrupted Boxarts.");
 	for(int i=0;i<(int)dirContents.size();i++) {
 		if(dirContents[i].size == 0) {
 			char path[256];
@@ -1005,33 +987,30 @@ void downloadBoxart(void) {
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("Luma 3DS wird heruntergeladen...\n" 
+		displayBottomMsg("Now Downloading Luma3DS\n" 
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledVersion("LUMA3DS-NIGHTLY", latestLumaNightly());
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		displayBottomMsg("Luma 3DS wird heruntergeladen...\n"
+		displayBottomMsg("Now Downloading Luma3DS\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("boot.firm wird extrahiert...\n"
+		displayBottomMsg("extracting Boot.firm\n"
 						"(Release)");
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
 
-		displayBottomMsg("Lösche unnötige Daten...\n");
 		deleteFile("sdmc:/Luma3DS.7z");
 
-		displayBottomMsg("Config wird gespeichert...");
 		setInstalledVersion("LUMA3DS-RELEASE", latestLumaRelease());
 		saveUpdateData();
 		updateAvailable[6] = false;

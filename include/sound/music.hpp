@@ -1,7 +1,7 @@
 
 
-#ifndef MIXER_HPP
-#define MIXER_HPP
+#ifndef MUSIC_HPP
+#define MUSIC_HPP
 
 #include <3ds.h>
 #include <SDL/SDL.h>

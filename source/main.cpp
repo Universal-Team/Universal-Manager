@@ -17,6 +17,7 @@
 #include "settings.h"
 #include "download.hpp"
 #include "inifile.h"
+#include "datetime.h"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
@@ -56,6 +57,7 @@ size_t button_tex2[] = {
 	extrasmallbuttontex,
 	extrasmallbuttontex,
 };
+
 
 const char *button_titles2[] = {
 	"Release",
@@ -122,7 +124,7 @@ void screenon()
 void displayBottomMsg(const char* text) {
 	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
 	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
+	pp2d_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
 	pp2d_end_draw();
 }
 
@@ -130,6 +132,7 @@ void displayBottomMsg(const char* text) {
 // Version numbers.
 
 int menuSelection = 0;
+int menuPage = 0;
 
 int main()
 {
@@ -159,10 +162,11 @@ int main()
 				pp2d_load_texture_png(buttontex, "romfs:/graphics/Buttons/page_button.png");
 				pp2d_load_texture_png(extrasmallbuttontex, "romfs:/graphics/Buttons/BS_2page_extra_small_button.png");
 				pp2d_load_texture_png(smallbuttontex, "romfs:/graphics/Buttons/page_button_small.png");
-                pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/Ultimate-Updater/BS_loading_background.png");
-			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/Ultimate-Updater/top_bg.png");
-			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/Ultimate-Updater/BS_background.png");
-			    pp2d_load_texture_png(dot, "romfs:/graphics/Ultimate-Updater/dot.png");
+                pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
+			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
+			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
+			    pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
+				pp2d_load_texture_png(pageframe, "romfs:/graphics/Page_Number_Frame.png");
 	
 	Result res = 0;
 	graphicsInit();
@@ -220,6 +224,8 @@ int main()
 			pp2d_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
+		pp2d_draw_on(GFX_TOP, GFX_LEFT);
+		pp2d_draw_text(140, 8, 0.9f, 0.9f, WHITE, getTime().c_str());
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
 		pp2d_draw_texture(subbgtex, 0, 0);
 
