@@ -40,6 +40,20 @@ void pp2d_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 	pp2d_texture_draw();
 }
 
+//void pp2d_free_texture(size_t id)
+//{
+//	if (id >= MAX_TEXTURES)
+//		return;
+//	
+//	if (!textures[id].allocated)
+//		return;
+//	
+//	C3D_TexDelete(&textures[id].tex);
+//	textures[id].width = 0;
+//	textures[id].height = 0;
+//	textures[id].allocated = false;
+//}
+
 size_t loadingbgtex = 1;
 size_t topbgtex = 2;
 size_t subbgtex = 3;
@@ -50,6 +64,8 @@ size_t dot = 7;
 size_t pageframe = 8;
 size_t mainmenutoptex = 9;
 size_t mainmenubottomtex = 10;
+size_t pksmbottomtex = 11;
+size_t pksmtoptex = 12;
 
 void graphicsInit(void) {
 }

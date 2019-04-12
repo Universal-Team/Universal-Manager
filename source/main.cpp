@@ -19,6 +19,10 @@
 #include "inifile.h"
 #include "datetime.h"
 
+//Screens
+#include "screens/MainMenuScreen.hpp"
+#include "screens/PKSMScreen.hpp"
+
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 static touchPosition touch;
