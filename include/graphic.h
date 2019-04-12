@@ -15,9 +15,9 @@ extern size_t extrasmallbuttontex;
 extern size_t smallbuttontex;
 extern size_t dot;
 extern size_t pageframe;
+extern size_t mainmenutoptex;
+extern size_t mainmenubottomtex;
 
-
-extern void graphicsInit(void);
 
 // Colors
 #define TRANSPARENT RGBA8(0, 0, 0, 0)

@@ -48,6 +48,8 @@ size_t extrasmallbuttontex = 5;
 size_t smallbuttontex = 6;
 size_t dot = 7;
 size_t pageframe = 8;
+size_t mainmenutoptex = 9;
+size_t mainmenubottomtex = 10;
 
 void graphicsInit(void) {
 }

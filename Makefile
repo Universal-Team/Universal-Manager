@@ -55,9 +55,9 @@ VERSION_MICRO := 0
 #---------------------------------------------------------------------------------
 TARGET		:=	Universal-Updater
 BUILD		:=	build
-SOURCES		:=	source source/json source/utils source/sound source/pp2d
+SOURCES		:=	source source/json source/utils source/sound source/pp2d source/screens
 DATA		:=	data
-INCLUDES	:=	include include/json include/utils include/sound include/pp2d
+INCLUDES	:=	include include/json include/utils include/sound include/pp2d include/screens
 GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
