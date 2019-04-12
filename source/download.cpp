@@ -280,6 +280,13 @@ void downloadFailed(void) {
 	}
 }
 
+void notImplementedMsg(void) {
+	displayBottomMsg("This button doesn't work yet.\n");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}
+
 void doneMsg(void) {
 	displayBottomMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
@@ -1015,5 +1022,10 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[6] = false;
 	}
+	doneMsg();
+}
+
+void notImplemented(void) {
+	notImplementedMsg();
 	doneMsg();
 }

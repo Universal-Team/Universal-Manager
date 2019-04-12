@@ -78,10 +78,10 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Boxart",
 	"Cheats",
-	"Cheats",
-	"Cheats",
-	"Cheats",
-	"Cheats",
+	"-",
+	"-",
+	"-",
+	"-",
 };
 
 const int title_spacing[] = {
@@ -106,9 +106,9 @@ const char *row_titles2[] = {
 	"Bootstrap",
 	"PKSM",
 	"Luma",
-	"Downloads",
-	"Downloads",
-	"Downloads",
+	"Misc.",
+	"-",
+	"-",
 };	
 
 bool updateAvailable[] = {
@@ -120,12 +120,12 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
+//	false,
+//	false,
+//	false,
+//	false,
+//	false,
+//	false,
 };
 
 void screenoff()
@@ -411,6 +411,7 @@ int main()
 		}
 
 		if (setOption) {
+			if (menuPage == 0) {
 			switch (menuSelection) {
 				case 0:	// TWiLight release
 					if(checkWifiStatus()){ // For testing
@@ -508,14 +509,73 @@ int main()
 						}
 					}
 					break;
-				default:
-					if(dspfirmfound) {
+				} else if (menuPage == 1) {
+				switch (menuSelection) {
+					case 0:
+							//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 1:
+						//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 2:
+						//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 3:
+						//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 4:
+						//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+				case 5:
+						//if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						notImplemented();
+					} else {
+						if(dspfirmfound) {
+						}
 					}
 					break;
 			}
 			setOption = false;
 		}
 
+	}
 	}
 
 	if (dspfirmfound) {

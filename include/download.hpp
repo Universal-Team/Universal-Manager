@@ -105,6 +105,11 @@ void downloadBoxart(void);
 void updatePKSM(bool nightly);
 
 /**
- * Update die CFW/Boot.firm!
+ * Update the CFW/Boot.firm!
  */
 void updateLuma(bool nightly);
+
+/**
+* This Button is not implemented yet.
+*/
+void notImplemented(void);
