@@ -5,7 +5,7 @@
 #include "common.hpp"
 
 #define APP_TITLE "Universal-Updater"
-#define VERSION_STRING "3.2.0"
+#define VERSION_STRING "1.0.0"
 
 enum DownloadError {
 	DL_ERROR_NONE = 0,
@@ -59,7 +59,7 @@ bool showReleaseInfo(std::string repo, bool drawMessageText);
  * Show the latest commit's name and message.
  * repo is where to get from. (Ex. "RocketRobz/TWiLightMenu")
  */
-void showCommitInfo(std::string repo);
+bool showCommitInfo(std::string repo, bool drawMessageText);
 
 /**
  * Prepare text for showing a release/commit message.

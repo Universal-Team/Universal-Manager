@@ -375,7 +375,7 @@ int main()
 				case 1:
 					if(dspfirmfound) {
 					}
-					showCommitInfo("RocketRobz/TWiLightMenu");
+					showCommitInfo("RocketRobz/TWiLightMenu", false);
 					break;
 				case 2:
 					if(dspfirmfound) {
@@ -385,7 +385,7 @@ int main()
 				case 3:
 					if(dspfirmfound) {
 					}
-					showCommitInfo("ahezard/nds-bootstrap");
+					showCommitInfo("ahezard/nds-bootstrap", false);
 					break;
 				case 4:
 					if(dspfirmfound) {
@@ -395,7 +395,7 @@ int main()
 				case 5:
 					if(dspfirmfound) {
 					}
-					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies");
+					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", false);
 					break;
 					case 6:
 					if(dspfirmfound) {
@@ -433,6 +433,8 @@ int main()
 					if(checkWifiStatus()){ 
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading commit...");
+						if(showCommitInfo("RocketRobz/TWiLightMenu", true))
 						updateTWiLight(true);
 					} else {
 						if(dspfirmfound) {
@@ -455,6 +457,8 @@ int main()
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading commit...");
+						if(showCommitInfo("ahezard/NDS-Bootstrap", true))
 						updateBootstrap(true);
 					} else {
 						if(dspfirmfound) {
@@ -477,6 +481,8 @@ int main()
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading commit...");
+						if(showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
 						updatePKSM(true);
 					} else {
 						if(dspfirmfound) {

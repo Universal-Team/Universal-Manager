@@ -522,7 +522,7 @@ bool showReleaseInfo(std::string repo, bool showExitText)
 	}
 }
 
-void showCommitInfo(std::string repo)
+bool showCommitInfo(std::string repo, bool showExitText)
 {
 	jsonName = getLatestCommit(repo, "sha").substr(0,7);
 	std::string jsonBody = getLatestCommit(repo, "commit", "message");
@@ -532,7 +532,7 @@ void showCommitInfo(std::string repo)
 
 	while(1) {
 		if(redrawText) {
-			drawMessageText(textPosition, false);
+			drawMessageText(textPosition, showExitText);
 			redrawText = false;
 		}
 
@@ -546,8 +546,10 @@ void showCommitInfo(std::string repo)
 				gspWaitForVBlank();
 		}
 		
-		if (hDown & KEY_A || hDown & KEY_B || hDown & KEY_Y) {
-			break;
+		if (hDown & KEY_A || hDown & KEY_Y || hDown & KEY_TOUCH) {
+			return true;
+		} else if (hDown & KEY_B) {
+			return false;
 		} else if (hHeld & KEY_UP) {
 			if(textPosition > 0) {
 				textPosition--;
