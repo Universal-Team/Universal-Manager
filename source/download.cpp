@@ -607,7 +607,7 @@ void drawMessageText(int position, bool showExitText)
 {
 	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
 	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(18, 24, .7, .7, BLACK, jsonName.c_str());
+	pp2d_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
 			pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
 	}
