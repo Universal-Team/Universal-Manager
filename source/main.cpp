@@ -41,11 +41,19 @@ struct {
 	{ 220, 128},
 	{ 129, 168},
 	{ 220, 168},
-	{ 129, 208},
-	{ 220, 208},
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	{ 220, 128},
 };
 
 size_t button_tex2[] = {
+	extrasmallbuttontex,
+	extrasmallbuttontex,
+	extrasmallbuttontex,
+	extrasmallbuttontex,
 	extrasmallbuttontex,
 	extrasmallbuttontex,
 	extrasmallbuttontex,
@@ -70,7 +78,10 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Boxart",
 	"Cheats",
-
+	"Cheats",
+	"Cheats",
+	"Cheats",
+	"Cheats",
 };
 
 const int title_spacing[] = {
@@ -84,6 +95,10 @@ const int title_spacing[] = {
 	10,
 	10,
 	10,
+	10,
+	10,
+	10,
+	10,
 };
 
 const char *row_titles2[] = {
@@ -92,9 +107,15 @@ const char *row_titles2[] = {
 	"PKSM",
 	"Luma",
 	"Downloads",
+	"Downloads",
+	"Downloads",
 };	
 
 bool updateAvailable[] = {
+	false,
+	false,
+	false,
+	false,
 	false,
 	false,
 	false,
@@ -230,8 +251,8 @@ int main()
 		pp2d_draw_texture(subbgtex, 0, 0);
 
 		// Draw buttons
-		if(menuPage == 0) {
-			for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
+		for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
+			if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
 				if (menuSelection == i) {
 					// Button is highlighted.
 					pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
@@ -261,8 +282,6 @@ int main()
 					pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
 				}
 			}
-		} else if (menuPage == 1) {
-
 		}
 		pp2d_end_draw();
 		
@@ -275,9 +294,17 @@ int main()
 		}
 
 		if (hDown & KEY_R) {
-			if(menuPage<1)	menuPage++;
+			if(menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
+				menuPage++;
+				menuSelection += 8;
+				if(menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
+			}
 		} else if (hDown & KEY_L) {
-			if(menuPage>0)	menuPage--;
+			if(menuPage>0) {
+				menuPage--;
+				menuSelection -= 8;
+				if(menuSelection < 0)	menuSelection = 0;
+			}
 		}
 
 		if (hDown & KEY_UP) {
@@ -299,10 +326,15 @@ int main()
 			buttonShading = false;
 		}
 
-		if (menuSelection > 9) menuSelection = 1; //Anzahl der gesamten Buttons, 1 muss bleiben.
-		else if (menuSelection > 9) menuSelection = 0; // Anzahl der Buttons und 0 muss bleiben.
-		else if (menuSelection < -1) menuSelection = 8; // -1 muss bleiben und anzahl der Schaltflächen bis zur letzten rechten schaltfläche.
-		else if (menuSelection < 0) menuSelection = 9; //0 muss bleiben und anzahl der Buttons.
+		if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
+			menuSelection = (menuPage*8)+1; //Anzahl der gesamten Buttons, 1 muss bleiben.
+		} else if ((menuSelection > (menuPage*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
+			menuSelection = (menuPage*8); // Anzahl der Buttons und 0 muss bleiben.
+		} else if (menuSelection < (menuPage*8)-1) {
+			menuSelection = ((menuPage*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (menuPage*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2; // -1 muss bleiben und anzahl der Schaltflächen bis zur letzten rechten schaltfläche.
+		} else if (menuSelection < (menuPage*8)) {
+			menuSelection = ((menuPage*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (menuPage*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1; //0 muss bleiben und anzahl der Buttons.
+		}
 
 		if (hDown & KEY_A) {
 			setOption = true;
