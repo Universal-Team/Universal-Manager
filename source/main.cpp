@@ -365,7 +365,7 @@ int main()
 				case 0:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("RocketRobz/TWiLightMenu");
+					showReleaseInfo("RocketRobz/TWiLightMenu", false);
 					break;
 				case 1:
 					if(dspfirmfound) {
@@ -375,7 +375,7 @@ int main()
 				case 2:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("ahezard/nds-bootstrap");
+					showReleaseInfo("ahezard/nds-bootstrap", false);
 					break;
 				case 3:
 					if(dspfirmfound) {
@@ -385,7 +385,7 @@ int main()
 				case 4:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("FlagBrew/PKSM");
+					showReleaseInfo("FlagBrew/PKSM", false);
 					break;
 				case 5:
 					if(dspfirmfound) {
@@ -395,12 +395,12 @@ int main()
 					case 6:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("AuroraWright/Luma3DS");
+					showReleaseInfo("AuroraWright/Luma3DS", false);
 					break;
 					case 7:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("hax0kartik/luma-hourlies");
+					showReleaseInfo("hax0kartik/luma-hourlies", false);
 					break;
 				default:
 					if(dspfirmfound) {
@@ -413,9 +413,11 @@ int main()
 		if (setOption) {
 			switch (menuSelection) {
 				case 0:	// TWiLight release
-					if(checkWifiStatus()){ // For testing
+					if(checkWifiStatus()){ 
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("RocketRobz/TWiLightMenu", true))
 						updateTWiLight(false);
 					} else {
 						if(dspfirmfound) {
@@ -423,7 +425,7 @@ int main()
 					}
 					break;
 				case 1:	// TWiLight nightly
-					if(checkWifiStatus()){ // For testing
+					if(checkWifiStatus()){ 
 						if(dspfirmfound) {
 						}
 						updateTWiLight(true);
@@ -436,6 +438,8 @@ int main()
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("Ahezard/NDS-Bootstrap", true))
 						updateBootstrap(false);
 					} else {
 						if(dspfirmfound) {
@@ -456,6 +460,8 @@ int main()
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("FlagBrew/PKSM", true))
 						updatePKSM(false);
 					} else {
 						if(dspfirmfound) {
@@ -476,12 +482,16 @@ int main()
 					 if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("AuroraWright/Luma3DS", true))
 						updateLuma(false);
 					break;
 				case 7:	// LumaNightly
 					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("hax0kartik/luma-hourlies", true))
 						updateLuma(true);
 					} else {
 						if(dspfirmfound) {
