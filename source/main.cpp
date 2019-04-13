@@ -22,6 +22,7 @@
 //Screens
 #include "screens/MainMenuScreen.hpp"
 #include "screens/PKSMScreen.hpp"
+#include "screens/TWLScreen.hpp"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
