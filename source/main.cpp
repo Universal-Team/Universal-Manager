@@ -19,10 +19,6 @@
 #include "inifile.h"
 #include "datetime.h"
 
-//Screens
-#include "screens/MainMenuScreen.hpp"
-#include "screens/PKSMScreen.hpp"
-#include "screens/TWLScreen.hpp"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
@@ -158,8 +154,7 @@ void displayBottomMsg(const char* text) {
 // Version numbers.
 
 int menuSelection = 0;
-//int menuPage = 0;
-int currentScreen = 0;
+int menuPage = 0;
 
 int main()
 {
@@ -298,14 +293,14 @@ int main()
 		}
 
 		if (hDown & KEY_R) {
-			if(currentScreen<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
-				currentScreen++;
+			if(menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
+				menuPage++;
 				menuSelection += 8;
 				if(menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
 			}
 		} else if (hDown & KEY_L) {
-			if(currentScreen>0) {
-				currentScreen--;
+			if(menuPage>0) {
+				menuPage--;
 				menuSelection -= 8;
 				if(menuSelection < 0)	menuSelection = 0;
 			}
@@ -330,14 +325,14 @@ int main()
 			buttonShading = false;
 		}
 
-		if ((menuSelection > (currentScreen*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
-			menuSelection = (currentScreen*8)+1; //Anzahl der gesamten Buttons, 1 muss bleiben.
-		} else if ((menuSelection > (currentScreen*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
-			menuSelection = (currentScreen*8); // Anzahl der Buttons und 0 muss bleiben.
-		} else if (menuSelection < (currentScreen*8)-1) {
-			menuSelection = ((currentScreen*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (currentScreen*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2; // -1 muss bleiben und anzahl der Schaltflächen bis zur letzten rechten schaltfläche.
-		} else if (menuSelection < (currentScreen*8)) {
-			menuSelection = ((currentScreen*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (currentScreen*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1; //0 muss bleiben und anzahl der Buttons.
+		if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
+			menuSelection = (menuPage*8)+1; 
+		} else if ((menuSelection > (menuPage*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
+			menuSelection = (menuPage*8); 
+		} else if (menuSelection < (menuPage*8)-1) {
+			menuSelection = ((menuPage*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (menuPage*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2;
+		} else if (menuSelection < (menuPage*8)) {
+			menuSelection = ((menuPage*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (menuPage*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1;
 		}
 
 		if (hDown & KEY_A) {
@@ -509,7 +504,7 @@ int main()
 					}
 					break;
 					case 8:	// Boxarts
-					//if(checkWifiStatus()){
+					if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
 						downloadBoxart();
