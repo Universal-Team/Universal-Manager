@@ -504,7 +504,7 @@ int main()
 					}
 					break;
 					case 8:	// Boxarts
-					if(checkWifiStatus()){
+					//if(checkWifiStatus()){
 						if(dspfirmfound) {
 						}
 						downloadBoxart();
@@ -546,5 +546,4 @@ int main()
 	aptExit();
 
     return 0;
-}
 }
