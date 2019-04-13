@@ -5,35 +5,9 @@
 
 #include <3ds.h>
 #include "pp2d/pp2d.h"
+#include "Colors.hpp"
+#include "Textures.hpp"
 
-// Textures
-extern size_t loadingbgtex;
-extern size_t topbgtex;
-extern size_t subbgtex;
-extern size_t buttontex;
-extern size_t extrasmallbuttontex;
-extern size_t smallbuttontex;
-extern size_t dot;
-extern size_t pageframe;
-extern size_t mainmenutoptex;
-extern size_t mainmenubottomtex;
-extern size_t pksmbottomtex;
-extern size_t pksmtoptex;
-extern size_t twltoptex;
-extern size_t twlbottomtex;
-
-
-// Colors
-#define TRANSPARENT RGBA8(0, 0, 0, 0)
-
-#define BLACK RGBA8(0, 0, 0, 255)
-#define WHITE RGBA8(255, 255, 255, 255)
-#define GRAY RGBA8(127, 127, 127, 255)
-#define BLUE RGBA8(0, 0, 255, 255)
-#define GREEN RGBA8(0, 255, 0, 255)
-#define RED RGBA8(255, 0, 0, 255)
-
-#define TIME RGBA8(16, 0, 0, 223)
 
 void pp2d_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color);
 void pp2d_draw_texture_part_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, u32 color);

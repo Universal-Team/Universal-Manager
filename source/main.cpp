@@ -55,20 +55,20 @@ struct {
 };
 
 size_t button_tex2[] = {
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
-	extrasmallbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
+	greenbuttontex,
 };
 
 
@@ -186,14 +186,12 @@ int main()
 	pp2d_set_screen_color(GFX_TOP, TRANSPARENT);
 	pp2d_set_3D(1);
 	
-				pp2d_load_texture_png(buttontex, "romfs:/graphics/Buttons/page_button.png");
-				pp2d_load_texture_png(extrasmallbuttontex, "romfs:/graphics/Buttons/BS_2page_extra_small_button.png");
-				pp2d_load_texture_png(smallbuttontex, "romfs:/graphics/Buttons/page_button_small.png");
+				pp2d_load_texture_png(greenbuttontex, "romfs:/graphics/Button-Colors/Green.png");
                 pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
 			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
 			    pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
-				pp2d_load_texture_png(pageframe, "romfs:/graphics/Page_Number_Frame.png");
+				pp2d_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	
 	Result res = 0;
 	//graphicsInit();
