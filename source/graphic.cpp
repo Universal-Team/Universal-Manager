@@ -63,12 +63,5 @@ size_t redbuttontex = 6;
 size_t orangebuttontex = 7;
 size_t dot = 8;
 size_t pageframe = 9;
-size_t mainmenutoptex = 10;
-size_t mainmenubottomtex = 11;
-size_t pksmbottomtex = 12;
-size_t pksmtoptex = 13;
-size_t twltoptex = 14;
-size_t twlbottomtex = 15;
-
 void graphicsInit(void) {
 }
