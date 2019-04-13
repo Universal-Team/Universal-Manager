@@ -19,6 +19,8 @@ extern size_t mainmenutoptex;
 extern size_t mainmenubottomtex;
 extern size_t pksmbottomtex;
 extern size_t pksmtoptex;
+extern size_t twltoptex;
+extern size_t twlbottomtex;
 
 
 // Colors

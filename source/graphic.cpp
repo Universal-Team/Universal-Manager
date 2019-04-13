@@ -66,6 +66,8 @@ size_t mainmenutoptex = 9;
 size_t mainmenubottomtex = 10;
 size_t pksmbottomtex = 11;
 size_t pksmtoptex = 12;
+size_t twltoptex = 13;
+size_t twlbottomtex = 14;
 
 void graphicsInit(void) {
 }
