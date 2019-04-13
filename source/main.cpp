@@ -44,10 +44,10 @@ struct {
 	{ 220, 168},
 	{ 129, 48},
 	{ 220, 48},
-	{ 129, 88},
-	{ 220, 88},
-	{ 129, 128},
-	{ 220, 128},
+	//{ 129, 88},
+	//{ 220, 88},
+	//{ 129, 128},
+	//{ 220, 128},
 };
 
 size_t button_tex2[] = {
@@ -61,10 +61,10 @@ size_t button_tex2[] = {
 	greenbuttontex,
 	greenbuttontex,
 	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
+	//greenbuttontex,
+	//greenbuttontex,
+	//greenbuttontex,
+	//greenbuttontex,
 };
 
 
@@ -79,10 +79,10 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Boxart",
 	"Cheats",
-	"Cheats",
-	"Cheats",
-	"Cheats",
-	"Cheats",
+	//"Cheats",
+	//"Cheats",
+	//"Cheats",
+	//"Cheats",
 };
 
 const int title_spacing[] = {
@@ -96,10 +96,10 @@ const int title_spacing[] = {
 	10,
 	10,
 	10,
-	10,
-	10,
-	10,
-	10,
+	//10,
+	//10,
+	//10,
+	//10,
 };
 
 const char *row_titles2[] = {
@@ -108,8 +108,8 @@ const char *row_titles2[] = {
 	"PKSM",
 	"Luma",
 	"Downloads",
-	"Downloads",
-	"Downloads",
+	//"Downloads",
+	//"Downloads",
 };	
 
 bool updateAvailable[] = {
@@ -123,10 +123,10 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
-	false,
-	false,
-	false,
-	false,
+	//false,
+	//false,
+	//false,
+	//false,
 };
 
 void screenoff()
