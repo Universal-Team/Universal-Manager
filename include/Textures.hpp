@@ -8,5 +8,7 @@ extern size_t greenbuttontex;
 extern size_t bluebuttontex;
 extern size_t redbuttontex;
 extern size_t orangebuttontex;
+extern size_t pinkbuttontex;
+extern size_t yellowbuttontex;
 extern size_t dot;
 extern size_t pageframe;

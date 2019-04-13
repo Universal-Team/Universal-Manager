@@ -1,5 +1,7 @@
 
 #include "graphic.h"
+#include "Colors.hpp"
+#include "Textures.hpp"
 
 void pp2d_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)
 {
@@ -61,7 +63,9 @@ size_t greenbuttontex = 4;
 size_t bluebuttontex = 5;
 size_t redbuttontex = 6;
 size_t orangebuttontex = 7;
-size_t dot = 8;
-size_t pageframe = 9;
+size_t pinkbuttontex = 8;
+size_t yellowbuttontex = 9;
+size_t dot = 10;
+size_t pageframe = 11;
 void graphicsInit(void) {
 }
