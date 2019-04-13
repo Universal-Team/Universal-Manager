@@ -51,16 +51,16 @@ struct {
 };
 
 size_t button_tex2[] = {
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
-	greenbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
 	//greenbuttontex,
 	//greenbuttontex,
 	//greenbuttontex,
@@ -181,7 +181,7 @@ int main()
 	pp2d_set_screen_color(GFX_TOP, TRANSPARENT);
 	pp2d_set_3D(1);
 	
-				pp2d_load_texture_png(greenbuttontex, "romfs:/graphics/Button-Colors/Green.png");
+				pp2d_load_texture_png(classicbuttontex, "romfs:/graphics/Button-Colors/Classic.png");
                 pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
 			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");

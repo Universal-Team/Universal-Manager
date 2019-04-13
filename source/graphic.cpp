@@ -65,7 +65,8 @@ size_t redbuttontex = 6;
 size_t orangebuttontex = 7;
 size_t pinkbuttontex = 8;
 size_t yellowbuttontex = 9;
-size_t dot = 10;
-size_t pageframe = 11;
+size_t classicbuttontex = 10;
+size_t dot = 11;
+size_t pageframe = 12;
 void graphicsInit(void) {
 }
