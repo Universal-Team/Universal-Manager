@@ -250,7 +250,7 @@ int main()
 			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 		pp2d_draw_on(GFX_TOP, GFX_LEFT);
-		pp2d_draw_text(140, 8, 0.9f, 0.9f, WHITE, getTime().c_str());
+		pp2d_draw_text(140, 8, 0.9f, 0.9f, YELLOW, getTime().c_str());
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
 		pp2d_draw_texture(subbgtex, 0, 0);
 
