@@ -248,6 +248,9 @@ int main()
 		pp2d_draw_text(140, 8, 0.9f, 0.9f, YELLOW, getTime().c_str());
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
 		pp2d_draw_texture(subbgtex, 0, 0);
+		pp2d_draw_text(280, 5, 0.50, 0.50, YELLOW, "1");
+		pp2d_draw_text(300, 5, 0.50, 0.50, YELLOW, "2");
+		pp2d_draw_texture(pageframe, 276+(menuPage*20), 5);
 
 		// Draw buttons
 		for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
