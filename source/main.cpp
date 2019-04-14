@@ -61,7 +61,7 @@ size_t button_tex2[] = {
 	classicbuttontex,
 	classicbuttontex,
 	classicbuttontex,
-	//greenbuttontex,
+	classicbuttontex,
 	//greenbuttontex,
 	//greenbuttontex,
 	//greenbuttontex,
@@ -79,7 +79,7 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Boxart",
 	"Cheats",
-	//"Cheats",
+	"Release",
 	//"Cheats",
 	//"Cheats",
 	//"Cheats",
@@ -96,7 +96,7 @@ const int title_spacing[] = {
 	10,
 	10,
 	10,
-	//10,
+	6,
 	//10,
 	//10,
 	//10,
@@ -108,7 +108,7 @@ const char *row_titles2[] = {
 	"PKSM",
 	"Luma",
 	"Downloads",
-	//"Downloads",
+	"Checkpoint",
 	//"Downloads",
 };	
 
@@ -123,7 +123,7 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
-	//false,
+	false,
 	//false,
 	//false,
 	//false,
@@ -403,6 +403,11 @@ int main()
 					}
 					showReleaseInfo("hax0kartik/luma-hourlies", false);
 					break;
+					case 10:
+					if(dspfirmfound) {
+					}
+					showReleaseInfo("FlagBrew/Checkpoint", false);
+					break;
 				default:
 					if(dspfirmfound) {
 					}
@@ -520,6 +525,18 @@ int main()
 						if(dspfirmfound) {
 						}
 						updateCheats();
+					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+					case 10:	// Checkpoint Release
+					if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("FlagBrew/Checkpoint", true))
+						updateCheckpoint();
 					} else {
 						if(dspfirmfound) {
 						}

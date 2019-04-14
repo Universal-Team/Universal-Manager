@@ -30,6 +30,7 @@ std::string latestPKSMReleaseCache = "";
 std::string latestPKSMNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
+std::string latestCheckpointReleaseCache = "";
 
 extern void displayBottomMsg(const char* text);
 
@@ -664,6 +665,12 @@ std::string latestLumaNightly(void) {
 	return latestLumaNightlyCache;
 }
 
+std::string latestCheckpointRelease(void) {
+	if (latestCheckpointReleaseCache == "")
+		latestCheckpointReleaseCache = getLatestRelease("FlagBrew/Checkpoint", "tag_name");
+	return latestCheckpointReleaseCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Updater/currentVersions.ini");
 }
@@ -694,6 +701,7 @@ void checkForUpdates() {
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
+	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -714,6 +722,8 @@ void checkForUpdates() {
 
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
+
+	updateAvailable[10] = checkpointRelease != latestcheckpointRelease();
 }
 
 void updateBootstrap(bool nightly) {
@@ -1090,6 +1100,27 @@ void updateLuma(bool nightly) {
 		setInstalledVersion("LUMA3DS-RELEASE", latestLumaRelease());
 		saveUpdateData();
 		updateAvailable[6] = false;
+	}
+	doneMsg();
+}
+
+void updateCheckpoint(void) {
+	displayBottomMsg("Downloading Checkpoint.cia (Release)\n");
+		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+
+		displayBottomMsg("Installing Checkpoint.cia\n"
+						"(Release)");
+		installCia("/Checkpoint-Release.cia");
+
+		deleteFile("sdmc:/Checkpoint-Release.cia");
+
+		setInstalledVersion("CHECKPOINT", latestCheckpointRelease());
+		saveUpdateData();
+		updateAvailable[10] = false;
 	}
 	doneMsg();
 }
