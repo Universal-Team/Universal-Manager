@@ -18,6 +18,7 @@
 #include "download.hpp"
 #include "inifile.h"
 #include "datetime.h"
+#include "Universal-Settings.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
