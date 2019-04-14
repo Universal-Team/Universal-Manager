@@ -31,6 +31,7 @@ std::string latestPKSMNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
+std::string latestUpdaterReleaseCache = "";
 
 extern void displayBottomMsg(const char* text);
 
@@ -671,6 +672,13 @@ std::string latestCheckpointRelease(void) {
 	return latestCheckpointReleaseCache;
 }
 
+
+std::string updater(void) {
+	if (latestUpdaterReleaseCache == "")
+		latestUpdaterReleaseCache = getLatestRelease("SuperSaiyajinVoltZ/Universal-Updater", "tag_name");
+	return latestUpdaterReleaseCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Updater/currentVersions.ini");
 }
@@ -695,13 +703,14 @@ void checkForUpdates() {
 
 	std::string menuChannel = getInstalledChannel("TWILIGHTMENU");
 	std::string menuVersion = getInstalledVersion("TWILIGHTMENU");
-	std::string updaterChannel = getInstalledChannel("PKSM");
-	std::string updaterVersion = getInstalledVersion("PKSM");
+	std::string pksmChannel = getInstalledChannel("PKSM");
+	std::string pksmVersion = getInstalledVersion("PKSM");
 	std::string bootstrapRelease = getInstalledVersion("NDS-BOOTSTRAP-RELEASE");
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
+	std::string updaterVersion = getInstalledVersion("UNIVERSAL-UPDATER");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -713,17 +722,17 @@ void checkForUpdates() {
 	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
 	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();
 
-	if (updaterChannel == "release")
-		updateAvailable[4] = updaterVersion != latestPKSMRelease();
-	else if (updaterChannel == "nightly")
-		updateAvailable[5] = updaterVersion != latestPKSMNightly();
+	if (pksmChannel == "release")
+		updateAvailable[4] = pksmVersion != latestPKSMRelease();
+	else if (pksmChannel == "nightly")
+		updateAvailable[5] = pksmVersion != latestPKSMNightly();
 	else
 		updateAvailable[4] = updateAvailable[5] = true;
 
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
-
-	updateAvailable[10] = checkpointRelease != latestcheckpointRelease();
+	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
+	updateAvailable[12] = updaterVersion != updater();
 }
 
 void updateBootstrap(bool nightly) {
@@ -1111,16 +1120,34 @@ void updateCheckpoint(void) {
 			return;
 		}
 
-
 		displayBottomMsg("Installing Checkpoint.cia\n"
 						"(Release)");
 		installCia("/Checkpoint-Release.cia");
 
 		deleteFile("sdmc:/Checkpoint-Release.cia");
 
-		setInstalledVersion("CHECKPOINT", latestCheckpointRelease());
+		setInstalledVersion("CHECKPOINT-RELEASE", latestCheckpointRelease());
 		saveUpdateData();
 		updateAvailable[10] = false;
 	}
-	doneMsg();
-}
+
+	void updateSelf(void) {
+		displayBottomMsg("Downloading Universal Updater...\n");
+
+		if (downloadFromRelease("https://github.com/SuperSaiyajinVoltZ/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayBottomMsg("Installing Universal-Updater CIA...\n"
+						"\n\n\n\n\n\n\n\n\n\n"
+						"The app will reboot when done.");
+
+		installCia("/Universal-Updater.cia");
+
+		deleteFile("sdmc:/Universal-Updater.cia");
+
+		setInstalledVersion("UNIVERSAL-UPDATER", updater());
+		saveUpdateData();
+		updateAvailable[12] = false;
+	}

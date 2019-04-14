@@ -113,3 +113,8 @@ void updateLuma(bool nightly);
 * Download Checkpoint (Release)
 */
 void updateCheckpoint(void);
+
+/**
+* Update The Updater!
+*/
+void updateSelf(void);

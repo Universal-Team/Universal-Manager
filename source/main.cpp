@@ -44,9 +44,9 @@ struct {
 	{ 220, 168},
 	{ 129, 48},
 	{ 220, 48},
-	//{ 129, 88},
-	//{ 220, 88},
-	//{ 129, 128},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
 	//{ 220, 128},
 };
 
@@ -62,8 +62,8 @@ size_t button_tex2[] = {
 	classicbuttontex,
 	classicbuttontex,
 	classicbuttontex,
-	//greenbuttontex,
-	//greenbuttontex,
+	redbuttontex,
+	classicbuttontex,
 	//greenbuttontex,
 };
 
@@ -80,8 +80,8 @@ const char *button_titles2[] = {
 	"Boxart",
 	"Cheats",
 	"Release",
-	//"Cheats",
-	//"Cheats",
+	"-",
+	"Release",
 	//"Cheats",
 };
 
@@ -97,8 +97,8 @@ const int title_spacing[] = {
 	10,
 	10,
 	6,
-	//10,
-	//10,
+	6,
+	10,
 	//10,
 };
 
@@ -109,7 +109,7 @@ const char *row_titles2[] = {
 	"Luma",
 	"Downloads",
 	"Checkpoint",
-	//"Downloads",
+	"Updater",
 };	
 
 bool updateAvailable[] = {
@@ -124,8 +124,8 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
-	//false,
-	//false,
+	false,
+	false,
 	//false,
 };
 
@@ -181,6 +181,7 @@ int main()
 	pp2d_set_3D(1);
 	
 				pp2d_load_texture_png(classicbuttontex, "romfs:/graphics/Button-Colors/Classic.png");
+				pp2d_load_texture_png(redbuttontex, "romfs:/graphics/Button-Colors/Red.png");
                 pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
 			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
@@ -408,6 +409,11 @@ int main()
 					}
 					showReleaseInfo("FlagBrew/Checkpoint", false);
 					break;
+					case 12:
+					if(dspfirmfound) {
+					}
+					showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", false);
+					break;
 				default:
 					if(dspfirmfound) {
 					}
@@ -538,6 +544,20 @@ int main()
 						if(showReleaseInfo("FlagBrew/Checkpoint", true))
 						updateCheckpoint();
 					} else {
+						if(dspfirmfound) {
+						}
+					}
+					break;
+					case 12: //Updater Update
+						if(checkWifiStatus()){
+						if(dspfirmfound) {
+						}
+						displayBottomMsg("Loading release notes...");
+						if(showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", true))
+							updatingSelf = true;
+							updateSelf();
+							updatingSelf = false;
+							} else {
 						if(dspfirmfound) {
 						}
 					}
