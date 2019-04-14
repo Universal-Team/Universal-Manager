@@ -28,6 +28,7 @@ static touchPosition touch;
 
 bool dspfirmfound = false;
 bool updatingSelf = false;
+bool showSettings = false;
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -127,6 +128,42 @@ bool updateAvailable[] = {
 	false,
 	false,
 	//false,
+};
+
+struct {
+	int x;
+	int y;
+} buttons_settings[] = {
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	{ 220, 128},
+	{ 129, 168},
+	{ 220, 168},
+};
+
+const char *button_titles_settings[] = {
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",
+	"Nightly",	
+	"Release",
+};
+
+const int title_spacing_settings[] = {
+	6,
+	10,
+	6,
+	10,
+	6,
+	10,
+	6,
+	10,
 };
 
 void screenoff()
@@ -286,6 +323,7 @@ int main()
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
 			    //pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
 				pp2d_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
+				pp2d_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
 	
 	Result res = 0;
 	//graphicsInit();
@@ -353,27 +391,26 @@ int main()
 		pp2d_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Top Rectangle.
 		pp2d_draw_texture(BorderBottom, 0, 0); 
 		//pp2d_draw_rectangle(0, 221, 320, 19, BLUE); // Draw Bottom Rectangle.
-		pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
-		pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
-		pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
+		if(!showSettings) {
+			pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
+			pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
+			pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
+		}
+		pp2d_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 
-		// Draw buttons
-		for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
-			if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
+		if(showSettings) {
+			// Draw buttons
+			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
-					pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+					pp2d_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
 				} else {
 					// Button is not highlighted. Darken the texture.
 					if (buttonShading) {
-						pp2d_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
+						pp2d_draw_texture_blend(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
 					} else {
-						pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+						pp2d_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
 					}
-				}
-				// Draw a dot if an update is availible
-				if(updateAvailable[i]) {
-					pp2d_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
 				}
 
 				// Determine the text height.
@@ -381,16 +418,47 @@ int main()
 				const int h = 30;
 
 				// Draw the title.
-				int y = buttons2[i].y + ((40 - h) / 2);
-				int x_from_width = buttons2[i].x + title_spacing2[i];
-				pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
+				int y = buttons_settings[i].y + ((40 - h) / 2);
+				int x_from_width = buttons_settings[i].x + title_spacing_settings[i];
+				pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles_settings[i]);
+			}
+			pp2d_end_draw();
+		} else {
+			// Draw buttons
+			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
+				if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
+					if (menuSelection == i) {
+						// Button is highlighted.
+						pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+					} else {
+						// Button is not highlighted. Darken the texture.
+						if (buttonShading) {
+							pp2d_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
+						} else {
+							pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+						}
+					}
+					// Draw a dot if an update is availible
+					if(updateAvailable[i]) {
+						pp2d_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
+					}
 
-				if(!(i%2)) {
-					pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
+					// Determine the text height.
+					// NOTE: Button texture size is 132x34.
+					const int h = 30;
+
+					// Draw the title.
+					int y = buttons2[i].y + ((40 - h) / 2);
+					int x_from_width = buttons2[i].x + title_spacing2[i];
+					pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
+
+					if(!(i%2)) {
+						pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
+					}
 				}
 			}
-		}
-		pp2d_end_draw();
+			pp2d_end_draw();
+	}
 		
 		if (fadein == true) {
 			fadealpha -= 15;
@@ -448,11 +516,15 @@ int main()
 		}
 
 		if (hDown & KEY_TOUCH) {
-			for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
-				if(updateAvailable[i]){
-					if (touch.py >= (buttons2[i].y-6) && touch.py <= (buttons2[i].y+10) && touch.px >= (buttons2[i].x+75) && touch.px <= (buttons2[i].x+91)) {
-						menuSelection = i;
-						showMessage = true;
+			if(touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
+				showSettings = !showSettings;
+			} else {
+				for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
+					if(updateAvailable[i]){
+						if (touch.py >= (buttons2[i].y-6) && touch.py <= (buttons2[i].y+10) && touch.px >= (buttons2[i].x+75) && touch.px <= (buttons2[i].x+91)) {
+							menuSelection = i;
+							showMessage = true;
+						}
 					}
 				}
 			}
@@ -528,149 +600,155 @@ int main()
 		}
 
 		if (setOption) {
-			switch (menuSelection) {
-				case 0:	// TWiLight release
-					if(checkWifiStatus()){ 
-						if(dspfirmfound) {
+			if(showSettings) {
+				switch (menuSelection) {
+					
+				}
+			} else {
+				switch (menuSelection) {
+					case 0:	// TWiLight release
+						if(checkWifiStatus()){ 
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("RocketRobz/TWiLightMenu", true))
+							updateTWiLight(false);
+						} else {
+							if(dspfirmfound) {
+							}
 						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("RocketRobz/TWiLightMenu", true))
-						updateTWiLight(false);
-					} else {
-						if(dspfirmfound) {
+						break;
+					case 1:	// TWiLight nightly
+						if(checkWifiStatus()){ 
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading commit...");
+							if(showCommitInfo("RocketRobz/TWiLightMenu", true))
+							updateTWiLight(true);
+						} else {
+							if(dspfirmfound) {
+							}
 						}
-					}
-					break;
-				case 1:	// TWiLight nightly
-					if(checkWifiStatus()){ 
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading commit...");
-						if(showCommitInfo("RocketRobz/TWiLightMenu", true))
-						updateTWiLight(true);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				case 2:	// nds-bootstrap release
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("Ahezard/NDS-Bootstrap", true))
-						updateBootstrap(false);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				case 3:	// nds-bootstrap nightly
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading commit...");
-						if(showCommitInfo("ahezard/NDS-Bootstrap", true))
-						updateBootstrap(true);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				case 4:	// PKSM Release
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("FlagBrew/PKSM", true))
-						updatePKSM(false);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				case 5:	// PKSM nightly
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading commit...");
-						if(showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
-						updatePKSM(true);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				case 6:	// Luma Release
-					 if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("AuroraWright/Luma3DS", true))
-						updateLuma(false);
-					break;
-				case 7:	// LumaNightly
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("hax0kartik/luma-hourlies", true))
-						updateLuma(true);
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-					case 8:	// Boxarts
-					//if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						downloadBoxart();
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-					case 9:	// usrcheat.dat
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						updateCheats();
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-					case 10:	// Checkpoint Release
-					if(checkWifiStatus()){
-						if(dspfirmfound) {
-						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("FlagBrew/Checkpoint", true))
-						updateCheckpoint();
-					} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-					case 12: //Updater Update
+						break;
+					case 2:	// nds-bootstrap release
 						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("Ahezard/NDS-Bootstrap", true))
+							updateBootstrap(false);
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+					case 3:	// nds-bootstrap nightly
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading commit...");
+							if(showCommitInfo("ahezard/NDS-Bootstrap", true))
+							updateBootstrap(true);
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+					case 4:	// PKSM Release
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("FlagBrew/PKSM", true))
+							updatePKSM(false);
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+					case 5:	// PKSM nightly
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading commit...");
+							if(showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
+							updatePKSM(true);
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+					case 6:	// Luma Release
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("AuroraWright/Luma3DS", true))
+							updateLuma(false);
+						break;
+					case 7:	// LumaNightly
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("hax0kartik/luma-hourlies", true))
+							updateLuma(true);
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 8:	// Boxarts
+						//if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							downloadBoxart();
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 9:	// usrcheat.dat
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							updateCheats();
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 10:	// Checkpoint Release
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("FlagBrew/Checkpoint", true))
+							updateCheckpoint();
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 12: //Updater Update
+							if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayBottomMsg("Loading release notes...");
+							if(showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", true))
+								updatingSelf = true;
+								updateSelf();
+								updatingSelf = false;
+								} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+					default:
 						if(dspfirmfound) {
 						}
-						displayBottomMsg("Loading release notes...");
-						if(showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", true))
-							updatingSelf = true;
-							updateSelf();
-							updatingSelf = false;
-							} else {
-						if(dspfirmfound) {
-						}
-					}
-					break;
-				default:
-					if(dspfirmfound) {
-					}
-					break;
+						break;
+				}
 			}
 			setOption = false;
 		}
