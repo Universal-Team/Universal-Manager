@@ -65,6 +65,7 @@ size_t dot = 5;
 size_t pageframe = 6;
 size_t BorderTop = 7;
 size_t BorderBottom = 8;
+size_t settingsIcon = 9;
 void graphicsInit(void) {
 }
 	
