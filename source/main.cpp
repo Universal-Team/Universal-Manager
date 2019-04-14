@@ -19,6 +19,7 @@
 #include "inifile.h"
 #include "datetime.h"
 #include "Universal-Settings.hpp"
+#include "Textures.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -51,19 +52,19 @@ struct {
 };
 
 size_t button_tex2[] = {
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	redbuttontex,
-	classicbuttontex,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
+	button,
 	//greenbuttontex,
 };
 
@@ -174,16 +175,116 @@ int main()
 	mkdir("sdmc:/Universal-Updater/Music", 0777); //MP3 Path.
 
 	pp2d_init();
-	
+
+	LoadUniversalSettings();
+
 	pp2d_set_screen_color(GFX_TOP, TRANSPARENT);
 	pp2d_set_3D(1);
 	
-				pp2d_load_texture_png(classicbuttontex, "romfs:/graphics/Button-Colors/Classic.png");
-				pp2d_load_texture_png(redbuttontex, "romfs:/graphics/Button-Colors/Red.png");
+				if (settings.universal.bordertop == 1) {									// Load the current Top Border from the Settings.ini!
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Black.png");
+			} else if (settings.universal.bordertop == 2) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkblue.png");
+			} else if (settings.universal.bordertop == 3) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkgreen.png");
+			} else if (settings.universal.bordertop == 4) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkred.png");
+			} else if (settings.universal.bordertop == 5) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Grey.png");
+			} else if (settings.universal.bordertop == 6) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/LightBlue.png");
+			} else if (settings.universal.bordertop == 7) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightgreen.png");
+			} else if (settings.universal.bordertop == 8) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Orange.png");
+			} else if (settings.universal.bordertop == 9) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Red.png");
+			} else if (settings.universal.bordertop == 10) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/White.png");
+			} else if (settings.universal.bordertop == 11) {
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Yellow.png");
+			} else if (settings.universal.bordertop == 12) {
+				pp2d_load_texture_png(BorderTop, "sdmc:/Universal-Updater/graphics/BorderTop.png"); // For SD
+			}
+
+
+		if (settings.universal.borderbottom == 1) {									// Load the current Bottom Border from the Settings.ini!
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Black.png");
+			} else if (settings.universal.borderbottom == 2) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkblue.png");
+			} else if (settings.universal.borderbottom == 3) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkgreen.png");
+			} else if (settings.universal.borderbottom == 4) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkred.png");
+			} else if (settings.universal.borderbottom == 5) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Grey.png");
+			} else if (settings.universal.borderbottom == 6) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/..Lightblue.png");
+			} else if (settings.universal.borderbottom == 7) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Lightgreen.png");
+			} else if (settings.universal.borderbottom == 8) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Orange.png");
+			} else if (settings.universal.borderbottom == 9) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Red.png");
+			} else if (settings.universal.borderbottom == 10) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/White.png");
+			} else if (settings.universal.borderbottom == 11) {
+				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Yellow.png");
+			} else if (settings.universal.borderbottom == 12) {
+				pp2d_load_texture_png(BorderBottom, "sdmc:/Universal-Updater/graphics/BorderBottom.png"); // For SD
+			}
+
+			if (settings.universal.dot == 1) {									// Load the current Dot Graphic from the Settings.ini!
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Black.png");
+			} else if (settings.universal.dot == 2) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkblue.png");
+			} else if (settings.universal.dot == 3) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkgreen.png");
+			} else if (settings.universal.dot == 4) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkred.png");
+			} else if (settings.universal.dot == 5) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Grey.png");
+			} else if (settings.universal.dot == 6) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Lightblue.png");
+			} else if (settings.universal.dot == 7) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Lightgreen.png");
+			} else if (settings.universal.dot == 8) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Orange.png");
+			} else if (settings.universal.dot == 9) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Red.png");
+			} else if (settings.universal.dot == 10) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/White.png");
+			} else if (settings.universal.dot == 11) {
+				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Yellow.png");
+			} else if (settings.universal.dot == 12) {
+				pp2d_load_texture_png(dot, "sdmc:/Universal-Updater/graphics/Dot.png"); // For SD
+			}
+
+			if (settings.universal.button == 1) {									// Load the current Button Graphic from the Settings.ini!
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Blue.png");
+			} else if (settings.universal.button == 2) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Classic.png");
+			} else if (settings.universal.button == 3) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Green.png");
+			} else if (settings.universal.button == 4) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Orange.png");
+			} else if (settings.universal.button == 5) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Pink.png");
+			} else if (settings.universal.button == 6) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Red.png");
+			} else if (settings.universal.button == 7) {
+				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Yellow.png");
+			} else if (settings.universal.button == 8) {
+				pp2d_load_texture_png(button, "sdmc:/Universal-Updater/graphics/Button.png"); // For SD
+			}
+
+
+				//pp2d_load_texture_png(classicbuttontex, "romfs:/graphics/Button-Colors/Classic.png");
+				//pp2d_load_texture_png(redbuttontex, "romfs:/graphics/Button-Colors/Red.png");
                 pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
 			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
 			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
-			    pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
+			    //pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
 				pp2d_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	
 	Result res = 0;
@@ -209,7 +310,7 @@ int main()
 			}	
 		}
 	}
-
+	
 	
 
 
@@ -243,14 +344,15 @@ int main()
 			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 		pp2d_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
-		pp2d_draw_rectangle(0, 0, 400, 19, BLUE); // Draw Top Rectangle.
-		pp2d_draw_rectangle(0, 221, 400, 19, BLUE); // Draw Bottom Rectangle.
+		pp2d_draw_rectangle(0, 0, 400, 240, WHITE); // Draw Top Rectangle.
+		pp2d_draw_texture(BorderTop, 0, 0);
+		//pp2d_draw_rectangle(0, 221, 400, 19, BLUE); // Draw Bottom Rectangle.
 		pp2d_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
 		pp2d_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
-		pp2d_draw_texture(subbgtex, 0, 0); 
-		pp2d_draw_rectangle(0, 0, 320, 19, BLUE); // Draw Top Rectangle.
-		pp2d_draw_rectangle(0, 221, 320, 19, BLUE); // Draw Bottom Rectangle.
+		pp2d_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Top Rectangle.
+		pp2d_draw_texture(BorderBottom, 0, 0); 
+		//pp2d_draw_rectangle(0, 221, 320, 19, BLUE); // Draw Bottom Rectangle.
 		pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
 		pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
 		pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
@@ -574,11 +676,11 @@ int main()
 		}
 
 	}
+		SaveUniversalSettings();
 
 	if (dspfirmfound) {
 		ndspExit();
 	}
-
 	hidExit();
 	srvExit();
 	romfsExit();

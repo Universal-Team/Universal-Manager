@@ -92,7 +92,7 @@ void SDLH_Play(void)
                 song = nullptr;
             }
             {
-                currentSong = randomNumbers() % songs.size();
+                //currentSong = randomNumbers() % songs.size();
             }
             song = Mix_LoadMUS(songs[currentSong].c_str());
             Mix_PlayMusic(song, 1);

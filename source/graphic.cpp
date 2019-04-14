@@ -2,6 +2,7 @@
 #include "graphic.h"
 #include "Colors.hpp"
 #include "Textures.hpp"
+#include "pp2d/pp2d.h"
 
 void pp2d_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)
 {
@@ -59,16 +60,11 @@ void pp2d_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 size_t loadingbgtex = 1;
 size_t topbgtex = 2;
 size_t subbgtex = 3;
-size_t greenbuttontex = 4;
-size_t bluebuttontex = 5;
-size_t redbuttontex = 6;
-size_t orangebuttontex = 7;
-size_t pinkbuttontex = 8;
-size_t yellowbuttontex = 9;
-size_t classicbuttontex = 10;
-size_t dot = 11;
-size_t pageframe = 12;
-size_t BorderTop = 13;
-size_t BorderBottom = 14;
+size_t button = 4;
+size_t dot = 5;
+size_t pageframe = 6;
+size_t BorderTop = 7;
+size_t BorderBottom = 8;
 void graphicsInit(void) {
 }
+	
