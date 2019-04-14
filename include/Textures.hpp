@@ -13,3 +13,5 @@ extern size_t yellowbuttontex;
 extern size_t classicbuttontex;
 extern size_t dot;
 extern size_t pageframe;
+extern size_t BorderTop;
+extern size_t BorderBottom;

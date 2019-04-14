@@ -14,13 +14,19 @@ static CIniFile settingsini( "sdmc:/Universal-Updater/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
-	settings.universal.theme = settingsini.GetInt("UNIVERSAL", "THEME", 1);
+	settings.universal.bordertop = settingsini.GetInt("UI", "BORDERTOP", 1); // Borders = 11
+	settings.universal.borderbottom = settingsini.GetInt("UI", "BORDERBOTTOM", 1); // Borders = 11
+	settings.universal.dot = settingsini.GetInt("UI", "DOT", 1); // Dots = 11
+	settings.universal.button = settingsini.GetInt("UI", "BUTTON", 1); //Buttons : 7
 }
 
 /**
  * Save settings.
  */
 void SaveUniversalSettings(void) {
-	settingsini.SetInt("UNIVERSAL", "THEME", settings.universal.theme);
+	settingsini.SetInt("UI", "BORDERTOP", settings.universal.bordertop);
+	settingsini.SetInt("UI", "BORDERBOTTOM", settings.universal.borderbottom);
+	settingsini.SetInt("UI", "DOT", settings.universal.dot);
+	settingsini.SetInt("UI", "BUTTON", settings.universal.button);
 	settingsini.SaveIniFile("sdmc:/Universal-Updater/Settings.ini");
 }

@@ -7,7 +7,10 @@
 
 typedef struct _Settings_t {
 	struct {
-		int theme;		// 0 = None (16:10), 1 = Left/Right black bars (4:3)
+		int bordertop;		// 
+		int borderbottom;	//
+		int dot;			//
+		int button;			//
 	} universal;
 } Settings_t;
 extern Settings_t settings;

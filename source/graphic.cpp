@@ -68,5 +68,7 @@ size_t yellowbuttontex = 9;
 size_t classicbuttontex = 10;
 size_t dot = 11;
 size_t pageframe = 12;
+size_t BorderTop = 13;
+size_t BorderBottom = 14;
 void graphicsInit(void) {
 }
