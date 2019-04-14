@@ -19,6 +19,7 @@
 #include "inifile.h"
 #include "datetime.h"
 #include "Universal-Settings.hpp"
+#include "Struct.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -29,89 +30,7 @@ bool dspfirmfound = false;
 bool updatingSelf = false;
 
 // 3D offsets. (0 == Left, 1 == Right)
-Offset3D offset3D[2] = {0.0f, 0.0f};
-
-struct {
-	int x;
-	int y;
-} buttons2[] = {
-	{ 129, 48},
-	{ 220, 48},
-	{ 129, 88},
-	{ 220, 88},
-	{ 129, 128},
-	{ 220, 128},
-	{ 129, 168},
-	{ 220, 168},
-	{ 129, 48},
-	{ 220, 48},
-	{ 129, 88},
-	{ 220, 88},
-	{ 129, 128},
-	//{ 220, 128},
-};
-
-size_t button_tex2[] = {
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	classicbuttontex,
-	redbuttontex,
-	classicbuttontex,
-	//greenbuttontex,
-};
-
-
-const char *button_titles2[] = {
-	"Release",
-	"Nightly",
-	"Release",
-	"Nightly",
-	"Release",
-	"Nightly",	
-	"Release",
-	"Nightly",
-	"Boxart",
-	"Cheats",
-	"Release",
-	"-",
-	"Release",
-	//"Cheats",
-};
-
-const int title_spacing[] = {
-	6,
-	10,
-	6,
-	10,
-	6,
-	10,
-	6,
-	10,
-	10,
-	10,
-	6,
-	6,
-	10,
-	//10,
-};
-
-const char *row_titles2[] = {
-	"TWL Menu++",
-	"Bootstrap",
-	"PKSM",
-	"Luma",
-	"Downloads",
-	"Checkpoint",
-	"Updater",
-};	
+Offset3D offset3D[2] = {0.0f, 0.0f};	
 
 bool updateAvailable[] = {
 	false,
@@ -278,7 +197,7 @@ int main()
 
 				// Draw the title.
 				int y = buttons2[i].y + ((40 - h) / 2);
-				int x_from_width = buttons2[i].x + title_spacing[i];
+				int x_from_width = buttons2[i].x + title_spacing2[i];
 				pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
 
 				if(!(i%2)) {
