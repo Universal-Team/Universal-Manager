@@ -19,7 +19,6 @@
 #include "inifile.h"
 #include "datetime.h"
 #include "Universal-Settings.hpp"
-#include "Struct.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -31,6 +30,86 @@ bool updatingSelf = false;
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
+struct {
+	int x;
+	int y;
+} buttons2[] = {
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	{ 220, 128},
+	{ 129, 168},
+	{ 220, 168},
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	//{ 220, 128},
+};
+
+size_t button_tex2[] = {
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	classicbuttontex,
+	redbuttontex,
+	classicbuttontex,
+	//greenbuttontex,
+};
+
+const char *button_titles2[] = {
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",
+	"Release",
+	"Nightly",	
+	"Release",
+	"Nightly",
+	"Boxart",
+	"Cheats",
+	"Release",
+	"     -",
+	"Release",
+	//"Cheats",
+};
+
+const int title_spacing2[] = {
+	6,
+	10,
+	6,
+	10,
+	6,
+	10,
+	6,
+	10,
+	10,
+	10,
+	6,
+	6,
+	10,
+	//10,
+};
+
+const char *row_titles2[] = {
+	"TWL Menu++",
+	"Bootstrap",
+	"PKSM",
+	"Luma",
+	"Downloads",
+	"Checkpoint",
+	"Updater",
+};	
 
 bool updateAvailable[] = {
 	false,
@@ -69,7 +148,6 @@ void displayBottomMsg(const char* text) {
 	pp2d_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
 	pp2d_end_draw();
 }
-
 
 // Version numbers.
 
@@ -164,13 +242,18 @@ int main()
 			pp2d_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		pp2d_draw_on(GFX_TOP, GFX_LEFT);
-		pp2d_draw_text(140, 8, 0.9f, 0.9f, YELLOW, getTime().c_str());
-		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
-		pp2d_draw_texture(subbgtex, 0, 0);
-		pp2d_draw_text(280, 5, 0.50, 0.50, YELLOW, "1");
-		pp2d_draw_text(300, 5, 0.50, 0.50, YELLOW, "2");
-		pp2d_draw_texture(pageframe, 276+(menuPage*20), 5);
+		pp2d_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
+		pp2d_draw_rectangle(0, 0, 400, 19, BLUE); // Draw Top Rectangle.
+		pp2d_draw_rectangle(0, 221, 400, 19, BLUE); // Draw Bottom Rectangle.
+		pp2d_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
+		pp2d_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
+		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+		pp2d_draw_texture(subbgtex, 0, 0); 
+		pp2d_draw_rectangle(0, 0, 320, 19, BLUE); // Draw Top Rectangle.
+		pp2d_draw_rectangle(0, 221, 320, 19, BLUE); // Draw Bottom Rectangle.
+		pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
+		pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
+		pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 
 		// Draw buttons
 		for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
@@ -193,7 +276,7 @@ int main()
 
 				// Determine the text height.
 				// NOTE: Button texture size is 132x34.
-				const int h = 32;
+				const int h = 30;
 
 				// Draw the title.
 				int y = buttons2[i].y + ((40 - h) / 2);
