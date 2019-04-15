@@ -8,7 +8,7 @@
 #include "inifile.h"
 #include "graphic.h"
 #include "fileBrowse.h"
-#include "pp2d/pp2d.h"
+#include "voltlib/volt.h"
 
 extern "C" {
 	#include "cia.h"
@@ -583,7 +583,7 @@ void setMessageText(const std::string &text)
 	_topText.clear();
 	for(auto word : words)
 	{
-		int width = pp2d_get_text_width((temp + " " + word).c_str(), 0.5f, 0.5f);
+		int width = volt_get_text_width((temp + " " + word).c_str(), 0.5f, 0.5f);
 		if(word.find('\n') != -1u)
 		{
 			word.erase(std::remove(word.begin(), word.end(), '\n'), word.end());
@@ -607,15 +607,15 @@ void setMessageText(const std::string &text)
 
 void drawMessageText(int position, bool showExitText)
 {
-	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
-	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
+	volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+	volt_draw_texture(loadingbgtex, 0, 0);
+	volt_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
-			pp2d_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
+			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
 	}
 	if(showExitText)
-		pp2d_draw_text(24, 200, 0.5f, 0.5f, WHITE, "B: Cancel   A: Update");
-	pp2d_end_draw();
+		volt_draw_text(24, 200, 0.5f, 0.5f, WHITE, "B: Cancel   A: Update");
+	volt_end_draw();
 }
 
 std::string latestMenuRelease(void) {

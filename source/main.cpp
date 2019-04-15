@@ -10,7 +10,7 @@
 #include <time.h>
 
 #include "graphic.h"
-#include "pp2d/pp2d.h"
+#include "voltlib/volt.h"
 #include "music.hpp"
 #include "thread.hpp"
 #include "dumpdsp.h"
@@ -181,10 +181,10 @@ void screenon()
 }
 
 void displayBottomMsg(const char* text) {
-	pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
-	pp2d_draw_texture(loadingbgtex, 0, 0);
-	pp2d_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
-	pp2d_end_draw();
+	volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+	volt_draw_texture(loadingbgtex, 0, 0);
+	volt_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
+	volt_end_draw();
 }
 
 // Version numbers.
@@ -211,142 +211,139 @@ int main()
 	mkdir("sdmc:/Universal-Updater", 0777); //main Path.
 	mkdir("sdmc:/Universal-Updater/Music", 0777); //MP3 Path.
 
-	pp2d_init();
+	volt_init();
 
 	LoadUniversalSettings();
 
-	pp2d_set_screen_color(GFX_TOP, TRANSPARENT);
-	pp2d_set_3D(1);
+	volt_set_screen_color(GFX_TOP, TRANSPARENT);
+	volt_set_3D(1);
 	
 
 				if (settings.universal.bordertop == 1) {									// Load the current Top Border from the Settings.ini!
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Black.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Black.png");
 			} else if (settings.universal.bordertop == 2) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkblue.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkblue.png");
 			} else if (settings.universal.bordertop == 3) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkgreen.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkgreen.png");
 			} else if (settings.universal.bordertop == 4) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkred.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkred.png");
 			} else if (settings.universal.bordertop == 5) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Grey.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Grey.png");
 			} else if (settings.universal.bordertop == 6) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightblue.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightblue.png");
 			} else if (settings.universal.bordertop == 7) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightgreen.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightgreen.png");
 			} else if (settings.universal.bordertop == 8) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Orange.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Orange.png");
 			} else if (settings.universal.bordertop == 9) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Red.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Red.png");
 			} else if (settings.universal.bordertop == 10) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/White.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/White.png");
 			} else if (settings.universal.bordertop == 11) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Yellow.png");
+				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Yellow.png");
 			} else if (settings.universal.bordertop == 12) {
-				pp2d_load_texture_png(BorderTop, "sdmc:/Universal-Updater/graphics/BorderTop.png"); // For SD
+				volt_load_texture_png(BorderTop, "sdmc:/Universal-Updater/graphics/BorderTop.png"); // For SD
 			}
 
 
 		if (settings.universal.borderbottom == 1) {									// Load the current Bottom Border from the Settings.ini!
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Black.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Black.png");
 			} else if (settings.universal.borderbottom == 2) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkblue.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkblue.png");
 			} else if (settings.universal.borderbottom == 3) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkgreen.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkgreen.png");
 			} else if (settings.universal.borderbottom == 4) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkred.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkred.png");
 			} else if (settings.universal.borderbottom == 5) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Grey.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Grey.png");
 			} else if (settings.universal.borderbottom == 6) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/..Lightblue.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/..Lightblue.png");
 			} else if (settings.universal.borderbottom == 7) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Lightgreen.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Lightgreen.png");
 			} else if (settings.universal.borderbottom == 8) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Orange.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Orange.png");
 			} else if (settings.universal.borderbottom == 9) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Red.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Red.png");
 			} else if (settings.universal.borderbottom == 10) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/White.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/White.png");
 			} else if (settings.universal.borderbottom == 11) {
-				pp2d_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Yellow.png");
+				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Yellow.png");
 			} else if (settings.universal.borderbottom == 12) {
-				pp2d_load_texture_png(BorderBottom, "sdmc:/Universal-Updater/graphics/BorderBottom.png"); // For SD
+				volt_load_texture_png(BorderBottom, "sdmc:/Universal-Updater/graphics/BorderBottom.png"); // For SD
 			}
 
 			if (settings.universal.dot == 1) {									// Load the current Dot Graphic from the Settings.ini!
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Black.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Black.png");
 			} else if (settings.universal.dot == 2) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkblue.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkblue.png");
 			} else if (settings.universal.dot == 3) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkgreen.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkgreen.png");
 			} else if (settings.universal.dot == 4) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Darkred.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkred.png");
 			} else if (settings.universal.dot == 5) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Grey.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Grey.png");
 			} else if (settings.universal.dot == 6) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Lightblue.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Lightblue.png");
 			} else if (settings.universal.dot == 7) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Lightgreen.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Lightgreen.png");
 			} else if (settings.universal.dot == 8) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Orange.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Orange.png");
 			} else if (settings.universal.dot == 9) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Red.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Red.png");
 			} else if (settings.universal.dot == 10) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/White.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/White.png");
 			} else if (settings.universal.dot == 11) {
-				pp2d_load_texture_png(dot, "romfs:/graphics/Dots/Yellow.png");
+				volt_load_texture_png(dot, "romfs:/graphics/Dots/Yellow.png");
 			} else if (settings.universal.dot == 12) {
-				pp2d_load_texture_png(dot, "sdmc:/Universal-Updater/graphics/Dot.png"); // For SD
+				volt_load_texture_png(dot, "sdmc:/Universal-Updater/graphics/Dot.png"); // For SD
 			}
 
 			if (settings.universal.button == 1) {									// Load the current Button Graphic from the Settings.ini!
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Blue.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Blue.png");
 			} else if (settings.universal.button == 2) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Classic.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Classic.png");
 			} else if (settings.universal.button == 3) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Green.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Green.png");
 			} else if (settings.universal.button == 4) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Orange.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Orange.png");
 			} else if (settings.universal.button == 5) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Pink.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Pink.png");
 			} else if (settings.universal.button == 6) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Red.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Red.png");
 			} else if (settings.universal.button == 7) {
-				pp2d_load_texture_png(button, "romfs:/graphics/Buttons/Yellow.png");
+				volt_load_texture_png(button, "romfs:/graphics/Buttons/Yellow.png");
 			} else if (settings.universal.button == 8) {
-				pp2d_load_texture_png(button, "sdmc:/Universal-Updater/graphics/Button.png"); // For SD
+				volt_load_texture_png(button, "sdmc:/Universal-Updater/graphics/Button.png"); // For SD
 			}
 
 
-				//pp2d_load_texture_png(classicbuttontex, "romfs:/graphics/Button-Colors/Classic.png");
-				//pp2d_load_texture_png(redbuttontex, "romfs:/graphics/Button-Colors/Red.png");
-                pp2d_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
-			    pp2d_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
-			    pp2d_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
-			    //pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
-				pp2d_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
-				pp2d_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
-				pp2d_load_texture_png(settingstop, "romfs:/graphics/standard-Graphics/Settings_Top.png");
+                volt_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
+			    volt_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
+			    volt_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
+				volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
+				volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
+				volt_load_texture_png(settingstop, "romfs:/graphics/standard-Graphics/Settings_Top.png");
 	
-	Result res = 0;
+	//Result res = 0;
 	//graphicsInit();
 		
  	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 		ndspInit();
 		dspfirmfound = true;
 	}else{
-		pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
-		pp2d_draw_text(12, 16, 0.5f, 0.5f, WHITE, "Dumping DSP firm...");
-		pp2d_end_draw();
+		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+		volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "Dumping DSP firm...");
+		volt_end_draw();
 		dumpDsp();
 		if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 			ndspInit();
 			dspfirmfound = true;
 		} else {
 			for (int i = 0; i < 90; i++) {
-				pp2d_begin_draw(GFX_BOTTOM, GFX_LEFT);
-				pp2d_draw_text(12, 16, 0.5f, 0.5f, WHITE, "DSP firm dumping failed.\n"
+				volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+				volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "DSP firm dumping failed.\n"
 						"Running without sound.");
-				pp2d_end_draw();
+				volt_end_draw();
 			}	
 		}
 	}
@@ -378,41 +375,41 @@ int main()
 		hidTouchRead(&touch);
 
 		for (int topfb = GFX_LEFT; topfb <= GFX_RIGHT; topfb++) {
-			if (topfb == GFX_LEFT) pp2d_begin_draw(GFX_TOP, (gfx3dSide_t)topfb);
-			else pp2d_draw_on(GFX_TOP, (gfx3dSide_t)topfb);
-			pp2d_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
-			if (fadealpha > 0) pp2d_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
+			if (topfb == GFX_LEFT) volt_begin_draw(GFX_TOP, (gfx3dSide_t)topfb);
+			else volt_draw_on(GFX_TOP, (gfx3dSide_t)topfb);
+			volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
+			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		pp2d_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
-		pp2d_draw_rectangle(0, 0, 400, 240, WHITE); // Draw Top Rectangle.
-		pp2d_draw_texture(BorderTop, 0, 0);
-		pp2d_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
-		pp2d_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
+		volt_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
+		volt_draw_rectangle(0, 0, 400, 240, WHITE); // Draw Top Rectangle.
+		volt_draw_texture(BorderTop, 0, 0);
+		volt_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
+		volt_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
 		if(!showSettings) {
-			pp2d_draw_texture(settingstop, 0, 0);
+			volt_draw_texture(settingstop, 0, 0);
 		}
-		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
-		pp2d_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Bottom Rectangle.
-		pp2d_draw_texture(BorderBottom, 0, 0); 
+		volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+		volt_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Bottom Rectangle.
+		volt_draw_texture(BorderBottom, 0, 0); 
 		if(!showSettings) {
-			pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
-			pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
-			pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
+			volt_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
+			volt_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
+			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		}
-		pp2d_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
+		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 
 		if(showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
-					pp2d_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
+					volt_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
 				} else {
 					// Button is not highlighted. Darken the texture.
 					if (buttonShading) {
-						pp2d_draw_texture_blend(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
+						volt_draw_texture_blend(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
 					} else {
-						pp2d_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
+						volt_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
 					}
 				}
 
@@ -423,27 +420,27 @@ int main()
 				// Draw the title.
 				int y = buttons_settings[i].y + ((40 - h) / 2);
 				int x_from_width = buttons_settings[i].x + title_spacing_settings[i];
-				pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles_settings[i]);
+				volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles_settings[i]);
 			}
-			pp2d_end_draw();
+			volt_end_draw();
 		} else {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
 				if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
 					if (menuSelection == i) {
 						// Button is highlighted.
-						pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+						volt_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
 					} else {
 						// Button is not highlighted. Darken the texture.
 						if (buttonShading) {
-							pp2d_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
+							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
 						} else {
-							pp2d_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+							volt_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
 						}
 					}
 					// Draw a dot if an update is availible
 					if(updateAvailable[i]) {
-						pp2d_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
+						volt_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
 					}
 
 					// Determine the text height.
@@ -453,14 +450,14 @@ int main()
 					// Draw the title.
 					int y = buttons2[i].y + ((40 - h) / 2);
 					int x_from_width = buttons2[i].x + title_spacing2[i];
-					pp2d_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
+					volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
 
 					if(!(i%2)) {
-						pp2d_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
+						volt_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
 					}
 				}
 			}
-			pp2d_end_draw();
+			volt_end_draw();
 	}
 		
 		if (fadein == true) {

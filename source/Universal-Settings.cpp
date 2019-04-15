@@ -30,3 +30,4 @@ void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "BUTTON", settings.universal.button);
 	settingsini.SaveIniFile("sdmc:/Universal-Updater/Settings.ini");
 }
+
