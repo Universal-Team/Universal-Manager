@@ -20,6 +20,7 @@
 #include "datetime.h"
 #include "Universal-Settings.hpp"
 #include "Textures.hpp"
+#include "Themes.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -46,9 +47,9 @@ struct {
 	{ 220, 168},
 	{ 129, 48},
 	{ 220, 48},
-	{ 129, 88},
-	{ 220, 88},
-	{ 129, 128},
+	{ 129, 118},
+	{ 220, 118},
+	{ 129, 168},
 	//{ 220, 128},
 };
 
@@ -181,9 +182,9 @@ void screenon()
 }
 
 void displayBottomMsg(const char* text) {
-	volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_texture(loadingbgtex, 0, 0);
-	volt_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	//volt_draw_texture(loadingbgtex, 0, 0);
+	volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
 	volt_end_draw();
 }
 
@@ -213,119 +214,21 @@ int main()
 
 	volt_init();
 
-	LoadUniversalSettings();
-
-	volt_set_screen_color(GFX_TOP, TRANSPARENT);
 	volt_set_3D(1);
-	
 
-				if (settings.universal.bordertop == 1) {									// Load the current Top Border from the Settings.ini!
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Black.png");
-			} else if (settings.universal.bordertop == 2) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkblue.png");
-			} else if (settings.universal.bordertop == 3) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkgreen.png");
-			} else if (settings.universal.bordertop == 4) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Darkred.png");
-			} else if (settings.universal.bordertop == 5) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Grey.png");
-			} else if (settings.universal.bordertop == 6) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightblue.png");
-			} else if (settings.universal.bordertop == 7) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightgreen.png");
-			} else if (settings.universal.bordertop == 8) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Orange.png");
-			} else if (settings.universal.bordertop == 9) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Red.png");
-			} else if (settings.universal.bordertop == 10) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/White.png");
-			} else if (settings.universal.bordertop == 11) {
-				volt_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Yellow.png");
-			} else if (settings.universal.bordertop == 12) {
-				volt_load_texture_png(BorderTop, "sdmc:/Universal-Updater/graphics/BorderTop.png"); // For SD
-			}
+				volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 
+				volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 
-		if (settings.universal.borderbottom == 1) {									// Load the current Bottom Border from the Settings.ini!
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Black.png");
-			} else if (settings.universal.borderbottom == 2) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkblue.png");
-			} else if (settings.universal.borderbottom == 3) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkgreen.png");
-			} else if (settings.universal.borderbottom == 4) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Darkred.png");
-			} else if (settings.universal.borderbottom == 5) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Grey.png");
-			} else if (settings.universal.borderbottom == 6) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/..Lightblue.png");
-			} else if (settings.universal.borderbottom == 7) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Lightgreen.png");
-			} else if (settings.universal.borderbottom == 8) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Orange.png");
-			} else if (settings.universal.borderbottom == 9) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Red.png");
-			} else if (settings.universal.borderbottom == 10) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/White.png");
-			} else if (settings.universal.borderbottom == 11) {
-				volt_load_texture_png(BorderBottom, "romfs:/graphics/Border/Bottom/Yellow.png");
-			} else if (settings.universal.borderbottom == 12) {
-				volt_load_texture_png(BorderBottom, "sdmc:/Universal-Updater/graphics/BorderBottom.png"); // For SD
-			}
+                //volt_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png"); Not used anymore. Maybe Later again?
 
-			if (settings.universal.dot == 1) {									// Load the current Dot Graphic from the Settings.ini!
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Black.png");
-			} else if (settings.universal.dot == 2) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkblue.png");
-			} else if (settings.universal.dot == 3) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkgreen.png");
-			} else if (settings.universal.dot == 4) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Darkred.png");
-			} else if (settings.universal.dot == 5) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Grey.png");
-			} else if (settings.universal.dot == 6) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Lightblue.png");
-			} else if (settings.universal.dot == 7) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Lightgreen.png");
-			} else if (settings.universal.dot == 8) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Orange.png");
-			} else if (settings.universal.dot == 9) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Red.png");
-			} else if (settings.universal.dot == 10) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/White.png");
-			} else if (settings.universal.dot == 11) {
-				volt_load_texture_png(dot, "romfs:/graphics/Dots/Yellow.png");
-			} else if (settings.universal.dot == 12) {
-				volt_load_texture_png(dot, "sdmc:/Universal-Updater/graphics/Dot.png"); // For SD
-			}
+			   // volt_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png"); // Not used. Maybe later?
 
-			if (settings.universal.button == 1) {									// Load the current Button Graphic from the Settings.ini!
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Blue.png");
-			} else if (settings.universal.button == 2) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Classic.png");
-			} else if (settings.universal.button == 3) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Green.png");
-			} else if (settings.universal.button == 4) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Orange.png");
-			} else if (settings.universal.button == 5) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Pink.png");
-			} else if (settings.universal.button == 6) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Red.png");
-			} else if (settings.universal.button == 7) {
-				volt_load_texture_png(button, "romfs:/graphics/Buttons/Yellow.png");
-			} else if (settings.universal.button == 8) {
-				volt_load_texture_png(button, "sdmc:/Universal-Updater/graphics/Button.png"); // For SD
-			}
-
-
-                volt_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png");
-			    volt_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png");
-			    volt_load_texture_png(subbgtex, "romfs:/graphics/standard-Graphics/BS_background.png");
 				volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
+
 				volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
-				volt_load_texture_png(settingstop, "romfs:/graphics/standard-Graphics/Settings_Top.png");
 	
 	//Result res = 0;
-	//graphicsInit();
 		
  	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 		ndspInit();
@@ -377,26 +280,19 @@ int main()
 		for (int topfb = GFX_LEFT; topfb <= GFX_RIGHT; topfb++) {
 			if (topfb == GFX_LEFT) volt_begin_draw(GFX_TOP, (gfx3dSide_t)topfb);
 			else volt_draw_on(GFX_TOP, (gfx3dSide_t)topfb);
-			volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
+			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		volt_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
-		volt_draw_rectangle(0, 0, 400, 240, WHITE); // Draw Top Rectangle.
-		volt_draw_texture(BorderTop, 0, 0);
-		volt_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
-		volt_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
-		if(!showSettings) {
-			volt_draw_texture(settingstop, 0, 0);
-		}
-		volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
-		volt_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Bottom Rectangle.
-		volt_draw_texture(BorderBottom, 0, 0); 
-		if(!showSettings) {
-			volt_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
-			volt_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
-			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
-		}
+		volt_draw_on(GFX_TOP, GFX_LEFT);
+		drawSharkiveUI();
+		volt_draw_text(170, 5, 0.50, 0.50, WHITE, "current Page :");
+		volt_draw_text(280, 5, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+		volt_draw_text(300, 5, 0.50, 0.50, WHITE, "2"); // Draw Second Page Number.
+		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
+		if (menuPage == 1) {
+			volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
+		}
 
 		if(showSettings) {
 			// Draw buttons
