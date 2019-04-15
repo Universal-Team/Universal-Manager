@@ -181,7 +181,7 @@ void screenon()
     gspLcdExit();
 }
 
-void displayBottomMsg(const char* text) {
+void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	//volt_draw_texture(loadingbgtex, 0, 0);
 	volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
@@ -506,7 +506,7 @@ int main()
 						if(checkWifiStatus()){ 
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("RocketRobz/TWiLightMenu", true))
 							updateTWiLight(false);
 						} else {
@@ -518,7 +518,7 @@ int main()
 						if(checkWifiStatus()){ 
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading commit...");
+							displayTopMsg("Loading commit...");
 							if(showCommitInfo("RocketRobz/TWiLightMenu", true))
 							updateTWiLight(true);
 						} else {
@@ -530,7 +530,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("Ahezard/NDS-Bootstrap", true))
 							updateBootstrap(false);
 						} else {
@@ -542,7 +542,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading commit...");
+							displayTopMsg("Loading commit...");
 							if(showCommitInfo("ahezard/NDS-Bootstrap", true))
 							updateBootstrap(true);
 						} else {
@@ -554,7 +554,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("FlagBrew/PKSM", true))
 							updatePKSM(false);
 						} else {
@@ -566,7 +566,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading commit...");
+							displayTopMsg("Loading commit...");
 							if(showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
 							updatePKSM(true);
 						} else {
@@ -578,7 +578,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("AuroraWright/Luma3DS", true))
 							updateLuma(false);
 						break;
@@ -586,7 +586,7 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("hax0kartik/luma-hourlies", true))
 							updateLuma(true);
 						} else {
@@ -618,9 +618,19 @@ int main()
 						if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("FlagBrew/Checkpoint", true))
 							updateCheckpoint();
+						} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 11:	// Checkpoint Release
+						if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							notImplementedYet();
 						} else {
 							if(dspfirmfound) {
 							}
@@ -630,7 +640,7 @@ int main()
 							if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayBottomMsg("Loading release notes...");
+							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", true))
 								updatingSelf = true;
 								updateSelf();

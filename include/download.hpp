@@ -118,3 +118,8 @@ void updateCheckpoint(void);
 * Update The Updater!
 */
 void updateSelf(void);
+
+/**
+* Not Implemented Yet Message Display.
+*/
+void notImplementedYet(void);

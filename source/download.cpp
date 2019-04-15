@@ -33,7 +33,7 @@ std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
 std::string latestUpdaterReleaseCache = "";
 
-extern void displayBottomMsg(const char* text);
+extern void displayTopMsg(const char* text);
 
 extern bool downloadNightlies;
 extern bool updateAvailable[];
@@ -276,14 +276,21 @@ bool checkWifiStatus(void) {
 }
 
 void downloadFailed(void) {
-	displayBottomMsg("Download failed!\n");
+	displayTopMsg("Download failed!\n");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}
+
+void notImplemented(void) {
+	displayTopMsg("Not implemented Yet.\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void doneMsg(void) {
-	displayBottomMsg("Done!");
+	displayTopMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -607,8 +614,8 @@ void setMessageText(const std::string &text)
 
 void drawMessageText(int position, bool showExitText)
 {
-	volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_texture(loadingbgtex, 0, 0);
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(40, 1, 300, 200, BLACK);
 	volt_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
 			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
@@ -737,14 +744,14 @@ void checkForUpdates() {
 
 void updateBootstrap(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("Downloading NDS-Bootstrap\n"
+		displayTopMsg("Downloading NDS-Bootstrap\n"
 						"(Nightly)");
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/nds-bootstrap.7z?raw=true", "/nds-bootstrap-nightly.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Now extracting.\n"
+		displayTopMsg("Now extracting.\n"
 						"(Nightly)");
 		extractArchive("/nds-bootstrap-nightly.7z", "nds-bootstrap/", "/_nds/");
 
@@ -754,14 +761,14 @@ void updateBootstrap(bool nightly) {
 		saveUpdateData();
 		updateAvailable[3] = false;
 	} else {	
-		displayBottomMsg("Downloading NDS-Bootstrap\n"
+		displayTopMsg("Downloading NDS-Bootstrap\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/ahezard/nds-bootstrap", "nds-bootstrap\\.zip", "/nds-bootstrap-release.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Now extracting.\n"
+		displayTopMsg("Now extracting.\n"
 						"(Release)");
 		extractArchive("/nds-bootstrap-release.zip", "/", "/_nds/");
 
@@ -776,19 +783,19 @@ void updateBootstrap(bool nightly) {
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("Now Downloading TWiLightMenu++\n"
+		displayTopMsg("Now Downloading TWiLightMenu++\n"
 						"(Nightly)\n\nThis may take a while.");
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Now extracting.\n"
+		displayTopMsg("Now extracting.\n"
 						"(Nightly)\n\nThis may take a while.");
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
 
-		displayBottomMsg("Now installing the CIAs.\n"
+		displayTopMsg("Now installing the CIAs.\n"
 						"(Nightly)");
 		// installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -802,20 +809,20 @@ void updateTWiLight(bool nightly) {
 		saveUpdateData();
 		updateAvailable[1] = false;
 	} else {
-		displayBottomMsg("Downloading TWiLightMenu++\n"
+		displayTopMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/RocketRobz/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Now extracting.\n"
+		displayTopMsg("Now extracting.\n"
 						"(Release)\n\nThis may take a while.");
 		extractArchive("/TWiLightMenu-release.7z", "_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-release.7z", "3DS - CFW users/", "/");
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
 
-		displayBottomMsg("Now installing the CIAs.\n"
+		displayTopMsg("Now installing the CIAs.\n"
 						"(Release)");
 		installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -834,14 +841,14 @@ void updateTWiLight(bool nightly) {
 
 void updatePKSM(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("Downloading PKSM...\n"
+		displayTopMsg("Downloading PKSM...\n"
 						"(Nightly)\n\nThis may take a while.");
 		if (downloadToFile("https://github.com/SuperSaiyajinVoltZ/PKSM-Nightlies/blob/master/PKSM.cia?raw=true", "/PKSM-Nightly.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Installing PKSM CIA...\n"
+		displayTopMsg("Installing PKSM CIA...\n"
 						"(Nightly)\n\n\n\n\n\n\n\n\n\n"
 						"This may take a while.");
 		installCia("/PKSM-Nightly.cia");
@@ -853,14 +860,14 @@ void updatePKSM(bool nightly) {
 		saveUpdateData();
 		updateAvailable[5] = false;
 	} else {
-		displayBottomMsg("Downloading PKSM\n"
+		displayTopMsg("Downloading PKSM\n"
 						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Installing PKSM.cia\n"
+		displayTopMsg("Installing PKSM.cia\n"
 						"(Release)\n\n\n\n\n\n\n\n\n\n"
 						"This may take a while..");
 		installCia("/PKSM-Release.cia");
@@ -876,13 +883,13 @@ void updatePKSM(bool nightly) {
 }
 
 void updateCheats(void) {
-	displayBottomMsg("Downloading DSJ's Usrcheat.dat\n");	// This needs to be manually changed when the usrcheat.dat in TWLBot get's updated
+	displayTopMsg("Downloading DSJ's Usrcheat.dat\n");	// This needs to be manually changed when the usrcheat.dat in TWLBot get's updated
 	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayBottomMsg("Now extracting...\n"
+	displayTopMsg("Now extracting...\n"
 					"\nThis may take a while.");
 	extractArchive("/usrcheat.dat.7z", "usrcheat.dat", "/_nds/TWiLightMenu/extras/usrcheat.dat");
 
@@ -976,7 +983,7 @@ void downloadBoxart(void) {
 	vector<DirEntry> dirContents;
 	std::string scanDir;
 
-	displayBottomMsg("Would you like to choose a directory, or scan\nthe full card?\n\n\n\n\n\n\n\n\n\nB: Cancel   A: Full SD   X: Choose Directory");
+	displayTopMsg("Would you like to choose a directory, or scan\nthe full card?\n\n\n\n\n\n\n\n\n\nB: Cancel   A: Full SD   X: Choose Directory");
 
 	while(1) {
 		gspWaitForVBlank();
@@ -1037,7 +1044,7 @@ void downloadBoxart(void) {
 						dirs += "\n";
 					}
 					dirs += "B: Back   A: Open   X: Choose";
-					displayBottomMsg(dirs.c_str());
+					displayTopMsg(dirs.c_str());
 				}
 			}
 			break;
@@ -1046,7 +1053,7 @@ void downloadBoxart(void) {
 		}
 	}
 
-	displayBottomMsg("Scanning SD card for DS roms...\n");
+	displayTopMsg("Scanning SD card for DS roms...\n");
 
 	chdir(scanDir.c_str());
 	findNdsFiles(dirContents);
@@ -1054,7 +1061,7 @@ void downloadBoxart(void) {
 	for(int i=0;i<(int)dirContents.size();i++) {
 		char downloadMessage[50];
 		snprintf(downloadMessage, sizeof(downloadMessage), "Downloading \"%s.bmp\"...\n", dirContents[i].tid);
-		displayBottomMsg(downloadMessage);
+		displayTopMsg(downloadMessage);
 
 		const char *ba_region = getBoxartRegion(dirContents[i].tid[3]);
 		
@@ -1069,7 +1076,7 @@ void downloadBoxart(void) {
 	chdir("sdmc:/_nds/TWiLightMenu/boxart/");
 	getDirectoryContents(dirContents);
 
-	displayBottomMsg("Deleting blank files...");
+	displayTopMsg("Deleting blank files...");
 	for(int i=0;i<(int)dirContents.size();i++) {
 		if(dirContents[i].size == 0) {
 			char path[256];
@@ -1082,7 +1089,7 @@ void downloadBoxart(void) {
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		displayBottomMsg("Now Downloading Luma3DS\n" 
+		displayTopMsg("Now Downloading Luma3DS\n" 
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			downloadFailed();
@@ -1093,14 +1100,14 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		displayBottomMsg("Now Downloading Luma3DS\n"
+		displayTopMsg("Now Downloading Luma3DS\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("extracting Boot.firm\n"
+		displayTopMsg("extracting Boot.firm\n"
 						"(Release)");
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
 
@@ -1114,13 +1121,13 @@ void updateLuma(bool nightly) {
 }
 
 void updateCheckpoint(void) {
-	displayBottomMsg("Downloading Checkpoint.cia (Release)\n");
+	displayTopMsg("Downloading Checkpoint.cia (Release)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Installing Checkpoint.cia\n"
+		displayTopMsg("Installing Checkpoint.cia\n"
 						"(Release)");
 		installCia("/Checkpoint-Release.cia");
 
@@ -1132,14 +1139,14 @@ void updateCheckpoint(void) {
 	}
 
 	void updateSelf(void) {
-		displayBottomMsg("Downloading Universal Updater...\n");
+		displayTopMsg("Downloading Universal Updater...\n");
 
 		if (downloadFromRelease("https://github.com/SuperSaiyajinVoltZ/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayBottomMsg("Installing Universal-Updater CIA...\n"
+		displayTopMsg("Installing Universal-Updater CIA...\n"
 						"\n\n\n\n\n\n\n\n\n\n"
 						"The app will reboot when done.");
 
@@ -1151,3 +1158,7 @@ void updateCheckpoint(void) {
 		saveUpdateData();
 		updateAvailable[12] = false;
 	}
+
+void notImplementedYet(void) {
+	notImplemented();
+}
