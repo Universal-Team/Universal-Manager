@@ -605,7 +605,7 @@ int main()
 					
 				}
 			} else {
-				switch (menuSelection) {
+			switch ((menuPage*8)+menuSelection) {
 					case 0:	// TWiLight release
 						if(checkWifiStatus()){ 
 							if(dspfirmfound) {
