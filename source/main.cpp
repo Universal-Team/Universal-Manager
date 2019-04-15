@@ -145,6 +145,10 @@ struct {
 	{ 220, 168},
 };
 
+size_t buttons_settings_tex[] = {
+	bigButton,
+};
+
 const char *button_titles_settings[] = {
 	"Release",
 	"Nightly",
@@ -220,6 +224,7 @@ int main()
 
 				volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 
+				volt_load_texture_png(bigButton, "romfs:/graphics/Misc/Bigbutton.png");
                 //volt_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png"); Not used anymore. Maybe Later again?
 
 			   // volt_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png"); // Not used. Maybe later?
@@ -304,13 +309,13 @@ int main()
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
-					volt_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
+					volt_draw_texture(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y);
 				} else {
 					// Button is not highlighted. Darken the texture.
 					if (buttonShading) {
-						volt_draw_texture_blend(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
+						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
 					} else {
-						volt_draw_texture(button_tex2[i], buttons_settings[i].x, buttons_settings[i].y);
+						volt_draw_texture(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y);
 					}
 				}
 

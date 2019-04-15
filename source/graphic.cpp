@@ -57,16 +57,12 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
-size_t loadingbgtex = 1;
-size_t topbgtex = 2;
-size_t subbgtex = 3;
-size_t button = 4;
-size_t dot = 5;
-size_t pageframe = 6;
-size_t BorderTop = 7;
-size_t BorderBottom = 8;
-size_t settingsIcon = 9;
-size_t settingstop = 10;
+//size_t loadingbgtex = 1;
+size_t button = 1;
+size_t dot = 2;
+size_t pageframe = 3;
+size_t settingsIcon = 4;
+size_t bigButton = 5;
 
 
 void graphicsInit(void) {
