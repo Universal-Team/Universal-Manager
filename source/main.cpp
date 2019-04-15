@@ -262,7 +262,7 @@ int main()
 	bool fadein = true;
 
 	checkForUpdates();
-	
+	LoadUniversalSettings();
 	// Loop as long as the status is not exit
 	Threads::create((ThreadFunc)SDLH_Play);
 	while(aptMainLoop()) {
@@ -284,7 +284,12 @@ int main()
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 		volt_draw_on(GFX_TOP, GFX_LEFT);
-		drawSharkiveUI();
+		if (settings.universal.theme == 1) {									// Load the current Top Border from the Settings.ini!
+				drawSharkiveUI();
+			} else if (settings.universal.theme == 2) {
+				drawCheckpointUI();
+			}
+		//drawSharkiveUI();
 		volt_draw_text(170, 5, 0.50, 0.50, WHITE, "current Page :");
 		volt_draw_text(280, 5, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 		volt_draw_text(300, 5, 0.50, 0.50, WHITE, "2"); // Draw Second Page Number.

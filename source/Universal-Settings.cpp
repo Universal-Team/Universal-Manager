@@ -14,7 +14,7 @@ static CIniFile settingsini( "sdmc:/Universal-Updater/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
-	settings.universal.theme = settingsini.GetInt("UI", "THEME", 1); // Themes = 2 
+	settings.universal.theme = settingsini.GetInt("UI", "THEME", 2); // Themes = 2 
 
 }
 
