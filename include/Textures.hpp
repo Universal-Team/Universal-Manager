@@ -10,3 +10,4 @@ extern size_t pageframe;
 extern size_t BorderTop;
 extern size_t BorderBottom;
 extern size_t settingsIcon;
+extern size_t settingstop;

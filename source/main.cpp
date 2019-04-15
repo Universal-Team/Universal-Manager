@@ -218,6 +218,7 @@ int main()
 	pp2d_set_screen_color(GFX_TOP, TRANSPARENT);
 	pp2d_set_3D(1);
 	
+
 				if (settings.universal.bordertop == 1) {									// Load the current Top Border from the Settings.ini!
 				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Black.png");
 			} else if (settings.universal.bordertop == 2) {
@@ -324,6 +325,7 @@ int main()
 			    //pp2d_load_texture_png(dot, "romfs:/graphics/standard-Graphics/dot.png");
 				pp2d_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 				pp2d_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
+				//pp2d_load_texture_png(settingstop, "romfs:/graphics/standard-Graphics/Settings_Top.png");
 	
 	Result res = 0;
 	//graphicsInit();
@@ -384,14 +386,15 @@ int main()
 		pp2d_draw_on(GFX_TOP, GFX_LEFT); // Draw on Top Screen.
 		pp2d_draw_rectangle(0, 0, 400, 240, WHITE); // Draw Top Rectangle.
 		pp2d_draw_texture(BorderTop, 0, 0);
-		//pp2d_draw_rectangle(0, 221, 400, 19, BLUE); // Draw Bottom Rectangle.
 		pp2d_draw_text(10, 0, 0.7f, 0.7f, TIME, getTime().c_str()); //Draw Time.
 		pp2d_draw_text(190, 0, 0.7f, 0.7f, TIME, "Universal-Updater");
 		pp2d_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
-		pp2d_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Top Rectangle.
+		pp2d_draw_rectangle(0, 0, 320, 240, WHITE); // Draw Bottom Rectangle.
 		pp2d_draw_texture(BorderBottom, 0, 0); 
-		//pp2d_draw_rectangle(0, 221, 320, 19, BLUE); // Draw Bottom Rectangle.
 		if(!showSettings) {
+			pp2d_draw_on(GFX_TOP, GFX_LEFT);
+			pp2d_draw_texture(settingstop, 0, 0);
+			pp2d_draw_on(GFX_BOTTOM, GFX_LEFT);
 			pp2d_draw_text(280, 5, 0.50, 0.50, TIME, "1"); //Draw First Page Number.
 			pp2d_draw_text(300, 5, 0.50, 0.50, TIME, "2"); // Draw Second Page Number.
 			pp2d_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
