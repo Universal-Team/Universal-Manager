@@ -15,3 +15,5 @@ DevkitARM and Libctru : Wintermute, Fincs and Smealum!
 PP2D : Bernardo Giordano!
 
 The Basic Code from the TWiLightMenu-Updater : RocketRobz!
+
+Icon & Banner : antoine62!
