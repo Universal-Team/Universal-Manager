@@ -229,7 +229,7 @@ int main()
 			} else if (settings.universal.bordertop == 5) {
 				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Grey.png");
 			} else if (settings.universal.bordertop == 6) {
-				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/LightBlue.png");
+				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightblue.png");
 			} else if (settings.universal.bordertop == 7) {
 				pp2d_load_texture_png(BorderTop, "romfs:/graphics/Border/Top/Lightgreen.png");
 			} else if (settings.universal.bordertop == 8) {
