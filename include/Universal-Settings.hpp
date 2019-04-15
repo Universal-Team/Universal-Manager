@@ -7,10 +7,7 @@
 
 typedef struct _Settings_t {
 	struct {
-		int bordertop;		// 
-		int borderbottom;	//
-		int dot;			//
-		int button;			//
+		int theme;		// 		//
 	} universal;
 } Settings_t;
 extern Settings_t settings;
