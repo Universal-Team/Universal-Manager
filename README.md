@@ -16,4 +16,6 @@ PP2D : Bernardo Giordano!
 
 The Basic Code from the TWiLightMenu-Updater : RocketRobz!
 
-Icon & Banner : antoine62!
+Icon : antoine62!
+
+Banner : TotallyNotGuy!
