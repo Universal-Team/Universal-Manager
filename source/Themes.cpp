@@ -1,6 +1,6 @@
 #include "Themes.hpp"
 #include "Colors.hpp"
-#include "Graphic.h"
+#include "graphic.h"
 #include "voltlib/volt.h"
 #include "utils/datetime.h"
 
