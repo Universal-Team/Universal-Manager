@@ -192,6 +192,16 @@ void displayTopMsg(const char* text) {
 	volt_end_draw();
 }
 
+void currentMusic(void) {
+	if (settings.universal.music == 1) {
+		Music_Chill();
+	} else if (settings.universal.music == 2) {
+		Music_Settings();
+	} else if (settings.universal.music == 3) {
+		Music_SD();
+	}
+}
+
 // Version numbers.
 
 int menuSelection = 0;
@@ -206,7 +216,9 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
-	SDLH_Init();
+	SDLH_Init_SD();
+	SDLH_Init_Chill();
+	SDLH_Init_Settings();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -269,7 +281,7 @@ int main()
 	checkForUpdates();
 	LoadUniversalSettings();
 	// Loop as long as the status is not exit
-	Threads::create((ThreadFunc)SDLH_Play);
+	Threads::create((ThreadFunc)currentMusic);
 	while(aptMainLoop()) {
 		offset3D[0].topbg = CONFIG_3D_SLIDERSTATE * -7.0f;
 		offset3D[1].topbg = CONFIG_3D_SLIDERSTATE * 7.0f;
@@ -288,16 +300,16 @@ int main()
 			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		volt_draw_on(GFX_TOP, GFX_LEFT);
-		if (settings.universal.theme == 1) {									// Load the current Top Border from the Settings.ini!
-				drawSharkiveUI();
-			} else if (settings.universal.theme == 2) {
-				drawCheckpointUI();
-			}
-		//drawSharkiveUI();
-		volt_draw_text(170, 5, 0.50, 0.50, WHITE, "current Page :");
-		volt_draw_text(280, 5, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-		volt_draw_text(300, 5, 0.50, 0.50, WHITE, "2"); // Draw Second Page Number.
+		//volt_draw_on(GFX_TOP, GFX_LEFT);
+		//if (settings.universal.theme == 1) {									// Load the current Top Border from the Settings.ini!
+		//		drawSharkiveUI();
+		//	} else if (settings.universal.theme == 2) {
+		//		drawCheckpointUI();
+		//	}
+		drawSharkiveUI();
+		volt_draw_text(170, 5, 0.50, 0.50, BLACK, "Current Page :");
+		volt_draw_text(280, 5, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+		volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 		if (menuPage == 1) {

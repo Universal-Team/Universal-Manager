@@ -9,9 +9,13 @@
 #include <string>
 #include "io.hpp"
 
-bool SDLH_Init(void);
+bool SDLH_Init_Chill(void);
+bool SDLH_Init_Settings(void);
+bool SDLH_Init_SD(void);
 void SDLH_Exit(void);
 
-void SDLH_Play(void);
+void Music_SD(void);
+void Music_Chill(void);
+void Music_Settings(void);
 
 #endif

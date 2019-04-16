@@ -8,6 +8,7 @@
 typedef struct _Settings_t {
 	struct {
 		int theme;		// 		//
+		int music;
 	} universal;
 } Settings_t;
 extern Settings_t settings;
