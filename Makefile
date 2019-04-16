@@ -35,16 +35,16 @@ include $(DEVKITARM)/3ds_rules
 # External tools
 #---------------------------------------------------------------------------------
 ifeq ($(OS),Windows_NT)
-MAKEROM 	?= ../tools/makerom.exe
-BANNERTOOL 	?= ../tools/bannertool.exe
-3DSTOOL     ?= ../tools/3dstool.exe
+MAKEROM 	?= ../makerom.exe
+BANNERTOOL 	?= ../bannertool.exe
 
 else
 MAKEROM 	?= makerom
 BANNERTOOL 	?= bannertool
-3DSTOOL     ?= 3dstool
 
 endif
+
+#---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
 # Version number
 #---------------------------------------------------------------------------------
