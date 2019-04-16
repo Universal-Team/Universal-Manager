@@ -19,6 +19,6 @@
 //Standard Theme.
 #define BLACK RGBA8(0, 0, 0, 255)
 #define RED RGBA8(255, 0, 0, 255)
-#define PURPLE RGBA8(0x81, 0x37, 0x72, 0xFF)
+#define MESSAGE_BOX_COLOR RGBA8(0x81, 0x37, 0x72, 0xFF)
 #define GRAY C2D_Color32(70, 70, 70, 255)
 #define TIME RGBA8(16, 0, 0, 223)
