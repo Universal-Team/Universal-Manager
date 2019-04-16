@@ -214,6 +214,7 @@ int main()
 	volt_init();
 
 	volt_set_3D(1);
+			LoadUniversalSettings();
 
 				volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 
@@ -259,7 +260,6 @@ int main()
 	bool fadein = true;
 
 	checkForUpdates();
-	LoadUniversalSettings();
 	// Loop as long as the status is not exit
 	Threads::create((ThreadFunc)currentMusic);
 	while(aptMainLoop()) {
@@ -312,10 +312,7 @@ int main()
 				// NOTE: Button texture size is 132x34.
 				const int h = 30;
 
-				// Draw the title.
-				int y = buttons_settings[i].y + ((40 - h) / 2);
-				int x_from_width = buttons_settings[i].x + title_spacing_settings[i];
-				volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles_settings[i]);
+				// Draw the Settings Options!
 			}
 			if (settings.universal.theme == 0) {
 				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Sharkive Theme");
@@ -517,13 +514,13 @@ int main()
 				case 0:
 				default:
 					settings.universal.theme++;
+					if (settings.universal.theme > 2) settings.universal.theme = 0;
 					break;
 				case 1:
 					settings.universal.music++;
+					if (settings.universal.music > 3) settings.universal.music = 0;
 					break;
 				}
-						if (settings.universal.theme > 2) settings.universal.theme = 0;
-						if (settings.universal.music > 3) settings.universal.music = 0;
 			} else {
 			switch ((menuPage*8)+menuSelection) {
 					case 0:	// TWiLight release
