@@ -309,15 +309,10 @@ int main()
 		//	drawLasagnaUI();
 		//}
 		drawSharkiveUI();
-		volt_draw_text(170, 5, 0.50, 0.50, BLACK, "Current Page :");
-		volt_draw_text(280, 5, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-		volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
-		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 		if (menuPage == 1) {
-			volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
+		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
 		}
-
 		if(showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
