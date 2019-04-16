@@ -46,7 +46,7 @@ steps:
     git config --global user.email "flamekat54@aol.com"
     git config --global user.name "TWLBot"
     git clone https://$GITHUB_TOKEN@github.com/TWLBot/Builds.git
-    cd Builds/extras\ Updater/
+    cd Builds/extras
     cp ../../Universal-Updater.3dsx Universal-Updater.3dsx
     cp ../../Universal-Updater.cia Universal-Updater.cia
     git stage .
@@ -71,17 +71,3 @@ steps:
     assets: '$(Build.ArtifactStagingDirectory)/*'
     isPreRelease: true
     addChangeLog: false
-
-- script: |
-    curl -o send.sh https://raw.githubusercontent.com/DS-Homebrew/discord-webhooks/master/send-azure.sh
-    chmod +x send.sh
-    ./send.sh success $WEBHOOK_URL
-  condition: succeeded()
-  displayName: 'Send success webhook'
-
-- script: |
-    curl -o send.sh https://raw.githubusercontent.com/DS-Homebrew/discord-webhooks/master/send-azure.sh
-    chmod +x send.sh
-    ./send.sh failure $WEBHOOK_URL
-  condition: failed()
-  displayName: 'Send failure webhook'
