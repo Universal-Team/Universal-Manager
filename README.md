@@ -3,19 +3,18 @@
 **CREDITS!**
 
 
-Main Developer : VoltZ
+Main Developer: VoltZ
 
-Thanks a lot to : 
+Big Thanks to: 
 
-Helper : Epicpkmn11!
-Helper : FlameKat53!
+Helpers: Epicpkmn11, FlameKat53!
 
-DevkitARM and Libctru : Wintermute, Fincs and Smealum!
+DevkitARM and Libctru: devkitPro/Wintermute, Fincs and Smealum!
 
-PP2D : Bernardo Giordano!
+PP2D: Bernardo Giordano!
 
-The Basic Code from the TWiLightMenu-Updater : RocketRobz!
+Based on the TWiLightMenu-Updater, made by RocketRobz and Epicpkmn11!
 
-Icon : antoine62!
+Icon: antoine62!
 
-Banner : TotallyNotGuy!
+Banner: TotallyNotGuy!
