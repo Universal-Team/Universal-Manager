@@ -627,13 +627,13 @@ void drawMessageText(int position, bool showExitText)
 
 std::string latestMenuRelease(void) {
 	if (latestMenuReleaseCache == "")
-		latestMenuReleaseCache = getLatestRelease("RocketRobz/TWiLightMenu", "tag_name");
+		latestMenuReleaseCache = getLatestRelease("DS-Homebrew/TWiLightMenu", "tag_name");
 	return latestMenuReleaseCache;
 }
 
 std::string latestMenuNightly(void) {
 	if (latestMenuNightlyCache == "")
-		latestMenuNightlyCache = getLatestCommit("RocketRobz/TWiLightMenu", "sha").substr(0,7);
+		latestMenuNightlyCache = getLatestCommit("DS-Homebrew/TWiLightMenu", "sha").substr(0,7);
 	return latestMenuNightlyCache;
 }
 
@@ -811,7 +811,7 @@ void updateTWiLight(bool nightly) {
 	} else {
 		displayTopMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
-		if (downloadFromRelease("https://github.com/RocketRobz/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
+		if (downloadFromRelease("https://github.com/DS-Homebrew/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
 			downloadFailed();
 			return;
 		}

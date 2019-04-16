@@ -453,12 +453,12 @@ int main()
 				case 0:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("RocketRobz/TWiLightMenu", false);
+					showReleaseInfo("DS-Homebrew/TWiLightMenu", false);
 					break;
 				case 1:
 					if(dspfirmfound) {
 					}
-					showCommitInfo("RocketRobz/TWiLightMenu", false);
+					showCommitInfo("DS-Homebrew/TWiLightMenu", false);
 					break;
 				case 2:
 					if(dspfirmfound) {
@@ -528,7 +528,7 @@ int main()
 							if(dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("RocketRobz/TWiLightMenu", true))
+							if(showReleaseInfo("DS-Homebrew/TWiLightMenu", true))
 							updateTWiLight(false);
 						} else {
 							if(dspfirmfound) {
@@ -540,7 +540,7 @@ int main()
 							if(dspfirmfound) {
 							}
 							displayTopMsg("Loading commit...");
-							if(showCommitInfo("RocketRobz/TWiLightMenu", true))
+							if(showCommitInfo("DS-Homebrew/TWiLightMenu", true))
 							updateTWiLight(true);
 						} else {
 							if(dspfirmfound) {
