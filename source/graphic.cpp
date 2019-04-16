@@ -62,7 +62,7 @@ size_t button = 1;
 size_t dot = 2;
 size_t pageframe = 3;
 size_t settingsIcon = 4;
-size_t bigButton = 5;
+size_t settingsButton = 5;
 
 
 void graphicsInit(void) {

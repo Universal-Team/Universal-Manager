@@ -135,38 +135,19 @@ struct {
 	int x;
 	int y;
 } buttons_settings[] = {
-	{ 129, 48},
-	{ 220, 48},
-	{ 129, 88},
-	{ 220, 88},
-	{ 129, 128},
-	{ 220, 128},
-	{ 129, 168},
-	{ 220, 168},
+	{ 0, 48},
+	{ 170, 48},
 };
 
 size_t buttons_settings_tex[] = {
-	bigButton,
+	settingsButton,
+	settingsButton,
 };
 
 const char *button_titles_settings[] = {
-	"Release",
-	"Nightly",
-	"Release",
-	"Nightly",
-	"Release",
-	"Nightly",
-	"Nightly",	
-	"Release",
 };
 
 const int title_spacing_settings[] = {
-	6,
-	10,
-	6,
-	10,
-	6,
-	10,
 	6,
 	10,
 };
@@ -193,12 +174,14 @@ void displayTopMsg(const char* text) {
 }
 
 void currentMusic(void) {
-	if (settings.universal.music == 1) {
+	if (settings.universal.music == 0) {
 		Music_Chill();
-	} else if (settings.universal.music == 2) {
+	} else if (settings.universal.music == 1) {
 		Music_Settings();
-	} else if (settings.universal.music == 3) {
+	} else if (settings.universal.music == 2) {
 		Music_SD();
+	} else if (settings.universal.music == 3) {
+
 	}
 }
 
@@ -236,10 +219,7 @@ int main()
 
 				volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 
-				volt_load_texture_png(bigButton, "romfs:/graphics/Misc/Bigbutton.png");
-                //volt_load_texture_png(loadingbgtex, "romfs:/graphics/standard-Graphics/BS_loading_background.png"); Not used anymore. Maybe Later again?
-
-			   // volt_load_texture_png(topbgtex, "romfs:/graphics/standard-Graphics/top_bg.png"); // Not used. Maybe later?
+				volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/Settingsbutton.png");
 
 				volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 
@@ -300,15 +280,15 @@ int main()
 			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		//volt_draw_on(GFX_TOP, GFX_LEFT);
-		//if (settings.universal.theme == 1) {									// Load the current Top Border from the Settings.ini!
-		//		drawSharkiveUI();
-		//	} else if (settings.universal.theme == 2) {
-		//		drawCheckpointUI();
-		//	} else if (settings.universal.theme == 3) {
-		//	drawLasagnaUI();
-		//}
-		drawSharkiveUI();
+		volt_draw_on(GFX_TOP, GFX_LEFT);
+		if (settings.universal.theme == 0) {									// Load the current Top Border from the Settings.ini!
+				drawSharkiveUI();
+			} else if (settings.universal.theme == 1) {
+				drawCheckpointUI();
+			} else if (settings.universal.theme == 2) {
+			drawLasagnaUI();
+		}
+		//drawSharkiveUI();
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		if (menuPage == 1) {
 		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
@@ -336,6 +316,23 @@ int main()
 				int y = buttons_settings[i].y + ((40 - h) / 2);
 				int x_from_width = buttons_settings[i].x + title_spacing_settings[i];
 				volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles_settings[i]);
+			}
+			if (settings.universal.theme == 0) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Sharkive Theme");
+			} else if (settings.universal.theme == 1) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Checkpoint Theme");
+			} else if (settings.universal.theme == 2) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Lasagna Theme");
+			}
+
+			if (settings.universal.music == 0) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Chill Music");
+			} else if (settings.universal.music == 1) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Settings Music");
+			} else if (settings.universal.music == 2) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "SD Music");
+			} else if (settings.universal.music == 3) {
+				volt_draw_text(180, 68, 0.65f, 0.65f, BLACK, "OFF");
 			}
 			volt_end_draw();
 		} else {
@@ -517,8 +514,16 @@ int main()
 		if (setOption) {
 			if(showSettings) {
 				switch (menuSelection) {
-					
+				case 0:
+				default:
+					settings.universal.theme++;
+					break;
+				case 1:
+					settings.universal.music++;
+					break;
 				}
+						if (settings.universal.theme > 2) settings.universal.theme = 0;
+						if (settings.universal.music > 3) settings.universal.music = 0;
 			} else {
 			switch ((menuPage*8)+menuSelection) {
 					case 0:	// TWiLight release
