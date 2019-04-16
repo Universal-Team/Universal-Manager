@@ -55,21 +55,3 @@ steps:
     git tag v$CURRENT_DATE
     echo '##vso[task.setvariable variable=TWLBOT_COMMIT]'$(git log -1 --format="%H")
   displayName: "Commit to TWLBot/Builds"
-
-- task: GitHubRelease@0
-  displayName: "Release to TWLBot/Builds"
-  inputs:
-    gitHubConnection: TWLBot
-    repositoryName: TWLBot/Builds
-    action: create
-    target: $(TWLBOT_COMMIT)
-    tagSource: 'manual'
-    tag: v$(CURRENT_DATE)
-    title: Universal-Updater | $(COMMIT_TAG)
-    releaseNotesSource: input
-    releaseNotes: $(COMMIT_MESSAGE)
-    assets: '$(Build.ArtifactStagingDirectory)/*'
-    isPreRelease: true
-    addChangeLog: false
-    
-# I needed a new branch to test stuffs on
