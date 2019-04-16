@@ -287,8 +287,10 @@ int main()
 				drawCheckpointUI();
 			} else if (settings.universal.theme == 2) {
 			drawLasagnaUI();
-		}
-		//drawSharkiveUI();
+		} else if (settings.universal.theme == 3) {
+		drawTheme4UI();
+	}
+		//drawTheme4UI();
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		if (menuPage == 1) {
 		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
@@ -320,6 +322,8 @@ int main()
 				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Checkpoint Theme");
 			} else if (settings.universal.theme == 2) {
 				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Lasagna Theme");
+			} else if (settings.universal.theme == 3) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Theme 4");
 			}
 
 			if (settings.universal.music == 0) {
@@ -514,7 +518,7 @@ int main()
 				case 0:
 				default:
 					settings.universal.theme++;
-					if (settings.universal.theme > 2) settings.universal.theme = 0;
+					if (settings.universal.theme > 3) settings.universal.theme = 0;
 					break;
 				case 1:
 					settings.universal.music++;

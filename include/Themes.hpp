@@ -19,3 +19,7 @@ void drawSharkiveUI(void);
 void drawCheckpointUI(void);
 
 void drawLasagnaUI(void);
+
+void drawTheme4UI(void);
+
+void drawBorderBlack(void);

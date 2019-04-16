@@ -71,3 +71,26 @@ void drawLasagnaUI(void) {
 	volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 	volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 }
+
+void drawTheme4UI(void) {
+    volt_set_screen_color(GFX_TOP, THEME4_BG);
+    volt_draw_on(GFX_TOP, GFX_LEFT); 
+	volt_draw_rectangle(0, 0, 400, 19, THEME4_BARS);
+	volt_draw_rectangle(0, 221, 400, 19, THEME4_BARS);
+
+	volt_draw_text(4, 3, 0.45f, 0.45f, GREYISH, getTime().c_str());
+    volt_draw_text(350, 3, 0.45f, 0.45f, GREYISH, "v1.0.0");
+    volt_draw_text(140, 3, 0.45f, 0.45f, WHITE, "Universal-Updater");
+    volt_draw_text(280, 225, 0.5f, 0.5f, WHITE, "\uE004 / \uE005: switch page");
+    volt_draw_text(1, 225, 0.5f, 0.5f, WHITE, "\uE000: Select an Option");
+
+    volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+    volt_set_screen_color(GFX_BOTTOM, THEME4_BG);
+    volt_draw_rectangle(0, 0, 320, 19, THEME4_BARS);
+	volt_draw_rectangle(0, 221, 320, 19, THEME4_BARS);
+
+    volt_draw_text(170, 5, 0.50, 0.50, BLACK, "Current Page :");
+	volt_draw_text(280, 5, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
+	volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
+}
