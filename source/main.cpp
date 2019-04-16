@@ -219,7 +219,7 @@ int main()
 
 				volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 
-				volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/Settingsbutton.png");
+				volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
 
 				volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 
