@@ -339,14 +339,15 @@ int main()
 	//}
 		draw_Background_Top();
 		draw_Bars_Top();
-		draw_Background_Bottom();
-		draw_Bars_Bottom();
-
 		volt_draw_text(4, 3, 0.5f, 0.5f, GREYISH, getTime().c_str());
     	volt_draw_text(350, 3, 0.5f, 0.5f, GREYISH, "v1.0.0");
     	volt_draw_text(140, 3, 0.5f, 0.5f, WHITE, "Universal-Updater");
     	volt_draw_text(280, 225, 0.5f, 0.5f, WHITE, "\uE004 / \uE005: switch page");
     	volt_draw_text(1, 225, 0.5f, 0.5f, WHITE, "\uE000: Select an Option");
+		draw_Background_Bottom();
+		draw_Bars_Bottom();
+		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
+
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		if (menuPage == 1) {
 		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.

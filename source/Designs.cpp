@@ -21,8 +21,8 @@ void draw_Bars_Bottom_Black(void) {
 }
 
 void draw_Background_Bottom_Black(void) {
+        volt_set_screen_color(GFX_BOTTOM, BLACK);
     volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
-    volt_set_screen_color(GFX_BOTTOM, BLACK);
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
