@@ -55,7 +55,7 @@ steps:
     cp ../../../Universal-Updater.3dsx Universal-Updater.3dsx
     cp ../../../Universal-Updater.cia Universal-Updater.cia
     qrencode -o Universal-Updater.png https://github.com/TWLBot/Builds/releases/download/v$CURRENT_DATE/Universal-Updater.cia
-    git stage .
+    git stage *
     git commit -m "Universal-Updater | $(COMMIT_TAG)"
     git push origin master
     git tag v$CURRENT_DATE
@@ -65,7 +65,8 @@ steps:
 - script: |
     curl -o send.sh https://raw.githubusercontent.com/DS-Homebrew/discord-webhooks/master/send-azure.sh
     chmod +x send.sh
-    export IMAGE=https://raw.githubusercontent.com/TWLBot/Builds/master/extras/Universal/Universal-Updater.png
+    echo v$CURRENT_DATE
+    export IMAGE=https://raw.githubusercontent.com/TWLBot/Builds/v$CURRENT_DATE/extras/Universal/Universal-Updater.png
     ./send.sh success $WEBHOOK_URL
   condition: succeeded()
   displayName: "Send success webhook"
