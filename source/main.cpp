@@ -599,7 +599,7 @@ int main()
 					case 12:
 					if(dspfirmfound) {
 					}
-					showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", false);
+					showReleaseInfo("Universal-Team/Universal-Updater", false);
 					break;
 				default:
 					if(dspfirmfound) {
@@ -763,7 +763,7 @@ int main()
 							if(dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("SuperSaiyajinVoltZ/Universal-Updater", true))
+							if(showReleaseInfo("Universal-Team/Universal-Updater", true))
 								updatingSelf = true;
 								updateSelf();
 								updatingSelf = false;
