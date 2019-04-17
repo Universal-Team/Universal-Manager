@@ -3,15 +3,13 @@
 **CREDITS!**
 
 
-Main Developer: VoltZ
+Main Developer: Universal-Team!
 
 Big Thanks to: 
 
-Helpers: Epicpkmn11, FlameKat53!
-
 DevkitARM and Libctru: devkitPro/Wintermute, Fincs and Smealum!
 
-PP2D: Bernardo Giordano!
+PP2D: Bernardo Giordano! [Now modified as voltlib by VoltZ!]
 
 Based on the TWiLightMenu-Updater, made by RocketRobz and Epicpkmn11!
 
