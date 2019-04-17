@@ -169,7 +169,15 @@ void screenon()
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 20, 400, 200, MESSAGE_BOX_COLOR);
-	volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
+//	if (settings.universal.text == 0) {
+		volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
+//	} else if (settings.universal.text == 1) {
+//		volt_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
+//	} else if (settings.universal.text == 2) {
+//		volt_draw_text(24, 32, 0.5f, 0.5f, BLUE, text);
+//	} else if (settings.universal.text == 3) {
+//		volt_draw_text(24, 32, 0.5f, 0.5f, RED, text);
+//	}
 	volt_end_draw();
 }
 
@@ -194,6 +202,8 @@ void draw_Bars_Bottom(void) {
 		draw_Bars_Bottom_Blue();
 	} else if (settings.universal.bars == 3) {
 		draw_Bars_Bottom_Red();
+	} else if (settings.universal.bars == 4) {
+		draw_Bars_Bottom_Yellow();
 	}
 }
 
@@ -206,6 +216,8 @@ void draw_Bars_Top(void) {
 		draw_Bars_Top_Blue();
 	} else if (settings.universal.bars == 3) {
 		draw_Bars_Top_Red();
+	} else if (settings.universal.bars == 4) {
+		draw_Bars_Top_Yellow();
 	}
 }
 
@@ -218,6 +230,8 @@ void draw_Background_Bottom(void) {
 		draw_Background_Bottom_Blue();
 	} else if (settings.universal.bg == 3) {
 		draw_Background_Bottom_Red();
+	} else if (settings.universal.bg == 4) {
+		draw_Background_Bottom_Yellow();
 	}
 }
 
@@ -230,6 +244,8 @@ void draw_Background_Top(void) {
 		draw_Background_Top_Blue();
 	} else if (settings.universal.bg == 3) {
 		draw_Background_Top_Red();
+	} else if (settings.universal.bg == 4) {
+		draw_Background_Top_Yellow();
 	}
 }
 
@@ -384,23 +400,27 @@ int main()
 		//	}
 
 			if (settings.universal.bg == 0) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bg == 1) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bg == 2) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bg == 3) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "RED");
+			} else if (settings.universal.bg == 4) {
+				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "YELLOW");
 			}
 
 			if (settings.universal.bars == 0) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bars == 1) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bars == 2) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bars == 3) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "RED");
+			} else if (settings.universal.bars == 4) {
+				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "YELLOW");
 			}
 
 		//	if (settings.universal.music == 0) {
@@ -595,11 +615,11 @@ int main()
 				case 0:
 				default:
 					settings.universal.bg++;
-					if (settings.universal.bg > 3) settings.universal.bg = 0;
+					if (settings.universal.bg > 4) settings.universal.bg = 0;
 					break;
 				case 1:
 					settings.universal.bars++;
-					if (settings.universal.bars > 3) settings.universal.bars = 0;
+					if (settings.universal.bars > 4) settings.universal.bars = 0;
 					break;
 				}
 			} else {

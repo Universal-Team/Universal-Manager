@@ -11,8 +11,8 @@ void draw_Bars_Top_Black(void) {
 }
 
 void draw_Background_Top_Black(void) {
-    volt_set_screen_color(GFX_TOP, BLACK);
     volt_draw_on(GFX_TOP, GFX_LEFT); 
+    volt_set_screen_color(GFX_TOP, BLACK);
 }
 
 void draw_Bars_Bottom_Black(void) {
@@ -21,8 +21,8 @@ void draw_Bars_Bottom_Black(void) {
 }
 
 void draw_Background_Bottom_Black(void) {
-        volt_set_screen_color(GFX_BOTTOM, BLACK);
-    volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+     volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+     volt_set_screen_color(GFX_BOTTOM, BLACK);
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -86,6 +86,27 @@ void draw_Bars_Bottom_Red(void) {
 void draw_Background_Bottom_Red(void) {
     volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
     volt_set_screen_color(GFX_BOTTOM, RED);
+}
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+void draw_Bars_Top_Yellow(void) {
+	volt_draw_rectangle(0, 0, 400, 19, YELLOW);
+	volt_draw_rectangle(0, 221, 400, 19, YELLOW);
+}
+
+void draw_Background_Top_Yellow(void) {
+    volt_draw_on(GFX_TOP, GFX_LEFT); 
+    volt_set_screen_color(GFX_TOP, YELLOW);
+}
+
+void draw_Bars_Bottom_Yellow(void) {
+    volt_draw_rectangle(0, 0, 320, 19, YELLOW);
+	volt_draw_rectangle(0, 221, 320, 19, YELLOW);
+}
+
+void draw_Background_Bottom_Yellow(void) {
+     volt_draw_on(GFX_BOTTOM, GFX_LEFT); // Draw on Bottom Screen.
+     volt_set_screen_color(GFX_BOTTOM, YELLOW);
 }
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
