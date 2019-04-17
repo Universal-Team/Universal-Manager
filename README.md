@@ -20,3 +20,7 @@ Icon: antoine62!
 Banner: TotallyNotGuy!
 
 The Chill Music is from : https://youtu.be/6K3SL4Ik_U4
+
+You can join the Official Universal-Updater Discord Server here : 
+
+https://discord.gg/KDJCfGF
