@@ -20,7 +20,7 @@
 #include "datetime.h"
 #include "Universal-Settings.hpp"
 #include "Textures.hpp"
-#include "Themes.hpp"
+#include "Designs.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -185,7 +185,54 @@ void currentMusic(void) {
 	}
 }
 
-// Version numbers.
+void draw_Bars_Bottom(void) {
+	if (settings.universal.bars == 0) {
+		draw_Bars_Bottom_Black();
+	} else if (settings.universal.bars == 1) {
+		draw_Bars_Bottom_White();
+	} else if (settings.universal.bars == 2) {
+		draw_Bars_Bottom_Blue();
+	} else if (settings.universal.bars == 3) {
+		draw_Bars_Bottom_Red();
+	}
+}
+
+void draw_Bars_Top(void) {
+	if (settings.universal.bars == 0) {
+		draw_Bars_Top_Black();
+	} else if (settings.universal.bars == 1) {
+		draw_Bars_Top_White();
+	} else if (settings.universal.bars == 2) {
+		draw_Bars_Top_Blue();
+	} else if (settings.universal.bars == 3) {
+		draw_Bars_Top_Red();
+	}
+}
+
+void draw_Background_Bottom(void) {
+	if (settings.universal.bg == 0) {
+		draw_Background_Bottom_Black();
+	} else if (settings.universal.bg == 1) {
+		draw_Background_Bottom_White();
+	} else if (settings.universal.bg == 2) {
+		draw_Background_Bottom_Blue();
+	} else if (settings.universal.bg == 3) {
+		draw_Background_Bottom_Red();
+	}
+}
+
+void draw_Background_Top(void) {
+	if (settings.universal.bg == 0) {
+		draw_Background_Top_Black();
+	} else if (settings.universal.bg == 1) {
+		draw_Background_Top_White();
+	} else if (settings.universal.bg == 2) {
+		draw_Background_Top_Blue();
+	} else if (settings.universal.bg == 3) {
+		draw_Background_Top_Red();
+	}
+}
+
 
 int menuSelection = 0;
 int menuPage = 0;
@@ -280,17 +327,26 @@ int main()
 			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-		volt_draw_on(GFX_TOP, GFX_LEFT);
-		if (settings.universal.theme == 0) {									// Load the current Top Border from the Settings.ini!
-				drawSharkiveUI();
-			} else if (settings.universal.theme == 1) {
-				drawCheckpointUI();
-			} else if (settings.universal.theme == 2) {
-			drawLasagnaUI();
-		} else if (settings.universal.theme == 3) {
-		drawTheme4UI();
-	}
-		//drawTheme4UI();
+	//	volt_draw_on(GFX_TOP, GFX_LEFT);
+	//	if (settings.universal.theme == 0) {									// Load the current Top Border from the Settings.ini!
+	//			drawSharkiveUI();
+	//		} else if (settings.universal.theme == 1) {
+	//			drawCheckpointUI();
+	//		} else if (settings.universal.theme == 2) {
+	//		drawLasagnaUI();
+	//	} else if (settings.universal.theme == 3) {
+	//	drawTheme4UI();
+	//}
+		draw_Background_Top();
+		draw_Bars_Top();
+		draw_Background_Bottom();
+		draw_Bars_Bottom();
+
+		volt_draw_text(4, 3, 0.5f, 0.5f, GREYISH, getTime().c_str());
+    	volt_draw_text(350, 3, 0.5f, 0.5f, GREYISH, "v1.0.0");
+    	volt_draw_text(140, 3, 0.5f, 0.5f, WHITE, "Universal-Updater");
+    	volt_draw_text(280, 225, 0.5f, 0.5f, WHITE, "\uE004 / \uE005: switch page");
+    	volt_draw_text(1, 225, 0.5f, 0.5f, WHITE, "\uE000: Select an Option");
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 		if (menuPage == 1) {
 		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
@@ -316,25 +372,45 @@ int main()
 
 				// Draw the Settings Options!
 			}
-			if (settings.universal.theme == 0) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Sharkive Theme");
-			} else if (settings.universal.theme == 1) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Checkpoint Theme");
-			} else if (settings.universal.theme == 2) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Lasagna Theme");
-			} else if (settings.universal.theme == 3) {
-				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Theme 4");
+		//	if (settings.universal.theme == 0) {
+		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Sharkive Theme");
+		//	} else if (settings.universal.theme == 1) {
+		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Checkpoint Theme");
+		//	} else if (settings.universal.theme == 2) {
+		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Lasagna Theme");
+		//	} else if (settings.universal.theme == 3) {
+		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Theme 4");
+		//	}
+
+			if (settings.universal.bg == 0) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "BLACK");
+			} else if (settings.universal.bg == 1) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "WHITE");
+			} else if (settings.universal.bg == 2) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "BLUE");
+			} else if (settings.universal.bg == 3) {
+				volt_draw_text(10, 68, 0.65, 0.65, BLACK, "RED");
 			}
 
-			if (settings.universal.music == 0) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Chill Music");
-			} else if (settings.universal.music == 1) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Settings Music");
-			} else if (settings.universal.music == 2) {
-				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "SD Music");
-			} else if (settings.universal.music == 3) {
-				volt_draw_text(180, 68, 0.65f, 0.65f, BLACK, "OFF");
+			if (settings.universal.bars == 0) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "BLACK");
+			} else if (settings.universal.bars == 1) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "WHITE");
+			} else if (settings.universal.bars == 2) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "BLUE");
+			} else if (settings.universal.bars == 3) {
+				volt_draw_text(180, 68, 0.65, 0.65, BLACK, "RED");
 			}
+
+		//	if (settings.universal.music == 0) {
+		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Chill Music");
+		//	} else if (settings.universal.music == 1) {
+		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Settings Music");
+		//	} else if (settings.universal.music == 2) {
+		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "SD Music");
+		//	} else if (settings.universal.music == 3) {
+		//		volt_draw_text(180, 68, 0.65f, 0.65f, BLACK, "OFF");
+		//	}
 			volt_end_draw();
 		} else {
 			// Draw buttons
@@ -517,12 +593,12 @@ int main()
 				switch (menuSelection) {
 				case 0:
 				default:
-					settings.universal.theme++;
-					if (settings.universal.theme > 3) settings.universal.theme = 0;
+					settings.universal.bg++;
+					if (settings.universal.bg > 3) settings.universal.bg = 0;
 					break;
 				case 1:
-					settings.universal.music++;
-					if (settings.universal.music > 3) settings.universal.music = 0;
+					settings.universal.bars++;
+					if (settings.universal.bars > 3) settings.universal.bars = 0;
 					break;
 				}
 			} else {

@@ -30,3 +30,5 @@
 #define WHITE RGBA8(255, 255, 255, 255)
 #define GREYISH RGBA8(200, 200, 200, 255)
 #define DarkBlue RGBA8(0, 2, 229, 255)
+
+#define BLUE ABGR8(255, 0X4F, 0x2F, 0x06)

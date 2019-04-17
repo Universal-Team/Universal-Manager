@@ -14,8 +14,9 @@ static CIniFile settingsini( "sdmc:/Universal-Updater/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
-	settings.universal.theme = settingsini.GetInt("UI", "THEME", 0); // Themes = 2 
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music!
+	settings.universal.bars = settingsini.GetInt("UI", "BARS", 0); // Themes = 2 
+	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", 0); // Music!
 
 }
 
@@ -23,8 +24,9 @@ void LoadUniversalSettings(void) {
  * Save settings.
  */
 void SaveUniversalSettings(void) {
-	settingsini.SetInt("UI", "THEME", settings.universal.theme);
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
+	settingsini.SetInt("UI", "BARS", settings.universal.bars);
+	settingsini.SetInt("UI", "BACKGROUND", settings.universal.bg);
 	settingsini.SaveIniFile("sdmc:/Universal-Updater/Settings.ini");
 }
 
