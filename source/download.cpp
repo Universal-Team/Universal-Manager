@@ -682,7 +682,7 @@ std::string latestCheckpointRelease(void) {
 
 std::string updater(void) {
 	if (latestUpdaterReleaseCache == "")
-		latestUpdaterReleaseCache = getLatestRelease("SuperSaiyajinVoltZ/Universal-Updater", "tag_name");
+		latestUpdaterReleaseCache = getLatestRelease("Universal-Team/Universal-Updater", "tag_name");
 	return latestUpdaterReleaseCache;
 }
 
@@ -1141,7 +1141,7 @@ void updateCheckpoint(void) {
 	void updateSelf(void) {
 		displayTopMsg("Downloading Universal Updater...\n");
 
-		if (downloadFromRelease("https://github.com/SuperSaiyajinVoltZ/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
+		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
 			downloadFailed();
 			return;
 		}
