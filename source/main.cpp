@@ -612,7 +612,7 @@ int main()
 			}
 		}
 
-		if (hDown & KEY_Y || showMessage && !showSettings) {
+		if ((hDown & KEY_Y || showMessage) && !showSettings) {
 			switch (menuSelection)
 			{
 				case 0:
