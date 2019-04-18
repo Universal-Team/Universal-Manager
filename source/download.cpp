@@ -33,6 +33,7 @@ std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
 std::string latestUpdaterReleaseCache = "";
 std::string latestUpdaterNightlyCache = "";
+std::string godMode9Cache = "";
 
 extern void displayTopMsg(const char* text);
 
@@ -696,6 +697,12 @@ std::string latestUpdaterNightly(void) {
 	return latestUpdaterNightlyCache;
 }
 
+std::string latestGodMode9(void) {
+	if (godMode9Cache == "")
+		godMode9Cache = getLatestRelease("D0k3/GodMode9", "tag_name");
+	return godMode9Cache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Updater/currentVersions.ini");
 }
@@ -729,6 +736,7 @@ void checkForUpdates() {
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
 	std::string updaterChannel = getInstalledChannel("UNIVERSAL-UPDATER");
 	std::string updaterVersion = getInstalledVersion("UNIVERSAL-UPDATER");
+	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -750,6 +758,7 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
+	updateAvailable[14] = godMode9Version != latestGodMode9();
 	
 	if (updaterChannel == "release")
 		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
@@ -1203,3 +1212,23 @@ void updateCheckpoint(void) {
 void notImplementedYet(void) {
 	notImplemented();
 }
+
+void downloadGodMode9(void) {
+	displayTopMsg("Now Downloading GodMode9\n"
+						"(Release)");
+		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayTopMsg("extracting GodMode9.firm\n"
+						"(Release)");
+		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
+
+		deleteFile("sdmc:/GodMode9.zip");
+
+		setInstalledVersion("GODMODE9", latestGodMode9());
+		saveUpdateData();
+		updateAvailable[14] = false;
+	}
+	//doneMsg(); Somehow, this gives me a error.

@@ -47,13 +47,15 @@ struct {
 	{ 220, 168},
 	{ 129, 48},
 	{ 220, 48},
-	{ 129, 118},
-	{ 220, 118},
+	{ 129, 88},
+	{ 220, 88},
+	{ 129, 128},
+	{ 220, 128},
 	{ 129, 168},
-	{ 220, 168},
 };
 
 size_t button_tex2[] = {
+	button,
 	button,
 	button,
 	button,
@@ -85,6 +87,7 @@ const char *button_titles2[] = {
 	"     -",
 	"Release",
 	"Nightly",
+	"GodMode9"
 };
 
 const int title_spacing2[] = {
@@ -102,6 +105,7 @@ const int title_spacing2[] = {
 	6,
 	10,
 	10,
+	6,
 };
 
 const char *row_titles2[] = {
@@ -112,9 +116,11 @@ const char *row_titles2[] = {
 	"Downloads",
 	"Checkpoint",
 	"Updater",
+	"Downloads",
 };	
 
 bool updateAvailable[] = {
+	false,
 	false,
 	false,
 	false,
@@ -365,9 +371,12 @@ int main()
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
-		if (menuPage == 1) {
-		volt_draw_text(1, 78, 0.50, 0.50, WHITE, "For TWiLightMenu++"); // Draw Second Page Number.
-		}
+
+    	volt_draw_text(170, 5, 0.50, 0.50, BLACK, "Current Page :");
+
+		volt_draw_text(280, 5, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+
+		volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 		if(showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
@@ -606,6 +615,11 @@ int main()
 					}
 					showCommitInfo("Universal-Team/Universal-Updater", false);
 					break;
+					case 14:
+					if(dspfirmfound) {
+					}
+					showReleaseInfo("D0k3/GodMode9", false);
+					break;
 				default:
 					if(dspfirmfound) {
 					}
@@ -784,11 +798,23 @@ int main()
 							if(checkWifiStatus()){
 							if(dspfirmfound) {
 							}
-							displayTopMsg("Loading release notes...");
+							displayTopMsg("Loading Commit...");
 							if(showCommitInfo("Universal-Team/Universal-Updater", true))
 								updatingSelf = true;
 								updateSelf(true);
 								updatingSelf = false;
+								} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+							case 14: //Updater Update
+							if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayTopMsg("Loading release notes...");
+							if(showReleaseInfo("D0k3/GodMode9", true))
+								downloadGodMode9();
 								} else {
 							if(dspfirmfound) {
 							}

@@ -123,3 +123,8 @@ void updateSelf(bool nightly);
 * Not Implemented Yet Message Display.
 */
 void notImplementedYet(void);
+
+/**
+* Download/Update GodMode9!
+*/
+void downloadGodMode9(void);
