@@ -168,7 +168,7 @@ void screenon()
 
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 20, 400, 200, MESSAGE_BOX_COLOR);
+	volt_draw_rectangle(0, 15, 400, 210, MESSAGE_BOX_COLOR);
 //	if (settings.universal.text == 0) {
 		volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
 //	} else if (settings.universal.text == 1) {
