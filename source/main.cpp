@@ -580,6 +580,18 @@ int main()
 		if (hDown & KEY_TOUCH) {
 			if(touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
 				showSettings = !showSettings;
+			} else if(showSettings) {
+				if(touch.py >= 48 && touch.py <= 81 && touch.px >= 40 && touch.px <= 160) {
+					menuSelection = 0;
+					setOption = true;
+				} else if(touch.py >= 48 && touch.py <= 81 && touch.px >= 170 && touch.px <= 290) {
+					menuSelection = 1;
+					setOption = true;
+				} else if(touch.py >= 98 && touch.py <= 130 && touch.px >= 40 && touch.px <= 160) {
+					menuSelection = 2;
+					setOption = true;
+				}
+				showMessage = setOption;
 			} else {
 				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if(updateAvailable[i]){
@@ -600,7 +612,7 @@ int main()
 			}
 		}
 
-		if (hDown & KEY_Y || showMessage) {
+		if (hDown & KEY_Y || showMessage && !showSettings) {
 			switch (menuSelection)
 			{
 				case 0:
