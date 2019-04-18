@@ -141,9 +141,9 @@ struct {
 	int x;
 	int y;
 } buttons_settings[] = {
-	{ 40, 48},
-	{ 170, 48},
-	{ 40, 98},
+	{ 200, 48},
+	{ 200, 98},
+	{ 200, 148},
 };
 
 size_t buttons_settings_tex[] = {
@@ -418,55 +418,55 @@ int main()
 				// Draw the Settings Options!
 			}
 			if (settings.universal.bg == 0) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bg == 1) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bg == 2) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bg == 3) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bg == 4) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "YELLOW");
 			} else if (settings.universal.bg == 5) {
-				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "GRAY");
 			} else if (settings.universal.bg == 6) {
-				volt_draw_text(40, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "LIGHT BROWN");
 			} else if (settings.universal.bg == 7) {
-				volt_draw_text(40, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.bars == 0) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bars == 1) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bars == 2) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bars == 3) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bars == 4) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "YELLOW");
 			} else if (settings.universal.bars == 5) {
-				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "GRAY");
 			} else if (settings.universal.bars == 6) {
-				volt_draw_text(170, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "LIGHT BROWN");
 			} else if (settings.universal.bars == 7) {
-				volt_draw_text(170, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.music == 0) {
-				volt_draw_text(65, 108, 0.65, 0.65, BLACK, "Chill Music");
+				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "Chill");
 			} else if (settings.universal.music == 1) {
-				volt_draw_text(42, 108, 0.65, 0.65, BLACK, "Settings Music");
+				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "Settings");
 			} else if (settings.universal.music == 2) {
-				volt_draw_text(70, 108, 0.65, 0.65, BLACK, "SD Music");
+				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "SD");
 			} else if (settings.universal.music == 3) {
-				volt_draw_text(80, 108, 0.65f, 0.65f, BLACK, "OFF");
+				volt_draw_text(240, 168, 0.65f, 0.65f, BLACK, "OFF");
 			}
 			volt_end_draw();
 		} else {
 			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 
-    		volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page :");
+    		volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page:");
 
 			volt_draw_text(280, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 
@@ -548,19 +548,9 @@ int main()
 			buttonShading = false;
 		}
 		if (showSettings == true) {
-			if (menuSelection > 3) menuSelection = 1; //Anzahl der gesamten Buttons, 1 muss bleiben.
+		if (menuSelection > 3) menuSelection = 0;
+		else if (menuSelection < 0) menuSelection = 3;
 
-
-
-		else if (menuSelection > 3) menuSelection = 0; // Anzahl der Buttons und 0 muss bleiben.
-
-
-
-		else if (menuSelection < -1) menuSelection = 2; // -1 muss bleiben und anzahl der Schaltflächen bis zur letzten rechten schaltfläche.
-
-
-
-		else if (menuSelection < 0) menuSelection = 3; //0 muss bleiben und anzahl der Buttons.
 		} else {
 		if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 			menuSelection = (menuPage*8)+1; 
