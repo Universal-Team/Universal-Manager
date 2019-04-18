@@ -388,7 +388,7 @@ int main()
 		draw_Background_Top();
 		draw_Bars_Top();
 		volt_draw_text(4, 3, 0.5f, 0.5f, GREYISH, getTime().c_str());
-    	volt_draw_text(350, 3, 0.5f, 0.5f, GREYISH, "v1.0.0");
+    	volt_draw_text(350, 3, 0.5f, 0.5f, GREYISH, "v2.0.0");
     	volt_draw_text(140, 3, 0.5f, 0.5f, WHITE, "Universal-Updater");
     	volt_draw_text(280, 225, 0.5f, 0.5f, WHITE, "\uE004 / \uE005: switch page");
     	volt_draw_text(1, 225, 0.5f, 0.5f, WHITE, "\uE000: Select an Option");
@@ -396,13 +396,6 @@ int main()
 		draw_Bars_Bottom();
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 
-		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
-
-    	volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page :");
-
-		volt_draw_text(280, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-
-		volt_draw_text(300, 4, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 		if(showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
@@ -471,6 +464,13 @@ int main()
 			}
 			volt_end_draw();
 		} else {
+			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
+
+    		volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page :");
+
+			volt_draw_text(280, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+
+			volt_draw_text(300, 4, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
 				if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
@@ -515,7 +515,7 @@ int main()
 			}
 		}
 
-		if (hDown & KEY_R) {
+		if (hDown & KEY_R && !showSettings) {
 			if(menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
 				menuPage++;
 				menuSelection += 8;
