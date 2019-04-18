@@ -69,7 +69,7 @@ size_t button_tex2[] = {
 	button,
 	button,
 	button,
-	button,
+	settingsButton,
 };
 
 const char *button_titles2[] = {
@@ -105,7 +105,7 @@ const int title_spacing2[] = {
 	6,
 	10,
 	10,
-	6,
+	8,
 };
 
 const char *row_titles2[] = {
@@ -141,7 +141,7 @@ struct {
 	int x;
 	int y;
 } buttons_settings[] = {
-	{ 0, 48},
+	{ 40, 48},
 	{ 170, 48},
 };
 
@@ -372,11 +372,11 @@ int main()
 
 		volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 
-    	volt_draw_text(170, 5, 0.50, 0.50, BLACK, "Current Page :");
+    	volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page :");
 
-		volt_draw_text(280, 5, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+		volt_draw_text(280, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 
-		volt_draw_text(300, 5, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
+		volt_draw_text(300, 4, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 		if(showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
@@ -409,27 +409,27 @@ int main()
 		//	}
 
 			if (settings.universal.bg == 0) {
-				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bg == 1) {
-				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bg == 2) {
-				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bg == 3) {
-				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bg == 4) {
-				volt_draw_text(10, 58, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "YELLOW");
 			}
 
 			if (settings.universal.bars == 0) {
-				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bars == 1) {
-				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bars == 2) {
-				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bars == 3) {
-				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bars == 4) {
-				volt_draw_text(180, 58, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "YELLOW");
 			}
 
 		//	if (settings.universal.music == 0) {
