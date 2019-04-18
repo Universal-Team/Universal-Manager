@@ -28,7 +28,7 @@ Result extractArchive(std::string archivePath, std::string wantedFile, std::stri
 
 			Handle fileHandle;
 			std::string outputPathFinal = outputPath;
-			if(entryName.length() > wantedFile.length())
+			if (entryName.length() > wantedFile.length())
 				outputPathFinal += entryName.substr(wantedFile.length());
 			if (outputPathFinal.substr(outputPathFinal.length()-1) == "/")	continue;
 			Result res = openFile(&fileHandle, outputPathFinal.c_str(), true);

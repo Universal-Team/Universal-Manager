@@ -177,15 +177,7 @@ void screenon()
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 17, 400, 208, MESSAGE_BOX_COLOR);
-//	if (settings.universal.text == 0) {
-		volt_draw_text(24, 32, 0.5f, 0.5f, BLACK, text);
-//	} else if (settings.universal.text == 1) {
-//		volt_draw_text(24, 32, 0.5f, 0.5f, WHITE, text);
-//	} else if (settings.universal.text == 2) {
-//		volt_draw_text(24, 32, 0.5f, 0.5f, BLUE, text);
-//	} else if (settings.universal.text == 3) {
-//		volt_draw_text(24, 32, 0.5f, 0.5f, RED, text);
-//	}
+		volt_draw_text(24, 32, 0.5f, 0.5f, settings.universal.text, text);
 	volt_end_draw();
 }
 
@@ -323,7 +315,7 @@ int main()
 	
 	//Result res = 0;
 		
- 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+ 	if ( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 		ndspInit();
 		dspfirmfound = true;
 	}else{
@@ -331,7 +323,7 @@ int main()
 		volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "Dumping DSP firm...");
 		volt_end_draw();
 		dumpDsp();
-		if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+		if ( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 			ndspInit();
 			dspfirmfound = true;
 		} else {
@@ -396,7 +388,7 @@ int main()
 		draw_Bars_Bottom();
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
 
-		if(showSettings) {
+		if (showSettings) {
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
 				if (menuSelection == i) {
@@ -473,7 +465,7 @@ int main()
 			volt_draw_text(300, 4, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
-				if(i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
+				if (i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
 					if (menuSelection == i) {
 						// Button is highlighted.
 						volt_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
@@ -486,7 +478,7 @@ int main()
 						}
 					}
 					// Draw a dot if an update is availible
-					if(updateAvailable[i]) {
+					if (updateAvailable[i]) {
 						volt_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
 					}
 
@@ -499,7 +491,7 @@ int main()
 					int x_from_width = buttons2[i].x + title_spacing2[i];
 					volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
 
-					if(!(i%2)) {
+					if (!(i%2)) {
 						volt_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
 					}
 				}
@@ -516,51 +508,50 @@ int main()
 		}
 
 		if (hDown & KEY_R && !showSettings) {
-			if(menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
+			if (menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
 				menuPage++;
 				menuSelection += 8;
-				if(menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
+				if (menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
 			}
 		} else if (hDown & KEY_L) {
-			if(menuPage>0) {
+			if (menuPage>0) {
 				menuPage--;
 				menuSelection -= 8;
-				if(menuSelection < 0)	menuSelection = 0;
+				if (menuSelection < 0)	menuSelection = 0;
 			}
 		}
 
 		if (hDown & KEY_UP) {
-			if (buttonShading) menuSelection -= 2;
+			if (buttonShading) menuSelection -= (showSettings ? 1 : 2);
 		} else if (hDown & KEY_DOWN) {
-			if (buttonShading) menuSelection += 2;
-		} else if (hDown & KEY_LEFT) {
+			if (buttonShading) menuSelection += (showSettings ? 1 : 2);
+		} else if (hDown & KEY_LEFT && !showSettings) {
 			if (buttonShading && menuSelection%2) menuSelection--;
-		} else if (hDown & KEY_RIGHT) {
+		} else if (hDown & KEY_RIGHT && !showSettings) {
 			if (buttonShading && !(menuSelection%2)) menuSelection++;
 		}
 		if (hDown & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT)) {
 			buttonShading = true;
-			if(dspfirmfound) {
+			if (dspfirmfound) {
 			}
 		}
 
 		if (hDown & KEY_TOUCH) {
 			buttonShading = false;
 		}
-		if (showSettings == true) {
-		if (menuSelection > 3) menuSelection = 0;
-		else if (menuSelection < 0) menuSelection = 3;
-
+		if (showSettings) {
+			if (menuSelection > 2) menuSelection = 0;
+			else if (menuSelection < 0) menuSelection = 2;
 		} else {
-		if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
-			menuSelection = (menuPage*8)+1; 
-		} else if ((menuSelection > (menuPage*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
-			menuSelection = (menuPage*8); 
-		} else if (menuSelection < (menuPage*8)-1) {
-			menuSelection = ((menuPage*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (menuPage*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2;
-		} else if (menuSelection < (menuPage*8)) {
-			menuSelection = ((menuPage*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (menuPage*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1;
-		}
+			if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
+				menuSelection = (menuPage*8)+1; 
+			} else if ((menuSelection > (menuPage*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
+				menuSelection = (menuPage*8); 
+			} else if (menuSelection < (menuPage*8)-1) {
+				menuSelection = ((menuPage*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (menuPage*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2;
+			} else if (menuSelection < (menuPage*8)) {
+				menuSelection = ((menuPage*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (menuPage*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1;
+			}
 		}
 
 		if (hDown & KEY_A) {
@@ -568,23 +559,24 @@ int main()
 		}
 
 		if (hDown & KEY_TOUCH) {
-			if(touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
+			if (touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
 				showSettings = !showSettings;
-			} else if(showSettings) {
-				if(touch.py >= 48 && touch.py <= 81 && touch.px >= 40 && touch.px <= 160) {
+				showMessage = false;
+			} else if (showSettings) {
+				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 40 && touch.px <= 160) {
 					menuSelection = 0;
 					setOption = true;
-				} else if(touch.py >= 48 && touch.py <= 81 && touch.px >= 170 && touch.px <= 290) {
+				} else if (touch.py >= 48 && touch.py <= 81 && touch.px >= 170 && touch.px <= 290) {
 					menuSelection = 1;
 					setOption = true;
-				} else if(touch.py >= 98 && touch.py <= 130 && touch.px >= 40 && touch.px <= 160) {
+				} else if (touch.py >= 98 && touch.py <= 130 && touch.px >= 40 && touch.px <= 160) {
 					menuSelection = 2;
 					setOption = true;
 				}
 				showMessage = setOption;
 			} else {
 				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
-					if(updateAvailable[i]){
+					if (updateAvailable[i]){
 						if (touch.py >= (buttons2[i].y-6) && touch.py <= (buttons2[i].y+10) && touch.px >= (buttons2[i].x+75) && touch.px <= (buttons2[i].x+91)) {
 							menuSelection = i;
 							showMessage = true;
@@ -592,7 +584,7 @@ int main()
 					}
 				}
 			}
-			if(!showMessage) {
+			if (!showMessage) {
 				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (touch.py >= buttons2[i].y && touch.py <= (buttons2[i].y+33) && touch.px >= buttons2[i].x && touch.px <= (buttons2[i].x+87)) {
 						menuSelection = i;
@@ -606,67 +598,67 @@ int main()
 			switch (menuSelection)
 			{
 				case 0:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("DS-Homebrew/TWiLightMenu", false);
 					break;
 				case 1:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showCommitInfo("DS-Homebrew/TWiLightMenu", false);
 					break;
 				case 2:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("ahezard/nds-bootstrap", false);
 					break;
 				case 3:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showCommitInfo("ahezard/nds-bootstrap", false);
 					break;
 				case 4:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("FlagBrew/PKSM", false);
 					break;
 				case 5:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", false);
 					break;
 					case 6:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("AuroraWright/Luma3DS", false);
 					break;
 					case 7:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("hax0kartik/luma-hourlies", false);
 					break;
 					case 10:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("FlagBrew/Checkpoint", false);
 					break;
 					case 12:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("Universal-Team/Universal-Updater", false);
 					break;
 					case 13:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showCommitInfo("Universal-Team/Universal-Updater", false);
 					break;
 					case 14:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					showReleaseInfo("D0k3/GodMode9", false);
 					break;
 				default:
-					if(dspfirmfound) {
+					if (dspfirmfound) {
 					}
 					break;
 			}
@@ -674,7 +666,7 @@ int main()
 		}
 
 		if (setOption) {
-			if(showSettings) {
+			if (showSettings) {
 				switch (menuSelection) {
 				case 0:
 				default:
@@ -696,181 +688,181 @@ int main()
 			displayTopMsg(str);
 			switch (menuSelection) {
 					case 0:	// TWiLight release
-						if(checkWifiStatus()){ 
-							if(dspfirmfound) {
+						if (checkWifiStatus()){ 
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("DS-Homebrew/TWiLightMenu", true))
+							if (showReleaseInfo("DS-Homebrew/TWiLightMenu", true))
 							updateTWiLight(false);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 1:	// TWiLight nightly
-						if(checkWifiStatus()){ 
-							if(dspfirmfound) {
+						if (checkWifiStatus()){ 
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading commit...");
-							if(showCommitInfo("DS-Homebrew/TWiLightMenu", true))
+							if (showCommitInfo("DS-Homebrew/TWiLightMenu", true))
 							updateTWiLight(true);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 2:	// nds-bootstrap release
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("Ahezard/NDS-Bootstrap", true))
+							if (showReleaseInfo("Ahezard/NDS-Bootstrap", true))
 							updateBootstrap(false);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 3:	// nds-bootstrap nightly
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading commit...");
-							if(showCommitInfo("ahezard/NDS-Bootstrap", true))
+							if (showCommitInfo("ahezard/NDS-Bootstrap", true))
 							updateBootstrap(true);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 4:	// PKSM Release
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("FlagBrew/PKSM", true))
+							if (showReleaseInfo("FlagBrew/PKSM", true))
 							updatePKSM(false);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 5:	// PKSM nightly
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading commit...");
-							if(showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
+							if (showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
 							updatePKSM(true);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					case 6:	// Luma Release
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("AuroraWright/Luma3DS", true))
+							if (showReleaseInfo("AuroraWright/Luma3DS", true))
 							updateLuma(false);
 						break;
 					case 7:	// LumaNightly
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("hax0kartik/luma-hourlies", true))
+							if (showReleaseInfo("hax0kartik/luma-hourlies", true))
 							updateLuma(true);
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 8:	// Boxarts
-						//if(checkWifiStatus()){
-							if(dspfirmfound) {
+						//if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							downloadBoxart();
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 9:	// usrcheat.dat
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							updateCheats();
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 10:	// Checkpoint Release
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("FlagBrew/Checkpoint", true))
+							if (showReleaseInfo("FlagBrew/Checkpoint", true))
 							updateCheckpoint();
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 11:	// Checkpoint Release
-						if(checkWifiStatus()){
-							if(dspfirmfound) {
+						if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							notImplementedYet();
 						} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 12: //Updater Update
-							if(checkWifiStatus()){
-							if(dspfirmfound) {
+							if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("Universal-Team/Universal-Updater", true))
+							if (showReleaseInfo("Universal-Team/Universal-Updater", true))
 								updatingSelf = true;
 								updateSelf(false);
 								updatingSelf = false;
 								} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 						case 13: //Updater Update
-							if(checkWifiStatus()){
-							if(dspfirmfound) {
+							if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading Commit...");
-							if(showCommitInfo("Universal-Team/Universal-Updater", true))
+							if (showCommitInfo("Universal-Team/Universal-Updater", true))
 								updatingSelf = true;
 								updateSelf(true);
 								updatingSelf = false;
 								} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 							case 14: //Updater Update
-							if(checkWifiStatus()){
-							if(dspfirmfound) {
+							if (checkWifiStatus()){
+							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if(showReleaseInfo("D0k3/GodMode9", true))
+							if (showReleaseInfo("D0k3/GodMode9", true))
 								downloadGodMode9();
 								} else {
-							if(dspfirmfound) {
+							if (dspfirmfound) {
 							}
 						}
 						break;
 					default:
-						if(dspfirmfound) {
+						if (dspfirmfound) {
 						}
 						break;
 				}

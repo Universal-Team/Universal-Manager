@@ -93,7 +93,7 @@ Result installCia(const char * ciaPath)
 
 	media = getTitleDestination(info.titleID);
 	
-	if(!updatingSelf) {
+	if (!updatingSelf) {
 		ret = deletePrevious(info.titleID, media);
 		if (R_FAILED(ret))
 			return ret;

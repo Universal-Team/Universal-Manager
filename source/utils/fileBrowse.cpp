@@ -52,7 +52,7 @@ void findNdsFiles(vector<DirEntry>& dirContents)
 			snprintf(scanningMessage, sizeof(scanningMessage), "Searching for NDS ROMs...\n\nThis may take a bit.\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
 			displayTopMsg(scanningMessage);
 			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
-				if(!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {
+				if (!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {
 					if (strcasecmp(dirEntry.name.substr(dirEntry.name.length()-3, 3).c_str(), "nds") == 0) {
 						// Get game's TID
 						FILE *f_nds_file = fopen(dirEntry.name.c_str(), "rb");
@@ -117,7 +117,7 @@ void getDirectoryContents (vector<DirEntry>& dirContents) {
 			DirEntry dirEntry;
 
 			struct dirent* pent = readdir(pdir);
-			if(pent == NULL) break;
+			if (pent == NULL) break;
 
 			stat(pent->d_name, &st);
 			if (strcmp(pent->d_name, "..") != 0) {

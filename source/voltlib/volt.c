@@ -76,7 +76,7 @@ void volt_begin_draw(gfxScreen_t target, gfx3dSide_t side)
 
 void volt_draw_on(gfxScreen_t target, gfx3dSide_t side)
 {
-	if(target == GFX_TOP) {
+	if (target == GFX_TOP) {
 		C3D_FrameDrawOn(side == GFX_LEFT ? topLeft : topRight);
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, side == GFX_LEFT ? &projectionTopLeft : &projectionTopRight);
 	} else {
