@@ -117,7 +117,7 @@ void updateCheckpoint(void);
 /**
 * Update The Updater!
 */
-void updateSelf(void);
+void updateSelf(bool nightly);
 
 /**
 * Not Implemented Yet Message Display.

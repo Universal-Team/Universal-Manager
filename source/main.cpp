@@ -50,7 +50,7 @@ struct {
 	{ 129, 118},
 	{ 220, 118},
 	{ 129, 168},
-	//{ 220, 128},
+	{ 220, 168},
 };
 
 size_t button_tex2[] = {
@@ -67,7 +67,7 @@ size_t button_tex2[] = {
 	button,
 	button,
 	button,
-	//greenbuttontex,
+	button,
 };
 
 const char *button_titles2[] = {
@@ -84,7 +84,7 @@ const char *button_titles2[] = {
 	"Release",
 	"     -",
 	"Release",
-	//"Cheats",
+	"Nightly",
 };
 
 const int title_spacing2[] = {
@@ -101,7 +101,7 @@ const int title_spacing2[] = {
 	6,
 	6,
 	10,
-	//10,
+	10,
 };
 
 const char *row_titles2[] = {
@@ -128,7 +128,7 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
-	//false,
+	false,
 };
 
 struct {
@@ -601,6 +601,11 @@ int main()
 					}
 					showReleaseInfo("Universal-Team/Universal-Updater", false);
 					break;
+					case 13:
+					if(dspfirmfound) {
+					}
+					showCommitInfo("Universal-Team/Universal-Updater", false);
+					break;
 				default:
 					if(dspfirmfound) {
 					}
@@ -765,7 +770,21 @@ int main()
 							displayTopMsg("Loading release notes...");
 							if(showReleaseInfo("Universal-Team/Universal-Updater", true))
 								updatingSelf = true;
-								updateSelf();
+								updateSelf(false);
+								updatingSelf = false;
+								} else {
+							if(dspfirmfound) {
+							}
+						}
+						break;
+						case 13: //Updater Update
+							if(checkWifiStatus()){
+							if(dspfirmfound) {
+							}
+							displayTopMsg("Loading release notes...");
+							if(showCommitInfo("Universal-Team/Universal-Updater", true))
+								updatingSelf = true;
+								updateSelf(true);
 								updatingSelf = false;
 								} else {
 							if(dspfirmfound) {

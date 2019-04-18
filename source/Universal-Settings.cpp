@@ -15,8 +15,8 @@ Settings_t settings;
 
 void LoadUniversalSettings(void) {
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music!
-	settings.universal.bars = settingsini.GetInt("UI", "BARS", 0); // Themes = 2 
-	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", 0); // Music!
+	settings.universal.bars = settingsini.GetInt("UI", "BARS", 1); // Themes = 2 
+	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", 2); // Music!
 
 }
 

@@ -32,6 +32,7 @@ std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
 std::string latestUpdaterReleaseCache = "";
+std::string latestUpdaterNightlyCache = "";
 
 extern void displayTopMsg(const char* text);
 
@@ -680,10 +681,19 @@ std::string latestCheckpointRelease(void) {
 }
 
 
-std::string updater(void) {
+
+std::string latestUpdaterRelease(void) {
 	if (latestUpdaterReleaseCache == "")
 		latestUpdaterReleaseCache = getLatestRelease("Universal-Team/Universal-Updater", "tag_name");
 	return latestUpdaterReleaseCache;
+}
+
+
+
+std::string latestUpdaterNightly(void) {
+	if (latestUpdaterNightlyCache == "")
+		latestUpdaterNightlyCache = getLatestCommit("Universal-Team/Universal-Updater", "sha").substr(0,7);
+	return latestUpdaterNightlyCache;
 }
 
 void saveUpdateData(void) {
@@ -717,6 +727,7 @@ void checkForUpdates() {
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
+	std::string updaterChannel = getInstalledChannel("UNIVERSAL-UPDATER");
 	std::string updaterVersion = getInstalledVersion("UNIVERSAL-UPDATER");
 
 	if (menuChannel == "release")
@@ -739,7 +750,14 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
-	updateAvailable[12] = updaterVersion != updater();
+	
+	if (updaterChannel == "release")
+		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
+	else if (updaterChannel == "nightly")
+		updateAvailable[13] = updaterVersion != latestUpdaterNightly();
+	else
+		updateAvailable[12] = updateAvailable[13] = true;
+
 }
 
 void updateBootstrap(bool nightly) {
@@ -1138,7 +1156,28 @@ void updateCheckpoint(void) {
 		updateAvailable[10] = false;
 	}
 
-	void updateSelf(void) {
+	void updateSelf(bool nightly) {
+	if(nightly) {
+		displayTopMsg("Downloading Universal-Updater\n" 
+						"(Nightly)");
+	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+		displayTopMsg("Installing Universal-Updater CIA...\n"
+						"\n\n\n\n\n\n\n\n\n"
+						"The app will reboot when done.");
+
+		installCia("/Universal-Updater-Nightly.cia");
+
+		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
+
+		setInstalledChannel("UNIVERSAL-UPDATER", "nightly");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
+		saveUpdateData();
+		updateAvailable[13] = false;
+	} else {
 		displayTopMsg("Downloading Universal Updater...\n");
 
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
@@ -1147,16 +1186,18 @@ void updateCheckpoint(void) {
 		}
 
 		displayTopMsg("Installing Universal-Updater CIA...\n"
-						"\n\n\n\n\n\n\n\n\n\n"
+						"\n\n\n\n\n\n\n\n\n"
 						"The app will reboot when done.");
 
 		installCia("/Universal-Updater.cia");
 
 		deleteFile("sdmc:/Universal-Updater.cia");
 
-		setInstalledVersion("UNIVERSAL-UPDATER", updater());
+		setInstalledChannel("UNIVERSAL-UPDATER", "release");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterRelease());
 		saveUpdateData();
 		updateAvailable[12] = false;
+	}
 	}
 
 void notImplementedYet(void) {
