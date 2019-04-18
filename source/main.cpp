@@ -143,9 +143,11 @@ struct {
 } buttons_settings[] = {
 	{ 40, 48},
 	{ 170, 48},
+	{ 40, 98},
 };
 
 size_t buttons_settings_tex[] = {
+	settingsButton,
 	settingsButton,
 	settingsButton,
 };
@@ -398,16 +400,6 @@ int main()
 
 				// Draw the Settings Options!
 			}
-		//	if (settings.universal.theme == 0) {
-		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Sharkive Theme");
-		//	} else if (settings.universal.theme == 1) {
-		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Checkpoint Theme");
-		//	} else if (settings.universal.theme == 2) {
-		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Lasagna Theme");
-		//	} else if (settings.universal.theme == 3) {
-		//		volt_draw_text(10, 68, 0.65, 0.65, BLACK, "Theme 4");
-		//	}
-
 			if (settings.universal.bg == 0) {
 				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bg == 1) {
@@ -432,15 +424,15 @@ int main()
 				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "YELLOW");
 			}
 
-		//	if (settings.universal.music == 0) {
-		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Chill Music");
-		//	} else if (settings.universal.music == 1) {
-		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "Settings Music");
-		//	} else if (settings.universal.music == 2) {
-		//		volt_draw_text(180, 68, 0.65, 0.65, BLACK, "SD Music");
-		//	} else if (settings.universal.music == 3) {
-		//		volt_draw_text(180, 68, 0.65f, 0.65f, BLACK, "OFF");
-		//	}
+			if (settings.universal.music == 0) {
+				volt_draw_text(65, 108, 0.65, 0.65, BLACK, "Chill Music");
+			} else if (settings.universal.music == 1) {
+				volt_draw_text(42, 108, 0.65, 0.65, BLACK, "Settings Music");
+			} else if (settings.universal.music == 2) {
+				volt_draw_text(70, 108, 0.65, 0.65, BLACK, "SD Music");
+			} else if (settings.universal.music == 3) {
+				volt_draw_text(80, 108, 0.65f, 0.65f, BLACK, "OFF");
+			}
 			volt_end_draw();
 		} else {
 			// Draw buttons
@@ -639,6 +631,10 @@ int main()
 				case 1:
 					settings.universal.bars++;
 					if (settings.universal.bars > 4) settings.universal.bars = 0;
+					break;
+				case 2:
+					settings.universal.music++;
+					if (settings.universal.music > 3) settings.universal.music = 0;
 					break;
 				}
 			} else {
