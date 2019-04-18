@@ -3,7 +3,6 @@
 
 //Theme 1.
 #define SHARKIVE_BG ABGR8(255, 0X4F, 0x2F, 0x06)
-#define SHARKIVE_BARS RGBA8(20, 20, 20, 255)
 
 //Theme 2.
 #define CHECKPOINT_BG ABGR8(255, 51, 51, 51)
@@ -30,5 +29,7 @@
 #define WHITE RGBA8(255, 255, 255, 255)
 #define GREYISH RGBA8(200, 200, 200, 255)
 #define DarkBlue RGBA8(0, 2, 229, 255)
+#define LIGHT_BROWN RGBA8(164, 84, 0, 255)
+#define LIGHT_GREEN RGBA8(15, 215, 138, 255)
 
 #define BLUE RGBA8(0, 0, 128, 255)

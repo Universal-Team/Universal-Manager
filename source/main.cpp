@@ -212,6 +212,12 @@ void draw_Bars_Bottom(void) {
 		draw_Bars_Bottom_Red();
 	} else if (settings.universal.bars == 4) {
 		draw_Bars_Bottom_Yellow();
+	} else if (settings.universal.bars == 5) {
+		draw_Bars_Bottom_Gray();
+	} else if (settings.universal.bars == 6) {
+		draw_Bars_Bottom_Light_Brown();
+	} else if (settings.universal.bars == 7) {
+		draw_Bars_Bottom_LIGHT_GREEN();
 	}
 }
 
@@ -226,6 +232,12 @@ void draw_Bars_Top(void) {
 		draw_Bars_Top_Red();
 	} else if (settings.universal.bars == 4) {
 		draw_Bars_Top_Yellow();
+	} else if (settings.universal.bars == 5) {
+		draw_Bars_Top_Gray();
+	} else if (settings.universal.bars == 6) {
+		draw_Bars_Top_Light_Brown();
+	} else if (settings.universal.bars == 7) {
+		draw_Bars_Top_LIGHT_GREEN();
 	}
 }
 
@@ -240,6 +252,12 @@ void draw_Background_Bottom(void) {
 		draw_Background_Bottom_Red();
 	} else if (settings.universal.bg == 4) {
 		draw_Background_Bottom_Yellow();
+	} else if (settings.universal.bg == 5) {
+		draw_Background_Bottom_Gray();
+	} else if (settings.universal.bg == 6) {
+		draw_Background_Bottom_Light_Brown();
+	} else if (settings.universal.bg == 7) {
+		draw_Background_Bottom_LIGHT_GREEN();
 	}
 }
 
@@ -254,6 +272,12 @@ void draw_Background_Top(void) {
 		draw_Background_Top_Red();
 	} else if (settings.universal.bg == 4) {
 		draw_Background_Top_Yellow();
+	} else if (settings.universal.bg == 5) {
+		draw_Background_Top_Gray();
+	} else if (settings.universal.bg == 6) {
+		draw_Background_Top_Light_Brown();
+	} else if (settings.universal.bg == 7) {
+		draw_Background_Top_LIGHT_GREEN();
 	}
 }
 
@@ -410,6 +434,12 @@ int main()
 				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bg == 4) {
 				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "YELLOW");
+			} else if (settings.universal.bg == 5) {
+				volt_draw_text(80, 58, 0.65, 0.65, BLACK, "GRAY");
+			} else if (settings.universal.bg == 6) {
+				volt_draw_text(40, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
+			} else if (settings.universal.bg == 7) {
+				volt_draw_text(40, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.bars == 0) {
@@ -422,6 +452,12 @@ int main()
 				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bars == 4) {
 				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "YELLOW");
+			} else if (settings.universal.bars == 5) {
+				volt_draw_text(210, 58, 0.65, 0.65, BLACK, "GRAY");
+			} else if (settings.universal.bars == 6) {
+				volt_draw_text(170, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
+			} else if (settings.universal.bars == 7) {
+				volt_draw_text(170, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.music == 0) {
@@ -511,7 +547,21 @@ int main()
 		if (hDown & KEY_TOUCH) {
 			buttonShading = false;
 		}
+		if (showSettings == true) {
+			if (menuSelection > 3) menuSelection = 1; //Anzahl der gesamten Buttons, 1 muss bleiben.
 
+
+
+		else if (menuSelection > 3) menuSelection = 0; // Anzahl der Buttons und 0 muss bleiben.
+
+
+
+		else if (menuSelection < -1) menuSelection = 2; // -1 muss bleiben und anzahl der Schaltflächen bis zur letzten rechten schaltfläche.
+
+
+
+		else if (menuSelection < 0) menuSelection = 3; //0 muss bleiben und anzahl der Buttons.
+		} else {
 		if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 			menuSelection = (menuPage*8)+1; 
 		} else if ((menuSelection > (menuPage*8)+7) || (menuSelection > (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1))) {
@@ -520,6 +570,7 @@ int main()
 			menuSelection = ((menuPage*8)+6 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-2) ? (menuPage*8)+6 : sizeof(buttons2)/sizeof(buttons2[0])-2;
 		} else if (menuSelection < (menuPage*8)) {
 			menuSelection = ((menuPage*8)+7 < (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1) ? (menuPage*8)+7 : sizeof(buttons2)/sizeof(buttons2[0])-1;
+		}
 		}
 
 		if (hDown & KEY_A) {
@@ -626,11 +677,11 @@ int main()
 				case 0:
 				default:
 					settings.universal.bg++;
-					if (settings.universal.bg > 4) settings.universal.bg = 0;
+					if (settings.universal.bg > 7) settings.universal.bg = 0;
 					break;
 				case 1:
 					settings.universal.bars++;
-					if (settings.universal.bars > 4) settings.universal.bars = 0;
+					if (settings.universal.bars > 7) settings.universal.bars = 0;
 					break;
 				case 2:
 					settings.universal.music++;
