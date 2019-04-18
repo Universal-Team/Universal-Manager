@@ -529,7 +529,7 @@ int main()
 			if(touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
 				showSettings = !showSettings;
 			} else {
-				for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
+				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if(updateAvailable[i]){
 						if (touch.py >= (buttons2[i].y-6) && touch.py <= (buttons2[i].y+10) && touch.px >= (buttons2[i].x+75) && touch.px <= (buttons2[i].x+91)) {
 							menuSelection = i;
@@ -539,7 +539,7 @@ int main()
 				}
 			}
 			if(!showMessage) {
-				for (int i = (int)(sizeof(buttons2)/sizeof(buttons2[0]))-1; i >= 0; i--) {
+				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (touch.py >= buttons2[i].y && touch.py <= (buttons2[i].y+33) && touch.px >= buttons2[i].x && touch.px <= (buttons2[i].x+87)) {
 						menuSelection = i;
 						setOption = true;
@@ -628,7 +628,10 @@ int main()
 					break;
 				}
 			} else {
-			switch ((menuPage*8)+menuSelection) {
+			char str[16];
+			itoa(menuSelection,str,10);
+			displayTopMsg(str);
+			switch (menuSelection) {
 					case 0:	// TWiLight release
 						if(checkWifiStatus()){ 
 							if(dspfirmfound) {
