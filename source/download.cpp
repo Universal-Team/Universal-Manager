@@ -616,7 +616,7 @@ void setMessageText(const std::string &text)
 void drawMessageText(int position, bool showExitText)
 {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 15, 400, 210, MESSAGE_BOX_COLOR);
+	volt_draw_rectangle(0, 17, 400, 208, MESSAGE_BOX_COLOR);
 	volt_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
 			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());

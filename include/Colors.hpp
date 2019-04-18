@@ -20,7 +20,7 @@
 //Standard.
 #define BLACK RGBA8(0, 0, 0, 255)
 #define RED RGBA8(255, 0, 0, 255)
-#define MESSAGE_BOX_COLOR RGBA8(0x81, 0x37, 0x72, 0xFF)
+#define MESSAGE_BOX_COLOR RGBA8(34, 85, 85, 255)
 #define GRAY C2D_Color32(70, 70, 70, 255)
 #define TIME RGBA8(16, 0, 0, 223)
 #define LIGHTBLUE RGBA8(187, 208, 254, 255)
@@ -31,4 +31,4 @@
 #define GREYISH RGBA8(200, 200, 200, 255)
 #define DarkBlue RGBA8(0, 2, 229, 255)
 
-#define BLUE ABGR8(255, 0X4F, 0x2F, 0x06)
+#define BLUE RGBA8(0, 0, 128, 255)
