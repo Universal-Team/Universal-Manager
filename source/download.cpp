@@ -57,10 +57,11 @@ std::string latestPKSMNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
+std::string latestCheckpointNightlyCache = "";
 std::string latestUpdaterReleaseCache = "";
 std::string latestUpdaterNightlyCache = "";
 std::string godMode9Cache = "";
-
+std::string godMode9NightlyCache = "";
 extern void displayTopMsg(const char* text);
 extern void draw_Dialogbox_Color(void);
 
@@ -260,7 +261,7 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 		return -1;
 	}
 	
-	printf("Looking for asset with name matching:\n%s\n", asset.c_str());
+	printf("Looking for asset with matching name:\n%s\n", asset.c_str());
 	std::string assetUrl;
 	json parsedAPI = json::parse(result_buf);
 	if (parsedAPI["assets"].is_array()) {
@@ -709,6 +710,12 @@ std::string latestCheckpointRelease(void) {
 }
 
 
+std::string latestCheckpointNightly(void) {
+	if (latestCheckpointNightlyCache == "")
+		latestCheckpointNightlyCache = getLatestCommit("FlagBrew/Checkpoint", "tag_name");
+	return latestCheckpointNightlyCache;
+}
+
 
 std::string latestUpdaterRelease(void) {
 	if (latestUpdaterReleaseCache == "")
@@ -728,6 +735,12 @@ std::string latestGodMode9(void) {
 	if (godMode9Cache == "")
 		godMode9Cache = getLatestRelease("D0k3/GodMode9", "tag_name");
 	return godMode9Cache;
+}
+
+std::string nightlyGodMode9(void) {
+	if (godMode9NightlyCache == "")
+		godMode9NightlyCache = getLatestCommit("D0k3/GodMode9", "tag_name");
+	return godMode9NightlyCache;
 }
 
 void saveUpdateData(void) {
@@ -761,9 +774,11 @@ void checkForUpdates() {
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
+	std::string checkpointNightly = getInstalledChannel("CHECKPOINT-NIGHTLY");
 	std::string updaterChannel = getInstalledChannel("UNIVERSAL-UPDATER");
 	std::string updaterVersion = getInstalledVersion("UNIVERSAL-UPDATER");
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
+	std::string godMode9Nightly = getInstalledChannel ("GODMODE9-NIGHTLY");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -785,7 +800,9 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
+	updateAvailable[11] = checkpointNightly != latestCheckpointNightly();
 	updateAvailable[14] = godMode9Version != latestGodMode9();
+	updateAvailable[16] = godMode9Nightly != nightlyGodMode9();
 	
 	if (updaterChannel == "release")
 		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
@@ -793,6 +810,7 @@ void checkForUpdates() {
 		updateAvailable[13] = updaterVersion != latestUpdaterNightly();
 	else
 		updateAvailable[12] = updateAvailable[13] = true;
+	
 
 }
 
@@ -937,7 +955,7 @@ void updatePKSM(bool nightly) {
 }
 
 void updateCheats(void) {
-	displayTopMsg("Downloading DSJ's Usrcheat.dat\n");	// This needs to be manually changed when the usrcheat.dat in TWLBot get's updated
+	displayTopMsg("Downloading DSJ's usrcheat.dat\n");
 	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
 		downloadFailed();
 		return;
@@ -1037,7 +1055,7 @@ void downloadBoxart(void) {
 	vector<DirEntry> dirContents;
 	std::string scanDir;
 
-	displayTopMsg("Would you like to choose a directory, or scan\nthe full card?\n\n\n\n\n\n\n\n\n\nB: Cancel   A: Full SD   X: Choose Directory");
+	displayTopMsg("Would you like to choose a directory, or scan\nthe entire SD card?\n\n\n\n\n\n\n\n\n\nB: Cancel   A: Full SD   X: Choose Directory");
 
 	while(1) {
 		gspWaitForVBlank();
@@ -1193,6 +1211,25 @@ void updateCheckpoint(void) {
 	doneMsg();
 }
 
+void nightlyCheckpoint(void) {
+	displayTopMsg("Downloading Checkpoint.cia (Nightly)\n");
+		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayTopMsg("Installing Checkpoint.cia\n"
+						"(Nighly)");
+		installCia("/Checkpoint-Nightly.cia");
+
+		deleteFile("sdmc:/Checkpoint-Nightly.cia");
+
+		setInstalledVersion("CHECKPOINT-NIGHTLY", latestCheckpointNightly());
+		saveUpdateData();
+		updateAvailable[10] = false;
+	doneMsg();
+}
+
 	void updateSelf(bool nightly) {
 	if(nightly) {
 		displayTopMsg("Downloading Universal-Updater\n" 
@@ -1250,8 +1287,28 @@ void downloadGodMode9(void) {
 			return;
 		}
 
-		displayTopMsg("extracting GodMode9.firm\n"
+		displayTopMsg("Extracting GodMode9.firm\n"
 						"(Release)");
+		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
+
+		deleteFile("sdmc:/GodMode9.zip");
+
+		setInstalledVersion("GODMODE9", latestGodMode9());
+		saveUpdateData();
+		updateAvailable[14] = false;
+	doneMsg(); 
+	}
+
+void godMode9Nightly(void) {
+	displayTopMsg("Now Downloading GodMode9\n"
+						"(Nightly)");
+		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayTopMsg("Extracting GodMode9.firm\n"
+						"(Nightly)");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 
 		deleteFile("sdmc:/GodMode9.zip");
