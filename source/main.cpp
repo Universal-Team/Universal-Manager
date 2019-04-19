@@ -426,7 +426,7 @@ int main()
     	volt_draw_text(1, 225, 0.5f, 0.5f, settings.universal.text, "\uE000: Select an Option");
 		draw_Background_Bottom();
 		draw_Bars_Bottom();
-		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
+		volt_draw_texture(settingsIcon, 301, 221); // Draw the settings icon
 
 		if (showSettings) {
 			// Draw buttons
