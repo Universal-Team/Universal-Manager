@@ -625,7 +625,7 @@ void drawMessageText(int position, bool showExitText)
 			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, settings.universal.text, _topText[i+position].c_str());
 	}
 	if(showExitText)
-		volt_draw_text(24, 200, 0.5f, 0.5f, WHITE, "B: Cancel   A: Update");
+		volt_draw_text(24, 200, 0.5f, 0.5f, settings.universal.text, "B: Cancel   A: Update");
 	volt_end_draw();
 }
 
