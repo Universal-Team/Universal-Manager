@@ -1165,7 +1165,8 @@ void updateCheckpoint(void) {
 		setInstalledVersion("CHECKPOINT-RELEASE", latestCheckpointRelease());
 		saveUpdateData();
 		updateAvailable[10] = false;
-	}
+	doneMsg();
+}
 
 	void updateSelf(bool nightly) {
 	if(nightly) {
@@ -1209,6 +1210,7 @@ void updateCheckpoint(void) {
 		saveUpdateData();
 		updateAvailable[12] = false;
 	}
+	doneMsg();
 	}
 
 void notImplementedYet(void) {
@@ -1232,5 +1234,5 @@ void downloadGodMode9(void) {
 		setInstalledVersion("GODMODE9", latestGodMode9());
 		saveUpdateData();
 		updateAvailable[14] = false;
+	doneMsg(); 
 	}
-	//doneMsg(); Somehow, this gives me a error.
