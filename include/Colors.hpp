@@ -7,7 +7,7 @@
 
 #define RED RGBA8(255, 0, 0, 255)
 
-#define YELLOW RGBA8(237, 247, 157, 255)
+#define YELLOW RGBA8(255, 215, 0, 255)
 
 #define GRAY RGBA8(70, 70, 70, 255)
 

@@ -141,9 +141,9 @@ struct {
 	int x;
 	int y;
 } buttons_settings[] = {
-	{ 200, 48},
-	{ 200, 98},
-	{ 200, 148},
+	{ 100, 48},
+	{ 100, 98},
+	{ 100, 148},
 };
 
 size_t buttons_settings_tex[] = {
@@ -408,51 +408,56 @@ int main()
 				const int h = 30;
 
 				// Draw the Settings Options!
+				volt_draw_text(2, 58, 0.65, 0.65, BLACK, "Background");
+
+				volt_draw_text(2, 108, 0.65, 0.65, BLACK, "Bars");
+
+				volt_draw_text(2, 158, 0.65, 0.65, BLACK, "Music");
 			}
 			if (settings.universal.bg == 0) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bg == 1) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bg == 2) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(130, 58, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bg == 3) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(135, 58, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bg == 4) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "YELLOW");
 			} else if (settings.universal.bg == 5) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(130, 58, 0.65, 0.65, BLACK, "GRAY");
 			} else if (settings.universal.bg == 6) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(110, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
 			} else if (settings.universal.bg == 7) {
-				volt_draw_text(240, 68, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(110, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.bars == 0) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(125, 108, 0.65, 0.65, BLACK, "BLACK");
 			} else if (settings.universal.bars == 1) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(125, 108, 0.65, 0.65, BLACK, "WHITE");
 			} else if (settings.universal.bars == 2) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(130, 108, 0.65, 0.65, BLACK, "BLUE");
 			} else if (settings.universal.bars == 3) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(135, 108, 0.65, 0.65, BLACK, "RED");
 			} else if (settings.universal.bars == 4) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(120, 108, 0.65, 0.65, BLACK, "YELLOW");
 			} else if (settings.universal.bars == 5) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(130, 108, 0.65, 0.65, BLACK, "GRAY");
 			} else if (settings.universal.bars == 6) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(110, 108, 0.65, 0.65, BLACK, "LIGHT BROWN");
 			} else if (settings.universal.bars == 7) {
-				volt_draw_text(240, 118, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(110, 108, 0.65, 0.65, BLACK, "LIGHT GREEN");
 			}
 
 			if (settings.universal.music == 0) {
-				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "Chill");
+				volt_draw_text(125, 158, 0.65, 0.65, BLACK, "Chill");
 			} else if (settings.universal.music == 1) {
-				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "Settings");
+				volt_draw_text(120, 158, 0.65, 0.65, BLACK, "Settings");
 			} else if (settings.universal.music == 2) {
-				volt_draw_text(240, 168, 0.65, 0.65, BLACK, "SD");
+				volt_draw_text(140, 158, 0.65, 0.65, BLACK, "SD");
 			} else if (settings.universal.music == 3) {
-				volt_draw_text(240, 168, 0.65f, 0.65f, BLACK, "OFF");
+				volt_draw_text(135, 158, 0.65f, 0.65f, BLACK, "OFF");
 			}
 			volt_end_draw();
 		} else {
@@ -566,7 +571,7 @@ int main()
 				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 40 && touch.px <= 160) {
 					menuSelection = 0;
 					setOption = true;
-				} else if (touch.py >= 48 && touch.py <= 81 && touch.px >= 170 && touch.px <= 290) {
+				} else if (touch.py >= 48 && touch.py <= 81 && touch.px >= 90 && touch.px <= 290) {
 					menuSelection = 1;
 					setOption = true;
 				} else if (touch.py >= 98 && touch.py <= 130 && touch.px >= 40 && touch.px <= 160) {
