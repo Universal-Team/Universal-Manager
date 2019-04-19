@@ -95,7 +95,8 @@ size_t button_tex2[] = {
 	button,
 	button,
 	button,
-	settingsButton,
+	button,
+	button,
 };
 
 const char *button_titles2[] = {
@@ -132,7 +133,8 @@ const int title_spacing2[] = {
 	6,
 	10,
 	10,
-	8,
+	6,
+	10,
 };
 
 const char *row_titles2[] = {
@@ -147,6 +149,7 @@ const char *row_titles2[] = {
 };	
 
 bool updateAvailable[] = {
+	false,
 	false,
 	false,
 	false,
@@ -738,6 +741,11 @@ int main()
 					}
 					showReleaseInfo("FlagBrew/Checkpoint", false);
 					break;
+				case 11:
+					if (dspfirmfound) {
+					}
+					showCommitInfo("FlagBrew/Checkpoint", false); //The Repo for the Nightlys.
+					break;
 				case 12:
 					if (dspfirmfound) {
 					}
@@ -753,15 +761,11 @@ int main()
 					}
 					showReleaseInfo("D0k3/GodMode9", false);
 					break;
+				
 				case 15:
 					if (dspfirmfound) {
 					}
-					showCommitInfo("FlagBrew/Checkpoint", false);
-					break;
-				case 16:
-					if (dspfirmfound) {
-					}
-					showCommitInfo("D0k3/GodMode9", false);
+					showCommitInfo("D0k3/GodMode9", false); // The Commit for the Nightlys.
 					break;
 				default:
 					if (dspfirmfound) {
@@ -922,7 +926,7 @@ int main()
 							}
 						}
 						break;
-					case 15: //Checkpoint Nightly
+					case 11: //Checkpoint Nightly
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -972,7 +976,7 @@ int main()
 							}
 						}
 						break;
-					case 16: //GodMode9 Nightly
+					case 15: //GodMode9 Nightly
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
