@@ -144,9 +144,11 @@ struct {
 	{ 100, 48},
 	{ 100, 98},
 	{ 100, 148},
+	{ 100, 198},
 };
 
 size_t buttons_settings_tex[] = {
+	settingsButton,
 	settingsButton,
 	settingsButton,
 	settingsButton,
@@ -286,6 +288,26 @@ void draw_Dialogbox_Color(void) {
 	}
 }
 
+void select_Text_Color(void) {
+	if (settings.universal.txtcolor == 0) {
+		settings.universal.text = BLACK;
+	} else if (settings.universal.txtcolor == 1) {
+		settings.universal.text = WHITE;
+	} else if (settings.universal.txtcolor == 2) {
+		settings.universal.text = BLUE;
+	} else if (settings.universal.txtcolor == 3) {
+		settings.universal.text = RED;
+	} else if (settings.universal.txtcolor == 4) {
+		settings.universal.text = YELLOW;
+	} else if (settings.universal.txtcolor == 5) {
+		settings.universal.text = GRAY;
+	} else if (settings.universal.txtcolor == 6) {
+		settings.universal.text = LIGHT_BROWN;
+	} else if (settings.universal.txtcolor == 7) {
+		settings.universal.text = LIGHT_GREEN;
+	}
+}
+
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	draw_Dialogbox_Color();
@@ -398,11 +420,11 @@ int main()
 	//}
 		draw_Background_Top();
 		draw_Bars_Top();
-		volt_draw_text(4, 3, 0.5f, 0.5f, GREYISH, getTime().c_str());
-    	volt_draw_text(350, 3, 0.5f, 0.5f, GREYISH, "v2.0.0");
-    	volt_draw_text(140, 3, 0.5f, 0.5f, WHITE, "Universal-Updater");
-    	volt_draw_text(280, 225, 0.5f, 0.5f, WHITE, "\uE004 / \uE005: switch page");
-    	volt_draw_text(1, 225, 0.5f, 0.5f, WHITE, "\uE000: Select an Option");
+		volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
+    	volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
+    	volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
+    	volt_draw_text(280, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: switch page");
+    	volt_draw_text(1, 225, 0.5f, 0.5f, settings.universal.text, "\uE000: Select an Option");
 		draw_Background_Bottom();
 		draw_Bars_Bottom();
 		volt_draw_texture(settingsIcon, 292, 212); // Draw the settings icon
@@ -427,11 +449,13 @@ int main()
 				const int h = 30;
 
 				// Draw the Settings Options!
-				volt_draw_text(2, 58, 0.65, 0.65, BLACK, "Background");
+				volt_draw_text(2, 58, 0.65, 0.65, settings.universal.text, "Background");
 
-				volt_draw_text(2, 108, 0.65, 0.65, BLACK, "Bars");
+				volt_draw_text(2, 108, 0.65, 0.65, settings.universal.text, "Bars");
 
-				volt_draw_text(2, 158, 0.65, 0.65, BLACK, "Music");
+				volt_draw_text(2, 158, 0.65, 0.65, settings.universal.text, "Music");
+
+				volt_draw_text(2, 208, 0.65, 0.65, settings.universal.text, "Text");
 			}
 			if (settings.universal.bg == 0) {
 				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "BLACK");
@@ -478,15 +502,34 @@ int main()
 			} else if (settings.universal.music == 3) {
 				volt_draw_text(135, 158, 0.65f, 0.65f, BLACK, "OFF");
 			}
+
+				if (settings.universal.txtcolor == 0) {
+				volt_draw_text(125, 208, 0.65, 0.65, BLACK, "BLACK");
+			} else if (settings.universal.txtcolor == 1) {
+				volt_draw_text(125, 208, 0.65, 0.65, BLACK, "WHITE");
+			} else if (settings.universal.txtcolor == 2) {
+				volt_draw_text(130, 208, 0.65, 0.65, BLACK, "BLUE");
+			} else if (settings.universal.txtcolor == 3) {
+				volt_draw_text(135, 208, 0.65, 0.65, BLACK, "RED");
+			} else if (settings.universal.txtcolor == 4) {
+				volt_draw_text(120, 208, 0.65, 0.65, BLACK, "YELLOW");
+			} else if (settings.universal.txtcolor == 5) {
+				volt_draw_text(130, 208, 0.65, 0.65, BLACK, "GRAY");
+			} else if (settings.universal.txtcolor == 6) {
+				volt_draw_text(110, 208, 0.65, 0.65, BLACK, "LIGHT BROWN");
+			} else if (settings.universal.txtcolor == 7) {
+				volt_draw_text(110, 208, 0.65, 0.65, BLACK, "LIGHT GREEN");
+			}
+
 			volt_end_draw();
 		} else {
 			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
 
-    		volt_draw_text(170, 4, 0.50, 0.50, BLACK, "Current Page:");
+    		volt_draw_text(170, 4, 0.50, 0.50, settings.universal.text, "Current Page:");
 
-			volt_draw_text(280, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+			volt_draw_text(280, 4, 0.50, 0.50, settings.universal.text, "1"); //Draw First Page Number.
 
-			volt_draw_text(300, 4, 0.50, 0.50, BLACK, "2"); // Draw Second Page Number.
+			volt_draw_text(300, 4, 0.50, 0.50, settings.universal.text, "2"); // Draw Second Page Number.
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
 				if (i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
@@ -513,10 +556,10 @@ int main()
 					// Draw the title.
 					int y = buttons2[i].y + ((40 - h) / 2);
 					int x_from_width = buttons2[i].x + title_spacing2[i];
-					volt_draw_text(x_from_width, y, 0.75, 0.75, BLACK, button_titles2[i]);
+					volt_draw_text(x_from_width, y, 0.75, 0.75, settings.universal.text, button_titles2[i]);
 
 					if (!(i%2)) {
-						volt_draw_text(5, y, 0.7, 0.7, BLACK, row_titles2[i/2]);
+						volt_draw_text(5, y, 0.7, 0.7, settings.universal.text, row_titles2[i/2]);
 					}
 				}
 			}
@@ -564,8 +607,8 @@ int main()
 			buttonShading = false;
 		}
 		if (showSettings) {
-			if (menuSelection > 2) menuSelection = 0;
-			else if (menuSelection < 0) menuSelection = 2;
+			if (menuSelection > 3) menuSelection = 0;
+			else if (menuSelection < 0) menuSelection = 3;
 		} else {
 			if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 				menuSelection = (menuPage*8)+1; 
@@ -704,6 +747,10 @@ int main()
 				case 2:
 					settings.universal.music++;
 					if (settings.universal.music > 3) settings.universal.music = 0;
+					break;
+				case 3:
+					settings.universal.txtcolor++;
+					if (settings.universal.txtcolor > 7) settings.universal.txtcolor = 0;
 					break;
 				}
 			} else {

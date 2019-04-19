@@ -8,6 +8,7 @@
 typedef struct _Settings_t {
 	struct {
 		int music;
+		int txtcolor;
 		int text;
 		int bars;
 		int bg;	
