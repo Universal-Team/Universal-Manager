@@ -152,3 +152,10 @@ void notImplementedYet(void);
 * Download/Update GodMode9!
 */
 void downloadGodMode9(void);
+
+//Update GodMode9 Nightly.
+
+void godMode9Nightly(void);
+
+//Update Checkpoint Nightly.
+void nightlyCheckpoint(void);
