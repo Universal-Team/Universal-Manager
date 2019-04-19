@@ -1299,7 +1299,7 @@ void downloadGodMode9(void) {
 	doneMsg(); 
 	}
 
-void GodMode9Nightly(void) {
+void godMode9Nightly(void) {
 	displayTopMsg("Now Downloading GodMode9\n"
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
