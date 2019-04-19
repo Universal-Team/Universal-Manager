@@ -928,7 +928,7 @@ int main()
 							}
 							displayTopMsg("Loading commit notes...");
 							if (showReleaseInfo("Flagbrew/Checkpoint", true))
-								downloadCheckpointNightly();
+								nightlyCheckpoint();
 								} else {
 							if (dspfirmfound) {
 							}
@@ -978,7 +978,7 @@ int main()
 							}
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("D0k3/GodMode9", true))
-								GodMode9Nightly();
+								godMode9Nightly();
 								} else {
 							if (dspfirmfound) {
 							}
