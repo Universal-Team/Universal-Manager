@@ -800,7 +800,7 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
-	updateAvailable[11] = checkpointNightly != latestCheckpointCommit();
+	updateAvailable[11] = checkpointNightly != latestCheckpointNightly();
 	updateAvailable[14] = godMode9Version != latestGodMode9();
 	updateAvailable[16] = godMode9Nightly != nightlyGodMode9();
 	
@@ -1211,7 +1211,7 @@ void updateCheckpoint(void) {
 	doneMsg();
 }
 
-void updateCheckpoint(void) {
+void nightlyCheckpoint(void) {
 	displayTopMsg("Downloading Checkpoint.cia (Nightly)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
