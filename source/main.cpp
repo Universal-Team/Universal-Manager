@@ -621,12 +621,13 @@ int main()
 
 		if (hDown & KEY_A) {
 			setOption = true;
+		} else if (hDown & KEY_SELECT) {
+			showSettings = !showSettings;
 		}
 
 		if (hDown & KEY_TOUCH) {
-			if (touch.py >= 212 && touch.py <= 240 && touch.px >= 292 && touch.px <= 320) {
+			if (touch.py >= 221 && touch.py <= 240 && touch.px >= 301 && touch.px <= 320) {
 				showSettings = !showSettings;
-				showMessage = false;
 			} else if (showSettings) {
 				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 0;
@@ -641,7 +642,6 @@ int main()
 					menuSelection = 3;
 					setOption = true;
 				}
-				showMessage = setOption;
 			} else {
 				for (int i = ((int)(sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (updateAvailable[i]){
@@ -651,14 +651,15 @@ int main()
 						}
 					}
 				}
-			}
-			if (!showMessage) {
+
+				if (!showMessage) {
 				for (int i = ((int)(sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (touch.py >= buttons2[i].y && touch.py <= (buttons2[i].y+33) && touch.px >= buttons2[i].x && touch.px <= (buttons2[i].x+87)) {
 						menuSelection = i;
 						setOption = true;
 					}
 				}
+			}
 			}
 		}
 
