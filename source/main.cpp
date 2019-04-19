@@ -398,7 +398,6 @@ int main()
 		hidScanInput();
 		
 		const u32 hDown = hidKeysDown();
-		const u32 hHeld = hidKeysHeld();
 
 		hidTouchRead(&touch);
 
@@ -446,7 +445,6 @@ int main()
 
 				// Determine the text height.
 				// NOTE: Button texture size is 132x34.
-				const int h = 30;
 
 				// Draw the Settings Options!
 				volt_draw_text(2, 58, 0.65, 0.65, settings.universal.text, "Background");
@@ -458,67 +456,67 @@ int main()
 				volt_draw_text(2, 208, 0.65, 0.65, settings.universal.text, "Text");
 			}
 			if (settings.universal.bg == 0) {
-				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(125, 58, 0.65, 0.65, settings.universal.text, "BLACK");
 			} else if (settings.universal.bg == 1) {
-				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(125, 58, 0.65, 0.65, settings.universal.text, "WHITE");
 			} else if (settings.universal.bg == 2) {
-				volt_draw_text(130, 58, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(130, 58, 0.65, 0.65, settings.universal.text, "BLUE");
 			} else if (settings.universal.bg == 3) {
-				volt_draw_text(135, 58, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(135, 58, 0.65, 0.65, settings.universal.text, "RED");
 			} else if (settings.universal.bg == 4) {
-				volt_draw_text(125, 58, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(125, 58, 0.65, 0.65, settings.universal.text, "YELLOW");
 			} else if (settings.universal.bg == 5) {
-				volt_draw_text(130, 58, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(130, 58, 0.65, 0.65, settings.universal.text, "GRAY");
 			} else if (settings.universal.bg == 6) {
-				volt_draw_text(110, 58, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(110, 58, 0.65, 0.65, settings.universal.text, "LIGHT BROWN");
 			} else if (settings.universal.bg == 7) {
-				volt_draw_text(110, 58, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(110, 58, 0.65, 0.65, settings.universal.text, "LIGHT GREEN");
 			}
 
 			if (settings.universal.bars == 0) {
-				volt_draw_text(125, 108, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(125, 108, 0.65, 0.65, settings.universal.text, "BLACK");
 			} else if (settings.universal.bars == 1) {
-				volt_draw_text(125, 108, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(125, 108, 0.65, 0.65, settings.universal.text, "WHITE");
 			} else if (settings.universal.bars == 2) {
-				volt_draw_text(130, 108, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(130, 108, 0.65, 0.65, settings.universal.text, "BLUE");
 			} else if (settings.universal.bars == 3) {
-				volt_draw_text(135, 108, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(135, 108, 0.65, 0.65, settings.universal.text, "RED");
 			} else if (settings.universal.bars == 4) {
-				volt_draw_text(120, 108, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(120, 108, 0.65, 0.65, settings.universal.text, "YELLOW");
 			} else if (settings.universal.bars == 5) {
-				volt_draw_text(130, 108, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(130, 108, 0.65, 0.65, settings.universal.text, "GRAY");
 			} else if (settings.universal.bars == 6) {
-				volt_draw_text(110, 108, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(110, 108, 0.65, 0.65, settings.universal.text, "LIGHT BROWN");
 			} else if (settings.universal.bars == 7) {
-				volt_draw_text(110, 108, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(110, 108, 0.65, 0.65, settings.universal.text, "LIGHT GREEN");
 			}
 
 			if (settings.universal.music == 0) {
-				volt_draw_text(125, 158, 0.65, 0.65, BLACK, "Chill");
+				volt_draw_text(125, 158, 0.65, 0.65, settings.universal.text, "Chill");
 			} else if (settings.universal.music == 1) {
-				volt_draw_text(120, 158, 0.65, 0.65, BLACK, "Settings");
+				volt_draw_text(120, 158, 0.65, 0.65, settings.universal.text, "Settings");
 			} else if (settings.universal.music == 2) {
-				volt_draw_text(140, 158, 0.65, 0.65, BLACK, "SD");
+				volt_draw_text(140, 158, 0.65, 0.65, settings.universal.text, "SD");
 			} else if (settings.universal.music == 3) {
-				volt_draw_text(135, 158, 0.65f, 0.65f, BLACK, "OFF");
+				volt_draw_text(135, 158, 0.65f, 0.65f, settings.universal.text, "OFF");
 			}
 
 				if (settings.universal.txtcolor == 0) {
-				volt_draw_text(125, 208, 0.65, 0.65, BLACK, "BLACK");
+				volt_draw_text(125, 208, 0.65, 0.65, settings.universal.text, "BLACK");
 			} else if (settings.universal.txtcolor == 1) {
-				volt_draw_text(125, 208, 0.65, 0.65, BLACK, "WHITE");
+				volt_draw_text(125, 208, 0.65, 0.65, settings.universal.text, "WHITE");
 			} else if (settings.universal.txtcolor == 2) {
-				volt_draw_text(130, 208, 0.65, 0.65, BLACK, "BLUE");
+				volt_draw_text(130, 208, 0.65, 0.65, settings.universal.text, "BLUE");
 			} else if (settings.universal.txtcolor == 3) {
-				volt_draw_text(135, 208, 0.65, 0.65, BLACK, "RED");
+				volt_draw_text(135, 208, 0.65, 0.65, settings.universal.text, "RED");
 			} else if (settings.universal.txtcolor == 4) {
-				volt_draw_text(120, 208, 0.65, 0.65, BLACK, "YELLOW");
+				volt_draw_text(120, 208, 0.65, 0.65, settings.universal.text, "YELLOW");
 			} else if (settings.universal.txtcolor == 5) {
-				volt_draw_text(130, 208, 0.65, 0.65, BLACK, "GRAY");
+				volt_draw_text(130, 208, 0.65, 0.65, settings.universal.text, "GRAY");
 			} else if (settings.universal.txtcolor == 6) {
-				volt_draw_text(110, 208, 0.65, 0.65, BLACK, "LIGHT BROWN");
+				volt_draw_text(110, 208, 0.65, 0.65, settings.universal.text, "LIGHT BROWN");
 			} else if (settings.universal.txtcolor == 7) {
-				volt_draw_text(110, 208, 0.65, 0.65, BLACK, "LIGHT GREEN");
+				volt_draw_text(110, 208, 0.65, 0.65, settings.universal.text, "LIGHT GREEN");
 			}
 
 			volt_end_draw();
@@ -639,10 +637,13 @@ int main()
 				} else if (touch.py >= 148 && touch.py <= 181 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 2;
 					setOption = true;
+				} else if (touch.py >= 198 && touch.py <= 231 && touch.px >= 100 && touch.px <= 235) {
+					menuSelection = 3;
+					setOption = true;
 				}
 				showMessage = setOption;
 			} else {
-				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
+				for (int i = ((int)(sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (updateAvailable[i]){
 						if (touch.py >= (buttons2[i].y-6) && touch.py <= (buttons2[i].y+10) && touch.px >= (buttons2[i].x+75) && touch.px <= (buttons2[i].x+91)) {
 							menuSelection = i;
@@ -652,7 +653,7 @@ int main()
 				}
 			}
 			if (!showMessage) {
-				for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
+				for (int i = ((int)(sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (touch.py >= buttons2[i].y && touch.py <= (buttons2[i].y+33) && touch.px >= buttons2[i].x && touch.px <= (buttons2[i].x+87)) {
 						menuSelection = i;
 						setOption = true;
@@ -751,6 +752,7 @@ int main()
 				case 3:
 					settings.universal.txtcolor++;
 					if (settings.universal.txtcolor > 7) settings.universal.txtcolor = 0;
+					select_Text_Color();
 					break;
 				}
 			} else {
@@ -897,12 +899,11 @@ int main()
 							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
-							if (showReleaseInfo("Universal-Team/Universal-Updater", true))
+							if (showReleaseInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(false);
 								updatingSelf = false;
-								} else {
-							if (dspfirmfound) {
+							} else if (dspfirmfound) {
 							}
 						}
 						break;
@@ -911,12 +912,11 @@ int main()
 							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading Commit...");
-							if (showCommitInfo("Universal-Team/Universal-Updater", true))
+							if (showCommitInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(true);
 								updatingSelf = false;
-								} else {
-							if (dspfirmfound) {
+							} else if (dspfirmfound) {
 							}
 						}
 						break;
