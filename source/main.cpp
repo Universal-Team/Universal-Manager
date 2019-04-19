@@ -761,7 +761,7 @@ int main()
 				case 16:
 					if (dspfirmfound) {
 					}
-					showReleaseInfo("D0k3/GodMode9", false);
+					showCommitInfo("D0k3/GodMode9", false);
 					break;
 				default:
 					if (dspfirmfound) {
@@ -890,7 +890,7 @@ int main()
 							}
 						}
 						break;
-						case 8:	// Boxarts
+					case 8:	// Boxarts
 						//if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -900,7 +900,7 @@ int main()
 							}
 						}
 						break;
-						case 9:	// usrcheat.dat
+					case 9:	// usrcheat.dat
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -910,7 +910,7 @@ int main()
 							}
 						}
 						break;
-						case 10:	// Checkpoint Release
+					case 10: // Checkpoint Release
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -922,17 +922,19 @@ int main()
 							}
 						}
 						break;
-						case 11:	// Checkpoint Release
-						if (checkWifiStatus()){
+					case 15: //Checkpoint Nightly
+							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							notImplementedYet();
-						} else {
+							displayTopMsg("Loading commit notes...");
+							if (showReleaseInfo("Flagbrew/Checkpoint", true))
+								downloadCheckpointNightly();
+								} else {
 							if (dspfirmfound) {
 							}
 						}
 						break;
-						case 12: //Updater Update
+					case 12: //Updater Update
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -945,11 +947,11 @@ int main()
 							}
 						}
 						break;
-						case 13: //Updater Update
+					case 13: //Updater Update
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading Commit notes...");
+							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(true);
@@ -958,7 +960,7 @@ int main()
 							}
 						}
 						break;
-							case 14: //Updater Update
+					case 14: //GodMode9 Release
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
@@ -970,25 +972,13 @@ int main()
 							}
 						}
 						break;
-							case 15: //Updater Update
+					case 16: //GodMode9 Nightly
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading commit notes...");
-							if (showReleaseInfo("Flagbrew/Checkpoint", true))
-								downloadGodMode9();
-								} else {
-							if (dspfirmfound) {
-							}
-						}
-						break;
-							case 16: //Updater Update
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
-							displayTopMsg("Loading commit notes...");
-							if (showReleaseInfo("D0k3/GodMode9", true))
-								downloadGodMode9();
+							if (showCommitInfo("D0k3/GodMode9", true))
+								GodMode9Nightly();
 								} else {
 							if (dspfirmfound) {
 							}
