@@ -295,21 +295,21 @@ void draw_Background_Top(void) {
 
 void draw_Dialogbox_Color(void) {
 	if (settings.universal.bg == 0) {
-		volt_draw_rectangle(0, 17, 400, 208, BLACK);
+		volt_draw_rectangle(0, 19, 400, 202, BLACK);
 	} else if (settings.universal.bg == 1) {
-		volt_draw_rectangle(0, 17, 400, 208, WHITE);
+		volt_draw_rectangle(0, 19, 400, 202, WHITE);
 	} else if (settings.universal.bg == 2) {
-		volt_draw_rectangle(0, 17, 400, 208, BLUE);
+		volt_draw_rectangle(0, 19, 400, 202, BLUE);
 	} else if (settings.universal.bg == 3) {
-		volt_draw_rectangle(0, 17, 400, 208, RED);
+		volt_draw_rectangle(0, 19, 400, 202, RED);
 	} else if (settings.universal.bg == 4) {
-		volt_draw_rectangle(0, 17, 400, 208, YELLOW);
+		volt_draw_rectangle(0, 19, 400, 202, YELLOW);
 	} else if (settings.universal.bg == 5) {
-		volt_draw_rectangle(0, 17, 400, 208, GRAY);
+		volt_draw_rectangle(0, 19, 400, 202, GRAY);
 	} else if (settings.universal.bg == 6) {
-		volt_draw_rectangle(0, 17, 400, 208, LIGHT_BROWN);
+		volt_draw_rectangle(0, 19, 400, 202, LIGHT_BROWN);
 	} else if (settings.universal.bg == 7) {
-		volt_draw_rectangle(0, 17, 400, 208, LIGHT_GREEN);
+		volt_draw_rectangle(0, 19, 400, 202, LIGHT_GREEN);
 	}
 }
 

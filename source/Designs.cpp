@@ -23,6 +23,7 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
+
 #include "Colors.hpp"
 #include "graphic.h"
 #include "voltlib/volt.h"
