@@ -737,7 +737,7 @@ std::string latestGodMode9(void) {
 	return godMode9Cache;
 }
 
-std::string NightlyGodMode9(void) {
+std::string nightlyGodMode9(void) {
 	if (godMode9NightlyCache == "")
 		godMode9NightlyCache = getLatestCommit("D0k3/GodMode9", "tag_name");
 	return godMode9NightlyCache;
@@ -800,9 +800,9 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
-	updateAvaliable[11] = checkpointNightly != latestCheckpointCommit();
+	updateAvailable[11] = checkpointNightly != latestCheckpointCommit();
 	updateAvailable[14] = godMode9Version != latestGodMode9();
-	updateAvaliable[16] = godMode9Nightly != NightlyGodMode9();
+	updateAvailable[16] = godMode9Nightly != nightlyGodMode9();
 	
 	if (updaterChannel == "release")
 		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
@@ -1213,7 +1213,7 @@ void updateCheckpoint(void) {
 
 void updateCheckpoint(void) {
 	displayTopMsg("Downloading Checkpoint.cia (Nightly)\n");
-		if (downloadToFile("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
+		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
@@ -1299,10 +1299,10 @@ void downloadGodMode9(void) {
 	doneMsg(); 
 	}
 
-void downloadGodMode9(void) {
+void GodMode9Nightly(void) {
 	displayTopMsg("Now Downloading GodMode9\n"
 						"(Nightly)");
-		if (downloadToFile("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
+		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			downloadFailed();
 			return;
 		}
