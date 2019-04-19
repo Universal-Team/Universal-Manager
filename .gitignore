@@ -5,7 +5,6 @@ build/sprites.h
 *.lst
 *.map
 *.shbin
-*.h
 *.3dsx
 *.cia
 *.elf
