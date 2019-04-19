@@ -78,9 +78,17 @@ struct {
 	{ 220, 128},
 	{ 129, 168},
 	{ 220, 168},
+	{ 129, 48},
+	{ 220, 48},
+	{ 129, 88},
+	{ 220, 88},
 };
 
 size_t button_tex2[] = {
+	button,
+	button,
+	button,
+	button,
 	button,
 	button,
 	button,
@@ -116,6 +124,10 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Release",
 	"Nightly",
+	"     - ",
+	"     - ",
+	"     - ",
+	"     - ",
 };
 
 const int title_spacing2[] = {
@@ -135,6 +147,10 @@ const int title_spacing2[] = {
 	10,
 	6,
 	10,
+	10,
+	10,
+	6,
+	10,
 };
 
 const char *row_titles2[] = {
@@ -146,6 +162,10 @@ const char *row_titles2[] = {
 	"Checkpoint",
 	"Updater",
 	"GodMode9",
+	"/",
+	"/",
+	"/",
+	"/",
 };	
 
 bool updateAvailable[] = {
@@ -452,7 +472,7 @@ int main()
 		volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
     	volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
     	volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
-    	volt_draw_text(280, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: Switch Page");
+    	volt_draw_text(260, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: Switch Page");
     	volt_draw_text(1, 225, 0.5f, 0.5f, settings.universal.text, "\uE000: Select an Option");
 		draw_Background_Bottom();
 		draw_Bars_Bottom();
@@ -551,13 +571,15 @@ int main()
 
 			volt_end_draw();
 		} else {
-			volt_draw_texture(pageframe, 276+(menuPage*20), 3); //Draw the Page Frame Texture.
+			volt_draw_texture(pageframe, 256+(menuPage*20), 3); //Draw the Page Frame Texture.
 
     		volt_draw_text(170, 4, 0.50, 0.50, settings.universal.text, "Current Page:");
 
-			volt_draw_text(280, 4, 0.50, 0.50, settings.universal.text, "1"); //Draw First Page Number.
+			volt_draw_text(260, 4, 0.50, 0.50, settings.universal.text, "1"); //Draw First Page Number.
 
-			volt_draw_text(300, 4, 0.50, 0.50, settings.universal.text, "2"); // Draw Second Page Number.
+			volt_draw_text(280, 4, 0.50, 0.50, settings.universal.text, "2"); // Draw Second Page Number.
+
+			volt_draw_text(300, 4, 0.50, 0.50, settings.universal.text, "3"); // Draw Third Page Number.
 			// Draw buttons
 			for (int i = (int)((sizeof(buttons2)/sizeof(buttons2[0])))-1; i >= 0; i--) {
 				if (i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
@@ -983,6 +1005,46 @@ int main()
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("D0k3/GodMode9", true))
 								godMode9Nightly();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+					case 16: //NotImplemented!
+							if (checkWifiStatus()){
+								if (dspfirmfound) {
+								}
+								notImplementedYet();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+					case 17: //NotImplemented!
+							if (checkWifiStatus()){
+								if (dspfirmfound) {
+								}
+								notImplementedYet();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+					case 18: //NotImplemented!
+							if (checkWifiStatus()){
+								if (dspfirmfound) {
+								}
+								notImplementedYet();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+					case 19: //NotImplemented!
+							if (checkWifiStatus()){
+								if (dspfirmfound) {
+								}
+								notImplementedYet();
 								} else {
 							if (dspfirmfound) {
 							}
