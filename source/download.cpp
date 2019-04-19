@@ -9,7 +9,8 @@
 #include "graphic.h"
 #include "fileBrowse.h"
 #include "voltlib/volt.h"
-
+#include "Universal-Settings.hpp"
+#include "Colors.hpp"
 extern "C" {
 	#include "cia.h"
 }
@@ -36,6 +37,7 @@ std::string latestUpdaterNightlyCache = "";
 std::string godMode9Cache = "";
 
 extern void displayTopMsg(const char* text);
+extern void draw_Dialogbox_Color(void);
 
 extern bool downloadNightlies;
 extern bool updateAvailable[];
@@ -617,10 +619,10 @@ void setMessageText(const std::string &text)
 void drawMessageText(int position, bool showExitText)
 {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 17, 400, 208, MESSAGE_BOX_COLOR);
-	volt_draw_text(18, 24, .7, .7, WHITE, jsonName.c_str());
+	draw_Dialogbox_Color();
+	volt_draw_text(18, 24, .7, .7, settings.universal.text, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
-			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, WHITE, _topText[i+position].c_str());
+			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, settings.universal.text, _topText[i+position].c_str());
 	}
 	if(showExitText)
 		volt_draw_text(24, 200, 0.5f, 0.5f, WHITE, "B: Cancel   A: Update");

@@ -174,13 +174,6 @@ void screenon()
     gspLcdExit();
 }
 
-void displayTopMsg(const char* text) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 17, 400, 208, MESSAGE_BOX_COLOR);
-		volt_draw_text(24, 32, 0.5f, 0.5f, settings.universal.text, text);
-	volt_end_draw();
-}
-
 void currentMusic(void) {
 	if (settings.universal.music == 0) {
 		Music_Chill();
@@ -273,6 +266,32 @@ void draw_Background_Top(void) {
 	}
 }
 
+void draw_Dialogbox_Color(void) {
+	if (settings.universal.bg == 0) {
+		volt_draw_rectangle(0, 17, 400, 208, BLACK);
+	} else if (settings.universal.bg == 1) {
+		volt_draw_rectangle(0, 17, 400, 208, WHITE);
+	} else if (settings.universal.bg == 2) {
+		volt_draw_rectangle(0, 17, 400, 208, BLUE);
+	} else if (settings.universal.bg == 3) {
+		volt_draw_rectangle(0, 17, 400, 208, RED);
+	} else if (settings.universal.bg == 4) {
+		volt_draw_rectangle(0, 17, 400, 208, YELLOW);
+	} else if (settings.universal.bg == 5) {
+		volt_draw_rectangle(0, 17, 400, 208, GRAY);
+	} else if (settings.universal.bg == 6) {
+		volt_draw_rectangle(0, 17, 400, 208, LIGHT_BROWN);
+	} else if (settings.universal.bg == 7) {
+		volt_draw_rectangle(0, 17, 400, 208, LIGHT_GREEN);
+	}
+}
+
+void displayTopMsg(const char* text) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	draw_Dialogbox_Color();
+		volt_draw_text(24, 32, 0.5f, 0.5f, settings.universal.text, text);
+	volt_end_draw();
+}
 
 int menuSelection = 0;
 int menuPage = 0;
