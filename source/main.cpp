@@ -77,6 +77,7 @@ struct {
 	{ 129, 128},
 	{ 220, 128},
 	{ 129, 168},
+	{ 220, 168},
 };
 
 size_t button_tex2[] = {
@@ -109,10 +110,11 @@ const char *button_titles2[] = {
 	"Boxart",
 	"Cheats",
 	"Release",
-	"     -",
+	"Nightly",
 	"Release",
 	"Nightly",
-	"GodMode9"
+	"Release",
+	"Nightly",
 };
 
 const int title_spacing2[] = {
@@ -135,13 +137,13 @@ const int title_spacing2[] = {
 
 const char *row_titles2[] = {
 	"TWL Menu++",
-	"Bootstrap",
+	"nds-bootstrap",
 	"PKSM",
-	"Luma",
-	"Downloads",
+	"Luma3DS",
+	"Extras",
 	"Checkpoint",
 	"Updater",
-	"Downloads",
+	"GodMode9",
 };	
 
 bool updateAvailable[] = {
@@ -432,22 +434,22 @@ int main()
 			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
-	//	volt_draw_on(GFX_TOP, GFX_LEFT);
-	//	if (settings.universal.theme == 0) {									// Load the current Top Border from the Settings.ini!
-	//			drawSharkiveUI();
-	//		} else if (settings.universal.theme == 1) {
-	//			drawCheckpointUI();
-	//		} else if (settings.universal.theme == 2) {
-	//		drawLasagnaUI();
-	//	} else if (settings.universal.theme == 3) {
-	//	drawTheme4UI();
-	//}
+		/*volt_draw_on(GFX_TOP, GFX_LEFT);
+		if (settings.universal.theme == 0) {									// Load the current Top Border from the Settings.ini!
+				drawSharkiveUI();
+			} else if (settings.universal.theme == 1) {
+				drawCheckpointUI();
+			} else if (settings.universal.theme == 2) {
+			drawLasagnaUI();
+		} else if (settings.universal.theme == 3) {
+		drawTheme4UI();
+	}*/
 		draw_Background_Top();
 		draw_Bars_Top();
 		volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
     	volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
     	volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
-    	volt_draw_text(280, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: switch page");
+    	volt_draw_text(280, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: Switch Page");
     	volt_draw_text(1, 225, 0.5f, 0.5f, settings.universal.text, "\uE000: Select an Option");
 		draw_Background_Bottom();
 		draw_Bars_Bottom();
@@ -721,32 +723,42 @@ int main()
 					}
 					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", false);
 					break;
-					case 6:
+				case 6:
 					if (dspfirmfound) {
 					}
 					showReleaseInfo("AuroraWright/Luma3DS", false);
 					break;
-					case 7:
+				case 7:
 					if (dspfirmfound) {
 					}
 					showReleaseInfo("hax0kartik/luma-hourlies", false);
 					break;
-					case 10:
+				case 10:
 					if (dspfirmfound) {
 					}
 					showReleaseInfo("FlagBrew/Checkpoint", false);
 					break;
-					case 12:
+				case 12:
 					if (dspfirmfound) {
 					}
 					showReleaseInfo("Universal-Team/Universal-Updater", false);
 					break;
-					case 13:
+				case 13:
 					if (dspfirmfound) {
 					}
 					showCommitInfo("Universal-Team/Universal-Updater", false);
 					break;
-					case 14:
+				case 14:
+					if (dspfirmfound) {
+					}
+					showReleaseInfo("D0k3/GodMode9", false);
+					break;
+				case 15:
+					if (dspfirmfound) {
+					}
+					showCommitInfo("FlagBrew/Checkpoint", false);
+					break;
+				case 16:
 					if (dspfirmfound) {
 					}
 					showReleaseInfo("D0k3/GodMode9", false);
@@ -802,7 +814,7 @@ int main()
 						if (checkWifiStatus()){ 
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading commit...");
+							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("DS-Homebrew/TWiLightMenu", true))
 							updateTWiLight(true);
 						} else {
@@ -826,7 +838,7 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading commit...");
+							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("ahezard/NDS-Bootstrap", true))
 							updateBootstrap(true);
 						} else {
@@ -850,7 +862,7 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading commit...");
+							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
 							updatePKSM(true);
 						} else {
@@ -870,7 +882,7 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading release notes...");
+							displayTopMsg("Loading commit notes...");
 							if (showReleaseInfo("hax0kartik/luma-hourlies", true))
 							updateLuma(true);
 						} else {
@@ -937,7 +949,7 @@ int main()
 							if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading Commit...");
+							displayTopMsg("Loading Commit notes...");
 							if (showCommitInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(true);
@@ -951,6 +963,30 @@ int main()
 							if (dspfirmfound) {
 							}
 							displayTopMsg("Loading release notes...");
+							if (showReleaseInfo("D0k3/GodMode9", true))
+								downloadGodMode9();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+							case 15: //Updater Update
+							if (checkWifiStatus()){
+							if (dspfirmfound) {
+							}
+							displayTopMsg("Loading commit notes...");
+							if (showReleaseInfo("Flagbrew/Checkpoint", true))
+								downloadGodMode9();
+								} else {
+							if (dspfirmfound) {
+							}
+						}
+						break;
+							case 16: //Updater Update
+							if (checkWifiStatus()){
+							if (dspfirmfound) {
+							}
+							displayTopMsg("Loading commit notes...");
 							if (showReleaseInfo("D0k3/GodMode9", true))
 								downloadGodMode9();
 								} else {
