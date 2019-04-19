@@ -568,13 +568,13 @@ int main()
 				showSettings = !showSettings;
 				showMessage = false;
 			} else if (showSettings) {
-				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 40 && touch.px <= 160) {
+				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 0;
 					setOption = true;
-				} else if (touch.py >= 48 && touch.py <= 81 && touch.px >= 90 && touch.px <= 290) {
+				} else if (touch.py >= 98 && touch.py <= 130 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 1;
 					setOption = true;
-				} else if (touch.py >= 98 && touch.py <= 130 && touch.px >= 40 && touch.px <= 160) {
+				} else if (touch.py >= 148 && touch.py <= 181 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 2;
 					setOption = true;
 				}
