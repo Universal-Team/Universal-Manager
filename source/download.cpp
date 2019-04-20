@@ -547,7 +547,7 @@ bool showReleaseInfo(std::string repo, bool showExitText)
 				gspWaitForVBlank();
 		}
 		
-		if (hDown & KEY_A || hDown & KEY_Y || hDown & KEY_TOUCH) {
+		if (hDown & KEY_A || (hDown & KEY_Y && !showExitText) || (hDown & KEY_TOUCH && !showExitText)) {
 			return true;
 		} else if (hDown & KEY_B) {
 			return false;
@@ -589,7 +589,7 @@ bool showCommitInfo(std::string repo, bool showExitText)
 				gspWaitForVBlank();
 		}
 		
-		if (hDown & KEY_A || hDown & KEY_Y || hDown & KEY_TOUCH) {
+		if (hDown & KEY_A || (hDown & KEY_Y && !showExitText) || (hDown & KEY_TOUCH && !showExitText)) {
 			return true;
 		} else if (hDown & KEY_B) {
 			return false;
