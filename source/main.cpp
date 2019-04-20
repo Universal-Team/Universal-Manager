@@ -557,12 +557,14 @@ int main()
 		} else if (hDown & KEY_SELECT) {
 			menuSelection = 0;
 			showSettings = !showSettings;
+			if(!showSettings)	SaveUniversalSettings();
 		}
 
 		if (hDown & KEY_TOUCH) {
 			if (touch.py >= 221 && touch.py <= 240 && touch.px >= 301 && touch.px <= 320) {
 				menuSelection = 0;
 				showSettings = !showSettings;
+				if(!showSettings)	SaveUniversalSettings();
 			} else if (showSettings) {
 				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 100 && touch.px <= 235) {
 					menuSelection = 0;
@@ -998,7 +1000,6 @@ int main()
 		}
 
 	}
-		SaveUniversalSettings();
 
 	if (dspfirmfound) {
 		ndspExit();
