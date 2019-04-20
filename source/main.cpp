@@ -124,7 +124,7 @@ const char *button_titles2[] = {
 	"Nightly",
 	"Release",
 	"Nightly",
-	"     - ",
+	"  FBI",
 	"     - ",
 	"     - ",
 	"     - ",
@@ -162,13 +162,14 @@ const char *row_titles2[] = {
 	"Checkpoint",
 	"Updater",
 	"GodMode9",
-	"/",
+	"FBI",
 	"/",
 	"/",
 	"/",
 };	
 
 bool updateAvailable[] = {
+	false,
 	false,
 	false,
 	false,
@@ -789,6 +790,11 @@ int main()
 					}
 					showCommitInfo("D0k3/GodMode9", false); // The Commit for the Nightlys.
 					break;
+				case 16:
+					if (dspfirmfound) {
+					}
+					showReleaseInfo("Steveice10/FBI", false); 
+					break;
 				default:
 					if (dspfirmfound) {
 					}
@@ -1014,7 +1020,9 @@ int main()
 							if (checkWifiStatus()){
 								if (dspfirmfound) {
 								}
-								notImplementedYet();
+								displayTopMsg("Loading release notes...");
+								if (showReleaseInfo("Steveice10/FBI", true))
+								updateFBIRelease();
 								} else {
 							if (dspfirmfound) {
 							}

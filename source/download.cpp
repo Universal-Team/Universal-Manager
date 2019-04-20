@@ -62,6 +62,8 @@ std::string latestUpdaterReleaseCache = "";
 std::string latestUpdaterNightlyCache = "";
 std::string godMode9Cache = "";
 std::string godMode9NightlyCache = "";
+std::string releaseFbiCache = "";
+
 extern void displayTopMsg(const char* text);
 extern void draw_Dialogbox_Color(void);
 
@@ -739,8 +741,14 @@ std::string latestGodMode9(void) {
 
 std::string nightlyGodMode9(void) {
 	if (godMode9NightlyCache == "")
-		godMode9NightlyCache = getLatestCommit("D0k3/GodMode9", "tag_name");
+		godMode9NightlyCache = getLatestCommit("D0k3/GodMode9", "sha").substr(0,7);
 	return godMode9NightlyCache;
+}
+
+std::string updatingFBI(void) {
+	if (releaseFbiCache == "")
+		releaseFbiCache = getLatestRelease("Steveice10/FBI", "tag_name");
+	return releaseFbiCache;
 }
 
 void saveUpdateData(void) {
@@ -779,6 +787,7 @@ void checkForUpdates() {
 	std::string updaterVersion = getInstalledVersion("UNIVERSAL-UPDATER");
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 	std::string godMode9Nightly = getInstalledChannel ("GODMODE9-NIGHTLY");
+	std::string releaseFBI = getInstalledVersion ("FBI");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -802,7 +811,8 @@ void checkForUpdates() {
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
 	updateAvailable[11] = checkpointNightly != latestCheckpointNightly();
 	updateAvailable[14] = godMode9Version != latestGodMode9();
-	updateAvailable[16] = godMode9Nightly != nightlyGodMode9();
+	updateAvailable[15] = godMode9Nightly != nightlyGodMode9();
+	updateAvailable[16] = releaseFBI != updatingFBI();
 	
 	if (updaterChannel == "release")
 		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
@@ -1226,7 +1236,7 @@ void nightlyCheckpoint(void) {
 
 		setInstalledVersion("CHECKPOINT-NIGHTLY", latestCheckpointNightly());
 		saveUpdateData();
-		updateAvailable[10] = false;
+		updateAvailable[11] = false;
 	doneMsg();
 }
 
@@ -1313,8 +1323,26 @@ void godMode9Nightly(void) {
 
 		deleteFile("sdmc:/GodMode9.zip");
 
-		setInstalledVersion("GODMODE9", latestGodMode9());
+		setInstalledVersion("GODMODE9", nightlyGodMode9());
 		saveUpdateData();
-		updateAvailable[14] = false;
+		updateAvailable[15] = false;
+	doneMsg(); 
+	}
+
+	void updateFBIRelease(void) {
+	displayTopMsg("Now Downloading FBI..");
+		if (downloadFromRelease("https://github.com/Steveice10/FBI", "FBI\\.cia", "/FBI.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayTopMsg("Installing FBI...");
+		installCia("/FBI.cia");
+
+		deleteFile("sdmc:/FBI.cia");
+
+		setInstalledVersion("FBI", updatingFBI());
+		saveUpdateData();
+		updateAvailable[16] = false;
 	doneMsg(); 
 	}

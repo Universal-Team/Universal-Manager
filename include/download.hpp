@@ -159,3 +159,6 @@ void godMode9Nightly(void);
 
 //Update Checkpoint Nightly.
 void nightlyCheckpoint(void);
+
+// Update FBI Release.
+void updateFBIRelease(void);
