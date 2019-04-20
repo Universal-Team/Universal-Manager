@@ -63,6 +63,8 @@ std::string latestUpdaterNightlyCache = "";
 std::string godMode9Cache = "";
 std::string godMode9NightlyCache = "";
 std::string releaseFbiCache = "";
+std::string buttonBootCache = "";
+std::string buttonBootNCache = "";
 
 extern void displayTopMsg(const char* text);
 extern void draw_Dialogbox_Color(void);
@@ -751,6 +753,18 @@ std::string updatingFBI(void) {
 	return releaseFbiCache;
 }
 
+std::string buttonBootRelease(void) {
+	if (buttonBootCache == "")
+		buttonBootCache = getLatestRelease("FlameKat53/ButtonBoot", "tag_name");
+	return buttonBootCache;
+}
+
+std::string buttonBootNightly(void) {
+	if (buttonBootNCache == "")
+		buttonBootNCache = getLatestRelease("FlameKat53/ButtonBoot", "sha").substr(0,7);
+	return buttonBootNCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Updater/currentVersions.ini");
 }
@@ -788,6 +802,8 @@ void checkForUpdates() {
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 	std::string godMode9Nightly = getInstalledChannel ("GODMODE9-NIGHTLY");
 	std::string releaseFBI = getInstalledVersion ("FBI");
+	std::string buttonBoot = getInstalledVersion ("BUTTONBOOT");
+	std::string buttonBootNightly2 = getInstalledVersion ("BUTTONBOOT");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -813,6 +829,8 @@ void checkForUpdates() {
 	updateAvailable[14] = godMode9Version != latestGodMode9();
 	updateAvailable[15] = godMode9Nightly != nightlyGodMode9();
 	updateAvailable[16] = releaseFBI != updatingFBI();
+	updateAvailable[18] = buttonBoot != buttonBootRelease();
+	updateAvailable[19] = buttonBootNightly2 != buttonBootNightly();
 	
 	if (updaterChannel == "release")
 		updateAvailable[12] = updaterVersion != latestUpdaterRelease();
@@ -979,6 +997,46 @@ void updateCheats(void) {
 
 	doneMsg();
 }
+
+void updateButtonBoot(void) {
+	displayTopMsg("Downloading ButtonBoot (Release)\n");
+	if (downloadFromRelease("https://github.com/FlameKat53/ButtonBoot",  "ButtonBoot_3DS\\.cia", "/ButtonBoot.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	displayTopMsg("Now Installing ButtonBoot.cia...");
+	installCia("/ButtonBoot.cia");
+
+	deleteFile("sdmc:/ButtonBoot.cia");
+
+		setInstalledVersion("BUTTONBOOT", buttonBootRelease());
+		saveUpdateData();
+		updateAvailable[18] = false;
+		doneMsg();
+	}
+
+void updateButtonBootNightly(void) {
+	displayTopMsg("Downloading ButtonBoot (Nightly)\n");
+	if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/ButtonBoot.7z?raw=true","/ButtonBoot.7z") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	displayTopMsg("Now extracting...\n"
+				"\nThis may take a while.");
+	extractArchive("/usrcheat.dat.7z", "ButtonBoot_3DS.cia", "/ButtonBoot-Nightly.cia");
+
+	displayTopMsg("Now Installing ButtonBoot.cia...");
+	installCia("/ButtonBoot-Nightly.cia");
+
+	deleteFile("sdmc:/ButtonBoot-Nightly.cia");
+
+		setInstalledVersion("BUTTONBOOT", buttonBootNightly());
+		saveUpdateData();
+		updateAvailable[19] = false;
+		doneMsg();
+	}
 
 const char* getBoxartRegion(char tid_region) {
 	// European boxart languages.

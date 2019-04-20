@@ -162,3 +162,9 @@ void nightlyCheckpoint(void);
 
 // Update FBI Release.
 void updateFBIRelease(void);
+
+// Update ButtonBoot Release.
+void updateButtonBoot(void);
+
+// Update ButtonBoot Nightly.
+void updateButtonBootNightly(void);
