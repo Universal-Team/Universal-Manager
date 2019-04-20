@@ -129,8 +129,8 @@ const char *button_titles2[] = {
 	"Nightly",
 	"  FBI",
 	"     - ",
-	"     - ",
-	"     - ",
+	"Release",
+	"Nightly",
 };
 
 const int title_spacing2[] = {
@@ -166,12 +166,15 @@ const char *row_titles2[] = {
 	"Updater",
 	"GodMode9",
 	"FBI",
-	"/",
+	"ButtonBoot",
 	"/",
 	"/",
 };	
 
 bool updateAvailable[] = {
+	false,
+	false,
+	false,
 	false,
 	false,
 	false,
@@ -682,6 +685,16 @@ int main()
 					}
 					showReleaseInfo("Steveice10/FBI", false); 
 					break;
+				case 18:
+					if (dspfirmfound) {
+					}
+					showReleaseInfo("FlameKat53/ButtonBoot", false); 
+					break;
+				case 19:
+					if (dspfirmfound) {
+					}
+					showCommitInfo("FlameKat53/ButtonBoot", false); 
+					break;
 				default:
 					if (dspfirmfound) {
 					}
@@ -955,7 +968,9 @@ int main()
 							if (checkWifiStatus()){
 								if (dspfirmfound) {
 								}
-								notImplementedYet();
+								displayTopMsg("Loading release notes...");
+								if (showReleaseInfo("FlameKat53/ButtonBoot", true))
+								updateButtonBoot();
 								} else {
 							if (dspfirmfound) {
 							}
@@ -965,7 +980,9 @@ int main()
 							if (checkWifiStatus()){
 								if (dspfirmfound) {
 								}
-								notImplementedYet();
+								displayTopMsg("Loading Commit notes...");
+								if (showCommitInfo("FlameKat53/ButtonBoot", true))
+								updateButtonBootNightly();
 								} else {
 							if (dspfirmfound) {
 							}
