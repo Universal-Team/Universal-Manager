@@ -1025,7 +1025,7 @@ void updateButtonBootNightly(void) {
 
 	displayTopMsg("Now extracting...\n"
 				"\nThis may take a while.");
-	extractArchive("/ButtonBoot.7z", "ButtonBoot_3DS.cia", "/ButtonBoot-Nightly.cia");
+	extractArchive("/ButtonBoot.7z", "ButtonBoot/ButtonBoot_3DS.cia", "/ButtonBoot_3DS.cia");
 
 	displayTopMsg("Now Installing ButtonBoot.cia...");
 	installCia("/ButtonBoot-Nightly.cia");
