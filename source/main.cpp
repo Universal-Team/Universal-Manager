@@ -57,6 +57,8 @@ bool dspfirmfound = false;
 bool updatingSelf = false;
 bool showSettings = false;
 
+std::string musicNames[] = {"Chill", "Settings", "SD", "OFF"};
+
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
 struct {
@@ -192,18 +194,45 @@ bool updateAvailable[] = {
 struct {
 	int x;
 	int y;
+	int w;
+	int h;
 } buttons_settings[] = {
-	{ 100, 48},
-	{ 100, 98},
-	{ 100, 148},
-	{ 100, 198},
+	{ 130, 32, 48, 32},
+	{ 190, 32, 48, 32},
+	{ 250, 32, 48, 32},
+	{ 130, 80, 48, 32},
+	{ 190, 80, 48, 32},
+	{ 250, 80, 48, 32},
+	{ 130, 128, 48, 32},
+	{ 190, 128, 48, 32},
+	{ 250, 128, 48, 32},
+	{ 147, 176, 134, 32},
 };
 
 size_t buttons_settings_tex[] = {
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
+	buttonRGB,
 	settingsButton,
-	settingsButton,
-	settingsButton,
-	settingsButton,
+};
+
+int button_settings_blend[] = {
+	RED,
+	GREEN,
+	BLUE,
+	RED,
+	GREEN,
+	BLUE,
+	RED,
+	GREEN,
+	BLUE,
+	WHITE,
 };
 
 const char *button_titles_settings[] = {
@@ -271,7 +300,7 @@ void displayTopMsg(const char* text) {
 	volt_end_draw();
 }
 
-std::string getColorName(int color, int bgr) {
+int getColorValue(int color, int bgr) {
 	char colorName[10];
 	int i;
 	std::stringstream ss;
@@ -280,8 +309,14 @@ std::string getColorName(int color, int bgr) {
 	std::string colorNamePart(colorName, 2*bgr+2, 2);
 	ss << std::hex << colorNamePart.c_str();
 	ss >> i;
-	itoa(i, colorName, 10);
 
+	return i;
+}
+
+std::string getColorName(int color, int bgr) {
+	char colorName[10];
+	int i = getColorValue(color, bgr);
+	itoa(i, colorName, 10);
 	return colorName;
 }
 
@@ -317,6 +352,7 @@ int main()
 	volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 	volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
+	volt_load_texture_png(buttonRGB, "romfs:/graphics/Grayscaled/buttonRGB.png");
 	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
 		
@@ -386,35 +422,33 @@ int main()
 			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
-					volt_draw_texture(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y);
+					volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
 				} else {
 					// Button is not highlighted. Darken the texture.
 					if (buttonShading) {
-						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, GRAY);
+						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, GRAY & button_settings_blend[i]);
 					} else {
-						volt_draw_texture(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y);
+						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
 					}
 				}
 
 				// Draw the Settings Options!
-				volt_draw_text(2, 58, 0.65, 0.65, settings.universal.text, "Background");
-				volt_draw_text(2, 108, 0.65, 0.65, settings.universal.text, "Bars");
-				volt_draw_text(2, 158, 0.65, 0.65, settings.universal.text, "Music");
-				volt_draw_text(2, 208, 0.65, 0.65, settings.universal.text, "Text");
+				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Background");
+				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Bars");
+				volt_draw_text(78, 138, 0.65, 0.65, settings.universal.text, "Text");
+				volt_draw_text(68, 186, 0.65, 0.65, settings.universal.text, "Music");
 			}
 
-			volt_draw_text(125, 58, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
-			volt_draw_text(125, 108, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
-			if (settings.universal.music == 0) {
-				volt_draw_text(125, 158, 0.65, 0.65, settings.universal.text, "Chill");
-			} else if (settings.universal.music == 1) {
-				volt_draw_text(120, 158, 0.65, 0.65, settings.universal.text, "Settings");
-			} else if (settings.universal.music == 2) {
-				volt_draw_text(140, 158, 0.65, 0.65, settings.universal.text, "SD");
-			} else if (settings.universal.music == 3) {
-				volt_draw_text(135, 158, 0.65f, 0.65f, settings.universal.text, "OFF");
-			}
-			volt_draw_text(125, 208, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 2).c_str());
+			volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
+			volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
+			volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
+			volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 2).c_str());
+			volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
+			volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 0).c_str());
+			volt_draw_text(167, 184, 0.65, 0.65, settings.universal.text, musicNames[settings.universal.music].c_str());
+			volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 2).c_str());
+			volt_draw_text(198, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 1).c_str());
+			volt_draw_text(258, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 0).c_str());
 
 			volt_end_draw();
 		} else {
@@ -482,13 +516,13 @@ int main()
 		}
 
 		if (hDown & KEY_UP) {
-			if (buttonShading) menuSelection -= (showSettings ? 1 : 2);
+			if (buttonShading) menuSelection -= (showSettings ? 3 : 2);
 		} else if (hDown & KEY_DOWN) {
-			if (buttonShading) menuSelection += (showSettings ? 1 : 2);
-		} else if (hDown & KEY_LEFT && !showSettings) {
-			if (buttonShading && menuSelection%2) menuSelection--;
-		} else if (hDown & KEY_RIGHT && !showSettings) {
-			if (buttonShading && !(menuSelection%2)) menuSelection++;
+			if (buttonShading) menuSelection += (showSettings ? 3 : 2);
+		} else if (hDown & KEY_LEFT) {
+			if (buttonShading && (showSettings ? menuSelection%3 : menuSelection%2)) menuSelection--;
+		} else if (hDown & KEY_RIGHT) {
+			if (buttonShading && (showSettings ? (menuSelection+1)%3 : !(menuSelection%2))) menuSelection++;
 		}
 		if (hDown & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT)) {
 			buttonShading = true;
@@ -500,8 +534,9 @@ int main()
 			buttonShading = false;
 		}
 		if (showSettings) {
-			if (menuSelection > 3) menuSelection = 0;
-			else if (menuSelection < 0) menuSelection = 3;
+			if (menuSelection > 11) menuSelection = 0;
+			else if (menuSelection > 9) menuSelection = 9;
+			else if (menuSelection < 0) menuSelection = 9;
 		} else {
 			if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 				menuSelection = (menuPage*8)+1; 
@@ -539,6 +574,14 @@ int main()
 					menuSelection = 3;
 					setOption = true;
 				}
+
+				for (int i = (int)(sizeof(buttons_settings)/sizeof(buttons_settings[0]))-1; i >= 0; i--) {
+					if (touch.py >= buttons_settings[i].y && touch.py <= (buttons_settings[i].y+buttons_settings[i].h) && touch.px >= buttons_settings[i].x && touch.px <= (buttons_settings[i].x+buttons_settings[i].w)) {
+						menuSelection = i;
+						setOption = true;
+					}
+				}
+
 			} else {
 				for (int i = ((int)(sizeof(buttons2)/sizeof(buttons2[0]))-1 < (menuPage*8+8)) ? (sizeof(buttons2)/sizeof(buttons2[0]))-1 : (menuPage*8+8); i >= menuPage*8; i--) {
 					if (updateAvailable[i]){
@@ -656,25 +699,43 @@ int main()
 				case 0:
 				default:
 					red = keyboardInputInt("Red");
-					green = keyboardInputInt("Green");
-					blue = keyboardInputInt("Blue");
-					settings.universal.bg = RGBA8(red, green, blue, 255);
+					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
 					break;
 				case 1:
-					red = keyboardInputInt("Red (0-255)");
 					green = keyboardInputInt("Green (0-255)");
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bars = RGBA8(red, green, blue, 255);
+					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
 					break;
 				case 2:
-					settings.universal.music++;
-					if (settings.universal.music > 3) settings.universal.music = 0;
+					blue = keyboardInputInt("Blue (0-255)");
+					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
 					break;
 				case 3:
-					red = keyboardInputInt("Red (0-255)");
+					red = keyboardInputInt("Red");
+					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+					break;
+				case 4:
 					green = keyboardInputInt("Green (0-255)");
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+					break;
+				case 5:
 					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.text = RGBA8(red, green, blue, 255);
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+					break;
+				case 6:
+					red = keyboardInputInt("Red");
+					settings.universal.text = RGBA8(red, getColorValue(settings.universal.text, 1), getColorValue(settings.universal.text, 0), 255);
+					break;
+				case 7:
+					green = keyboardInputInt("Green (0-255)");
+					settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), green, getColorValue(settings.universal.text, 0), 255);
+					break;
+				case 8:
+					blue = keyboardInputInt("Blue (0-255)");
+					settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), getColorValue(settings.universal.text, 1), blue, 255);
+					break;
+				case 9:
+					settings.universal.music++;
+					if (settings.universal.music > 3) settings.universal.music = 0;
 					break;
 				}
 			} else {

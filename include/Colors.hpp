@@ -28,9 +28,13 @@
 
 #define WHITE RGBA8(255, 255, 255, 255)
 
-#define BLUE RGBA8(0, 0, 128, 255)
-
 #define RED RGBA8(255, 0, 0, 255)
+
+#define GREEN RGBA8(0, 255, 0, 255)
+
+#define BLUE RGBA8(0, 0, 255, 255)
+
+#define DARK_BLUE RGBA8(0, 0, 128, 255)
 
 #define YELLOW RGBA8(255, 215, 0, 255)
 

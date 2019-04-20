@@ -11,3 +11,4 @@ build/*
 *.smdh
 *.ipch
 *.bin
+*.DS_Store

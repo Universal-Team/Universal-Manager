@@ -88,9 +88,7 @@ size_t dot = 2;
 size_t pageframe = 3;
 size_t settingsIcon = 4;
 size_t settingsButton = 5;
-size_t greenButton = 6;
-size_t redButton = 7;
-size_t blueButton = 8;
+size_t buttonRGB = 6;
 
 
 void graphicsInit(void) {
