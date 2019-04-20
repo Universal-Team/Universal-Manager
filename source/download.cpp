@@ -1302,10 +1302,14 @@ void nightlyCheckpoint(void) {
 	if(nightly) {
 		displayTopMsg("Downloading Universal-Updater\n" 
 						"(Nightly)");
-	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
-		downloadFailed();
-		return;
-	}
+		if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		setInstalledChannel("UNIVERSAL-UPDATER", "nightly");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
+		saveUpdateData();
 
 		displayTopMsg("Installing Universal-Updater CIA...\n"
 						"\n\n\n\n\n\n\n\n\n"
@@ -1314,11 +1318,6 @@ void nightlyCheckpoint(void) {
 		installCia("/Universal-Updater-Nightly.cia");
 
 		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
-
-		setInstalledChannel("UNIVERSAL-UPDATER", "nightly");
-		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
-		saveUpdateData();
-		updateAvailable[13] = false;
 	} else {
 		displayTopMsg("Downloading Universal Updater...\n");
 
@@ -1327,6 +1326,10 @@ void nightlyCheckpoint(void) {
 			return;
 		}
 
+		setInstalledChannel("UNIVERSAL-UPDATER", "release");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterRelease());
+		saveUpdateData();
+
 		displayTopMsg("Installing Universal-Updater CIA...\n"
 						"\n\n\n\n\n\n\n\n\n"
 						"The app will reboot when done.");
@@ -1334,11 +1337,6 @@ void nightlyCheckpoint(void) {
 		installCia("/Universal-Updater.cia");
 
 		deleteFile("sdmc:/Universal-Updater.cia");
-
-		setInstalledChannel("UNIVERSAL-UPDATER", "release");
-		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterRelease());
-		saveUpdateData();
-		updateAvailable[12] = false;
 	}
 	doneMsg();
 	}
