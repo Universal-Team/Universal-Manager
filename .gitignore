@@ -1,6 +1,6 @@
 
 *.d
-build/sprites.h
+build/*
 *.o
 *.lst
 *.map

@@ -41,10 +41,9 @@ Settings_t settings;
 
 void LoadUniversalSettings(void) {
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music!
-	settings.universal.txtcolor = settingsini.GetInt("UI", "TXTCOLOR", 0); // Text Color Selector
 	settings.universal.text = settingsini.GetInt("UI", "TEXT", BLACK); // Text Color
-	settings.universal.bars = settingsini.GetInt("UI", "BARS", 1); // Themes = 2 
-	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", 2); // Music!
+	settings.universal.bars = settingsini.GetInt("UI", "BARS", WHITE); // Bars color
+	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", BLUE); // Background color
 	
 
 }
@@ -54,7 +53,6 @@ void LoadUniversalSettings(void) {
  */
 void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
-	settingsini.SetInt("UI", "TXTCOLOR", settings.universal.txtcolor);
 	settingsini.SetInt("UI", "TEXT", settings.universal.text);
 	settingsini.SetInt("UI", "BARS", settings.universal.bars);
 	settingsini.SetInt("UI", "BACKGROUND", settings.universal.bg);
