@@ -921,7 +921,7 @@ int main()
 								}
 								displayTopMsg("Loading Commit notes...");
 								if (showCommitInfo("FlameKat53/ButtonBoot", true))
-								updateButtonBoot();
+								updateButtonBootNightly();
 								} else {
 							if (dspfirmfound) {
 							}
