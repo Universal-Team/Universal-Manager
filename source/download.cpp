@@ -53,7 +53,6 @@ std::string latestMenuNightlyCache = "";
 std::string latestBootstrapReleaseCache = "";
 std::string latestBootstrapNightlyCache = "";
 std::string latestPKSMReleaseCache = "";
-std::string latestPKSMNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string latestCheckpointReleaseCache = "";
@@ -689,12 +688,6 @@ std::string latestPKSMRelease(void) {
 	return latestPKSMReleaseCache;
 }
 
-std::string latestPKSMNightly(void) {
-	if (latestPKSMNightlyCache == "")
-		latestPKSMNightlyCache = getLatestCommit("SuperSaiyajinVoltZ/PKSM-Nightlies", "sha").substr(0,7);
-	return latestPKSMNightlyCache;
-}
-
 std::string latestLumaRelease(void) {
 	if (latestLumaReleaseCache == "")
 		latestLumaReleaseCache = getLatestRelease("Aurorawright/Luma3DS", "tag_name");
@@ -789,7 +782,6 @@ void checkForUpdates() {
 
 	std::string menuChannel = getInstalledChannel("TWILIGHTMENU");
 	std::string menuVersion = getInstalledVersion("TWILIGHTMENU");
-	std::string pksmChannel = getInstalledChannel("PKSM");
 	std::string pksmVersion = getInstalledVersion("PKSM");
 	std::string bootstrapRelease = getInstalledVersion("NDS-BOOTSTRAP-RELEASE");
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
@@ -815,13 +807,7 @@ void checkForUpdates() {
 	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
 	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();
 
-	if (pksmChannel == "release")
-		updateAvailable[4] = pksmVersion != latestPKSMRelease();
-	else if (pksmChannel == "nightly")
-		updateAvailable[5] = pksmVersion != latestPKSMNightly();
-	else
-		updateAvailable[4] = updateAvailable[5] = true;
-
+	updateAvailable[4] = pksmVersion != latestPKSMRelease();
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
@@ -939,27 +925,7 @@ void updateTWiLight(bool nightly) {
 	doneMsg();
 }
 
-void updatePKSM(bool nightly) {
-	if(nightly) {
-		displayTopMsg("Downloading PKSM...\n"
-						"(Nightly)\n\nThis may take a while.");
-		if (downloadToFile("https://github.com/SuperSaiyajinVoltZ/PKSM-Nightlies/blob/master/PKSM.cia?raw=true", "/PKSM-Nightly.cia") != 0) {
-			downloadFailed();
-			return;
-		}
-
-		displayTopMsg("Installing PKSM CIA...\n"
-						"(Nightly)\n\n\n\n\n\n\n\n\n\n"
-						"This may take a while.");
-		installCia("/PKSM-Nightly.cia");
-
-		deleteFile("sdmc:/PKSM-Nightly.cia");
-
-		setInstalledChannel("PKSM", "nightly");
-		setInstalledVersion("PKSM", latestPKSMNightly());
-		saveUpdateData();
-		updateAvailable[5] = false;
-	} else {
+void updatePKSM(void) {
 		displayTopMsg("Downloading PKSM\n"
 						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
@@ -978,7 +944,6 @@ void updatePKSM(bool nightly) {
 		setInstalledVersion("PKSM", latestPKSMRelease());
 		saveUpdateData();
 		updateAvailable[4] = false;
-	}
 	doneMsg();
 }
 

@@ -126,7 +126,7 @@ void downloadBoxart(void);
 /**
  * Update PKSM!
  */
-void updatePKSM(bool nightly);
+void updatePKSM(void);
 
 /**
  * Update the CFW/Boot.firm!

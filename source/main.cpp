@@ -116,7 +116,7 @@ const char *button_titles2[] = {
 	"Release",
 	"Nightly",
 	"Release",
-	"Nightly",	
+	"     - ",	
 	"Release",
 	"Nightly",
 	"Boxart",
@@ -636,11 +636,6 @@ int main()
 					}
 					showReleaseInfo("FlagBrew/PKSM", false);
 					break;
-				case 5:
-					if (dspfirmfound) {
-					}
-					showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", false);
-					break;
 				case 6:
 					if (dspfirmfound) {
 					}
@@ -812,7 +807,7 @@ int main()
 							}
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("FlagBrew/PKSM", true))
-							updatePKSM(false);
+							updatePKSM();
 						} else {
 							if (dspfirmfound) {
 							}
@@ -822,9 +817,7 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
-							displayTopMsg("Loading commit notes...");
-							if (showCommitInfo("SuperSaiyajinVoltZ/PKSM-Nightlies", true))
-							updatePKSM(true);
+							notImplementedYet();
 						} else {
 							if (dspfirmfound) {
 							}
