@@ -654,7 +654,7 @@ void drawMessageText(int position, bool showExitText)
 			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, settings.universal.text, _topText[i+position].c_str());
 	}
 	if(showExitText)
-		volt_draw_text(24, 200, 0.5f, 0.5f, settings.universal.text, "B: Cancel   A: Update");
+		volt_draw_text(24, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
 	volt_end_draw();
 }
 
@@ -1089,17 +1089,14 @@ void downloadBoxart(void) {
 	vector<DirEntry> dirContents;
 	std::string scanDir;
 
-	displayTopMsg("Would you like to choose a directory, or scan\nthe entire SD card?\n\n\n\n\n\n\n\n\n\nB: Cancel   A: Full SD   X: Choose Directory");
+	displayTopMsg("Would you like to choose a directory\nor Cancel the Process?\n\n\n\n\n\n\n\n\n \uE001: Cancel    \uE002: Choose Directory");
 
 	while(1) {
 		gspWaitForVBlank();
 		hidScanInput();
 		const u32 hDown = hidKeysDown();
 
-		if(hDown & KEY_A) {
-			scanDir = "sdmc:/";
-			break;
-		} else if(hDown & KEY_X) {
+		 if(hDown & KEY_X) {
 			chdir("sdmc:/");
 			bool dirChosen = false;
 			uint selectedDir = 0;
@@ -1149,7 +1146,7 @@ void downloadBoxart(void) {
 					for(uint i=0;i<((dirContents.size()<10) ? 11-dirContents.size() : 0);i++) {
 						dirs += "\n";
 					}
-					dirs += "B: Back   A: Open   X: Choose";
+					dirs += "\uE001: Back   \uE000: Open   \uE002: Choose";
 					displayTopMsg(dirs.c_str());
 				}
 			}
