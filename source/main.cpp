@@ -112,36 +112,21 @@ size_t button_tex2[] = {
 
 int button_blend(int i) {
 	if (i == 0) {
-		return GREEN;
-	} else if (i == 1) {
-		return settings.universal.bars;
+		return settings.universal.button;
 	} else {
 		return settings.universal.button;
 	}
 }
 
-int button_dot_blend[] = {
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-	settings.universal.dot,
-};
+int dot_blend(int i) {
+	if (i == 0) {
+		return settings.universal.dot;
+	//} else if (i == 1) {
+	//	return settings.universal.bars;
+	} else {
+		return settings.universal.dot;
+	}
+}
 
 const char *button_titles2[] = {
 	"Release",
@@ -358,6 +343,7 @@ std::string getColorName(int color, int bgr) {
 
 int menuSelection = 0;
 int menuPage = 0;
+//int settingsPage = 0;
 
 int main()
 {
@@ -467,13 +453,13 @@ int main()
 						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
 					}
 				}
-
+//				if (settingsPage = 0) {
 				// Draw the Settings Options!
 				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Background");
 				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Bars");
 				volt_draw_text(78, 138, 0.65, 0.65, settings.universal.text, "Text");
 				volt_draw_text(68, 186, 0.65, 0.65, settings.universal.text, "Music");
-			}
+			//}
 
 			volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
 			volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
@@ -485,7 +471,17 @@ int main()
 			volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 2).c_str());
 			volt_draw_text(198, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 1).c_str());
 			volt_draw_text(258, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 0).c_str());
-
+				}
+//			if (settingsPage = 1) {
+//			volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Button");
+//			volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Dot");
+//			volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
+//			volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
+//			volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
+//			volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 2).c_str());
+//			volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
+//			volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 0).c_str());
+//			}
 			volt_end_draw();
 		} else {
 			volt_draw_texture(pageframe, 256+(menuPage*20), 3); //Draw the Page Frame Texture.
@@ -498,18 +494,19 @@ int main()
 				if (i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
 					if (menuSelection == i) {
 						// Button is highlighted.
-						volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, button_blend(i));
+						volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, settings.universal.button);
 					} else {
 						// Button is not highlighted. Darken the texture.
 						if (buttonShading) {
-							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY & button_blend(i));
+							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY & settings.universal.button);
 						} else {
-							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, button_blend(i));
+							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, settings.universal.button);
 						}
 					}
 					// Draw a dot if an update is availible
 					if (updateAvailable[i]) {
-						volt_draw_texture_blend(dot, buttons2[i].x+75, buttons2[i].y-6, button_dot_blend[i]);
+						volt_draw_texture_blend(dot, buttons2[i].x+75, buttons2[i].y-6, settings.universal.dot);
+						
 					}
 
 					// Determine the text height.
@@ -739,6 +736,7 @@ int main()
 				int green;
 				int blue;
 				switch (menuSelection) {
+//					if (settingsPage == 0) {
 				case 0:
 				default:
 					red = keyboardInputInt("Red");
@@ -781,6 +779,32 @@ int main()
 					if (settings.universal.music > 3) settings.universal.music = 0;
 					break;
 				}
+//				} else if (settingsPage == 1) {
+//				case 0:
+//				default:
+//					red = keyboardInputInt("Red");
+//					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.button, 1), getColorValue(settings.universal.button, 0), 255);
+//					break;
+//				case 1:
+//					green = keyboardInputInt("Green (0-255)");
+//					settings.universal.bg = RGBA8(getColorValue(settings.universal.button, 2), green, getColorValue(settings.universal.button, 0), 255);
+//					break;
+//				case 2:
+//					blue = keyboardInputInt("Blue (0-255)");
+//					settings.universal.bg = RGBA8(getColorValue(settings.universal.button, 2), getColorValue(settings.universal.button, 1), blue, 255);
+//					break;
+//				case 3:
+//					red = keyboardInputInt("Red");
+//					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.dot, 1), getColorValue(settings.universal.dot, 0), 255);
+//					break;
+//				case 4:
+//					green = keyboardInputInt("Green (0-255)");
+//					settings.universal.bars = RGBA8(getColorValue(settings.universal.dot, 2), green, getColorValue(settings.universal.dot, 0), 255);
+//					break;
+//				case 5:
+//					blue = keyboardInputInt("Blue (0-255)");
+//					settings.universal.bars = RGBA8(getColorValue(settings.universal.dot, 2), getColorValue(settings.universal.dot, 1), blue, 255);
+//					break;
 			} else {
 			char str[16];
 			itoa(menuSelection,str,10);
@@ -1026,7 +1050,6 @@ int main()
 		}
 
 	}
-
 	if (dspfirmfound) {
 		ndspExit();
 	}
@@ -1039,4 +1062,4 @@ int main()
 	aptExit();
 
     return 0;
-}
+} 

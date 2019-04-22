@@ -44,8 +44,8 @@ void LoadUniversalSettings(void) {
 	settings.universal.text = settingsini.GetInt("UI", "TEXT", BLACK); // Text Color
 	settings.universal.bars = settingsini.GetInt("UI", "BARS", WHITE); // Bars color
 	settings.universal.bg = settingsini.GetInt("UI", "BACKGROUND", DARK_BLUE); // Background color
-	settings.universal.button = settingsini.GetInt("UI", "BUTTON", WHITE); // Bars color
-	settings.universal.dot = settingsini.GetInt("UI", "DOT", DARK_BLUE); // Bars color
+	settings.universal.button = settingsini.GetInt("UI", "BUTTON", LIGHT_GREEN); // Bars color
+	settings.universal.dot = settingsini.GetInt("UI", "DOT", LIGHTBLUE); // Bars color
 	
 
 }
