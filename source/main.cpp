@@ -110,6 +110,52 @@ size_t button_tex2[] = {
 	button,
 };
 
+int button_blend[] = {
+	GREEN,
+	settings.universal.bars,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+	settings.universal.button,
+};
+
+int button_dot_blend[] = {
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+	settings.universal.dot,
+};
+
 const char *button_titles2[] = {
 	"Release",
 	"Nightly",
@@ -465,18 +511,18 @@ int main()
 				if (i <= ((ceil(((double)menuSelection+1)/8)*8)-1) && i >= ((ceil(((double)menuSelection+1)/8)*8)-8)) {
 					if (menuSelection == i) {
 						// Button is highlighted.
-						volt_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+						volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, button_blend[i]);
 					} else {
 						// Button is not highlighted. Darken the texture.
 						if (buttonShading) {
-							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY);
+							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, GRAY & button_blend[i]);
 						} else {
-							volt_draw_texture(button_tex2[i], buttons2[i].x, buttons2[i].y);
+							volt_draw_texture_blend(button_tex2[i], buttons2[i].x, buttons2[i].y, button_blend[i]);
 						}
 					}
 					// Draw a dot if an update is availible
 					if (updateAvailable[i]) {
-						volt_draw_texture(dot, buttons2[i].x+75, buttons2[i].y-6);
+						volt_draw_texture_blend(dot, buttons2[i].x+75, buttons2[i].y-6, button_dot_blend[i]);
 					}
 
 					// Determine the text height.

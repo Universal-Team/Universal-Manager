@@ -36,6 +36,8 @@ typedef struct _Settings_t {
 		int text;
 		int bars;
 		int bg;
+		int button;
+		int dot;
 	} universal;
 } Settings_t;
 extern Settings_t settings;
