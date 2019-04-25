@@ -291,11 +291,13 @@ void currentMusic(void) {
 }
 
 void draw_Bars_Bottom(void) {
+	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 19, settings.universal.bars);
 	volt_draw_rectangle(0, 221, 320, 19, settings.universal.bars);
 }
 
 void draw_Bars_Top(void) {
+	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 19, settings.universal.bars);
 	volt_draw_rectangle(0, 221, 400, 19, settings.universal.bars);
 }
@@ -311,13 +313,49 @@ void draw_Background_Top(void) {
 }
 
 void draw_Dialogbox_Color(void) {
+	if (settings.universal.layout == 0) {
 	volt_draw_rectangle(0, 19, 400, 202, settings.universal.bg);
+} else if (settings.universal.layout == 1) {
+	volt_draw_rectangle(24, 23, 352, 207, WHITE);
 }
+}
+
+
+void draw_Border(void) {
+	volt_draw_on(GFX_TOP, GFX_LEFT);
+	draw_Background_Top();
+	//volt_draw_texture(Border, 0, 0);
+	volt_draw_texture_blend(Border, 0, 0, settings.universal.bars);
+	volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
+    volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
+    volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
+	draw_Background_Bottom();
+	draw_Bars_Bottom();
+}
+
+void draw_Standard(void) {
+	draw_Background_Top();
+	draw_Bars_Top();
+	volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
+    volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
+    volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
+	draw_Background_Bottom();
+	draw_Bars_Bottom();
+}
+
+void chooseLayout(void) {
+	if (settings.universal.layout == 0) {
+	draw_Standard();
+} else if (settings.universal.layout == 1) {
+	draw_Border();
+}
+}
+
 
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	draw_Dialogbox_Color();
-		volt_draw_text(24, 32, 0.5f, 0.5f, settings.universal.text, text);
+	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
 	volt_end_draw();
 }
 
@@ -373,6 +411,7 @@ int main()
 
 	volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
+	volt_load_texture_png(Border, "romfs:/graphics/Misc/border_top.png");
 	volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
 	volt_load_texture_png(buttonRGB, "romfs:/graphics/Grayscaled/buttonRGB.png");
 	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
@@ -428,15 +467,7 @@ int main()
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 
-		draw_Background_Top();
-		draw_Bars_Top();
-		volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
-    	volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
-    	volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
-    	volt_draw_text(260, 225, 0.5f, 0.5f, settings.universal.text, "\uE004 / \uE005: Switch Page");
-    	volt_draw_text(1, 225, 0.5f, 0.5f, settings.universal.text, "\uE000: Select an Option");
-		draw_Background_Bottom();
-		draw_Bars_Bottom();
+		chooseLayout();
 		volt_draw_texture(settingsIcon, 301, 221); // Draw the settings icon
 
 		if (showSettings) {

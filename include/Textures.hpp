@@ -28,6 +28,7 @@
 
 //extern size_t loadingbgtex;
 extern size_t button;
+extern size_t Border;
 extern size_t dot;
 extern size_t pageframe;
 extern size_t settingsIcon;

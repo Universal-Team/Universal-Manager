@@ -40,6 +40,7 @@ static CIniFile settingsini( "sdmc:/Universal-Updater/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
+	settings.universal.layout = settingsini.GetInt("UI", "LAYOUT", 0); // Layouts!
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music!
 	settings.universal.text = settingsini.GetInt("UI", "TEXT", BLACK); // Text Color
 	settings.universal.bars = settingsini.GetInt("UI", "BARS", WHITE); // Bars color
@@ -54,6 +55,7 @@ void LoadUniversalSettings(void) {
  * Save settings.
  */
 void SaveUniversalSettings(void) {
+	settingsini.SetInt("UI", "LAYOUT", settings.universal.layout);
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
 	settingsini.SetInt("UI", "TEXT", settings.universal.text);
 	settingsini.SetInt("UI", "BARS", settings.universal.bars);

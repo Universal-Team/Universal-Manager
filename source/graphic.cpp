@@ -68,7 +68,7 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 	volt_texture_draw();
 }
 
-//void pp2d_free_texture(size_t id)
+//void volt_free_texture(size_t id)
 //{
 //	if (id >= MAX_TEXTURES)
 //		return;
@@ -84,11 +84,12 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 
 //size_t loadingbgtex = 1;
 size_t button = 1;
-size_t dot = 2;
-size_t pageframe = 3;
-size_t settingsIcon = 4;
-size_t settingsButton = 5;
-size_t buttonRGB = 6;
+size_t Border = 2;
+size_t dot = 3;
+size_t pageframe = 4;
+size_t settingsIcon = 5;
+size_t settingsButton = 6;
+size_t buttonRGB = 7;
 
 
 void graphicsInit(void) {

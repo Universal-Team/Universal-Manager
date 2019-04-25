@@ -32,6 +32,7 @@
 
 typedef struct _Settings_t {
 	struct {
+		int layout;
 		int music;
 		int text;
 		int bars;
