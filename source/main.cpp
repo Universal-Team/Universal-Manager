@@ -316,7 +316,7 @@ void draw_Dialogbox_Color(void) {
 	if (settings.universal.layout == 0) {
 	volt_draw_rectangle(0, 19, 400, 202, settings.universal.bg);
 } else if (settings.universal.layout == 1) {
-	volt_draw_rectangle(24, 23, 352, 207, WHITE);
+	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
 }
 }
 
