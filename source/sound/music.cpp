@@ -32,7 +32,7 @@
 
 static Mix_Music* song;
 static Mix_Music* settings;
-static Mix_Music* chill;
+static Mix_Music* standard;
 static std::vector<std::string> songs;
 static bool musicMutex = false;
 static bool donePlaying = false;
@@ -42,7 +42,7 @@ static u8 currentVolume = 0;
 
 
 
-bool SDLH_Init_Chill(void)
+bool SDLH_Init_Default(void)
 {
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
     {
@@ -55,7 +55,7 @@ bool SDLH_Init_Chill(void)
         fprintf(stderr, "Mix_Init: %s\n", Mix_GetError());
     }
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
-    chill = Mix_LoadMUS("romfs:/Music/Chill.mp3");
+    standard = Mix_LoadMUS("romfs:/Music/Default.mp3");
 
     return true;
 }
@@ -135,8 +135,8 @@ void SDLH_Exit(void)
     } else if (settings) 
     {
         Mix_FreeMusic(settings);
-    } else if (chill) {
-        Mix_FreeMusic(chill);
+    } else if (standard) {
+        Mix_FreeMusic(standard);
     }
     Mix_CloseAudio();
     Mix_Quit();
@@ -182,9 +182,9 @@ void Music_SD(void) // If Settings is set to `SD`.
 
 
 
-void Music_Chill(void)
+void Music_Default(void)
 {
-    Mix_PlayMusic(chill, -1); //If Settings is set to `Chill`.
+    Mix_PlayMusic(standard, -1); //If Settings is set to `Default`.
 }
 
 void Music_Settings(void)
