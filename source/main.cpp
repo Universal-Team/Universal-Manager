@@ -905,6 +905,8 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
+							displayTopMsg("Loading Commit notes...");
+							if (showCommitInfo("FlagBrew/PKSM", true))
 							notImplementedYet();
 						} else {
 							if (dspfirmfound) {
