@@ -381,7 +381,7 @@ std::string getColorName(int color, int bgr) {
 
 int menuSelection = 0;
 int menuPage = 0;
-//int settingsPage = 0;
+int settingsPage = 0;
 
 int main()
 {
@@ -471,8 +471,12 @@ int main()
 		volt_draw_texture(settingsIcon, 301, 221); // Draw the settings icon
 
 		if (showSettings) {
+			volt_draw_texture(pageframe, 256+(settingsPage*20), 3); //Draw the Page Frame Texture.
+    		volt_draw_text(170, 4, 0.50, 0.50, settings.universal.text, "Current Page:");
+			volt_draw_text(260, 4, 0.50, 0.50, settings.universal.text, "1"); //Draw First Page Number.
+			volt_draw_text(280, 4, 0.50, 0.50, settings.universal.text, "2"); // Draw Second Page Number.
 			// Draw buttons
-			for (int i = (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1; i >= 0; i--) {
+			for (int i = (settingsPage == 0 ? (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1 : 5); i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
 					volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
@@ -484,35 +488,34 @@ int main()
 						volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
 					}
 				}
-//				if (settingsPage = 0) {
+			}
+			if (settingsPage == 0) {
 				// Draw the Settings Options!
 				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Background");
 				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Bars");
 				volt_draw_text(78, 138, 0.65, 0.65, settings.universal.text, "Text");
 				volt_draw_text(68, 186, 0.65, 0.65, settings.universal.text, "Music");
-			//}
 
-			volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
-			volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
-			volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
-			volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 2).c_str());
-			volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
-			volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 0).c_str());
-			volt_draw_text(167, 184, 0.65, 0.65, settings.universal.text, musicNames[settings.universal.music].c_str());
-			volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 2).c_str());
-			volt_draw_text(198, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 1).c_str());
-			volt_draw_text(258, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 0).c_str());
-				}
-//			if (settingsPage = 1) {
-//			volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Button");
-//			volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Dot");
-//			volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
-//			volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
-//			volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
-//			volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 2).c_str());
-//			volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
-//			volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 0).c_str());
-//			}
+				volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 2).c_str());
+				volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 1).c_str());
+				volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bg, 0).c_str());
+				volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 2).c_str());
+				volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 1).c_str());
+				volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.bars, 0).c_str());
+				volt_draw_text(167, 184, 0.65, 0.65, settings.universal.text, musicNames[settings.universal.music].c_str());
+				volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 2).c_str());
+				volt_draw_text(198, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 1).c_str());
+				volt_draw_text(258, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 0).c_str());
+			} else if (settingsPage == 1) {
+				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Button");
+				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Dot");
+				volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 2).c_str());
+				volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 1).c_str());
+				volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 0).c_str());
+				volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 2).c_str());
+				volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 1).c_str());
+				volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 0).c_str());
+			}
 			volt_end_draw();
 		} else {
 			volt_draw_texture(pageframe, 256+(menuPage*20), 3); //Draw the Page Frame Texture.
@@ -565,17 +568,31 @@ int main()
 			}
 		}
 
-		if (hDown & KEY_R && !showSettings) {
-			if (menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
-				menuPage++;
-				menuSelection += 8;
-				if (menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
+		if (hDown & KEY_R) {
+			if(showSettings) {
+				if (settingsPage<1) {
+					settingsPage++;
+					menuSelection = 0;
+				}
+			} else {
+				if (menuPage<(ceil(((double)(sizeof(buttons2)/sizeof(buttons2[0])+1.0)/8))-1)) {
+					menuPage++;
+					menuSelection += 8;
+					if (menuSelection > (int)sizeof(buttons2))	menuSelection = (int)sizeof(buttons2);
+				}
 			}
 		} else if (hDown & KEY_L) {
-			if (menuPage>0) {
-				menuPage--;
-				menuSelection -= 8;
-				if (menuSelection < 0)	menuSelection = 0;
+			if(showSettings) {
+				if (settingsPage>0) {
+					settingsPage--;
+					menuSelection = 0;
+				}
+			} else {
+				if (menuPage>0) {
+					menuPage--;
+					menuSelection -= 8;
+					if (menuSelection < 0)	menuSelection = 0;
+				}
 			}
 		}
 
@@ -597,10 +614,13 @@ int main()
 		if (hDown & KEY_TOUCH) {
 			buttonShading = false;
 		}
-		if (showSettings) {
+		if (showSettings && settingsPage == 0) {
 			if (menuSelection > 11) menuSelection = 0;
 			else if (menuSelection > 9) menuSelection = 9;
 			else if (menuSelection < 0) menuSelection = 9;
+		} else if (showSettings && settingsPage == 1) {
+			if (menuSelection > 5) menuSelection = 0;
+			else if (menuSelection < 0) menuSelection = 5;
 		} else {
 			if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 				menuSelection = (menuPage*8)+1; 
@@ -618,30 +638,16 @@ int main()
 		} else if (hDown & KEY_SELECT) {
 			menuSelection = 0;
 			showSettings = !showSettings;
-			if(!showSettings)	SaveUniversalSettings();
+			if (!showSettings)	SaveUniversalSettings();
 		}
 
 		if (hDown & KEY_TOUCH) {
 			if (touch.py >= 221 && touch.py <= 240 && touch.px >= 301 && touch.px <= 320) {
 				menuSelection = 0;
 				showSettings = !showSettings;
-				if(!showSettings)	SaveUniversalSettings();
+				if (!showSettings)	SaveUniversalSettings();
 			} else if (showSettings) {
-				if (touch.py >= 48 && touch.py <= 81 && touch.px >= 100 && touch.px <= 235) {
-					menuSelection = 0;
-					setOption = true;
-				} else if (touch.py >= 98 && touch.py <= 130 && touch.px >= 100 && touch.px <= 235) {
-					menuSelection = 1;
-					setOption = true;
-				} else if (touch.py >= 148 && touch.py <= 181 && touch.px >= 100 && touch.px <= 235) {
-					menuSelection = 2;
-					setOption = true;
-				} else if (touch.py >= 198 && touch.py <= 231 && touch.px >= 100 && touch.px <= 235) {
-					menuSelection = 3;
-					setOption = true;
-				}
-
-				for (int i = (int)(sizeof(buttons_settings)/sizeof(buttons_settings[0]))-1; i >= 0; i--) {
+				for (int i = (settingsPage == 0 ? (int)(sizeof(buttons_settings)/sizeof(buttons_settings[0]))-1 : 5); i >= 0; i--) {
 					if (touch.py >= buttons_settings[i].y && touch.py <= (buttons_settings[i].y+buttons_settings[i].h) && touch.px >= buttons_settings[i].x && touch.px <= (buttons_settings[i].x+buttons_settings[i].w)) {
 						menuSelection = i;
 						setOption = true;
@@ -766,76 +772,79 @@ int main()
 				int red;
 				int green;
 				int blue;
-				switch (menuSelection) {
-//					if (settingsPage == 0) {
-				case 0:
-				default:
-					red = keyboardInputInt("Red");
-					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
-					break;
-				case 1:
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
-					break;
-				case 2:
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
-					break;
-				case 3:
-					red = keyboardInputInt("Red");
-					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
-					break;
-				case 4:
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
-					break;
-				case 5:
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
-					break;
-				case 6:
-					red = keyboardInputInt("Red");
-					settings.universal.text = RGBA8(red, getColorValue(settings.universal.text, 1), getColorValue(settings.universal.text, 0), 255);
-					break;
-				case 7:
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), green, getColorValue(settings.universal.text, 0), 255);
-					break;
-				case 8:
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), getColorValue(settings.universal.text, 1), blue, 255);
-					break;
-				case 9:
-					settings.universal.music++;
-					if (settings.universal.music > 3) settings.universal.music = 0;
-					break;
+				if (settingsPage == 0) {
+					switch (menuSelection) {
+						case 0:
+						default:
+							red = keyboardInputInt("Red");
+							settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
+							break;
+						case 1:
+							green = keyboardInputInt("Green (0-255)");
+							settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
+							break;
+						case 2:
+							blue = keyboardInputInt("Blue (0-255)");
+							settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+							break;
+						case 3:
+							red = keyboardInputInt("Red");
+							settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+							break;
+						case 4:
+							green = keyboardInputInt("Green (0-255)");
+							settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+							break;
+						case 5:
+							blue = keyboardInputInt("Blue (0-255)");
+							settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+							break;
+						case 6:
+							red = keyboardInputInt("Red");
+							settings.universal.text = RGBA8(red, getColorValue(settings.universal.text, 1), getColorValue(settings.universal.text, 0), 255);
+							break;
+						case 7:
+							green = keyboardInputInt("Green (0-255)");
+							settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), green, getColorValue(settings.universal.text, 0), 255);
+							break;
+						case 8:
+							blue = keyboardInputInt("Blue (0-255)");
+							settings.universal.text = RGBA8(getColorValue(settings.universal.text, 2), getColorValue(settings.universal.text, 1), blue, 255);
+							break;
+						case 9:
+							settings.universal.music++;
+							if (settings.universal.music > 3) settings.universal.music = 0;
+							break;
+					}
+				} else if (settingsPage == 1) {
+					switch(menuSelection) {
+						case 0:
+						default:
+							red = keyboardInputInt("Red");
+							settings.universal.button = RGBA8(red, getColorValue(settings.universal.button, 1), getColorValue(settings.universal.button, 0), 255);
+							break;
+						case 1:
+							green = keyboardInputInt("Green (0-255)");
+							settings.universal.button = RGBA8(getColorValue(settings.universal.button, 2), green, getColorValue(settings.universal.button, 0), 255);
+							break;
+						case 2:
+							blue = keyboardInputInt("Blue (0-255)");
+							settings.universal.button = RGBA8(getColorValue(settings.universal.button, 2), getColorValue(settings.universal.button, 1), blue, 255);
+							break;
+						case 3:
+							red = keyboardInputInt("Red");
+							settings.universal.dot = RGBA8(red, getColorValue(settings.universal.dot, 1), getColorValue(settings.universal.dot, 0), 255);
+							break;
+						case 4:
+							green = keyboardInputInt("Green (0-255)");
+							settings.universal.dot = RGBA8(getColorValue(settings.universal.dot, 2), green, getColorValue(settings.universal.dot, 0), 255);
+							break;
+						case 5:
+							blue = keyboardInputInt("Blue (0-255)");
+							settings.universal.dot = RGBA8(getColorValue(settings.universal.dot, 2), getColorValue(settings.universal.dot, 1), blue, 255);
+							break;
+					}
 				}
-//				} else if (settingsPage == 1) {
-//				case 0:
-//				default:
-//					red = keyboardInputInt("Red");
-//					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.button, 1), getColorValue(settings.universal.button, 0), 255);
-//					break;
-//				case 1:
-//					green = keyboardInputInt("Green (0-255)");
-//					settings.universal.bg = RGBA8(getColorValue(settings.universal.button, 2), green, getColorValue(settings.universal.button, 0), 255);
-//					break;
-//				case 2:
-//					blue = keyboardInputInt("Blue (0-255)");
-//					settings.universal.bg = RGBA8(getColorValue(settings.universal.button, 2), getColorValue(settings.universal.button, 1), blue, 255);
-//					break;
-//				case 3:
-//					red = keyboardInputInt("Red");
-//					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.dot, 1), getColorValue(settings.universal.dot, 0), 255);
-//					break;
-//				case 4:
-//					green = keyboardInputInt("Green (0-255)");
-//					settings.universal.bars = RGBA8(getColorValue(settings.universal.dot, 2), green, getColorValue(settings.universal.dot, 0), 255);
-//					break;
-//				case 5:
-//					blue = keyboardInputInt("Blue (0-255)");
-//					settings.universal.bars = RGBA8(getColorValue(settings.universal.dot, 2), getColorValue(settings.universal.dot, 1), blue, 255);
-//					break;
 			} else {
 			char str[16];
 			itoa(menuSelection,str,10);
@@ -1093,4 +1102,4 @@ int main()
 	aptExit();
 
     return 0;
-} 
+}
