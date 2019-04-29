@@ -34,13 +34,9 @@
 #include <string>
 #include "io.hpp"
 
-bool SDLH_Init_Default(void);
-bool SDLH_Init_Settings(void);
-bool SDLH_Init_SD(void);
+bool SDLH_Init_ON(void);
 void SDLH_Exit(void);
 
-void Music_SD(void);
-void Music_Default(void);
-void Music_Settings(void);
+void Music_ON(void);
 
 #endif

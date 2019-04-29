@@ -57,7 +57,7 @@ bool dspfirmfound = false;
 bool updatingSelf = false;
 bool showSettings = false;
 
-std::string musicNames[] = {"Default", "Settings", "SD", "OFF"};
+std::string musicNames[] = {"ON", "OFF"};
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -280,12 +280,8 @@ void screenon()
 
 void currentMusic(void) {
 	if (settings.universal.music == 0) {
-		Music_Default();
+		Music_ON();
 	} else if (settings.universal.music == 1) {
-		Music_Settings();
-	} else if (settings.universal.music == 2) {
-		Music_SD();
-	} else if (settings.universal.music == 3) {
 
 	}
 }
@@ -392,9 +388,7 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
-	SDLH_Init_SD();
-	SDLH_Init_Default();
-	SDLH_Init_Settings();
+	SDLH_Init_ON();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -813,7 +807,7 @@ int main()
 							break;
 						case 9:
 							settings.universal.music++;
-							if (settings.universal.music > 3) settings.universal.music = 0;
+							if (settings.universal.music > 1) settings.universal.music = 0;
 							break;
 					}
 				} else if (settingsPage == 1) {

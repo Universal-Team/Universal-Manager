@@ -31,8 +31,6 @@
 #include "random.hpp"
 
 static Mix_Music* song;
-static Mix_Music* settings;
-static Mix_Music* standard;
 static std::vector<std::string> songs;
 static bool musicMutex = false;
 static bool donePlaying = false;
@@ -40,52 +38,13 @@ static size_t currentSong = 0;
 static u8 currentVolume = 0;
 
 
-
-
-bool SDLH_Init_Default(void)
+bool SDLH_Init_ON(void)
 {
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
     {
         fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
         return false;
     }
-    const int mix_flags = MIX_INIT_MP3;
-    if ((Mix_Init(mix_flags) & mix_flags) != mix_flags)
-    {
-        fprintf(stderr, "Mix_Init: %s\n", Mix_GetError());
-    }
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
-    standard = Mix_LoadMUS("romfs:/Music/Default.mp3");
-
-    return true;
-}
-
-bool SDLH_Init_Settings(void)
-{
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
-    {
-        fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
-        return false;
-    }
-    const int mix_flags = MIX_INIT_MP3;
-    if ((Mix_Init(mix_flags) & mix_flags) != mix_flags)
-    {
-        fprintf(stderr, "Mix_Init: %s\n", Mix_GetError());
-    }
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
-    settings = Mix_LoadMUS("romfs:/Music/Settings.mp3");
-
-    return true;
-}
-
-bool SDLH_Init_SD(void)
-{
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
-    {
-        fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
-        return false;
-    }
-
     const int mix_flags = MIX_INIT_MP3;
     if ((Mix_Init(mix_flags) & mix_flags) != mix_flags)
     {
@@ -110,11 +69,12 @@ bool SDLH_Init_SD(void)
             }
         }
     }
-
+    if (songs.empty())
+    {
+        songs.push_back("romfs:/Music/Default.mp3");
+    }
     std::sort(songs.begin(), songs.end());
-
     HIDUSER_GetSoundVolume(&currentVolume);
-    
     return true;
 }
 
@@ -132,18 +92,13 @@ void SDLH_Exit(void)
     if (song)
     {
         Mix_FreeMusic(song);
-    } else if (settings) 
-    {
-        Mix_FreeMusic(settings);
-    } else if (standard) {
-        Mix_FreeMusic(standard);
     }
     Mix_CloseAudio();
     Mix_Quit();
     SDL_Quit();
 }
 
-void Music_SD(void) // If Settings is set to `SD`.
+void Music_ON(void) // If Settings is set to `ON`.
 {
     musicMutex = true;
     while (musicMutex)
@@ -178,16 +133,4 @@ void Music_SD(void) // If Settings is set to `SD`.
         svcSleepThread(250000000);
     }
     donePlaying = true;
-}
-
-
-
-void Music_Default(void)
-{
-    Mix_PlayMusic(standard, -1); //If Settings is set to `Default`.
-}
-
-void Music_Settings(void)
-{
-    Mix_PlayMusic(settings, -1);    //If Settings is set to `Settings`.
 }
