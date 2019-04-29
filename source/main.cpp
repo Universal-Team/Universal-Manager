@@ -55,6 +55,7 @@ static touchPosition touch;
 
 bool dspfirmfound = false;
 bool updatingSelf = false;
+bool updated3dsx = false;
 bool showSettings = false;
 
 std::string musicNames[] = {"ON", "OFF"};
@@ -840,251 +841,160 @@ int main()
 					}
 				}
 			} else {
-			char str[16];
-			itoa(menuSelection,str,10);
-			displayTopMsg(str);
-			switch (menuSelection) {
+				char str[16];
+				itoa(menuSelection,str,10);
+				displayTopMsg(str);
+				switch (menuSelection) {
 					case 0:	// TWiLight release
-						if (checkWifiStatus()){ 
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("DS-Homebrew/TWiLightMenu", true))
-							updateTWiLight(false);
-						} else {
-							if (dspfirmfound) {
-							}
+								updateTWiLight(false);
 						}
 						break;
 					case 1:	// TWiLight nightly
 						if (checkWifiStatus()){ 
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("DS-Homebrew/TWiLightMenu", true))
-							updateTWiLight(true);
-						} else {
-							if (dspfirmfound) {
-							}
+								updateTWiLight(true);
 						}
 						break;
 					case 2:	// nds-bootstrap release
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("Ahezard/NDS-Bootstrap", true))
-							updateBootstrap(false);
-						} else {
-							if (dspfirmfound) {
-							}
+								updateBootstrap(false);
 						}
 						break;
 					case 3:	// nds-bootstrap nightly
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("ahezard/NDS-Bootstrap", true))
-							updateBootstrap(true);
-						} else {
-							if (dspfirmfound) {
-							}
+								updateBootstrap(true);
 						}
 						break;
 					case 4:	// PKSM Release
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("FlagBrew/PKSM", true))
-							updatePKSM();
-						} else {
-							if (dspfirmfound) {
-							}
+								updatePKSM();
 						}
 						break;
 					case 5:	// PKSM nightly
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading Commit notes...");
 							if (showCommitInfo("FlagBrew/PKSM", true))
-							notImplementedYet();
-						} else {
-							if (dspfirmfound) {
-							}
+								notImplementedYet();
 						}
 						break;
 					case 6:	// Luma Release
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("AuroraWright/Luma3DS", true))
-							updateLuma(false);
+								updateLuma(false);
+						}
 						break;
 					case 7:	// LumaNightly
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading commit notes...");
 							if (showReleaseInfo("hax0kartik/luma-hourlies", true))
-							updateLuma(true);
-						} else {
-							if (dspfirmfound) {
-							}
+								updateLuma(true);
 						}
 						break;
 					case 8:	// Boxarts
-						//if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							downloadBoxart();
-						} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 9:	// usrcheat.dat
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							updateCheats();
-						} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 10: // Checkpoint Release
 						if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("FlagBrew/Checkpoint", true))
-							updateCheckpoint();
-						} else {
-							if (dspfirmfound) {
-							}
+								updateCheckpoint();
 						}
 						break;
 					case 11: //Checkpoint Nightly
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading commit notes...");
 							if (showReleaseInfo("Flagbrew/Checkpoint", true))
 								nightlyCheckpoint();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 12: //Updater Update
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(false);
 								updatingSelf = false;
-							} else if (dspfirmfound) {
 							}
 						}
 						break;
 					case 13: //Updater Update
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(true);
 								updatingSelf = false;
-							} else if (dspfirmfound) {
 							}
 						}
 						break;
 					case 14: //GodMode9 Release
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading release notes...");
 							if (showReleaseInfo("D0k3/GodMode9", true))
 								downloadGodMode9();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 15: //GodMode9 Nightly
-							if (checkWifiStatus()){
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
 							displayTopMsg("Loading commit notes...");
 							if (showCommitInfo("D0k3/GodMode9", true))
 								godMode9Nightly();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 16: //NotImplemented!
-							if (checkWifiStatus()){
-								if (dspfirmfound) {
-								}
-								displayTopMsg("Loading release notes...");
-								if (showReleaseInfo("Steveice10/FBI", true))
+						if (checkWifiStatus()){
+							displayTopMsg("Loading release notes...");
+							if (showReleaseInfo("Steveice10/FBI", true))
 								updateFBIRelease();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 17: //NotImplemented!
-							if (checkWifiStatus()){
-								if (dspfirmfound) {
-								}
-								notImplementedYet();
-								} else {
-							if (dspfirmfound) {
-							}
+						if (checkWifiStatus()){
+							notImplementedYet();
 						}
 						break;
 					case 18: //NotImplemented!
-							if (checkWifiStatus()){
-								if (dspfirmfound) {
-								}
-								displayTopMsg("Loading release notes...");
-								if (showReleaseInfo("FlameKat53/ButtonBoot", true))
+						if (checkWifiStatus()){
+							displayTopMsg("Loading release notes...");
+							if (showReleaseInfo("FlameKat53/ButtonBoot", true))
 								updateButtonBoot();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					case 19: //NotImplemented!
-							if (checkWifiStatus()){
-								if (dspfirmfound) {
-								}
-								displayTopMsg("Loading Commit notes...");
-								if (showCommitInfo("FlameKat53/ButtonBoot", true))
+						if (checkWifiStatus()){
+							displayTopMsg("Loading Commit notes...");
+							if (showCommitInfo("FlameKat53/ButtonBoot", true))
 								updateButtonBootNightly();
-								} else {
-							if (dspfirmfound) {
-							}
 						}
 						break;
 					default:
-						if (dspfirmfound) {
-						}
 						break;
+					}
 				}
+				setOption = false;
 			}
-			setOption = false;
+			if(hDown & KEY_START || updated3dsx) {
+				break;
+			}
 		}
-
 	}
 	if (dspfirmfound) {
 		ndspExit();

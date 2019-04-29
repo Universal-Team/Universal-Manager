@@ -70,6 +70,7 @@ extern void draw_Dialogbox_Color(void);
 
 extern bool downloadNightlies;
 extern bool updateAvailable[];
+extern bool updated3dsx;
 
 // following function is from 
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
@@ -1262,9 +1263,9 @@ void nightlyCheckpoint(void) {
 }
 
 	void updateSelf(bool nightly) {
-	if(nightly) {
+	if (nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
 		displayTopMsg("Downloading Universal-Updater\n" 
-						"(Nightly)");
+						"(Nightly (cia))");
 		if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
 			downloadFailed();
 			return;
@@ -1281,8 +1282,8 @@ void nightlyCheckpoint(void) {
 		installCia("/Universal-Updater-Nightly.cia");
 
 		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
-	} else {
-		displayTopMsg("Downloading Universal Updater...\n");
+	} else if (!nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
+		displayTopMsg("Downloading Universal Updater...\n(Release (cia))");
 
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
 			downloadFailed();
@@ -1300,8 +1301,33 @@ void nightlyCheckpoint(void) {
 		installCia("/Universal-Updater.cia");
 
 		deleteFile("sdmc:/Universal-Updater.cia");
+	} else if(nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) == 0)) {
+		displayTopMsg("Downloading Universal Updater...\n(Nightly (3dsx))");
+
+		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/Universal/Universal-Updater.3dsx?raw=true", "/3ds/Universal-Updater.3dsx") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		setInstalledChannel("UNIVERSAL-UPDATER", "nightly");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
+		saveUpdateData();
+	} else {
+		displayTopMsg("Downloading Universal Updater...\n(Release (3dsx))");
+
+		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.3dsx", "/Universal-Updater.3dsx") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		setInstalledChannel("UNIVERSAL-UPDATER", "nightly");
+		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
+		saveUpdateData();
 	}
 	doneMsg();
+	if(access("sdmc:/3ds/TWiLightMenu-Updater.3dsx", F_OK) == 0) {
+		updated3dsx = true;
+	}
 	}
 
 void notImplementedYet(void) {
