@@ -995,7 +995,6 @@ int main()
 				break;
 			}
 		}
-	}
 	if (dspfirmfound) {
 		ndspExit();
 	}
