@@ -36,6 +36,8 @@
 #include "voltlib/volt.h"
 #include "Universal-Settings.hpp"
 #include "Colors.hpp"
+#include "thread.hpp"
+
 extern "C" {
 	#include "cia.h"
 }
@@ -71,6 +73,12 @@ extern void draw_Dialogbox_Color(void);
 extern bool downloadNightlies;
 extern bool updateAvailable[];
 extern bool updated3dsx;
+extern int filesExtracted;
+extern std::string extractingFile;
+
+char progressBarMsg[64] = "";
+bool showProgressBar = false;
+bool progressBarType = 0; // 0 = Download | 1 = Extract
 
 // following function is from 
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
@@ -659,6 +667,15 @@ void drawMessageText(int position, bool showExitText)
 	volt_end_draw();
 }
 
+void displayProgressBar() {
+	char str[256];
+	while(showProgressBar) {
+		snprintf(str, sizeof(str), "%s\n%s%s\n%i %s", progressBarMsg, (!progressBarType ? "" : "\nCurrently extracting:\n"), (!progressBarType ? "" : extractingFile.c_str()), (!progressBarType ? (int)round(result_written/1000) : filesExtracted), (!progressBarType ? "KB downloaded." : (filesExtracted == 1 ? "file extracted." :"files extracted.")));
+		displayTopMsg(str);
+		gspWaitForVBlank();
+	}
+}
+
 std::string latestMenuRelease(void) {
 	if (latestMenuReleaseCache == "")
 		latestMenuReleaseCache = getLatestRelease("DS-Homebrew/TWiLightMenu", "tag_name");
@@ -831,16 +848,21 @@ void checkForUpdates() {
 
 void updateBootstrap(bool nightly) {
 	if(nightly) {
-		displayTopMsg("Downloading NDS-Bootstrap\n"
-						"(Nightly)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Nightly)");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/nds-bootstrap.7z?raw=true", "/nds-bootstrap-nightly.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Now extracting.\n"
-						"(Nightly)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting nds-bootstrap...\n(Nightly)");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/nds-bootstrap-nightly.7z", "nds-bootstrap/", "/_nds/");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-nightly.7z");
 
@@ -848,16 +870,22 @@ void updateBootstrap(bool nightly) {
 		saveUpdateData();
 		updateAvailable[3] = false;
 	} else {	
-		displayTopMsg("Downloading NDS-Bootstrap\n"
-						"(Release)");
+		displayTopMsg("Downloading nds-bootstrap...\n(Release)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/ahezard/nds-bootstrap", "nds-bootstrap\\.zip", "/nds-bootstrap-release.zip") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Now extracting.\n"
-						"(Release)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting nds-bootstrap...\n(Release)");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/nds-bootstrap-release.zip", "/", "/_nds/");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-release.zip");
 
@@ -867,6 +895,7 @@ void updateBootstrap(bool nightly) {
 	}
 	doneMsg();
 }
+
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {

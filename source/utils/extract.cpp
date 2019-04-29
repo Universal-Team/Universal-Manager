@@ -30,6 +30,10 @@
 #include <archive.h>
 #include <archive_entry.h>
 
+
+int filesExtracted = 0;
+std::string extractingFile = "";
+
 Result extractArchive(std::string archivePath, std::string wantedFile, std::string outputPath)
 {
 	int r;
@@ -49,6 +53,7 @@ Result extractArchive(std::string archivePath, std::string wantedFile, std::stri
 		std::string entryName(archive_entry_pathname(entry));
 		if (wantedFile == "/")	wantedFile = "";
 		if (matchPattern(wantedFile, entryName.substr(0,wantedFile.length())) || wantedFile == "") {
+			extractingFile = (entryName.length() > wantedFile.length() ? entryName.substr(wantedFile.length()) : wantedFile);
 			ret = EXTRACT_ERROR_NONE;
 
 			Handle fileHandle;
@@ -93,7 +98,7 @@ Result extractArchive(std::string archivePath, std::string wantedFile, std::stri
 			
 			FSFILE_Close(fileHandle);
 			free(buf);
-			// break;
+			filesExtracted++;
 		}
 	}
 	
