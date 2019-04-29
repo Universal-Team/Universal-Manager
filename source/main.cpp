@@ -57,7 +57,7 @@ bool dspfirmfound = false;
 bool updatingSelf = false;
 bool showSettings = false;
 
-std::string musicNames[] = {"Chill", "Settings", "SD", "OFF"};
+std::string musicNames[] = {"Default", "Settings", "SD", "OFF"};
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -280,7 +280,7 @@ void screenon()
 
 void currentMusic(void) {
 	if (settings.universal.music == 0) {
-		Music_Chill();
+		Music_Default();
 	} else if (settings.universal.music == 1) {
 		Music_Settings();
 	} else if (settings.universal.music == 2) {
@@ -393,7 +393,7 @@ int main()
 	hidInit();
 	acInit();
 	SDLH_Init_SD();
-	SDLH_Init_Chill();
+	SDLH_Init_Default();
 	SDLH_Init_Settings();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
@@ -914,6 +914,8 @@ int main()
 						if (checkWifiStatus()){
 							if (dspfirmfound) {
 							}
+							displayTopMsg("Loading Commit notes...");
+							if (showCommitInfo("FlagBrew/PKSM", true))
 							notImplementedYet();
 						} else {
 							if (dspfirmfound) {
