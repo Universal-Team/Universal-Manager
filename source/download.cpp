@@ -899,17 +899,24 @@ void updateBootstrap(bool nightly) {
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {
-		displayTopMsg("Now Downloading TWiLightMenu++\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg),"Now Downloading TWiLightMenu++\n"
 						"(Nightly)\n\nThis may take a while.");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Now extracting.\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
 						"(Nightly)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
+		showProgressBar = false;
 
 		displayTopMsg("Now installing the CIAs.\n"
 						"(Nightly)");
@@ -927,16 +934,25 @@ void updateTWiLight(bool nightly) {
 	} else {
 		displayTopMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading TWiLightMenu++\n"
+						"(Release)\n\nThis may take a while.");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/DS-Homebrew/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Now extracting.\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
 						"(Release)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/TWiLightMenu-release.7z", "_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-release.7z", "3DS - CFW users/", "/");
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
+		showProgressBar = false;
 
 		displayTopMsg("Now installing the CIAs.\n"
 						"(Release)");
