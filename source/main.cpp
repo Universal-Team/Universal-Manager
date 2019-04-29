@@ -502,7 +502,7 @@ int main()
 				volt_draw_text(198, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 1).c_str());
 				volt_draw_text(258, 136, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.text, 0).c_str());
 			} else if (settingsPage == 1) {
-				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Button");
+				volt_draw_text(60, 42, 0.65, 0.65, settings.universal.text, "Button");
 				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Dot");
 				volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 2).c_str());
 				volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 1).c_str());
