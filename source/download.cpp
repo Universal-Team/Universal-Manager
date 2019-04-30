@@ -1274,7 +1274,9 @@ void updateLuma(bool nightly) {
 		setInstalledVersion("LUMA3DS-NIGHTLY", latestLumaNightly());
 		saveUpdateData();
 		updateAvailable[7] = false;
-	} else {	
+	} else {
+		displayTopMsg("Now Downloading Luma3DS\n"
+		"(Release)");	
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading Luma3DS\n"
 						"(Release)");
 		showProgressBar = true;
@@ -1373,6 +1375,7 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
 	} else if (!nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
+		displayTopMsg("Downloading Universal Updater...\n(Release (cia))");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Release (cia))");
 		showProgressBar = true;
 		progressBarType = 0;
@@ -1395,6 +1398,7 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater.cia");
 	} else if(nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) == 0)) {
+		displayTopMsg("Downloading Universal Updater...\n(Nightly (3dsx))");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Nightly (3dsx))");
 		showProgressBar = true;
 		progressBarType = 0;
@@ -1409,6 +1413,7 @@ void nightlyCheckpoint(void) {
 		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
 		saveUpdateData();
 	} else {
+		displayTopMsg("Downloading Universal Updater...\n(Release (3dsx))");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Release (3dsx))");
 		showProgressBar = true;
 		progressBarType = 0;
