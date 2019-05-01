@@ -972,13 +972,9 @@ void updateTWiLight(bool nightly) {
 }
 
 void updatePKSM(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKSM\n"
+		displayTopMsg("Downloading PKSM\n"
 						"(Release)\n\nThis may take a while.");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -998,22 +994,15 @@ void updatePKSM(void) {
 }
 
 void updateCheats(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading DSJ's usrcheat.dat\n");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Downloading DSJ's usrcheat.dat\n");
 	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
-		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
 
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting...\n"
+	displayTopMsg("Now extracting...\n"
 					"\nThis may take a while.");
-		filesExtracted = 0;
-		progressBarType = 1;
 	extractArchive("/usrcheat.dat.7z", "usrcheat.dat", "/_nds/TWiLightMenu/extras/usrcheat.dat");
-		showProgressBar = false;
 
 	deleteFile("sdmc:/usrcheat.dat.7z");
 
@@ -1021,12 +1010,8 @@ void updateCheats(void) {
 }
 
 void updateButtonBoot(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading ButtonBoot (Release)\n");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Downloading ButtonBoot (Release)\n");
 	if (downloadFromRelease("https://github.com/FlameKat53/ButtonBoot",  "ButtonBoot_3DS\\.cia", "/ButtonBoot.cia") != 0) {
-		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
@@ -1043,22 +1028,15 @@ void updateButtonBoot(void) {
 	}
 
 void updateButtonBootNightly(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading ButtonBoot (Nightly)\n");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Downloading ButtonBoot (Nightly)\n");
 	if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/ButtonBoot.7z?raw=true","/ButtonBoot.7z") != 0) {
-		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
 
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting...\n"
+	displayTopMsg("Now extracting...\n"
 				"\nThis may take a while.");
-		filesExtracted = 0;
-		progressBarType = 1;
 	extractArchive("/ButtonBoot.7z", "ButtonBoot/ButtonBoot_3DS.cia", "/ButtonBoot-Nightly.cia");
-	showProgressBar = false;
 
 	displayTopMsg("Now Installing ButtonBoot.cia...");
 	installCia("/ButtonBoot-Nightly.cia");
@@ -1260,13 +1238,9 @@ void downloadBoxart(void) {
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading Luma3DS\n" 
+		displayTopMsg("Now Downloading Luma3DS\n" 
 						"(Nightly)");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1275,23 +1249,16 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading Luma3DS\n"
+		displayTopMsg("Now Downloading Luma3DS\n"
 						"(Release)");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "extracting Boot.firm\n"
+		displayTopMsg("extracting Boot.firm\n"
 						"(Release)");
-		filesExtracted = 0;
-		progressBarType = 1;
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
-		showProgressBar = false;
 
 		deleteFile("sdmc:/Luma3DS.7z");
 
@@ -1303,12 +1270,8 @@ void updateLuma(bool nightly) {
 }
 
 void updateCheckpoint(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Checkpoint.cia (Release)\n");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Downloading Checkpoint.cia (Release)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1326,12 +1289,8 @@ void updateCheckpoint(void) {
 }
 
 void nightlyCheckpoint(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Checkpoint.cia (Nightly)\n");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Downloading Checkpoint.cia (Nightly)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1350,13 +1309,9 @@ void nightlyCheckpoint(void) {
 
 	void updateSelf(bool nightly) {
 	if (nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Updater\n" 
+		displayTopMsg("Downloading Universal-Updater\n" 
 						"(Nightly (cia))");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1373,12 +1328,9 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
 	} else if (!nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Release (cia))");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		displayTopMsg("Downloading Universal Updater...\n(Release (cia))");
+
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1395,12 +1347,9 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater.cia");
 	} else if(nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) == 0)) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Nightly (3dsx))");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		displayTopMsg("Downloading Universal Updater...\n(Nightly (3dsx))");
+
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/Universal/Universal-Updater.3dsx?raw=true", "/3ds/Universal-Updater.3dsx") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1409,12 +1358,9 @@ void nightlyCheckpoint(void) {
 		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
 		saveUpdateData();
 	} else {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal Updater...\n(Release (3dsx))");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		displayTopMsg("Downloading Universal Updater...\n(Release (3dsx))");
+
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.3dsx", "/Universal-Updater.3dsx") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
@@ -1434,24 +1380,17 @@ void notImplementedYet(void) {
 }
 
 void downloadGodMode9(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading GodMode9\n"
+	displayTopMsg("Now Downloading GodMode9\n"
 						"(Release)");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
-		filesExtracted = 0;
-		progressBarType = 1;
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting GodMode9.firm\n"
-						"(Release)");
 
+		displayTopMsg("Extracting GodMode9.firm\n"
+						"(Release)");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
-		showProgressBar = false;
 
 		deleteFile("sdmc:/GodMode9.zip");
 
@@ -1462,24 +1401,16 @@ void downloadGodMode9(void) {
 	}
 
 void godMode9Nightly(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading GodMode9\n"
+	displayTopMsg("Now Downloading GodMode9\n"
 						"(Nightly)");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting GodMode9.firm\n"
+		displayTopMsg("Extracting GodMode9.firm\n"
 						"(Nightly)");
-		filesExtracted = 0;
-		progressBarType = 1;		
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
-		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
-		showProgressBar = false;
 
 		deleteFile("sdmc:/GodMode9.zip");
 
@@ -1490,12 +1421,8 @@ void godMode9Nightly(void) {
 	}
 
 	void updateFBIRelease(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Downloading FBI..");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+	displayTopMsg("Now Downloading FBI..");
 		if (downloadFromRelease("https://github.com/Steveice10/FBI", "FBI\\.cia", "/FBI.cia") != 0) {
-			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
