@@ -38,6 +38,7 @@
 #include "datetime.h"
 #include "download.hpp"
 #include "dumpdsp.h"
+#include "gui.hpp"
 #include "graphic.h"
 #include "inifile.h"
 #include "keyboard.h"
@@ -59,6 +60,8 @@ bool updated3dsx = false;
 bool showSettings = false;
 
 std::string musicNames[] = {"ON", "OFF"};
+
+std::string layoutNames[] = {"BARS", "BORDER"};
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -229,6 +232,7 @@ struct {
 	{ 190, 128, 48, 32},
 	{ 250, 128, 48, 32},
 	{ 147, 176, 134, 32},
+	//{ 300, 176, 134, 32}, // Must appear on the Second Page.
 };
 
 size_t buttons_settings_tex[] = {
@@ -242,6 +246,7 @@ size_t buttons_settings_tex[] = {
 	buttonRGB,
 	buttonRGB,
 	settingsButton,
+	//settingsButton, // Must appear on the Second Page.
 };
 
 int button_settings_blend[] = {
@@ -255,14 +260,7 @@ int button_settings_blend[] = {
 	GREEN,
 	BLUE,
 	WHITE,
-};
-
-const char *button_titles_settings[] = {
-};
-
-const int title_spacing_settings[] = {
-	6,
-	10,
+	//WHITE, // Must appear on the Second Page.
 };
 
 void screenoff()
@@ -285,75 +283,6 @@ void currentMusic(void) {
 	} else if (settings.universal.music == 1) {
 
 	}
-}
-
-void draw_Bars_Bottom(void) {
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 19, settings.universal.bars);
-	volt_draw_rectangle(0, 221, 320, 19, settings.universal.bars);
-}
-
-void draw_Bars_Top(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 19, settings.universal.bars);
-	volt_draw_rectangle(0, 221, 400, 19, settings.universal.bars);
-}
-
-void draw_Background_Bottom(void) {
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-    volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
-}
-
-void draw_Background_Top(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-    volt_draw_rectangle(0, 0, 400, 240, settings.universal.bg);
-}
-
-void draw_Dialogbox_Color(void) {
-	if (settings.universal.layout == 0) {
-	volt_draw_rectangle(0, 19, 400, 202, settings.universal.bg);
-} else if (settings.universal.layout == 1) {
-	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
-}
-}
-
-
-void draw_Border(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	draw_Background_Top();
-	//volt_draw_texture(Border, 0, 0);
-	volt_draw_texture_blend(Border, 0, 0, settings.universal.bars);
-	volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
-    volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
-    volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
-	draw_Background_Bottom();
-	draw_Bars_Bottom();
-}
-
-void draw_Standard(void) {
-	draw_Background_Top();
-	draw_Bars_Top();
-	volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
-    volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
-    volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
-	draw_Background_Bottom();
-	draw_Bars_Bottom();
-}
-
-void chooseLayout(void) {
-	if (settings.universal.layout == 0) {
-	draw_Standard();
-} else if (settings.universal.layout == 1) {
-	draw_Border();
-}
-}
-
-
-void displayTopMsg(const char* text) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	draw_Dialogbox_Color();
-	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
-	volt_end_draw();
 }
 
 int getColorValue(int color, int bgr) {
@@ -404,13 +333,7 @@ int main()
 	volt_set_3D(1);
 	LoadUniversalSettings();
 
-	volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
-	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
-	volt_load_texture_png(Border, "romfs:/graphics/Misc/border_top.png");
-	volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
-	volt_load_texture_png(buttonRGB, "romfs:/graphics/Grayscaled/buttonRGB.png");
-	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
-	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
+	loadBasicGraphic();
 		
  	if (access("sdmc:/3ds/dspfirm.cdc", F_OK) != -1) {
 		ndspInit();
@@ -510,6 +433,7 @@ int main()
 				volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 2).c_str());
 				volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 1).c_str());
 				volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 0).c_str());
+				volt_draw_text(167, 184, 0.65, 0.65, settings.universal.layout, layoutNames[settings.universal.layout].c_str());
 			}
 			volt_end_draw();
 		} else {
@@ -614,8 +538,8 @@ int main()
 			else if (menuSelection > 9) menuSelection = 9;
 			else if (menuSelection < 0) menuSelection = 9;
 		} else if (showSettings && settingsPage == 1) {
-			if (menuSelection > 5) menuSelection = 0;
-			else if (menuSelection < 0) menuSelection = 5;
+			if (menuSelection > 6) menuSelection = 0;
+			else if (menuSelection < 0) menuSelection = 6;
 		} else {
 			if ((menuSelection > (menuPage*8)+8) || (menuSelection > (int)(sizeof(buttons2)/sizeof(buttons2[0])))) {
 				menuSelection = (menuPage*8)+1; 
@@ -837,6 +761,10 @@ int main()
 						case 5:
 							blue = keyboardInputInt("Blue (0-255)");
 							settings.universal.dot = RGBA8(getColorValue(settings.universal.dot, 2), getColorValue(settings.universal.dot, 1), blue, 255);
+							break;
+						case 6:
+						settings.universal.layout++;
+							if (settings.universal.layout > 1) settings.universal.layout = 0;
 							break;
 					}
 				}
