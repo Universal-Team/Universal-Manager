@@ -93,7 +93,11 @@ void draw_Dialogbox_Color(void) {
 void displayTopMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	draw_Dialogbox_Color();
+	if (settings.universal.layout == 0) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
+} else if (settings.universal.layout == 1) {
+	volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
+}
 	volt_end_draw();
 }
 

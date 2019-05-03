@@ -632,7 +632,7 @@ void setMessageText(const std::string &text)
 	_topText.clear();
 	for(auto word : words)
 	{
-		int width = volt_get_text_width((temp + " " + word).c_str(), 0.5f, 0.5f);
+		int width = volt_get_text_width((temp + " " + word).c_str(), 0.45f, 0.45f);
 		if(word.find('\n') != -1u)
 		{
 			word.erase(std::remove(word.begin(), word.end(), '\n'), word.end());
@@ -658,12 +658,12 @@ void drawMessageText(int position, bool showExitText)
 {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	draw_Dialogbox_Color();
-	volt_draw_text(18, 24, .7, .7, settings.universal.text, jsonName.c_str());
+	volt_draw_text(25, 24, .7, .7, settings.universal.text, jsonName.c_str());
 	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
-			volt_draw_text(24, ((i * 16) + 48), 0.5f, 0.5f, settings.universal.text, _topText[i+position].c_str());
+			volt_draw_text(24, ((i * 16) + 48), 0.45f, 0.45f, settings.universal.text, _topText[i+position].c_str());
 	}
 	if(showExitText)
-		volt_draw_text(24, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
+		volt_draw_text(30, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
 	volt_end_draw();
 }
 
