@@ -58,18 +58,13 @@ void loadBasicGraphic(void) {
 	volt_load_texture_png(buttonRGB, "romfs:/graphics/Misc/buttonRGB.png");
 	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
+	volt_load_texture_png(barTop, "romfs:/graphics/Misc/Bars_Top.png");
 }
 
 void draw_Bars_Bottom(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 19, settings.universal.bars);
 	volt_draw_rectangle(0, 221, 320, 19, settings.universal.bars);
-}
-
-void draw_Bars_Top(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 19, settings.universal.bars);
-	volt_draw_rectangle(0, 221, 400, 19, settings.universal.bars);
 }
 
 void draw_Background_Bottom(void) {
@@ -84,7 +79,7 @@ void draw_Background_Top(void) {
 
 void draw_Dialogbox_Color(void) {
 	if (settings.universal.layout == 0) {
-	volt_draw_rectangle(0, 19, 400, 202, settings.universal.bg);
+	volt_draw_rectangle(0, 21, 400, 199, settings.universal.bg);
 } else if (settings.universal.layout == 1) {
 	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
 }
@@ -116,9 +111,9 @@ void draw_Border(void) {
 	draw_Bars_Bottom();
 }
 
-void draw_Standard(void) {
+void draw_Bar(void) {
 	draw_Background_Top();
-	draw_Bars_Top();
+	volt_draw_texture_blend(barTop, 0, 0, settings.universal.bars);
 	volt_draw_text(4, 3, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
     volt_draw_text(350, 3, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
     volt_draw_text(140, 3, 0.5f, 0.5f, settings.universal.text, "Universal-Updater");
@@ -128,7 +123,7 @@ void draw_Standard(void) {
 
 void chooseLayout(void) {
 	if (settings.universal.layout == 0) {
-	draw_Standard();
+	draw_Bar();
 } else if (settings.universal.layout == 1) {
 	draw_Border();
 }

@@ -44,6 +44,6 @@ void displayTopMsg(const char* text);
 
 void draw_Border(void);
 
-void draw_Standard(void);
+void draw_Bar(void);
 
 void chooseLayout(void);
