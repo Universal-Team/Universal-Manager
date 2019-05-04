@@ -89,6 +89,7 @@ size_t dot = 3;
 size_t pageframe = 4;
 size_t settingsIcon = 5;
 //size_t settingsButton = 6;
+size_t SD = 6;
 size_t buttonRGB = 7;
 size_t barTop = 8;
 

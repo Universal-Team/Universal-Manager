@@ -51,14 +51,24 @@
 // UI STUFF
 
 void loadBasicGraphic(void) {
+	if (settings.universal.layout == 2) {
+	volt_load_texture_png(SD, "sdmc:/Universal-Updater/Graphic/Image.png");
     volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 	volt_load_texture_png(Border, "romfs:/graphics/Misc/border_top.png");
-	//volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
 	volt_load_texture_png(buttonRGB, "romfs:/graphics/Misc/buttonRGB.png");
 	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
 	volt_load_texture_png(barTop, "romfs:/graphics/Misc/Bars_Top.png");
+} else {
+	volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
+	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
+	volt_load_texture_png(Border, "romfs:/graphics/Misc/border_top.png");
+	volt_load_texture_png(buttonRGB, "romfs:/graphics/Misc/buttonRGB.png");
+	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
+	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
+	volt_load_texture_png(barTop, "romfs:/graphics/Misc/Bars_Top.png");
+}
 }
 
 void draw_Bars_Bottom(void) {
@@ -82,6 +92,8 @@ void draw_Dialogbox_Color(void) {
 	volt_draw_rectangle(0, 21, 400, 199, settings.universal.bg);
 } else if (settings.universal.layout == 1) {
 	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
+} else if (settings.universal.layout == 2) {
+	volt_draw_rectangle(24, 23, 352, 207, TRANSPARENT);
 }
 }
 
@@ -91,6 +103,8 @@ void displayTopMsg(const char* text) {
 	if (settings.universal.layout == 0) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
 } else if (settings.universal.layout == 1) {
+	volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
+} else if (settings.universal.layout == 2) {
 	volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
 }
 	volt_end_draw();
@@ -121,10 +135,20 @@ void draw_Bar(void) {
 	draw_Bars_Bottom();
 }
 
+void draw_SD(void) {
+	volt_draw_on(GFX_TOP, GFX_LEFT);
+	draw_Background_Top();
+	volt_draw_texture(SD, 0, 0);
+	draw_Background_Bottom();
+	draw_Bars_Bottom();
+}
+
 void chooseLayout(void) {
 	if (settings.universal.layout == 0) {
 	draw_Bar();
 } else if (settings.universal.layout == 1) {
 	draw_Border();
+} else if (settings.universal.layout == 2) {
+	draw_SD();
 }
 }

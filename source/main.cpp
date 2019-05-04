@@ -327,6 +327,7 @@ int main()
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Updater", 0777); //main Path.
 	mkdir("sdmc:/Universal-Updater/Music", 0777); //MP3 Path.
+	mkdir("sdmc:/Universal-Updater/Graphic", 0777); //SD Image Path.
 
 	volt_init();
 
