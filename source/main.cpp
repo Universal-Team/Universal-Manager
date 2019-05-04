@@ -410,7 +410,7 @@ int main()
 			if (settingsPage == 0) {
 				// Draw the Settings Options!
 				volt_draw_text(20, 42, 0.65, 0.65, settings.universal.text, "Background");
-				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Bars");
+				volt_draw_text(17, 90, 0.65, 0.65, settings.universal.text, "Border / Bars");
 				volt_draw_text(78, 138, 0.65, 0.65, settings.universal.text, "Text");
 				volt_draw_text(68, 186, 0.65, 0.65, settings.universal.text, "Music");
 
