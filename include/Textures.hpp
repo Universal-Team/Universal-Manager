@@ -32,6 +32,6 @@ extern size_t Border;
 extern size_t dot;
 extern size_t pageframe;
 extern size_t settingsIcon;
-extern size_t settingsButton;
+//extern size_t settingsButton;
 extern size_t buttonRGB;
 extern size_t barTop;

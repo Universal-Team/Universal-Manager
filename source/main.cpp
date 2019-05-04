@@ -231,7 +231,7 @@ struct {
 	{ 130, 128, 48, 32},
 	{ 190, 128, 48, 32},
 	{ 250, 128, 48, 32},
-	{ 147, 176, 134, 32},
+	{ 158, 176, 134, 32},
 	//{ 300, 176, 134, 32}, // Must appear on the Second Page.
 };
 
@@ -245,7 +245,7 @@ size_t buttons_settings_tex[] = {
 	buttonRGB,
 	buttonRGB,
 	buttonRGB,
-	settingsButton,
+	buttonRGB,
 	//settingsButton, // Must appear on the Second Page.
 };
 

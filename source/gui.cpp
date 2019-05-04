@@ -54,7 +54,7 @@ void loadBasicGraphic(void) {
     volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
 	volt_load_texture_png(Border, "romfs:/graphics/Misc/border_top.png");
-	volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
+	//volt_load_texture_png(settingsButton, "romfs:/graphics/Misc/SettingsButton.png");
 	volt_load_texture_png(buttonRGB, "romfs:/graphics/Misc/buttonRGB.png");
 	volt_load_texture_png(pageframe, "romfs:/graphics/Misc/Page_Number_Frame.png");
 	volt_load_texture_png(settingsIcon, "romfs:/graphics/Misc/Settings_Icon.png");
