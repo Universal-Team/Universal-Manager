@@ -93,7 +93,7 @@ void draw_Dialogbox_Color(void) {
 } else if (settings.universal.layout == 1) {
 	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
 } else if (settings.universal.layout == 2) {
-	volt_draw_rectangle(24, 23, 352, 207, TRANSPARENT);
+	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
 }
 }
 
