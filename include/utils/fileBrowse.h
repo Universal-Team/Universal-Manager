@@ -28,6 +28,7 @@
 #define FILE_BROWSE_H
 
 #include "download.hpp"
+#include "gui.hpp"
 #include <sys/stat.h>
 #include <dirent.h>
 #include <vector>

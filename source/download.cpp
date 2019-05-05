@@ -67,7 +67,8 @@ std::string releaseFbiCache = "";
 std::string buttonBootCache = "";
 std::string buttonBootNCache = "";
 
-extern void displayTopMsg(const char* text);
+void displayMsg(void);
+
 extern void draw_Dialogbox_Color(void);
 
 extern bool downloadNightlies;
@@ -318,21 +319,21 @@ bool checkWifiStatus(void) {
 }
 
 void downloadFailed(void) {
-	displayTopMsg("Download failed!\n");
+	displayMsg("Download failed!\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void notImplemented(void) {
-	displayTopMsg("Not implemented Yet.\n");
+	displayMsg("Not implemented Yet.\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void doneMsg(void) {
-	displayTopMsg("Done!");
+	displayMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -656,6 +657,7 @@ void setMessageText(const std::string &text)
 
 void drawMessageText(int position, bool showExitText)
 {
+	if (settings.universal.layout == 0) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	draw_Dialogbox_Color();
 	volt_draw_text(25, 24, .7, .7, settings.universal.text, jsonName.c_str());
@@ -664,6 +666,25 @@ void drawMessageText(int position, bool showExitText)
 	}
 	if(showExitText)
 		volt_draw_text(30, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
+	} else if (settings.universal.layout == 1) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	draw_Dialogbox_Color();
+	volt_draw_text(25, 24, .7, .7, settings.universal.text, jsonName.c_str());
+	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
+			volt_draw_text(24, ((i * 16) + 48), 0.45f, 0.45f, settings.universal.text, _topText[i+position].c_str());
+	}
+	if(showExitText)
+		volt_draw_text(30, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
+	} else if (settings.universal.layout == 2) {
+	volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+	draw_Dialogbox_Color();
+	volt_draw_text(25, 24, .7, .7, settings.universal.text, jsonName.c_str());
+	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
+			volt_draw_text(24, ((i * 16) + 48), 0.45f, 0.45f, settings.universal.text, _topText[i+position].c_str());
+	}
+	if(showExitText)
+		volt_draw_text(30, 200, 0.5f, 0.5f, settings.universal.text, "\uE001: Cancel   \uE000: Update");
+	}
 	volt_end_draw();
 }
 
@@ -671,7 +692,7 @@ void displayProgressBar() {
 	char str[256];
 	while(showProgressBar) {
 		snprintf(str, sizeof(str), "%s\n%s%s\n%i %s", progressBarMsg, (!progressBarType ? "" : "\nCurrently extracting:\n"), (!progressBarType ? "" : extractingFile.c_str()), (!progressBarType ? (int)round(result_written/1000) : filesExtracted), (!progressBarType ? "KB downloaded." : (filesExtracted == 1 ? "file extracted." :"files extracted.")));
-		displayTopMsg(str);
+		displayMsg(str);
 		gspWaitForVBlank();
 	}
 }
@@ -870,7 +891,7 @@ void updateBootstrap(bool nightly) {
 		saveUpdateData();
 		updateAvailable[3] = false;
 	} else {	
-		displayTopMsg("Downloading nds-bootstrap...\n(Release)");
+		displayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
 		showProgressBar = true;
 		progressBarType = 0;
@@ -918,7 +939,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
 		showProgressBar = false;
 
-		displayTopMsg("Now installing the CIAs.\n"
+		displayMsg("Now installing the CIAs.\n"
 						"(Nightly)");
 		// installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -932,7 +953,7 @@ void updateTWiLight(bool nightly) {
 		saveUpdateData();
 		updateAvailable[1] = false;
 	} else {
-		displayTopMsg("Downloading TWiLightMenu++\n"
+		displayMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
@@ -954,7 +975,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
 		showProgressBar = false;
 
-		displayTopMsg("Now installing the CIAs.\n"
+		displayMsg("Now installing the CIAs.\n"
 						"(Release)");
 		installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -972,14 +993,14 @@ void updateTWiLight(bool nightly) {
 }
 
 void updatePKSM(void) {
-		displayTopMsg("Downloading PKSM\n"
+		displayMsg("Downloading PKSM\n"
 						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Installing PKSM.cia\n"
+		displayMsg("Installing PKSM.cia\n"
 						"(Release)\n\n\n\n\n\n\n\n\n\n"
 						"This may take a while..");
 		installCia("/PKSM-Release.cia");
@@ -994,13 +1015,13 @@ void updatePKSM(void) {
 }
 
 void updateCheats(void) {
-	displayTopMsg("Downloading DSJ's usrcheat.dat\n");
+	displayMsg("Downloading DSJ's usrcheat.dat\n");
 	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayTopMsg("Now extracting...\n"
+	displayMsg("Now extracting...\n"
 					"\nThis may take a while.");
 	extractArchive("/usrcheat.dat.7z", "usrcheat.dat", "/_nds/TWiLightMenu/extras/usrcheat.dat");
 
@@ -1010,13 +1031,13 @@ void updateCheats(void) {
 }
 
 void updateButtonBoot(void) {
-	displayTopMsg("Downloading ButtonBoot (Release)\n");
+	displayMsg("Downloading ButtonBoot (Release)\n");
 	if (downloadFromRelease("https://github.com/FlameKat53/ButtonBoot",  "ButtonBoot_3DS\\.cia", "/ButtonBoot.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayTopMsg("Now Installing ButtonBoot.cia...");
+	displayMsg("Now Installing ButtonBoot.cia...");
 	installCia("/ButtonBoot.cia");
 
 	deleteFile("sdmc:/ButtonBoot.cia");
@@ -1028,17 +1049,17 @@ void updateButtonBoot(void) {
 	}
 
 void updateButtonBootNightly(void) {
-	displayTopMsg("Downloading ButtonBoot (Nightly)\n");
+	displayMsg("Downloading ButtonBoot (Nightly)\n");
 	if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/ButtonBoot.7z?raw=true","/ButtonBoot.7z") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayTopMsg("Now extracting...\n"
+	displayMsg("Now extracting...\n"
 				"\nThis may take a while.");
 	extractArchive("/ButtonBoot.7z", "ButtonBoot/ButtonBoot_3DS.cia", "/ButtonBoot-Nightly.cia");
 
-	displayTopMsg("Now Installing ButtonBoot.cia...");
+	displayMsg("Now Installing ButtonBoot.cia...");
 	installCia("/ButtonBoot-Nightly.cia");
 
 	deleteFile("sdmc:/ButtonBoot-Nightly.cia");
@@ -1135,7 +1156,7 @@ void downloadBoxart(void) {
 	vector<DirEntry> dirContents;
 	std::string scanDir;
 
-	displayTopMsg("Would you like to choose a directory\nor Cancel the Process?\n\n\n\n\n\n\n\n\n \uE001: Cancel    \uE002: Choose Directory");
+	displayMsg("Would you like to choose a directory\nor Cancel the Process?\n\n\n\n\n\n\n\n\n \uE001: Cancel    \uE002: Choose Directory");
 
 	while(1) {
 		gspWaitForVBlank();
@@ -1193,7 +1214,7 @@ void downloadBoxart(void) {
 						dirs += "\n";
 					}
 					dirs += "\uE001: Back   \uE000: Open   \uE002: Choose";
-					displayTopMsg(dirs.c_str());
+					displayMsg(dirs.c_str());
 				}
 			}
 			break;
@@ -1202,7 +1223,7 @@ void downloadBoxart(void) {
 		}
 	}
 
-	displayTopMsg("Scanning SD card for DS roms...\n");
+	displayMsg("Scanning SD card for DS roms...\n");
 
 	chdir(scanDir.c_str());
 	findNdsFiles(dirContents);
@@ -1210,7 +1231,7 @@ void downloadBoxart(void) {
 	for(int i=0;i<(int)dirContents.size();i++) {
 		char downloadMessage[50];
 		snprintf(downloadMessage, sizeof(downloadMessage), "Downloading \"%s.bmp\"...\n", dirContents[i].tid);
-		displayTopMsg(downloadMessage);
+		displayMsg(downloadMessage);
 
 		const char *ba_region = getBoxartRegion(dirContents[i].tid[3]);
 		
@@ -1225,7 +1246,7 @@ void downloadBoxart(void) {
 	chdir("sdmc:/_nds/TWiLightMenu/boxart/");
 	getDirectoryContents(dirContents);
 
-	displayTopMsg("Deleting blank files...");
+	displayMsg("Deleting blank files...");
 	for(int i=0;i<(int)dirContents.size();i++) {
 		if(dirContents[i].size == 0) {
 			char path[256];
@@ -1238,7 +1259,7 @@ void downloadBoxart(void) {
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		displayTopMsg("Now Downloading Luma3DS\n" 
+		displayMsg("Now Downloading Luma3DS\n" 
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			downloadFailed();
@@ -1249,14 +1270,14 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		displayTopMsg("Now Downloading Luma3DS\n"
+		displayMsg("Now Downloading Luma3DS\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("extracting Boot.firm\n"
+		displayMsg("extracting Boot.firm\n"
 						"(Release)");
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
 
@@ -1270,13 +1291,13 @@ void updateLuma(bool nightly) {
 }
 
 void updateCheckpoint(void) {
-	displayTopMsg("Downloading Checkpoint.cia (Release)\n");
+	displayMsg("Downloading Checkpoint.cia (Release)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Installing Checkpoint.cia\n"
+		displayMsg("Installing Checkpoint.cia\n"
 						"(Release)");
 		installCia("/Checkpoint-Release.cia");
 
@@ -1289,13 +1310,13 @@ void updateCheckpoint(void) {
 }
 
 void nightlyCheckpoint(void) {
-	displayTopMsg("Downloading Checkpoint.cia (Nightly)\n");
+	displayMsg("Downloading Checkpoint.cia (Nightly)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Installing Checkpoint.cia\n"
+		displayMsg("Installing Checkpoint.cia\n"
 						"(Nighly)");
 		installCia("/Checkpoint-Nightly.cia");
 
@@ -1309,7 +1330,7 @@ void nightlyCheckpoint(void) {
 
 	void updateSelf(bool nightly) {
 	if (nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
-		displayTopMsg("Downloading Universal-Updater\n" 
+		displayMsg("Downloading Universal-Updater\n" 
 						"(Nightly (cia))");
 		if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/extras/Universal/Universal-Updater.cia?raw=true", "/Universal-Updater-Nightly.cia") != 0) {
 			downloadFailed();
@@ -1320,7 +1341,7 @@ void nightlyCheckpoint(void) {
 		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
 		saveUpdateData();
 
-		displayTopMsg("Installing Universal-Updater CIA...\n"
+		displayMsg("Installing Universal-Updater CIA...\n"
 						"\n\n\n\n\n\n\n\n\n"
 						"The app will reboot when done.");
 
@@ -1328,7 +1349,7 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater-Nightly.cia");
 	} else if (!nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) != 0)) {
-		displayTopMsg("Downloading Universal Updater...\n(Release (cia))");
+		displayMsg("Downloading Universal Updater...\n(Release (cia))");
 
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.cia", "/Universal-Updater.cia") != 0) {
 			downloadFailed();
@@ -1339,7 +1360,7 @@ void nightlyCheckpoint(void) {
 		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterRelease());
 		saveUpdateData();
 
-		displayTopMsg("Installing Universal-Updater CIA...\n"
+		displayMsg("Installing Universal-Updater CIA...\n"
 						"\n\n\n\n\n\n\n\n\n"
 						"The app will reboot when done.");
 
@@ -1347,7 +1368,7 @@ void nightlyCheckpoint(void) {
 
 		deleteFile("sdmc:/Universal-Updater.cia");
 	} else if(nightly && (access("sdmc:/3ds/Universal-Updater.3dsx", F_OK) == 0)) {
-		displayTopMsg("Downloading Universal Updater...\n(Nightly (3dsx))");
+		displayMsg("Downloading Universal Updater...\n(Nightly (3dsx))");
 
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/extras/Universal/Universal-Updater.3dsx?raw=true", "/3ds/Universal-Updater.3dsx") != 0) {
 			downloadFailed();
@@ -1358,7 +1379,7 @@ void nightlyCheckpoint(void) {
 		setInstalledVersion("UNIVERSAL-UPDATER", latestUpdaterNightly());
 		saveUpdateData();
 	} else {
-		displayTopMsg("Downloading Universal Updater...\n(Release (3dsx))");
+		displayMsg("Downloading Universal Updater...\n(Release (3dsx))");
 
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Updater", "Universal-Updater\\.3dsx", "/Universal-Updater.3dsx") != 0) {
 			downloadFailed();
@@ -1380,14 +1401,14 @@ void notImplementedYet(void) {
 }
 
 void downloadGodMode9(void) {
-	displayTopMsg("Now Downloading GodMode9\n"
+	displayMsg("Now Downloading GodMode9\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Extracting GodMode9.firm\n"
+		displayMsg("Extracting GodMode9.firm\n"
 						"(Release)");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
@@ -1401,14 +1422,14 @@ void downloadGodMode9(void) {
 	}
 
 void godMode9Nightly(void) {
-	displayTopMsg("Now Downloading GodMode9\n"
+	displayMsg("Now Downloading GodMode9\n"
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Extracting GodMode9.firm\n"
+		displayMsg("Extracting GodMode9.firm\n"
 						"(Nightly)");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 
@@ -1421,13 +1442,13 @@ void godMode9Nightly(void) {
 	}
 
 	void updateFBIRelease(void) {
-	displayTopMsg("Now Downloading FBI..");
+	displayMsg("Now Downloading FBI..");
 		if (downloadFromRelease("https://github.com/Steveice10/FBI", "FBI\\.cia", "/FBI.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayTopMsg("Installing FBI...");
+		displayMsg("Installing FBI...");
 		installCia("/FBI.cia");
 
 		deleteFile("sdmc:/FBI.cia");

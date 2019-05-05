@@ -36,7 +36,7 @@ using namespace std;
 
 int file_count = 0;
 
-extern void displayTopMsg(const char* text);
+void displayMsg(void);
 
 /**
  * Get the title ID.
@@ -58,7 +58,7 @@ void findNdsFiles(vector<DirEntry>& dirContents)
 
 	if (pdir == NULL)
 	{
-		displayTopMsg("Unable to open the directory.");
+		displayMsg("Unable to open the directory.");
 		for(int i=0;i<120;i++)
 			gspWaitForVBlank();
 	}
@@ -75,7 +75,7 @@ void findNdsFiles(vector<DirEntry>& dirContents)
 			dirEntry.name = pent->d_name;
 			char scanningMessage[512];
 			snprintf(scanningMessage, sizeof(scanningMessage), "Searching for NDS ROMs...\n\nThis may take a bit.\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
-			displayTopMsg(scanningMessage);
+			displayMsg(scanningMessage);
 			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
 				if (!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {
 					if (strcasecmp(dirEntry.name.substr(dirEntry.name.length()-3, 3).c_str(), "nds") == 0) {
@@ -133,7 +133,7 @@ void getDirectoryContents (vector<DirEntry>& dirContents) {
 	DIR *pdir = opendir ("."); 
 	
 	if (pdir == NULL) {
-		displayTopMsg("Unable to open the directory.");
+		displayMsg("Unable to open the directory.");
 		for(int i=0;i<120;i++)
 			gspWaitForVBlank();
 	} else {

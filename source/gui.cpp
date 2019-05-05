@@ -93,23 +93,26 @@ void draw_Dialogbox_Color(void) {
 } else if (settings.universal.layout == 1) {
 	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
 } else if (settings.universal.layout == 2) {
-	volt_draw_rectangle(24, 23, 352, 207, settings.universal.bg);
+	volt_draw_rectangle(0, 21, 320, 199, settings.universal.bg);
 }
 }
 
-void displayTopMsg(const char* text) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	draw_Dialogbox_Color();
+void displayMsg(const char* text) {
 	if (settings.universal.layout == 0) {
-	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
-} else if (settings.universal.layout == 1) {
-	volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
-} else if (settings.universal.layout == 2) {
-	volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
-}
+		volt_begin_draw(GFX_TOP, GFX_LEFT);
+		draw_Dialogbox_Color();
+		volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.text, text);
+	} else if (settings.universal.layout == 1) {
+		volt_begin_draw(GFX_TOP, GFX_LEFT);
+		draw_Dialogbox_Color();
+		volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
+	} else if (settings.universal.layout == 2) {
+		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+		draw_Dialogbox_Color();
+		volt_draw_text(30, 30, 0.40f, 0.40f, settings.universal.text, text);
+	}
 	volt_end_draw();
 }
-
 
 // Layouts!
 

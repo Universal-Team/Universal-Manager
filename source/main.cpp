@@ -772,60 +772,60 @@ int main()
 			} else {
 				char str[16];
 				itoa(menuSelection,str,10);
-				displayTopMsg(str);
+				displayMsg(str);
 				switch (menuSelection) {
 					case 0:	// TWiLight release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("DS-Homebrew/TWiLightMenu", true))
 								updateTWiLight(false);
 						}
 						break;
 					case 1:	// TWiLight nightly
 						if (checkWifiStatus()){ 
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showCommitInfo("DS-Homebrew/TWiLightMenu", true))
 								updateTWiLight(true);
 						}
 						break;
 					case 2:	// nds-bootstrap release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("Ahezard/NDS-Bootstrap", true))
 								updateBootstrap(false);
 						}
 						break;
 					case 3:	// nds-bootstrap nightly
 						if (checkWifiStatus()){
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showCommitInfo("ahezard/NDS-Bootstrap", true))
 								updateBootstrap(true);
 						}
 						break;
 					case 4:	// PKSM Release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("FlagBrew/PKSM", true))
 								updatePKSM();
 						}
 						break;
 					case 5:	// PKSM nightly
 						if (checkWifiStatus()){
-							displayTopMsg("Loading Commit notes...");
+							displayMsg("Loading Commit notes...");
 							if (showCommitInfo("FlagBrew/PKSM", true))
 								notImplementedYet();
 						}
 						break;
 					case 6:	// Luma Release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("AuroraWright/Luma3DS", true))
 								updateLuma(false);
 						}
 						break;
 					case 7:	// LumaNightly
 						if (checkWifiStatus()){
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showReleaseInfo("hax0kartik/luma-hourlies", true))
 								updateLuma(true);
 						}
@@ -842,21 +842,21 @@ int main()
 						break;
 					case 10: // Checkpoint Release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("FlagBrew/Checkpoint", true))
 								updateCheckpoint();
 						}
 						break;
 					case 11: //Checkpoint Nightly
 						if (checkWifiStatus()){
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showReleaseInfo("Flagbrew/Checkpoint", true))
 								nightlyCheckpoint();
 						}
 						break;
 					case 12: //Updater Update
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(false);
@@ -866,7 +866,7 @@ int main()
 						break;
 					case 13: //Updater Update
 						if (checkWifiStatus()){
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showCommitInfo("Universal-Team/Universal-Updater", true)) {
 								updatingSelf = true;
 								updateSelf(true);
@@ -876,21 +876,21 @@ int main()
 						break;
 					case 14: //GodMode9 Release
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("D0k3/GodMode9", true))
 								downloadGodMode9();
 						}
 						break;
 					case 15: //GodMode9 Nightly
 						if (checkWifiStatus()){
-							displayTopMsg("Loading commit notes...");
+							displayMsg("Loading commit notes...");
 							if (showCommitInfo("D0k3/GodMode9", true))
 								godMode9Nightly();
 						}
 						break;
 					case 16: //NotImplemented!
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("Steveice10/FBI", true))
 								updateFBIRelease();
 						}
@@ -902,14 +902,14 @@ int main()
 						break;
 					case 18: //NotImplemented!
 						if (checkWifiStatus()){
-							displayTopMsg("Loading release notes...");
+							displayMsg("Loading release notes...");
 							if (showReleaseInfo("FlameKat53/ButtonBoot", true))
 								updateButtonBoot();
 						}
 						break;
 					case 19: //NotImplemented!
 						if (checkWifiStatus()){
-							displayTopMsg("Loading Commit notes...");
+							displayMsg("Loading Commit notes...");
 							if (showCommitInfo("FlameKat53/ButtonBoot", true))
 								updateButtonBootNightly();
 						}

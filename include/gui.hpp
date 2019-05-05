@@ -38,12 +38,14 @@ void draw_Background_Top(void);
 
 void draw_Dialogbox_Color(void);
 
-void displayTopMsg(const char* text);
+void displayMsg(const char* text);
 
 // Layouts!
 
 void draw_Border(void);
 
 void draw_Bar(void);
+
+void draw_SD(void);
 
 void chooseLayout(void);
