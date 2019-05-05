@@ -51,7 +51,7 @@
 // UI STUFF
 
 void loadBasicGraphic(void) {
-	if (settings.universal.layout == 2) {
+	if((access("sdmc:/Universal-Updater/Graphic/Image.png", F_OK) == 0)) {
 	volt_load_texture_png(SD, "sdmc:/Universal-Updater/Graphic/Image.png");
     volt_load_texture_png(button, "romfs:/graphics/Misc/Button.png");
 	volt_load_texture_png(dot, "romfs:/graphics/Misc/Dot.png");
@@ -141,7 +141,11 @@ void draw_Bar(void) {
 void draw_SD(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	draw_Background_Top();
+	if((access("sdmc:/Universal-Updater/Graphic/Image.png", F_OK) == 0)) {
 	volt_draw_texture(SD, 0, 0);
+	} else {
+		volt_draw_texture_blend(barTop, 0, 0, settings.universal.bars);
+	}
 	draw_Background_Bottom();
 	draw_Bars_Bottom();
 	volt_draw_text(150, 225, 0.5f, 0.5f, settings.universal.text, "v2.0.0");

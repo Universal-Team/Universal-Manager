@@ -61,7 +61,7 @@ bool showSettings = false;
 
 std::string musicNames[] = {"ON", "OFF"};
 
-std::string layoutNames[] = {"BARS", "BORDER"};
+std::string layoutNames[] = {"BARS", "BORDER", "SD"};
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -765,7 +765,7 @@ int main()
 							break;
 						case 6:
 						settings.universal.layout++;
-							if (settings.universal.layout > 1) settings.universal.layout = 0;
+							if (settings.universal.layout > 2) settings.universal.layout = 0;
 							break;
 					}
 				}
