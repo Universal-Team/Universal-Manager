@@ -61,7 +61,7 @@ bool showSettings = false;
 
 std::string musicNames[] = {"ON", "OFF"};
 
-std::string layoutNames[] = {"BARS", "BORDER", "SD"};
+std::string layoutNames[] = {"BA", "BO", "SD"};
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -232,7 +232,6 @@ struct {
 	{ 190, 128, 48, 32},
 	{ 250, 128, 48, 32},
 	{ 158, 176, 134, 32},
-	//{ 300, 176, 134, 32}, // Must appear on the Second Page.
 };
 
 size_t buttons_settings_tex[] = {
@@ -246,7 +245,6 @@ size_t buttons_settings_tex[] = {
 	buttonRGB,
 	buttonRGB,
 	buttonRGB,
-	//settingsButton, // Must appear on the Second Page.
 };
 
 int button_settings_blend[] = {
@@ -260,7 +258,6 @@ int button_settings_blend[] = {
 	GREEN,
 	BLUE,
 	WHITE,
-	//WHITE, // Must appear on the Second Page.
 };
 
 void screenoff()
@@ -395,7 +392,7 @@ int main()
 			volt_draw_text(260, 4, 0.50, 0.50, settings.universal.text, "1"); //Draw First Page Number.
 			volt_draw_text(280, 4, 0.50, 0.50, settings.universal.text, "2"); // Draw Second Page Number.
 			// Draw buttons
-			for (int i = (settingsPage == 0 ? (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1 : 5); i >= 0; i--) {
+			for (int i = (settingsPage == 0 ? (int)((sizeof(buttons_settings)/sizeof(buttons_settings[0])))-1 : 6); i >= 0; i--) {
 				if (menuSelection == i) {
 					// Button is highlighted.
 					volt_draw_texture_blend(buttons_settings_tex[i], buttons_settings[i].x, buttons_settings[i].y, button_settings_blend[i]);
@@ -428,13 +425,22 @@ int main()
 			} else if (settingsPage == 1) {
 				volt_draw_text(60, 42, 0.65, 0.65, settings.universal.text, "Button");
 				volt_draw_text(81, 90, 0.65, 0.65, settings.universal.text, "Dot");
+				volt_draw_text(55, 138, 0.65, 0.65, settings.universal.text, "Layout");
+				volt_draw_text(0, 200, 0.65, 0.65, settings.universal.text, "Bars = BA ; Border = BO ; SD = Picture"); // Must be there, until I know, how to set a better button.
 				volt_draw_text(138, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 2).c_str());
 				volt_draw_text(198, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 1).c_str());
 				volt_draw_text(258, 40, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.button, 0).c_str());
 				volt_draw_text(138, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 2).c_str());
 				volt_draw_text(198, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 1).c_str());
 				volt_draw_text(258, 88, 0.65, 0.65, settings.universal.text, getColorName(settings.universal.dot, 0).c_str());
-				volt_draw_text(167, 184, 0.65, 0.65, settings.universal.layout, layoutNames[settings.universal.layout].c_str());
+				//volt_draw_text(138, 40, 0.65, 0.65, settings.universal.layout, layoutNames[settings.universal.layout].c_str()); // Must be set.. I dunno how to make it better.
+				if (settings.universal.layout == 0) {
+					volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, "BA");
+				} else if (settings.universal.layout == 1) {
+					volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, "BO");
+				} else if (settings.universal.layout == 2) {
+					volt_draw_text(138, 136, 0.65, 0.65, settings.universal.text, "SD");
+			}
 			}
 			volt_end_draw();
 		} else {
