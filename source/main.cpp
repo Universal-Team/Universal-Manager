@@ -521,8 +521,16 @@ int main()
 				}
 			}
 		}
+	/**		if (hDown & KEY_X) {
+	 * if (showSettings = true) {
+	*			displayMsg("\uE004 / \uE005: Switch Page\n"
+	*			"\uE000: Select an Option");
+	*		} else {
+	*			displayMsg("\uE004 / \uE005: Switch Page\n" // Comment out for now (Planned for a "Manual")
+	*			"\uE000: Select an Option");
+	}
 
-		if (hDown & KEY_UP) {
+	*/	if (hDown & KEY_UP) {
 			if (buttonShading) menuSelection -= (showSettings ? 3 : 2);
 		} else if (hDown & KEY_DOWN) {
 			if (buttonShading) menuSelection += (showSettings ? 3 : 2);
