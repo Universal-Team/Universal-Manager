@@ -144,6 +144,8 @@ void draw_SD(void) {
 	volt_draw_texture(SD, 0, 0);
 	draw_Background_Bottom();
 	draw_Bars_Bottom();
+	volt_draw_text(150, 225, 0.5f, 0.5f, settings.universal.text, "v2.0.0");
+	volt_draw_text(0, 225, 0.5f, 0.5f, settings.universal.text, getTime().c_str());
 }
 
 void chooseLayout(void) {
