@@ -47,6 +47,8 @@
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 bool showFileManagerScreen = false;
+bool showCredits = false;
+bool showMusicPlayer = false;
 bool dspfirmfound = false;
 
 // Music and sound effects.
@@ -97,6 +99,21 @@ void screenon()
 			volt_draw_text(210, 187, 0.7f, 0.7f, BLACK, "Settings");
 			volt_end_draw();
 	}
+
+		void loadCredits(void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
+			volt_draw_text(130, 40, 0.72f, 0.72f, WHITE, "Made by VoltZ,");
+			volt_draw_text(130, 100, 0.72f, 0.72f, WHITE, "Made by Pk11,");
+			volt_draw_text(130, 160, 0.72f, 0.72f, WHITE, "Made by RocketRobz");
+			volt_draw_text(130, 220, 0.72f, 0.72f, WHITE, "and Made by Flame!");
+			
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+			volt_end_draw();
+		}
 
 		void loadSoundEffects(void) {
 		if (dspfirmfound) {
@@ -169,18 +186,28 @@ int main()
 		}
 
 		if (showFileManagerScreen) {
-			drawFileManager();
+			drawFileManagerSubMenu();
+		} else if (showCredits) {
+			loadCredits();
+		} else if (showMusicPlayer) {
+			drawMusicPlayerUI();
 		} else {
 		drawMainMenu();
 	}
 
 	if (hDown & KEY_A) {
 		showFileManagerScreen = !showFileManagerScreen; // If you press "A", the FileManager Sub Menu Appears for now.
-	} else if (hDown & KEY_START) {
-		break; // This brings you back to the Home Menu / Homebrew Screen.
+	} else 	if (hDown & KEY_B) {
+		showCredits = !showCredits; // If you press "A", the FileManager Sub Menu Appears for now.
 	} else if (hDown & KEY_B) {
 				sfx_example->stop(); // Load a simple Sound Effect for test Purpose.
 				sfx_example->play();	
+	}
+
+	if (showFileManagerScreen) {
+		if (hDown & KEY_SELECT) {
+			showMusicPlayer = !showMusicPlayer;
+		}
 	}
 	}
 

@@ -30,4 +30,6 @@
 #include "voltlib/volt.h"
 
 
-void drawFileManager (void);
+void drawFileManagerSubMenu (void);
+
+void drawMusicPlayerUI (void);
