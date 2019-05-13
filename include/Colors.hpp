@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -23,35 +23,14 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-// Design Colors.
+
+// Colors.
 #define BLACK RGBA8(0, 0, 0, 255)
 
 #define WHITE RGBA8(255, 255, 255, 255)
 
-#define RED RGBA8(255, 0, 0, 255)
-
-#define GREEN RGBA8(0, 255, 0, 255)
-
-#define BLUE RGBA8(0, 0, 255, 255)
-
-#define DARK_BLUE RGBA8(0, 0, 128, 255)
-
-#define YELLOW RGBA8(255, 215, 0, 255)
-
 #define GRAY RGBA8(70, 70, 70, 255)
 
-#define LIGHTBLUE RGBA8(187, 208, 254, 255)
-
-#define LIGHT_BROWN RGBA8(164, 84, 0, 255)
-
-#define LIGHT_GREEN RGBA8(15, 215, 138, 255)
-
-// Other Colors.
-
-#define MESSAGE_BOX_COLOR RGBA8(34, 85, 85, 255)
+#define GREYISH RGBA8(200, 200, 200, 255)
 
 #define TRANSPARENT RGBA8(0, 0, 0, 0)
-
-#define TIME RGBA8(16, 0, 0, 223)
-
-#define GREYISH RGBA8(200, 200, 200, 255)

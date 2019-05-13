@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 */
 
 #include "graphic.h"
-#include "Colors.hpp"
+//#include "Colors.hpp"
 #include "Textures.hpp"
 #include "voltlib/volt.h"
 
@@ -82,18 +82,24 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
-//size_t loadingbgtex = 1;
-size_t button = 1;
-size_t Border = 2;
-size_t dot = 3;
-size_t pageframe = 4;
-size_t settingsIcon = 5;
-//size_t settingsButton = 6;
-size_t SD = 6;
-size_t buttonRGB = 7;
-size_t barTop = 8;
+// Main Menu Stuff.
+size_t FileManagerIcon = 1;
+size_t FTPIcon = 2;
+size_t MainMenuButton = 3;
+size_t UpdaterIcon = 4;
+size_t SettingsIcon = 5;
+
+// FileManager Stuff.
 
 
 void graphicsInit(void) {
+	// Main Menu Stuff.
+	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");
+	volt_load_texture_png(FTPIcon, "romfs:/graphics/MainMenu/FTP Icon.png");
+	volt_load_texture_png(MainMenuButton, "romfs:/graphics/MainMenu/MainMenu Button.png");
+	volt_load_texture_png(UpdaterIcon, "romfs:/graphics/MainMenu/Updater Icon.png");
+	volt_load_texture_png(SettingsIcon, "romfs:/graphics/MainMenu/Settings Icon.png");
+
+	// FileManager Stuff.
 }
 	

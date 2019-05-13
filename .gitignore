@@ -1,14 +1,2 @@
 
-*.d
-build/*
-*.o
-*.lst
-*.map
-*.shbin
-*.3dsx
-*.cia
-*.elf
-*.smdh
-*.ipch
 *.bin
-*.DS_Store

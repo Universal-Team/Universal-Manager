@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -24,8 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
-#pragma once
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-#include "common.hpp"
+#include <string>
 
-bool matchPattern(std::string pattern, std::string tested);
+// 3D offsets.
+typedef struct _Offset3D {
+	float topbg;
+} Offset3D;
+extern Offset3D offset3D[2];	// 0 == Left; 1 == Right
+
+#endif /* SETTINGS_H */
