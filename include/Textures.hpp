@@ -31,6 +31,7 @@
 
 // Misc Stuff.
 extern size_t MainMenuButton;
+extern size_t BackIcon;
 
 // Main Menu Stuff.
 extern size_t FileManagerIcon;
