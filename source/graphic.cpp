@@ -82,24 +82,29 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
+// Misc Stuff.
+size_t MainMenuButton = 1;
 // Main Menu Stuff.
-size_t FileManagerIcon = 1;
-size_t FTPIcon = 2;
-size_t MainMenuButton = 3;
+size_t FileManagerIcon = 2;
+size_t FTPIcon = 3;
 size_t UpdaterIcon = 4;
 size_t SettingsIcon = 5;
 
 // FileManager Stuff.
-
+size_t MusicIcon = 6;
 
 void graphicsInit(void) {
+	
+	// Misc Stuff.
+	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/MainMenu Button.png");
+
 	// Main Menu Stuff.
 	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");
 	volt_load_texture_png(FTPIcon, "romfs:/graphics/MainMenu/FTP Icon.png");
-	volt_load_texture_png(MainMenuButton, "romfs:/graphics/MainMenu/MainMenu Button.png");
 	volt_load_texture_png(UpdaterIcon, "romfs:/graphics/MainMenu/Updater Icon.png");
 	volt_load_texture_png(SettingsIcon, "romfs:/graphics/MainMenu/Settings Icon.png");
 
 	// FileManager Stuff.
+	volt_load_texture_png(MusicIcon, "romfs:/graphics/FileManager/Music Icon.png");
 }
 	

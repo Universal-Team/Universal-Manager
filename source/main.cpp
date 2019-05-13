@@ -43,6 +43,8 @@
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
+bool showFileManagerScreen = false;
+
 static touchPosition touch;
 
 // 3D offsets. (0 == Left, 1 == Right)
@@ -67,8 +69,10 @@ void screenon()
 			volt_draw_rectangle(0, 0, 400, 240, GRAY);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
 			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
+
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+
 			volt_draw_texture(MainMenuButton, 0, 40);
 			volt_draw_texture(FileManagerIcon, 5, 50);
 			volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "FileManager");
@@ -86,6 +90,21 @@ void screenon()
 			volt_draw_text(210, 187, 0.7f, 0.7f, BLACK, "Settings");
 			volt_end_draw();
 	}
+
+		void drawFileManager (void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+
+			volt_draw_texture(MainMenuButton, 100, 40);
+			volt_draw_texture(MusicIcon, 105, 50);
+			volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+			volt_end_draw();
+		}
 
 int main()
 {
@@ -117,6 +136,7 @@ int main()
 		hidScanInput();
 		
 		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
 
 		hidTouchRead(&touch);
 
@@ -126,7 +146,18 @@ int main()
 			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
+
+		if (showFileManagerScreen) {
+			drawFileManager();
+		} else {
 		drawMainMenu();
+	}
+
+	if (hDown & KEY_A) {
+		showFileManagerScreen = !showFileManagerScreen; // If you press "A", the FileManager Sub Menu Appears for now.
+	} else if (hDown & KEY_START) {
+		break; // This brings you back to the Home Menu / Homebrew Screen.
+	}
 	}
 
 	hidExit();
