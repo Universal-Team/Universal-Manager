@@ -93,6 +93,9 @@ size_t SettingsIcon = 5;
 // FileManager Stuff.
 size_t MusicIcon = 6;
 
+// Music Player Stuff.
+size_t PlayIcon = 7;
+size_t PauseIcon = 8;
 void graphicsInit(void) {
 	
 	// Misc Stuff.
@@ -106,5 +109,9 @@ void graphicsInit(void) {
 
 	// FileManager Stuff.
 	volt_load_texture_png(MusicIcon, "romfs:/graphics/FileManager/Music Icon.png");
+
+	// Music Player Stuff.
+	volt_load_texture_png(PlayIcon, "romfs:/graphics/MusicPlayer/Play Icon.png");
+	volt_load_texture_png(PauseIcon, "romfs:/graphics/MusicPlayer/Pause Icon.png");
 }
 	

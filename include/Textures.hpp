@@ -40,3 +40,7 @@ extern size_t SettingsIcon;
 
 // FileManager Stuff.
 extern size_t MusicIcon;
+
+// Music Player Stuff.
+extern size_t PlayIcon;
+extern size_t PauseIcon;
