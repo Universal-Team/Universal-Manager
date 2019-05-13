@@ -39,11 +39,17 @@
 #include "settings.h"
 #include "Textures.hpp"
 #include "voltlib/volt.h"
+#include "sfx.hpp"
+#include "dumpdsp.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 bool showFileManagerScreen = false;
+bool dspfirmfound = false;
+
+// Music and sound effects.
+sound *sfx_example = NULL;
 
 static touchPosition touch;
 
@@ -106,6 +112,12 @@ void screenon()
 			volt_end_draw();
 		}
 
+		void loadSoundEffects(void) {
+		if (dspfirmfound) {
+		sfx_example = new sound("romfs:/sfx/example.wav", 2, false);
+		}
+		}
+
 int main()
 {
 	aptInit();
@@ -123,6 +135,29 @@ int main()
 	volt_set_3D(1);
 
 	graphicsInit();
+
+	 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+		ndspInit();
+		dspfirmfound = true;
+	}else{
+		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+		volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "Dumping DSP firm...");
+		volt_end_draw();
+		dumpDsp();
+		if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+			ndspInit();
+			dspfirmfound = true;
+		} else {
+			for (int i = 0; i < 90; i++) {
+				volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+				volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "DSP firm dumping failed.\n"
+						"Running without sound.");
+				volt_end_draw();
+			}	
+		}
+	}
+
+		loadSoundEffects();
 
 	int fadealpha = 255;
 	bool fadein = true;
@@ -157,9 +192,17 @@ int main()
 		showFileManagerScreen = !showFileManagerScreen; // If you press "A", the FileManager Sub Menu Appears for now.
 	} else if (hDown & KEY_START) {
 		break; // This brings you back to the Home Menu / Homebrew Screen.
+	} else if (hDown & KEY_B) {
+				sfx_example->stop(); // Load a simple Sound Effect for test Purpose.
+				sfx_example->play();	
 	}
 	}
 
+
+	delete sfx_example;
+	if (dspfirmfound) {
+		ndspExit();
+	}
 	hidExit();
 	srvExit();
 	romfsExit();
