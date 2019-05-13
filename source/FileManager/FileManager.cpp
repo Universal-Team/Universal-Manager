@@ -44,10 +44,11 @@
 
 		void drawMusicPlayerUI (void) {
 			volt_draw_on(GFX_TOP, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 240, WHITE);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
 			volt_draw_rectangle(0, 215, 400, 25, BLACK);
 			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "Music Player Menu");
+			volt_draw_text(0, 217, BIG_SIZE, BIG_SIZE, WHITE, "Currently Playing :");
 
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);

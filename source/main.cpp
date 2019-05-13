@@ -90,12 +90,12 @@ void screenon()
 
 		void drawMainMenu (void) {
 			volt_draw_on(GFX_TOP, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 240, DARK_BLUE);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
 			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "Universal-Manager");
 
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+			volt_draw_rectangle(0, 0, 320, 240, DARK_BLUE);
 
 			volt_draw_texture(MainMenuButton, 0, 40);
 			volt_draw_texture(FileManagerIcon, 5, 50);
@@ -178,7 +178,6 @@ int main()
 		loadSoundEffects();
 
 	int fadealpha = 255;
-	bool fadein = true;
 
 	// Loop as long as the status is not exit
 	while(aptMainLoop()) {
@@ -189,7 +188,6 @@ int main()
 		hidScanInput();
 		
 		const u32 hDown = hidKeysDown();
-		const u32 hHeld = hidKeysHeld();
 
 		hidTouchRead(&touch);
 

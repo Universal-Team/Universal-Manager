@@ -33,4 +33,8 @@
 
 #define GREYISH RGBA8(200, 200, 200, 255)
 
+#define DARK_BLUE RGBA8(0, 0, 128, 255)
+
+#define GREEN RGBA8(0, 255, 0, 255)
+
 #define TRANSPARENT RGBA8(0, 0, 0, 0)
