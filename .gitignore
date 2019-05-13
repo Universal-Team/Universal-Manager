@@ -1,2 +1,12 @@
 
 *.bin
+*.d
+*.o
+*.smdh
+*.elf
+*.cia
+*.3dsx
+build/vshader_shbin.h
+build/vshader.shbin
+*.map
+*.lst
