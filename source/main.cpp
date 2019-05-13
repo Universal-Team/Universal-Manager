@@ -92,26 +92,26 @@ void screenon()
 			volt_draw_on(GFX_TOP, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 400, 240, GRAY);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
+			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "Universal-Manager");
 
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);
 
 			volt_draw_texture(MainMenuButton, 0, 40);
 			volt_draw_texture(FileManagerIcon, 5, 50);
-			volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "FileManager");
+			volt_draw_text(40, 57, BUTTON_TEXT, BUTTON_TEXT, BLACK, "FileManager");
 
 			volt_draw_texture(MainMenuButton, 170, 40);
 			volt_draw_texture(FTPIcon, 175, 50);
-			volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "FTP Client");
+			volt_draw_text(210, 57, BUTTON_TEXT, BUTTON_TEXT, BLACK, "FTP Client");
 
 			volt_draw_texture(MainMenuButton, 0, 170);
 			volt_draw_texture(UpdaterIcon, 5, 180);
-			volt_draw_text(40, 187, 0.7f, 0.7f, BLACK, "Updater");
+			volt_draw_text(40, 187, BUTTON_TEXT, BUTTON_TEXT, BLACK, "Updater");
 
 			volt_draw_texture(MainMenuButton, 170, 170);
 			volt_draw_texture(SettingsIcon, 175, 180);
-			volt_draw_text(210, 187, 0.7f, 0.7f, BLACK, "Settings");
+			volt_draw_text(210, 187, BUTTON_TEXT, BUTTON_TEXT, BLACK, "Settings");
 			volt_end_draw();
 	}
 
@@ -119,11 +119,11 @@ void screenon()
 			volt_draw_on(GFX_TOP, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 400, 240, GRAY);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
-			volt_draw_text(130, 40, 0.72f, 0.72f, WHITE, "Made by VoltZ,");
-			volt_draw_text(130, 100, 0.72f, 0.72f, WHITE, "Made by Pk11,");
-			volt_draw_text(130, 160, 0.72f, 0.72f, WHITE, "Made by RocketRobz");
-			volt_draw_text(130, 220, 0.72f, 0.72f, WHITE, "and Made by Flame!");
+			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "Universal-Manager");
+			volt_draw_text(130, 40, BIG_SIZE, BIG_SIZE, WHITE, "Made by VoltZ,");
+			volt_draw_text(130, 100, BIG_SIZE, BIG_SIZE, WHITE, "Made by Pk11,");
+			volt_draw_text(130, 160, BIG_SIZE, BIG_SIZE, WHITE, "Made by RocketRobz");
+			volt_draw_text(130, 220, BIG_SIZE, BIG_SIZE, WHITE, "and Made by Flame!");
 			
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);

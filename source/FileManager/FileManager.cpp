@@ -30,14 +30,14 @@
 			volt_draw_on(GFX_TOP, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 400, 240, GRAY);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "FileManager Sub Menu");
 
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);
 
 			volt_draw_texture(MainMenuButton, 100, 40);
 			volt_draw_texture(MusicIcon, 105, 50);
-			volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+			volt_draw_text(140, 57, BUTTON_TEXT, BUTTON_TEXT, BLACK, "Music Player");
 			volt_draw_texture(BackIcon, 288, 208); 
 			volt_end_draw();
 		}
@@ -47,7 +47,7 @@
 			volt_draw_rectangle(0, 0, 400, 240, GRAY);
 			volt_draw_rectangle(0, 0, 400, 25, BLACK);
 			volt_draw_rectangle(0, 215, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+			volt_draw_text(130, 4, BIG_SIZE, BIG_SIZE, WHITE, "Music Player Menu");
 
 			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);

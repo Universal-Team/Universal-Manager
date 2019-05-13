@@ -32,6 +32,10 @@
 #include "Colors.hpp"
 #include "Textures.hpp"
 
+// Text Sizes.
+
+#define BIG_SIZE 0.72f
+#define BUTTON_TEXT 0.7f
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color);
 void volt_draw_texture_part_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, u32 color);
