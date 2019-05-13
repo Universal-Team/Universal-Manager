@@ -24,19 +24,10 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <cstddef>
+#include "Textures.hpp"
+#include "graphic.h"
+#include "Colors.hpp"
+#include "voltlib/volt.h"
 
 
-// Textures
-
-// Misc Stuff.
-extern size_t MainMenuButton;
-
-// Main Menu Stuff.
-extern size_t FileManagerIcon;
-extern size_t FTPIcon;
-extern size_t UpdaterIcon;
-extern size_t SettingsIcon;
-
-// FileManager Stuff.
-extern size_t MusicIcon;
+void drawFileManager (void);

@@ -41,6 +41,7 @@
 #include "voltlib/volt.h"
 #include "sfx.hpp"
 #include "dumpdsp.hpp"
+#include "FileManager/FileManager.hpp"
 
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
@@ -96,21 +97,6 @@ void screenon()
 			volt_draw_text(210, 187, 0.7f, 0.7f, BLACK, "Settings");
 			volt_end_draw();
 	}
-
-		void drawFileManager (void) {
-			volt_draw_on(GFX_TOP, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 400, 240, GRAY);
-			volt_draw_rectangle(0, 0, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
-
-			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 320, 240, GRAY);
-
-			volt_draw_texture(MainMenuButton, 100, 40);
-			volt_draw_texture(MusicIcon, 105, 50);
-			volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
-			volt_end_draw();
-		}
 
 		void loadSoundEffects(void) {
 		if (dspfirmfound) {

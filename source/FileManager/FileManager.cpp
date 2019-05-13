@@ -24,19 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <cstddef>
+#include "FileManager/FileManager.hpp"
 
+		void drawFileManager (void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
 
-// Textures
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
 
-// Misc Stuff.
-extern size_t MainMenuButton;
-
-// Main Menu Stuff.
-extern size_t FileManagerIcon;
-extern size_t FTPIcon;
-extern size_t UpdaterIcon;
-extern size_t SettingsIcon;
-
-// FileManager Stuff.
-extern size_t MusicIcon;
+			volt_draw_texture(MainMenuButton, 100, 40);
+			volt_draw_texture(MusicIcon, 105, 50);
+			volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+			volt_end_draw();
+		}
