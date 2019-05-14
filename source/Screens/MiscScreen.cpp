@@ -24,12 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "Textures.hpp"
-#include "graphic.h"
-#include "Colors.hpp"
-#include "voltlib/volt.h"
+#include "Screens/ScreenCommon.hpp"
 
-
-void drawFileManagerSubMenu (void);
-
-void drawMusicPlayerUI (void);
+		void drawCredits(void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
+			volt_draw_text(130, 40, 0.72f, 0.72f, WHITE, "Made by VoltZ,");
+			volt_draw_text(130, 100, 0.72f, 0.72f, WHITE, "Made by Pk11,");
+			volt_draw_text(130, 160, 0.72f, 0.72f, WHITE, "Made by RocketRobz");
+			volt_draw_text(130, 220, 0.72f, 0.72f, WHITE, "and Made by Flame!");
+			
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+			volt_end_draw();
+		}
