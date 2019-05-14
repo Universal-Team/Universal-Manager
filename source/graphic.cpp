@@ -85,24 +85,29 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 // Misc Stuff.
 size_t MainMenuButton = 1;
 size_t BackIcon = 2;
+size_t UpdaterButton = 3;
+size_t Dot = 4;
+
 // Main Menu Stuff.
-size_t FileManagerIcon = 3;
-size_t FTPIcon = 4;
-size_t UpdaterIcon = 5;
-size_t SettingsIcon = 6;
+size_t FileManagerIcon = 5;
+size_t FTPIcon = 6;
+size_t UpdaterIcon = 7;
+size_t SettingsIcon = 8;
 
 // FileManager Stuff.
-size_t MusicIcon = 7;
+size_t MusicIcon = 9;
 
 // Music Player Stuff.
-size_t PlayIcon = 8;
-size_t PauseIcon = 9;
+size_t PlayIcon = 10;
+size_t PauseIcon = 11;
 
 void graphicsInit(void) {
 	
 	// Misc Stuff.
 	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/Button.png");
 	volt_load_texture_png(BackIcon, "romfs:/graphics/Misc/Back Icon.png");
+	volt_load_texture_png(UpdaterButton, "romfs:/graphics/Button/UpdaterButton.png");
+	volt_load_texture_png(Dot, "romfs:/graphics/Misc/Dot.png");
 
 	// Main Menu Stuff.
 	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");

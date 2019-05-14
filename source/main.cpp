@@ -50,6 +50,7 @@ bool showFileManagerScreen = false;
 bool showCredits = false;
 bool showMusicPlayer = false;
 bool dspfirmfound = false;
+bool showUpdater = false;
 
 // Music and sound effects.
 sound *sfx_example = NULL;
@@ -159,6 +160,8 @@ int main()
 			drawFileManagerSubMenu();
 		} else if (showCredits) {
 			drawCredits();
+		} else if (showUpdater) {
+			drawUpdaterScreen();
 		} else if (showMusicPlayer) {
 			drawMusicPlayerUI();
 		} else {
@@ -168,7 +171,7 @@ int main()
 	if (hDown & KEY_A) {
 		showFileManagerScreen = !showFileManagerScreen; // If you press "A", the FileManager Sub Menu Appears for now.
 	} else 	if (hDown & KEY_B) {
-		showCredits = !showCredits;
+		showUpdater = !showUpdater;
 	} else if (hDown & KEY_X) {
 				notImplemented(); // Shows a "NotImplementedYet" Message. 
 	}

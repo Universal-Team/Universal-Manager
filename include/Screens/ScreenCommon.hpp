@@ -40,3 +40,6 @@ void drawCredits(void);
 void drawMusicPlayerUI(void);
 void drawMusicPlay(void);
 void drawMusicPause(void);
+
+// Updater Screen.
+void drawUpdaterScreen(void);
