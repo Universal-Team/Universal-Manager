@@ -46,11 +46,8 @@
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
-bool showFileManagerScreen = false;
-bool showCredits = false;
-bool showMusicPlayer = false;
 bool dspfirmfound = false;
-bool showUpdater = false;
+
 
 // Music and sound effects.
 sound *sfx_example = NULL;
@@ -93,6 +90,9 @@ void screenon()
 		sfx_example = new sound("romfs:/sfx/example.wav", 2, false);
 		}
 		}
+
+int screenMode = 0;
+// Screen Modes :: Screen 0 = MainMenu ; Screen 1 = Filemanager Sub Menu ; Screen 2 = Credits Screen ; Screen 3 = Updater Screen ; Screen 4 = Music Player Screen.
 
 int main()
 {
@@ -156,31 +156,64 @@ int main()
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 
-		if (showFileManagerScreen) {
-			drawFileManagerSubMenu();
-		} else if (showCredits) {
-			drawCredits();
-		} else if (showUpdater) {
-			drawUpdaterScreen();
-		} else if (showMusicPlayer) {
-			drawMusicPlayerUI();
-		} else {
-		drawMainMenu();
-	}
+			// Define of the Screen Modes.
+			if (screenMode == 0) {
+				drawMainMenu();			// Draws the Main Menu Screen. 0
+			} else if (screenMode == 1) {
+			drawFileManagerSubMenu();  // Draws the File Manager Sub Menu Screen. 1
+		} else if (screenMode == 2) {
+			drawCredits();				// Draws the Credits. 2
+		} else if (screenMode == 3) {
+			drawUpdaterScreen();		// Draws the Updater Screen. 3
+		} else if (screenMode == 4) {
+			drawMusicPlayerUI();		// Draws the Music Player Menu. 4
+		}
 
-	if (hDown & KEY_A) {
-		showFileManagerScreen = !showFileManagerScreen; // If you press "A", the FileManager Sub Menu Appears for now.
-	} else 	if (hDown & KEY_B) {
-		showUpdater = !showUpdater;
-	} else if (hDown & KEY_X) {
-				notImplemented(); // Shows a "NotImplementedYet" Message. 
-	}
+		// Main Menu.
 
-	if (showFileManagerScreen) {
-		if (hDown & KEY_SELECT) {
-			showMusicPlayer = !showMusicPlayer;
+	if (screenMode == 0) {
+		if (hDown & KEY_A) {
+			screenMode = 1;
+		} else if (hDown & KEY_X) {
+			screenMode = 2;
+		} else if (hDown & KEY_Y) {
+			screenMode = 3;
 		}
 	}
+
+		// File Manager Sub Menu.
+	if (screenMode == 1) {
+		if (hDown & KEY_B) {
+			screenMode = 0;
+		} else if (hDown & KEY_A) {
+			screenMode = 4;
+		}
+	}
+	// Credits.
+
+	if (screenMode == 2) {
+		if (hDown & KEY_B) {
+			screenMode = 0;
+		}
+	}
+
+	// Updater Screen.
+
+	if (screenMode == 3) {
+		if (hDown & KEY_B) {
+			screenMode = 0;
+		}
+	}
+
+	// Music Player.
+
+	if (screenMode == 4) {
+		if (hDown & KEY_B) {
+			screenMode = 1;
+		}
+	}
+
+
 	}
 
 
