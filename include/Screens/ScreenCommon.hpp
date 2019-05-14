@@ -38,3 +38,5 @@ void drawCredits(void);
 
 // Music Player Screen.
 void drawMusicPlayerUI(void);
+void drawMusicPlay(void);
+void drawMusicPause(void);

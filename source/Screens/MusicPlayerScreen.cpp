@@ -39,3 +39,33 @@
 			volt_draw_rectangle(0, 215, 320, 25, BLACK);
 			volt_end_draw();
 		}
+
+		void drawMusicPlay(void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_rectangle(0, 215, 400, 25, BLACK);
+			volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Playing : ");
+
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+			volt_draw_rectangle(0, 0, 320, 25, BLACK);
+			volt_draw_rectangle(0, 215, 320, 25, BLACK);
+			volt_draw_texture(PlayIcon, 160, 120);
+			volt_end_draw();
+		}
+
+		void drawMusicPause(void) {
+			volt_draw_on(GFX_TOP, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 400, 240, GRAY);
+			volt_draw_rectangle(0, 0, 400, 25, BLACK);
+			volt_draw_rectangle(0, 215, 400, 25, BLACK);
+			volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Paused.");
+
+			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+			volt_draw_rectangle(0, 0, 320, 25, BLACK);
+			volt_draw_rectangle(0, 215, 320, 25, BLACK);
+			volt_draw_texture(PauseIcon, 160, 120);
+			volt_end_draw();
+		}
