@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Mac",
+            "name": "3DS",
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/devkitPro/**"
