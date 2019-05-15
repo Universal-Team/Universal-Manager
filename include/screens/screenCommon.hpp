@@ -33,7 +33,8 @@ void drawMainMenu(void);
 // File Manager Sub Menu Screen.
 void drawFileManagerSubMenu(void);
 
-// Credits Screen.
+// Settings Screen.
+void drawSettingsScreen(void);
 void drawCredits(void);
 
 // Music Player Screen.
