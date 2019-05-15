@@ -45,14 +45,6 @@
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicPlayerScreen 4
-#define MusicPlayScreen 5
-#define MusicPauseScreen 6
-
 struct ButtonPos {
     int x;
     int y;
@@ -194,10 +186,10 @@ int main()
 			case musicPlayerScreen:
 				drawMusicPlayerUI();		// Draws the Music Player menu screen
 				break;
-			case MusicPlayScreen:
+			case musicPlayScreen:
 				drawMusicPlay();			// Draws the Music Player play screen
 				break;
-			case MusicPauseScreen:
+			case musicPauseScreen:
 				drawMusicPause();			// Draws the Music Player pause screen
 				break;
 		}
@@ -243,8 +235,8 @@ int main()
 					screenMode = fileScreen;
 				}
 				break;
-			case MusicPlayScreen:
-			case MusicPauseScreen:
+			case musicPlayScreen:
+			case musicPauseScreen:
 				if (hDown & KEY_B) {
 					screenMode = musicPlayerScreen;
 				}

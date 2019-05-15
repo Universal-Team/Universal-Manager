@@ -24,24 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "screens/screens.h"
+extern int screenMode;
 
-// Main Menu Screen.
-void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
-
-// Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
-
-// Updater Screen.
-void drawUpdaterScreen(void);
+#define mainScreen 0
+#define fileScreen 1
+#define creditsScreen 2
+#define updaterScreen 3
+#define musicPlayerScreen 4
+#define musicPlayScreen 5
+#define musicPauseScreen 6
