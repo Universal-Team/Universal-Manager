@@ -25,7 +25,7 @@
 */
 
 #include "graphic.h"
-#include "Textures.hpp"
+#include "textures.hpp"
 
 // Main Menu Screen.
 void drawMainMenu(void);

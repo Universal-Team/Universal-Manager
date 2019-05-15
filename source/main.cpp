@@ -37,10 +37,10 @@
 
 #include "dumpdsp.hpp"
 #include "graphic.h"
-#include "Screens/ScreenCommon.hpp"
+#include "screens/screenCommon.hpp"
 #include "settings.h"
 #include "sfx.hpp"
-#include "Textures.hpp"
+#include "textures.hpp"
 #include "voltlib/volt.h"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)

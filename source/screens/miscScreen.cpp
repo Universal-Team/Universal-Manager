@@ -24,7 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "Screens/ScreenCommon.hpp"
+#include "screens/screenCommon.hpp"
 
 		void drawCredits(void) {
 			volt_draw_on(GFX_TOP, GFX_LEFT);

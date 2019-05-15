@@ -25,8 +25,8 @@
 */
 
 #include "graphic.h"
-//#include "Colors.hpp"
-#include "Textures.hpp"
+//#include "colors.hpp"
+#include "textures.hpp"
 #include "voltlib/volt.h"
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)

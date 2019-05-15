@@ -29,8 +29,8 @@
 
 #include <3ds.h>
 #include "voltlib/volt.h"
-#include "Colors.hpp"
-#include "Textures.hpp"
+#include "colors.hpp"
+#include "textures.hpp"
 
 // Text Sizes.
 
