@@ -72,6 +72,12 @@ ButtonPos mainScreenButtonPos[] = {
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicPlayerScreen},
+	{100, 120, 149, 52, imageScreen},
+    {288, 208, 32, 32, mainScreen},
+};
+
+ButtonPos settingsScreenButtonPos[] = {
+    {0, 40, 149, 52, creditsScreen},
     {288, 208, 32, 32, mainScreen},
 };
 
@@ -231,6 +237,10 @@ int main()
 				}
 				break;
 			case creditsScreen:
+			if (hDown & KEY_B) {
+				screenMode = settingsScreen;
+				break;
+			}
 			case updaterScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
@@ -247,8 +257,19 @@ int main()
 					screenMode = musicPlayerScreen;
 				}
 				break;
-		}
-	}
+			case settingsScreen:
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
+						if (touch.px >= settingsScreenButtonPos[i].x && touch.px <= (settingsScreenButtonPos[i].x + settingsScreenButtonPos[i].w) && touch.py >= settingsScreenButtonPos[i].y && touch.py <= (settingsScreenButtonPos[i].y + settingsScreenButtonPos[i].h)) {
+							screenMode = settingsScreenButtonPos[i].link;
+						}
+					}
+				}
+				break;
+			}
+			}
 	
 	delete sfx_example;
 	if (dspfirmfound) {
