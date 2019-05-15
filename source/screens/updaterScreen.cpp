@@ -30,7 +30,7 @@ void drawUpdaterScreen(void) {
     // Draw The Main Top Screen.
     volt_draw_on(GFX_TOP, GFX_LEFT);
     volt_draw_rectangle(0, 0, 400, 240, GRAY);
-    volt_draw_rectangle(0, 0, 400, 25, BLACK);
+    volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
     volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater");
     
     // Draw the Main Bottom Screen Background.
