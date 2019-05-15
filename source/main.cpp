@@ -43,8 +43,12 @@
 #include "dumpdsp.hpp"
 #include "Screens/ScreenCommon.hpp"
 
-
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
+#define mainScreen 0
+#define fileScreen 1
+#define creditsScreen 2
+#define updaterScreen 3
+#define musicScreen 4
 
 bool dspfirmfound = false;
 
@@ -169,51 +173,33 @@ int main()
 			drawMusicPlayerUI();		// Draws the Music Player Menu. 4
 		}
 
-		// Main Menu.
-
-	if (screenMode == 0) {
-		if (hDown & KEY_A) {
-			screenMode = 1;
-		} else if (hDown & KEY_X) {
-			screenMode = 2;
-		} else if (hDown & KEY_Y) {
-			screenMode = 3;
+		if (screenMode == mainScreen) { // Main Menu screen
+			if (hDown & KEY_A) {
+				screenMode = fileScreen;
+			} else if (hDown & KEY_X) {
+				screenMode = creditsScreen;
+			} else if (hDown & KEY_Y) {
+				screenMode = updaterScreen;
+			}
+		} else if (screenMode == fileScreen) { // File Manager screen
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+			} else if (hDown & KEY_A) {
+				screenMode = musicScreen;
+			}
+		} else if (screenMode == creditsScreen) { // Credits screen
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+			}
+		} else if (screenMode == updaterScreen) { // Updater screen
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+			}
+		} else if (screenMode == musicScreen) { // Music Player screen
+			if (hDown & KEY_B) {
+				screenMode = fileScreen;
+			}
 		}
-	}
-
-		// File Manager Sub Menu.
-	if (screenMode == 1) {
-		if (hDown & KEY_B) {
-			screenMode = 0;
-		} else if (hDown & KEY_A) {
-			screenMode = 4;
-		}
-	}
-	// Credits.
-
-	if (screenMode == 2) {
-		if (hDown & KEY_B) {
-			screenMode = 0;
-		}
-	}
-
-	// Updater Screen.
-
-	if (screenMode == 3) {
-		if (hDown & KEY_B) {
-			screenMode = 0;
-		}
-	}
-
-	// Music Player.
-
-	if (screenMode == 4) {
-		if (hDown & KEY_B) {
-			screenMode = 1;
-		}
-	}
-
-
 	}
 
 
