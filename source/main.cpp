@@ -166,6 +166,7 @@ int main()
 		offset3D[1].topbg = CONFIG_3D_SLIDERSTATE * 7.0f;
 
 		// Scan hid shared memory for input events
+		gspWaitForVBlank();
 		hidScanInput();
 		const u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
@@ -238,10 +239,8 @@ int main()
 				}
 				break;
 			case musicPlayerScreen:
-				if (hDown & KEY_B) {
+				if (hDown & KEY_X) {
 					screenMode = fileScreen;
-				} else if (hDown & KEY_A) {
-					screenMode = MusicPlayScreen;
 				}
 				break;
 			case MusicPlayScreen:

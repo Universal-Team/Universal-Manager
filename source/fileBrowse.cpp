@@ -10,7 +10,7 @@ int file_count = 0;
 
 extern bool continueFileScan;
 
-extern void displayBottomMsg(const char* text);
+extern void displayMsg(const char* text);
 
 /**
  * Get the title ID.
@@ -32,7 +32,7 @@ void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> file
 
 	if (pdir == NULL)
 	{
-		displayBottomMsg("Unable to open the directory.");
+		displayMsg("Unable to open the directory.");
 		for(int i=0;i<120;i++)
 			gspWaitForVBlank();
 	}
@@ -49,7 +49,7 @@ void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> file
 			dirEntry.name = pent->d_name;
 			char scanningMessage[512];
 			snprintf(scanningMessage, sizeof(scanningMessage), "Scanning SD card for files...\n\n(Press B to cancel)\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
-			displayBottomMsg(scanningMessage);
+			displayMsg(scanningMessage);
 			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
 				if(!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {
 					for(uint i=0;i<fileTypes.size();i++) {
@@ -108,7 +108,7 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 	DIR *pdir = opendir ("."); 
 	
 	if (pdir == NULL) {
-		displayBottomMsg("Unable to open the directory.");
+		displayMsg("Unable to open the directory.");
 		for(int i=0;i<120;i++)
 			gspWaitForVBlank();
 	} else {
