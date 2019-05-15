@@ -62,14 +62,14 @@ struct ButtonPos {
 };
 
 ButtonPos mainScreenButtonPos[] = {
-    {0, 40, 148, 51, fileScreen},
-    {170, 40, 148, 51, creditsScreen},
-    {0, 170, 148, 51, updaterScreen},
-    {170, 170, 148, 51, musicPlayerScreen},
+    {0, 40, 149, 52, fileScreen},
+    {170, 40, 149, 52, creditsScreen},
+    {0, 170, 149, 52, updaterScreen},
+    {170, 170, 149, 52, musicPlayerScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
-    {100, 40, 148, 51, musicPlayerScreen},
+    {100, 40, 149, 52, musicPlayerScreen},
     {288, 208, 32, 32, mainScreen},
 };
 
