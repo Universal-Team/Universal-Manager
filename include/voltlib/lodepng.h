@@ -30,8 +30,8 @@
 #include <string.h> /*for size_t*/
 
 #ifdef __cplusplus
-#include <vector>
 #include <string>
+#include <vector>
 #endif /*__cplusplus*/
 
 extern const char* LODEPNG_VERSION_STRING;

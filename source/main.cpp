@@ -28,20 +28,20 @@
 #include <algorithm>
 #include <dirent.h>
 #include <malloc.h>
-#include <stdio.h>
 #include <sstream>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
 
+#include "dumpdsp.hpp"
 #include "graphic.h"
+#include "Screens/ScreenCommon.hpp"
 #include "settings.h"
+#include "sfx.hpp"
 #include "Textures.hpp"
 #include "voltlib/volt.h"
-#include "sfx.hpp"
-#include "dumpdsp.hpp"
-#include "Screens/ScreenCommon.hpp"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 #define mainScreen 0

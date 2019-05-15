@@ -24,13 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <stdio.h>
-#include <string.h>
 #include <3ds.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
 #include "sha256.h"
+
 #define NB_TITLES (sizeof(titles)/sizeof(TitleInfo))
 
 typedef struct {
