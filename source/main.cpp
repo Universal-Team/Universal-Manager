@@ -68,6 +68,11 @@ ButtonPos mainScreenButtonPos[] = {
     {170, 170, 148, 51, musicPlayerScreen},
 };
 
+ButtonPos fileScreenButtonPos[] = {
+    {100, 40, 148, 51, musicPlayerScreen},
+    {288, 208, 32, 32, mainScreen},
+};
+
 bool dspfirmfound = false;
 
 // Music and sound effects.
@@ -213,6 +218,12 @@ int main()
 				screenMode = mainScreen;
 			} else if (hDown & KEY_A) {
 				screenMode = musicPlayerScreen;
+			} else if (hDown & KEY_TOUCH) {
+				for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
+					if(touch.px >= fileScreenButtonPos[i].x && touch.px <= (fileScreenButtonPos[i].x + fileScreenButtonPos[i].w) && touch.py >= fileScreenButtonPos[i].y && touch.py <= (fileScreenButtonPos[i].y + fileScreenButtonPos[i].h)) {
+						screenMode = fileScreenButtonPos[i].link;
+					}
+				}
 			}
 		} else if (screenMode == creditsScreen) { // Credits screen
 			if (hDown & KEY_B) {
