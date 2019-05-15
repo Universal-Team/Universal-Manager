@@ -48,3 +48,6 @@ extern size_t ImageIcon;
 // Music Player Stuff.
 extern size_t PlayIcon;
 extern size_t PauseIcon;
+
+// SD Image!
+extern size_t SDImage;

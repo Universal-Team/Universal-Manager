@@ -28,14 +28,6 @@
 #include <unistd.h>
 #include <vector>
 
-#include "fileBrowse.h"
-
-uint selectedDir = 0;
-int keyRepeatDelay = 0;
-bool dirChanged = true;
-std::vector<DirEntry> dirContents;
-std::string scanDir;
-
 void drawMusicPlayerUI(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
@@ -43,57 +35,7 @@ void drawMusicPlayerUI(void) {
 	volt_draw_rectangle(0, 215, 400, 25, BLACK);
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
-	if(dirChanged) {
-		getDirectoryContents(dirContents);
-		for(uint i=0;i<dirContents.size();i++) {
-			if(!(strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "mp3") == 0 ||
-				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "m4a") == 0 ||
-				dirContents[i].isDirectory)) {
-				dirContents.erase(dirContents.begin()+i);
-			}
-		}
-		dirChanged = false;
-	}
-	const u32 hDown = hidKeysHeld();
-	const u32 hHeld = hidKeysHeld();
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	if(hDown & KEY_A) {
-		if(dirContents[selectedDir].isDirectory) {
-		chdir(dirContents[selectedDir].name.c_str());
-		selectedDir = 0;
-		dirChanged = true;
-		} else {
-			// Play the song
-		}
-	} else if(hDown & KEY_B) {
-		chdir("..");
-		selectedDir = 0;
-		dirChanged = true;
-	} else if(hHeld & KEY_UP) {
-		if(selectedDir > 0 && !keyRepeatDelay) {
-			selectedDir--;
-			keyRepeatDelay = 3;
-		}
-	} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if(selectedDir < dirContents.size()-1) {
-			selectedDir++;
-			keyRepeatDelay = 3;
-		}
-	}
-	std::string dirs;
-	for(uint i=(selectedDir<12) ? 0 : selectedDir-12;i<dirContents.size()&&i<((selectedDir<12) ? 13 : selectedDir+1);i++) {
-		if(i == selectedDir) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for(uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-	if(dirContents[selectedDir].isDirectory)	dirs += "\nA: Open Folder   B: Back   X: Exit";
-	else	dirs += "\nA: Play   B: Back   X: Exit";
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	drawFileBrowse();
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 240, GRAY);

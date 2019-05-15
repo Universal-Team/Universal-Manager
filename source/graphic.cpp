@@ -109,6 +109,9 @@ size_t ImageIcon = 10;
 size_t PlayIcon = 11;
 size_t PauseIcon = 12;
 
+// Image Viewer!
+size_t SDImage = 13;
+
 void graphicsInit(void) {
 	
 	// Misc Stuff.
