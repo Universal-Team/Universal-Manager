@@ -40,3 +40,10 @@ void drawCredits(void) {
 	volt_draw_rectangle(0, 0, 320, 240, GRAY);
 	volt_end_draw();
 }
+
+void notImplemented(void) {
+	displayMsg("Not implemented Yet.\n");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}

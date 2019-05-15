@@ -82,6 +82,13 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
+void displayMsg(const char* text) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(0, 25, 400, 215, BLACK);
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
+	volt_end_draw();
+}
+
 // Misc Stuff.
 size_t MainMenuButton = 1;
 size_t BackIcon = 2;

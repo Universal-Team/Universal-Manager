@@ -59,3 +59,7 @@ void drawUpdaterScreen(void);
 
 // Image Viewer!
 void drawImageViewerUI(void);
+
+// Miscs.
+
+void notImplemented(void);

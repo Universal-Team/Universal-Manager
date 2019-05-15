@@ -95,19 +95,6 @@ void screenon()
     gspLcdExit();
 }
 
-void displayMsg(const char* text) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 25, 400, 215, BLACK);
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
-	volt_end_draw();
-}
-
-void notImplemented(void) {
-	displayMsg("Not implemented Yet.\n");
-	for (int i = 0; i < 60*2; i++) {
-		gspWaitForVBlank();
-	}
-}
 
 void loadSoundEffects(void) {
 	if (dspfirmfound) {
