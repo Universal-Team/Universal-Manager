@@ -51,7 +51,7 @@
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);
 			volt_draw_rectangle(0, 0, 320, 25, BLACK);
 			volt_draw_rectangle(0, 215, 320, 25, BLACK);
-			volt_draw_texture(PlayIcon, 160, 120);
+			volt_draw_texture(PlayIcon, 140, 100);
 			volt_end_draw();
 		}
 
@@ -66,6 +66,6 @@
 			volt_draw_rectangle(0, 0, 320, 240, GRAY);
 			volt_draw_rectangle(0, 0, 320, 25, BLACK);
 			volt_draw_rectangle(0, 215, 320, 25, BLACK);
-			volt_draw_texture(PauseIcon, 160, 120);
+			volt_draw_texture(PauseIcon, 140, 100);
 			volt_end_draw();
 		}

@@ -44,11 +44,14 @@
 #include "voltlib/volt.h"
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
+
 #define mainScreen 0
 #define fileScreen 1
 #define creditsScreen 2
 #define updaterScreen 3
-#define musicScreen 4
+#define musicPlayerScreen 4
+#define MusicPlayScreen 5
+#define MusicPauseScreen 6
 
 bool dspfirmfound = false;
 
@@ -171,6 +174,10 @@ int main()
 			drawUpdaterScreen();		// Draws the Updater Screen. 3
 		} else if (screenMode == 4) {
 			drawMusicPlayerUI();		// Draws the Music Player Menu. 4
+		} else if (screenMode == 5) {
+			drawMusicPlay();
+		} else if (screenMode == 6) {
+			drawMusicPause();
 		}
 
 		if (screenMode == mainScreen) { // Main Menu screen
@@ -185,7 +192,7 @@ int main()
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
 			} else if (hDown & KEY_A) {
-				screenMode = musicScreen;
+				screenMode = musicPlayerScreen;
 			}
 		} else if (screenMode == creditsScreen) { // Credits screen
 			if (hDown & KEY_B) {
@@ -195,11 +202,17 @@ int main()
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
 			}
-		} else if (screenMode == musicScreen) { // Music Player screen
+		} else if (screenMode == musicPlayerScreen) { // Music Player screen
 			if (hDown & KEY_B) {
 				screenMode = fileScreen;
+			} else if (hDown & KEY_A) {
+				screenMode = MusicPlayScreen;
+			} 
+			} else if (screenMode == MusicPlayScreen) {
+				if (hDown & KEY_B) {
+					screenMode = musicPlayerScreen;
+				}
 			}
-		}
 	}
 
 
