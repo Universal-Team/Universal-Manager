@@ -27,34 +27,34 @@
 #include "screens/screenCommon.hpp"
 
 void drawUpdaterScreen(void) {
-            // Draw The Main Top Screen.
-			volt_draw_on(GFX_TOP, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 400, 240, GRAY);
-			volt_draw_rectangle(0, 0, 400, 25, BLACK);
-			volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Updater");
-            
-            // Draw the Main Bottom Screen Background.
-			volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-			volt_draw_rectangle(0, 0, 320, 240, GRAY);
+    // Draw The Main Top Screen.
+    volt_draw_on(GFX_TOP, GFX_LEFT);
+    volt_draw_rectangle(0, 0, 400, 240, GRAY);
+    volt_draw_rectangle(0, 0, 400, 25, BLACK);
+    volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Updater");
+    
+    // Draw the Main Bottom Screen Background.
+    volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+    volt_draw_rectangle(0, 0, 320, 240, GRAY);
 
-            // TWL Menu Buttons.
-            volt_draw_texture(UpdaterButton, 129, 48);
-            volt_draw_texture(UpdaterButton, 220, 48);
-            volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "TWLMENU++");
-            volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
-            volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
+    // TWL Menu Buttons.
+    volt_draw_texture(UpdaterButton, 129, 48);
+    volt_draw_texture(UpdaterButton, 220, 48);
+    volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "TWLMENU++");
+    volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
+    volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
 
-            // NDS-Bootstrap Buttons.
-            volt_draw_texture(UpdaterButton, 129, 88);
-            volt_draw_texture(UpdaterButton, 220, 88);
-            volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
-            volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
-            volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
+    // NDS-Bootstrap Buttons.
+    volt_draw_texture(UpdaterButton, 129, 88);
+    volt_draw_texture(UpdaterButton, 220, 88);
+    volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
+    volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
+    volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
 
 
-            // Draw The Pages and Back Icon.
-    		volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
-			volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-            volt_draw_texture(BackIcon, 288, 208);
-            volt_end_draw();
+    // Draw The Pages and Back Icon.
+    volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+    volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+    volt_draw_texture(BackIcon, 288, 208);
+    volt_end_draw();
 }
