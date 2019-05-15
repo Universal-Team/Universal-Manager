@@ -35,9 +35,16 @@ void drawFileManagerSubMenu(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 240, GRAY);
 
+	// Music Player Button.
 	volt_draw_texture(MainMenuButton, 100, 40);
 	volt_draw_texture(MusicIcon, 105, 50);
 	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+
+	// Image Viewer Button.
+	volt_draw_texture(MainMenuButton, 100, 120);
+	volt_draw_texture(ImageIcon, 105, 130);
+	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
+	
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }

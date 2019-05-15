@@ -67,7 +67,7 @@ ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, creditsScreen},
     {0, 170, 149, 52, updaterScreen},
-    {170, 170, 149, 52, musicPlayerScreen},
+    {170, 170, 149, 52, settingsScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
@@ -191,6 +191,12 @@ int main()
 				break;
 			case musicPauseScreen:
 				drawMusicPause();			// Draws the Music Player pause screen
+				break;
+			case settingsScreen:
+				drawSettingsScreen();		// Draws the Settings Screen
+				break;
+			case imageScreen:
+				drawImageViewerUI();
 				break;
 		}
 

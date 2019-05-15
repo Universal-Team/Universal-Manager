@@ -34,6 +34,8 @@
 #define musicPlayerScreen 4
 #define musicPlayScreen 5
 #define musicPauseScreen 6
+#define settingsScreen 7
+#define imageScreen 8
 
 extern int screenMode;
 
@@ -54,3 +56,6 @@ void drawMusicPause(void);
 
 // Updater Screen.
 void drawUpdaterScreen(void);
+
+// Image Viewer!
+void drawImageViewerUI(void);
