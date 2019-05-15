@@ -41,7 +41,7 @@ void drawMusicPlayerUI(void) {
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
 	volt_draw_rectangle(0, 0, 400, 25, BLACK);
 	volt_draw_rectangle(0, 215, 400, 25, BLACK);
-	volt_draw_text(130, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if(dirChanged) {
 		getDirectoryContents(dirContents);
