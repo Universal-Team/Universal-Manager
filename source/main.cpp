@@ -53,8 +53,22 @@
 #define MusicPlayScreen 5
 #define MusicPauseScreen 6
 
-bool dspfirmfound = false;
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
 
+ButtonPos mainScreenButtonPos[] = {
+    {0, 40, 148, 51, fileScreen},
+    {170, 40, 148, 51, creditsScreen},
+    {0, 170, 148, 51, updaterScreen},
+    {170, 170, 148, 51, musicPlayerScreen},
+};
+
+bool dspfirmfound = false;
 
 // Music and sound effects.
 sound *sfx_example = NULL;
@@ -187,6 +201,12 @@ int main()
 				screenMode = creditsScreen;
 			} else if (hDown & KEY_Y) {
 				screenMode = updaterScreen;
+			} else if (hDown & KEY_TOUCH) {
+				for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
+					if(touch.px >= mainScreenButtonPos[i].x && touch.px <= (mainScreenButtonPos[i].x + mainScreenButtonPos[i].w) && touch.py >= mainScreenButtonPos[i].y && touch.py <= (mainScreenButtonPos[i].y + mainScreenButtonPos[i].h)) {
+						screenMode = mainScreenButtonPos[i].link;
+					}
+				}
 			}
 		} else if (screenMode == fileScreen) { // File Manager screen
 			if (hDown & KEY_B) {
