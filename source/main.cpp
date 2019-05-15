@@ -61,6 +61,16 @@ struct ButtonPos {
 	int link;
 };
 
+// Music and sound effects.
+sound *sfx_example = NULL;
+
+// 3D offsets. (0 == Left, 1 == Right)
+Offset3D offset3D[2] = {0.0f, 0.0f};	
+
+int screenMode = 0;
+bool dspfirmfound = false;
+static touchPosition touch;
+
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, creditsScreen},
@@ -72,16 +82,6 @@ ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicPlayerScreen},
     {288, 208, 32, 32, mainScreen},
 };
-
-bool dspfirmfound = false;
-
-// Music and sound effects.
-sound *sfx_example = NULL;
-
-static touchPosition touch;
-
-// 3D offsets. (0 == Left, 1 == Right)
-Offset3D offset3D[2] = {0.0f, 0.0f};	
 
 void screenoff()
 {
@@ -97,28 +97,25 @@ void screenon()
     gspLcdExit();
 }
 
-		void displayMsg(const char* text) {
-			volt_begin_draw(GFX_TOP, GFX_LEFT);
-			volt_draw_rectangle(0, 25, 400, 215, BLACK);
-			volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
-			volt_end_draw();
-		}
+void displayMsg(const char* text) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(0, 25, 400, 215, BLACK);
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
+	volt_end_draw();
+}
 
-		void notImplemented(void) {
-		displayMsg("Not implemented Yet.\n");
-		for (int i = 0; i < 60*2; i++) {
+void notImplemented(void) {
+	displayMsg("Not implemented Yet.\n");
+	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
-		}
 	}
+}
 
-		void loadSoundEffects(void) {
-		if (dspfirmfound) {
+void loadSoundEffects(void) {
+	if (dspfirmfound) {
 		sfx_example = new sound("romfs:/sfx/example.wav", 2, false);
-		}
-		}
-
-int screenMode = 0;
-// Screen Modes :: Screen 0 = MainMenu ; Screen 1 = Filemanager Sub Menu ; Screen 2 = Credits Screen ; Screen 3 = Updater Screen ; Screen 4 = Music Player Screen.
+	}
+}
 
 int main()
 {
@@ -138,15 +135,15 @@ int main()
 
 	graphicsInit();
 
-	 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+	if (access("sdmc:/3ds/dspfirm.cdc", F_OK) != -1) {
 		ndspInit();
 		dspfirmfound = true;
-	}else{
+	} else {
 		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
 		volt_draw_text(12, 16, 0.5f, 0.5f, WHITE, "Dumping DSP firm...");
 		volt_end_draw();
 		dumpDsp();
-		if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+		if (access("sdmc:/3ds/dspfirm.cdc", F_OK) != -1) {
 			ndspInit();
 			dspfirmfound = true;
 		} else {
@@ -159,7 +156,7 @@ int main()
 		}
 	}
 
-		loadSoundEffects();
+	loadSoundEffects();
 
 	int fadealpha = 255;
 
@@ -170,83 +167,92 @@ int main()
 
 		// Scan hid shared memory for input events
 		hidScanInput();
-		
 		const u32 hDown = hidKeysDown();
-
 		hidTouchRead(&touch);
 
 		for (int topfb = GFX_LEFT; topfb <= GFX_RIGHT; topfb++) {
 			if (topfb == GFX_LEFT) volt_begin_draw(GFX_TOP, (gfx3dSide_t)topfb);
 			else volt_draw_on(GFX_TOP, (gfx3dSide_t)topfb);
-			//volt_draw_texture(topbgtex, offset3D[topfb].topbg, 0);
 			if (fadealpha > 0) volt_draw_rectangle(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 		}
 
-			// Define of the Screen Modes.
-			if (screenMode == 0) {
-				drawMainMenu();			// Draws the Main Menu Screen. 0
-			} else if (screenMode == 1) {
-			drawFileManagerSubMenu();  // Draws the File Manager Sub Menu Screen. 1
-		} else if (screenMode == 2) {
-			drawCredits();				// Draws the Credits. 2
-		} else if (screenMode == 3) {
-			drawUpdaterScreen();		// Draws the Updater Screen. 3
-		} else if (screenMode == 4) {
-			drawMusicPlayerUI();		// Draws the Music Player Menu. 4
-		} else if (screenMode == 5) {
-			drawMusicPlay();
-		} else if (screenMode == 6) {
-			drawMusicPause();
+		// Draws a screen based on screenMode
+		switch(screenMode) {
+			case mainScreen:
+				drawMainMenu();				// Draws the Main Menu screen
+				break;
+			case fileScreen:
+				drawFileManagerSubMenu();	// Draws the File Manager screen
+				break;
+			case creditsScreen:
+				drawCredits();				// Draws the Credits screen
+				break;
+			case updaterScreen:
+				drawUpdaterScreen();		// Draws the Updater screen
+				break;
+			case musicPlayerScreen:
+				drawMusicPlayerUI();		// Draws the Music Player menu screen
+				break;
+			case MusicPlayScreen:
+				drawMusicPlay();			// Draws the Music Player play screen
+				break;
+			case MusicPauseScreen:
+				drawMusicPause();			// Draws the Music Player pause screen
+				break;
 		}
 
-		if (screenMode == mainScreen) { // Main Menu screen
-			if (hDown & KEY_A) {
-				screenMode = fileScreen;
-			} else if (hDown & KEY_X) {
-				screenMode = creditsScreen;
-			} else if (hDown & KEY_Y) {
-				screenMode = updaterScreen;
-			} else if (hDown & KEY_TOUCH) {
-				for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
-					if(touch.px >= mainScreenButtonPos[i].x && touch.px <= (mainScreenButtonPos[i].x + mainScreenButtonPos[i].w) && touch.py >= mainScreenButtonPos[i].y && touch.py <= (mainScreenButtonPos[i].y + mainScreenButtonPos[i].h)) {
-						screenMode = mainScreenButtonPos[i].link;
+		// Scans inputs for the current screen
+		switch(screenMode) {
+			case mainScreen:
+				if (hDown & KEY_A) {
+					screenMode = fileScreen;
+				} else if (hDown & KEY_X) {
+					screenMode = creditsScreen;
+				} else if (hDown & KEY_Y) {
+					screenMode = updaterScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
+						if (touch.px >= mainScreenButtonPos[i].x && touch.px <= (mainScreenButtonPos[i].x + mainScreenButtonPos[i].w) && touch.py >= mainScreenButtonPos[i].y && touch.py <= (mainScreenButtonPos[i].y + mainScreenButtonPos[i].h)) {
+							screenMode = mainScreenButtonPos[i].link;
+						}
 					}
 				}
-			}
-		} else if (screenMode == fileScreen) { // File Manager screen
-			if (hDown & KEY_B) {
-				screenMode = mainScreen;
-			} else if (hDown & KEY_A) {
-				screenMode = musicPlayerScreen;
-			} else if (hDown & KEY_TOUCH) {
-				for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
-					if(touch.px >= fileScreenButtonPos[i].x && touch.px <= (fileScreenButtonPos[i].x + fileScreenButtonPos[i].w) && touch.py >= fileScreenButtonPos[i].y && touch.py <= (fileScreenButtonPos[i].y + fileScreenButtonPos[i].h)) {
-						screenMode = fileScreenButtonPos[i].link;
+				break;
+			case fileScreen:
+				if (hDown & KEY_B) {
+					screenMode = mainScreen;
+				} else if (hDown & KEY_A) {
+					screenMode = musicPlayerScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
+						if (touch.px >= fileScreenButtonPos[i].x && touch.px <= (fileScreenButtonPos[i].x + fileScreenButtonPos[i].w) && touch.py >= fileScreenButtonPos[i].y && touch.py <= (fileScreenButtonPos[i].y + fileScreenButtonPos[i].h)) {
+							screenMode = fileScreenButtonPos[i].link;
+						}
 					}
 				}
-			}
-		} else if (screenMode == creditsScreen) { // Credits screen
-			if (hDown & KEY_B) {
-				screenMode = mainScreen;
-			}
-		} else if (screenMode == updaterScreen) { // Updater screen
-			if (hDown & KEY_B) {
-				screenMode = mainScreen;
-			}
-		} else if (screenMode == musicPlayerScreen) { // Music Player screen
-			if (hDown & KEY_B) {
-				screenMode = fileScreen;
-			} else if (hDown & KEY_A) {
-				screenMode = MusicPlayScreen;
-			} 
-			} else if (screenMode == MusicPlayScreen) {
+				break;
+			case creditsScreen:
+			case updaterScreen:
+				if (hDown & KEY_B) {
+					screenMode = mainScreen;
+				}
+				break;
+			case musicPlayerScreen:
+				if (hDown & KEY_B) {
+					screenMode = fileScreen;
+				} else if (hDown & KEY_A) {
+					screenMode = MusicPlayScreen;
+				}
+				break;
+			case MusicPlayScreen:
+			case MusicPauseScreen:
 				if (hDown & KEY_B) {
 					screenMode = musicPlayerScreen;
 				}
-			}
+				break;
+		}
 	}
-
-
+	
 	delete sfx_example;
 	if (dspfirmfound) {
 		ndspExit();

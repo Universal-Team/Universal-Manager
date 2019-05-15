@@ -10,3 +10,4 @@ build/vshader_shbin.h
 build/vshader.shbin
 *.map
 *.lst
+.vscode/ipch
