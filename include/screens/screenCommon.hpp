@@ -26,7 +26,16 @@
 
 #include "graphic.h"
 #include "textures.hpp"
-#include "screens/screens.h"
+
+#define mainScreen 0
+#define fileScreen 1
+#define creditsScreen 2
+#define updaterScreen 3
+#define musicPlayerScreen 4
+#define musicPlayScreen 5
+#define musicPauseScreen 6
+
+extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
