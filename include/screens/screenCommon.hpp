@@ -33,7 +33,6 @@
 #define updaterScreen 3
 #define musicPlayerScreen 4
 #define musicPlayScreen 5
-#define musicPauseScreen 6
 
 extern int screenMode;
 

@@ -43,6 +43,11 @@
 #include "textures.hpp"
 #include "voltlib/volt.h"
 
+extern "C" {
+	#include "music/error.h"
+	#include "music/playback.h"
+}
+
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 struct ButtonPos {
@@ -189,9 +194,6 @@ int main()
 			case musicPlayScreen:
 				drawMusicPlay();			// Draws the Music Player play screen
 				break;
-			case musicPauseScreen:
-				drawMusicPause();			// Draws the Music Player pause screen
-				break;
 		}
 
 		// Scans inputs for the current screen
@@ -236,8 +238,11 @@ int main()
 				}
 				break;
 			case musicPlayScreen:
-			case musicPauseScreen:
-				if (hDown & KEY_B) {
+				if (hDown & KEY_A) {
+					togglePlayback();
+				} else if (hDown & KEY_X) {
+					stopPlayback();
+				} else if (hDown & KEY_B) {
 					screenMode = musicPlayerScreen;
 				}
 				break;

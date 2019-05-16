@@ -11,3 +11,4 @@ build/vshader.shbin
 *.map
 *.lst
 .vscode/ipch
+*.DS_Store

@@ -30,11 +30,16 @@
 
 #include "fileBrowse.h"
 
-uint selectedDir = 0;
-int keyRepeatDelay = 0;
+extern "C" {
+	#include "music/playback.h"
+}
+
+uint selectedFile = 0;
+int keyRepeatDelay = 3;
 bool dirChanged = true;
 std::vector<DirEntry> dirContents;
 std::string scanDir;
+std::string currentSong = "";
 
 void drawMusicPlayerUI(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
@@ -43,10 +48,10 @@ void drawMusicPlayerUI(void) {
 	volt_draw_rectangle(0, 215, 400, 25, BLACK);
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
-	if(dirChanged) {
+	if (dirChanged) {
 		getDirectoryContents(dirContents);
 		for(uint i=0;i<dirContents.size();i++) {
-			if(!(strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "mp3") == 0 ||
+			if (!(strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "mp3") == 0 ||
 				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "m4a") == 0 ||
 				dirContents[i].isDirectory)) {
 				dirContents.erase(dirContents.begin()+i);
@@ -54,44 +59,51 @@ void drawMusicPlayerUI(void) {
 		}
 		dirChanged = false;
 	}
-	const u32 hDown = hidKeysHeld();
+	const u32 hDown = hidKeysDown();
 	const u32 hHeld = hidKeysHeld();
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	if(hDown & KEY_A) {
-		if(dirContents[selectedDir].isDirectory) {
-		chdir(dirContents[selectedDir].name.c_str());
-		selectedDir = 0;
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	if (hDown & KEY_A) {
+		if (dirContents[selectedFile].isDirectory) {
+		chdir(dirContents[selectedFile].name.c_str());
+		selectedFile = 0;
 		dirChanged = true;
+		} else if (isPlaying()) {
+			currentSong = "";
+			stopPlayback();
 		} else {
-			// Play the song
+			currentSong = dirContents[selectedFile].name;
+			playbackInfo_t playbackInfo;
+			changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
+			screenMode = musicPlayScreen;
 		}
-	} else if(hDown & KEY_B) {
+	} else if (hDown & KEY_B) {
 		chdir("..");
-		selectedDir = 0;
+		selectedFile = 0;
 		dirChanged = true;
-	} else if(hHeld & KEY_UP) {
-		if(selectedDir > 0 && !keyRepeatDelay) {
-			selectedDir--;
+	} else if (hHeld & KEY_UP) {
+		if (selectedFile > 0 && !keyRepeatDelay) {
+			selectedFile--;
 			keyRepeatDelay = 3;
 		}
-	} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if(selectedDir < dirContents.size()-1) {
-			selectedDir++;
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedFile < dirContents.size()-1) {
+			selectedFile++;
 			keyRepeatDelay = 3;
 		}
 	}
 	std::string dirs;
-	for(uint i=(selectedDir<12) ? 0 : selectedDir-12;i<dirContents.size()&&i<((selectedDir<12) ? 13 : selectedDir+1);i++) {
-		if(i == selectedDir) {
+	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
+		if (i == selectedFile) {
 			dirs += "> " + dirContents[i].name + "\n";
 		} else {
 			dirs += "  " + dirContents[i].name + "\n";
 		}
 	}
-	for(uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
+	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	if(dirContents[selectedDir].isDirectory)	dirs += "\nA: Open Folder   B: Back   X: Exit";
+	if (dirContents[selectedFile].isDirectory)	dirs += "\nA: Open Folder   B: Back   X: Exit";
+	else if (isPlaying())	dirs += "\nA: Stop Playing   B: Back   X: Exit";
 	else	dirs += "\nA: Play   B: Back   X: Exit";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
@@ -108,27 +120,17 @@ void drawMusicPlay(void) {
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
 	volt_draw_rectangle(0, 0, 400, 25, BLACK);
 	volt_draw_rectangle(0, 215, 400, 25, BLACK);
-	volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Playing : ");
+	if(!isPaused()) {
+		std::string nowPlayingText = "Currently Playing: " + currentSong;
+		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
+	} else {
+		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Paused.");
+	}
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 240, GRAY);
 	volt_draw_rectangle(0, 0, 320, 25, BLACK);
 	volt_draw_rectangle(0, 215, 320, 25, BLACK);
-	volt_draw_texture(PauseIcon, 140, 100);
-	volt_end_draw();
-}
-
-void drawMusicPause(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, GRAY);
-	volt_draw_rectangle(0, 0, 400, 25, BLACK);
-	volt_draw_rectangle(0, 215, 400, 25, BLACK);
-	volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Paused.");
-
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, GRAY);
-	volt_draw_rectangle(0, 0, 320, 25, BLACK);
-	volt_draw_rectangle(0, 215, 320, 25, BLACK);
-	volt_draw_texture(PlayIcon, 140, 100);
+	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
 	volt_end_draw();
 }
