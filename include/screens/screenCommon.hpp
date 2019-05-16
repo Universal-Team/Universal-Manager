@@ -62,4 +62,3 @@ void drawImageViewerUI(void);
 // Miscs.
 
 void notImplemented(void);
-void drawFileBrowse(void);
