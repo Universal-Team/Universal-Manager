@@ -24,30 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <cstddef>
+#include "screens/screenCommon.hpp"
+#include <unistd.h>
+#include <vector>
 
 
-// Textures
+void drawImageViewerUI(void) {
+	volt_draw_on(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(0, 0, 400, 240, GRAY);
+	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
+	volt_draw_rectangle(0, 215, 400, 25, DARK_BLUE);
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu");
 
-// Misc Stuff.
-extern size_t MainMenuButton;
-extern size_t BackIcon;
-extern size_t UpdaterButton;
-extern size_t Dot;
+	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+	volt_draw_rectangle(0, 0, 320, 240, GRAY);
+	volt_draw_rectangle(0, 0, 320, 25, DARK_BLUE);
+	volt_draw_rectangle(0, 215, 320, 25, DARK_BLUE);
+	volt_end_draw();
 
-// Main Menu Stuff.
-extern size_t FileManagerIcon;
-extern size_t FTPIcon;
-extern size_t UpdaterIcon;
-extern size_t SettingsIcon;
-
-// FileManager Stuff.
-extern size_t MusicIcon;
-extern size_t ImageIcon;
-
-// Music Player Stuff.
-extern size_t PlayIcon;
-extern size_t PauseIcon;
-
-// SD Image!
-extern size_t SDImage;
+}

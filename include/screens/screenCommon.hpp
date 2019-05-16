@@ -33,6 +33,8 @@
 #define updaterScreen 3
 #define musicPlayerScreen 4
 #define musicPlayScreen 5
+#define settingsScreen 6
+#define imageScreen 7
 
 extern int screenMode;
 
@@ -53,3 +55,11 @@ void drawMusicPause(void);
 
 // Updater Screen.
 void drawUpdaterScreen(void);
+
+// Image Viewer!
+void drawImageViewerUI(void);
+
+// Miscs.
+
+void notImplemented(void);
+void drawFileBrowse(void);

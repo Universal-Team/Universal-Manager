@@ -29,7 +29,7 @@
 void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
-	volt_draw_rectangle(0, 0, 400, 25, BLACK);
+	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
 	volt_draw_text(110, 40, 0.72f, 0.72f, WHITE, "Made by VoltZ,");
 	volt_draw_text(110, 100, 0.72f, 0.72f, WHITE, "Made by Pk11,");
@@ -39,4 +39,11 @@ void drawCredits(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 240, GRAY);
 	volt_end_draw();
+}
+
+void notImplemented(void) {
+	displayMsg("Not implemented Yet.\n");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
 }

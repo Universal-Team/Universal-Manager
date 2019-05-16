@@ -72,11 +72,21 @@ ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, creditsScreen},
     {0, 170, 149, 52, updaterScreen},
-    {170, 170, 149, 52, musicPlayerScreen},
+    {170, 170, 149, 52, settingsScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicPlayerScreen},
+	{100, 120, 149, 52, imageScreen},
+    {288, 208, 32, 32, mainScreen},
+};
+
+ButtonPos settingsScreenButtonPos[] = {
+    {0, 40, 149, 52, creditsScreen},
+    {288, 208, 32, 32, mainScreen},
+};
+
+ButtonPos updaterScreenButtonPos[] = {
     {288, 208, 32, 32, mainScreen},
 };
 
@@ -94,19 +104,6 @@ void screenon()
     gspLcdExit();
 }
 
-void displayMsg(const char* text) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 25, 400, 215, BLACK);
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
-	volt_end_draw();
-}
-
-void notImplemented(void) {
-	displayMsg("Not implemented Yet.\n");
-	for (int i = 0; i < 60*2; i++) {
-		gspWaitForVBlank();
-	}
-}
 
 void loadSoundEffects(void) {
 	if (dspfirmfound) {
@@ -194,6 +191,12 @@ int main()
 			case musicPlayScreen:
 				drawMusicPlay();			// Draws the Music Player play screen
 				break;
+			case settingsScreen:
+				drawSettingsScreen();		// Draws the Settings Screen
+				break;
+			case imageScreen:
+				drawImageViewerUI();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -227,10 +230,20 @@ int main()
 				}
 				break;
 			case creditsScreen:
+			if (hDown & KEY_B) {
+				screenMode = settingsScreen;
+				break;
+			}
 			case updaterScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
-				}
+								} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
+						if (touch.px >= updaterScreenButtonPos[i].x && touch.px <= (updaterScreenButtonPos[i].x + updaterScreenButtonPos[i].w) && touch.py >= updaterScreenButtonPos[i].y && touch.py <= (updaterScreenButtonPos[i].y + updaterScreenButtonPos[i].h)) {
+							screenMode = updaterScreenButtonPos[i].link;
+						}
+					}
+								}
 				break;
 			case musicPlayerScreen:
 				if (hDown & KEY_X) {
@@ -246,8 +259,24 @@ int main()
 					screenMode = musicPlayerScreen;
 				}
 				break;
-		}
-	}
+			case settingsScreen:
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
+						if (touch.px >= settingsScreenButtonPos[i].x && touch.px <= (settingsScreenButtonPos[i].x + settingsScreenButtonPos[i].w) && touch.py >= settingsScreenButtonPos[i].y && touch.py <= (settingsScreenButtonPos[i].y + settingsScreenButtonPos[i].h)) {
+							screenMode = settingsScreenButtonPos[i].link;
+						}
+					}
+				}
+				break;
+			case imageScreen:
+			if (hDown & KEY_B) {
+				screenMode = fileScreen;
+				break;
+			}
+			}
+			}
 	
 	delete sfx_example;
 	if (dspfirmfound) {
