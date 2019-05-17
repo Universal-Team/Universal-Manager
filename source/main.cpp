@@ -90,6 +90,10 @@ ButtonPos updaterScreenButtonPos[] = {
     {288, 208, 32, 32, mainScreen},
 };
 
+ButtonPos creditsScreenButtonPos[] = {
+    {288, 208, 32, 32, settingsScreen},
+};
+
 void screenoff()
 {
     gspLcdInit();\
@@ -232,8 +236,14 @@ int main()
 			case creditsScreen:
 			if (hDown & KEY_B) {
 				screenMode = settingsScreen;
+				} else if (hDown & KEY_TOUCH) {
+				for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
+				if (touch.px >= creditsScreenButtonPos[i].x && touch.px <= (creditsScreenButtonPos[i].x + creditsScreenButtonPos[i].w) && touch.py >= creditsScreenButtonPos[i].y && touch.py <= (creditsScreenButtonPos[i].y + creditsScreenButtonPos[i].h)) {
+				screenMode = creditsScreenButtonPos[i].link;
+						}
+					}
+								}
 				break;
-			}
 			case updaterScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;

@@ -51,3 +51,6 @@ extern size_t PauseIcon;
 
 // SD Image!
 extern size_t SDImage;
+
+// Credits Stuff.
+extern size_t CreditsImage;

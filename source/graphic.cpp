@@ -112,6 +112,8 @@ size_t PauseIcon = 12;
 // Image Viewer!
 size_t SDImage = 13;
 
+size_t CreditsImage = 14;
+
 void graphicsInit(void) {
 	
 	// Misc Stuff.
@@ -129,8 +131,12 @@ void graphicsInit(void) {
 	// FileManager Stuff.
 	volt_load_texture_png(MusicIcon, "romfs:/graphics/FileManager/Music Icon.png");
 	volt_load_texture_png(ImageIcon, "romfs:/graphics/FileManager/Image Icon.png");
+	
 	// Music Player Stuff.
 	volt_load_texture_png(PlayIcon, "romfs:/graphics/MusicPlayer/Play Icon.png");
 	volt_load_texture_png(PauseIcon, "romfs:/graphics/MusicPlayer/Pause Icon.png");
+
+	// Credits Stuff.
+	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
 }
 	
