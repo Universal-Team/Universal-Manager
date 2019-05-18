@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -31,8 +31,8 @@
  * @brief volt implementation
  */
 
-#include "volt.h"
 #include "loadbmp.h"
+#include "volt.h"
 
 static DVLB_s* vshader_dvlb;
 static shaderProgram_s program;

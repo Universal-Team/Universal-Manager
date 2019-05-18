@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,33 @@
 *         reasonable ways as different from the original version.
 */
 
+#include <cstddef>
+
+
 // Textures
 
-//extern size_t loadingbgtex;
-extern size_t button;
-extern size_t Border;
-extern size_t dot;
-extern size_t pageframe;
-extern size_t settingsIcon;
-//extern size_t settingsButton;
-extern size_t SD;
-extern size_t buttonRGB;
-extern size_t barTop;
+// Misc Stuff.
+extern size_t MainMenuButton;
+extern size_t BackIcon;
+extern size_t UpdaterButton;
+extern size_t Dot;
+
+// Main Menu Stuff.
+extern size_t FileManagerIcon;
+extern size_t FTPIcon;
+extern size_t UpdaterIcon;
+extern size_t SettingsIcon;
+
+// FileManager Stuff.
+extern size_t MusicIcon;
+extern size_t ImageIcon;
+
+// Music Player Stuff.
+extern size_t PlayIcon;
+extern size_t PauseIcon;
+
+// SD Image!
+extern size_t SDImage;
+
+// Credits Stuff.
+extern size_t CreditsImage;

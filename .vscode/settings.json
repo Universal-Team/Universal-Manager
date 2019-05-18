@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "playback.h": "c",
+        "mp3.h": "c",
+        "opus.h": "c",
+        "stdbool.h": "c",
+        "wav.h": "c",
+        "stdio.h": "c",
+        "iosfwd": "cpp"
+    }
+}

@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -43,9 +43,9 @@ LOADBMP_API unsigned int loadbmp_decode_file(
 #	pragma warning(disable: 4996)
 #endif
 
+#include <stdio.h> /* fopen(), fwrite(), fread(), fclose() */
 #include <stdlib.h> /* malloc(), free() */
 #include <string.h> /* memset(), memcpy() */
-#include <stdio.h> /* fopen(), fwrite(), fread(), fclose() */
 
 LOADBMP_API unsigned int loadbmp_decode_file(
 	const char *filename, unsigned char **imageData, unsigned int *width, unsigned int *height)

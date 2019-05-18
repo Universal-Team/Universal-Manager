@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -30,8 +30,8 @@
 #include <string.h> /*for size_t*/
 
 #ifdef __cplusplus
-#include <vector>
 #include <string>
+#include <vector>
 #endif /*__cplusplus*/
 
 extern const char* LODEPNG_VERSION_STRING;

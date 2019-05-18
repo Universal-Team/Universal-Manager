@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 */
 
 #include "graphic.h"
-#include "Colors.hpp"
-#include "Textures.hpp"
+//#include "colors.hpp"
+#include "textures.hpp"
 #include "voltlib/volt.h"
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)
@@ -82,18 +82,61 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
-//size_t loadingbgtex = 1;
-size_t button = 1;
-size_t Border = 2;
-size_t dot = 3;
-size_t pageframe = 4;
-size_t settingsIcon = 5;
-//size_t settingsButton = 6;
-size_t SD = 6;
-size_t buttonRGB = 7;
-size_t barTop = 8;
+void displayMsg(const char* text) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(0, 25, 400, 215, BLACK);
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
+	volt_end_draw();
+}
 
+// Misc Stuff.
+size_t MainMenuButton = 1;
+size_t BackIcon = 2;
+size_t UpdaterButton = 3;
+size_t Dot = 4;
+
+// Main Menu Stuff.
+size_t FileManagerIcon = 5;
+size_t FTPIcon = 6;
+size_t UpdaterIcon = 7;
+size_t SettingsIcon = 8;
+
+// FileManager Stuff.
+size_t MusicIcon = 9;
+size_t ImageIcon = 10;
+
+// Music Player Stuff.
+size_t PlayIcon = 11;
+size_t PauseIcon = 12;
+
+// Image Viewer!
+size_t SDImage = 13;
+
+size_t CreditsImage = 14;
 
 void graphicsInit(void) {
+	
+	// Misc Stuff.
+	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/Button.png");
+	volt_load_texture_png(BackIcon, "romfs:/graphics/Misc/Back Icon.png");
+	volt_load_texture_png(UpdaterButton, "romfs:/graphics/Button/UpdaterButton.png");
+	volt_load_texture_png(Dot, "romfs:/graphics/Misc/Dot.png");
+
+	// Main Menu Stuff.
+	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");
+	volt_load_texture_png(FTPIcon, "romfs:/graphics/MainMenu/FTP Icon.png");
+	volt_load_texture_png(UpdaterIcon, "romfs:/graphics/MainMenu/Updater Icon.png");
+	volt_load_texture_png(SettingsIcon, "romfs:/graphics/MainMenu/Settings Icon.png");
+
+	// FileManager Stuff.
+	volt_load_texture_png(MusicIcon, "romfs:/graphics/FileManager/Music Icon.png");
+	volt_load_texture_png(ImageIcon, "romfs:/graphics/FileManager/Image Icon.png");
+	
+	// Music Player Stuff.
+	volt_load_texture_png(PlayIcon, "romfs:/graphics/MusicPlayer/Play Icon.png");
+	volt_load_texture_png(PauseIcon, "romfs:/graphics/MusicPlayer/Pause Icon.png");
+
+	// Credits Stuff.
+	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
 }
 	

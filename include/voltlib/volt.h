@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -34,13 +34,14 @@ extern "C" {
 #endif
 
 #include <3ds.h>
-#include <citro3d.h>
 #include <citro2d.h>
+#include <citro3d.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
+
 #include "vshader_shbin.h"
 
 #define TOP_WIDTH 400

@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Updater
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -29,16 +29,20 @@
 
 #include <3ds.h>
 #include "voltlib/volt.h"
-#include "Colors.hpp"
-#include "Textures.hpp"
-#include "Universal-Settings.hpp"
+#include "colors.hpp"
+#include "textures.hpp"
 
+// Text Sizes.
+
+#define BIG_SIZE 0.72f
+#define BUTTON_TEXT 0.7f
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color);
 void volt_draw_texture_part_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, u32 color);
 void volt_draw_texture_part_scale(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, float scaleX, float scaleY);
 void volt_draw_texture_part_scale_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, float scaleX, float scaleY, u32 color);
 void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, flipType fliptype, u32 color);
+void displayMsg(const char* text);
 void graphicsInit(void);
 //void volt_free_texture(size_t id);
 #endif // GRAPHIC_H
