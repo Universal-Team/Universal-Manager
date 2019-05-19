@@ -32,10 +32,11 @@
 #define fileScreen 1
 #define creditsScreen 2
 #define updaterScreen 3
-#define musicPlayerScreen 4
-#define musicPlayScreen 5
-#define settingsScreen 6
-#define imageScreen 7
+#define musicListScreen 4
+#define musicPlayerScreen 5
+#define musicPlaylistScreen 6
+#define settingsScreen 7
+#define imageScreen 8
 
 extern int screenMode;
 
@@ -50,9 +51,11 @@ void drawSettingsScreen(void);
 void drawCredits(void);
 
 // Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
+void drawMusicList(void);
+void drawMusicPlayer(void);
+void drawMusicPlaylist(void);
+void drawMusicPlaylist(void);
+void musicPlaylistLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
 void drawUpdaterScreen(void);

@@ -42,7 +42,7 @@ std::string scanDir;
 std::string currentSong = "";
 std::vector<std::string> nowPlayingList;
 
-void drawMusicPlayerUI(void) {
+void drawMusicList(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
@@ -77,7 +77,7 @@ void drawMusicPlayerUI(void) {
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
-			screenMode = musicPlayScreen;
+			screenMode = musicPlayerScreen;
 			aptSetSleepAllowed(false);
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
 		}
@@ -86,7 +86,8 @@ void drawMusicPlayerUI(void) {
 		selectedFile = 0;
 		dirChanged = true;
 	} else if (hDown & KEY_Y) {
-		nowPlayingList.push_back(dirContents[selectedFile].name);
+		dirChanged = true;
+		screenMode = musicPlaylistScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -119,7 +120,7 @@ void drawMusicPlayerUI(void) {
 	volt_end_draw();
 }
 
-void drawMusicPlay(void) {
+void drawMusicPlayer(void) {
 	drawBgTop();
 	drawBarsTop();
 	if(!isPaused() && isPlaying()) {
@@ -138,4 +139,57 @@ void drawMusicPlay(void) {
 	drawBarsBot();
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
 	volt_end_draw();
+}
+
+int selectedPlst = 0;
+std::vector<DirEntry> plsts;
+
+void drawMusicPlaylist(void) {
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
+	
+	if(dirChanged) {
+		char startPath[PATH_MAX];
+		getcwd(startPath, PATH_MAX);
+		chdir("sdmc:/Universal-Manager/playlists/");
+		getDirectoryContents(plsts);
+		chdir(startPath);
+		DirEntry dirEntry;
+		dirEntry.name = "Now Playing";
+		dirEntry.isDirectory = false;
+		plsts.insert(plsts.begin(), dirEntry);
+		dirChanged = false;
+	}
+
+	std::string plstList;
+	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
+		if (i == selectedPlst) {
+			plstList += "> " + plsts[i].name + "\n";
+		} else {
+			plstList += "  " + plsts[i].name + "\n";
+		}
+	}
+	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
+		plstList += "\n";
+	}
+	plstList += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE003 : New Playlist";
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+
+	drawBgBot();
+	drawBarsBot();
+	volt_end_draw();
+}
+
+void musicPlaylistLogic(u32 hDown, u32 hHeld) {
+	if(hDown & KEY_A) {
+		if(selectedPlst == 0) {
+		nowPlayingList.push_back(dirContents[selectedFile].name);
+		}
+		screenMode = musicListScreen;
+	} else if (hDown & KEY_B) {
+		screenMode = musicListScreen;
+	}
 }

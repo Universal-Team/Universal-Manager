@@ -81,7 +81,7 @@ ButtonPos mainScreenButtonPos[] = {
 };
 
 ButtonPos fileScreenButtonPos[] = {
-    {100, 40, 149, 52, musicPlayerScreen},
+    {100, 40, 149, 52, musicListScreen},
 	{100, 120, 149, 52, imageScreen},
     {288, 208, 32, 32, mainScreen},
 };
@@ -197,6 +197,7 @@ int main()
 		gspWaitForVBlank();
 		hidScanInput();
 		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
 		hidTouchRead(&touch);
 
 		for (int topfb = GFX_LEFT; topfb <= GFX_RIGHT; topfb++) {
@@ -219,17 +220,20 @@ int main()
 			case updaterScreen:
 				drawUpdaterScreen();		// Draws the Updater screen
 				break;
-			case musicPlayerScreen:
-				drawMusicPlayerUI();		// Draws the Music Player menu screen
+			case musicListScreen:
+				drawMusicList();			// Draws the Music Player song selection screen
 				break;
-			case musicPlayScreen:
-				drawMusicPlay();			// Draws the Music Player play screen
+			case musicPlayerScreen:
+				drawMusicPlayer();			// Draws the Music Player playback screen
+				break;
+			case musicPlaylistScreen:
+				drawMusicPlaylist();		// Draws the Music Player playlist creation screen
 				break;
 			case settingsScreen:
-				drawSettingsScreen();		// Draws the Settings Screen
+				drawSettingsScreen();		// Draws the Settings screen
 				break;
 			case imageScreen:
-				drawImageViewerUI();
+				drawImageViewerUI();		// Draw the Image Viewer screen
 				break;
 		}
 
@@ -254,7 +258,7 @@ int main()
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
 				} else if (hDown & KEY_A) {
-					screenMode = musicPlayerScreen;
+					screenMode = musicListScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
 						if (touch.px >= fileScreenButtonPos[i].x && touch.px <= (fileScreenButtonPos[i].x + fileScreenButtonPos[i].w) && touch.py >= fileScreenButtonPos[i].y && touch.py <= (fileScreenButtonPos[i].y + fileScreenButtonPos[i].h)) {
@@ -287,19 +291,22 @@ int main()
 					}
 								}
 				break;
-			case musicPlayerScreen:
+			case musicListScreen:
 				if (hDown & KEY_X) {
 					screenMode = fileScreen;
 				}
 				break;
-			case musicPlayScreen:
+			case musicPlayerScreen:
 				if (hDown & KEY_A) {
 					togglePlayback();
 				} else if (hDown & KEY_X) {
 					stopPlayback();
 				} else if (hDown & KEY_B) {
-					screenMode = musicPlayerScreen;
+					screenMode = musicListScreen;
 				}
+				break;
+			case musicPlaylistScreen:
+				musicPlaylistLogic(hDown, hHeld);
 				break;
 			case settingsScreen:
 				int red;
@@ -339,6 +346,8 @@ int main()
 			nowPlayingList.erase(nowPlayingList.begin());
 			playbackInfo_t playbackInfo;
 			changeFile(currentSong.c_str(), &playbackInfo);
+		} else if (!isPlaying() && currentSong != "") {
+			currentSong = "";
 		}
 	}
 	
