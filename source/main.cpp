@@ -312,7 +312,7 @@ int main()
 					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
 			} else if (hDown & KEY_A) {
 					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 3), blue, getColorValue(settings.universal.bars, 0), 255);
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
 			} else if (hDown & KEY_R) {
 				SaveUniversalSettings();
 				saveMsg();
