@@ -24,15 +24,21 @@
 *         reasonable ways as different from the original version.
 */
 
-// Colors.
-#define BLACK RGBA8(0, 0, 0, 255)
+#pragma once
 
-#define WHITE RGBA8(255, 255, 255, 255)
+#include <3ds.h>
 
-#define GRAY RGBA8(70, 70, 70, 255)
+/*! Loop status */
+typedef enum
+{
+  LOOP_CONTINUE, /*!< Continue looping */
+  LOOP_RESTART,  /*!< Reinitialize */
+  LOOP_EXIT,     /*!< Terminate looping */
+} loop_status_t;
 
-#define GREYISH RGBA8(200, 200, 200, 255)
+bool isTransfering;
+char ftp_accepted_connection[50], ftp_file_transfer[100];
 
-#define DARK_BLUE RGBA8(0, 0, 128, 255)
-
-#define TRANSPARENT RGBA8(0, 0, 0, 0)
+int           ftp_init(void);
+loop_status_t ftp_loop(void);
+void          ftp_exit(void);

@@ -24,15 +24,42 @@
 *         reasonable ways as different from the original version.
 */
 
-// Colors.
-#define BLACK RGBA8(0, 0, 0, 255)
+#pragma once
 
-#define WHITE RGBA8(255, 255, 255, 255)
+#ifdef _3DS
+#include <3ds.h>
+#define ESC(x) "\x1b[" #x
+#define RESET   ESC(0m)
+#define BLACK   ESC(30m)
+#define RED     ESC(31;1m)
+#define GREEN   ESC(32;1m)
+#define YELLOW  ESC(33;1m)
+#define BLUE    ESC(34;1m)
+#define MAGENTA ESC(35;1m)
+#define CYAN    ESC(36;1m)
+#define WHITE   ESC(37;1m)
+#else
+#define ESC(x)
+#define RESET
+#define BLACK
+#define RED
+#define GREEN
+#define YELLOW
+#define BLUE
+#define MAGENTA
+#define CYAN
+#define WHITE
+#endif
 
-#define GRAY RGBA8(70, 70, 70, 255)
+void console_init(void);
 
-#define GREYISH RGBA8(200, 200, 200, 255)
+__attribute__((format(printf,1,2)))
+void console_set_status(const char *fmt, ...);
 
-#define DARK_BLUE RGBA8(0, 0, 128, 255)
+__attribute__((format(printf,1,2)))
+void console_print(const char *fmt, ...);
 
-#define TRANSPARENT RGBA8(0, 0, 0, 0)
+__attribute__((format(printf,1,2)))
+void debug_print(const char *fmt, ...);
+
+void console_render(void);
