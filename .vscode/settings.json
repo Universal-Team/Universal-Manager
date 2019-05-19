@@ -6,6 +6,7 @@
         "stdbool.h": "c",
         "wav.h": "c",
         "stdio.h": "c",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "vector": "cpp"
     }
 }

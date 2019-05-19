@@ -68,6 +68,9 @@ int screenMode = 0;
 bool dspfirmfound = false;
 static touchPosition touch;
 
+extern std::string currentSong;
+extern std::vector<std::string> nowPlayingList;
+
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, creditsScreen},
@@ -285,8 +288,15 @@ int main()
 				screenMode = fileScreen;
 				break;
 			}
-			}
-			}
+		}
+
+		if(!isPlaying() && nowPlayingList.size()) {
+			currentSong = nowPlayingList[0];
+			nowPlayingList.erase(nowPlayingList.begin());
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
+		}
+	}
 	
 	delete sfx_example;
 	if (dspfirmfound) {

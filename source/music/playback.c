@@ -193,7 +193,7 @@ void playFile(void* infoIn)
 		DSP_FlushDataCache(buffer1, decoder.buffSize * sizeof(int16_t));
 		DSP_FlushDataCache(buffer2, decoder.buffSize * sizeof(int16_t));
 	}
-
+	stop = true;
 	(*decoder.exit)();
 out:
 	if(isNdspInit == true)
