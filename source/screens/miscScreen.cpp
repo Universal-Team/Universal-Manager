@@ -36,6 +36,9 @@ void drawCredits(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgBot();
 		drawBarsBotDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgBot();
+		drawBarsBotRed();
 	}
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();

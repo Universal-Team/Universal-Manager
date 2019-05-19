@@ -37,4 +37,6 @@
 
 #define GREEN RGBA8(0, 255, 0, 255)
 
+#define RED RGBA8(255, 5, 32, 255)
+
 #define TRANSPARENT RGBA8(0, 0, 0, 0)

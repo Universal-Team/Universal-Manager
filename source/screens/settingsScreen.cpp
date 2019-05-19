@@ -8,6 +8,9 @@ void drawSettingsScreen(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgTop();
 		drawBarsTopDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgTop();
+		drawBarsTopRed();
 	}
     volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Settings");
 
@@ -19,6 +22,9 @@ void drawSettingsScreen(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgBot();
 		drawBarsBotDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgBot();
+		drawBarsBotRed();
 	}
 
     volt_draw_texture(MainMenuButton, 0, 40);

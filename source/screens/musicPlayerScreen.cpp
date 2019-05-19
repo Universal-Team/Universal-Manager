@@ -50,6 +50,9 @@ void drawMusicPlayerUI(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgTop();
 		drawBarsTopDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgTop();
+		drawBarsTopRed();
 	}
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
@@ -125,6 +128,9 @@ void drawMusicPlayerUI(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgBot();
 		drawBarsBotDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgBot();
+		drawBarsBotRed();
 	}
 	volt_end_draw();
 
@@ -138,7 +144,10 @@ void drawMusicPlay(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgTop();
 		drawBarsTopDark();
-	}
+	} else if (settings.universal.theme == 2) {
+		drawBgTop();
+		drawBarsTopRed();
+	} 
 	if(!isPaused() && isPlaying()) {
 		std::string nowPlayingText = "Currently Playing: " + currentSong;
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
@@ -157,6 +166,9 @@ void drawMusicPlay(void) {
 	} else if (settings.universal.theme == 1) {
 		drawBgBot();
 		drawBarsBotDark();
+	} else if (settings.universal.theme == 2) {
+		drawBgBot();
+		drawBarsBotRed();
 	}
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
 	volt_end_draw();

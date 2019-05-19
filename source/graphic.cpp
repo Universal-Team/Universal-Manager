@@ -92,6 +92,11 @@ void drawBarsTopDark(void) {
 	volt_draw_rectangle(0, 215, 400, 25, BLACK);
 }
 
+void drawBarsTopRed(void) {
+	volt_draw_rectangle(0, 0, 400, 25, RED);
+	volt_draw_rectangle(0, 215, 400, 25, RED);
+}
+
 void drawBgTop(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
@@ -105,6 +110,11 @@ void drawBarsBotLight(void) {
 void drawBarsBotDark(void) {
 	volt_draw_rectangle(0, 0, 320, 25, BLACK);
 	volt_draw_rectangle(0, 215, 320, 25, BLACK);
+}
+
+void drawBarsBotRed(void) {
+	volt_draw_rectangle(0, 0, 320, 25, RED);
+	volt_draw_rectangle(0, 215, 320, 25, RED);
 }
 
 void drawBgBot(void) {

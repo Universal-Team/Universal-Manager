@@ -49,11 +49,15 @@ void drawBarsTopLight(void);
 
 void drawBarsTopDark(void);
 
+void drawBarsTopRed(void);
+
 void drawBgTop(void);
 
 void drawBarsBotLight(void);
 
 void drawBarsBotDark(void);
+
+void drawBarsBotRed(void);
 
 void drawBgBot(void);
 
