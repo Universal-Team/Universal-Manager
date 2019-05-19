@@ -24,26 +24,37 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+/**
 
-void drawFileManagerSubMenu(void) {
-		drawBgTop();
-		drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
-
-		drawBgBot();
-		drawBarsBot();
-
-	// Music Player Button.
-	volt_draw_texture(MainMenuButton, 100, 40);
-	volt_draw_texture(MusicIcon, 105, 50);
-	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
-
-	// Image Viewer Button.
-	volt_draw_texture(MainMenuButton, 100, 120);
-	volt_draw_texture(ImageIcon, 105, 130);
-	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
+	This method is created by Jolty95 (umbjolt in gbatemp) to parse KeyBoard input to TWLoader.
+	This code is an application of libctru swkbd using native 3DS software keyboard.
+	Please, do not modify it if there is not reason to do it.
 	
-	volt_draw_texture(BackIcon, 288, 208);
-	volt_end_draw();
-}
+	Use:
+		#std::string keyboardInput(const wchar_t*)  return a C++ string with the input written by the user using touch screen or buttons.
+		#int keyboardInputInt(void)  return a int with the input written by the user using touch screen or buttons. If input is >255 return = 255 and if cancel, return 0
+
+*/
+
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
+
+#include <string>
+
+/**
+ * This method show the software original keyboard from the 3ds OS. 
+ * @param: const char* text to show a hint in keyboard
+ * @return: std::string with user input
+ */
+
+std::string keyboardInput(const wchar_t* hint);
+
+/**
+ * This method show the software original keyboard from the 3ds OS. 
+ * @param: const char* text to show a hint in keyboard
+ * @return: int with user input
+ */
+
+int keyboardInputInt(const char* hint);
+
+#endif // KEYBOARD_H

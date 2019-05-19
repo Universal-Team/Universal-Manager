@@ -31,6 +31,7 @@
 #include "voltlib/volt.h"
 #include "colors.hpp"
 #include "textures.hpp"
+#include "universal-Settings.hpp"
 
 // Text Sizes.
 
@@ -45,19 +46,11 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 void displayMsg(const char* text);
 void graphicsInit(void);
 
-void drawBarsTopLight(void);
-
-void drawBarsTopDark(void);
-
-void drawBarsTopRed(void);
+void drawBarsTop(void);
 
 void drawBgTop(void);
 
-void drawBarsBotLight(void);
-
-void drawBarsBotDark(void);
-
-void drawBarsBotRed(void);
+void drawBarsBot(void);
 
 void drawBgBot(void);
 

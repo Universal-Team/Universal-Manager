@@ -27,30 +27,13 @@
 #include "screens/screenCommon.hpp"
 
 void drawUpdaterScreen(void) {
-	 // Theme Stuff.
-	if (settings.universal.theme == 0) {
 		drawBgTop();
-		drawBarsTopLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgTop();
-		drawBarsTopDark();
-	} else if (settings.universal.theme == 2) {
-		drawBgTop();
-		drawBarsTopRed();
-	}
+		drawBarsTop();
     volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater");
     
     // Draw the Main Bottom Screen Background.
-		if (settings.universal.theme == 0) {
 		drawBgBot();
-		drawBarsBotLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgBot();
-		drawBarsBotDark();
-	} else if (settings.universal.theme == 2) {
-		drawBgBot();
-		drawBarsBotRed();
-	}
+		drawBarsBot();
 
     // TWL Menu Buttons.
     volt_draw_texture(UpdaterButton, 129, 48);

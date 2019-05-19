@@ -42,6 +42,7 @@
 #include "sfx.hpp"
 #include "textures.hpp"
 #include "voltlib/volt.h"
+#include "keyboard.h"
 
 extern "C" {
 	#include "music/error.h"
@@ -111,6 +112,25 @@ void screenon()
     gspLcdExit();
 }
 
+int getColorValue(int color, int bgr) {
+	char colorName[10];
+	int i;
+	std::stringstream ss;
+
+	itoa(color, colorName, 16);
+	std::string colorNamePart(colorName, 2*bgr+2, 2);
+	ss << std::hex << colorNamePart.c_str();
+	ss >> i;
+
+	return i;
+}
+
+std::string getColorName(int color, int bgr) {
+	char colorName[10];
+	int i = getColorValue(color, bgr);
+	itoa(i, colorName, 10);
+	return colorName;
+}
 
 void loadSoundEffects(void) {
 	if (dspfirmfound) {
@@ -279,11 +299,23 @@ int main()
 				}
 				break;
 			case settingsScreen:
+				int red;
+				int green;
+				int blue;
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
 			} else if (hDown & KEY_X) {
-				settings.universal.theme++;
-				if (settings.universal.theme > 2) settings.universal.theme = 0;
+					red = keyboardInputInt("Red");
+					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+			} else if (hDown & KEY_Y) {
+					green = keyboardInputInt("Green (0-255)");
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+			} else if (hDown & KEY_A) {
+					blue = keyboardInputInt("Blue (0-255)");
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 3), blue, getColorValue(settings.universal.bars, 0), 255);
+			} else if (hDown & KEY_R) {
+				SaveUniversalSettings();
+				saveMsg();
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
 						if (touch.px >= settingsScreenButtonPos[i].x && touch.px <= (settingsScreenButtonPos[i].x + settingsScreenButtonPos[i].w) && touch.py >= settingsScreenButtonPos[i].y && touch.py <= (settingsScreenButtonPos[i].y + settingsScreenButtonPos[i].h)) {

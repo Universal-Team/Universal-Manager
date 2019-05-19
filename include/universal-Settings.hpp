@@ -33,7 +33,7 @@
 
 typedef struct _Settings_t {
 	struct {
-		int theme;
+		int bars;
 	} universal;
 } Settings_t;
 extern Settings_t settings;

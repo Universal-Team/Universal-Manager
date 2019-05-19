@@ -82,19 +82,9 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
-void drawBarsTopLight(void) {
-	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
-	volt_draw_rectangle(0, 215, 400, 25, DARK_BLUE);
-}
-
-void drawBarsTopDark(void) {
-	volt_draw_rectangle(0, 0, 400, 25, BLACK);
-	volt_draw_rectangle(0, 215, 400, 25, BLACK);
-}
-
-void drawBarsTopRed(void) {
-	volt_draw_rectangle(0, 0, 400, 25, RED);
-	volt_draw_rectangle(0, 215, 400, 25, RED);
+void drawBarsTop(void) {
+	volt_draw_rectangle(0, 0, 400, 25, settings.universal.bars);
+	volt_draw_rectangle(0, 215, 400, 25, settings.universal.bars);
 }
 
 void drawBgTop(void) {
@@ -102,19 +92,9 @@ void drawBgTop(void) {
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
 }
 
-void drawBarsBotLight(void) {
-	volt_draw_rectangle(0, 0, 320, 25, DARK_BLUE);
-	volt_draw_rectangle(0, 215, 320, 25, DARK_BLUE);
-}
-
-void drawBarsBotDark(void) {
-	volt_draw_rectangle(0, 0, 320, 25, BLACK);
-	volt_draw_rectangle(0, 215, 320, 25, BLACK);
-}
-
-void drawBarsBotRed(void) {
-	volt_draw_rectangle(0, 0, 320, 25, RED);
-	volt_draw_rectangle(0, 215, 320, 25, RED);
+void drawBarsBot(void) {
+	volt_draw_rectangle(0, 0, 320, 25, settings.universal.bars);
+	volt_draw_rectangle(0, 215, 320, 25, settings.universal.bars);
 }
 
 void drawBgBot(void) {

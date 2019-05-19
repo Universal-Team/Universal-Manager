@@ -30,22 +30,21 @@ void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_texture(CreditsImage, 0, 0);
 	
-		if (settings.universal.theme == 0) {
 		drawBgBot();
-		drawBarsBotLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgBot();
-		drawBarsBotDark();
-	} else if (settings.universal.theme == 2) {
-		drawBgBot();
-		drawBarsBotRed();
-	}
+		drawBarsBot();
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }
 
 void notImplemented(void) {
 	displayMsg("Not implemented Yet.\n");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}
+
+void saveMsg(void) {
+	displayMsg("Settings Saved!\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
