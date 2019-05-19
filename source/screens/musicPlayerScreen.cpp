@@ -52,7 +52,9 @@ void drawMusicPlayerUI(void) {
 		getDirectoryContents(dirContents);
 		for(uint i=0;i<dirContents.size();i++) {
 			if (!(strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "mp3") == 0 ||
-				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "m4a") == 0 ||
+				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "m4a") == 0 || // I dunno, if it can play this file yet?
+				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "wav") == 0 ||
+				strcasecmp(dirContents[i].name.substr(dirContents[i].name.length()-3, 3).c_str(), "ogg") == 0 ||
 				dirContents[i].isDirectory)) {
 				dirContents.erase(dirContents.begin()+i);
 			}
