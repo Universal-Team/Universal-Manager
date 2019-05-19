@@ -41,6 +41,7 @@ std::vector<DirEntry> dirContents;
 std::string scanDir;
 std::string currentSong = "";
 
+
 void drawMusicPlayerUI(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 240, GRAY);
@@ -105,9 +106,9 @@ void drawMusicPlayerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	if (dirContents[selectedFile].isDirectory)	dirs += "\nA: Open Folder   B: Back   X: Exit";
-	else if (isPlaying())	dirs += "\nA: Stop Playing   B: Back   X: Exit";
-	else	dirs += "\nA: Play   B: Back   X: Exit";
+	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit";
+	else if (isPlaying())	dirs += "\n\uE000 : Stop Playing   \uE001 : Back   \uE002 : Exit";
+	else	dirs += "\nA : Play   B : Back   X : Exit";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
@@ -126,8 +127,10 @@ void drawMusicPlay(void) {
 	if(!isPaused()) {
 		std::string nowPlayingText = "Currently Playing: " + currentSong;
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
+		volt_draw_text(0, 220, 0.72f, 0.72f, WHITE, "\uE000 : Pause \uE001 : FileBrowse \uE002 : Stop");
 	} else {
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Paused.");
+		volt_draw_text(0, 220, 0.72f, 0.72f, WHITE, "\uE000 : Play \uE001 : FileBrowse");
 	}
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
