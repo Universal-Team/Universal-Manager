@@ -77,9 +77,9 @@ void drawMusicPlayerUI(void) {
 				currentSong = dirContents[selectedFile].name;
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
-				aptSetSleepAllowed(false);
 			}
 			screenMode = musicPlayScreen;
+			aptSetSleepAllowed(false);
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
 		}
 	} else if (hDown & KEY_B) {
