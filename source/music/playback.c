@@ -202,14 +202,11 @@ out:
 		ndspExit();
 	}
 
-	delete(info->file);
+	//delete(info->file);
 	linearFree(buffer1);
 	linearFree(buffer2);
 
 	/* Signal Watchdog thread that we've stopped playing */
-	*info->errInfo->error = -1;
-	svcSignalEvent(*info->errInfo->failEvent);
-
 	threadExit(0);
 	return;
 
