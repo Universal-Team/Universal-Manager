@@ -24,42 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "universal-Settings.hpp"
+#ifndef THREAD_HPP
+#define THREAD_HPP
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicPlayerScreen 4
-#define musicPlayScreen 5
-#define settingsScreen 6
-#define imageScreen 7
+#include <vector>
 
-extern int screenMode;
+namespace Threads
+{
+    void create(ThreadFunc entrypoint);
+    void destroy(void);
+}
 
-// Main Menu Screen.
-void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
-
-// Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
-
-// Updater Screen.
-void drawUpdaterScreen(void);
-
-// Image Viewer!
-void drawImageViewerUI(void);
-
-// Miscs.
-
-void saveMsg(void);
+#endif

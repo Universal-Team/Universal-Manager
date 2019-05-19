@@ -43,6 +43,7 @@
 #include "textures.hpp"
 #include "voltlib/volt.h"
 #include "keyboard.h"
+#include "download/download.hpp"
 
 extern "C" {
 	#include "music/error.h"
@@ -276,7 +277,9 @@ int main()
 			case updaterScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
-								} else if (hDown & KEY_TOUCH) {
+				} else if (hDown & KEY_X) {
+					updateBootstrap(true);			// Testing Purpose.
+					} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
 						if (touch.px >= updaterScreenButtonPos[i].x && touch.px <= (updaterScreenButtonPos[i].x + updaterScreenButtonPos[i].w) && touch.py >= updaterScreenButtonPos[i].y && touch.py <= (updaterScreenButtonPos[i].y + updaterScreenButtonPos[i].h)) {
 							screenMode = updaterScreenButtonPos[i].link;

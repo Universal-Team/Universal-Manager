@@ -24,42 +24,28 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "universal-Settings.hpp"
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicPlayerScreen 4
-#define musicPlayScreen 5
-#define settingsScreen 6
-#define imageScreen 7
+#include <string.h>
+#include <stdio.h>
+#include <3ds.h>
+#include "thread.hpp"
 
-extern int screenMode;
+static std::vector<Thread> threads;
 
-// Main Menu Screen.
-void drawMainMenu(void);
+void Threads::create(ThreadFunc entrypoint)
+{
+    s32 prio = 0;
+    svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
+    Thread thread = threadCreate((ThreadFunc)entrypoint, NULL, 4*1024, prio-1, -2, false);
+    threads.push_back(thread);
+}
 
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
-
-// Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
-
-// Updater Screen.
-void drawUpdaterScreen(void);
-
-// Image Viewer!
-void drawImageViewerUI(void);
-
-// Miscs.
-
-void saveMsg(void);
+void Threads::destroy(void)
+{
+    for (u32 i = 0; i < threads.size(); i++)
+    {
+        threadJoin(threads.at(i), U64_MAX);
+        threadFree(threads.at(i));
+    }
+    threads.clear();
+}

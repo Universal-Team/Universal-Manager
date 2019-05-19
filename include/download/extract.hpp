@@ -24,42 +24,18 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "universal-Settings.hpp"
+#pragma once
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicPlayerScreen 4
-#define musicPlayScreen 5
-#define settingsScreen 6
-#define imageScreen 7
+#include "common.hpp"
 
-extern int screenMode;
+enum ExtractError {
+	EXTRACT_ERROR_NONE = 0,
+	EXTRACT_ERROR_ARCHIVE,
+	EXTRACT_ERROR_ALLOC,
+	EXTRACT_ERROR_FIND,
+	EXTRACT_ERROR_READFILE,
+	EXTRACT_ERROR_OPENFILE,
+	EXTRACT_ERROR_WRITEFILE,
+};
 
-// Main Menu Screen.
-void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
-
-// Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
-
-// Updater Screen.
-void drawUpdaterScreen(void);
-
-// Image Viewer!
-void drawImageViewerUI(void);
-
-// Miscs.
-
-void saveMsg(void);
+Result extractArchive(std::string archivePath, std::string wantedFile, std::string outputPath);

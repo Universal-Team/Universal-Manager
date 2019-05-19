@@ -24,42 +24,39 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "universal-Settings.hpp"
+#pragma once
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicPlayerScreen 4
-#define musicPlayScreen 5
-#define settingsScreen 6
-#define imageScreen 7
+#include <3ds.h>
 
-extern int screenMode;
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
 
-// Main Menu Screen.
-void drawMainMenu(void);
+#include "files.h"
 
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
+#ifdef __cplusplus
+}
 
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
+#include <cstdio>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <regex>
+#include <curl/curl.h>
 
-// Music Player Screen.
-void drawMusicPlayerUI(void);
-void drawMusicPlay(void);
-void drawMusicPause(void);
+#include "stringutils.hpp"
+#include "json.hpp"
 
-// Updater Screen.
-void drawUpdaterScreen(void);
+using json = nlohmann::json;
 
-// Image Viewer!
-void drawImageViewerUI(void);
+#endif
 
-// Miscs.
+extern char * arg0;
 
-void saveMsg(void);
+#define WORKING_DIR       "/3ds/"
+

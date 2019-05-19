@@ -36,13 +36,6 @@ void drawCredits(void) {
 	volt_end_draw();
 }
 
-void notImplemented(void) {
-	displayMsg("Not implemented Yet.\n");
-	for (int i = 0; i < 60*2; i++) {
-		gspWaitForVBlank();
-	}
-}
-
 void saveMsg(void) {
 	displayMsg("Settings Saved!\n");
 	for (int i = 0; i < 60*2; i++) {
