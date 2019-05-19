@@ -202,13 +202,13 @@ out:
 		ndspExit();
 	}
 
-	delete(info->file);
+	//delete(info->file); // This makes the Crash.
 	linearFree(buffer1);
 	linearFree(buffer2);
 
 	/* Signal Watchdog thread that we've stopped playing */
-	*info->errInfo->error = -1;
-	svcSignalEvent(*info->errInfo->failEvent);
+	//*info->errInfo->error = -1; // This Too.
+	//svcSignalEvent(*info->errInfo->failEvent); // This too.
 
 	threadExit(0);
 	return;
