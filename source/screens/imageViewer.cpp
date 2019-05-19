@@ -30,13 +30,13 @@
 
 
 void drawImageViewerUI(void) {
-	 // Theme Stuff.
-		drawBgTop();
-		drawBarsTop();
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu");
 
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 	volt_end_draw();
 
 }

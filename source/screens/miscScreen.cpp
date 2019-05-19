@@ -30,8 +30,8 @@ void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_texture(CreditsImage, 0, 0);
 	
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }

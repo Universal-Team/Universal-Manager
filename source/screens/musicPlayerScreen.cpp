@@ -43,9 +43,9 @@ std::string currentSong = "";
 std::vector<std::string> nowPlayingList;
 
 void drawMusicPlayerUI(void) {
-	 // Theme Stuff.
-		drawBgTop();
-		drawBarsTop();
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
@@ -114,15 +114,14 @@ void drawMusicPlayerUI(void) {
 	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Now Playing";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 	volt_end_draw();
-
 }
 
 void drawMusicPlay(void) {
-		drawBgTop();
-		drawBarsTop();
+	drawBgTop();
+	drawBarsTop();
 	if(!isPaused() && isPlaying()) {
 		std::string nowPlayingText = "Currently Playing: " + currentSong;
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
@@ -135,8 +134,8 @@ void drawMusicPlay(void) {
 		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE001 : Back");
 	}
 
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
 	volt_end_draw();
 }

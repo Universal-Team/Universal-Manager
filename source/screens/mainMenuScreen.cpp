@@ -27,12 +27,12 @@
 #include "screens/screenCommon.hpp"
 
 void drawMainMenu(void) {
-		drawBgTop();
-		drawBarsTop();
+	drawBgTop();
+	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
 
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_texture(FileManagerIcon, 5, 50);

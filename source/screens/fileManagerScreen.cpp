@@ -27,12 +27,12 @@
 #include "screens/screenCommon.hpp"
 
 void drawFileManagerSubMenu(void) {
-		drawBgTop();
-		drawBarsTop();
+	drawBgTop();
+	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
 
-		drawBgBot();
-		drawBarsBot();
+	drawBgBot();
+	drawBarsBot();
 
 	// Music Player Button.
 	volt_draw_texture(MainMenuButton, 100, 40);
