@@ -77,6 +77,7 @@ void drawMusicPlayerUI(void) {
 			playbackInfo_t playbackInfo;
 			changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			screenMode = musicPlayScreen;
+			aptSetSleepAllowed(false);
 		}
 	} else if (hDown & KEY_B) {
 		chdir("..");
