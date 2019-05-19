@@ -24,37 +24,28 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#ifndef UNIVERSAL_SETTINGS_HPP
+#define UNIVERSAL_SETTINGS_HPP
 
-void drawFileManagerSubMenu(void) {
-	 // Theme Stuff.
-	if (settings.universal.theme == 0) {
-		drawBgTop();
-		drawBarsTopLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgTop();
-		drawBarsTopDark();
-	}
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+#include <string>
+#include "graphic.h"
+#include "voltlib/volt.h"
 
-		if (settings.universal.theme == 0) {
-		drawBgBot();
-		drawBarsBotLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgBot();
-		drawBarsBotDark();
-	}
+typedef struct _Settings_t {
+	struct {
+		int theme;
+	} universal;
+} Settings_t;
+extern Settings_t settings;
 
-	// Music Player Button.
-	volt_draw_texture(MainMenuButton, 100, 40);
-	volt_draw_texture(MusicIcon, 105, 50);
-	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+/**
+ * Load the Universal settings.
+ */
+void LoadUniversalSettings(void);
 
-	// Image Viewer Button.
-	volt_draw_texture(MainMenuButton, 100, 120);
-	volt_draw_texture(ImageIcon, 105, 130);
-	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
-	
-	volt_draw_texture(BackIcon, 288, 208);
-	volt_end_draw();
-}
+/**
+ * Save the Universal settings.
+ */
+void SaveUniversalSettings(void);
+
+#endif /* UNIVERSAL_SETTINGS_HPP */

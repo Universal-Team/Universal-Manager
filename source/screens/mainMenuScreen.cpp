@@ -27,13 +27,23 @@
 #include "screens/screenCommon.hpp"
 
 void drawMainMenu(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, GRAY);
-	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
+	 // Theme Stuff.
+	if (settings.universal.theme == 0) {
+		drawBgTop();
+		drawBarsTopLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgTop();
+		drawBarsTopDark();
+	}
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
 
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, GRAY);
+		if (settings.universal.theme == 0) {
+		drawBgBot();
+		drawBarsBotLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgBot();
+		drawBarsBotDark();
+	}
 
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_texture(FileManagerIcon, 5, 50);
@@ -43,12 +53,12 @@ void drawMainMenu(void) {
 	volt_draw_texture(FTPIcon, 175, 50);
 	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "FTP Client");
 
-	volt_draw_texture(MainMenuButton, 0, 170);
-	volt_draw_texture(UpdaterIcon, 5, 180);
-	volt_draw_text(40, 187, 0.7f, 0.7f, BLACK, "Updater");
+	volt_draw_texture(MainMenuButton, 0, 150);
+	volt_draw_texture(UpdaterIcon, 5, 160);
+	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Updater");
 
-	volt_draw_texture(MainMenuButton, 170, 170);
-	volt_draw_texture(SettingsIcon, 175, 180);
-	volt_draw_text(210, 187, 0.7f, 0.7f, BLACK, "Settings");
+	volt_draw_texture(MainMenuButton, 170, 150);
+	volt_draw_texture(SettingsIcon, 175, 160);
+	volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Settings");
 	volt_end_draw();
 }

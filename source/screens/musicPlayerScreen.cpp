@@ -43,10 +43,14 @@ std::string currentSong = "";
 std::vector<std::string> nowPlayingList;
 
 void drawMusicPlayerUI(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, GRAY);
-	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
-	volt_draw_rectangle(0, 215, 400, 25, DARK_BLUE);
+	 // Theme Stuff.
+	if (settings.universal.theme == 0) {
+		drawBgTop();
+		drawBarsTopLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgTop();
+		drawBarsTopDark();
+	}
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
@@ -115,19 +119,26 @@ void drawMusicPlayerUI(void) {
 	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Now Playing";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, GRAY);
-	volt_draw_rectangle(0, 0, 320, 25, DARK_BLUE);
-	volt_draw_rectangle(0, 215, 320, 25, DARK_BLUE);
+		if (settings.universal.theme == 0) {
+		drawBgBot();
+		drawBarsBotLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgBot();
+		drawBarsBotDark();
+	}
 	volt_end_draw();
 
 }
 
 void drawMusicPlay(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, GRAY);
-	volt_draw_rectangle(0, 0, 400, 25, BLACK);
-	volt_draw_rectangle(0, 215, 400, 25, BLACK);
+	 // Theme Stuff.
+	if (settings.universal.theme == 0) {
+		drawBgTop();
+		drawBarsTopLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgTop();
+		drawBarsTopDark();
+	}
 	if(!isPaused() && isPlaying()) {
 		std::string nowPlayingText = "Currently Playing: " + currentSong;
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
@@ -140,10 +151,13 @@ void drawMusicPlay(void) {
 		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE001 : Back");
 	}
 
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, GRAY);
-	volt_draw_rectangle(0, 0, 320, 25, BLACK);
-	volt_draw_rectangle(0, 215, 320, 25, BLACK);
+		if (settings.universal.theme == 0) {
+		drawBgBot();
+		drawBarsBotLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgBot();
+		drawBarsBotDark();
+	}
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
 	volt_end_draw();
 }

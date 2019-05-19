@@ -26,6 +26,7 @@
 
 #include "graphic.h"
 #include "textures.hpp"
+#include "universal-Settings.hpp"
 
 #define mainScreen 0
 #define fileScreen 1

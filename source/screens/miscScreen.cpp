@@ -30,8 +30,13 @@ void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_texture(CreditsImage, 0, 0);
 	
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, DARK_BLUE);
+		if (settings.universal.theme == 0) {
+		drawBgBot();
+		drawBarsBotLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgBot();
+		drawBarsBotDark();
+	}
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }

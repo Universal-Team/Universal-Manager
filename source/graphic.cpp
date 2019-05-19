@@ -82,6 +82,36 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //	textures[id].allocated = false;
 //}
 
+void drawBarsTopLight(void) {
+	volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
+	volt_draw_rectangle(0, 215, 400, 25, DARK_BLUE);
+}
+
+void drawBarsTopDark(void) {
+	volt_draw_rectangle(0, 0, 400, 25, BLACK);
+	volt_draw_rectangle(0, 215, 400, 25, BLACK);
+}
+
+void drawBgTop(void) {
+	volt_draw_on(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(0, 0, 400, 240, GRAY);
+}
+
+void drawBarsBotLight(void) {
+	volt_draw_rectangle(0, 0, 320, 25, DARK_BLUE);
+	volt_draw_rectangle(0, 215, 320, 25, DARK_BLUE);
+}
+
+void drawBarsBotDark(void) {
+	volt_draw_rectangle(0, 0, 320, 25, BLACK);
+	volt_draw_rectangle(0, 215, 320, 25, BLACK);
+}
+
+void drawBgBot(void) {
+	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
+	volt_draw_rectangle(0, 0, 320, 240, GRAY);
+}
+
 void displayMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 25, 400, 215, BLACK);

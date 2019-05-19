@@ -74,8 +74,8 @@ extern std::vector<std::string> nowPlayingList;
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, creditsScreen},
-    {0, 170, 149, 52, updaterScreen},
-    {170, 170, 149, 52, settingsScreen},
+    {0, 150, 149, 52, updaterScreen},
+    {170, 150, 149, 52, settingsScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
@@ -130,9 +130,15 @@ int main()
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
+	// make folders if they don't exist
+	mkdir("sdmc:/3ds", 0777);	// For DSP dump
+	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
+	mkdir("sdmc:/Universal-Updater/Playlist", 0777); // Playlist Path.
+
 	volt_init();
 
 	volt_set_3D(1);
+	LoadUniversalSettings();
 
 	graphicsInit();
 
@@ -302,6 +308,7 @@ int main()
 	if (dspfirmfound) {
 		ndspExit();
 	}
+	SaveUniversalSettings();
 	hidExit();
 	srvExit();
 	romfsExit();

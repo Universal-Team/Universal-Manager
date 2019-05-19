@@ -27,15 +27,24 @@
 #include "screens/screenCommon.hpp"
 
 void drawUpdaterScreen(void) {
-    // Draw The Main Top Screen.
-    volt_draw_on(GFX_TOP, GFX_LEFT);
-    volt_draw_rectangle(0, 0, 400, 240, GRAY);
-    volt_draw_rectangle(0, 0, 400, 25, DARK_BLUE);
+	 // Theme Stuff.
+	if (settings.universal.theme == 0) {
+		drawBgTop();
+		drawBarsTopLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgTop();
+		drawBarsTopDark();
+	}
     volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater");
     
     // Draw the Main Bottom Screen Background.
-    volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-    volt_draw_rectangle(0, 0, 320, 240, GRAY);
+		if (settings.universal.theme == 0) {
+		drawBgBot();
+		drawBarsBotLight();
+	} else if (settings.universal.theme == 1) {
+		drawBgBot();
+		drawBarsBotDark();
+	}
 
     // TWL Menu Buttons.
     volt_draw_texture(UpdaterButton, 129, 48);

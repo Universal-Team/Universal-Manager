@@ -24,37 +24,32 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#include "universal-Settings.hpp"
+#include "inifile.h"
 
-void drawFileManagerSubMenu(void) {
-	 // Theme Stuff.
-	if (settings.universal.theme == 0) {
-		drawBgTop();
-		drawBarsTopLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgTop();
-		drawBarsTopDark();
-	}
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+#include <unistd.h>
+#include <string>
+using std::string;
+using std::wstring;
 
-		if (settings.universal.theme == 0) {
-		drawBgBot();
-		drawBarsBotLight();
-	} else if (settings.universal.theme == 1) {
-		drawBgBot();
-		drawBarsBotDark();
-	}
+#include <3ds.h>
 
-	// Music Player Button.
-	volt_draw_texture(MainMenuButton, 100, 40);
-	volt_draw_texture(MusicIcon, 105, 50);
-	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
-	// Image Viewer Button.
-	volt_draw_texture(MainMenuButton, 100, 120);
-	volt_draw_texture(ImageIcon, 105, 130);
-	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
+// Settings
+Settings_t settings;
+
+void LoadUniversalSettings(void) {
+	settings.universal.theme = settingsini.GetInt("UI", "THEME", 0); // Layouts!
 	
-	volt_draw_texture(BackIcon, 288, 208);
-	volt_end_draw();
+
 }
+
+/**
+ * Save settings.
+ */
+void SaveUniversalSettings(void) {
+	settingsini.SetInt("UI", "THEME", settings.universal.theme);
+	settingsini.SaveIniFile("sdmc:/Universal-Updater/Settings.ini");
+}
+

@@ -44,5 +44,18 @@ void volt_draw_texture_part_scale_blend(size_t id, int x, int y, int xbegin, int
 void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, flipType fliptype, u32 color);
 void displayMsg(const char* text);
 void graphicsInit(void);
+
+void drawBarsTopLight(void);
+
+void drawBarsTopDark(void);
+
+void drawBgTop(void);
+
+void drawBarsBotLight(void);
+
+void drawBarsBotDark(void);
+
+void drawBgBot(void);
+
 //void volt_free_texture(size_t id);
 #endif // GRAPHIC_H
