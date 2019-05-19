@@ -281,6 +281,9 @@ int main()
 			case settingsScreen:
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
+			} else if (hDown & KEY_X) {
+				settings.universal.theme++;
+				if (settings.universal.theme > 1) settings.universal.theme = 0;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
 						if (touch.px >= settingsScreenButtonPos[i].x && touch.px <= (settingsScreenButtonPos[i].x + settingsScreenButtonPos[i].w) && touch.py >= settingsScreenButtonPos[i].y && touch.py <= (settingsScreenButtonPos[i].y + settingsScreenButtonPos[i].h)) {
