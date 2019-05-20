@@ -34,17 +34,12 @@
  * @return: std::string with user input
  */
 
-std::string keyboardInput(const wchar_t* hint) {
+std::string keyboardInput(const char* hint) {
     SwkbdState keyboardState;
 	char input[64];
-	char buffer[64];
-	
-	//wchart_t* to char*
-	wcstombs (buffer, hint, sizeof(buffer) );
-	buffer[63]='\0';
 	
     swkbdInit(&keyboardState, SWKBD_TYPE_QWERTY, 2, sizeof(input));
-    swkbdSetHintText(&keyboardState, buffer);
+    swkbdSetHintText(&keyboardState, hint);
 	swkbdSetFeatures(&keyboardState, SWKBD_DEFAULT_QWERTY);
 
     swkbdInputText(&keyboardState, input, sizeof(input));

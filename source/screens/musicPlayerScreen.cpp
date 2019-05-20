@@ -25,10 +25,12 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include <fstream>
 #include <unistd.h>
 #include <vector>
 
 #include "fileBrowse.h"
+#include "keyboard.h"
 
 extern "C" {
 	#include "music/playback.h"
@@ -40,7 +42,6 @@ bool dirChanged = true;
 std::vector<DirEntry> dirContents;
 std::string scanDir;
 std::string currentSong = "";
-std::vector<std::string> nowPlayingList;
 
 void drawMusicList(void) {
 	// Theme Stuff.
@@ -88,6 +89,7 @@ void drawMusicList(void) {
 	} else if (hDown & KEY_Y) {
 		dirChanged = true;
 		screenMode = musicPlaylistScreen;
+		keyRepeatDelay = 2;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -141,8 +143,9 @@ void drawMusicPlayer(void) {
 	volt_end_draw();
 }
 
-int selectedPlst = 0;
+uint selectedPlst = 0;
 std::vector<DirEntry> plsts;
+std::vector<std::string> nowPlayingList;
 
 void drawMusicPlaylist(void) {
 	// Theme Stuff.
@@ -184,12 +187,39 @@ void drawMusicPlaylist(void) {
 }
 
 void musicPlaylistLogic(u32 hDown, u32 hHeld) {
+	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
 		if(selectedPlst == 0) {
 		nowPlayingList.push_back(dirContents[selectedFile].name);
+		} else {
+			char path[PATH_MAX];
+			getcwd(path, PATH_MAX);
+			FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "a");
+			fputs((path+dirContents[selectedFile].name+"\n").c_str(), plst);
+			fclose(plst);
 		}
 		screenMode = musicListScreen;
 	} else if (hDown & KEY_B) {
 		screenMode = musicListScreen;
+	} else if (hDown & KEY_Y && !keyRepeatDelay) { // !keyRepeat delay so it doesn't instantly make a new plst
+		std::string newPlaylist = keyboardInput("Enter new playlist name:");
+		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+newPlaylist+".plst").c_str(), "w");
+		fclose(plst);
+		dirChanged = true;
+	} else if (hDown & KEY_X) {
+		if (selectedPlst != 0) {
+		remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
+		dirChanged = true;
+		}
+	} else if (hHeld & KEY_UP) {
+		if (selectedPlst > 0 && !keyRepeatDelay) {
+			selectedPlst--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedPlst < plsts.size()-1) {
+			selectedPlst++;
+			keyRepeatDelay = 3;
+		}
 	}
 }
