@@ -5,7 +5,7 @@ void drawSettingsScreen(void) {
 	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Settings");
 
-	volt_draw_text(50, 90, 0.72f, 0.72f, WHITE, "Press \uE003 to change the Green RGB.\nPress \uE002 to change the Red RGB.\nPress \uE000 to change the Blue RGB.\n and press R to save!");
+	volt_draw_text(50, 90, 0.72f, 0.72f, WHITE, "Press X to go to the UI Settings.");
 
 	drawBgBot();
 	drawBarsBot();
