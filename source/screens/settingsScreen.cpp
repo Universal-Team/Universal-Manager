@@ -13,8 +13,8 @@ void drawSettingsScreen(void) {
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Credits");
 
-	//volt_draw_texture(MainMenuButton, 170, 40);
-	//volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "Theme"); // To do.
+	volt_draw_texture(MainMenuButton, 170, 40);
+	volt_draw_text(200, 57, 0.7f, 0.7f, BLACK, "UI Settings");
 
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();

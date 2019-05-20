@@ -93,6 +93,11 @@ ButtonPos fileScreenButtonPos[] = {
 ButtonPos settingsScreenButtonPos[] = {
     {0, 40, 149, 52, creditsScreen},
     {288, 208, 32, 32, mainScreen},
+	{170, 40, 149, 52, uiSettingsScreen},
+};
+
+ButtonPos uisettingsScreenButtonPos[] = {
+    {288, 208, 32, 32, settingsScreen},
 };
 
 ButtonPos updaterScreenButtonPos[] = {
@@ -373,6 +378,12 @@ int main()
 				saveMsg();
 				} else if (hDown & KEY_B) {
 					screenMode = settingsScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(uisettingsScreenButtonPos)/sizeof(uisettingsScreenButtonPos[0]));i++) {
+						if (touching(touch, uisettingsScreenButtonPos[i])) {
+							screenMode = uisettingsScreenButtonPos[i].link;
+						}
+					}
 				}
 				break;
 			}
