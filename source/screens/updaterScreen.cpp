@@ -49,6 +49,7 @@ ButtonPos downloadButtonPos[] = {
 	{140, 98, 87, 33, -1},
 	{229, 58, 87, 33, -1},
 	{140, 58, 87, 33, -1},
+	{288, 208, 32, 32, mainScreen},
 };
 
 
@@ -96,6 +97,8 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 			updateTWiLight(true);
 		} else if (touching(touch, downloadButtonPos[3])) {
 			updateTWiLight(false);
+		} else if (touching(touch, downloadButtonPos[4])) {
+				screenMode = downloadButtonPos[4].link;
+		}
 	}
-}
 }

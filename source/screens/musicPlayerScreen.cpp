@@ -189,7 +189,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
-		if(strcmp(path, "sdmc:/") == 0) {
+		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
 			screenMode = musicMainScreen;
 		} else {
 		chdir("..");
