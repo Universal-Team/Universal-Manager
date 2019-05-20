@@ -40,6 +40,11 @@
 #define settingsScreen			9
 #define imageScreen				10
 
+struct Playlist {
+    std::string name;
+    int position;
+};
+
 extern int screenMode;
 
 // Main Menu Screen.

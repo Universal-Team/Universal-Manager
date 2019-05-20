@@ -25,6 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
@@ -58,7 +59,7 @@ bool firstSong = true;
 int locInPlaylist = 0;
 uint selectedPlst = 0;
 std::vector<DirEntry> plsts;
-std::vector<std::string> nowPlayingList;
+std::vector<Playlist> nowPlayingList;
 bool decForRepeat2 = false;
 
 extern bool touching(touchPosition touch, ButtonPos button);
@@ -164,7 +165,13 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentSong) {
 				nowPlayingList.clear();
-				currentSong = dirContents[selectedFile].name;
+				char path[PATH_MAX];
+				getcwd(path, PATH_MAX);
+				currentSong = path + dirContents[selectedFile].name;
+				Playlist song;
+				song.name = currentSong;
+				song.position = nowPlayingList.size() + 1;
+				nowPlayingList.push_back(song);
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
@@ -220,12 +227,20 @@ void drawMusicPlayer(void) {
 	drawBgBot();
 	drawBarsBot();
 	char str[64];
-	snprintf(str, sizeof(str), "Repeat: %i, Shuffle: %i, loc: %i", musicRepeat, musicShuffle, locInPlaylist);
+	snprintf(str, sizeof(str), "Repeat: %i, Shuffle: %i, loc: %i, pos: %i", musicRepeat, musicShuffle, locInPlaylist, nowPlayingList[locInPlaylist].position);
 	volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, str);
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos.x, playerButtonPos.y);
 	volt_end_draw();
 }
 
+bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
+	if(lhs.position < rhs.position)	return true;
+	else	return false;
+}
+
+bool playlistShufflePredicate(const Playlist &lhs, const Playlist &rhs) {
+	return rand() % 2;
+}
 void musicPlayerLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_A) {
 		togglePlayback();
@@ -243,7 +258,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		} else {
 			locInPlaylist = nowPlayingList.size() - 1;
 		}
-		currentSong = nowPlayingList[locInPlaylist];
+		currentSong = nowPlayingList[locInPlaylist].name;
 		playbackInfo_t playbackInfo;
 		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_RIGHT) {
@@ -252,7 +267,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		} else {
 			locInPlaylist = 0;
 		}
-		currentSong = nowPlayingList[locInPlaylist];
+		currentSong = nowPlayingList[locInPlaylist].name;
 		playbackInfo_t playbackInfo;
 		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_SELECT) {
@@ -263,6 +278,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		}
 	} else if (hDown & KEY_START) {
 		musicShuffle = !musicShuffle;
+		std::sort(nowPlayingList.begin(), nowPlayingList.end(), musicShuffle ?  playlistShufflePredicate : playlistSortPredicate);
 	}
 }
 
@@ -309,7 +325,10 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
 		if(selectedPlst == 0) {
-		nowPlayingList.push_back(dirContents[selectedFile].name);
+			Playlist playlist;
+			playlist.name = dirContents[selectedFile].name;
+			playlist.position = nowPlayingList.size() + 1;
+			nowPlayingList.push_back(playlist);
 		} else {
 			char path[PATH_MAX];
 			getcwd(path, PATH_MAX);
@@ -382,8 +401,10 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	if(hDown & KEY_A) {
 		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
 		if(plst) {
-			std::string song;
-			while(std::getline(plst, song)) {
+			Playlist song;
+			int i = nowPlayingList.size() + 1;
+			while(std::getline(plst, song.name)) {
+				song.position = i++;
 				nowPlayingList.push_back(song);
 			}
 		}

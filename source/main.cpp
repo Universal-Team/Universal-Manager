@@ -71,7 +71,7 @@ bool dspfirmfound = false;
 static touchPosition touch;
 
 extern std::string currentSong;
-extern std::vector<std::string> nowPlayingList;
+extern std::vector<Playlist> nowPlayingList;
 extern int locInPlaylist;
 extern int musicRepeat;
 extern bool musicShuffle;
@@ -362,7 +362,7 @@ int main()
 				locInPlaylist++;
 			}
 			firstSong = false;
-			currentSong = nowPlayingList[locInPlaylist];
+			currentSong = nowPlayingList[locInPlaylist].name;
 			playbackInfo_t playbackInfo;
 			changeFile(currentSong.c_str(), &playbackInfo);
 		} else if (!isPlaying() && currentSong != "") {
