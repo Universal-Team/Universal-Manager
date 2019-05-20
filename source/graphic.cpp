@@ -104,8 +104,11 @@ void drawBgBot(void) {
 
 void displayMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 25, 400, 215, BLACK);
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, text);
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.bars, text);
+	drawBgBot();
+	drawBarsBot();
 	volt_end_draw();
 }
 

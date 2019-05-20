@@ -51,6 +51,12 @@ std::vector<std::string> _topText;
 std::string jsonName;
 
 extern bool downloadNightlies;
+extern int filesExtracted;
+extern std::string extractingFile;
+
+char progressBarMsg[64] = "";
+bool showProgressBar = false;
+bool progressBarType = 0; // 0 = Download | 1 = Extract
 
 // following function is from 
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
@@ -638,27 +644,51 @@ void drawMessageText(int position, bool showExitText)
 }
 }
 
+void displayProgressBar() {
+	char str[256];
+	while(showProgressBar) {
+		snprintf(str, sizeof(str), "%s\n%s%s\n%i %s", progressBarMsg, (!progressBarType ? "" : "\nCurrently extracting:\n"), (!progressBarType ? "" : extractingFile.c_str()), (!progressBarType ? (int)round(result_written/1000) : filesExtracted), (!progressBarType ? "KB downloaded." : (filesExtracted == 1 ? "file extracted." :"files extracted.")));
+		displayMsg(str);
+		gspWaitForVBlank();
+	}
+}
+
 void updateBootstrap(bool nightly) {
 	if(nightly) {
-		displayMsg("Downloading nds-bootstrap...\n(Nightly)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Nightly)");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/nds-bootstrap.7z?raw=true", "/nds-bootstrap-nightly.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Extracting nds-bootstrap...\n(Nightly)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting nds-bootstrap...\n(Nightly)");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/nds-bootstrap-nightly.7z", "nds-bootstrap/", "/_nds/");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-nightly.7z");
 	} else {	
 		displayMsg("Downloading nds-bootstrap...\n(Release)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/ahezard/nds-bootstrap", "nds-bootstrap\\.zip", "/nds-bootstrap-release.zip") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Extracting nds-bootstrap...\n(Release)");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting nds-bootstrap...\n(Release)");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/nds-bootstrap-release.zip", "/", "/_nds/");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-release.zip");
 	}
@@ -668,17 +698,24 @@ void updateBootstrap(bool nightly) {
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {
-		displayMsg("Now Downloading TWiLightMenu++\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg),"Now Downloading TWiLightMenu++\n"
 						"(Nightly)\n\nThis may take a while.");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Now extracting.\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
 						"(Nightly)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
+		showProgressBar = false;
 
 		displayMsg("Now installing the CIAs.\n"
 						"(Nightly)");
@@ -688,20 +725,28 @@ void updateTWiLight(bool nightly) {
 		deleteFile("sdmc:/TWiLightMenu-nightly.7z");
 		deleteFile("sdmc:/TWiLight Menu.cia");
 		deleteFile("sdmc:/TWiLight Menu - Game booter.cia");
-
 	} else {
 		displayMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading TWiLightMenu++\n"
+						"(Release)\n\nThis may take a while.");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/DS-Homebrew/TWiLightMenu", "TWiLightMenu\\.7z", "/TWiLightMenu-release.7z") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Now extracting.\n"
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
 						"(Release)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/TWiLightMenu-release.7z", "_nds/", "/_nds/");
 		extractArchive("/TWiLightMenu-release.7z", "3DS - CFW users/", "/");
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
+		showProgressBar = false;
 
 		displayMsg("Now installing the CIAs.\n"
 						"(Release)");
