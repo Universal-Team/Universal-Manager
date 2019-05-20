@@ -49,6 +49,11 @@ static size_t result_sz = 0;
 static size_t result_written = 0;
 std::vector<std::string> _topText;
 std::string jsonName;
+CIniFile versionsFile("sdmc:/Universal-Manager/currentVersions.ini");
+std::string latestMenuReleaseCache = "";
+std::string latestMenuNightlyCache = "";
+std::string latestBootstrapReleaseCache = "";
+std::string latestBootstrapNightlyCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -653,6 +658,69 @@ void displayProgressBar() {
 	}
 }
 
+std::string latestMenuRelease(void) {
+	if (latestMenuReleaseCache == "")
+		latestMenuReleaseCache = getLatestRelease("DS-Homebrew/TWiLightMenu", "tag_name");
+	return latestMenuReleaseCache;
+}
+
+std::string latestMenuNightly(void) {
+	if (latestMenuNightlyCache == "")
+		latestMenuNightlyCache = getLatestCommit("DS-Homebrew/TWiLightMenu", "sha").substr(0,7);
+	return latestMenuNightlyCache;
+}
+
+std::string latestBootstrapRelease(void) {
+	if (latestBootstrapReleaseCache == "")
+		latestBootstrapReleaseCache = getLatestRelease("ahezard/nds-bootstrap", "tag_name");
+	return latestBootstrapReleaseCache;
+}
+
+std::string latestBootstrapNightly(void) {
+	if (latestBootstrapNightlyCache == "")
+		latestBootstrapNightlyCache = getLatestCommit("ahezard/nds-bootstrap", "sha").substr(0,7);
+	return latestBootstrapNightlyCache;
+}
+
+void saveUpdateData(void) {
+	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
+}
+
+std::string getInstalledVersion(std::string component) {
+	return versionsFile.GetString(component, "VERSION", "");
+}
+
+std::string getInstalledChannel(std::string component) {
+	return versionsFile.GetString(component, "CHANNEL", "");
+}
+
+void setInstalledVersion(std::string component, std::string version) {
+	versionsFile.SetString(component, "VERSION", version);
+}
+
+void setInstalledChannel(std::string component, std::string channel) {
+	versionsFile.SetString(component, "CHANNEL", channel);
+}
+
+void checkForUpdates() {
+
+	std::string menuChannel = getInstalledChannel("TWILIGHTMENU");
+	std::string menuVersion = getInstalledVersion("TWILIGHTMENU");
+	std::string bootstrapRelease = getInstalledVersion("NDS-BOOTSTRAP-RELEASE");
+	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
+
+	/*if (menuChannel == "release")
+		updateAvailable[0] = menuVersion != latestMenuRelease();
+	else if (menuChannel == "nightly")
+		updateAvailable[1] = menuVersion != latestMenuNightly();
+	else
+		updateAvailable[0] = updateAvailable[1] = true;
+
+	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
+	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();		// For later.
+*/}
+
+
 void updateBootstrap(bool nightly) {
 	if(nightly) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Nightly)");
@@ -672,6 +740,10 @@ void updateBootstrap(bool nightly) {
 		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-nightly.7z");
+
+		setInstalledVersion("NDS-BOOTSTRAP-NIGHTLY", latestBootstrapNightly());
+		saveUpdateData();
+		//updateAvailable[3] = false; // For Later.
 	} else {	
 		displayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
@@ -691,6 +763,10 @@ void updateBootstrap(bool nightly) {
 		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-release.zip");
+
+		setInstalledVersion("NDS-BOOTSTRAP-RELEASE", latestBootstrapRelease());
+		saveUpdateData();
+		//updateAvailable[2] = false; // For Later.
 	}
 	doneMsg();
 }
@@ -725,6 +801,11 @@ void updateTWiLight(bool nightly) {
 		deleteFile("sdmc:/TWiLightMenu-nightly.7z");
 		deleteFile("sdmc:/TWiLight Menu.cia");
 		deleteFile("sdmc:/TWiLight Menu - Game booter.cia");
+
+		setInstalledChannel("TWILIGHTMENU", "nightly");
+		setInstalledVersion("TWILIGHTMENU", latestMenuNightly());
+		saveUpdateData();
+		//updateAvailable[1] = false; // For Later.
 	} else {
 		displayMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
@@ -756,6 +837,11 @@ void updateTWiLight(bool nightly) {
 		deleteFile("sdmc:/TWiLightMenu-release.7z");
 		deleteFile("sdmc:/TWiLight Menu.cia");
 		deleteFile("sdmc:/TWiLight Menu - Game booter.cia");
+
+		setInstalledChannel("TWILIGHTMENU", "release");
+		setInstalledVersion("TWILIGHTMENU", latestMenuRelease());
+		saveUpdateData();
+		//updateAvailable[0] = false; // For Later.
 	}
 	doneMsg();
 }
