@@ -72,6 +72,10 @@ static touchPosition touch;
 
 extern std::string currentSong;
 extern std::vector<std::string> nowPlayingList;
+extern int locInPlaylist;
+extern int musicRepeat;
+extern bool musicShuffle;
+extern bool firstSong;
 
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
@@ -352,9 +356,13 @@ int main()
 			}
 		}
 
-		if(!isPlaying() && nowPlayingList.size()) {
-			currentSong = nowPlayingList[0];
-			nowPlayingList.erase(nowPlayingList.begin());
+		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+			if (musicRepeat != 2 && !firstSong) {
+				locInPlaylist++;
+			}
+			firstSong = false;
+			currentSong = nowPlayingList[locInPlaylist];
 			playbackInfo_t playbackInfo;
 			changeFile(currentSong.c_str(), &playbackInfo);
 		} else if (!isPlaying() && currentSong != "") {

@@ -50,11 +50,16 @@ bool dirChanged = true;
 std::vector<DirEntry> dirContents;
 std::string scanDir;
 std::string currentSong = "";
+int musicRepeat = 0;
+bool musicShuffle = 0;
 
 int musicPlayerReturn = musicMainScreen;
+bool firstSong = true;
+int locInPlaylist = 0;
 uint selectedPlst = 0;
 std::vector<DirEntry> plsts;
 std::vector<std::string> nowPlayingList;
+bool decForRepeat2 = false;
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
@@ -214,6 +219,9 @@ void drawMusicPlayer(void) {
 
 	drawBgBot();
 	drawBarsBot();
+	char str[64];
+	snprintf(str, sizeof(str), "Repeat: %i, Shuffle: %i, loc: %i", musicRepeat, musicShuffle, locInPlaylist);
+	volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, str);
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos.x, playerButtonPos.y);
 	volt_end_draw();
 }
@@ -229,6 +237,42 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		if(touching(touch, playerButtonPos)) {
 			togglePlayback();
 		}
+	} else if (hDown & KEY_LEFT) {
+		if(locInPlaylist > 0) {
+			locInPlaylist--;
+		} else {
+			locInPlaylist = nowPlayingList.size() - 1;
+		}
+		currentSong = nowPlayingList[locInPlaylist];
+		playbackInfo_t playbackInfo;
+		changeFile(currentSong.c_str(), &playbackInfo);
+	} else if (hDown & KEY_RIGHT) {
+		if(locInPlaylist < (int)nowPlayingList.size()-1) {
+			locInPlaylist++;
+		} else {
+			locInPlaylist = 0;
+		}
+		currentSong = nowPlayingList[locInPlaylist];
+		playbackInfo_t playbackInfo;
+		changeFile(currentSong.c_str(), &playbackInfo);
+	} else if (hDown & KEY_SELECT) {
+		switch(musicRepeat) {
+			case 1:
+				// if(locInPlaylist > 0) {
+				// 	locInPlaylist--;
+				// 	decForRepeat2 = true;
+				// }
+			case 0:
+			default:
+				musicRepeat++;
+				break;
+			case 2:
+				// if(decForRepeat2)	locInPlaylist++;
+				musicRepeat = 0;
+				break;	
+		}
+	} else if (hDown & KEY_START) {
+		musicShuffle = !musicShuffle;
 	}
 }
 
