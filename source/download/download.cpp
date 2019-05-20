@@ -759,3 +759,11 @@ void updateTWiLight(bool nightly) {
 	}
 	doneMsg();
 }
+
+void updateUniversalManager(bool nightly) {
+	if(nightly) {
+		notImplemented();
+	} else {
+		notImplemented();
+}
+}

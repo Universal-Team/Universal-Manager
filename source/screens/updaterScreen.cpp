@@ -49,6 +49,8 @@ ButtonPos downloadButtonPos[] = {
 	{129, 88, 87, 33, -1},
 	{220, 48, 87, 33, -1},
 	{129, 48, 87, 33, -1},
+	{220, 128, 87, 33, -1},
+	{129, 128, 87, 33, -1},
 	{288, 208, 32, 32, mainScreen},
 };
 
@@ -77,6 +79,13 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
 
+// Universal-Manager Buttons.
+
+	volt_draw_texture(UpdaterButton, 129, 128);
+	volt_draw_texture(UpdaterButton, 220, 128);
+	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "UNIV-Manager");
+	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
+	volt_draw_text(229, 138, 0.7f, 0.7f, BLACK, "Nightly");
 
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
@@ -98,6 +107,10 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, downloadButtonPos[3])) {
 			updateTWiLight(false);
 		} else if (touching(touch, downloadButtonPos[4])) {
+			updateUniversalManager(true);
+		} else if (touching(touch, downloadButtonPos[5])) {
+			updateUniversalManager(false);
+		} else if (touching(touch, downloadButtonPos[6])) {
 				screenMode = downloadButtonPos[4].link;
 		}
 	}

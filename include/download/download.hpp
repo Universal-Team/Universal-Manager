@@ -111,3 +111,8 @@ void updateBootstrap(bool nightly);
  * Update TWiLight Menu++ to the latest build.
  */
 void updateTWiLight(bool nightly);
+
+/**
+ * Update Universal-Manager to the latest build.
+ */
+void updateUniversalManager(bool nightly);
