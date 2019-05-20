@@ -92,6 +92,10 @@ void drawBgTop(void) {
 	volt_draw_rectangle(0, 0, 400, 240, settings.universal.bg);
 }
 
+void displayTime(void) {
+	volt_draw_text(4, 3, 0.7f, 0.7f, WHITE, getTime().c_str());
+}
+
 void drawBarsBot(void) {
 	volt_draw_rectangle(0, 0, 320, 25, settings.universal.bars);
 	volt_draw_rectangle(0, 215, 320, 25, settings.universal.bars);

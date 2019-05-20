@@ -24,31 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#ifndef DATETIME_H
+#define DATETIME_H
 
-void drawMainMenu(void) {
-	drawBgTop();
-	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Universal-Manager");
-	displayTime();
+// Include Paths.
+#include "common.hpp"
 
-	drawBgBot();
-	drawBarsBot();
+std::string getTime(void);
+std::string getPathDateTime(void);
 
-	volt_draw_texture(MainMenuButton, 0, 40);
-	volt_draw_texture(FileManagerIcon, 5, 50);
-	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "FileManager");
-
-	volt_draw_texture(MainMenuButton, 170, 40);
-	volt_draw_texture(FTPIcon, 175, 50);
-	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "FTP Client");
-
-	volt_draw_texture(MainMenuButton, 0, 150);
-	volt_draw_texture(UpdaterIcon, 5, 160);
-	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Updater");
-
-	volt_draw_texture(MainMenuButton, 170, 150);
-	volt_draw_texture(SettingsIcon, 175, 160);
-	volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Settings");
-	volt_end_draw();
-}
+#endif

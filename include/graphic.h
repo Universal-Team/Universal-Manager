@@ -32,6 +32,7 @@
 #include "colors.hpp"
 #include "textures.hpp"
 #include "universal-Settings.hpp"
+#include "datetime.h"
 
 // Text Sizes.
 
@@ -49,6 +50,8 @@ void graphicsInit(void);
 void drawBarsTop(void);
 
 void drawBgTop(void);
+
+void displayTime(void);
 
 void drawBarsBot(void);
 

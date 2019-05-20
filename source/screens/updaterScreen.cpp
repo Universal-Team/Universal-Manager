@@ -57,7 +57,7 @@ void drawUpdaterScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater");
-	volt_draw_text(1, 90, 0.72f, 0.72f, WHITE, "Press \uE002 to download NDS-Bootstrap Nightly.");
+	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
