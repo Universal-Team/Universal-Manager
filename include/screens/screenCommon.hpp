@@ -28,15 +28,17 @@
 #include "textures.hpp"
 #include "universal-Settings.hpp"
 
-#define mainScreen 0
-#define fileScreen 1
-#define creditsScreen 2
-#define updaterScreen 3
-#define musicListScreen 4
-#define musicPlayerScreen 5
-#define musicPlaylistScreen 6
-#define settingsScreen 7
-#define imageScreen 8
+#define mainScreen				0
+#define fileScreen				1
+#define creditsScreen			2
+#define updaterScreen			3
+#define musicMainScreen			4
+#define musicListScreen			5
+#define musicPlayerScreen		6
+#define musicPlaylistAddScreen	7
+#define musicPlaylistPlayScreen	8
+#define settingsScreen			9
+#define imageScreen				10
 
 extern int screenMode;
 
@@ -51,11 +53,16 @@ void drawSettingsScreen(void);
 void drawCredits(void);
 
 // Music Player Screen.
+void drawMusicMain(void);
+void musicMainLogic(u32 hDown, touchPosition touch);
+void musicListLogic(u32 hDown, u32 hHeld);
 void drawMusicList(void);
+void musicPlayerLogic(u32 hDown);
 void drawMusicPlayer(void);
-void drawMusicPlaylist(void);
-void drawMusicPlaylist(void);
-void musicPlaylistLogic(u32 hDown, u32 hHeld);
+void drawMusicPlaylistAdd(void);
+void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
+void drawMusicPlaylistPlay(void);
+void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
 void drawUpdaterScreen(void);

@@ -81,7 +81,7 @@ ButtonPos mainScreenButtonPos[] = {
 };
 
 ButtonPos fileScreenButtonPos[] = {
-    {100, 40, 149, 52, musicListScreen},
+    {100, 40, 149, 52, musicMainScreen},
 	{100, 120, 149, 52, imageScreen},
     {288, 208, 32, 32, mainScreen},
 };
@@ -220,14 +220,20 @@ int main()
 			case updaterScreen:
 				drawUpdaterScreen();		// Draws the Updater screen
 				break;
+			case musicMainScreen:
+				drawMusicMain();			// Draws the Music Player song selection screen
+				break;
 			case musicListScreen:
 				drawMusicList();			// Draws the Music Player song selection screen
 				break;
 			case musicPlayerScreen:
 				drawMusicPlayer();			// Draws the Music Player playback screen
 				break;
-			case musicPlaylistScreen:
-				drawMusicPlaylist();		// Draws the Music Player playlist creation screen
+			case musicPlaylistAddScreen:
+				drawMusicPlaylistAdd();		// Draws the Music Player playlist creation screen
+				break;
+			case musicPlaylistPlayScreen:
+				drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
 				break;
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
@@ -283,30 +289,28 @@ int main()
 					screenMode = mainScreen;
 				} else if (hDown & KEY_X) {
 					updateBootstrap(true);			// Testing Purpose.
-					} else if (hDown & KEY_TOUCH) {
+				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
 						if (touch.px >= updaterScreenButtonPos[i].x && touch.px <= (updaterScreenButtonPos[i].x + updaterScreenButtonPos[i].w) && touch.py >= updaterScreenButtonPos[i].y && touch.py <= (updaterScreenButtonPos[i].y + updaterScreenButtonPos[i].h)) {
 							screenMode = updaterScreenButtonPos[i].link;
 						}
 					}
-								}
+				}
+				break;
+			case musicMainScreen:
+				musicMainLogic(hDown, touch);
 				break;
 			case musicListScreen:
-				if (hDown & KEY_X) {
-					screenMode = fileScreen;
-				}
+				musicListLogic(hDown, hHeld);
 				break;
 			case musicPlayerScreen:
-				if (hDown & KEY_A) {
-					togglePlayback();
-				} else if (hDown & KEY_X) {
-					stopPlayback();
-				} else if (hDown & KEY_B) {
-					screenMode = musicListScreen;
-				}
+				musicPlayerLogic(hDown);
 				break;
-			case musicPlaylistScreen:
-				musicPlaylistLogic(hDown, hHeld);
+			case musicPlaylistAddScreen:
+				musicPlaylistAddLogic(hDown, hHeld);
+				break;
+			case musicPlaylistPlayScreen:
+				musicPlaylistPlayLogic(hDown, hHeld);
 				break;
 			case settingsScreen:
 				int red;

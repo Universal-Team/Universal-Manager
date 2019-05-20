@@ -46,7 +46,9 @@ extern size_t MusicIcon;
 extern size_t ImageIcon;
 
 // Music Player Stuff.
+extern size_t PlaylistIcon;
 extern size_t PlayIcon;
+extern size_t PlayIconSmall;
 extern size_t PauseIcon;
 
 // SD Image!

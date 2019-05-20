@@ -42,6 +42,65 @@ bool dirChanged = true;
 std::vector<DirEntry> dirContents;
 std::string scanDir;
 std::string currentSong = "";
+int musicPlayerReturn = musicMainScreen;
+uint selectedPlst = 0;
+std::vector<DirEntry> plsts;
+std::vector<std::string> nowPlayingList;
+
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+
+ButtonPos mainButtonPos[] = {
+    {0, 40, 149, 52, musicListScreen},
+    {170, 40, 149, 52, musicPlayerScreen},
+    {0, 150, 149, 52, musicPlaylistPlayScreen},
+};
+
+void drawMusicMain() {
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	drawBgBot();
+	drawBarsBot();
+
+	volt_draw_texture(MainMenuButton, 0, 40);
+	volt_draw_texture(MusicIcon, 5, 50);
+	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Songs");
+
+	volt_draw_texture(MainMenuButton, 170, 40);
+	volt_draw_texture(PlayIconSmall, 175, 50);
+	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "Now playing");
+
+	volt_draw_texture(MainMenuButton, 0, 150);
+	volt_draw_texture(PlaylistIcon, 1, 156);
+	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
+
+	volt_end_draw();
+}
+
+void musicMainLogic(u32 hDown, touchPosition touch) {
+	if(hDown & KEY_B) {
+		screenMode = fileScreen;
+	} else if(hDown & KEY_TOUCH) {
+		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
+			if (touch.px >= mainButtonPos[i].x && touch.px <= (mainButtonPos[i].x + mainButtonPos[i].w) && touch.py >= mainButtonPos[i].y && touch.py <= (mainButtonPos[i].y + mainButtonPos[i].h)) {
+				screenMode = mainButtonPos[i].link;
+				if(mainButtonPos[i].link == musicPlayerScreen) {
+					musicPlayerReturn = musicMainScreen;
+				} else if(mainButtonPos[i].link == musicPlaylistPlayScreen) {
+					selectedPlst = 0;
+					dirChanged = true;
+				}
+			}
+		}
+	}
+}
 
 void drawMusicList(void) {
 	// Theme Stuff.
@@ -64,43 +123,6 @@ void drawMusicList(void) {
 		}
 		dirChanged = false;
 	}
-	const u32 hDown = hidKeysDown();
-	const u32 hHeld = hidKeysHeld();
-	if (keyRepeatDelay)	keyRepeatDelay--;
-	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
-		} else {
-			if(dirContents[selectedFile].name != currentSong) {
-				currentSong = dirContents[selectedFile].name;
-				playbackInfo_t playbackInfo;
-				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
-			}
-			screenMode = musicPlayerScreen;
-			aptSetSleepAllowed(false);
-			togglePlayback(); // Since it would otherwise pause it in main.cpp
-		}
-	} else if (hDown & KEY_B) {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
-	} else if (hDown & KEY_Y) {
-		dirChanged = true;
-		screenMode = musicPlaylistScreen;
-		keyRepeatDelay = 2;
-	} else if (hHeld & KEY_UP) {
-		if (selectedFile > 0 && !keyRepeatDelay) {
-			selectedFile--;
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedFile < dirContents.size()-1) {
-			selectedFile++;
-			keyRepeatDelay = 3;
-		}
-	}
 	std::string dirs;
 	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
 		if (i == selectedFile) {
@@ -114,12 +136,60 @@ void drawMusicList(void) {
 	}
 	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit";
 	else if(dirContents[selectedFile].name == currentSong)	dirs += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Now Playing";
-	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Now Playing";
+	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
 	drawBarsBot();
 	volt_end_draw();
+}
+
+void musicListLogic(u32 hDown, u32 hHeld) {
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	if (hDown & KEY_A) {
+		if (dirContents[selectedFile].isDirectory) {
+			chdir(dirContents[selectedFile].name.c_str());
+			selectedFile = 0;
+			dirChanged = true;
+		} else {
+			if(dirContents[selectedFile].name != currentSong) {
+				nowPlayingList.clear();
+				currentSong = dirContents[selectedFile].name;
+				playbackInfo_t playbackInfo;
+				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
+			}
+			screenMode = musicPlayerScreen;
+			musicPlayerReturn = musicListScreen;
+			aptSetSleepAllowed(false);
+			togglePlayback(); // Since it would otherwise pause it in main.cpp
+		}
+	} else if (hDown & KEY_B) {
+		char path[PATH_MAX];
+		getcwd(path, PATH_MAX);
+		if(strcmp(path, "sdmc:/") == 0) {
+			screenMode = musicMainScreen;
+		} else {
+		chdir("..");
+		selectedFile = 0;
+		dirChanged = true;
+		}
+	} else if (hDown & KEY_Y && !dirContents[selectedFile].isDirectory) {
+		dirChanged = true;
+		screenMode = musicPlaylistAddScreen;
+		keyRepeatDelay = 2;
+	} else if (hDown & KEY_X) {
+		screenMode = musicMainScreen;
+	} else if (hHeld & KEY_UP) {
+		if (selectedFile > 0 && !keyRepeatDelay) {
+			selectedFile--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedFile < dirContents.size()-1) {
+			selectedFile++;
+			keyRepeatDelay = 3;
+		}
+	}
 }
 
 void drawMusicPlayer(void) {
@@ -143,11 +213,17 @@ void drawMusicPlayer(void) {
 	volt_end_draw();
 }
 
-uint selectedPlst = 0;
-std::vector<DirEntry> plsts;
-std::vector<std::string> nowPlayingList;
+void musicPlayerLogic(u32 hDown) {
+	if (hDown & KEY_A) {
+		togglePlayback();
+	} else if (hDown & KEY_X) {
+		stopPlayback();
+	} else if (hDown & KEY_B) {
+		screenMode = musicPlayerReturn;
+	}
+}
 
-void drawMusicPlaylist(void) {
+void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
@@ -178,7 +254,7 @@ void drawMusicPlaylist(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE003 : New Playlist";
+	plstList += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
@@ -186,7 +262,7 @@ void drawMusicPlaylist(void) {
 	volt_end_draw();
 }
 
-void musicPlaylistLogic(u32 hDown, u32 hHeld) {
+void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
 		if(selectedPlst == 0) {
@@ -211,6 +287,68 @@ void musicPlaylistLogic(u32 hDown, u32 hHeld) {
 		remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
 		dirChanged = true;
 		}
+	} else if (hHeld & KEY_UP) {
+		if (selectedPlst > 0 && !keyRepeatDelay) {
+			selectedPlst--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedPlst < plsts.size()-1) {
+			selectedPlst++;
+			keyRepeatDelay = 3;
+		}
+	}
+}
+
+void drawMusicPlaylistPlay(void) {
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
+	
+	if(dirChanged) {
+		char startPath[PATH_MAX];
+		getcwd(startPath, PATH_MAX);
+		chdir("sdmc:/Universal-Manager/playlists/");
+		getDirectoryContents(plsts);
+		chdir(startPath);
+	}
+
+	std::string plstList;
+	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
+		if (i == selectedPlst) {
+			plstList += "> " + plsts[i].name + "\n";
+		} else {
+			plstList += "  " + plsts[i].name + "\n";
+		}
+	}
+	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
+		plstList += "\n";
+	}
+	plstList += "\n\uE000 : Add "+plsts[selectedPlst].name+" to Now Playing   \uE001 : Back   \uE002 : Delete";
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+
+	drawBgBot();
+	drawBarsBot();
+	volt_end_draw();
+}
+
+void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
+	if(keyRepeatDelay)	keyRepeatDelay--;
+	if(hDown & KEY_A) {
+		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
+		if(plst) {
+			std::string song;
+			while(std::getline(plst, song)) {
+				nowPlayingList.push_back(song);
+			}
+		}
+	} else if (hDown & KEY_B) {
+		screenMode = musicMainScreen;
+	} else if (hDown & KEY_X) {
+		remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
+		dirChanged = true;
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;

@@ -34,7 +34,7 @@ void drawFileManagerSubMenu(void) {
 	drawBgBot();
 	drawBarsBot();
 
-	// Music Player Button.
+	// Music List Button.
 	volt_draw_texture(MainMenuButton, 100, 40);
 	volt_draw_texture(MusicIcon, 105, 50);
 	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
