@@ -39,6 +39,7 @@
 #define musicPlaylistPlayScreen	8
 #define settingsScreen			9
 #define imageScreen				10
+#define uiSettingsScreen        11
 
 struct Playlist {
     std::string name;
@@ -56,6 +57,7 @@ void drawFileManagerSubMenu(void);
 // Settings Screen.
 void drawSettingsScreen(void);
 void drawCredits(void);
+void drawUISettingsScreen(void);
 
 // Music Player Screen.
 void drawMusicMain(void);

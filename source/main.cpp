@@ -252,6 +252,9 @@ int main()
 			case imageScreen:
 				drawImageViewerUI();		// Draw the Image Viewer screen
 				break;
+			case uiSettingsScreen:
+				drawUISettingsScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -330,18 +333,8 @@ int main()
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
 			} else if (hDown & KEY_X) {
-					red = keyboardInputInt("Red");
-					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
-			} else if (hDown & KEY_Y) {
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
-			} else if (hDown & KEY_A) {
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
-			} else if (hDown & KEY_R) {
-				SaveUniversalSettings();
-				saveMsg();
-				} else if (hDown & KEY_TOUCH) {
+				screenMode = uiSettingsScreen;
+			} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
 						if (touching(touch, settingsScreenButtonPos[i])) {
 							screenMode = settingsScreenButtonPos[i].link;
@@ -352,6 +345,35 @@ int main()
 			case imageScreen:
 			if (hDown & KEY_B) {
 				screenMode = fileScreen;
+				break;
+			case uiSettingsScreen:
+                int red;
+				int green;
+				int blue;
+                if (hDown & KEY_X) {
+					red = keyboardInputInt("Red");
+					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+			} else if (hDown & KEY_Y) {
+					green = keyboardInputInt("Green (0-255)");
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+			} else if (hDown & KEY_A) {
+					blue = keyboardInputInt("Blue (0-255)");
+					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+			} else if (hDown & KEY_SELECT) {
+					red = keyboardInputInt("Red");
+					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
+			} else if (hDown & KEY_START) {
+					green = keyboardInputInt("Green (0-255)");
+					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
+			} else if (hDown & KEY_L) {
+					blue = keyboardInputInt("Blue (0-255)");
+					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+			} else if (hDown & KEY_R) {
+				SaveUniversalSettings();
+				saveMsg();
+				} else if (hDown & KEY_B) {
+					screenMode = settingsScreen;
+				}
 				break;
 			}
 		}

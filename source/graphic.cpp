@@ -89,7 +89,7 @@ void drawBarsTop(void) {
 
 void drawBgTop(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, GRAY);
+	volt_draw_rectangle(0, 0, 400, 240, settings.universal.bg);
 }
 
 void drawBarsBot(void) {
@@ -99,7 +99,7 @@ void drawBarsBot(void) {
 
 void drawBgBot(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, GRAY);
+	volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
 }
 
 void displayMsg(const char* text) {
