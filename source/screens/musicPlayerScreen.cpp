@@ -74,16 +74,16 @@ void drawMusicMain() {
 	drawBgBot();
 	drawBarsBot();
 
-	volt_draw_texture(MainMenuButton, 0, 40);
-	volt_draw_texture(MusicIcon, 5, 50);
+	volt_draw_texture(MainMenuButton, mainButtonPos[0].x, mainButtonPos[0].y);
+	volt_draw_texture(MusicIcon, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
 	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Songs");
 
-	volt_draw_texture(MainMenuButton, 170, 40);
-	volt_draw_texture(PlayIconSmall, 175, 50);
+	volt_draw_texture(MainMenuButton, mainButtonPos[1].x, mainButtonPos[1].y);
+	volt_draw_texture(PlayIconSmall, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
 	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "Now playing");
 
-	volt_draw_texture(MainMenuButton, 0, 150);
-	volt_draw_texture(PlaylistIcon, 1, 156);
+	volt_draw_texture(MainMenuButton, mainButtonPos[2].x, mainButtonPos[2].y);
+	volt_draw_texture(PlaylistIcon, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
 
 	volt_end_draw();
@@ -214,7 +214,7 @@ void drawMusicPlayer(void) {
 
 	drawBgBot();
 	drawBarsBot();
-	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 130, 90);
+	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos.x, playerButtonPos.y);
 	volt_end_draw();
 }
 
