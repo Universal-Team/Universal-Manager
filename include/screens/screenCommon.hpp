@@ -73,6 +73,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
 void drawUpdaterScreen(void);
+void updaterLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 void drawImageViewerUI(void);

@@ -304,17 +304,7 @@ int main()
 								}
 				break;
 			case updaterScreen:
-				if (hDown & KEY_B) {
-					screenMode = mainScreen;
-				} else if (hDown & KEY_X) {
-					updateBootstrap(true);			// Testing Purpose.
-				} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
-						if (touching(touch, updaterScreenButtonPos[i])) {
-							screenMode = updaterScreenButtonPos[i].link;
-						}
-					}
-				}
+				updaterLogic(hDown, touch);
 				break;
 			case musicMainScreen:
 				musicMainLogic(hDown, touch);

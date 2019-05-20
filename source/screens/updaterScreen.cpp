@@ -25,6 +25,32 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "download/download.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
+
+bool updatingSelf = false;
+
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
+
+ButtonPos downloadButtonPos[] = {
+	{229, 98, 87, 33, -1},
+	{140, 98, 87, 33, -1},
+	{229, 58, 87, 33, -1},
+	{140, 58, 87, 33, -1},
+};
+
 
 void drawUpdaterScreen(void) {
 	drawBgTop();
@@ -56,4 +82,20 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
+}
+
+void updaterLogic(u32 hDown, touchPosition touch) {
+		  if (hDown & KEY_B) {
+		screenMode = mainScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, downloadButtonPos[0])) {
+			updateBootstrap(true);
+		} else if (touching(touch, downloadButtonPos[1])) {
+			updateBootstrap(false);
+		} else if (touching(touch, downloadButtonPos[2])) {
+			updateTWiLight(true);
+		} else if (touching(touch, downloadButtonPos[3])) {
+			updateTWiLight(false);
+	}
+}
 }
