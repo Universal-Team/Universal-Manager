@@ -25,7 +25,7 @@ void drawUISettingsScreen(void) {
 	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "UI Settings");
 
-	volt_draw_text(50, 25, 0.72f, 0.72f, WHITE, "Bars Color Change :\n\uE003: change the Green RGB.\n\uE002: change the Red RGB.\n\uE000: change the Blue RGB.\n\nBackground Color Change :\nStart: Change the Green RGB.\nSelect: Change the Red RGB.\nL: Change the Blue RGB.");
+	volt_draw_text(50, 25, 0.68f, 0.68f, WHITE, "Bars Color Change :\n\uE003: change the Green RGB.\n\uE002: change the Red RGB.\n\uE000: change the Blue RGB.\n\nBackground Color Change :\nStart: Change the Green RGB.\nSelect: Change the Red RGB.\nL: Change the Blue RGB.");
 
 	drawBgBot();
 	drawBarsBot();
