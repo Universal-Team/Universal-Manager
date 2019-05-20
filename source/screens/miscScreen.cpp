@@ -25,6 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "ftp/ftp.h"
 
 void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
@@ -41,4 +42,16 @@ void saveMsg(void) {
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
+}
+
+//void ftpLogic(void) { // To-Do
+
+
+void drawFTPScreen(void) {
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
+	drawBgBot();
+	drawBarsBot();
+	volt_end_draw();
 }

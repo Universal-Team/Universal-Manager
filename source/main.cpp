@@ -79,7 +79,7 @@ extern bool firstSong;
 
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
-    {170, 40, 149, 52, creditsScreen},
+    {170, 40, 149, 52, ftpScreen},
     {0, 150, 149, 52, updaterScreen},
     {170, 150, 149, 52, settingsScreen},
 };
@@ -260,6 +260,9 @@ int main()
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
+			case ftpScreen:
+				drawFTPScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -268,7 +271,7 @@ int main()
 				if (hDown & KEY_A) {
 					screenMode = fileScreen;
 				} else if (hDown & KEY_X) {
-					screenMode = creditsScreen;
+					screenMode = ftpScreen;
 				} else if (hDown & KEY_Y) {
 					screenMode = updaterScreen;
 				} else if (hDown & KEY_TOUCH) {
@@ -376,6 +379,10 @@ int main()
 					}
 				}
 				break;
+			case ftpScreen:
+			if (hDown & KEY_B) {  // Later : "ftpLogic".
+				screenMode = mainScreen;
+			}
 			}
 		}
 

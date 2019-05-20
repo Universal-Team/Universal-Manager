@@ -40,6 +40,7 @@
 #define settingsScreen			9
 #define imageScreen				10
 #define uiSettingsScreen        11
+#define ftpScreen               12
 
 struct Playlist {
     std::string name;
@@ -81,3 +82,6 @@ void drawImageViewerUI(void);
 // Miscs.
 
 void saveMsg(void);
+
+// FTP Stuff.
+void drawFTPScreen(void);
