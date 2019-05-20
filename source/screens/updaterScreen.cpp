@@ -51,7 +51,6 @@ ButtonPos downloadButtonPos[] = {
 	{129, 48, 87, 33, -1},
 	{220, 128, 87, 33, -1},
 	{129, 128, 87, 33, -1},
-	{288, 208, 32, 32, mainScreen},
 };
 
 
@@ -110,8 +109,6 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 			updateUniversalManager(true);
 		} else if (touching(touch, downloadButtonPos[5])) {
 			updateUniversalManager(false);
-		} else if (touching(touch, downloadButtonPos[6])) {
-				screenMode = downloadButtonPos[4].link;
 		}
 	}
 }

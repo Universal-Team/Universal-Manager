@@ -289,6 +289,13 @@ int main()
 				break;
 			case updaterScreen:
 				updaterLogic(hDown, touch);
+				if (hDown & KEY_TOUCH) {
+				for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
+				if (touching(touch, updaterScreenButtonPos[i])) {
+				screenMode = updaterScreenButtonPos[i].link;
+				}
+				}
+				}
 				break;
 			case musicMainScreen:
 				musicMainLogic(hDown, touch);
