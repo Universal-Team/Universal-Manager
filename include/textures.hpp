@@ -46,10 +46,14 @@ extern size_t MusicIcon;
 extern size_t ImageIcon;
 
 // Music Player Stuff.
-extern size_t PlaylistIcon;
+extern size_t LeftIcon;
+extern size_t PauseIcon;
 extern size_t PlayIcon;
 extern size_t PlayIconSmall;
-extern size_t PauseIcon;
+extern size_t PlaylistIcon;
+extern size_t RepeatIcon;
+extern size_t RightIcon;
+extern size_t ShuffleIcon;
 
 // SD Image!
 extern size_t SDImage;

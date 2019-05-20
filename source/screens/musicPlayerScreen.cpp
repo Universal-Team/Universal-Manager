@@ -70,7 +70,13 @@ ButtonPos mainButtonPos[] = {
     {0, 150, 149, 52, musicPlaylistPlayScreen},
 };
 
-ButtonPos playerButtonPos = {130, 90, 60, 60, -1};
+ButtonPos playerButtonPos[] = {
+	{130, 90, 60, 60, -1},
+	{80, 100, 40, 40, -1},
+	{200, 100, 40, 40, -1},
+	{240, 175, 30, 30, -1},
+	{280, 175, 30, 30, -1},
+};
 
 void drawMusicMain() {
 	// Theme Stuff.
@@ -226,10 +232,12 @@ void drawMusicPlayer(void) {
 
 	drawBgBot();
 	drawBarsBot();
-	char str[64];
-	snprintf(str, sizeof(str), "Repeat: %i, Shuffle: %i, loc: %i, pos: %i", musicRepeat, musicShuffle, locInPlaylist, nowPlayingList[locInPlaylist].position);
-	volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, str);
-	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos.x, playerButtonPos.y);
+	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y);
+	volt_draw_texture(LeftIcon, playerButtonPos[1].x, playerButtonPos[1].y);
+	volt_draw_texture(RightIcon, playerButtonPos[2].x, playerButtonPos[2].y);
+	volt_draw_texture_blend(ShuffleIcon, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
+	volt_draw_texture_blend(RepeatIcon, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
+	if (musicRepeat)	volt_draw_text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, WHITE, (musicRepeat == 1 ? "A" : "S"));
 	volt_end_draw();
 }
 
@@ -249,19 +257,29 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
 	} else if (hDown & KEY_TOUCH) {
-		if(touching(touch, playerButtonPos)) {
+		if (touching(touch, playerButtonPos[0])) {
 			togglePlayback();
+		} else if (touching(touch, playerButtonPos[1])) {
+			goto prevSong;
+		} else if (touching(touch, playerButtonPos[2])) {
+			goto nextSong;
+		} else if (touching(touch, playerButtonPos[3])) {
+			goto toggleShuffle;
+		} else if (touching(touch, playerButtonPos[4])) {
+			goto toggleRepeat;
 		}
 	} else if (hDown & KEY_LEFT) {
+		prevSong:
 		if(locInPlaylist > 0) {
 			locInPlaylist--;
-		} else {
+		} else if (nowPlayingList.size() > 0) {
 			locInPlaylist = nowPlayingList.size() - 1;
 		}
 		currentSong = nowPlayingList[locInPlaylist].name;
 		playbackInfo_t playbackInfo;
 		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_RIGHT) {
+		nextSong:
 		if(locInPlaylist < (int)nowPlayingList.size()-1) {
 			locInPlaylist++;
 		} else {
@@ -270,13 +288,15 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		currentSong = nowPlayingList[locInPlaylist].name;
 		playbackInfo_t playbackInfo;
 		changeFile(currentSong.c_str(), &playbackInfo);
-	} else if (hDown & KEY_SELECT) {
+	} else if (hDown & KEY_START) {
+		toggleRepeat:
 		if (musicRepeat < 2 ) {
 			musicRepeat++;
 		} else {
 			musicRepeat = 0;
 		}
-	} else if (hDown & KEY_START) {
+	} else if (hDown & KEY_SELECT) {
+		toggleShuffle:
 		musicShuffle = !musicShuffle;
 		std::sort(nowPlayingList.begin(), nowPlayingList.end(), musicShuffle ?  playlistShufflePredicate : playlistSortPredicate);
 	}
