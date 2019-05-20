@@ -59,6 +59,7 @@ void drawFileManagerSubMenu(void);
 void drawSettingsScreen(void);
 void drawCredits(void);
 void drawUISettingsScreen(void);
+void uiSettingsLogic(u32 hDown, touchPosition touch);
 
 // Music Player Screen.
 void drawMusicMain(void);

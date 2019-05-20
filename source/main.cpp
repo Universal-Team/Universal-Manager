@@ -122,25 +122,6 @@ void screenon()
     gspLcdExit();
 }
 
-int getColorValue(int color, int bgr) {
-	char colorName[10];
-	int i;
-	std::stringstream ss;
-
-	itoa(color, colorName, 16);
-	std::string colorNamePart(colorName, 2*bgr+2, 2);
-	ss << std::hex << colorNamePart.c_str();
-	ss >> i;
-
-	return i;
-}
-
-std::string getColorName(int color, int bgr) {
-	char colorName[10];
-	int i = getColorValue(color, bgr);
-	itoa(i, colorName, 10);
-	return colorName;
-}
 
 void loadSoundEffects(void) {
 	if (dspfirmfound) {
@@ -325,9 +306,6 @@ int main()
 				musicPlaylistPlayLogic(hDown, hHeld);
 				break;
 			case settingsScreen:
-				int red;
-				int green;
-				int blue;
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
 			} else if (hDown & KEY_X) {
@@ -345,39 +323,7 @@ int main()
 				screenMode = fileScreen;
 				break;
 			case uiSettingsScreen:
-                int red;
-				int green;
-				int blue;
-                if (hDown & KEY_X) {
-					red = keyboardInputInt("Red");
-					settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
-			} else if (hDown & KEY_Y) {
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
-			} else if (hDown & KEY_A) {
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
-			} else if (hDown & KEY_SELECT) {
-					red = keyboardInputInt("Red");
-					settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
-			} else if (hDown & KEY_START) {
-					green = keyboardInputInt("Green (0-255)");
-					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
-			} else if (hDown & KEY_L) {
-					blue = keyboardInputInt("Blue (0-255)");
-					settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
-			} else if (hDown & KEY_R) {
-				SaveUniversalSettings();
-				saveMsg();
-				} else if (hDown & KEY_B) {
-					screenMode = settingsScreen;
-				} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(uisettingsScreenButtonPos)/sizeof(uisettingsScreenButtonPos[0]));i++) {
-						if (touching(touch, uisettingsScreenButtonPos[i])) {
-							screenMode = uisettingsScreenButtonPos[i].link;
-						}
-					}
-				}
+				uiSettingsLogic(hDown, touch);
 				break;
 			case ftpScreen:
 			if (hDown & KEY_B) {  // Later : "ftpLogic".

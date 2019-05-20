@@ -45,10 +45,10 @@ extern bool touching(touchPosition touch, ButtonPos button);
 
 
 ButtonPos downloadButtonPos[] = {
-	{229, 98, 87, 33, -1},
-	{140, 98, 87, 33, -1},
-	{229, 58, 87, 33, -1},
-	{140, 58, 87, 33, -1},
+	{220, 88, 87, 33, -1},
+	{129, 88, 87, 33, -1},
+	{220, 48, 87, 33, -1},
+	{129, 48, 87, 33, -1},
 	{288, 208, 32, 32, mainScreen},
 };
 
