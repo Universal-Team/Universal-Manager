@@ -256,20 +256,10 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		playbackInfo_t playbackInfo;
 		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_SELECT) {
-		switch(musicRepeat) {
-			case 1:
-				// if(locInPlaylist > 0) {
-				// 	locInPlaylist--;
-				// 	decForRepeat2 = true;
-				// }
-			case 0:
-			default:
-				musicRepeat++;
-				break;
-			case 2:
-				// if(decForRepeat2)	locInPlaylist++;
-				musicRepeat = 0;
-				break;	
+		if (musicRepeat < 2 ) {
+			musicRepeat++;
+		} else {
+			musicRepeat = 0;
 		}
 	} else if (hDown & KEY_START) {
 		musicShuffle = !musicShuffle;
