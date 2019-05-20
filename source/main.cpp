@@ -139,6 +139,13 @@ void loadSoundEffects(void) {
 	}
 }
 
+bool touching(touchPosition touch, ButtonPos button) {
+	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
+		return true;
+	else
+		return false;
+}
+
 int main()
 {
 	aptInit();
@@ -254,7 +261,7 @@ int main()
 					screenMode = updaterScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
-						if (touch.px >= mainScreenButtonPos[i].x && touch.px <= (mainScreenButtonPos[i].x + mainScreenButtonPos[i].w) && touch.py >= mainScreenButtonPos[i].y && touch.py <= (mainScreenButtonPos[i].y + mainScreenButtonPos[i].h)) {
+						if (touching(touch, mainScreenButtonPos[i])) {
 							screenMode = mainScreenButtonPos[i].link;
 						}
 					}
@@ -267,7 +274,7 @@ int main()
 					screenMode = musicListScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
-						if (touch.px >= fileScreenButtonPos[i].x && touch.px <= (fileScreenButtonPos[i].x + fileScreenButtonPos[i].w) && touch.py >= fileScreenButtonPos[i].y && touch.py <= (fileScreenButtonPos[i].y + fileScreenButtonPos[i].h)) {
+						if (touching(touch, fileScreenButtonPos[i])) {
 							screenMode = fileScreenButtonPos[i].link;
 						}
 					}
@@ -278,7 +285,7 @@ int main()
 				screenMode = settingsScreen;
 				} else if (hDown & KEY_TOUCH) {
 				for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
-				if (touch.px >= creditsScreenButtonPos[i].x && touch.px <= (creditsScreenButtonPos[i].x + creditsScreenButtonPos[i].w) && touch.py >= creditsScreenButtonPos[i].y && touch.py <= (creditsScreenButtonPos[i].y + creditsScreenButtonPos[i].h)) {
+				if (touching(touch, creditsScreenButtonPos[i])) {
 				screenMode = creditsScreenButtonPos[i].link;
 						}
 					}
@@ -291,7 +298,7 @@ int main()
 					updateBootstrap(true);			// Testing Purpose.
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
-						if (touch.px >= updaterScreenButtonPos[i].x && touch.px <= (updaterScreenButtonPos[i].x + updaterScreenButtonPos[i].w) && touch.py >= updaterScreenButtonPos[i].y && touch.py <= (updaterScreenButtonPos[i].y + updaterScreenButtonPos[i].h)) {
+						if (touching(touch, updaterScreenButtonPos[i])) {
 							screenMode = updaterScreenButtonPos[i].link;
 						}
 					}
@@ -304,7 +311,7 @@ int main()
 				musicListLogic(hDown, hHeld);
 				break;
 			case musicPlayerScreen:
-				musicPlayerLogic(hDown);
+				musicPlayerLogic(hDown, touch);
 				break;
 			case musicPlaylistAddScreen:
 				musicPlaylistAddLogic(hDown, hHeld);
@@ -332,7 +339,7 @@ int main()
 				saveMsg();
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
-						if (touch.px >= settingsScreenButtonPos[i].x && touch.px <= (settingsScreenButtonPos[i].x + settingsScreenButtonPos[i].w) && touch.py >= settingsScreenButtonPos[i].y && touch.py <= (settingsScreenButtonPos[i].y + settingsScreenButtonPos[i].h)) {
+						if (touching(touch, settingsScreenButtonPos[i])) {
 							screenMode = settingsScreenButtonPos[i].link;
 						}
 					}

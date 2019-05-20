@@ -57,7 +57,7 @@ void drawMusicMain(void);
 void musicMainLogic(u32 hDown, touchPosition touch);
 void musicListLogic(u32 hDown, u32 hHeld);
 void drawMusicList(void);
-void musicPlayerLogic(u32 hDown);
+void musicPlayerLogic(u32 hDown, touchPosition touch);
 void drawMusicPlayer(void);
 void drawMusicPlaylistAdd(void);
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld);

@@ -36,17 +36,6 @@ extern "C" {
 	#include "music/playback.h"
 }
 
-uint selectedFile = 0;
-int keyRepeatDelay = 3;
-bool dirChanged = true;
-std::vector<DirEntry> dirContents;
-std::string scanDir;
-std::string currentSong = "";
-int musicPlayerReturn = musicMainScreen;
-uint selectedPlst = 0;
-std::vector<DirEntry> plsts;
-std::vector<std::string> nowPlayingList;
-
 struct ButtonPos {
     int x;
     int y;
@@ -55,11 +44,27 @@ struct ButtonPos {
 	int link;
 };
 
+uint selectedFile = 0;
+int keyRepeatDelay = 3;
+bool dirChanged = true;
+std::vector<DirEntry> dirContents;
+std::string scanDir;
+std::string currentSong = "";
+
+int musicPlayerReturn = musicMainScreen;
+uint selectedPlst = 0;
+std::vector<DirEntry> plsts;
+std::vector<std::string> nowPlayingList;
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
 ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
 };
+
+ButtonPos playerButtonPos = {130, 90, 60, 60, -1};
 
 void drawMusicMain() {
 	// Theme Stuff.
@@ -89,7 +94,7 @@ void musicMainLogic(u32 hDown, touchPosition touch) {
 		screenMode = fileScreen;
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
-			if (touch.px >= mainButtonPos[i].x && touch.px <= (mainButtonPos[i].x + mainButtonPos[i].w) && touch.py >= mainButtonPos[i].y && touch.py <= (mainButtonPos[i].y + mainButtonPos[i].h)) {
+			if (touching(touch, mainButtonPos[i])) {
 				screenMode = mainButtonPos[i].link;
 				if(mainButtonPos[i].link == musicPlayerScreen) {
 					musicPlayerReturn = musicMainScreen;
@@ -209,17 +214,21 @@ void drawMusicPlayer(void) {
 
 	drawBgBot();
 	drawBarsBot();
-	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 140, 100);
+	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, 130, 90);
 	volt_end_draw();
 }
 
-void musicPlayerLogic(u32 hDown) {
+void musicPlayerLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_A) {
 		togglePlayback();
 	} else if (hDown & KEY_X) {
 		stopPlayback();
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
+	} else if (hDown & KEY_TOUCH) {
+		if(touching(touch, playerButtonPos)) {
+			togglePlayback();
+		}
 	}
 }
 
