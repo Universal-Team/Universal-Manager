@@ -365,6 +365,8 @@ int main()
 			currentSong = nowPlayingList[locInPlaylist].name;
 			playbackInfo_t playbackInfo;
 			changeFile(currentSong.c_str(), &playbackInfo);
+		} else if (isPlaying() && currentSong == "") {
+			stopPlayback();
 		} else if (!isPlaying() && currentSong != "") {
 			currentSong = "";
 		}
