@@ -183,7 +183,6 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 			}
 			screenMode = musicPlayerScreen;
 			musicPlayerReturn = musicListScreen;
-			aptSetSleepAllowed(false);
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
 		}
 	} else if (hDown & KEY_B) {
@@ -300,6 +299,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		musicShuffle = !musicShuffle;
 		std::sort(nowPlayingList.begin(), nowPlayingList.end(), musicShuffle ?  playlistShufflePredicate : playlistSortPredicate);
 	}
+	aptSetSleepAllowed(false);
 }
 
 void drawMusicPlaylistAdd(void) {
