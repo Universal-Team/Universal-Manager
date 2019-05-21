@@ -23,13 +23,16 @@ extern bool touching(touchPosition touch, ButtonPos button);
 
 
 ButtonPos uiSettingsButtonPos[] = {
-	{220, 88, 87, 33, -1},
-	{129, 48, 87, 33, -1},
-	{220, 48, 87, 33, -1},
+	// Bars
+	
+	{46, 98, 87, 33, -1},
+	{129, 98, 87, 33, -1},
+	{220, 98, 87, 33, -1},
+	// Background
+
+	{46, 168, 87, 33, -1},
+	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
-	{129, 128, 87, 33, -1},
-	{220, 128, 87, 33, -1},
-	{288, 208, 32, 32, settingsScreen},
 };
 
 int getColorValue(int color, int bgr) {
@@ -79,21 +82,26 @@ void drawUISettingsScreen(void) {
 	drawBgBot();
 	drawBarsBot();
 
-	volt_draw_text(120, 98, 0.7f, 0.7f, BLACK, "Bars");
-	volt_draw_texture(UpdaterButton, 129, 48);
-	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Green");
-	volt_draw_texture(UpdaterButton, 220, 48);
-	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Blue");
+	// Bars.
+	volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
+	volt_draw_texture(UpdaterButton, 35, 88);
+	volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, "Red");
+	volt_draw_texture(UpdaterButton, 129, 88);
+	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Green");
 	volt_draw_texture(UpdaterButton, 220, 88);
-	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Red");
+	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Blue");
 
-	volt_draw_text(120, 178, 0.7f, 0.7f, BLACK, "Background");
-	volt_draw_texture(UpdaterButton, 129, 128);
-	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Green");
-	volt_draw_texture(UpdaterButton, 220, 128);
-	volt_draw_text(229, 138, 0.7f, 0.7f, BLACK, "Blue");
+	// Background.
+	volt_draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
+	volt_draw_texture(UpdaterButton, 35, 168);
+	volt_draw_text(46, 178, 0.7f, 0.7f, BLACK, "Red");
+	volt_draw_texture(UpdaterButton, 129, 168);
+	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Green");
 	volt_draw_texture(UpdaterButton, 220, 168);
-	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, "Red");
+	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, "Blue");
+
+	// Maybe Text Color later? 
+
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }
@@ -123,8 +131,6 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
 			blue = keyboardInputInt("Blue (0-255)");
 			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
-		} else if (touching(touch, uiSettingsButtonPos[6])) {
-				screenMode = uiSettingsButtonPos[6].link;
 		}
-	}
+		}
 }
