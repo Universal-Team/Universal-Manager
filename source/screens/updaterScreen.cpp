@@ -72,7 +72,7 @@ ButtonPos downloadButtonPos[] = {
 void drawUpdaterScreen(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater");
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Page 1");
 	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
@@ -111,6 +111,8 @@ void drawUpdaterScreen(void) {
 void updaterLogic(u32 hDown, touchPosition touch) {
 		  if (hDown & KEY_B) {
 		screenMode = mainScreen;
+			} else if (hDown & KEY_R) {
+				screenMode = updaterScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
 			updateBootstrap(true);
@@ -126,4 +128,47 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 			updateUniversalManager(false);
 		}
 	}
+}
+
+// Second Page!
+
+ButtonPos downloadFunction2ButtonPos[] = {
+};
+
+/*ButtonPos download2ButtonPos[] = {
+		{220, 88, 87, 33},
+};
+
+*/void drawUpdaterScreen2(void) {
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Page 2");
+	displayTime();
+	
+	// Draw the Main Bottom Screen Background.
+	drawBgBot();
+	drawBarsBot();
+
+	//volt_draw_texture(UpdaterButton, download2ButtonPos[0].x, download2ButtonPos[0].y);
+	// NDS-Bootstrap Buttons.
+	//volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
+	//volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
+
+// Universal-Manager Buttons.
+
+	// Draw The Pages and Back Icon.
+	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	//volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+	volt_draw_text(265, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+	volt_end_draw();
+}
+
+void updaterLogic2(u32 hDown, touchPosition touch) {
+		  if (hDown & KEY_L) {
+		screenMode = updaterScreen;
+	/*} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, downloadFunction2ButtonPos[0])) {
+			updateBootstrap(true);
+		}
+*/}
 }

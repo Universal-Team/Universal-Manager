@@ -41,6 +41,7 @@
 #define imageScreen				10
 #define uiSettingsScreen        11
 #define ftpScreen               12
+#define updaterScreen2          13
 
 struct Playlist {
     std::string name;
@@ -74,8 +75,12 @@ void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
+// Page 1.
 void drawUpdaterScreen(void);
 void updaterLogic(u32 hDown, touchPosition touch);
+// Page 2.
+void drawUpdaterScreen2(void);
+void updaterLogic2(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 void drawImageViewerUI(void);

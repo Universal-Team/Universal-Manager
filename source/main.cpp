@@ -243,6 +243,9 @@ int main()
 			case ftpScreen:
 				drawFTPScreen();
 				break;
+			case updaterScreen2:
+				drawUpdaterScreen2();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -335,6 +338,10 @@ int main()
 			if (hDown & KEY_B) {  // Later : "ftpLogic".
 				screenMode = mainScreen;
 			}
+				break;
+			case updaterScreen2:
+				updaterLogic2(hDown, touch);
+				break;
 			}
 		}
 
