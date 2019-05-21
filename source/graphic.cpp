@@ -141,11 +141,12 @@ size_t PlaylistIcon = 15;
 size_t RepeatIcon = 16;
 size_t RightIcon = 17;
 size_t ShuffleIcon = 18;
+size_t PlaylistEditor = 19;
 
 // Image Viewer!
-size_t SDImage = 19;
+size_t SDImage = 20;
 
-size_t CreditsImage = 20;
+size_t CreditsImage = 21;
 
 void graphicsInit(void) {
 	
@@ -174,6 +175,7 @@ void graphicsInit(void) {
 	volt_load_texture_png(RepeatIcon, "romfs:/graphics/MusicPlayer/Repeat Icon.png");
 	volt_load_texture_png(RightIcon, "romfs:/graphics/MusicPlayer/Right Icon.png");
 	volt_load_texture_png(ShuffleIcon, "romfs:/graphics/MusicPlayer/Shuffle Icon.png");
+	volt_load_texture_png(PlaylistEditor, "romfs:/graphics/MusicPlayer/Playlist Editor.png");
 
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");

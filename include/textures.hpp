@@ -54,6 +54,7 @@ extern size_t PlaylistIcon;
 extern size_t RepeatIcon;
 extern size_t RightIcon;
 extern size_t ShuffleIcon;
+extern size_t PlaylistEditor;
 
 // SD Image!
 extern size_t SDImage;

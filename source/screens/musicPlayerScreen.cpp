@@ -68,6 +68,7 @@ ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
+	{170, 150, 149, 52, /*playListEditorScreen*/},
 };
 
 ButtonPos playerButtonPos[] = {
@@ -97,6 +98,10 @@ void drawMusicMain() {
 	volt_draw_texture(MainMenuButton, mainButtonPos[2].x, mainButtonPos[2].y);
 	volt_draw_texture(PlaylistIcon, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
+
+	volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
+	volt_draw_texture(PlaylistEditor, mainButtonPos[3].x+1, mainButtonPos[3].y+6);
+	volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Plst Editor");
 
 	volt_end_draw();
 }
