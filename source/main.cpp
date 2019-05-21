@@ -151,7 +151,6 @@ int main()
 	// make folders if they don't exist
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
-	mkdir("sdmc:/Universal-Updater/Playlist", 0777); // Playlist Path.
 
 	volt_init();
 

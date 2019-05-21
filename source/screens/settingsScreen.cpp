@@ -33,6 +33,8 @@ ButtonPos uiSettingsButtonPos[] = {
 	{46, 168, 87, 33, -1},
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
+
+	{288, 208, 32, 32, settingsScreen},
 };
 
 int getColorValue(int color, int bgr) {
@@ -131,6 +133,8 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
 			blue = keyboardInputInt("Blue (0-255)");
 			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+		} else if (touching(touch, uiSettingsButtonPos[6])) {
+			screenMode = uiSettingsButtonPos[6].link;
 		}
-		}
+}
 }
