@@ -44,13 +44,28 @@ struct ButtonPos {
 extern bool touching(touchPosition touch, ButtonPos button);
 
 
-ButtonPos downloadButtonPos[] = {
+ButtonPos downloadFunctionButtonPos[] = {
+	// TWLMenu
 	{220, 88, 87, 33, -1},
 	{129, 88, 87, 33, -1},
+	// NDS-Bootstrap
 	{220, 48, 87, 33, -1},
 	{129, 48, 87, 33, -1},
+	// Universal-Manager
 	{220, 128, 87, 33, -1},
 	{129, 128, 87, 33, -1},
+};
+
+ButtonPos downloadButtonPos[] = {
+	// TWLMenu
+    {129, 48, 87, 33},
+    {220, 48, 87, 33},
+		// NDS-Bootstrap
+    {129, 88, 87, 33},
+		{220, 88, 87, 33},
+		// Universal-Manager
+		{129, 128, 87, 33},
+		{220, 128, 87, 33},
 };
 
 
@@ -65,23 +80,23 @@ void drawUpdaterScreen(void) {
 	drawBarsBot();
 
 	// TWL Menu Buttons.
-	volt_draw_texture(UpdaterButton, 129, 48);
-	volt_draw_texture(UpdaterButton, 220, 48);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[0].x, downloadButtonPos[0].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[1].x, downloadButtonPos[1].y);
 	volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "TWLMENU++");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
 
 	// NDS-Bootstrap Buttons.
-	volt_draw_texture(UpdaterButton, 129, 88);
-	volt_draw_texture(UpdaterButton, 220, 88);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[2].x, downloadButtonPos[2].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[3].x, downloadButtonPos[3].y);
 	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
 
 // Universal-Manager Buttons.
 
-	volt_draw_texture(UpdaterButton, 129, 128);
-	volt_draw_texture(UpdaterButton, 220, 128);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[4].x, downloadButtonPos[4].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[5].x, downloadButtonPos[5].y);
 	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "UNIV-Manager");
 	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 138, 0.7f, 0.7f, BLACK, "Nightly");
@@ -97,17 +112,17 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		  if (hDown & KEY_B) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, downloadButtonPos[0])) {
+		if (touching(touch, downloadFunctionButtonPos[0])) {
 			updateBootstrap(true);
-		} else if (touching(touch, downloadButtonPos[1])) {
+		} else if (touching(touch, downloadFunctionButtonPos[1])) {
 			updateBootstrap(false);
-		} else if (touching(touch, downloadButtonPos[2])) {
+		} else if (touching(touch, downloadFunctionButtonPos[2])) {
 			updateTWiLight(true);
-		} else if (touching(touch, downloadButtonPos[3])) {
+		} else if (touching(touch, downloadFunctionButtonPos[3])) {
 			updateTWiLight(false);
-		} else if (touching(touch, downloadButtonPos[4])) {
+		} else if (touching(touch, downloadFunctionButtonPos[4])) {
 			updateUniversalManager(true);
-		} else if (touching(touch, downloadButtonPos[5])) {
+		} else if (touching(touch, downloadFunctionButtonPos[5])) {
 			updateUniversalManager(false);
 		}
 	}
