@@ -68,6 +68,13 @@ ButtonPos downloadButtonPos[] = {
 		{220, 128, 87, 33},
 };
 
+bool updateAvailable[] = {
+	false,
+	false,
+	false,
+	false,
+};
+
 
 void drawUpdaterScreen(void) {
 	drawBgTop();
@@ -105,7 +112,12 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_texture(BackIcon, 288, 208);
+		for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]))-1; i >= 0; i--) {
+	if(updateAvailable[i]) {
+				volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
+			}
 	volt_end_draw();
+}
 }
 
 void updaterLogic(u32 hDown, touchPosition touch) {
@@ -113,6 +125,9 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		screenMode = mainScreen;
 			} else if (hDown & KEY_R) {
 				screenMode = updaterScreen2;
+			} else if (hDown & KEY_SELECT) {
+				displayMsg("Checking for Updates.. please wait.");
+				checkForUpdates();
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
 			updateBootstrap(true);

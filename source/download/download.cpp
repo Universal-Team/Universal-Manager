@@ -37,6 +37,7 @@
 #include "universal-Settings.hpp"
 #include "colors.hpp"
 #include "download/thread.hpp"
+#include "screens/screenCommon.hpp"
 
 extern "C" {
 	#include "download/cia.h"
@@ -62,6 +63,8 @@ extern std::string extractingFile;
 char progressBarMsg[64] = "";
 bool showProgressBar = false;
 bool progressBarType = 0; // 0 = Download | 1 = Extract
+
+extern bool updateAvailable[];
 
 // following function is from 
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
@@ -709,7 +712,7 @@ void checkForUpdates() {
 	std::string bootstrapRelease = getInstalledVersion("NDS-BOOTSTRAP-RELEASE");
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
 
-	/*if (menuChannel == "release")
+	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
 	else if (menuChannel == "nightly")
 		updateAvailable[1] = menuVersion != latestMenuNightly();
@@ -718,7 +721,7 @@ void checkForUpdates() {
 
 	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
 	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();		// For later.
-*/}
+}
 
 
 void updateBootstrap(bool nightly) {
@@ -743,7 +746,7 @@ void updateBootstrap(bool nightly) {
 
 		setInstalledVersion("NDS-BOOTSTRAP-NIGHTLY", latestBootstrapNightly());
 		saveUpdateData();
-		//updateAvailable[3] = false; // For Later.
+		updateAvailable[3] = false; // For Later.
 	} else {	
 		displayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
@@ -766,7 +769,7 @@ void updateBootstrap(bool nightly) {
 
 		setInstalledVersion("NDS-BOOTSTRAP-RELEASE", latestBootstrapRelease());
 		saveUpdateData();
-		//updateAvailable[2] = false; // For Later.
+		updateAvailable[2] = false; // For Later.
 	}
 	doneMsg();
 }
@@ -805,7 +808,7 @@ void updateTWiLight(bool nightly) {
 		setInstalledChannel("TWILIGHTMENU", "nightly");
 		setInstalledVersion("TWILIGHTMENU", latestMenuNightly());
 		saveUpdateData();
-		//updateAvailable[1] = false; // For Later.
+		updateAvailable[1] = false; // For Later.
 	} else {
 		displayMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
@@ -841,7 +844,7 @@ void updateTWiLight(bool nightly) {
 		setInstalledChannel("TWILIGHTMENU", "release");
 		setInstalledVersion("TWILIGHTMENU", latestMenuRelease());
 		saveUpdateData();
-		//updateAvailable[0] = false; // For Later.
+		updateAvailable[0] = false; // For Later.
 	}
 	doneMsg();
 }
