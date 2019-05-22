@@ -49,6 +49,11 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 bool checkWifiStatus(void);
 
 /**
+ * Display "Please connect to Wi-Fi" for 2s.
+ */
+void notConnectedMsg(void);
+
+/**
  * Get info from the GitHub API about a Release.
  * repo is where to get from. (Ex. "RocketRobz/TWiLightMenu")
  * item is that to get from the API. (Ex. "tag_name")

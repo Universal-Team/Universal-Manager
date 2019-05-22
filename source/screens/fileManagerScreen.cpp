@@ -47,3 +47,15 @@ void drawFileManagerSubMenu(void) {
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_end_draw();
 }
+
+void drawFileManagerScreen(void) {
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Menu");
+
+	drawBgBot();
+	drawBarsBot();
+	
+	volt_draw_texture(BackIcon, 288, 208);
+	volt_end_draw();
+}

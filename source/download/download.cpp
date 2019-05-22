@@ -324,6 +324,13 @@ void doneMsg(void) {
 	}
 }
 
+void notConnectedMsg(void) {
+	displayMsg("Please connect to Wi-Fi");
+	for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}
+
 std::string getLatestRelease(std::string repo, std::string item)
 {
 	Result ret = 0;

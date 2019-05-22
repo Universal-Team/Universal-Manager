@@ -42,6 +42,7 @@
 #define uiSettingsScreen        11
 #define ftpScreen               12
 #define updaterScreen2          13
+#define fileManagerScreen       14
 
 struct Playlist {
     std::string name;
@@ -55,6 +56,7 @@ void drawMainMenu(void);
 
 // File Manager Sub Menu Screen.
 void drawFileManagerSubMenu(void);
+void drawFileManagerScreen(void);
 
 // Settings Screen.
 void drawSettingsScreen(void);

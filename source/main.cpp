@@ -184,6 +184,9 @@ int main()
 
 	int fadealpha = 255;
 
+	//displayMsg("Checking for Updates.. please wait.");
+	//			checkForUpdates();							// Maybe for later? 
+	
 	// Loop as long as the status is not exit
 	while(aptMainLoop()) {
 		offset3D[0].topbg = CONFIG_3D_SLIDERSTATE * -7.0f;
@@ -246,6 +249,9 @@ int main()
 			case updaterScreen2:
 				drawUpdaterScreen2();
 				break;
+			case fileManagerScreen:
+				drawFileManagerScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -270,6 +276,8 @@ int main()
 					screenMode = mainScreen;
 				} else if (hDown & KEY_A) {
 					screenMode = musicListScreen;
+				} else if (hDown & KEY_X) {
+					screenMode = fileManagerScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
 						if (touching(touch, fileScreenButtonPos[i])) {
@@ -342,6 +350,10 @@ int main()
 			case updaterScreen2:
 				updaterLogic2(hDown, touch);
 				break;
+			case fileManagerScreen:
+			if(hDown & KEY_B) {
+				screenMode = fileScreen;
+			}
 			}
 		}
 
