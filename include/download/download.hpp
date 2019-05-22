@@ -121,3 +121,18 @@ void updateTWiLight(bool nightly);
  * Update Universal-Manager to the latest build.
  */
 void updateUniversalManager(bool nightly);
+
+/**
+ * Update Luma's boot.firm to latest build.
+ */
+void updateLuma(bool nightly);
+
+/**
+ * Update GodMode9.firm to latest Release.
+ */
+void downloadGodMode9(void);
+
+/**
+ * Update PKSM to latest Release.
+ */
+void updatePKSM(void);
