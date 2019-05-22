@@ -131,3 +131,8 @@ void updateLuma(bool nightly);
  * Update GodMode9.firm to latest Release.
  */
 void downloadGodMode9(void);
+
+/**
+ * Update PKSM to latest Release.
+ */
+void updatePKSM(void);

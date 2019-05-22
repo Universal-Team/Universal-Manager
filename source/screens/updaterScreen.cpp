@@ -46,21 +46,23 @@ extern bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos downloadFunctionButtonPos[] = {
 	// TWLMenu
-	{220, 88, 87, 33, -1},
-	{129, 88, 87, 33, -1},
-	// NDS-Bootstrap
-	{220, 48, 87, 33, -1},
 	{129, 48, 87, 33, -1},
+	{220, 48, 87, 33, -1},
+	// NDS-Bootstrap
+	{129, 88, 87, 33, -1},
+	{220, 88, 87, 33, -1},
 	// Universal-Manager
-	{220, 128, 87, 33, -1},
 	{129, 128, 87, 33, -1},
+	{220, 128, 87, 33, -1},
 	// Luma 3DS.
-	{220, 168, 87, 33, -1},
 	{129, 168, 87, 33, -1},
+	{220, 168, 87, 33, -1},
 	// Check for Update!
 	{0, 208, 32, 32, -1},
 	// GodMode9
 	{129, 48, 87, 33, -1},
+	// PKSM
+	{129, 88, 87, 33, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
@@ -79,9 +81,12 @@ ButtonPos downloadButtonPos[] = {
 
 	// GodMode9
 	{129, 48, 87, 33},
+	// PKSM
+	{129, 88, 87, 33},
 };
 
 bool updateAvailable[] = {
+	false,
 	false,
 	false,
 	false,
@@ -152,21 +157,21 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		screenMode = updaterScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
-			updateBootstrap(true);
-		} else if (touching(touch, downloadFunctionButtonPos[1])) {
-			updateBootstrap(false);
-		} else if (touching(touch, downloadFunctionButtonPos[2])) {
-			updateTWiLight(true);
-		} else if (touching(touch, downloadFunctionButtonPos[3])) {
 			updateTWiLight(false);
+		} else if (touching(touch, downloadFunctionButtonPos[1])) {
+			updateTWiLight(true);
+		} else if (touching(touch, downloadFunctionButtonPos[2])) {
+			updateBootstrap(false);
+		} else if (touching(touch, downloadFunctionButtonPos[3])) {
+			updateBootstrap(true);
 		} else if (touching(touch, downloadFunctionButtonPos[4])) {
-			updateUniversalManager(true);
-		} else if (touching(touch, downloadFunctionButtonPos[5])) {
 			updateUniversalManager(false);
+		} else if (touching(touch, downloadFunctionButtonPos[5])) {
+			updateUniversalManager(true);
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
-			updateLuma(true);
-		} else if (touching(touch, downloadFunctionButtonPos[7])) {
 			updateLuma(false);
+		} else if (touching(touch, downloadFunctionButtonPos[7])) {
+			updateLuma(true);
 		} else if (touching(touch, downloadFunctionButtonPos[8])) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
@@ -189,6 +194,10 @@ void drawUpdaterScreen2(void) {
 	volt_draw_text(0, 58, 0.7f, 0.7f, BLACK, "GodMode9");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
 
+	volt_draw_texture(UpdaterButton, downloadButtonPos[9].x, downloadButtonPos[9].y);
+	// PKSM Buttons.
+	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "PKSM");
+	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(265, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
@@ -206,6 +215,8 @@ void updaterLogic2(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[9])) {
 			downloadGodMode9();
-		}
+		} else if (touching(touch, downloadFunctionButtonPos[10])) {
+			updatePKSM();
+}
 }
 }

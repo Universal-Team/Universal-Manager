@@ -58,6 +58,7 @@ std::string latestBootstrapNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string godMode9Cache = "";
+std::string latestPKSMReleaseCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -713,6 +714,12 @@ std::string latestGodMode9(void) {
 	return godMode9Cache;
 }
 
+std::string latestPKSMRelease(void) {
+	if (latestPKSMReleaseCache == "")
+		latestPKSMReleaseCache = getLatestRelease("FlagBrew/PKSM", "tag_name");
+	return latestPKSMReleaseCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -742,6 +749,7 @@ void checkForUpdates() {
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
+	std::string pksmVersion = getInstalledVersion("PKSM");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -756,6 +764,7 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[9] = godMode9Version != latestGodMode9();
+	updateAvailable[10] = pksmVersion != latestPKSMRelease();
 }
 
 
@@ -945,3 +954,25 @@ void downloadGodMode9(void) {
 		updateAvailable[9] = false;
 	doneMsg(); 
 	}
+
+void updatePKSM(void) {
+		displayMsg("Downloading PKSM\n"
+						"(Release)\n\nThis may take a while.");
+		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayMsg("Installing PKSM.cia\n"
+						"(Release)\n\n\n\n\n\n\n\n\n\n"
+						"This may take a while..");
+		installCia("/PKSM-Release.cia");
+
+		deleteFile("sdmc:/PKSM-Release.cia");
+
+		setInstalledChannel("PKSM", "release");
+		setInstalledVersion("PKSM", latestPKSMRelease());
+		saveUpdateData();
+		updateAvailable[10] = false;
+	doneMsg();
+}
