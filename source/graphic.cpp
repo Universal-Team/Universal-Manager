@@ -110,6 +110,7 @@ void displayMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.bars, text);
 	drawBgBot();
 	drawBarsBot();
