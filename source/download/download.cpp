@@ -59,6 +59,7 @@ std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string godMode9Cache = "";
 std::string latestPKSMReleaseCache = "";
+std::string latestCheckpointReleaseCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -720,6 +721,12 @@ std::string latestPKSMRelease(void) {
 	return latestPKSMReleaseCache;
 }
 
+std::string latestCheckpointRelease(void) {
+	if (latestCheckpointReleaseCache == "")
+		latestCheckpointReleaseCache = getLatestRelease("FlagBrew/Checkpoint", "tag_name");
+	return latestCheckpointReleaseCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -750,6 +757,7 @@ void checkForUpdates() {
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 	std::string pksmVersion = getInstalledVersion("PKSM");
+	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -765,6 +773,7 @@ void checkForUpdates() {
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[9] = godMode9Version != latestGodMode9();
 	updateAvailable[10] = pksmVersion != latestPKSMRelease();
+	updateAvailable[11] = checkpointRelease != latestCheckpointRelease();
 }
 
 
@@ -974,5 +983,24 @@ void updatePKSM(void) {
 		setInstalledVersion("PKSM", latestPKSMRelease());
 		saveUpdateData();
 		updateAvailable[10] = false;
+	doneMsg();
+}
+
+void updateCheckpoint(void) {
+	displayMsg("Downloading Checkpoint.cia (Release)\n");
+		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayMsg("Installing Checkpoint.cia\n"
+						"(Release)");
+		installCia("/Checkpoint-Release.cia");
+
+		deleteFile("sdmc:/Checkpoint-Release.cia");
+
+		setInstalledVersion("CHECKPOINT-RELEASE", latestCheckpointRelease());
+		saveUpdateData();
+		updateAvailable[11] = false;
 	doneMsg();
 }

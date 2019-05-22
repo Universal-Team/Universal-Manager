@@ -63,6 +63,8 @@ ButtonPos downloadFunctionButtonPos[] = {
 	{129, 48, 87, 33, -1},
 	// PKSM
 	{129, 88, 87, 33, -1},
+	// Checkpoint
+	{129, 128, 87, 33, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
@@ -83,9 +85,12 @@ ButtonPos downloadButtonPos[] = {
 	{129, 48, 87, 33},
 	// PKSM
 	{129, 88, 87, 33},
+	// Checkpoint
+	{129, 128, 87, 33},
 };
 
 bool updateAvailable[] = {
+	false,
 	false,
 	false,
 	false,
@@ -200,6 +205,10 @@ void drawUpdaterScreen2(void) {
 	// PKSM Buttons.
 	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "PKSM");
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
+	// Checkpoint Buttons.
+	volt_draw_texture(UpdaterButton, downloadButtonPos[10].x, downloadButtonPos[10].y);
+	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Checkpoint");
+	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(265, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
@@ -219,6 +228,8 @@ void updaterLogic2(u32 hDown, touchPosition touch) {
 			downloadGodMode9();
 		} else if (touching(touch, downloadFunctionButtonPos[10])) {
 			updatePKSM();
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+			updateCheckpoint();
 }
 }
 }

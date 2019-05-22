@@ -136,3 +136,8 @@ void downloadGodMode9(void);
  * Update PKSM to latest Release.
  */
 void updatePKSM(void);
+
+/**
+ * Update Checkpoint to latest Release.
+ */
+void updateCheckpoint(void);
