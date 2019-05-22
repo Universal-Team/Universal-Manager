@@ -161,8 +161,8 @@ void drawMusicList(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit";
-	else if(dirContents[selectedFile].name == currentSong)	dirs += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Now Playing";
+	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else if(dirContents[selectedFile].name == currentSong)	dirs += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
@@ -205,10 +205,9 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
-	} else if (hDown & KEY_Y && !dirContents[selectedFile].isDirectory) {
+	} else if (hDown & KEY_Y) {
 		dirChanged = true;
 		screenMode = musicPlaylistAddScreen;
-		keyRepeatDelay = 2;
 	} else if (hDown & KEY_X) {
 		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
@@ -339,9 +338,9 @@ void drawMusicPlaylistAdd(void) {
 	std::string plstList;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
-			plstList += "> " + plsts[i].name + "\n";
+			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
 		} else {
-			plstList += "  " + plsts[i].name + "\n";
+			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
 		}
 	}
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
@@ -358,26 +357,44 @@ void drawMusicPlaylistAdd(void) {
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
-		if(selectedPlst == 0) {
-			Playlist playlist;
-			playlist.name = dirContents[selectedFile].name;
-			playlist.position = nowPlayingList.size() + 1;
-			nowPlayingList.push_back(playlist);
+		std::vector<DirEntry> selectedFiles;
+		if(dirContents[selectedFile].isDirectory) {
+			char startPath[PATH_MAX];
+			getcwd(startPath, PATH_MAX);
+			chdir(dirContents[selectedFile].name.c_str());
+			getDirectoryContents(selectedFiles);
+			chdir(startPath);
 		} else {
-			char path[PATH_MAX];
-			getcwd(path, PATH_MAX);
-			FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "a");
-			fputs((path+dirContents[selectedFile].name+"\n").c_str(), plst);
-			fclose(plst);
+			DirEntry dirEntry;
+			dirEntry.name = "";
+			selectedFiles.push_back(dirEntry);
+		}
+		for(uint i=0;i<selectedFiles.size();i++) {
+			if(selectedPlst == 0) {
+				Playlist playlist;
+				char path[PATH_MAX];
+				getcwd(path, PATH_MAX);
+				playlist.name = path + dirContents[selectedFile].name + "/" + selectedFiles[i].name;
+				playlist.position = nowPlayingList.size() + 1;
+				nowPlayingList.push_back(playlist);
+			} else {
+				char path[PATH_MAX];
+				getcwd(path, PATH_MAX);
+				FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "a");
+				fputs((path+dirContents[selectedFile].name+(dirContents[selectedFile].isDirectory?"/"+selectedFiles[i].name:"")+"\n").c_str(), plst);
+				fclose(plst);
+			}
 		}
 		screenMode = musicListScreen;
 	} else if (hDown & KEY_B) {
 		screenMode = musicListScreen;
-	} else if (hDown & KEY_Y && !keyRepeatDelay) { // !keyRepeat delay so it doesn't instantly make a new plst
+	} else if (hDown & KEY_Y) {
 		std::string newPlaylist = keyboardInput("Enter new playlist name:");
-		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+newPlaylist+".plst").c_str(), "w");
-		fclose(plst);
-		dirChanged = true;
+		if(newPlaylist != "") {
+			FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+newPlaylist+".plst").c_str(), "w");
+			fclose(plst);
+			dirChanged = true;
+		}
 	} else if (hDown & KEY_X) {
 		if (selectedPlst != 0) {
 			if(confirmPopup("Are you sure you want to delete this playlist?")) {
@@ -416,9 +433,9 @@ void drawMusicPlaylistPlay(void) {
 	std::string plstList;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
-			plstList += "> " + plsts[i].name + "\n";
+			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
 		} else {
-			plstList += "  " + plsts[i].name + "\n";
+			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
 		}
 	}
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
