@@ -55,3 +55,27 @@ void drawFTPScreen(void) {
 	drawBarsBot();
 	volt_end_draw();
 }
+
+bool confirmPopup(std::string msg) {
+	return confirmPopup(msg, "", "Yes", "No", 245);
+}
+
+// NOTE: This'll get the app stuck in a loop while its running, so background
+// processes like the clock won't update while the message bubble is up
+bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
+	volt_begin_draw(GFX_TOP, GFX_LEFT);
+	volt_draw_rectangle(50, 60, 300, 120, settings.universal.bars);
+	volt_draw_text_center(GFX_TOP, 90, 0.45f, 0.45f, WHITE, msg1.c_str());
+	volt_draw_text_center(GFX_TOP, 110, 0.45f, 0.45f, WHITE, msg2.c_str());
+	volt_draw_text(ynXPos, 160, 0.45f, 0.45f, WHITE, ("\uE001 : "+no+"   \uE000 : "+yes).c_str());
+	volt_end_draw();
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		if(keysDown() & KEY_A) {
+			return true;
+		} else if(keysDown() & KEY_B) {
+			return false;
+		}
+	}
+}

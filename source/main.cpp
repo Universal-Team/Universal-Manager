@@ -234,6 +234,9 @@ int main()
 			case musicPlaylistPlayScreen:
 				drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
 				break;
+			case musicPlaylistEditScreen:
+				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
+				break;
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
 				break;
@@ -287,24 +290,24 @@ int main()
 				}
 				break;
 			case creditsScreen:
-			if (hDown & KEY_B) {
-				screenMode = settingsScreen;
+				if (hDown & KEY_B) {
+					screenMode = settingsScreen;
 				} else if (hDown & KEY_TOUCH) {
-				for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
-				if (touching(touch, creditsScreenButtonPos[i])) {
-				screenMode = creditsScreenButtonPos[i].link;
+					for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
+						if (touching(touch, creditsScreenButtonPos[i])) {
+							screenMode = creditsScreenButtonPos[i].link;
 						}
 					}
-								}
+				}
 				break;
 			case updaterScreen:
 				updaterLogic(hDown, touch);
 				if (hDown & KEY_TOUCH) {
-				for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
-				if (touching(touch, updaterScreenButtonPos[i])) {
-				screenMode = updaterScreenButtonPos[i].link;
-				}
-				}
+					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
+						if (touching(touch, updaterScreenButtonPos[i])) {
+							screenMode = updaterScreenButtonPos[i].link;
+						}
+					}
 				}
 				break;
 			case musicMainScreen:
@@ -321,6 +324,9 @@ int main()
 				break;
 			case musicPlaylistPlayScreen:
 				musicPlaylistPlayLogic(hDown, hHeld);
+				break;
+			case musicPlaylistEditScreen:
+				musicPlaylistEditLogic(hDown, hHeld);
 				break;
 			case settingsScreen:
 			if (hDown & KEY_B) {

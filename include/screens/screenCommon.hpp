@@ -37,16 +37,17 @@
 #define musicPlayerScreen		6
 #define musicPlaylistAddScreen	7
 #define musicPlaylistPlayScreen	8
-#define settingsScreen			9
-#define imageScreen				10
-#define uiSettingsScreen        11
-#define ftpScreen               12
-#define updaterScreen2          13
-#define fileManagerScreen       14
+#define musicPlaylistEditScreen	9
+#define settingsScreen			10
+#define imageScreen				11
+#define uiSettingsScreen		12
+#define ftpScreen				13
+#define updaterScreen2			14
+#define fileManagerScreen		15
 
 struct Playlist {
-    std::string name;
-    int position;
+	std::string name;
+	int position;
 };
 
 extern int screenMode;
@@ -75,6 +76,8 @@ void drawMusicPlaylistAdd(void);
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
+void drawMusicPlaylistEdit(void);
+void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
 // Page 1.
@@ -88,8 +91,9 @@ void updaterLogic2(u32 hDown, touchPosition touch);
 void drawImageViewerUI(void);
 
 // Miscs.
-
 void saveMsg(void);
+bool confirmPopup(std::string msg);
+bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
 
 // FTP Stuff.
 void drawFTPScreen(void);

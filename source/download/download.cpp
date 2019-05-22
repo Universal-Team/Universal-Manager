@@ -60,7 +60,7 @@ extern bool downloadNightlies;
 extern int filesExtracted;
 extern std::string extractingFile;
 
-char progressBarMsg[64] = "";
+char progressBarMsg[128] = "";
 bool showProgressBar = false;
 bool progressBarType = 0; // 0 = Download | 1 = Extract
 

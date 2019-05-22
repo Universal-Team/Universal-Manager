@@ -62,13 +62,17 @@ std::vector<DirEntry> plsts;
 std::vector<Playlist> nowPlayingList;
 bool decForRepeat2 = false;
 
+uint selectedPlstItem = 0;
+int movingPlstItem = -1;
+std::vector<std::string> plstContents;
+
 extern bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
-	{170, 150, 149, 52, /*playListEditorScreen*/},
+	// {170, 150, 149, 52, /*playListEditorScreen*/},
 };
 
 ButtonPos playerButtonPos[] = {
@@ -99,9 +103,9 @@ void drawMusicMain() {
 	volt_draw_texture(PlaylistIcon, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
 
-	volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
-	volt_draw_texture(PlaylistEditor, mainButtonPos[3].x+1, mainButtonPos[3].y+6);
-	volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Plst Editor");
+	// volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
+	// volt_draw_texture(PlaylistEditor, mainButtonPos[3].x+1, mainButtonPos[3].y+6);
+	// volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Plst Editor");
 
 	volt_end_draw();
 }
@@ -223,7 +227,7 @@ void drawMusicPlayer(void) {
 	drawBgTop();
 	drawBarsTop();
 	if(!isPaused() && isPlaying()) {
-		std::string nowPlayingText = "Currently Playing: " + currentSong;
+		std::string nowPlayingText = "Currently Playing: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
 		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
 	} else if(isPaused() && isPlaying()) {
@@ -371,8 +375,10 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 		dirChanged = true;
 	} else if (hDown & KEY_X) {
 		if (selectedPlst != 0) {
-		remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
-		dirChanged = true;
+			if(confirmPopup("Are you sure you want to delete this playlist?")) {
+				remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
+				dirChanged = true;
+			}
 		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
@@ -413,7 +419,7 @@ void drawMusicPlaylistPlay(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList += "\n\uE000 : Add "+plsts[selectedPlst].name+" to Now Playing   \uE001 : Back   \uE002 : Delete";
+	plstList += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
@@ -424,6 +430,13 @@ void drawMusicPlaylistPlay(void) {
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
+		if(confirmPopup("Would you like to add to these songs to",
+						 "Now Playing or play them now?",
+						 "Play Now",
+						 "Add to Now Playing",
+						 117)) {
+			nowPlayingList.clear();
+		}
 		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
 		if(plst) {
 			Playlist song;
@@ -436,8 +449,19 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_B) {
 		screenMode = musicMainScreen;
 	} else if (hDown & KEY_X) {
-		remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
-		dirChanged = true;
+		if(confirmPopup("Are you sure you want to delete this playlist?")) {
+			remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
+			dirChanged = true;
+		}
+	} else if (hDown & KEY_Y) {
+		std::string temp;
+		std::ifstream file("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
+		plstContents.clear();
+		while(std::getline(file, temp)) {
+			plstContents.push_back(temp);
+		}
+		selectedPlstItem = 0;
+		screenMode = musicPlaylistEditScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
@@ -446,6 +470,70 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
+			keyRepeatDelay = 3;
+		}
+	}
+}
+
+void drawMusicPlaylistEdit() {
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+
+	std::string plstList;
+	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
+		if (i == selectedPlstItem) {
+			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+		} else if ((int)i == movingPlstItem) {
+			plstList += "x " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+		} else {
+			plstList += "  " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+		}
+	}
+	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
+		plstList += "\n";
+	}
+	plstList += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+
+	drawBgBot();
+	drawBarsBot();
+	volt_end_draw();
+}
+
+void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
+	if(keyRepeatDelay)	keyRepeatDelay--;
+	if(hDown & KEY_A) {
+		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "w");
+		for(uint i=0;i<plstContents.size();i++) {
+			fputs((plstContents[i]+"\n").c_str(), plst);
+		}
+		fclose(plst);
+		screenMode = musicPlaylistPlayScreen;
+	} else if(hDown & KEY_B) {
+		screenMode = musicPlaylistPlayScreen;
+	} else if (hDown & KEY_X) {
+		if(confirmPopup("Are you sure you want to remove this song?")) {
+			plstContents.erase(plstContents.begin()+selectedPlstItem);
+			dirChanged = true;
+		}
+	} else if (hDown & KEY_Y) {
+		if(movingPlstItem == -1) {
+			movingPlstItem = selectedPlstItem;
+		} else {
+			std::string item = plstContents[movingPlstItem];
+			plstContents.erase(plstContents.begin()+movingPlstItem);
+			plstContents.insert(plstContents.begin()+selectedPlstItem, item);
+			movingPlstItem = -1;
+		}
+	} else if (hHeld & KEY_UP) {
+		if (selectedPlstItem > 0 && !keyRepeatDelay) {
+			selectedPlstItem--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedPlstItem < plstContents.size()-1) {
+			selectedPlstItem++;
 			keyRepeatDelay = 3;
 		}
 	}
