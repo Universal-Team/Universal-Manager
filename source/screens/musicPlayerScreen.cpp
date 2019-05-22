@@ -229,10 +229,9 @@ void drawMusicPlayer(void) {
 	if(!isPaused() && isPlaying()) {
 		std::string nowPlayingText = "Currently Playing: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
-		char pos[32];
-		snprintf(pos, sizeof(pos), "%lld/%lld", Audio_GetPosition()/Audio_GetRate(), Audio_GetLength()/Audio_GetRate());
-		volt_draw_text(20, 175, 0.72f, 0.72f, WHITE, pos);
-		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
+		volt_draw_text(20, 180, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		volt_draw_rectangle(18, 192, 364, 20, BLACK);
+		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, settings.universal.bars);
 		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
 	} else if(isPaused() && isPlaying()) {
 		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "Currently Paused.");

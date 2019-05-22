@@ -181,4 +181,17 @@ void graphicsInit(void) {
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
 }
+
+std::string secondsToString(u64 seconds) {
+    int h = 0, m = 0, s = 0;
+    h = (seconds / 3600);
+    m = (seconds - (3600 * h)) / 60;
+    s = (seconds - (3600 * h) - (m * 60));
+
+	char string[35];
+
+    if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
+    else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
 	
+	return string;
+}

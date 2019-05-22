@@ -57,5 +57,7 @@ void drawBarsBot(void);
 
 void drawBgBot(void);
 
+std::string secondsToString(u64 seconds);
+
 //void volt_free_texture(size_t id);
 #endif // GRAPHIC_H
