@@ -57,6 +57,7 @@ std::string latestBootstrapReleaseCache = "";
 std::string latestBootstrapNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
+std::string godMode9Cache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -706,6 +707,12 @@ std::string latestLumaNightly(void) {
 	return latestLumaNightlyCache;
 }
 
+std::string latestGodMode9(void) {
+	if (godMode9Cache == "")
+		godMode9Cache = getLatestRelease("D0k3/GodMode9", "tag_name");
+	return godMode9Cache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -734,6 +741,7 @@ void checkForUpdates() {
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
+	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -747,6 +755,7 @@ void checkForUpdates() {
 		// Universal Manager would be [4] and [5].
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
+	updateAvailable[9] = godMode9Version != latestGodMode9();
 }
 
 
@@ -915,3 +924,24 @@ void updateLuma(bool nightly) {
 	}
 	doneMsg();
 }
+
+void downloadGodMode9(void) {
+	displayMsg("Now Downloading GodMode9\n"
+						"(Release)");
+		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayMsg("Extracting GodMode9.firm\n"
+						"(Release)");
+		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
+		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
+
+		deleteFile("sdmc:/GodMode9.zip");
+
+		setInstalledVersion("GODMODE9", latestGodMode9());
+		saveUpdateData();
+		updateAvailable[9] = false;
+	doneMsg(); 
+	}
