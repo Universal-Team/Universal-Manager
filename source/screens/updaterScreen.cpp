@@ -116,8 +116,8 @@ void drawUpdaterScreen(void) {
 	if(updateAvailable[i]) {
 				volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
 			}
-	volt_end_draw();
 }
+	volt_end_draw();
 }
 
 void updaterLogic(u32 hDown, touchPosition touch) {
