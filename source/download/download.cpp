@@ -55,6 +55,8 @@ std::string latestMenuReleaseCache = "";
 std::string latestMenuNightlyCache = "";
 std::string latestBootstrapReleaseCache = "";
 std::string latestBootstrapNightlyCache = "";
+std::string latestLumaReleaseCache = "";
+std::string latestLumaNightlyCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -692,6 +694,18 @@ std::string latestBootstrapNightly(void) {
 	return latestBootstrapNightlyCache;
 }
 
+std::string latestLumaRelease(void) {
+	if (latestLumaReleaseCache == "")
+		latestLumaReleaseCache = getLatestRelease("Aurorawright/Luma3DS", "tag_name");
+	return latestLumaReleaseCache;
+}
+
+std::string latestLumaNightly(void) {
+	if (latestLumaNightlyCache == "")
+		latestLumaNightlyCache = getLatestRelease("hax0kartik/luma-hourlies", "tag_name");
+	return latestLumaNightlyCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -718,6 +732,8 @@ void checkForUpdates() {
 	std::string menuVersion = getInstalledVersion("TWILIGHTMENU");
 	std::string bootstrapRelease = getInstalledVersion("NDS-BOOTSTRAP-RELEASE");
 	std::string boostrapNightly = getInstalledVersion("NDS-BOOTSTRAP-NIGHTLY");
+	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
+	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -727,7 +743,10 @@ void checkForUpdates() {
 		updateAvailable[0] = updateAvailable[1] = true;
 
 	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
-	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();		// For later.
+	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();	
+		// Universal Manager would be [4] and [5].
+	updateAvailable[6] = lumaRelease != latestLumaRelease();
+	updateAvailable[7] = lumaNightly != latestLumaNightly();
 }
 
 
@@ -862,4 +881,37 @@ void updateUniversalManager(bool nightly) {
 	} else {
 		notImplemented();
 }
+}
+
+void updateLuma(bool nightly) {
+	if(nightly) {
+		displayMsg("Now Downloading Luma3DS\n" 
+						"(Nightly)");
+		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		setInstalledVersion("LUMA3DS-NIGHTLY", latestLumaNightly());
+		saveUpdateData();
+		updateAvailable[7] = false;
+	} else {	
+		displayMsg("Now Downloading Luma3DS\n"
+						"(Release)");
+		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
+			downloadFailed();
+			return;
+		}
+
+		displayMsg("extracting Boot.firm\n"
+						"(Release)");
+		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
+
+		deleteFile("sdmc:/Luma3DS.7z");
+
+		setInstalledVersion("LUMA3DS-RELEASE", latestLumaRelease());
+		saveUpdateData();
+		updateAvailable[6] = false;
+	}
+	doneMsg();
 }

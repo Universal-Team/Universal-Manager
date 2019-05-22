@@ -54,7 +54,9 @@ ButtonPos downloadFunctionButtonPos[] = {
 	// Universal-Manager
 	{220, 128, 87, 33, -1},
 	{129, 128, 87, 33, -1},
-
+	// Luma 3DS.
+	{220, 168, 87, 33, -1},
+	{129, 168, 87, 33, -1},
 	// Check for Update!
 	{0, 208, 32, 32, -1},
 };
@@ -69,6 +71,9 @@ ButtonPos downloadButtonPos[] = {
 	// Universal-Manager
 	{129, 128, 87, 33},
 	{220, 128, 87, 33},
+	// Luma 3DS.
+	{129, 168, 87, 33},
+	{220, 168, 87, 33},
 };
 
 bool updateAvailable[] = {
@@ -111,6 +116,12 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 138, 0.7f, 0.7f, BLACK, "Nightly");
 
+	// Luma 3DS Buttons.
+	volt_draw_texture(UpdaterButton, downloadButtonPos[6].x, downloadButtonPos[6].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[7].x, downloadButtonPos[7].y);
+	volt_draw_text(0, 178, 0.7f, 0.7f, BLACK, "Luma3DS");
+	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Release");
+	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, "Nightly");
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
@@ -143,6 +154,10 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, downloadFunctionButtonPos[5])) {
 			updateUniversalManager(false);
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
+			updateLuma(true);
+		} else if (touching(touch, downloadFunctionButtonPos[7])) {
+			updateLuma(false);
+		} else if (touching(touch, downloadFunctionButtonPos[8])) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
 		}
