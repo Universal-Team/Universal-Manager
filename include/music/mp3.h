@@ -38,6 +38,10 @@ uint8_t channelMp3(void);
  */
 uint64_t decodeMp3(void* buffer);
 
+u64 MP3_GetPosition(void);
+
+u64 MP3_GetLength(void);
+
 /**
  * Free MP3 decoder.
  */

@@ -1,3 +1,4 @@
+#include <3ds.h>
 #include <stdbool.h>
 
 #ifndef PLAYBACK_H
@@ -63,5 +64,11 @@ void playFile(void* infoIn);
  *							play file.
  */
 int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo);
+
+u64 Audio_GetLength(void);
+
+u64 Audio_GetPosition(void);
+
+int Audio_GetRate(void);
 
 #endif

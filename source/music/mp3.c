@@ -11,6 +11,8 @@ static mpg123_handle	*mh = NULL;
 static uint32_t			rate;
 static uint8_t			channels;
 
+static u64 frames_read = 0, total_samples = 0;
+
 /**
  * Set decoder parameters for MP3.
  *
@@ -61,6 +63,8 @@ int initMp3(const char* file)
 	 * Ensure that this output format will not change (it might, when we allow
 	 * it).
 	 */
+	frames_read = 0;
+	total_samples = mpg123_length(mh);
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
 
@@ -103,7 +107,16 @@ uint64_t decodeMp3(void* buffer)
 {
 	size_t done = 0;
 	mpg123_read(mh, buffer, *buffSize, &done);
+	frames_read += done/(sizeof(s16) * 2);
 	return done / (sizeof(int16_t));
+}
+
+u64 MP3_GetPosition(void) {
+	return frames_read;
+}
+
+u64 MP3_GetLength(void) {
+	return total_samples;
 }
 
 /**

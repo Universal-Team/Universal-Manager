@@ -1,4 +1,3 @@
-#include <3ds.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +13,7 @@
 #include "music/wav.h"
 
 static volatile bool stop = true;
+static enum file_types file_type = FILE_TYPE_ERROR;
 
 /**
  * Pause or play current file.
@@ -75,7 +75,9 @@ void playFile(void* infoIn)
 	/* Reset previous stop command */
 	stop = false;
 
-	switch(getFileType(file))
+	file_type = getFileType(file);
+
+	switch(file_type)
 	{
 		case FILE_TYPE_WAV:
 			setWav(&decoder);
@@ -262,4 +264,109 @@ int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo)
 	thread = threadCreate(playFile, playbackInfo, 32 * 1024, prio - 1, -2, false);
 
 	return 0;
+}
+
+u64 Audio_GetPosition(void) {
+	u64 position = -1;
+
+	switch(file_type) {
+		case FILE_TYPE_FLAC:
+			// position = FLAC_GetPosition();
+			break;
+
+		case FILE_TYPE_MP3:
+			position = MP3_GetPosition();
+			break;
+
+		// case FILE_TYPE_OGG:
+		// 	position = OGG_GetPosition();
+		// 	break;
+
+		case FILE_TYPE_OPUS:
+			// position = OPUS_GetPosition();
+			break;
+
+		case FILE_TYPE_WAV:
+			// position = WAV_GetPosition();
+			break;
+
+		// case FILE_TYPE_XM:
+		// 	position = XM_GetPosition();
+		// 	break;
+
+		default:
+			break;
+	}
+
+	return position;
+}
+
+u64 Audio_GetLength(void) {
+	u64 length = 0;
+
+	switch(file_type) {
+		case FILE_TYPE_FLAC:
+			// length = FLAC_GetLength();
+			break;
+
+		case FILE_TYPE_MP3:
+			length = MP3_GetLength();
+			break;
+
+		// case FILE_TYPE_OGG:
+		// 	length = OGG_GetLength();
+		// 	break;
+
+		case FILE_TYPE_OPUS:
+			// length = OPUS_GetLength();
+			break;
+
+		case FILE_TYPE_WAV:
+			// length = WAV_GetLength();
+			break;
+
+		// case FILE_TYPE_XM:
+		// 	length = XM_GetLength();
+		// 	break;
+
+		default:
+			break;
+	}
+
+	return length;
+}
+
+int Audio_GetRate(void) {
+	u64 rate = 0;
+
+	switch(file_type) {
+		case FILE_TYPE_FLAC:
+			// rate = rateFlac();
+			break;
+
+		case FILE_TYPE_MP3:
+			rate = rateMp3();
+			break;
+
+		// case FILE_TYPE_OGG:
+			// rate = rateVorbis();
+		// 	break;
+
+		case FILE_TYPE_OPUS:
+			// rate = rateOpus();
+			break;
+
+		case FILE_TYPE_WAV:
+			rate = rateWav();
+			break;
+
+		// case FILE_TYPE_XM:
+		// 	rate = XM_GetLength();
+		// 	break;
+
+		default:
+			break;
+	}
+
+	return rate;
 }
