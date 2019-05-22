@@ -12,10 +12,10 @@
 #include "universal-settings.hpp"
 
 struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
+	int x;
+	int y;
+	int w;
+	int h;
 	int link;
 };
 
@@ -109,9 +109,9 @@ void drawUISettingsScreen(void) {
 }
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
-				int red;
-				int green;
-				int blue;
+	int red;
+	int green;
+	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
 	} else if (hDown & KEY_TOUCH) {
@@ -136,5 +136,5 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 		}
-}
+	}
 }

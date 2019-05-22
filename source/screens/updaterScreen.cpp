@@ -34,10 +34,10 @@
 bool updatingSelf = false;
 
 struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
+	int x;
+	int y;
+	int w;
+	int h;
 	int link;
 };
 
@@ -61,14 +61,14 @@ ButtonPos downloadFunctionButtonPos[] = {
 
 ButtonPos downloadButtonPos[] = {
 	// TWLMenu
-    {129, 48, 87, 33},
-    {220, 48, 87, 33},
-		// NDS-Bootstrap
-    {129, 88, 87, 33},
-		{220, 88, 87, 33},
-		// Universal-Manager
-		{129, 128, 87, 33},
-		{220, 128, 87, 33},
+	{129, 48, 87, 33},
+	{220, 48, 87, 33},
+	// NDS-Bootstrap
+	{129, 88, 87, 33},
+	{220, 88, 87, 33},
+	// Universal-Manager
+	{129, 128, 87, 33},
+	{220, 128, 87, 33},
 };
 
 bool updateAvailable[] = {
@@ -116,19 +116,19 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_draw_texture(UpdaterIcon, 0, 208);
-		for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]))-1; i >= 0; i--) {
-	if(updateAvailable[i]) {
-				volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
-			}
-}
+	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]))-1; i >= 0; i--) {
+		if(updateAvailable[i]) {
+			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
+		}
+	}
 	volt_end_draw();
 }
 
 void updaterLogic(u32 hDown, touchPosition touch) {
-		  if (hDown & KEY_B) {
+	if (hDown & KEY_B) {
 		screenMode = mainScreen;
-			} else if (hDown & KEY_R) {
-				screenMode = updaterScreen2;
+	} else if (hDown & KEY_R) {
+		screenMode = updaterScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
 			updateBootstrap(true);
@@ -145,8 +145,8 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
+		}
 	}
-}
 }
 
 // Second Page!
@@ -155,7 +155,7 @@ ButtonPos downloadFunction2ButtonPos[] = {
 };
 
 /*ButtonPos download2ButtonPos[] = {
-		{220, 88, 87, 33},
+	{220, 88, 87, 33},
 };
 
 */void drawUpdaterScreen2(void) {
@@ -173,7 +173,7 @@ ButtonPos downloadFunction2ButtonPos[] = {
 	//volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
 	//volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
 
-// Universal-Manager Buttons.
+	// Universal-Manager Buttons.
 
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
@@ -183,7 +183,7 @@ ButtonPos downloadFunction2ButtonPos[] = {
 }
 
 void updaterLogic2(u32 hDown, touchPosition touch) {
-		  if (hDown & KEY_L) {
+	if (hDown & KEY_L) {
 		screenMode = updaterScreen;
 	/*} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunction2ButtonPos[0])) {
