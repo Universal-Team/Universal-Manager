@@ -62,8 +62,6 @@ void drawSettingsScreen(void) {
 	drawBarsTop();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Settings");
 
-	volt_draw_text(50, 90, 0.72f, 0.72f, WHITE, "Press X to go to the UI Settings.");
-
 	drawBgBot();
 	drawBarsBot();
 

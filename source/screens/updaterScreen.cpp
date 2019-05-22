@@ -102,8 +102,9 @@ bool updateAvailable[] = {
 void drawUpdaterScreen(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Page 1");
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Screen");
 	displayTime();
+	volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE001 : Back   \ue005 : Go to Page 2; Touch : Select an Option.");
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
@@ -182,8 +183,9 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterScreen2(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Page 2");
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Screen");
 	displayTime();
+	volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\ue004 : Go to Page 1; Touch : Select an Option.");
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
