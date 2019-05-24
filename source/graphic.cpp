@@ -28,6 +28,7 @@
 //#include "colors.hpp"
 #include "textures.hpp"
 #include "voltlib/volt.h"
+#include <unistd.h>
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)
 {
@@ -106,6 +107,15 @@ void drawBgBot(void) {
 	volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
 }
 
+void drawMusicPlayerImage(void) {
+	if((access("sdmc:/Universal-Manager/Theme/TopScreen.png", F_OK) == 0)) {
+		volt_draw_on(GFX_TOP, GFX_LEFT);
+		volt_draw_texture(TopImage, 0, 25);
+	} else {
+		drawBgTop();
+	}
+}
+
 void displayMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	drawBgTop();
@@ -149,6 +159,8 @@ size_t SDImage = 20;
 
 size_t CreditsImage = 21;
 
+size_t TopImage = 22;
+
 void graphicsInit(void) {
 	
 	// Misc Stuff.
@@ -180,6 +192,11 @@ void graphicsInit(void) {
 
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
+
+	if((access("sdmc:/Universal-Manager/Theme/TopScreen.png", F_OK) == 0)) {
+		volt_load_texture_png(TopImage, "sdmc:/Universal-Manager/Theme/TopScreen.png");
+	} else {
+}
 }
 
 std::string secondsToString(u64 seconds) {

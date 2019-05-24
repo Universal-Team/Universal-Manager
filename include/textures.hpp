@@ -61,3 +61,6 @@ extern size_t SDImage;
 
 // Credits Stuff.
 extern size_t CreditsImage;
+
+// For People, who has Images on their SD Card under "sdmc:/Universal-Manager/Theme".
+extern size_t TopImage;

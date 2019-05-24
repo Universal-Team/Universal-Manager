@@ -57,6 +57,8 @@ void drawBarsBot(void);
 
 void drawBgBot(void);
 
+void drawMusicPlayerImage(void);
+
 std::string secondsToString(u64 seconds);
 
 //void volt_free_texture(size_t id);

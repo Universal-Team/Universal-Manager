@@ -224,13 +224,13 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 }
 
 void drawMusicPlayer(void) {
-	drawBgTop();
+	drawMusicPlayerImage();
 	drawBarsTop();
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
-		volt_draw_text(20, 180, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		volt_draw_text(0, 4, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
+		volt_draw_text(20, 177, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		volt_draw_rectangle(18, 192, 364, 20, BLACK);
 		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, settings.universal.bars);
 	}
