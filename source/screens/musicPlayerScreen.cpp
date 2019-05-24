@@ -224,7 +224,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 }
 
 void drawMusicPlayer(void) {
-	drawMusicPlayerImage();
+	drawBgTop();
 	drawBarsTop();
 
 	if(isPlaying()) {
@@ -233,6 +233,7 @@ void drawMusicPlayer(void) {
 		volt_draw_text(20, 177, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		volt_draw_rectangle(18, 192, 364, 20, BLACK);
 		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, settings.universal.bars);
+		volt_draw_texture(Cover, 40, 25);
 	}
 	
 	if(!isPaused() && isPlaying()) {

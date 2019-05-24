@@ -62,5 +62,5 @@ extern size_t SDImage;
 // Credits Stuff.
 extern size_t CreditsImage;
 
-// For People, who has Images on their SD Card under "sdmc:/Universal-Manager/Theme".
-extern size_t TopImage;
+// This is for the Cover of the Music File.
+extern size_t Cover;

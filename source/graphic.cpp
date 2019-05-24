@@ -107,15 +107,6 @@ void drawBgBot(void) {
 	volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
 }
 
-void drawMusicPlayerImage(void) {
-	if((access("sdmc:/Universal-Manager/Theme/TopScreen.png", F_OK) == 0)) {
-		volt_draw_on(GFX_TOP, GFX_LEFT);
-		volt_draw_texture(TopImage, 0, 25);
-	} else {
-		drawBgTop();
-	}
-}
-
 void displayMsg(const char* text) {
 	volt_begin_draw(GFX_TOP, GFX_LEFT);
 	drawBgTop();
@@ -159,7 +150,7 @@ size_t SDImage = 20;
 
 size_t CreditsImage = 21;
 
-size_t TopImage = 22;
+size_t Cover = 22;
 
 void graphicsInit(void) {
 	
@@ -192,11 +183,7 @@ void graphicsInit(void) {
 
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
-
-	if((access("sdmc:/Universal-Manager/Theme/TopScreen.png", F_OK) == 0)) {
-		volt_load_texture_png(TopImage, "sdmc:/Universal-Manager/Theme/TopScreen.png");
-	} else {
-}
+	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");;
 }
 
 std::string secondsToString(u64 seconds) {
