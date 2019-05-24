@@ -57,14 +57,14 @@ ButtonPos downloadFunctionButtonPos[] = {
 	// Luma 3DS.
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
-	// Check for Update!
-	{0, 208, 32, 32, -1},
 	// GodMode9
 	{129, 48, 87, 33, -1},
 	// PKSM
 	{129, 88, 87, 33, -1},
 	// Checkpoint
 	{129, 128, 87, 33, -1},
+	// Check for Update!
+	{0, 208, 32, 32, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
@@ -148,7 +148,7 @@ void drawUpdaterScreen(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_draw_texture(UpdaterIcon, 0, 208);
-	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]))-1; i >= 0; i--) {
+	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
 		}
@@ -178,7 +178,7 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 			updateLuma(false);
 		} else if (touching(touch, downloadFunctionButtonPos[7])) {
 			updateLuma(true);
-		} else if (touching(touch, downloadFunctionButtonPos[8])) {
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
 		}
@@ -212,11 +212,11 @@ void drawUpdaterScreen2(void) {
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(265, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	//for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[8]))-1; i >= 0; i--) {
-		//if(updateAvailable[i]) {
-			//volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
-		//}
-	//}
+	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[10]))-1; i >= 8; i--) {
+		if(updateAvailable[i]) {
+			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
+		}
+	}
 	volt_end_draw();
 }
 
@@ -224,11 +224,11 @@ void updaterLogic2(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_L) {
 		screenMode = updaterScreen;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, downloadFunctionButtonPos[9])) {
+		if (touching(touch, downloadFunctionButtonPos[8])) {
 			downloadGodMode9();
-		} else if (touching(touch, downloadFunctionButtonPos[10])) {
+		} else if (touching(touch, downloadFunctionButtonPos[9])) {
 			updatePKSM();
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+		} else if (touching(touch, downloadFunctionButtonPos[10])) {
 			updateCheckpoint();
 }
 }

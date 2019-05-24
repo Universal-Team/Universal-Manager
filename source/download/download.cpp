@@ -771,9 +771,9 @@ void checkForUpdates() {
 		// Universal Manager would be [4] and [5].
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
-	updateAvailable[9] = godMode9Version != latestGodMode9();
-	updateAvailable[10] = pksmVersion != latestPKSMRelease();
-	updateAvailable[11] = checkpointRelease != latestCheckpointRelease();
+	updateAvailable[8] = godMode9Version != latestGodMode9();
+	updateAvailable[9] = pksmVersion != latestPKSMRelease();
+	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
 }
 
 
@@ -960,7 +960,7 @@ void downloadGodMode9(void) {
 
 		setInstalledVersion("GODMODE9", latestGodMode9());
 		saveUpdateData();
-		updateAvailable[9] = false;
+		updateAvailable[8] = false;
 	doneMsg(); 
 	}
 
@@ -982,7 +982,7 @@ void updatePKSM(void) {
 		setInstalledChannel("PKSM", "release");
 		setInstalledVersion("PKSM", latestPKSMRelease());
 		saveUpdateData();
-		updateAvailable[10] = false;
+		updateAvailable[9] = false;
 	doneMsg();
 }
 
@@ -1001,6 +1001,6 @@ void updateCheckpoint(void) {
 
 		setInstalledVersion("CHECKPOINT-RELEASE", latestCheckpointRelease());
 		saveUpdateData();
-		updateAvailable[11] = false;
+		updateAvailable[10] = false;
 	doneMsg();
 }
