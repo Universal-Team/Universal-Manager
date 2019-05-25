@@ -29,22 +29,32 @@
 #include "universal-Settings.hpp"
 
 #define mainScreen				0
+//###############################
 #define fileScreen				1
+//###############################
 #define creditsScreen			2
-#define TWLScreen				3
-#define musicMainScreen			4
-#define musicListScreen			5
-#define musicPlayerScreen		6
-#define musicPlaylistAddScreen	7
-#define musicPlaylistPlayScreen	8
-#define musicPlaylistEditScreen	9
-#define settingsScreen			10
+//###############################
+#define musicMainScreen			3
+//###############################
+#define musicListScreen			4
+#define musicPlayerScreen		5
+#define musicPlaylistAddScreen	6
+#define musicPlaylistPlayScreen	7
+#define musicPlaylistEditScreen	8
+//###############################
+#define settingsScreen			9
+#define uiSettingsScreen		10
+//###############################
 #define imageScreen				11
-#define uiSettingsScreen		12
-#define ftpScreen				13
-#define OtherScreen				14
-#define fileManagerScreen		15
-#define updaterSubMenu			16
+//###############################
+#define ftpScreen				12
+//###############################
+#define fileManagerScreen		13
+//###############################
+#define updaterSubMenu			14
+#define OtherScreen				15
+#define TWLScreen				16
+//###############################
 
 struct Playlist {
 	std::string name;
@@ -80,7 +90,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
 
-// Updater Screen.
+// Updater Screens
 // Sub Menu.
 void drawUpdaterSubMenu(void);
 void updaterSubMenuLogic(u32 hDown, touchPosition touch);
@@ -90,9 +100,6 @@ void updaterTWLLogic(u32 hDown, touchPosition touch);
 // Other Screen
 void drawUpdaterOther(void);
 void updaterOtherLogic(u32 hDown, touchPosition touch);
-// Page 2.
-void drawUpdaterScreen2(void);
-void updaterLogic2(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 void drawImageViewerUI(void);

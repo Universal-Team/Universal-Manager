@@ -207,18 +207,19 @@ int main()
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {
+//#########################################################################################################
 			case mainScreen:
 				drawMainMenu();				// Draws the Main Menu screen
 				break;
+//#########################################################################################################
 			case fileScreen:
 				drawFileManagerSubMenu();	// Draws the File Manager screen
 				break;
+//#########################################################################################################
 			case creditsScreen:
 				drawCredits();				// Draws the Credits screen
 				break;
-			case updaterSubMenu:
-				drawUpdaterSubMenu();		// Draws the Updater screen
-				break;
+//#########################################################################################################
 			case musicMainScreen:
 				drawMusicMain();			// Draws the Music Player song selection screen
 				break;
@@ -237,20 +238,28 @@ int main()
 			case musicPlaylistEditScreen:
 				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
 				break;
+//#########################################################################################################
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
-				break;
-			case imageScreen:
-				drawImageViewerUI();		// Draw the Image Viewer screen
 				break;
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
+//#########################################################################################################
+			case imageScreen:
+				drawImageViewerUI();		// Draw the Image Viewer screen
+				break;
+//#########################################################################################################
 			case ftpScreen:
 				drawFTPScreen();
 				break;
+//#########################################################################################################
 			case fileManagerScreen:
 				drawFileManagerScreen();
+				break;
+//#########################################################################################################
+			case updaterSubMenu:
+				drawUpdaterSubMenu();		// Draws the Updater screen
 				break;
 			case TWLScreen:
 				drawUpdaterTWL();
@@ -258,10 +267,12 @@ int main()
 			case OtherScreen:
 				drawUpdaterOther();
 				break;
+//#########################################################################################################
 		}
 
 		// Scans inputs for the current screen
 		switch(screenMode) {
+//#########################################################################################################
 			case mainScreen:
 				if (hDown & KEY_A) {
 					screenMode = fileScreen;
@@ -277,6 +288,7 @@ int main()
 					}
 				}
 				break;
+//#########################################################################################################
 			case fileScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
@@ -292,6 +304,7 @@ int main()
 					}
 				}
 				break;
+//#########################################################################################################
 			case creditsScreen:
 				if (hDown & KEY_B) {
 					screenMode = settingsScreen;
@@ -303,9 +316,7 @@ int main()
 					}
 				}
 				break;
-			case updaterSubMenu:
-				updaterSubMenuLogic(hDown, touch);
-				break;
+//#########################################################################################################
 			case musicMainScreen:
 				musicMainLogic(hDown, touch);
 				break;
@@ -324,6 +335,7 @@ int main()
 			case musicPlaylistEditScreen:
 				musicPlaylistEditLogic(hDown, hHeld);
 				break;
+//#########################################################################################################
 			case settingsScreen:
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
@@ -337,22 +349,29 @@ int main()
 					}
 				}
 				break;
+			case uiSettingsScreen:
+				uiSettingsLogic(hDown, touch);
+				break;
+//#########################################################################################################
 			case imageScreen:
 			if (hDown & KEY_B) {
 				screenMode = fileScreen;
 				break;
-			case uiSettingsScreen:
-				uiSettingsLogic(hDown, touch);
-				break;
+//#########################################################################################################
 			case ftpScreen:
 			if (hDown & KEY_B) {  // Later : "ftpLogic".
 				screenMode = mainScreen;
 			}
+//#########################################################################################################
 				break;
 			case fileManagerScreen:
 			if(hDown & KEY_B) {
 				screenMode = fileScreen;
 			}
+//#########################################################################################################
+				break;
+			case updaterSubMenu:
+				updaterSubMenuLogic(hDown, touch);
 				break;
 			case TWLScreen:
 				updaterTWLLogic(hDown, touch);
@@ -362,6 +381,7 @@ int main()
 				break;
 			}
 		}
+//#########################################################################################################
 
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
 			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
