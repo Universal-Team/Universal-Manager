@@ -1140,7 +1140,7 @@ void downloadThemes(void) {
 			}
 		}
 		themesText += "\n\n\n\n\n";
-		themesText += "B: Back   A: Choose";
+		themesText += "B: Back   A: Continue";
 		displayMsg(themesText.c_str());
 	}
 
