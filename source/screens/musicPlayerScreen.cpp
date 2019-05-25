@@ -73,7 +73,7 @@ ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
-	// {170, 150, 149, 52, /*playListEditorScreen*/},
+	{170, 150, 149, 52, themeSelectorScreen},
 };
 
 ButtonPos playerButtonPos[] = {
@@ -104,11 +104,9 @@ void drawMusicMain() {
 	volt_draw_texture(PlaylistIcon, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
 
-	// volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
-	// volt_draw_texture(PlaylistEditor, mainButtonPos[3].x+1, mainButtonPos[3].y+6);
-	// volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Plst Editor");
-
-	volt_end_draw();
+	 volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
+	 volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Selector");
+	 volt_end_draw();
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -190,7 +188,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 				nowPlayingList.push_back(song);
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
-				volt_free_texture(Cover);
+				//volt_free_texture(Cover);
 			}
 			screenMode = musicPlayerScreen;
 			musicPlayerReturn = musicListScreen;
@@ -271,14 +269,6 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		stopPlayback();
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
-	} else if (hDown & KEY_Y) {
-		if (settings.universal.music == 1) {
-		if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
-			volt_free_texture(MusicPlayerImage);
-			volt_load_texture_png(MusicPlayerImage, "sdmc:/Universal-Manager/Theme/Image.png");
-		}
-		} else {
-		}
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, playerButtonPos[0])) {
 			togglePlayback();
@@ -567,6 +557,85 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
 			selectedPlstItem++;
+			keyRepeatDelay = 3;
+		}
+	}
+}
+
+void drawThemeSelector(void) {
+	// Theme Stuff.
+	drawBgTop();
+	drawBarsTop();
+	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Theme Selector");
+
+	if (dirChanged) {
+		dirContents.clear();
+		std::vector<DirEntry> dirContentsTemp;
+		getDirectoryContents(dirContentsTemp);
+		for(uint i=0;i<dirContentsTemp.size();i++) {
+			if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
+				dirContentsTemp[i].isDirectory)) {
+				dirContents.push_back(dirContentsTemp[i]);
+			}
+		}
+		dirChanged = false;
+	}
+	std::string dirs;
+	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
+		if (i == selectedFile) {
+			dirs += "> " + dirContents[i].name + "\n";
+		} else {
+			dirs += "  " + dirContents[i].name + "\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
+		dirs += "\n";
+	}
+	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+
+	drawBgBot();
+	drawBarsBot();
+	volt_end_draw();
+}
+
+void themeSelectorLogic(u32 hDown, u32 hHeld) { 
+	if (keyRepeatDelay)	keyRepeatDelay--; 
+	if (hDown & KEY_A) {
+		if (dirContents[selectedFile].isDirectory) {
+			chdir(dirContents[selectedFile].name.c_str());
+			selectedFile = 0;
+			dirChanged = true;
+		} else {
+			if(dirContents[selectedFile].name != currentSong) {
+			}
+			if (settings.universal.music == 1) {
+		if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
+			if(confirmPopup("Do you want, to use this Image?")) {
+			volt_free_texture(MusicPlayerImage);
+			volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
+		} else {
+		}
+		}
+			}
+		}
+	} else if (hDown & KEY_B) {
+		char path[PATH_MAX];
+		getcwd(path, PATH_MAX);
+		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
+			screenMode = musicMainScreen;
+		} else {
+		chdir("..");
+		selectedFile = 0;
+		dirChanged = true;
+		}
+	} else if (hHeld & KEY_UP) {
+		if (selectedFile > 0 && !keyRepeatDelay) {
+			selectedFile--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedFile < dirContents.size()-1) {
+			selectedFile++;
 			keyRepeatDelay = 3;
 		}
 	}

@@ -238,6 +238,9 @@ int main()
 			case musicPlaylistEditScreen:
 				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
 				break;
+			case themeSelectorScreen:
+				drawThemeSelector();
+				break;
 //#########################################################################################################
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
@@ -337,6 +340,9 @@ int main()
 				break;
 			case musicPlaylistEditScreen:
 				musicPlaylistEditLogic(hDown, hHeld);
+				break;
+			case themeSelectorScreen:
+				themeSelectorLogic(hDown, hHeld);
 				break;
 //#########################################################################################################
 			case settingsScreen:

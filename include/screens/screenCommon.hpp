@@ -41,20 +41,21 @@
 #define musicPlaylistAddScreen	6
 #define musicPlaylistPlayScreen	7
 #define musicPlaylistEditScreen	8
+#define themeSelectorScreen 	9
 //###############################
-#define settingsScreen			9
-#define uiSettingsScreen		10
+#define settingsScreen			10
+#define uiSettingsScreen		11
 //###############################
-#define imageScreen				11
+#define imageScreen				12
 //###############################
-#define ftpScreen				12
+#define ftpScreen				13
 //###############################
-#define fileManagerScreen		13
+#define fileManagerScreen		14
 //###############################
-#define updaterSubMenu			14
-#define OtherScreen				15
-#define TWLScreen				16
-#define CFWScreen				17
+#define updaterSubMenu			15
+#define OtherScreen				16
+#define TWLScreen				17
+#define CFWScreen				18
 //###############################
 
 struct Playlist {
@@ -90,6 +91,8 @@ void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
+void drawThemeSelector(void);
+void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.
