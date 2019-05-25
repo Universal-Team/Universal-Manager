@@ -31,7 +31,7 @@
 #define mainScreen				0
 #define fileScreen				1
 #define creditsScreen			2
-#define updaterScreen			3
+#define TWLScreen				3
 #define musicMainScreen			4
 #define musicListScreen			5
 #define musicPlayerScreen		6
@@ -42,8 +42,9 @@
 #define imageScreen				11
 #define uiSettingsScreen		12
 #define ftpScreen				13
-#define updaterScreen2			14
+#define OtherScreen				14
 #define fileManagerScreen		15
+#define updaterSubMenu			16
 
 struct Playlist {
 	std::string name;
@@ -80,9 +81,15 @@ void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
 
 // Updater Screen.
-// Page 1.
-void drawUpdaterScreen(void);
-void updaterLogic(u32 hDown, touchPosition touch);
+// Sub Menu.
+void drawUpdaterSubMenu(void);
+void updaterSubMenuLogic(u32 hDown, touchPosition touch);
+// TWL Screen.
+void drawUpdaterTWL(void);
+void updaterTWLLogic(u32 hDown, touchPosition touch);
+// Other Screen
+void drawUpdaterOther(void);
+void updaterOtherLogic(u32 hDown, touchPosition touch);
 // Page 2.
 void drawUpdaterScreen2(void);
 void updaterLogic2(u32 hDown, touchPosition touch);

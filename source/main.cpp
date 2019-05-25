@@ -80,7 +80,7 @@ extern bool firstSong;
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, ftpScreen},
-    {0, 150, 149, 52, updaterScreen},
+    {0, 150, 149, 52, updaterSubMenu},
     {170, 150, 149, 52, settingsScreen},
 };
 
@@ -216,8 +216,8 @@ int main()
 			case creditsScreen:
 				drawCredits();				// Draws the Credits screen
 				break;
-			case updaterScreen:
-				drawUpdaterScreen();		// Draws the Updater screen
+			case updaterSubMenu:
+				drawUpdaterSubMenu();		// Draws the Updater screen
 				break;
 			case musicMainScreen:
 				drawMusicMain();			// Draws the Music Player song selection screen
@@ -249,11 +249,14 @@ int main()
 			case ftpScreen:
 				drawFTPScreen();
 				break;
-			case updaterScreen2:
-				drawUpdaterScreen2();
-				break;
 			case fileManagerScreen:
 				drawFileManagerScreen();
+				break;
+			case TWLScreen:
+				drawUpdaterTWL();
+				break;
+			case OtherScreen:
+				drawUpdaterOther();
 				break;
 		}
 
@@ -265,7 +268,7 @@ int main()
 				} else if (hDown & KEY_X) {
 					screenMode = ftpScreen;
 				} else if (hDown & KEY_Y) {
-					screenMode = updaterScreen;
+					screenMode = updaterSubMenu;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
 						if (touching(touch, mainScreenButtonPos[i])) {
@@ -300,15 +303,8 @@ int main()
 					}
 				}
 				break;
-			case updaterScreen:
-				updaterLogic(hDown, touch);
-				if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(updaterScreenButtonPos)/sizeof(updaterScreenButtonPos[0]));i++) {
-						if (touching(touch, updaterScreenButtonPos[i])) {
-							screenMode = updaterScreenButtonPos[i].link;
-						}
-					}
-				}
+			case updaterSubMenu:
+				updaterSubMenuLogic(hDown, touch);
 				break;
 			case musicMainScreen:
 				musicMainLogic(hDown, touch);
@@ -353,13 +349,17 @@ int main()
 				screenMode = mainScreen;
 			}
 				break;
-			case updaterScreen2:
-				updaterLogic2(hDown, touch);
-				break;
 			case fileManagerScreen:
 			if(hDown & KEY_B) {
 				screenMode = fileScreen;
 			}
+				break;
+			case TWLScreen:
+				updaterTWLLogic(hDown, touch);
+				break;
+			case OtherScreen:
+				updaterOtherLogic(hDown, touch);
+				break;
 			}
 		}
 
