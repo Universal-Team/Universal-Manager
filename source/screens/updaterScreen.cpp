@@ -146,6 +146,7 @@ void drawUpdaterScreen(void) {
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	volt_draw_texture(BackIcon, 288, 208);
 	volt_draw_texture(UpdaterIcon, 0, 208);
 	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
@@ -195,7 +196,7 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 			updateLuma(true);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[11])) {
-			if(confirmPopup("Are you sure you want to scan for Updates?\nThis only works the First Time.")) {
+			if(confirmPopup("Are you sure you want to check for Updates?\nThis only works the First Time.")) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
 			}
@@ -229,7 +230,8 @@ void drawUpdaterScreen2(void) {
 	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
-	volt_draw_text(265, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	volt_draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
 	for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[10]))-1; i >= 8; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
