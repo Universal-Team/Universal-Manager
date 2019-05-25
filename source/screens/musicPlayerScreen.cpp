@@ -105,7 +105,7 @@ void drawMusicMain() {
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
 
 	 volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
-	 volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Selector");
+	 volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Themes");
 	 volt_end_draw();
 }
 
@@ -229,6 +229,7 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		volt_draw_text(0, 4, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
+		volt_draw_rectangle(18, 175, 100, 20, BLACK);
 		volt_draw_text(20, 177, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		volt_draw_rectangle(18, 192, 364, 20, BLACK);
 		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, settings.universal.bars);
