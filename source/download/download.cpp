@@ -528,6 +528,104 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 	return jsonItem;
 }
 
+std::vector<ThemeEntry> getThemeList(std::string repo, std::string path)
+{
+	Result ret = 0;
+	void *socubuf = memalign(0x1000, 0x100000);
+	std::vector<ThemeEntry> emptyVector;
+	if (!socubuf)
+	{
+		return emptyVector;
+	}
+
+	ret = socInit((u32*)socubuf, 0x100000);
+	if (R_FAILED(ret))
+	{
+		free(socubuf);
+		return emptyVector;
+	}
+	
+	std::stringstream apiurlStream;
+	apiurlStream << "https://api.github.com/repos/" << repo << "/contents/" << path;
+	std::string apiurl = apiurlStream.str();
+	
+	CURL *hnd = curl_easy_init();
+	ret = setupContext(hnd, apiurl.c_str());
+	if (ret != 0) {
+		socExit();
+		free(result_buf);
+		free(socubuf);
+		result_buf = NULL;
+		result_sz = 0;
+		result_written = 0;
+		return emptyVector;
+	}
+
+	CURLcode cres = curl_easy_perform(hnd);
+	curl_easy_cleanup(hnd);
+	char* newbuf = (char*)realloc(result_buf, result_written + 1);
+	result_buf = newbuf;
+	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
+	
+	if (cres != CURLE_OK) {
+		printf("Error in:\ncurl\n");
+		socExit();
+		free(result_buf);
+		free(socubuf);
+		result_buf = NULL;
+		result_sz = 0;
+		result_written = 0;
+		
+		return emptyVector;
+	}
+	
+	std::vector<ThemeEntry> jsonItems;
+	json parsedAPI = json::parse(result_buf);
+	for(uint i=0;i<parsedAPI.size();i++) {
+		ThemeEntry themeEntry;
+		if (parsedAPI[i]["name"].is_string()) {
+			themeEntry.name = parsedAPI[i]["name"];
+		}
+		if (parsedAPI[i]["download_url"].is_string()) {
+			themeEntry.downloadUrl = parsedAPI[i]["download_url"];
+		}
+		if (parsedAPI[i]["path"].is_string()) {
+			themeEntry.sdPath = "sdmc:/";
+			themeEntry.sdPath += parsedAPI[i]["path"];
+			themeEntry.path = parsedAPI[i]["path"];
+
+			size_t pos;
+			while ((pos = themeEntry.path.find(" ")) != std::string::npos) {
+				themeEntry.path.replace(pos, 1, "%20");
+			}
+		}
+		jsonItems.push_back(themeEntry);
+	}
+
+	socExit();
+	free(result_buf);
+	free(socubuf);
+	result_buf = NULL;
+	result_sz = 0;
+	result_written = 0;
+
+	return jsonItems;
+}
+
+void downloadTheme(std::string path) {
+	std::vector<ThemeEntry> themeContents = getThemeList("Universal-Team/extras", path);
+	for(uint i=0;i<themeContents.size();i++) {
+		if(themeContents[i].downloadUrl != "") {
+			displayMsg(("Downloading: "+themeContents[i].name).c_str());
+			downloadToFile(themeContents[i].downloadUrl, themeContents[i].sdPath);
+		} else {
+			displayMsg(("Downloading: "+themeContents[i].name).c_str());
+			mkdir((themeContents[i].sdPath).c_str(), 0777);
+			downloadTheme(themeContents[i].path);
+		}
+	}
+}
+
 bool showReleaseInfo(std::string repo, bool showExitText)
 {
 	jsonName = getLatestRelease(repo, "name");
@@ -1003,4 +1101,105 @@ void updateCheckpoint(void) {
 		saveUpdateData();
 		updateAvailable[10] = false;
 	doneMsg();
+}
+
+void downloadThemes(void) {
+
+	int selectedMusicTheme = 0;
+	int keyRepeatDelay = 0;
+	std::string themeNames[] = {"Music Theme"};
+	std::string themeFolders[] = {"Theme"};
+	chooseMusicTheme:
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
+		if(keyRepeatDelay)	keyRepeatDelay--;
+		if(hDown & KEY_A) {
+			break;
+		} else if(hDown & KEY_B) {
+			return;
+		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+			if(selectedMusicTheme > 0) {
+				selectedMusicTheme--;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+			if(selectedMusicTheme < 3) {
+				selectedMusicTheme++;
+				keyRepeatDelay = 3;
+			}
+		}
+		std::string themesText = "Do you want to download Images for the Music Player?\n";
+		for(int i=0;i<0;i++) {
+			if(i == selectedMusicTheme) {
+				themesText += "> " + themeNames[i] + "\n";
+			} else {
+				themesText += "  " + themeNames[i] + "\n";
+			}
+		}
+		themesText += "\n\n\n\n\n";
+		themesText += "B: Back   A: Choose";
+		displayMsg(themesText.c_str());
+	}
+
+	displayMsg("Getting theme list...");
+
+	std::vector<ThemeEntry> themeList;
+	themeList = getThemeList("Universal-Team/extras", "Universal-Manager/"+themeFolders[selectedMusicTheme]+"/themes");
+	mkdir(("sdmc:/Universal-Manager/"+themeFolders[selectedMusicTheme]).c_str(), 0777);
+	mkdir(("sdmc:/Universal-Manager/"+themeFolders[selectedMusicTheme]+"/themes/").c_str(), 0777);
+
+	int selectedTheme = 0;
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
+		if(keyRepeatDelay)	keyRepeatDelay--;
+		if(hDown & KEY_A) {
+			mkdir((themeList[selectedTheme].sdPath).c_str(), 0777);
+			displayMsg(("Downloading: "+themeList[selectedTheme].name).c_str());
+			downloadTheme(themeList[selectedTheme].path);
+		} else if(hDown & KEY_B) {
+			selectedTheme = 0;
+			goto chooseMusicTheme;
+		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+			if(selectedTheme > 0) {
+				selectedTheme--;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+			if(selectedTheme < (int)themeList.size()-1) {
+				selectedTheme++;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_LEFT && !keyRepeatDelay) {
+			selectedTheme -= 10;
+			if(selectedTheme < 0) {
+				selectedTheme = 0;
+			}
+			keyRepeatDelay = 3;
+		} else if(hHeld & KEY_RIGHT && !keyRepeatDelay) {
+			selectedTheme += 10;
+			if(selectedTheme > (int)themeList.size()) {
+				selectedTheme = themeList.size()-1;
+			}
+			keyRepeatDelay = 3;
+		}
+		std::string themesText;
+		for(int i=(selectedTheme<10) ? 0 : selectedTheme-10;i<(int)themeList.size()&&i<((selectedTheme<10) ? 11 : selectedTheme+1);i++) {
+			if(i == selectedTheme) {
+				themesText += "> " + themeList[i].name + "\n";
+			} else {
+				themesText += "  " + themeList[i].name + "\n";
+			}
+		}
+		for(uint i=0;i<((themeList.size()<10) ? 11-themeList.size() : 0);i++) {
+			themesText += "\n";
+		}
+		themesText += "B: Back   A: Choose";
+		displayMsg(themesText.c_str());
+	}
 }

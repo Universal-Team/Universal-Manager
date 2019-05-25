@@ -67,6 +67,8 @@ ButtonPos downloadFunctionButtonPos[] = {
 	{0, 208, 32, 32, -1},
 	// Back Icon.
 	{288, 208, 32, 32, -1},
+
+	{129, 168, 87, 33, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
@@ -89,11 +91,15 @@ ButtonPos downloadButtonPos[] = {
 	{129, 88, 87, 33},
 	// Checkpoint
 	{129, 128, 87, 33},
+	// Music Player Theme.
+	{129, 168, 87, 33},
 
 	// Sub Menu.
 	{38, 48, 87, 33, CFWScreen},
 	{129, 48, 87, 33, TWLScreen},
 	{220, 48, 87, 33, OtherScreen},
+
+	{129, 168, 87, 33},
 };
 
 bool updateAvailable[] = {
@@ -119,9 +125,9 @@ void drawUpdaterSubMenu(void) {
 	drawBgBot();
 	drawBarsBot();
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[11].x, downloadButtonPos[11].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[12].x, downloadButtonPos[12].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[13].x, downloadButtonPos[13].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[14].x, downloadButtonPos[14].y);
 	volt_draw_text(49, 58, 0.7f, 0.7f, BLACK, "CFW");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "TWL");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Other");
@@ -250,6 +256,11 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	volt_draw_texture(UpdaterButton, downloadButtonPos[10].x, downloadButtonPos[10].y);
 	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Checkpoint");
 	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
+
+	// Themes Download Button.
+	volt_draw_texture(UpdaterButton, downloadButtonPos[15].x, downloadButtonPos[15].y);
+	volt_draw_text(0, 178, 0.7f, 0.7f, BLACK, "extras");
+	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Themes");
 	
 
 	// Draw The Pages and Back Icon.
@@ -290,6 +301,8 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[12])) {
 			screenMode = updaterSubMenu;
+		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+			downloadThemes();
 		}
 }
 }

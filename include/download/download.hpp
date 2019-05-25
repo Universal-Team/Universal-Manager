@@ -39,6 +39,13 @@ enum DownloadError {
 	DL_ERROR_GIT,
 };
 
+struct ThemeEntry {
+	std::string downloadUrl;
+	std::string name;
+	std::string path;
+	std::string sdPath;
+};
+
 Result downloadToFile(std::string url, std::string path);
 Result downloadFromRelease(std::string url, std::string asset, std::string path);
 
@@ -77,6 +84,14 @@ std::string getLatestCommit(std::string repo, std::string item);
  * @return the string from the API.
  */
 std::string getLatestCommit(std::string repo, std::string array, std::string item);
+
+/**
+ * Get a GitHub directory's contents with the GitHub API.
+ * repo is where to get from. (Ex. "DS-Homebrew/twlmenu-extras")
+ * path is the path within the repo (Ex. "contents/_nds/TWiLightMenu/dsimenu/themes")
+ * @return the string from the API.
+ */
+std::vector<ThemeEntry> getThemeList(std::string repo, std::string path);
 
 /**
  * Show the latest release's name and message.
@@ -141,3 +156,8 @@ void updatePKSM(void);
  * Update Checkpoint to latest Release.
  */
 void updateCheckpoint(void);
+
+/**
+ * Download themes from Universal-Team/extras.
+ */
+void downloadThemes(void);

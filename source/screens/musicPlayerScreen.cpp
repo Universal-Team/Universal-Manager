@@ -271,6 +271,14 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		stopPlayback();
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
+	} else if (hDown & KEY_Y) {
+		if (settings.universal.music == 1) {
+		if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
+			volt_free_texture(MusicPlayerImage);
+			volt_load_texture_png(MusicPlayerImage, "sdmc:/Universal-Manager/Theme/Image.png");
+		}
+		} else {
+		}
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, playerButtonPos[0])) {
 			togglePlayback();
