@@ -42,6 +42,7 @@ Settings_t settings;
 void LoadUniversalSettings(void) {
 	settings.universal.bars = settingsini.GetInt("UI", "BARS", BLACK); // Bars color
 	settings.universal.bg = settingsini.GetInt("UI", "BG", GRAY); // Background Color
+	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
 	
 
 }
@@ -52,6 +53,7 @@ void LoadUniversalSettings(void) {
 void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "BARS", settings.universal.bars);
 	settingsini.SetInt("UI", "BG", settings.universal.bg);
+	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 

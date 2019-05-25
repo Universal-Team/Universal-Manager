@@ -118,6 +118,29 @@ void displayMsg(const char* text) {
 	volt_end_draw();
 }
 
+
+void drawMusicPlayerImage(void) {
+	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
+		volt_draw_on(GFX_TOP, GFX_LEFT);
+		volt_draw_texture(MusicPlayerImage, 0, 25);
+	} else {
+		drawBgTop();
+	}
+}
+
+void drawCover(void) {
+	drawBgTop();
+	volt_draw_texture(Cover, 40, 25);
+}
+
+void MusicPlayerImageChoice(void) {
+	if (settings.universal.music == 0) {
+		drawCover();
+	} else if(settings.universal.music ==1) {
+		drawMusicPlayerImage();
+	}
+}
+
 // Misc Stuff.
 size_t MainMenuButton = 1;
 size_t BackIcon = 2;
@@ -151,6 +174,7 @@ size_t SDImage = 20;
 size_t CreditsImage = 21;
 
 size_t Cover = 22;
+size_t MusicPlayerImage = 23;
 
 void graphicsInit(void) {
 	
@@ -183,7 +207,12 @@ void graphicsInit(void) {
 
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
-	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");;
+	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");
+
+	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
+		volt_load_texture_png(MusicPlayerImage, "sdmc:/Universal-Manager/Theme/Image.png");
+	} else {
+}
 }
 
 std::string secondsToString(u64 seconds) {
