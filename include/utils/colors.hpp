@@ -29,7 +29,7 @@
 
 #define WHITE RGBA8(255, 255, 255, 255)
 
-#define GRAY RGBA8(70, 70, 70, 255)
+#define GRAY RGBA8(127, 127, 127, 255)
 
 #define GREYISH RGBA8(200, 200, 200, 255)
 
