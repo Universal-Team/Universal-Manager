@@ -86,7 +86,7 @@ ButtonPos mainScreenButtonPos[] = {
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicMainScreen},
-	{100, 120, 149, 52, imageScreen},
+	{100, 120, 149, 52, PNGScreen},
     {288, 208, 32, 32, mainScreen},
 };
 
@@ -249,8 +249,11 @@ int main()
 				drawUISettingsScreen();
 				break;
 //#########################################################################################################
-			case imageScreen:
-				drawImageViewerUI();		// Draw the Image Viewer screen
+			case PNGScreen:
+				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
+				break;
+			case BMPScreen:
+				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
 				break;
 			case showImageScreen:
 				showImage();
@@ -365,8 +368,11 @@ int main()
 				uiSettingsLogic(hDown, touch);
 				break;
 //#########################################################################################################
-			case imageScreen:
-			imageSelectorLogic(hDown, hHeld);
+			case PNGScreen:
+			PNGSelectorLogic(hDown, hHeld);
+				break;
+			case BMPScreen:
+			BMPSelectorLogic(hDown, hHeld);
 				break;
 			case showImageScreen:
 			showImageLogic(hDown, touch);

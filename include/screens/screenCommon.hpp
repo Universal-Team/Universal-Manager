@@ -46,17 +46,18 @@
 #define settingsScreen			10
 #define uiSettingsScreen		11
 //###############################
-#define imageScreen				12
-#define showImageScreen			13
+#define PNGScreen				12
+#define BMPScreen				13
+#define showImageScreen			14
 //###############################
-#define ftpScreen				14
+#define ftpScreen				15
 //###############################
-#define fileManagerScreen		15
+#define fileManagerScreen		16
 //###############################
-#define updaterSubMenu			16
-#define OtherScreen				17
-#define TWLScreen				18
-#define CFWScreen				19
+#define updaterSubMenu			17
+#define OtherScreen				18
+#define TWLScreen				19
+#define CFWScreen				20
 //###############################
 
 struct Playlist {
@@ -110,8 +111,10 @@ void drawUpdaterCFW(void);
 void updaterCFWLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
-void drawImageViewerUI(void);
-void imageSelectorLogic(u32 hDown, u32 hHeld);
+void drawPNGImageViewerUI(void);
+void PNGSelectorLogic(u32 hDown, u32 hHeld);
+void drawBMPImageViewerUI(void);
+void BMPSelectorLogic(u32 hDown, u32 hHeld);
 void showImage(void);
 void showImageLogic(u32 hDown, touchPosition touch);
 
