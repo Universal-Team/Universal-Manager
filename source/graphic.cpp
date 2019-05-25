@@ -130,7 +130,7 @@ void drawMusicPlayerImage(void) {
 
 void drawCover(void) {
 	drawBgTop();
-	volt_draw_texture(Cover, 40, 25);
+	volt_draw_texture(Cover, 178, 30);
 }
 
 void MusicPlayerImageChoice(void) {
