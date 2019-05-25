@@ -163,24 +163,42 @@ void updaterLogic(u32 hDown, touchPosition touch) {
 		screenMode = updaterScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
+			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
 			updateTWiLight(false);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[1])) {
+			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Nightly?")) {
 			updateTWiLight(true);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[2])) {
+			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Release?")) {
 			updateBootstrap(false);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[3])) {
+			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
 			updateBootstrap(true);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[4])) {
+			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
 			updateUniversalManager(false);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[5])) {
+			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
 			updateUniversalManager(true);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
+			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
 			updateLuma(false);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[7])) {
+			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
 			updateLuma(true);
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+			if(confirmPopup("Are you sure you want to scan for Updates?\nThis only works the First Time.")) {
 			displayMsg("Checking for Updates.. please wait.");
 			checkForUpdates();
+			}
 		}
 	}
 }
@@ -225,11 +243,17 @@ void updaterLogic2(u32 hDown, touchPosition touch) {
 		screenMode = updaterScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[8])) {
+			if(confirmPopup("Are you sure you want to update GodMode9\nRelease?")) {
 			downloadGodMode9();
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[9])) {
+			if(confirmPopup("Are you sure you want to update PKSM\nRelease?")) {
 			updatePKSM();
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[10])) {
+			if(confirmPopup("Are you sure you want to update Checkpoint\nRelease?")) {
 			updateCheckpoint();
+			}
 }
 }
 }
