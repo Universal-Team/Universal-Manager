@@ -643,6 +643,8 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
+	} else if(hDown & KEY_X) {
+		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
