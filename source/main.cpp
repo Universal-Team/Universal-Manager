@@ -267,6 +267,9 @@ int main()
 			case OtherScreen:
 				drawUpdaterOther();
 				break;
+			case CFWScreen:
+				drawUpdaterCFW();
+				break;
 //#########################################################################################################
 		}
 
@@ -378,6 +381,9 @@ int main()
 				break;
 			case OtherScreen:
 				updaterOtherLogic(hDown, touch);
+				break;
+			case CFWScreen:
+				updaterCFWLogic(hDown, touch);
 				break;
 			}
 		}

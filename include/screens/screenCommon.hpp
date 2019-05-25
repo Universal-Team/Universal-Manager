@@ -54,6 +54,7 @@
 #define updaterSubMenu			14
 #define OtherScreen				15
 #define TWLScreen				16
+#define CFWScreen				17
 //###############################
 
 struct Playlist {
@@ -100,6 +101,9 @@ void updaterTWLLogic(u32 hDown, touchPosition touch);
 // Other Screen
 void drawUpdaterOther(void);
 void updaterOtherLogic(u32 hDown, touchPosition touch);
+// CFW Screen
+void drawUpdaterCFW(void);
+void updaterCFWLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 void drawImageViewerUI(void);
