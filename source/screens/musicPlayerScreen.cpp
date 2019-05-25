@@ -563,6 +563,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	}
 }
 
+
 void drawThemeSelector(void) {
 	// Theme Stuff.
 	drawBgTop();
@@ -609,15 +610,19 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
-			if (settings.universal.music == 1) {
-		if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
+			if (settings.universal.music == 0) {
+			if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
+			volt_free_texture(Cover);
+			volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
+			}
+		} else if (settings.universal.music == 1) {
+			if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
 			if(confirmPopup("Do you want, to use this Image?")) {
 			volt_free_texture(MusicPlayerImage);
 			volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
-		} else {
 		}
 		}
-			}
+		}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
