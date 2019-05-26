@@ -121,6 +121,7 @@ void displayMsg(const char* text) {
 
 void drawMusicPlayerImage(void) {
 		volt_draw_on(GFX_TOP, GFX_LEFT);
+		volt_draw_text(20, 100, 0.7f, 0.7f, WHITE, "You didn't loaded an Image Yet.\nPlease Load an Image under Themes.");
 		volt_draw_texture(MusicPlayerImage, 0, 25);
 	}
 
