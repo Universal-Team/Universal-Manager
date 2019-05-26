@@ -44,7 +44,7 @@ void drawFileManagerSubMenu(void) {
 	volt_draw_texture(ImageIcon, 105, 130);
 	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
 	
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 

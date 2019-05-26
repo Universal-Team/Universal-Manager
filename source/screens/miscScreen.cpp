@@ -33,7 +33,7 @@ void drawCredits(void) {
 	
 	drawBgBot();
 	drawBarsBot();
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 

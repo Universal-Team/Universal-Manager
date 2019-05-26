@@ -236,11 +236,12 @@ void drawMusicPlayer(void) {
 
 		// Placeholder for Metadata Stuff..
 		if (settings.universal.music == 0) {
+	} else if (settings.universal.music == 1) {
 		volt_draw_text(15, 40, 0.7f, 0.7f, BLACK, "Song Name");
 		volt_draw_text(15, 60, 0.7f, 0.7f, BLACK, "Author Name");
 		volt_draw_text(15, 80, 0.7f, 0.7f, BLACK, "Album Name");
 		volt_draw_text(15, 100, 0.7f, 0.7f, BLACK, "Release Year?");
-	} else if (settings.universal.music == 1) {
+	} else if (settings.universal.music == 2) {
 	}
 	}
 	

@@ -87,25 +87,25 @@ ButtonPos mainScreenButtonPos[] = {
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicMainScreen},
 	{100, 120, 149, 52, PNGScreen},
-    {288, 208, 32, 32, mainScreen},
+    {293, 213, 27, 27, mainScreen},
 };
 
 ButtonPos settingsScreenButtonPos[] = {
     {0, 40, 149, 52, creditsScreen},
-    {288, 208, 32, 32, mainScreen},
+    {293, 213, 27, 27, mainScreen},
 	{170, 40, 149, 52, uiSettingsScreen},
 };
 
 ButtonPos uisettingsScreenButtonPos[] = {
-    {288, 208, 32, 32, settingsScreen},
+    {293, 213, 27, 27, settingsScreen},
 };
 
 ButtonPos updaterScreenButtonPos[] = {
-    {288, 208, 32, 32, mainScreen},
+    {293, 213, 27, 27, mainScreen},
 };
 
 ButtonPos creditsScreenButtonPos[] = {
-    {288, 208, 32, 32, settingsScreen},
+    {293, 213, 27, 27, settingsScreen},
 };
 
 void screenoff()

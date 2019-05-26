@@ -35,7 +35,7 @@ ButtonPos uiSettingsButtonPos[] = {
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
 
-	{288, 208, 32, 32, settingsScreen},
+	{293, 213, 27, 27, settingsScreen},
 
 	// Music BG
 	{220, 28, 87, 33, -1},
@@ -78,7 +78,7 @@ void drawSettingsScreen(void) {
 	volt_draw_texture(MainMenuButton, 170, 40);
 	volt_draw_text(200, 57, 0.7f, 0.7f, BLACK, "UI Settings");
 
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 
@@ -109,7 +109,7 @@ void drawUISettingsScreen(void) {
 
 	volt_draw_texture(UpdaterButton, 220, 28);
 	volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, musicModes[settings.universal.music].c_str());
-	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode");
+	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
 
 	// Save Settings. ;P
 	volt_draw_texture(UpdaterButton, 10, 28);
@@ -117,7 +117,7 @@ void drawUISettingsScreen(void) {
 
 	// Maybe Text Color later? 
 
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 

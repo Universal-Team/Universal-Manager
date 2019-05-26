@@ -66,7 +66,7 @@ ButtonPos downloadFunctionButtonPos[] = {
 	// Check for Update!
 	{0, 208, 32, 32, -1},
 	// Back Icon.
-	{288, 208, 32, 32, -1},
+	{293, 213, 27, 27, -1},
 
 	{129, 168, 87, 33, -1},
 };
@@ -182,7 +182,7 @@ void drawUpdaterTWL(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
@@ -268,7 +268,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[10]))-1; i >= 8; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
@@ -334,7 +334,7 @@ void drawUpdaterCFW(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 288, 208);
+	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
