@@ -39,6 +39,9 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Music BG
 	{220, 28, 87, 33, -1},
+
+	// Saving.
+	{10, 28, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -106,6 +109,11 @@ void drawUISettingsScreen(void) {
 
 	volt_draw_texture(UpdaterButton, 220, 28);
 	volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, musicModes[settings.universal.music].c_str());
+	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode");
+
+	// Save Settings. ;P
+	volt_draw_texture(UpdaterButton, 10, 28);
+	volt_draw_text(19, 38, 0.7f, 0.7f, BLACK, "Save");
 
 	// Maybe Text Color later? 
 
@@ -143,6 +151,9 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
-		}
+		} else if (touching(touch, uiSettingsButtonPos[8])) {
+			SaveUniversalSettings();
+			saveMsg();
 	}
+}
 }
