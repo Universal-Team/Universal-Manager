@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+//#include <SDL/SDL.h>
 
 #include "music/all.h"
 #include "music/error.h"
@@ -14,6 +15,7 @@
 
 static volatile bool stop = true;
 static enum file_types file_type = FILE_TYPE_ERROR;
+Audio_Metadata metadata;
 
 /**
  * Pause or play current file.

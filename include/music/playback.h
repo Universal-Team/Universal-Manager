@@ -17,6 +17,16 @@ struct decoder_fn
 	void (* exit)(void);
 };
 
+typedef struct {
+	bool has_meta;
+    char title[31];
+    char album[31];
+    char artist[31];
+    char year[5];
+} Audio_Metadata;
+
+extern Audio_Metadata metadata;
+
 struct playbackInfo_t
 {
 	char*				file;
