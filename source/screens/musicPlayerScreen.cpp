@@ -625,7 +625,6 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
 			}
 		} else if (settings.universal.music == 1) {
-			if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
 			if(confirmPopup("Do you want, to use this Image?")) {
 			volt_free_texture(MusicPlayerImage);
 			volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
