@@ -20,6 +20,7 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
+std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -87,24 +88,24 @@ void drawUISettingsScreen(void) {
 
 	// Bars.
 	volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
-	volt_draw_texture(UpdaterButton, 35, 88);
-	volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, "Red");
-	volt_draw_texture(UpdaterButton, 129, 88);
-	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Green");
-	volt_draw_texture(UpdaterButton, 220, 88);
-	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Blue");
+	volt_draw_texture_blend(UpdaterButton, 35, 88, RED);
+	volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
+	volt_draw_texture_blend(UpdaterButton, 129, 88, GREEN);
+	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
+	volt_draw_texture_blend(UpdaterButton, 220, 88, BLUE);
+	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
 	volt_draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
-	volt_draw_texture(UpdaterButton, 35, 168);
-	volt_draw_text(46, 178, 0.7f, 0.7f, BLACK, "Red");
-	volt_draw_texture(UpdaterButton, 129, 168);
-	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Green");
-	volt_draw_texture(UpdaterButton, 220, 168);
-	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, "Blue");
+	volt_draw_texture_blend(UpdaterButton, 35, 168, RED);
+	volt_draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
+	volt_draw_texture_blend(UpdaterButton, 129, 168, GREEN);
+	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
+	volt_draw_texture_blend(UpdaterButton, 220, 168, BLUE);
+	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
 
 	volt_draw_texture(UpdaterButton, 220, 28);
-	volt_draw_text(229, 38, 0.7f, 0.7f, BLACK, "Music");
+	volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, musicModes[settings.universal.music].c_str());
 
 	// Maybe Text Color later? 
 
