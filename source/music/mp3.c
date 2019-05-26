@@ -1,4 +1,3 @@
-#include <3ds.h>
 #include <mpg123.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,85 +6,12 @@
 #include "mp3.h"
 #include "music/playback.h"
 
-static mpg123_handle *mp3;
 static size_t*			buffSize;
 static mpg123_handle	*mh = NULL;
 static uint32_t			rate;
 static uint8_t			channels;
 
 static u64 frames_read = 0, total_samples = 0;
-
-static void safe_print(char *tag, char *name, char *data, size_t size) {
-	char safe[31];
-	if (size > 30) 
-		return;
-	memcpy(safe, data, size);
-	safe[size] = 0;
-	snprintf(tag, 34, "%s: %s\n", name, safe);
-}
-
-
-// For MP3 ID3 tags
-// Print out ID3v1 info.
-static void print_v1(Audio_Metadata *ID3tag, mpg123_id3v1 *v1) {
-	safe_print(ID3tag->title, "",   v1->title,   sizeof(v1->title));
-	safe_print(ID3tag->artist, "",  v1->artist,  sizeof(v1->artist));
-	safe_print(ID3tag->album, "",   v1->album,   sizeof(v1->album));
-	safe_print(ID3tag->year, "",    v1->year,    sizeof(v1->year));
-}
-
-static void print_lines(char *data, const char *prefix, mpg123_string *inlines) {
-	size_t i;
-	int hadcr = 0, hadlf = 0;
-	char *lines = NULL;
-	char *line  = NULL;
-	size_t len = 0;
-
-	if (inlines != NULL && inlines->fill) {
-		lines = inlines->p;
-		len   = inlines->fill;
-	}
-	else 
-		return;
-
-	line = lines;
-	for (i = 0; i < len; ++i) {
-		if (lines[i] == '\n' || lines[i] == '\r' || lines[i] == 0) {
-			char save = lines[i]; /* saving, changing, restoring a byte in the data */
-			if (save == '\n') 
-				++hadlf;
-			if (save == '\r') 
-				++hadcr;
-			if ((hadcr || hadlf) && (hadlf % 2 == 0) && (hadcr % 2 == 0)) 
-				line = "";
-
-			if (line) {
-				lines[i] = 0;
-				if (data == NULL)
-					printf("%s%s\n", prefix, line);
-				else
-					snprintf(data, 0x1F, "%s%s\n", prefix, line);
-				line = NULL;
-				lines[i] = save;
-			}
-		}
-		else {
-			hadlf = hadcr = 0;
-			if (line == NULL) 
-				line = lines + i;
-		}
-	}
-}
-
-// For MP3 ID3 tags
-// Print out the named ID3v2  fields.
-static void print_v2(Audio_Metadata *ID3tag, mpg123_id3v2 *v2) {
-	print_lines(ID3tag->title, "", v2->title);
-	print_lines(ID3tag->artist, "", v2->artist);
-	print_lines(ID3tag->album, "", v2->album);
-	print_lines(ID3tag->year, "",    v2->year);
-}
-
 
 /**
  * Set decoder parameters for MP3.
@@ -133,18 +59,6 @@ int initMp3(const char* file)
 		return -1;
 	}
 
-	static const Audio_Metadata empty;
-	metadata = empty;
-	mpg123_id3v1 *v1;
-	mpg123_id3v2 *v2;
-
-	mpg123_seek(mh, 0, SEEK_SET);
-	metadata.has_meta = mpg123_meta_check(mh);
-	if (metadata.has_meta & MPG123_ID3 && mpg123_id3(mp3, &v1, &v2) == MPG123_OK) {
-		if (v1 != NULL)
-			print_v1(&metadata, v1);
-		if (v2 != NULL) {
-			print_v2(&metadata, v2);
 	/*
 	 * Ensure that this output format will not change (it might, when we allow
 	 * it).
@@ -161,8 +75,6 @@ int initMp3(const char* file)
 	*buffSize = mpg123_outblock(mh) * 16;
 
 	return 0;
-}
-	}
 }
 
 /**
