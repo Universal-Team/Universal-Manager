@@ -631,7 +631,6 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		}
 		}
 		}
-		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
