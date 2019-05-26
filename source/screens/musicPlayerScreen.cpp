@@ -620,11 +620,16 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
 			if (settings.universal.music == 0) {
+			displayMsg("Your Current Setting doesn't allow it.\nChange Your Setting in the UI Settings.\n(Music)");
+			for (int i = 0; i < 60*4; i++) {
+			gspWaitForVBlank();
+			}
+		} else if (settings.universal.music == 1) {
 			if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
 			volt_free_texture(Cover);
 			volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
-			}
-		} else if (settings.universal.music == 1) {
+			} 
+		} else if (settings.universal.music == 2) {
 			if(confirmPopup("Do you want, to use this Image?")) {
 			volt_free_texture(MusicPlayerImage);
 			volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());

@@ -120,13 +120,9 @@ void displayMsg(const char* text) {
 
 
 void drawMusicPlayerImage(void) {
-	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
 		volt_draw_on(GFX_TOP, GFX_LEFT);
 		volt_draw_texture(MusicPlayerImage, 0, 25);
-	} else {
-		drawBgTop();
 	}
-}
 
 void drawCover(void) {
 	drawBgTop();
@@ -135,8 +131,10 @@ void drawCover(void) {
 
 void MusicPlayerImageChoice(void) {
 	if (settings.universal.music == 0) {
-		drawCover();
+		drawBgTop();
 	} else if(settings.universal.music ==1) {
+		drawCover();
+	} else if(settings.universal.music == 2) {
 		drawMusicPlayerImage();
 	}
 }

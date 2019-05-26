@@ -141,18 +141,23 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			screenMode = uiSettingsButtonPos[6].link;
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
-			if (settings.universal.music > 1) settings.universal.music = 0;
+			if (settings.universal.music > 2) settings.universal.music = 0;
 		}
 		if (settings.universal.music == 0) {
-			displayMsg("Current Music Player Mode : Cover.");
+			displayMsg("Current Music Player Mode : Default.");
 			for (int i = 0; i < 60*1; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (settings.universal.music == 1) {
-			displayMsg("Current Music Player Mode : Background.");
+			displayMsg("Current Music Player Mode : Cover.");
 			for (int i = 0; i < 60*1; i++) {
 			gspWaitForVBlank();
 			}
-		}
+		} else if (settings.universal.music == 2) {
+			displayMsg("Current Music Player Mode : Background.");
+			for (int i = 0; i < 60*1; i++) {
+			gspWaitForVBlank();
+	}
+}
 	}
 }
