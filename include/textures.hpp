@@ -31,7 +31,6 @@
 
 // Misc Stuff.
 extern size_t MainMenuButton;
-extern size_t BackIcon;
 extern size_t UpdaterButton;
 extern size_t Dot;
 extern size_t bgTop;

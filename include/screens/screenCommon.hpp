@@ -125,3 +125,4 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 
 // FTP Stuff.
 void drawFTPScreen(void);
+void ftpLogic(u32 hDown, touchPosition touch);

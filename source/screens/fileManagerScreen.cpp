@@ -29,7 +29,8 @@
 void drawFileManagerSubMenu(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+	displayTime();
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
 
 	drawBgBot();
 	drawBarsBot();
@@ -43,21 +44,16 @@ void drawFileManagerSubMenu(void) {
 	volt_draw_texture(MainMenuButton, 100, 120);
 	volt_draw_texture(ImageIcon, 105, 130);
 	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
-	
-	volt_draw_texture(BackIcon, 293, 213);
-	displayTime();
 	volt_end_draw();
 }
 
 void drawFileManagerScreen(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FileManager Menu");
+	displayTime();
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FileManager Menu");
 
 	drawBgBot();
 	drawBarsBot();
-	
-	volt_draw_texture(BackIcon, 288, 208);
-	displayTime();
 	volt_end_draw();
 }

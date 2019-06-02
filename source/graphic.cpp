@@ -144,7 +144,6 @@ void MusicPlayerImageChoice(void) {
 
 // Misc Stuff.
 size_t MainMenuButton = 1;
-size_t BackIcon = 2;
 size_t UpdaterButton = 3;
 size_t Dot = 4;
 
@@ -188,7 +187,6 @@ void graphicsInit(void) {
 	
 	// Misc Stuff.
 	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/MainMenuButton.png");
-	volt_load_texture_png(BackIcon, "romfs:/graphics/Misc/Back Icon.png");
 	volt_load_texture_png(UpdaterButton, "romfs:/graphics/Button/UpdaterButton.png");
 	volt_load_texture_png(Dot, "romfs:/graphics/Misc/Dot.png");
 	volt_load_texture_png(bgTop, "romfs:/graphics/Misc/universal-bg-top.png");

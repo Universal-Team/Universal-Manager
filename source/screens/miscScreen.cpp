@@ -26,6 +26,33 @@
 
 #include "screens/screenCommon.hpp"
 #include "ftp/ftp.h"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
+
+struct ButtonPos {
+	int x;
+	int y;
+	int w;
+	int h;
+	int link;
+};
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
+
+ButtonPos ftpFunctionButtonPos[] = {
+	// Back Icon.
+	{293, 213, 27, 27, -1},
+};
+
+ButtonPos ftpButtonPos[] = {
+		// Back Icon.
+	{293, 213, 27, 27, mainScreen},
+};
+
+
 
 void drawCredits(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
@@ -33,8 +60,6 @@ void drawCredits(void) {
 	
 	drawBgBot();
 	drawBarsBot();
-	volt_draw_texture(BackIcon, 293, 213);
-	displayTime();
 	volt_end_draw();
 }
 
@@ -45,16 +70,26 @@ void saveMsg(void) {
 	}
 }
 
-//void ftpLogic(void) { // To-Do
+void ftpLogic(u32 hDown, touchPosition touch) {
+		if (hDown & KEY_B) {
+		screenMode = mainScreen;
+	} else if(hDown & KEY_TOUCH) {
+		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
+			if (touching(touch, ftpButtonPos[i])) {
+				screenMode = ftpButtonPos[i].link;
+			}
+		}
+	}
+}
 
 
 void drawFTPScreen(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
+	displayTime();
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
 	drawBgBot();
 	drawBarsBot();
-	displayTime();
 	volt_end_draw();
 }
 

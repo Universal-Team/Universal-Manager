@@ -89,7 +89,7 @@ void drawMusicMain() {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBgBot();
 	drawBarsBot();
 
@@ -133,7 +133,7 @@ void drawMusicList(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -335,7 +335,7 @@ void drawMusicPlaylistAdd(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -436,7 +436,7 @@ void drawMusicPlaylistPlay(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -518,7 +518,7 @@ void drawMusicPlaylistEdit() {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
@@ -585,7 +585,7 @@ void drawThemeSelector(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Theme Selector");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Theme Selector");
 
 	if (dirChanged) {
 		dirContents.clear();

@@ -121,7 +121,7 @@ void drawUpdaterSubMenu(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 
 	drawBgBot();
 	drawBarsBot();
@@ -133,7 +133,6 @@ void drawUpdaterSubMenu(void) {
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "TWL");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Other");
 	//volt_draw_texture(UpdaterIcon, 0, 208); // Not working Yet correctly.
-	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 
@@ -160,7 +159,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterTWL(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "TWL Update Screen");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "TWL Update Screen");
 	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
@@ -186,7 +185,6 @@ void drawUpdaterTWL(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
@@ -237,7 +235,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 */void drawUpdaterOther(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Other Updater Screen");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
@@ -272,7 +270,6 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[10]))-1; i >= 8; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
@@ -314,7 +311,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterCFW(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "CFW Update Screen");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "CFW Update Screen");
 	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
@@ -338,7 +335,6 @@ void drawUpdaterCFW(void) {
 	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	volt_draw_texture(BackIcon, 293, 213);
 	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
 		if(updateAvailable[i]) {
 			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);

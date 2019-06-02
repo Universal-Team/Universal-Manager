@@ -68,7 +68,7 @@ void drawSettingsScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Settings");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Settings");
 
 	drawBgBot();
 	drawBarsBot();
@@ -78,8 +78,6 @@ void drawSettingsScreen(void) {
 
 	volt_draw_texture(MainMenuButton, 170, 40);
 	volt_draw_text(200, 57, 0.7f, 0.7f, BLACK, "UI Settings");
-
-	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 
@@ -87,7 +85,7 @@ void drawUISettingsScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "UI Settings");
+	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "UI Settings");
 	drawBgBot();
 	drawBarsBot();
 
@@ -118,8 +116,6 @@ void drawUISettingsScreen(void) {
 	volt_draw_text(19, 38, 0.7f, 0.7f, BLACK, "Save");
 
 	// Maybe Text Color later? 
-
-	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 
