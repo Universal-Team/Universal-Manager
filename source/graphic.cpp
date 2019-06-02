@@ -182,6 +182,15 @@ size_t barTopBot = 27;
 size_t barBotTop = 28;
 size_t barBotBot  = 29;
 size_t RGBButton = 30;
+size_t Battery0 = 31;
+size_t Battery15 = 32;
+size_t Battery28 = 33;
+size_t Battery43 = 34;
+size_t Battery57 = 35;
+size_t Battery71 = 36;
+size_t Battery85 = 37;
+size_t Battery100 = 38;
+size_t BatteryCharge = 39;
 
 void graphicsInit(void) {
 	
@@ -224,6 +233,17 @@ void graphicsInit(void) {
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/universal-credits.png");
 
+	// Battery.
+	volt_load_texture_png(Battery0, "romfs:/graphics/Battery/battery0.png");
+	volt_load_texture_png(Battery15, "romfs:/graphics/Battery/battery15.png");
+	volt_load_texture_png(Battery28, "romfs:/graphics/Battery/battery28.png");
+	volt_load_texture_png(Battery43, "romfs:/graphics/Battery/battery43.png");
+	volt_load_texture_png(Battery57, "romfs:/graphics/Battery/battery57.png");
+	volt_load_texture_png(Battery71, "romfs:/graphics/Battery/battery71.png");
+	volt_load_texture_png(Battery85, "romfs:/graphics/Battery/battery85.png");
+	volt_load_texture_png(Battery100, "romfs:/graphics/Battery/battery100.png");
+	volt_load_texture_png(BatteryCharge, "romfs:/graphics/Battery/batteryCharge.png");
+
 
 	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
 		volt_load_texture_png(MusicPlayerImage, "sdmc:/Universal-Manager/Theme/Image.png");
@@ -243,4 +263,14 @@ std::string secondsToString(u64 seconds) {
     else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
 	
 	return string;
+}
+
+void drawBatteryTop(void) {
+	volt_draw_texture(Battery100, 330, 5);
+	volt_draw_text(348, 5, 0.7f, 0.7f, WHITE, "100%");
+}
+
+void drawBatteryBot(void) {
+	volt_draw_texture(Battery100, 250, 5);
+	volt_draw_text(268, 5, 0.7f, 0.7f, WHITE, "100%");
 }

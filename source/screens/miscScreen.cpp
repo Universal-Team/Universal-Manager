@@ -60,6 +60,7 @@ void drawCredits(void) {
 	
 	drawBgBot();
 	drawBarsBot();
+	drawBatteryBot();
 	volt_end_draw();
 }
 
@@ -88,6 +89,7 @@ void drawFTPScreen(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
+	drawBatteryTop();
 	drawBgBot();
 	drawBarsBot();
 	volt_end_draw();

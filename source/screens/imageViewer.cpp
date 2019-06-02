@@ -44,6 +44,7 @@ void drawPNGImageViewerUI(void) {
 	drawBgTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
+	drawBatteryTop();
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -81,6 +82,7 @@ void drawBMPImageViewerUI(void) {
 	drawBgTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
+	drawBatteryTop();
 
 	if (dirChanged) {
 		dirContents.clear();

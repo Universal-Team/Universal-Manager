@@ -31,6 +31,7 @@ void drawFileManagerSubMenu(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
+	drawBatteryTop();
 
 	drawBgBot();
 	drawBarsBot();
@@ -52,6 +53,7 @@ void drawFileManagerScreen(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FileManager Menu");
+	drawBatteryTop();
 
 	drawBgBot();
 	drawBarsBot();

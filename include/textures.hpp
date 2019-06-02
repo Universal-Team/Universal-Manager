@@ -73,3 +73,14 @@ extern size_t CreditsImage;
 // This is for the BG of the Music Player.
 extern size_t Cover;
 extern size_t MusicPlayerImage;
+
+// Battery.
+extern size_t Battery0;
+extern size_t Battery15;
+extern size_t Battery28;
+extern size_t Battery43;
+extern size_t Battery57;
+extern size_t Battery71;
+extern size_t Battery85;
+extern size_t Battery100;
+extern size_t BatteryCharge;

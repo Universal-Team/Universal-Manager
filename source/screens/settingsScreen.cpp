@@ -69,6 +69,7 @@ void drawSettingsScreen(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Settings");
+	drawBatteryTop();
 
 	drawBgBot();
 	drawBarsBot();
@@ -86,6 +87,7 @@ void drawUISettingsScreen(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "UI Settings");
+	drawBatteryTop();
 	drawBgBot();
 	drawBarsBot();
 

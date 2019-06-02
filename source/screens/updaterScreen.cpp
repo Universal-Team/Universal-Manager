@@ -122,6 +122,7 @@ void drawUpdaterSubMenu(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
+	drawBatteryTop();
 
 	drawBgBot();
 	drawBarsBot();
@@ -160,6 +161,7 @@ void drawUpdaterTWL(void) {
 	drawBgTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "TWL Update Screen");
+	drawBatteryTop();
 	displayTime();
 	
 	// Draw the Main Bottom Screen Background.
@@ -237,6 +239,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	displayTime();
+	drawBatteryTop();
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
@@ -313,6 +316,7 @@ void drawUpdaterCFW(void) {
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "CFW Update Screen");
 	displayTime();
+	drawBatteryTop();
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
