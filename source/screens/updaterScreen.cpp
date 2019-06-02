@@ -121,7 +121,7 @@ void drawUpdaterSubMenu(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 	drawBatteryTop();
 
 	drawBgBot();
@@ -160,7 +160,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterTWL(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "TWL Update Screen");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "TWL Update Screen");
 	drawBatteryTop();
 	displayTime();
 	
@@ -237,7 +237,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 */void drawUpdaterOther(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Other Updater Screen");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	displayTime();
 	drawBatteryTop();
 	
@@ -314,7 +314,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterCFW(void) {
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "CFW Update Screen");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "CFW Update Screen");
 	displayTime();
 	drawBatteryTop();
 	

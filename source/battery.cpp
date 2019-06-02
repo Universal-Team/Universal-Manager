@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ptmu_x.h"
+#include "universal-Settings.hpp"
 
 
 void drawBatteryTop(void) {
@@ -41,9 +42,8 @@ void drawBatteryTop(void) {
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
-
 	if(batteryPercent == 0) {
-		volt_draw_texture(Battery0, 330, 15);
+	volt_draw_texture(Battery0, 330, 15);
 	} else if (batteryPercent > 0 && batteryPercent <= 15) {
 	volt_draw_texture(Battery15, 330, 5);
 	} else if(batteryPercent > 15 && batteryPercent <= 28) {
@@ -63,11 +63,13 @@ void drawBatteryTop(void) {
 	if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
 		volt_draw_texture(BatteryCharge, 330, 5);
 	}
-
+	if (settings.universal.battery == 0) {
 	if(batteryPercent == 100) {
-		volt_draw_textf(348, 5, 0.7f, 0.7f, WHITE, "100%%");
+		volt_draw_textf(348, 4, 0.7f, 0.7f, WHITE, "100%%");
 	} else {
-		volt_draw_textf(348, 5, 0.7f, 0.7f, WHITE, "%2d%%", batteryPercent);
+		volt_draw_textf(348, 4, 0.7f, 0.7f, WHITE, "%2d%%", batteryPercent);
+}
+} else if (settings.universal.battery == 1) {
 }
 }
 
@@ -98,10 +100,12 @@ void drawBatteryBot(void) {
 	if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
 		volt_draw_texture(BatteryCharge, 250, 5);
 	}
-
+	if (settings.universal.battery == 0) {
 	if(batteryPercent == 100) {
-		volt_draw_textf(268, 5, 0.7f, 0.7f, WHITE, "100%%");
+		volt_draw_textf(268, 4, 0.7f, 0.7f, WHITE, "100%%");
 	} else {
-		volt_draw_textf(268, 5, 0.7f, 0.7f, WHITE, "%2d%%", batteryPercent);
+		volt_draw_textf(268, 4, 0.7f, 0.7f, WHITE, "%2d%%", batteryPercent);
+}
+} else if (settings.universal.battery == 1) {
 }
 }

@@ -55,12 +55,17 @@ extern size_t ImageIcon;
 
 // Music Player Stuff.
 extern size_t LeftIcon;
+extern size_t LeftIcon2;
 extern size_t PauseIcon;
+extern size_t PauseIcon2;
 extern size_t PlayIcon;
+extern size_t PlayIcon2;
 extern size_t PlayIconSmall;
+extern size_t PlayIconSmall2;
 extern size_t PlaylistIcon;
 extern size_t RepeatIcon;
 extern size_t RightIcon;
+extern size_t RightIcon2;
 extern size_t ShuffleIcon;
 extern size_t PlaylistEditor;
 

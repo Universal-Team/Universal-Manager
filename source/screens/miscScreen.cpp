@@ -88,7 +88,7 @@ void drawFTPScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FTP Mode");
 	drawBatteryTop();
 	drawBgBot();
 	drawBarsBot();

@@ -68,7 +68,7 @@ void drawSettingsScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Settings");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Settings");
 	drawBatteryTop();
 
 	drawBgBot();
@@ -86,7 +86,8 @@ void drawUISettingsScreen(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "UI Settings");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings");
+	volt_draw_text(0, 216, 0.72f, 0.72f, WHITE, "Press X to change the Percent Option.");
 	drawBatteryTop();
 	drawBgBot();
 	drawBarsBot();
@@ -127,6 +128,9 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
+		} else if (hDown & KEY_X) {
+			settings.universal.battery++;
+			if (settings.universal.battery > 1) settings.universal.battery = 0;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			red = keyboardInputInt("Red");

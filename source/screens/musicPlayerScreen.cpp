@@ -89,7 +89,7 @@ void drawMusicMain() {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBatteryTop();
 	drawBgBot();
 	drawBarsBot();
@@ -99,7 +99,8 @@ void drawMusicMain() {
 	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Songs");
 
 	volt_draw_texture(MainMenuButton, mainButtonPos[1].x, mainButtonPos[1].y);
-	volt_draw_texture(PlayIconSmall, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
+	volt_draw_texture_blend(PlayIconSmall, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
+	volt_draw_texture(PlayIconSmall2, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
 	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "Now playing");
 
 	volt_draw_texture(MainMenuButton, mainButtonPos[2].x, mainButtonPos[2].y);
@@ -134,7 +135,7 @@ void drawMusicList(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBatteryTop();
 
 	if (dirChanged) {
@@ -232,7 +233,7 @@ void drawMusicPlayer(void) {
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		volt_draw_text(0, 4, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
+		volt_draw_text(0, 3, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
 		volt_draw_rectangle(18, 175, 100, 20, BLACK);
 		volt_draw_text(20, 177, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		volt_draw_rectangle(18, 192, 364, 20, BLACK);
@@ -262,9 +263,15 @@ void drawMusicPlayer(void) {
 	drawBarsBot();
 	displayTime();
 	drawBatteryBot();
-	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y);
-	volt_draw_texture(LeftIcon, playerButtonPos[1].x, playerButtonPos[1].y);
-	volt_draw_texture(RightIcon, playerButtonPos[2].x, playerButtonPos[2].y);
+	volt_draw_texture_blend(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
+	volt_draw_texture(!isPaused() ? PauseIcon2 : PlayIcon2, playerButtonPos[0].x, playerButtonPos[0].y);
+
+	volt_draw_texture_blend(LeftIcon, playerButtonPos[1].x, playerButtonPos[1].y, settings.universal.bars);
+	volt_draw_texture(LeftIcon2, playerButtonPos[1].x, playerButtonPos[1].y);
+
+	volt_draw_texture_blend(RightIcon, playerButtonPos[2].x, playerButtonPos[2].y, settings.universal.bars);
+	volt_draw_texture(RightIcon2, playerButtonPos[2].x, playerButtonPos[2].y);
+
 	volt_draw_texture_blend(ShuffleIcon, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
 	volt_draw_texture_blend(RepeatIcon, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
 	if (musicRepeat)	volt_draw_text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, WHITE, (musicRepeat == 1 ? "A" : "S"));
@@ -338,7 +345,7 @@ void drawMusicPlaylistAdd(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	drawBatteryTop();
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -440,7 +447,7 @@ void drawMusicPlaylistPlay(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	drawBatteryTop();
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -523,7 +530,7 @@ void drawMusicPlaylistEdit() {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	drawBatteryTop();
 
 	std::string plstList;
@@ -591,7 +598,7 @@ void drawThemeSelector(void) {
 	drawBgTop();
 	drawBarsTop();
 	displayTime();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Theme Selector");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Theme Selector");
 	drawBatteryTop();
 
 	if (dirChanged) {

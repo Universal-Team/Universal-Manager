@@ -194,6 +194,12 @@ size_t Battery71 = 36;
 size_t Battery85 = 37;
 size_t Battery100 = 38;
 size_t BatteryCharge = 39;
+size_t PlayIcon2 = 40;
+size_t PauseIcon2 = 41;
+size_t LeftIcon2 = 42;
+size_t RightIcon2 = 43;
+size_t PlayIconSmall2 = 44;
+
 
 void graphicsInit(void) {
 	
@@ -223,12 +229,24 @@ void graphicsInit(void) {
 	
 	// Music Player Stuff.
 	volt_load_texture_png(LeftIcon, "romfs:/graphics/MusicPlayer/Left Icon.png");
+	volt_load_texture_png(LeftIcon2, "romfs:/graphics/MusicPlayer/Left Icon 2.png");
+
 	volt_load_texture_png(PauseIcon, "romfs:/graphics/MusicPlayer/Pause Icon.png");
+	volt_load_texture_png(PauseIcon2, "romfs:/graphics/MusicPlayer/Pause Icon 2.png");
+
 	volt_load_texture_png(PlayIcon, "romfs:/graphics/MusicPlayer/Play Icon.png");
+	volt_load_texture_png(PlayIcon2, "romfs:/graphics/MusicPlayer/Play Icon 2.png");
+
 	volt_load_texture_png(PlayIconSmall, "romfs:/graphics/MusicPlayer/Play Icon Small.png");
+	volt_load_texture_png(PlayIconSmall2, "romfs:/graphics/MusicPlayer/Play Icon Small 2.png");
+
 	volt_load_texture_png(PlaylistIcon, "romfs:/graphics/MusicPlayer/Playlist Icon.png");
+
 	volt_load_texture_png(RepeatIcon, "romfs:/graphics/MusicPlayer/Repeat Icon.png");
+
 	volt_load_texture_png(RightIcon, "romfs:/graphics/MusicPlayer/Right Icon.png");
+	volt_load_texture_png(RightIcon2, "romfs:/graphics/MusicPlayer/Right Icon 2.png");
+
 	volt_load_texture_png(ShuffleIcon, "romfs:/graphics/MusicPlayer/Shuffle Icon.png");
 	volt_load_texture_png(PlaylistEditor, "romfs:/graphics/MusicPlayer/Playlist Editor.png");
 	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");

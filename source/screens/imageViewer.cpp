@@ -43,7 +43,7 @@ void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
 	drawBatteryTop();
 
 	if (dirChanged) {
@@ -81,7 +81,7 @@ void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
 	drawBatteryTop();
 
 	if (dirChanged) {
