@@ -91,6 +91,7 @@ void drawBarsTop(void) {
 void drawBgTop(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 400, 240, settings.universal.bg);
+	volt_draw_texture(bgTop, 0, 25);
 }
 
 void displayTime(void) {
@@ -105,6 +106,7 @@ void drawBarsBot(void) {
 void drawBgBot(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
+	volt_draw_texture(bgBot, 0, 25);
 }
 
 void displayMsg(const char* text) {
@@ -174,6 +176,8 @@ size_t CreditsImage = 21;
 
 size_t Cover = 22;
 size_t MusicPlayerImage = 23;
+size_t bgTop = 24;
+size_t bgBot = 25;
 
 void graphicsInit(void) {
 	
@@ -182,6 +186,8 @@ void graphicsInit(void) {
 	volt_load_texture_png(BackIcon, "romfs:/graphics/Misc/Back Icon.png");
 	volt_load_texture_png(UpdaterButton, "romfs:/graphics/Button/UpdaterButton.png");
 	volt_load_texture_png(Dot, "romfs:/graphics/Misc/Dot.png");
+	volt_load_texture_png(bgTop, "romfs:/graphics/Misc/universal-bg-top.png");
+	volt_load_texture_png(bgBot, "romfs:/graphics/Misc/universal-bg-bottom.png");
 
 	// Main Menu Stuff.
 	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");
