@@ -203,10 +203,11 @@ void graphicsInit(void) {
 	volt_load_texture_png(RightIcon, "romfs:/graphics/MusicPlayer/Right Icon.png");
 	volt_load_texture_png(ShuffleIcon, "romfs:/graphics/MusicPlayer/Shuffle Icon.png");
 	volt_load_texture_png(PlaylistEditor, "romfs:/graphics/MusicPlayer/Playlist Editor.png");
+	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");
 
 	// Credits Stuff.
-	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/Credits Image.png");
-	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");
+	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/universal-credits.png");
+
 
 	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
 		volt_load_texture_png(MusicPlayerImage, "sdmc:/Universal-Manager/Theme/Image.png");
