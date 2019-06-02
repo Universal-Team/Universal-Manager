@@ -84,13 +84,13 @@ void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, f
 //}
 
 void drawBarsTop(void) {
-	volt_draw_rectangle(0, 0, 400, 25, settings.universal.bars);
-	volt_draw_rectangle(0, 215, 400, 25, settings.universal.bars);
+	volt_draw_texture_blend(barTopTop, 0, 0, settings.universal.bars);
+	volt_draw_texture_blend(barTopBot, 0, 215, settings.universal.bars);
 }
 
 void drawBgTop(void) {
 	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 400, 240, settings.universal.bg);
+	volt_draw_rectangle(0, 25, 400, 190, settings.universal.bg);
 	volt_draw_texture(bgTop, 0, 25);
 }
 
@@ -99,13 +99,13 @@ void displayTime(void) {
 }
 
 void drawBarsBot(void) {
-	volt_draw_rectangle(0, 0, 320, 25, settings.universal.bars);
-	volt_draw_rectangle(0, 215, 320, 25, settings.universal.bars);
+	volt_draw_texture_blend(barBotTop, 0, 0, settings.universal.bars);
+	volt_draw_texture_blend(barBotBot, 0, 215, settings.universal.bars);
 }
 
 void drawBgBot(void) {
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	volt_draw_rectangle(0, 0, 320, 240, settings.universal.bg);
+	volt_draw_rectangle(0, 25, 320, 190, settings.universal.bg);
 	volt_draw_texture(bgBot, 0, 25);
 }
 
@@ -178,16 +178,28 @@ size_t Cover = 22;
 size_t MusicPlayerImage = 23;
 size_t bgTop = 24;
 size_t bgBot = 25;
+size_t barTopTop = 26;
+size_t barTopBot = 27;
+size_t barBotTop = 28;
+size_t barBotBot  = 29;
+size_t RGBButton = 30;
 
 void graphicsInit(void) {
 	
 	// Misc Stuff.
-	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/Button.png");
+	volt_load_texture_png(MainMenuButton, "romfs:/graphics/Button/MainMenuButton.png");
 	volt_load_texture_png(BackIcon, "romfs:/graphics/Misc/Back Icon.png");
 	volt_load_texture_png(UpdaterButton, "romfs:/graphics/Button/UpdaterButton.png");
 	volt_load_texture_png(Dot, "romfs:/graphics/Misc/Dot.png");
 	volt_load_texture_png(bgTop, "romfs:/graphics/Misc/universal-bg-top.png");
 	volt_load_texture_png(bgBot, "romfs:/graphics/Misc/universal-bg-bottom.png");
+	volt_load_texture_png(RGBButton, "romfs:/graphics/Button/RGBButton.png");
+
+	// Bars
+	volt_load_texture_png(barTopTop, "romfs:/graphics/Misc/top-screen-top.png");
+	volt_load_texture_png(barTopBot, "romfs:/graphics/Misc/top-screen-bot.png");
+	volt_load_texture_png(barBotTop, "romfs:/graphics/Misc/bottom-screen-top.png");
+	volt_load_texture_png(barBotBot, "romfs:/graphics/Misc/bottom-screen-bot.png");
 
 	// Main Menu Stuff.
 	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");

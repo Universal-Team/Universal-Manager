@@ -34,6 +34,7 @@ void drawCredits(void) {
 	drawBgBot();
 	drawBarsBot();
 	volt_draw_texture(BackIcon, 293, 213);
+	displayTime();
 	volt_end_draw();
 }
 
@@ -53,6 +54,7 @@ void drawFTPScreen(void) {
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "FTP Mode");
 	drawBgBot();
 	drawBarsBot();
+	displayTime();
 	volt_end_draw();
 }
 

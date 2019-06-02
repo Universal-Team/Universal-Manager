@@ -88,6 +88,7 @@ void drawMusicMain() {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBgBot();
 	drawBarsBot();
@@ -131,6 +132,7 @@ void drawMusicList(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
@@ -256,6 +258,7 @@ void drawMusicPlayer(void) {
 
 	drawBgBot();
 	drawBarsBot();
+	displayTime();
 	volt_draw_texture(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y);
 	volt_draw_texture(LeftIcon, playerButtonPos[1].x, playerButtonPos[1].y);
 	volt_draw_texture(RightIcon, playerButtonPos[2].x, playerButtonPos[2].y);
@@ -331,6 +334,7 @@ void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -431,6 +435,7 @@ void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -512,6 +517,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlaylistEdit() {
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
@@ -578,6 +584,7 @@ void drawThemeSelector(void) {
 	// Theme Stuff.
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Theme Selector");
 
 	if (dirChanged) {

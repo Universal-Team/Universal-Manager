@@ -120,6 +120,7 @@ bool updateAvailable[] = {
 void drawUpdaterSubMenu(void) {
 	drawBgTop();
 	drawBarsTop();
+	displayTime();
 	volt_draw_text(110, 4, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 
 	drawBgBot();
@@ -132,6 +133,7 @@ void drawUpdaterSubMenu(void) {
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "TWL");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Other");
 	//volt_draw_texture(UpdaterIcon, 0, 208); // Not working Yet correctly.
+	volt_draw_texture(BackIcon, 293, 213);
 	volt_end_draw();
 }
 
@@ -150,7 +152,9 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 			checkForUpdates();
 			}
 		}
-*/}
+*/} else if (touching(touch, downloadFunctionButtonPos[12])) {
+			screenMode = mainScreen;
+		}
 }
 
 void drawUpdaterTWL(void) {

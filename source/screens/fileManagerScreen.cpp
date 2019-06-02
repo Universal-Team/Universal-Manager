@@ -45,6 +45,7 @@ void drawFileManagerSubMenu(void) {
 	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
 	
 	volt_draw_texture(BackIcon, 293, 213);
+	displayTime();
 	volt_end_draw();
 }
 
@@ -57,5 +58,6 @@ void drawFileManagerScreen(void) {
 	drawBarsBot();
 	
 	volt_draw_texture(BackIcon, 288, 208);
+	displayTime();
 	volt_end_draw();
 }

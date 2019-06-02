@@ -36,6 +36,13 @@ extern size_t UpdaterButton;
 extern size_t Dot;
 extern size_t bgTop;
 extern size_t bgBot;
+extern size_t RGBButton;
+
+// Bars.
+extern size_t barTopTop;
+extern size_t barTopBot;
+extern size_t barBotTop;
+extern size_t barBotBot;
 
 // Main Menu Stuff.
 extern size_t FileManagerIcon;

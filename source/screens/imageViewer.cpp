@@ -72,6 +72,7 @@ void drawPNGImageViewerUI(void) {
 
 	drawBgBot();
 	drawBarsBot();
+	displayTime();
 	volt_end_draw();
 }
 
@@ -108,6 +109,7 @@ void drawBMPImageViewerUI(void) {
 
 	drawBgBot();
 	drawBarsBot();
+	displayTime();
 	volt_end_draw();
 }
 
