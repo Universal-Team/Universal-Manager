@@ -24,52 +24,27 @@
 *         reasonable ways as different from the original version.
 */
 
-#pragma once
-
-#include <3ds.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
-#include "files.h"
-
-#ifdef __cplusplus
-}
-
+#include "common.hpp"
+#include "colors.hpp"
 #include <cstdio>
-#include <iostream>
+#include <cstring>
+#include <dirent.h>
+#include <malloc.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <regex>
-#include <curl/curl.h>
+#include <3ds.h>
+#include <stdlib.h>
+#include <3ds/types.h>
+#include <3ds/result.h>
+#include <3ds/svc.h>
+#include <3ds/srv.h>
+#include <3ds/synchronization.h>
+#include <3ds/services/ptmu.h>
+#include <3ds/ipc.h>
 
-#include "stringutils.hpp"
-#include "json.hpp"
-#include "graphic.h"
-#include "textures.hpp"
-
-using json = nlohmann::json;
-
-#endif
-
-extern char * arg0;
-
-#define WORKING_DIR       "/3ds/"
-
-// Battery.
-extern size_t Battery0;
-extern size_t Battery15;
-extern size_t Battery28;
-extern size_t Battery43;
-extern size_t Battery57;
-extern size_t Battery71;
-extern size_t Battery85;
-extern size_t Battery100;
-extern size_t BatteryCharge;
-
+void drawBatteryTop(void);
+void drawBatteryBot(void);

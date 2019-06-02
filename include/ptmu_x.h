@@ -24,52 +24,27 @@
 *         reasonable ways as different from the original version.
 */
 
-#pragma once
+#ifndef PTMU_X_H
+#define PTMU_X_H
 
-#include <3ds.h>
+// ptm:u functions not available in ctrulib.
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
 
-#include "files.h"
+Result ptmuxInit(void);
+
+void ptmuxExit(void);
+
+Result PTMUX_GetAdapterState(u8 *out);
+
+Result mcuInit(void);
+Result mcuExit(void);
+Result mcuGetBatteryLevel(u8* out);
 
 #ifdef __cplusplus
 }
-
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <curl/curl.h>
-
-#include "stringutils.hpp"
-#include "json.hpp"
-#include "graphic.h"
-#include "textures.hpp"
-
-using json = nlohmann::json;
-
 #endif
 
-extern char * arg0;
-
-#define WORKING_DIR       "/3ds/"
-
-// Battery.
-extern size_t Battery0;
-extern size_t Battery15;
-extern size_t Battery28;
-extern size_t Battery43;
-extern size_t Battery57;
-extern size_t Battery71;
-extern size_t Battery85;
-extern size_t Battery100;
-extern size_t BatteryCharge;
-
+#endif /* PTMU_X_H */

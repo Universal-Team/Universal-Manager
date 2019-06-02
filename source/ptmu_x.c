@@ -24,52 +24,69 @@
 *         reasonable ways as different from the original version.
 */
 
-#pragma once
+// Based on ctrulib's ptmu.c.
+#include <stdlib.h>
+#include <3ds/types.h>
+#include <3ds/result.h>
+#include <3ds/svc.h>
+#include <3ds/srv.h>
+#include <3ds/synchronization.h>
+#include <3ds/services/ptmu.h>
+#include <3ds/ipc.h>
+
+#include "ptmu_x.h"
 
 #include <3ds.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
+static Handle mcuhwcHandle;
 
-#include "files.h"
-
-#ifdef __cplusplus
+Result mcuInit(void)
+{
+    return srvGetServiceHandle(&mcuhwcHandle, "mcu::HWC");
 }
 
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <curl/curl.h>
+Result mcuExit(void)
+{
+    return svcCloseHandle(mcuhwcHandle);
+}
 
-#include "stringutils.hpp"
-#include "json.hpp"
-#include "graphic.h"
-#include "textures.hpp"
+static Handle ptmuxHandle;
+static int ptmuxRefCount;
 
-using json = nlohmann::json;
+Result ptmuxInit(void)
+{
+	if (AtomicPostIncrement(&ptmuxRefCount)) return 0;
+	Result res = srvGetServiceHandle(&ptmuxHandle, "ptm:u");
+	if (R_FAILED(res)) AtomicDecrement(&ptmuxRefCount);
+	return res;
+}
 
-#endif
+void ptmuxExit(void)
+{
+	if (AtomicDecrement(&ptmuxRefCount)) return;
+	svcCloseHandle(ptmuxHandle);
+}
 
-extern char * arg0;
+Result PTMUX_GetAdapterState(u8 *out)
+{
+	Result ret=0;
+	u32 *cmdbuf = getThreadCommandBuffer();
 
-#define WORKING_DIR       "/3ds/"
+	cmdbuf[0] = IPC_MakeHeader(0x5,0,0); // 0x50000
 
-// Battery.
-extern size_t Battery0;
-extern size_t Battery15;
-extern size_t Battery28;
-extern size_t Battery43;
-extern size_t Battery57;
-extern size_t Battery71;
-extern size_t Battery85;
-extern size_t Battery100;
-extern size_t BatteryCharge;
+	if(R_FAILED(ret = svcSendSyncRequest(ptmuxHandle)))return ret;
 
+	*out = (u8)cmdbuf[2] & 0xFF;
+
+	return (Result)cmdbuf[1];
+}
+
+Result mcuGetBatteryLevel(u8* out)
+{
+    u32* ipc = getThreadCommandBuffer();
+    ipc[0] = 0x50000;
+    Result ret = svcSendSyncRequest(mcuhwcHandle);
+    if(ret < 0) return ret;
+	*out = ipc[2];
+    return ipc[1];
+}

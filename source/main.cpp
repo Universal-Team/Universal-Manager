@@ -44,6 +44,7 @@
 #include "voltlib/volt.h"
 #include "keyboard.h"
 #include "download/download.hpp"
+#include "ptmu_x.h"
 
 extern "C" {
 	#include "music/error.h"
@@ -145,6 +146,9 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
+	ptmuInit();	// For battery status
+	ptmuxInit();	// For AC adapter status
+	mcuInit();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 

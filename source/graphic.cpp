@@ -29,6 +29,9 @@
 #include "textures.hpp"
 #include "voltlib/volt.h"
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color)
 {
@@ -263,14 +266,4 @@ std::string secondsToString(u64 seconds) {
     else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
 	
 	return string;
-}
-
-void drawBatteryTop(void) {
-	volt_draw_texture(Battery100, 330, 5);
-	volt_draw_text(348, 5, 0.7f, 0.7f, WHITE, "100%");
-}
-
-void drawBatteryBot(void) {
-	volt_draw_texture(Battery100, 250, 5);
-	volt_draw_text(268, 5, 0.7f, 0.7f, WHITE, "100%");
 }
