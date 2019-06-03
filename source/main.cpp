@@ -252,6 +252,9 @@ int main()
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
+		//	case uiSettingsScreen2:
+		//		drawUISettingsScreen2();
+		//		break;
 //#########################################################################################################
 			case PNGScreen:
 				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
@@ -371,6 +374,9 @@ int main()
 			case uiSettingsScreen:
 				uiSettingsLogic(hDown, touch);
 				break;
+		//	case uiSettingsScreen2:
+		//		uiSettingsLogic2(hDown, touch);
+		//		break;
 //#########################################################################################################
 			case PNGScreen:
 			PNGSelectorLogic(hDown, hHeld);

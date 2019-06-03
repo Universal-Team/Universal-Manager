@@ -45,19 +45,20 @@
 //###############################
 #define settingsScreen			10
 #define uiSettingsScreen		11
+#define uiSettingsScreen2		12
 //###############################
-#define PNGScreen				12
-#define BMPScreen				13
-#define showImageScreen			14
+#define PNGScreen				13
+#define BMPScreen				14
+#define showImageScreen			15
 //###############################
-#define ftpScreen				15
+#define ftpScreen				16
 //###############################
-#define fileManagerScreen		16
+#define fileManagerScreen		17
 //###############################
-#define updaterSubMenu			17
-#define OtherScreen				18
-#define TWLScreen				19
-#define CFWScreen				20
+#define updaterSubMenu			18
+#define OtherScreen				19
+#define TWLScreen				20
+#define CFWScreen				21
 //###############################
 
 struct Playlist {
@@ -79,6 +80,8 @@ void drawSettingsScreen(void);
 void drawCredits(void);
 void drawUISettingsScreen(void);
 void uiSettingsLogic(u32 hDown, touchPosition touch);
+//void drawUISettingsScreen2(void);
+//void uiSettingsLogic2(u32 hDown, touchPosition touch);
 
 // Music Player Screen.
 void drawMusicMain(void);

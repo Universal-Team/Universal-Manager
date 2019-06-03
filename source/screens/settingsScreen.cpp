@@ -21,6 +21,8 @@ struct ButtonPos {
 
 extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
+std::string animationModes[] = {"Disabled", "Enabled"};
+std::string percentModes[] = {"Hidden", "Shown"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -42,6 +44,17 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Saving.
 	{10, 28, 87, 33, -1},
+
+	// Bubble Colors.
+	{46, 98, 87, 33, -1},
+	{129, 98, 87, 33, -1},
+	{220, 98, 87, 33, -1},
+
+	// Animation Mode.
+	{220, 28, 87, 33, -1},
+
+	// Percent Mode.
+	{220, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -90,7 +103,6 @@ void drawUISettingsScreen(void) {
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings");
-	volt_draw_text(0, 216, 0.72f, 0.72f, WHITE, "Press X to change the Percent Option.");
 	drawBatteryTop();
 	drawBgBot();
 	animatedBGBot();
@@ -126,15 +138,43 @@ void drawUISettingsScreen(void) {
 	volt_end_draw();
 }
 
+/*void drawUISettingsScreen2(void) {
+	drawBgTop();
+	animatedBGTop();
+	drawBarsTop();
+	displayTime();
+	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings Page 2");
+	drawBatteryTop();
+	drawBgBot();
+	animatedBGBot();
+	drawBarsBotBack();
+
+		// Bubbles.
+	//volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubble");
+	volt_draw_texture_blend(RGBButton, 35, 88, RED);
+	//volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 2).c_str());
+	volt_draw_texture_blend(RGBButton, 129, 88, GREEN);
+	//volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 1).c_str());
+	volt_draw_texture_blend(RGBButton, 220, 88, BLUE);
+	//volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 0).c_str());
+
+	volt_draw_texture(UpdaterButton, 220, 28);
+	//volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, animationModes[settings.universal.animation].c_str());
+	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Animation :");
+
+	volt_draw_texture(UpdaterButton, 220, 168);
+	//volt_draw_text(229, 178, 0.65f, 0.65f, BLACK, percentModes[settings.universal.battery].c_str());
+	volt_draw_text(110, 178, 0.7f, 0.7f, BLACK, "Percentage :");
+}*/
+
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int red;
 	int green;
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
-		} else if (hDown & KEY_X) {
-			settings.universal.battery++;
-			if (settings.universal.battery > 1) settings.universal.battery = 0;
+		//} else if (hDown & KEY_R) {
+		//	screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			red = keyboardInputInt("Red");
@@ -165,3 +205,33 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	}
 }
 }
+
+/*void uiSettingsLogic2(u32 hDown, touchPosition touch) {
+	int red;
+	int green;
+	int blue;
+		if (hDown & KEY_B) {
+		screenMode = settingsScreen;
+		} else if (hDown & KEY_L) {
+			screenMode = uiSettingsScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, uiSettingsButtonPos[9])) {
+			red = keyboardInputInt("Red");
+			settings.universal.color = RGBA8(red, getColorValue(settings.universal.color, 1), getColorValue(settings.universal.color, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[10])) {
+			green = keyboardInputInt("Green (0-255)");
+			settings.universal.color = RGBA8(getColorValue(settings.universal.color, 2), green, getColorValue(settings.universal.color, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[11])) {
+			blue = keyboardInputInt("Blue (0-255)");
+			settings.universal.color = RGBA8(getColorValue(settings.universal.color, 2), getColorValue(settings.universal.color, 1), blue, 255);
+		} else if (touching(touch, uiSettingsButtonPos[12])) {
+				settings.universal.animation++;
+			if (settings.universal.animation > 1) settings.universal.animation = 0;
+		} else if (touching(touch, uiSettingsButtonPos[13])) {
+				settings.universal.battery++;
+			if (settings.universal.battery > 1) settings.universal.battery = 0;
+		} else if (touching(touch, uiSettingsButtonPos[6])) {
+			screenMode = uiSettingsButtonPos[6].link;
+	}
+}
+}*/
