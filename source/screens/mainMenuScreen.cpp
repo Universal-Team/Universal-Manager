@@ -28,12 +28,14 @@
 
 void drawMainMenu(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Universal-Manager");
 	displayTime();
 	drawBatteryTop();
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 
 	volt_draw_texture(MainMenuButton, 0, 40);

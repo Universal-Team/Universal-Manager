@@ -59,6 +59,7 @@ void drawCredits(void) {
 	volt_draw_texture(CreditsImage, 0, 0);
 	
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 	drawBatteryBot();
 	volt_end_draw();
@@ -86,11 +87,13 @@ void ftpLogic(u32 hDown, touchPosition touch) {
 
 void drawFTPScreen(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FTP Mode");
 	drawBatteryTop();
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 	volt_end_draw();
 }

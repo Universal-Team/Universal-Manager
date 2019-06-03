@@ -66,12 +66,14 @@ std::string getColorName(int color, int bgr) {
 
 void drawSettingsScreen(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Settings");
 	drawBatteryTop();
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	volt_draw_texture(MainMenuButton, 0, 40);
@@ -84,12 +86,14 @@ void drawSettingsScreen(void) {
 
 void drawUISettingsScreen(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings");
 	volt_draw_text(0, 216, 0.72f, 0.72f, WHITE, "Press X to change the Percent Option.");
 	drawBatteryTop();
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	// Bars.

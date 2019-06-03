@@ -42,6 +42,7 @@ std::string filename;
 void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
 	drawBatteryTop();
@@ -72,6 +73,7 @@ void drawPNGImageViewerUI(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	displayTime();
 	volt_end_draw();
@@ -80,6 +82,7 @@ void drawPNGImageViewerUI(void) {
 void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
 	drawBatteryTop();
@@ -110,6 +113,7 @@ void drawBMPImageViewerUI(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	displayTime();
 	volt_end_draw();
@@ -122,6 +126,7 @@ void showImage(void) {
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_draw_text(110, 4, 0.45f, 0.45f, WHITE, "Press B to exit.");
 	volt_end_draw();

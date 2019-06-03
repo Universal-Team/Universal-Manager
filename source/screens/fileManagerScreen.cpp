@@ -28,12 +28,14 @@
 
 void drawFileManagerSubMenu(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
 	drawBatteryTop();
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	// Music List Button.
@@ -50,12 +52,14 @@ void drawFileManagerSubMenu(void) {
 
 void drawFileManagerScreen(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FileManager Menu");
 	drawBatteryTop();
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }

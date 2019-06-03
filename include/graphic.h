@@ -69,8 +69,10 @@ std::string secondsToString(u64 seconds);
 void drawBatteryTop(void);
 
 void drawBatteryBot(void);
+// Animated BG's.
 
-void animatedBG(void);
+void animatedBGTop(void);
+void animatedBGBot(void);
 
 //void volt_free_texture(size_t id);
 #endif // GRAPHIC_H

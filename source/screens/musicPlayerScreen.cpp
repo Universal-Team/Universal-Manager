@@ -87,11 +87,13 @@ ButtonPos playerButtonPos[] = {
 void drawMusicMain() {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBatteryTop();
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 
 	volt_draw_texture(MainMenuButton, mainButtonPos[0].x, mainButtonPos[0].y);
@@ -133,6 +135,7 @@ void musicMainLogic(u32 hDown, touchPosition touch) {
 void drawMusicList(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
@@ -170,6 +173,7 @@ void drawMusicList(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }
@@ -260,6 +264,7 @@ void drawMusicPlayer(void) {
 	}
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	displayTime();
 	drawBatteryBot();
@@ -343,6 +348,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -377,6 +383,7 @@ void drawMusicPlaylistAdd(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }
@@ -445,6 +452,7 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -474,6 +482,7 @@ void drawMusicPlaylistPlay(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }
@@ -528,6 +537,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 
 void drawMusicPlaylistEdit() {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -550,6 +560,7 @@ void drawMusicPlaylistEdit() {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }
@@ -596,6 +607,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 void drawThemeSelector(void) {
 	// Theme Stuff.
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Theme Selector");
@@ -627,6 +639,7 @@ void drawThemeSelector(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotNormal();
 	volt_end_draw();
 }

@@ -142,6 +142,10 @@ void drawMusicPlayerImage(void) {
 
 void drawCover(void) {
 	drawBgTop();
+	if (settings.universal.animation == 0) {
+	} else if (settings.universal.animation == 1) {
+		animatedBGTop();
+	}
 	volt_draw_texture_blend(Cover, 185, 30, settings.universal.bars);
 	volt_draw_texture(Cover2, 185, 30);
 }
@@ -149,6 +153,10 @@ void drawCover(void) {
 void MusicPlayerImageChoice(void) {
 	if (settings.universal.music == 0) {
 		drawBgTop();
+		if (settings.universal.animation == 0) {
+	} else if (settings.universal.animation == 1) {
+		animatedBGTop();
+	}
 	} else if(settings.universal.music ==1) {
 		drawCover();
 	} else if(settings.universal.music == 2) {
@@ -211,7 +219,8 @@ size_t LeftIcon2 = 42;
 size_t RightIcon2 = 43;
 size_t PlayIconSmall2 = 44;
 size_t Cover2 = 45;
-size_t animatedTexture[2] = {47, 48};
+size_t animatedTextureTop[2] = {47, 48};
+size_t animatedTextureBottom[2] = {49, 50};
 
 void graphicsInit(void) {
 	
@@ -284,8 +293,11 @@ void graphicsInit(void) {
 	} else {
 }
 
-	volt_load_texture_png(animatedTexture[0], "romfs:/graphics/animated/Bubble 1.png");
-	volt_load_texture_png(animatedTexture[1], "romfs:/graphics/animated/Bubble 2.png");
+	volt_load_texture_png(animatedTextureTop[0], "romfs:/graphics/animated/Bubbles_Top_1.png");
+	volt_load_texture_png(animatedTextureTop[1], "romfs:/graphics/animated/Bubbles_Top_2.png");
+
+	volt_load_texture_png(animatedTextureBottom[0], "romfs:/graphics/animated/Bubbles_Bottom_1.png");
+	volt_load_texture_png(animatedTextureBottom[1], "romfs:/graphics/animated/Bubbles_Bottom_2.png");
 }
 
 std::string secondsToString(u64 seconds) {
@@ -305,7 +317,9 @@ std::string secondsToString(u64 seconds) {
 static int animated_bubblesYPos[2] = {0};
 static bool animated_bubbleMoveDelay = false;
 
-void animatedBG(void) {
+void animatedBGTop(void) {
+		if (settings.universal.animation == 0) {
+	} else if (settings.universal.animation == 1) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -315,8 +329,28 @@ void animatedBG(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	volt_draw_texture(animatedTexture[0], 0, animated_bubblesYPos[0]);
-	volt_draw_texture(animatedTexture[0], 0, animated_bubblesYPos[0]+240);
-	volt_draw_texture(animatedTexture[1], 0, animated_bubblesYPos[1]);
-	volt_draw_texture(animatedTexture[1], 0, animated_bubblesYPos[1]+240);
+	volt_draw_texture_blend(animatedTextureTop[0], 0, animated_bubblesYPos[0], settings.universal.color);
+	volt_draw_texture_blend(animatedTextureTop[0], 0, animated_bubblesYPos[0]+240, settings.universal.color);
+	volt_draw_texture_blend(animatedTextureTop[1], 0, animated_bubblesYPos[1], settings.universal.color);
+	volt_draw_texture_blend(animatedTextureTop[1], 0, animated_bubblesYPos[1]+240, settings.universal.color);
+}
+}
+
+void animatedBGBot(void) {
+	if (settings.universal.animation == 0) {
+	} else if (settings.universal.animation == 1) {
+		if (!animated_bubbleMoveDelay) {
+		animated_bubblesYPos[0]--;
+		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
+	}
+	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
+
+	animated_bubblesYPos[1]--;
+	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
+
+	volt_draw_texture_blend(animatedTextureBottom[0], 0, animated_bubblesYPos[0], settings.universal.color);
+	volt_draw_texture_blend(animatedTextureBottom[0], 0, animated_bubblesYPos[0]+240, settings.universal.color);
+	volt_draw_texture_blend(animatedTextureBottom[1], 0, animated_bubblesYPos[1], settings.universal.color);
+	volt_draw_texture_blend(animatedTextureBottom[1], 0, animated_bubblesYPos[1]+240, settings.universal.color);
+}
 }

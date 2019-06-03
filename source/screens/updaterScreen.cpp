@@ -119,12 +119,14 @@ bool updateAvailable[] = {
 
 void drawUpdaterSubMenu(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	displayTime();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 	drawBatteryTop();
 
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	volt_draw_texture(UpdaterButton, downloadButtonPos[12].x, downloadButtonPos[12].y);
@@ -159,6 +161,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 
 void drawUpdaterTWL(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "TWL Update Screen");
 	drawBatteryTop();
@@ -166,6 +169,7 @@ void drawUpdaterTWL(void) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	// TWL Menu Buttons.
@@ -236,6 +240,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 
 */void drawUpdaterOther(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	displayTime();
@@ -243,6 +248,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 		// Universal-Manager Buttons.
@@ -313,6 +319,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 
 void drawUpdaterCFW(void) {
 	drawBgTop();
+	animatedBGTop();
 	drawBarsTop();
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "CFW Update Screen");
 	displayTime();
@@ -320,6 +327,7 @@ void drawUpdaterCFW(void) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
+	animatedBGBot();
 	drawBarsBotBack();
 
 	// Luma 3DS Buttons.
