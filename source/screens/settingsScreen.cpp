@@ -72,7 +72,7 @@ void drawSettingsScreen(void) {
 	drawBatteryTop();
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Credits");
@@ -90,7 +90,7 @@ void drawUISettingsScreen(void) {
 	volt_draw_text(0, 216, 0.72f, 0.72f, WHITE, "Press X to change the Percent Option.");
 	drawBatteryTop();
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	// Bars.
 	volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");

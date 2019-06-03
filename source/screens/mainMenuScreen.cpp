@@ -34,7 +34,7 @@ void drawMainMenu(void) {
 	drawBatteryTop();
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_texture(FileManagerIcon, 5, 50);

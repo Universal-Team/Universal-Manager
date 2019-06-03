@@ -34,7 +34,7 @@ void drawFileManagerSubMenu(void) {
 	drawBatteryTop();
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	// Music List Button.
 	volt_draw_texture(MainMenuButton, 100, 40);
@@ -56,6 +56,6 @@ void drawFileManagerScreen(void) {
 	drawBatteryTop();
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }

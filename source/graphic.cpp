@@ -101,8 +101,17 @@ void displayTime(void) {
 	volt_draw_text(4, 3, 0.7f, 0.7f, WHITE, getTime().c_str());
 }
 
-void drawBarsBot(void) {
+void drawBarsBotBack(void) {
+	volt_free_texture(barBotBot);
 	volt_draw_texture_blend(barBotTop, 0, 0, settings.universal.bars);
+	volt_load_texture_png(barBotBot, "romfs:/graphics/Misc/bottom-screen-bot-back.png");
+	volt_draw_texture_blend(barBotBot, 0, 215, settings.universal.bars);
+}
+
+void drawBarsBotNormal(void) {
+	volt_free_texture(barBotBot);
+	volt_draw_texture_blend(barBotTop, 0, 0, settings.universal.bars);
+	volt_load_texture_png(barBotBot, "romfs:/graphics/Misc/bottom-screen-bot.png");
 	volt_draw_texture_blend(barBotBot, 0, 215, settings.universal.bars);
 }
 
@@ -119,7 +128,7 @@ void displayMsg(const char* text) {
 	displayTime();
 	volt_draw_text(26, 32, 0.45f, 0.45f, settings.universal.bars, text);
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -132,7 +141,8 @@ void drawMusicPlayerImage(void) {
 
 void drawCover(void) {
 	drawBgTop();
-	volt_draw_texture(Cover, 185, 30);
+	volt_draw_texture_blend(Cover, 185, 30, settings.universal.bars);
+	volt_draw_texture(Cover2, 185, 30);
 }
 
 void MusicPlayerImageChoice(void) {
@@ -199,6 +209,7 @@ size_t PauseIcon2 = 41;
 size_t LeftIcon2 = 42;
 size_t RightIcon2 = 43;
 size_t PlayIconSmall2 = 44;
+size_t Cover2 = 45;
 
 
 void graphicsInit(void) {
@@ -215,7 +226,6 @@ void graphicsInit(void) {
 	volt_load_texture_png(barTopTop, "romfs:/graphics/Misc/top-screen-top.png");
 	volt_load_texture_png(barTopBot, "romfs:/graphics/Misc/top-screen-bot.png");
 	volt_load_texture_png(barBotTop, "romfs:/graphics/Misc/bottom-screen-top.png");
-	volt_load_texture_png(barBotBot, "romfs:/graphics/Misc/bottom-screen-bot.png");
 
 	// Main Menu Stuff.
 	volt_load_texture_png(FileManagerIcon, "romfs:/graphics/MainMenu/Filemanager Icon.png");
@@ -249,7 +259,9 @@ void graphicsInit(void) {
 
 	volt_load_texture_png(ShuffleIcon, "romfs:/graphics/MusicPlayer/Shuffle Icon.png");
 	volt_load_texture_png(PlaylistEditor, "romfs:/graphics/MusicPlayer/Playlist Editor.png");
-	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Unknown.png");
+
+	volt_load_texture_png(Cover, "romfs:/graphics/MusicPlayer/Cover.png");
+	volt_load_texture_png(Cover2, "romfs:/graphics/MusicPlayer/Cover 2.png");
 
 	// Credits Stuff.
 	volt_load_texture_png(CreditsImage, "romfs:/graphics/Misc/universal-credits.png");

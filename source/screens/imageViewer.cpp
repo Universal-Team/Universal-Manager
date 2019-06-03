@@ -72,7 +72,7 @@ void drawPNGImageViewerUI(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	displayTime();
 	volt_end_draw();
 }
@@ -110,7 +110,7 @@ void drawBMPImageViewerUI(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	displayTime();
 	volt_end_draw();
 }
@@ -122,7 +122,7 @@ void showImage(void) {
 
 	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_draw_text(110, 4, 0.45f, 0.45f, WHITE, "Press B to exit.");
 	volt_end_draw();
 }

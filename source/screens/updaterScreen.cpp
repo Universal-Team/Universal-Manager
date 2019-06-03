@@ -125,7 +125,7 @@ void drawUpdaterSubMenu(void) {
 	drawBatteryTop();
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	volt_draw_texture(UpdaterButton, downloadButtonPos[12].x, downloadButtonPos[12].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[13].x, downloadButtonPos[13].y);
@@ -166,7 +166,7 @@ void drawUpdaterTWL(void) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	// TWL Menu Buttons.
 	volt_draw_texture(UpdaterButton, downloadButtonPos[0].x, downloadButtonPos[0].y);
@@ -243,7 +243,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 		// Universal-Manager Buttons.
 
@@ -320,7 +320,7 @@ void drawUpdaterCFW(void) {
 	
 	// Draw the Main Bottom Screen Background.
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotBack();
 
 	// Luma 3DS Buttons.
 	volt_draw_texture(UpdaterButton, downloadButtonPos[6].x, downloadButtonPos[6].y);

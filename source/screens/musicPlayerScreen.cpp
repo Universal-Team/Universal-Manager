@@ -92,7 +92,7 @@ void drawMusicMain() {
 	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	drawBatteryTop();
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 
 	volt_draw_texture(MainMenuButton, mainButtonPos[0].x, mainButtonPos[0].y);
 	volt_draw_texture(MusicIcon, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
@@ -170,7 +170,7 @@ void drawMusicList(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -260,7 +260,7 @@ void drawMusicPlayer(void) {
 	}
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	displayTime();
 	drawBatteryBot();
 	volt_draw_texture_blend(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
@@ -377,7 +377,7 @@ void drawMusicPlaylistAdd(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -474,7 +474,7 @@ void drawMusicPlaylistPlay(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -550,7 +550,7 @@ void drawMusicPlaylistEdit() {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -627,7 +627,7 @@ void drawThemeSelector(void) {
 	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	drawBgBot();
-	drawBarsBot();
+	drawBarsBotNormal();
 	volt_end_draw();
 }
 
@@ -649,7 +649,7 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		} else if (settings.universal.music == 1) {
 			if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
 			volt_free_texture(Cover);
-			volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
+			volt_load_texture_png(Cover2, dirContents[selectedFile].name.c_str());
 			} 
 		} else if (settings.universal.music == 2) {
 			if(confirmPopup("Do you want, to use this Image?")) {

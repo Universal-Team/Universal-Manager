@@ -53,7 +53,8 @@ void drawBgTop(void);
 
 void displayTime(void);
 
-void drawBarsBot(void);
+void drawBarsBotBack(void);
+void drawBarsBotNormal(void);
 
 void drawBgBot(void);
 
