@@ -25,6 +25,7 @@
 */
 
 #include <cstddef>
+#include <3ds.h>
 
 
 // Textures
@@ -90,3 +91,5 @@ extern size_t Battery71;
 extern size_t Battery85;
 extern size_t Battery100;
 extern size_t BatteryCharge;
+
+extern size_t animatedTexture[2];

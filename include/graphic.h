@@ -70,5 +70,7 @@ void drawBatteryTop(void);
 
 void drawBatteryBot(void);
 
+void animatedBG(void);
+
 //void volt_free_texture(size_t id);
 #endif // GRAPHIC_H
