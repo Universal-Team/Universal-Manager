@@ -46,7 +46,7 @@ void LoadUniversalSettings(void) {
 	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.
 
 	// Animated BG.
-	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 0); // 1 -> Enabled / 0 -> Disabled.
+	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
 	settings.universal.color = settingsini.GetInt("ANIMATED", "COLOR", DARK_BLUE); // Color of the Bubbles.
 	
 

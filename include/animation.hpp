@@ -24,51 +24,21 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef GRAPHIC_H
-#define GRAPHIC_H
+#ifndef ANIMATION_HPP
+#define ANIMATION_HPP
 
 #include <3ds.h>
 #include "voltlib/volt.h"
-#include "colors.hpp"
 #include "textures.hpp"
-#include "universal-Settings.hpp"
-#include "datetime.h"
 
-// Text Sizes.
+// Textures.
+extern size_t animatedTextureTop[2];
+extern size_t animatedTextureBottom[2];
 
-#define BIG_SIZE 0.72f
-#define BUTTON_TEXT 0.7f
+// Animated BG Functions.
+void animation_Init(void);
+void animatedBGTop(void);
+void animatedBGBot(void);
 
-void volt_draw_texture_scale_blend(size_t id, int x, int y, float scaleX, float scaleY, u32 color);
-void volt_draw_texture_part_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, u32 color);
-void volt_draw_texture_part_scale(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, float scaleX, float scaleY);
-void volt_draw_texture_part_scale_blend(size_t id, int x, int y, int xbegin, int ybegin, int width, int height, float scaleX, float scaleY, u32 color);
-void volt_draw_texture_rotate_flip_blend(size_t id, int x, int y, float angle, flipType fliptype, u32 color);
-void displayMsg(const char* text);
-void graphicsInit(void);
 
-void drawBarsTop(void);
-
-void drawBgTop(void);
-
-void displayTime(void);
-
-void drawBarsBotBack(void);
-void drawBarsBotNormal(void);
-
-void drawBgBot(void);
-
-void drawMusicPlayerImage(void);
-
-void drawCover(void);
-
-void MusicPlayerImageChoice(void);
-
-std::string secondsToString(u64 seconds);
-
-void drawBatteryTop(void);
-
-void drawBatteryBot(void);
-
-//void volt_free_texture(size_t id);
-#endif // GRAPHIC_H
+#endif // ANIMATION_HPP

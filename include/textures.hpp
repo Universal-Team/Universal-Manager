@@ -91,6 +91,3 @@ extern size_t Battery71;
 extern size_t Battery85;
 extern size_t Battery100;
 extern size_t BatteryCharge;
-
-extern size_t animatedTextureTop[2];
-extern size_t animatedTextureBottom[2];
