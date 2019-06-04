@@ -30,7 +30,8 @@ void drawMainMenu(void) {
 	drawBgTop();
 	animatedBGTop();
 	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Universal-Manager");
+	volt_draw_wtext_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, TR(STR_MAINMENU_TITLE));
+	//volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Universal-Manager");
 	displayTime();
 	drawBatteryTop();
 
@@ -40,7 +41,7 @@ void drawMainMenu(void) {
 
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_texture(FileManagerIcon, 5, 50);
-	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "FileManager");
+	volt_draw_wtext(40, 57, 0.65f, 0.65f, BLACK, TR(STR_MAINMENU_FILEMANAGER));
 
 	volt_draw_texture(MainMenuButton, 170, 40);
 	volt_draw_texture(FTPIcon, 175, 50);

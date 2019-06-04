@@ -28,6 +28,7 @@
 #include "textures.hpp"
 #include "universal-Settings.hpp"
 #include "animation.hpp"
+#include "language/language.h"
 
 #define mainScreen				0
 //###############################

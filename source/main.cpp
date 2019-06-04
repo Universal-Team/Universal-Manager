@@ -189,9 +189,7 @@ int main()
 
 	int fadealpha = 255;
 
-	//displayMsg("Checking for Updates.. please wait.");
-	//			checkForUpdates();							// Maybe for later? 
-	
+	langInit();
 	// Loop as long as the status is not exit
 	while(aptMainLoop()) {
 		offset3D[0].topbg = CONFIG_3D_SLIDERSTATE * -7.0f;
