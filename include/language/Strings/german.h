@@ -24,34 +24,18 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef UNIVERSAL_SETTINGS_HPP
-#define UNIVERSAL_SETTINGS_HPP
+#ifndef GERMAN_H
+#define GERMAN_H
 
-#include <string>
-#include "graphic.h"
-#include "voltlib/volt.h"
+#include <3ds/types.h>
 
-typedef struct _Settings_t {
-	struct {
-		int bars;
-		int bg;
-		int music;
-		int battery;
-		int language;
-		int animation;
-		int color;
-	} universal;
-} Settings_t;
-extern Settings_t settings;
+// GERMAN
+static const char *const lang_DE[STR_MAX] = {
 
-/**
- * Load the Universal settings.
- */
-void LoadUniversalSettings(void);
+	/** Main Menu Stuff. **/
+	"Universal-Manager",					// "Universal-Manager"
+	"DateiManager",							// "Filemanager"
+};
 
-/**
- * Save the Universal settings.
- */
-void SaveUniversalSettings(void);
 
-#endif /* UNIVERSAL_SETTINGS_HPP */
+#endif /* GERMAN_H */

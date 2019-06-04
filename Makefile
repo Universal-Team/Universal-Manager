@@ -55,9 +55,9 @@ VERSION_MICRO := 0
 #---------------------------------------------------------------------------------
 TARGET		:=	Universal-Manager
 BUILD		:=	build
-SOURCES		:=	source source/voltlib source/screens source/music source/download source/utils
+SOURCES		:=	source source/voltlib source/screens source/music source/download source/utils source/language
 DATA		:=	data
-INCLUDES	:=	include include/voltlib include/screens include/music include/download include/utils
+INCLUDES	:=	include include/voltlib include/screens include/music include/download include/utils include/language include/language/strings
 GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs

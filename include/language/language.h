@@ -24,34 +24,48 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef UNIVERSAL_SETTINGS_HPP
-#define UNIVERSAL_SETTINGS_HPP
+// Language functions.
+#ifndef UNIVERSAL_MANAGER_LANGUAGE_H
+#define UNIVERSAL_MANAGER_LANGUAGE_H
 
-#include <string>
-#include "graphic.h"
-#include "voltlib/volt.h"
+#include <3ds/types.h>
 
-typedef struct _Settings_t {
-	struct {
-		int bars;
-		int bg;
-		int music;
-		int battery;
-		int language;
-		int animation;
-		int color;
-	} universal;
-} Settings_t;
-extern Settings_t settings;
+// Active language ID.
+extern u8 language;
+// System language ID.
+extern u8 sys_language;
 
 /**
- * Load the Universal settings.
+ * Initialize translations.
+ * Uses the language ID specified in settings.ui.language.
+ *
+ * Check the language variable outside of settings to determine
+ * the actual language in use.
  */
-void LoadUniversalSettings(void);
+void langInit(void);
 
 /**
- * Save the Universal settings.
+ * Clear the translations cache.
  */
-void SaveUniversalSettings(void);
+void langClear(void);
 
-#endif /* UNIVERSAL_SETTINGS_HPP */
+// String IDs.
+typedef enum _StrID {
+	
+	/** Main Menu Stuff. **/
+	STR_MAINMENU_TITLE = 0,										// "Universal-Manager"
+	STR_MAINMENU_FILEMANAGER,									// "Filemanager"
+	STR_MAX
+} StrID;
+
+/**
+ * Get a translation.
+ *
+ * NOTE: Call langInit() before using TR().
+ *
+ * @param strID String ID.
+ * @return Translation, or error string if strID is invalid.
+ */
+const wchar_t *TR(StrID strID);
+
+#endif /* UNIVERSAL_MANAGER_LANGUAGE_H */
