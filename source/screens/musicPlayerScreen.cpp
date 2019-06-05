@@ -220,11 +220,13 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
+			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
@@ -438,11 +440,13 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedPlst--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
+			scrollSfx();
 			selectedPlst++;
 			keyRepeatDelay = 3;
 		}
@@ -524,11 +528,13 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicPlaylistEditScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedPlst--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
+			scrollSfx();
 			selectedPlst++;
 			keyRepeatDelay = 3;
 		}
@@ -592,11 +598,13 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlstItem > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedPlstItem--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
+			scrollSfx();
 			selectedPlstItem++;
 			keyRepeatDelay = 3;
 		}
@@ -685,11 +693,13 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
+			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}

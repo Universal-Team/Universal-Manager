@@ -29,6 +29,7 @@
 #include "universal-Settings.hpp"
 #include "animation.hpp"
 #include "language/language.h"
+#include "download/common.hpp"
 
 #define mainScreen				0
 //###############################

@@ -53,6 +53,7 @@ extern "C" {
 #include "json.hpp"
 #include "graphic.h"
 #include "textures.hpp"
+#include "utils/sfx.hpp"
 
 using json = nlohmann::json;
 

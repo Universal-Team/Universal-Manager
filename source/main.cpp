@@ -62,7 +62,7 @@ struct ButtonPos {
 };
 
 // Music and sound effects.
-sound *sfx_example = NULL;
+sound *sfx_scroll = NULL;
 
 // 3D offsets. (0 == Left, 1 == Right)
 Offset3D offset3D[2] = {0.0f, 0.0f};	
@@ -126,7 +126,7 @@ void screenon()
 
 void loadSoundEffects(void) {
 	if (dspfirmfound) {
-		sfx_example = new sound("romfs:/sfx/example.wav", 2, false);
+		sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
 	}
 }
 
@@ -148,7 +148,7 @@ int main()
 	acInit();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	//mcuInit(); // Comment this out, if you use Citra.
+	mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -428,7 +428,7 @@ int main()
 		}
 	}
 	
-	delete sfx_example;
+	delete sfx_scroll;
 	if (dspfirmfound) {
 		ndspExit();
 	}

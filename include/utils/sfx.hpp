@@ -42,3 +42,5 @@ private:
 	u8* data = NULL;
 	int chnl;
 };
+
+void scrollSfx(void);

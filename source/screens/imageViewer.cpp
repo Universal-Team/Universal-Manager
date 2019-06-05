@@ -162,11 +162,13 @@ void BMPSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = PNGScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
+			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
@@ -203,11 +205,13 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = BMPScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
+			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
+			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}

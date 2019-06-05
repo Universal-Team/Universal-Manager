@@ -28,9 +28,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include "dumpdsp.hpp"
 
 #include <string>
 using std::string;
+
+extern sound *sfx_scroll;
+extern bool dspfirmfound;
 
 // Reference: http://yannesposito.com/Scratch/en/blog/2010-10-14-Fun-with-wav/
 typedef struct _WavHeader {
@@ -155,4 +159,11 @@ void sound::stop()
 	if (!data)
 		return;
 	ndspChnWaveBufClear(chnl);
+}
+
+void scrollSfx(void) {
+	if(dspfirmfound) {
+		sfx_scroll->stop();
+		sfx_scroll->play();
+	}
 }

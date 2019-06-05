@@ -86,3 +86,63 @@ void animatedBGBot(void) {
 	volt_draw_texture_blend(animatedTextureBottom[1], 0, animated_bubblesYPos[1]+240, settings.universal.color);
 }
 }
+
+/**
+ * Make the dialog box appear.				// Ported from TWLoader.
+ * @param text Dialog box text.
+ */
+/*void DialogBoxAppear(int x, int y, const char *text) {
+	if (showdialogbox)
+		return;
+
+	// Save the dialog text so we can make
+	// use if it if nullptr is specified.
+	if (text) {
+		dialog_text = text;
+	}
+
+	int movespeed = 22;
+	for (int i = 0; i < 240; i += movespeed) {
+		if (movespeed <= 1) {
+			movespeed = 1;
+		} else {
+			movespeed -= 0.2;
+		}
+		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+		if (screenmode == SCREEN_MODE_SETTINGS) {
+			pp2d_draw_texture(settingstex, 0, 0);
+		}
+		volt_draw_texture(dialogboxtex, 0, i-240);			
+		volt_draw_text(x, y+i-240, 0.5f, 0.5f, BLACK, dialog_text.c_str());
+		volt_end_draw();
+	}
+	showdialogbox = true;
+}*/
+
+/**
+ * Make the dialog box disappear.
+ * @param text Dialog box text.
+ */
+/*void DialogBoxDisappear(int x, int y, const char *text) {
+	if (!showdialogbox)
+		return;
+
+	// Save the dialog text so we can make
+	// use if it if nullptr is specified.
+	if (text) {
+		dialog_text = text;
+	}
+
+	int movespeed = 1;
+	for (int i = 0; i < 240; i += movespeed) {
+		movespeed += 1;
+		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
+		if (screenmode == SCREEN_MODE_SETTINGS) {
+			volt_draw_texture(settingstex, 0, 0);
+		}
+		volt_draw_texture(dialogboxtex, 0, i);
+		volt_draw_text(x, y+i, 0.5f, 0.5f, BLACK, dialog_text.c_str());
+		volt_end_draw();
+	}
+	showdialogbox = false;
+}*/
