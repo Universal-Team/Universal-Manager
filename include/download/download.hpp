@@ -161,3 +161,8 @@ void updateCheckpoint(void);
  * Download themes from Universal-Team/extras.
  */
 void downloadThemes(void);
+
+/**
+ * Update DeadSkullzJr's cheat DB to the latest version.
+ */
+void updateCheats(void);

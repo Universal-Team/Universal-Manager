@@ -1203,3 +1203,24 @@ void downloadThemes(void) {
 		displayMsg(themesText.c_str());
 	}
 }
+
+void updateCheats(void) {
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading DSJ's cheat database...");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Extracting DSJ's cheat database...");
+	filesExtracted = 0;
+	progressBarType = 1;
+	extractArchive("/usrcheat.dat.7z", "usrcheat.dat", "/_nds/TWiLightMenu/extras/usrcheat.dat");
+	showProgressBar = false;
+
+	deleteFile("sdmc:/usrcheat.dat.7z");
+
+	doneMsg();
+}

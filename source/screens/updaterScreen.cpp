@@ -51,6 +51,10 @@ ButtonPos downloadFunctionButtonPos[] = {
 	// NDS-Bootstrap
 	{129, 88, 87, 33, -1},
 	{220, 88, 87, 33, -1},
+
+	// Usrcheat.dat
+	{129, 128, 87, 33, -1},
+
 	// Universal-Manager
 	{129, 48, 87, 33, -1},
 	{220, 48, 87, 33, -1},
@@ -78,6 +82,8 @@ ButtonPos downloadButtonPos[] = {
 	// NDS-Bootstrap
 	{129, 88, 87, 33},
 	{220, 88, 87, 33},
+	// Usrcheat.dat
+	{129, 128, 87, 33},
 	// Universal-Manager
 	{129, 48, 87, 33},
 	{220, 48, 87, 33},
@@ -129,9 +135,9 @@ void drawUpdaterSubMenu(void) {
 	animatedBGBot();
 	drawBarsBotBack();
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[12].x, downloadButtonPos[12].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[13].x, downloadButtonPos[13].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[14].x, downloadButtonPos[14].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[15].x, downloadButtonPos[15].y);
 	volt_draw_text(49, 58, 0.7f, 0.7f, BLACK, "CFW");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "TWL");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Other");
@@ -186,6 +192,10 @@ void drawUpdaterTWL(void) {
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
 
+	volt_draw_texture(UpdaterButton, downloadButtonPos[4].x, downloadButtonPos[4].y);
+	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Extras");
+	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Cheats");
+
 	// Draw The Pages and Back Icon.
 	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -223,6 +233,10 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
 			updateBootstrap(true);
 			}
+			} else if (touching(touch, downloadFunctionButtonPos[4])) {
+			if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
+			updateCheats();
+			}
 		} else if (touching(touch, downloadFunctionButtonPos[12])) {
 			screenMode = updaterSubMenu;
 		}
@@ -253,23 +267,23 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 
 		// Universal-Manager Buttons.
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[4].x, downloadButtonPos[4].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[5].x, downloadButtonPos[5].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[6].x, downloadButtonPos[6].y);
 	volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "UNIV-Manager");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[9].x, downloadButtonPos[9].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[10].x, downloadButtonPos[10].y);
 	// PKSM Buttons.
 	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "PKSM");
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 	// Checkpoint Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[10].x, downloadButtonPos[10].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[11].x, downloadButtonPos[11].y);
 	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Checkpoint");
 	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
 
 	// Themes Download Button.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[15].x, downloadButtonPos[15].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	volt_draw_text(0, 178, 0.7f, 0.7f, BLACK, "extras");
 	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Themes");
 	
@@ -293,25 +307,25 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_L) {
 		screenMode = TWLScreen;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, downloadFunctionButtonPos[4])) {
+		if (touching(touch, downloadFunctionButtonPos[5])) {
 			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
 			updateUniversalManager(false);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[5])) {
+		} else if (touching(touch, downloadFunctionButtonPos[6])) {
 			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
 			updateUniversalManager(true);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[9])) {
+		} else if (touching(touch, downloadFunctionButtonPos[10])) {
 			if(confirmPopup("Are you sure you want to update PKSM\nRelease?")) {
 			updatePKSM();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[10])) {
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			if(confirmPopup("Are you sure you want to update Checkpoint\nRelease?")) {
 			updateCheckpoint();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[12])) {
-			screenMode = updaterSubMenu;
 		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+			screenMode = updaterSubMenu;
+		} else if (touching(touch, downloadFunctionButtonPos[14])) {
 			downloadThemes();
 		}
 }
@@ -331,14 +345,14 @@ void drawUpdaterCFW(void) {
 	drawBarsBotBack();
 
 	// Luma 3DS Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[6].x, downloadButtonPos[6].y);
 	volt_draw_texture(UpdaterButton, downloadButtonPos[7].x, downloadButtonPos[7].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[8].x, downloadButtonPos[8].y);
 	volt_draw_text(0, 58, 0.7f, 0.7f, BLACK, "Luma3DS");
 	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
 	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
 
 	 // GodMode9 Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[8].x, downloadButtonPos[8].y);
+	volt_draw_texture(UpdaterButton, downloadButtonPos[9].x, downloadButtonPos[9].y);
 	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "GodMode9");
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
 
@@ -360,19 +374,19 @@ void updaterCFWLogic(u32 hDown, touchPosition touch) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_R) {
 		screenMode = TWLScreen;
-	} else if (touching(touch, downloadFunctionButtonPos[6])) {
+	} else if (touching(touch, downloadFunctionButtonPos[7])) {
 			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
 			updateLuma(false);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[7])) {
+		} else if (touching(touch, downloadFunctionButtonPos[8])) {
 			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
 			updateLuma(true);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[8])) {
+		} else if (touching(touch, downloadFunctionButtonPos[9])) {
 			if(confirmPopup("Are you sure you want to update GodMode9\nRelease?")) {
 			downloadGodMode9();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[12])) {
+		} else if (touching(touch, downloadFunctionButtonPos[13])) {
 			screenMode = updaterSubMenu;
 		}
 		}
