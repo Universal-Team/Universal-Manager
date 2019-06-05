@@ -31,7 +31,6 @@ void drawMainMenu(void) {
 	animatedBGTop();
 	drawBarsTop();
 	volt_draw_wtext_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, TR(STR_MAINMENU_TITLE));
-	//volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Universal-Manager");
 	displayTime();
 	drawBatteryTop();
 
@@ -45,14 +44,14 @@ void drawMainMenu(void) {
 
 	volt_draw_texture(MainMenuButton, 170, 40);
 	volt_draw_texture(FTPIcon, 175, 50);
-	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "FTP Client");
+	volt_draw_wtext(210, 57, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_FTP));
 
 	volt_draw_texture(MainMenuButton, 0, 150);
 	volt_draw_texture(UpdaterIcon, 5, 160);
-	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Updater");
+	volt_draw_wtext(40, 167, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_UPDATER));
 
 	volt_draw_texture(MainMenuButton, 170, 150);
 	volt_draw_texture(SettingsIcon, 175, 160);
-	volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Settings");
+	volt_draw_wtext(210, 167, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_SETTINGS));
 	volt_end_draw();
 }

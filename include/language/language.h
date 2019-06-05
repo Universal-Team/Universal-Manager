@@ -55,6 +55,11 @@ typedef enum _StrID {
 	/** Main Menu Stuff. **/
 	STR_MAINMENU_TITLE = 0,										// "Universal-Manager"
 	STR_MAINMENU_FILEMANAGER,									// "Filemanager"
+	STR_MAINMENU_FTP,											// "FTP"
+	STR_MAINMENU_UPDATER,										// "Updater"
+	STR_MAINMENU_SETTINGS,										// "Settings"
+
+	
 	STR_MAX
 } StrID;
 

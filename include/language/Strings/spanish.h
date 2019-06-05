@@ -35,6 +35,9 @@ static const char *const lang_ES[STR_MAX] = {
 		/** Main Menu Stuff. **/
 	"Universal-Manager",					// "Universal-Manager"
 	"Filemanager",							// "Filemanager"
+	"FTP",									// "FTP"
+	"Updater",								// "Updater"
+	"Settings",								// "Settings"
 };
 
 

@@ -33,8 +33,11 @@
 static const char *const lang_JP[STR_MAX] = {
 
 	/** Main Menu Stuff. **/
-	"",															// "Universal-Manager"
-	"",															// "Filemanager"
+	"",										// "Universal-Manager"
+	"",										// "Filemanager"
+	"",										// "FTP"
+	"",										// "Updater"
+	"",										// "Settings"
 };
 
 
