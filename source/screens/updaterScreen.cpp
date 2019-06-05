@@ -160,7 +160,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 			checkForUpdates();
 			}
 		}
-*/} else if (touching(touch, downloadFunctionButtonPos[12])) {
+*/} else if (touching(touch, downloadFunctionButtonPos[13])) {
 			screenMode = mainScreen;
 		}
 }
@@ -237,7 +237,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 			if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
 			updateCheats();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[12])) {
+		} else if (touching(touch, downloadFunctionButtonPos[13])) {
 			screenMode = updaterSubMenu;
 		}
 	}
