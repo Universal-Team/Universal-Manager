@@ -91,3 +91,7 @@ extern size_t Battery71;
 extern size_t Battery85;
 extern size_t Battery100;
 extern size_t BatteryCharge;
+
+extern size_t RedButton;
+extern size_t GreenButton;
+extern size_t BlueButton;

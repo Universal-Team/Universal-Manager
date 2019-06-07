@@ -136,20 +136,20 @@ void drawUISettingsScreen(void) {
 
 	// Bars.
 	volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
-	volt_draw_texture_blend(RGBButton, 35, 88, RED);
+	volt_draw_texture(RedButton, 35, 88);
 	volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
-	volt_draw_texture_blend(RGBButton, 129, 88, GREEN);
+	volt_draw_texture(GreenButton, 129, 88);
 	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
-	volt_draw_texture_blend(RGBButton, 220, 88, BLUE);
+	volt_draw_texture(BlueButton, 220, 88);
 	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
 	volt_draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
-	volt_draw_texture_blend(RGBButton, 35, 168, RED);
+	volt_draw_texture(RedButton, 35, 168);
 	volt_draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
-	volt_draw_texture_blend(RGBButton, 129, 168, GREEN);
+	volt_draw_texture(GreenButton, 129, 168);
 	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
-	volt_draw_texture_blend(RGBButton, 220, 168, BLUE);
+	volt_draw_texture(BlueButton, 220, 168);
 	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
 
 	volt_draw_texture(UpdaterButton, 220, 28);

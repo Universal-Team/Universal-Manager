@@ -167,59 +167,63 @@ void MusicPlayerImageChoice(void) {
 
 // Misc Stuff.
 size_t MainMenuButton = 1;
-size_t UpdaterButton = 3;
-size_t Dot = 4;
+size_t UpdaterButton = 2;
+size_t Dot = 3;
 
 // Main Menu Stuff.
-size_t FileManagerIcon = 5;
-size_t FTPIcon = 6;
-size_t UpdaterIcon = 7;
-size_t SettingsIcon = 8;
+size_t FileManagerIcon = 4;
+size_t FTPIcon = 5;
+size_t UpdaterIcon = 6;
+size_t SettingsIcon = 7;
 
 // FileManager Stuff.
-size_t MusicIcon = 9;
-size_t ImageIcon = 10;
+size_t MusicIcon = 8;
+size_t ImageIcon = 9;
 
 // Music Player Stuff.
-size_t LeftIcon = 11;
-size_t PauseIcon = 12;
-size_t PlayIcon = 13;
-size_t PlayIconSmall = 14;
-size_t PlaylistIcon = 15;
-size_t RepeatIcon = 16;
-size_t RightIcon = 17;
-size_t ShuffleIcon = 18;
-size_t PlaylistEditor = 19;
+size_t LeftIcon = 10;
+size_t PauseIcon = 11;
+size_t PlayIcon = 12;
+size_t PlayIconSmall = 13;
+size_t PlaylistIcon = 14;
+size_t RepeatIcon = 15;
+size_t RightIcon = 16;
+size_t ShuffleIcon = 17;
+size_t PlaylistEditor = 18;
 
 // Image Viewer!
-size_t SDImage = 20;
+size_t SDImage = 19;
 
-size_t CreditsImage = 21;
+size_t CreditsImage = 20;
 
-size_t Cover = 22;
-size_t MusicPlayerImage = 23;
-size_t bgTop = 24;
-size_t bgBot = 25;
-size_t barTopTop = 26;
-size_t barTopBot = 27;
-size_t barBotTop = 28;
-size_t barBotBot  = 29;
-size_t RGBButton = 30;
-size_t Battery0 = 31;
-size_t Battery15 = 32;
-size_t Battery28 = 33;
-size_t Battery43 = 34;
-size_t Battery57 = 35;
-size_t Battery71 = 36;
-size_t Battery85 = 37;
-size_t Battery100 = 38;
-size_t BatteryCharge = 39;
-size_t PlayIcon2 = 40;
-size_t PauseIcon2 = 41;
-size_t LeftIcon2 = 42;
-size_t RightIcon2 = 43;
-size_t PlayIconSmall2 = 44;
-size_t Cover2 = 45;
+size_t Cover = 21;
+size_t MusicPlayerImage = 22;
+size_t bgTop = 23;
+size_t bgBot = 24;
+size_t barTopTop = 25;
+size_t barTopBot = 26;
+size_t barBotTop = 27;
+size_t barBotBot  = 28;
+size_t RGBButton = 29;
+size_t Battery0 = 30;
+size_t Battery15 = 31;
+size_t Battery28 = 32;
+size_t Battery43 = 33;
+size_t Battery57 = 34;
+size_t Battery71 = 35;
+size_t Battery85 = 36;
+size_t Battery100 = 37;
+size_t BatteryCharge = 38;
+size_t PlayIcon2 = 39;
+size_t PauseIcon2 = 40;
+size_t LeftIcon2 = 41;
+size_t RightIcon2 = 42;
+size_t PlayIconSmall2 = 43;
+size_t Cover2 = 44;
+size_t RedButton = 45;
+size_t BlueButton = 46;
+// 47, 48, 49, 50 - Animated Stuff. -- Included in "animation.cpp".
+size_t GreenButton = 51;
 
 void graphicsInit(void) {
 	
@@ -285,6 +289,10 @@ void graphicsInit(void) {
 	volt_load_texture_png(Battery85, "romfs:/graphics/Battery/battery85.png");
 	volt_load_texture_png(Battery100, "romfs:/graphics/Battery/battery100.png");
 	volt_load_texture_png(BatteryCharge, "romfs:/graphics/Battery/batteryCharge.png");
+
+	volt_load_texture_png(RedButton, "romfs:/graphics/Button/RedButton.png");
+	volt_load_texture_png(GreenButton, "romfs:/graphics/Button/GreenButton.png");
+	volt_load_texture_png(BlueButton, "romfs:/graphics/Button/BlueButton.png");
 
 
 	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
