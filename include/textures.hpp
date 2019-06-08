@@ -95,3 +95,4 @@ extern size_t BatteryCharge;
 extern size_t RedButton;
 extern size_t GreenButton;
 extern size_t BlueButton;
+extern size_t ThemeIcon;

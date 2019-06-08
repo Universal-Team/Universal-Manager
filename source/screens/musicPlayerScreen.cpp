@@ -110,6 +110,7 @@ void drawMusicMain() {
 	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
 
 	 volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
+	 volt_draw_texture(ThemeIcon, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
 	 volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Themes");
 	 volt_end_draw();
 }

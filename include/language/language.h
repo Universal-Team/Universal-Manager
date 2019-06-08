@@ -59,6 +59,67 @@ typedef enum _StrID {
 	STR_MAINMENU_UPDATER,										// "Updater"
 	STR_MAINMENU_SETTINGS,										// "Settings"
 
+	// File Manager Sub Menu Stuff.
+	STR_FILEMANAGER_SUBMENU_MUSICPLAYER,						// "Music Player"
+	STR_FILEMANAGER_SUBMENU_IMAGEVIEWER,						// "Image Viewer"
+	STR_FILEMANAGER_SUBMENU_TITLE,								// "FileManager Sub Menu"
+
+	// Music Stuff.
+	STR_MUSICPLAYERMENU_SONGS,									// "Songs"
+	STR_MUSICPLAYERMENU_NOWPLAYING,								// "Now Playing"
+	STR_MUSICPLAYERMENU_PLAYLISTS, 								// "Playlists"
+	STR_MUSICPLAYERMENU_THEMES,									// "Themes"
+	STR_MUSICPLAYERMENU_TITLE,									// "Music Player Menu"
+
+	STR_MUSICFILEBROWSE_OPEN_FOLDER,							// "\uE000 : Open Folder"
+	STR_MUSICFILEBROWSE_BACK,									// "\uE001 : Back"
+	STR_MUSICFILEBROWSE_EXIT,									// "\uE002 : Exit"
+	STR_MUSICFILEBROWSE_ADDTOPL,								// "\uE003 : Add to Playlist"
+	STR_MUSICFILEBROWSE_PLAY,									// "\uE000 : Play"
+
+	STR_MUSICPLAYER_PLAY,										// "\uE000 : Play"
+	STR_MUSICPLAYER_PAUSE,										// "\uE000 : Pause"
+	STR_MUSICPLAYER_BACK,										// "\uE001 : Back"
+	STR_MUSICPLAYER_STOPSONG,									// "\uE002 : Stop Song"
+	STR_MUSICPLAYER_CURRENTSONG,								// "Current Song:"
+
+	STR_PLAYLIST_TITLE,											// "Music Playlist Menu"
+	STR_PLAYLIST_PLAY,											// "\uE000 : Play"
+	STR_PLAYLIST_BACK,											// "\uE001 : Back"
+	STR_PLAYLIST_DELETE,										// "\uE002 : Delete"
+	STR_PLAYLIST_EDIT,											// "\uE003 : Edit"
+
+
+	STR_PLAYLISTEDIT_SAVE,										// "\uE000 : Save"
+	STR_PLAYLISTEDIT_BACK,										// "\uE001 : Back"
+	STR_PLAYLISTEDIT_DELETE,									// "\uE002 : Delete"
+	STR_PLAYLISTEDIT_MOVE,										// "\uE003 : Move"
+
+	STR_THEMES_TITLE,											// "Theme Selector"
+
+	// Image Stuff.
+	STR_IMAGE_PNG_TITLE,										// "Image Viewer Menu [PNG]"
+	STR_IMAGE_BMP_TITLE,										// "Image Viewer Menu [BMP]"
+	STR_IMAGE_VIEWER_EXIT, 										// "Press B to Exit."
+
+	// Download Stuff.
+	STR_DOWNLOAD_DOWNLOADING,									// "Now Downloading"
+	STR_DOWNLOAD_EXTRACTING,									// "Now Extracting"
+	STR_DOWNLOAD_INSTALLING,									// "Now Installing"
+
+	// FTP Stuff.
+	STR_FTP_TITLE,												// "FTP Mode"
+
+	// Settings Stuff.
+	STR_SETTINGS_CREDITS,										// "Credits"
+	STR_SETTINGS_UISETTINGS,									// "UI Settings"
+
+	// UI Settings stuff.
+	STR_UISETTINGS_SAVE,										// "Save"
+	STR_UISETTINGS_TITLE,										// "UI Settings"
+	STR_UISETTINGS_MUSICMODE,									// "Music Mode:"
+	STR_UISETTINGS_BARS,										// "Bars"
+	STR_UISETTINGS_BACKGROUND,									// "Background"
 	
 	STR_MAX
 } StrID;

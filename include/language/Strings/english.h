@@ -38,6 +38,68 @@ static const char *const lang_EN[STR_MAX] = {
 	"FTP",									// "FTP"
 	"Updater",								// "Updater"
 	"Settings",								// "Settings"
+
+	// File Manager Sub Menu Stuff.
+	"Music Player",							// "Music Player"
+	"Image Viewer",							// "Image Viewer"
+	"FileManager Sub Menu",					// "FileManager Sub Menu"
+
+	// Music Stuff.
+	"Songs",								// "Songs"
+	"Now Playing",							// "Now Playing"
+	"Playlists",							// "Playlists"
+	"Themes",								// "Themes"
+	"Music Player Menu",					// "Music Player Menu"
+
+	"\uE000 : Open Folder",					// "\uE000 : Open Folder"
+	"\uE001 : Back",						// "\uE001 : Back"
+	"\uE002 : Exit",						// "\uE002 : Exit"
+	"\uE003 : Add to Playlist",				// "\uE003 : Add to Playlist"
+	"\uE000 : Play",						// "\uE000 : Play"
+
+	"\uE000 : Play",						// "\uE000 : Play"
+	"\uE000 : Pause",						// "\uE000 : Pause"
+	"\uE001 : Back",						// "\uE001 : Back"
+	"\uE002 : Stop Song",					// "\uE002 : Stop Song"
+	"Current Song:",						// "Current Song:"
+
+	"Music Playlist Menu",					// "Music Playlist Menu"
+	"\uE000 : Play",						// "\uE000 : Play"
+	"\uE001 : Back",						// "\uE001 : Back"
+	"\uE002 : Delete",						// "\uE002 : Delete"
+	"\uE003 : Edit",						// "\uE003 : Edit"
+
+
+	"\uE000 : Save",						// "\uE000 : Save"
+	"\uE001 : Back",						// "\uE001 : Back"
+	"\uE002 : Delete",						// "\uE002 : Delete"
+	"\uE003 : Move",						// "\uE003 : Move"
+
+	"Theme Selector",						// "Theme Selector"
+
+	// Image Stuff.
+	"Image Viewer Menu [PNG]",				// "Image Viewer Menu [PNG]"
+	"Image Viewer Menu [BMP]",				// "Image Viewer Menu [BMP]"
+	"Press B to Exit.", 					// "Press B to Exit."
+
+	// Download Stuff.
+	"Now Downloading",						// "Now Downloading"
+	"Now Extracting",						// "Now Extracting"
+	"Now Installing",						// "Now Installing"
+
+	// FTP Stuff.
+	"FTP Mode",								// "FTP Mode"
+
+	// Settings Stuff.
+	"Credits",								// "Credits"
+	"UI Settings",							// "UI Settings"
+
+	// UI Settings stuff.
+	"Save",									// "Save"
+	"UI Settings",							// "UI Settings"
+	"Music Mode:",							// "Music Mode:"
+	"Bars",									// "Bars"
+	"Background",							// "Background"
 };
 
 
