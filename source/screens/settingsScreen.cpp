@@ -35,7 +35,7 @@
 #include <sstream>
 
 #include "keyboard.h"
-#include "universal-settings.hpp"
+#include "utils/settings.hpp"
 
 struct ButtonPos {
 	int x;

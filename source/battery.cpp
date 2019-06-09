@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ptmu_x.h"
-#include "universal-Settings.hpp"
+#include "utils/settings.hpp"
 
 
 void drawBatteryTop(void) {

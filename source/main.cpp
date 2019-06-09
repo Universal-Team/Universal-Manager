@@ -38,7 +38,7 @@
 #include "dumpdsp.hpp"
 #include "graphic.h"
 #include "screens/screenCommon.hpp"
-#include "settings.h"
+#include "utils/settings.hpp"
 #include "sfx.hpp"
 #include "textures.hpp"
 #include "voltlib/volt.h"

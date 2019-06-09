@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef UNIVERSAL_SETTINGS_HPP
-#define UNIVERSAL_SETTINGS_HPP
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
 
 #include <string>
 #include "graphic.h"
@@ -54,4 +54,10 @@ void LoadUniversalSettings(void);
  */
 void SaveUniversalSettings(void);
 
-#endif /* UNIVERSAL_SETTINGS_HPP */
+// 3D offsets.
+typedef struct _Offset3D {
+	float topbg;
+} Offset3D;
+extern Offset3D offset3D[2];	// 0 == Left; 1 == Right
+
+#endif /* SETTINGS_HPP */

@@ -26,7 +26,7 @@
 
 #include "language/language.h"
 #include "language/textfns.h"
-#include "universal-settings.hpp"
+#include "utils/settings.hpp"
 
 #include <malloc.h>
 

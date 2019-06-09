@@ -26,10 +26,10 @@
 
 #include "graphic.h"
 #include "textures.hpp"
-#include "universal-Settings.hpp"
+#include "utils/settings.hpp"
 #include "animation.hpp"
 #include "language/language.h"
-#include "download/common.hpp"
+#include "common.hpp"
 
 #define mainScreen				0
 //###############################

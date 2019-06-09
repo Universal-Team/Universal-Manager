@@ -24,7 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "universal-Settings.hpp"
+#include "utils/settings.hpp"
 #include "inifile.h"
 
 #include <unistd.h>

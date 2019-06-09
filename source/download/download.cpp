@@ -34,7 +34,7 @@
 #include "graphic.h"
 #include "fileBrowse.h"
 #include "voltlib/volt.h"
-#include "universal-Settings.hpp"
+#include "utils/settings.hpp"
 #include "colors.hpp"
 #include "download/thread.hpp"
 #include "screens/screenCommon.hpp"
