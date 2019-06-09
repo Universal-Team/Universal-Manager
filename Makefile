@@ -45,13 +45,13 @@ BANNERTOOL 	?= bannertool
 endif
 
 #---------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------
 # Version number
 #---------------------------------------------------------------------------------
 
-VERSION_MAJOR := 2
+VERSION_MAJOR := 3
 VERSION_MINOR := 0
 VERSION_MICRO := 0
+
 #---------------------------------------------------------------------------------
 TARGET		:=	Universal-Manager
 BUILD		:=	build
@@ -74,7 +74,7 @@ RSF_FILE	:=	app/build-cia.rsf
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O2 -mword-relocations \
+CFLAGS	:=	-g -Wall -O2 -DVERSION_MAJOR=$(VERSION_MAJOR) -DVERSION_MINOR=$(VERSION_MINOR) -DVERSION_MICRO=$(VERSION_MICRO) -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
