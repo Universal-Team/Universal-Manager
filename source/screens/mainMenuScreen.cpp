@@ -41,6 +41,7 @@ void drawMainMenu(void) {
 	volt_draw_texture(MainMenuButton, 0, 40);
 	volt_draw_texture(FileManagerIcon, 5, 50);
 	volt_draw_wtext(40, 57, 0.65f, 0.65f, BLACK, TR(STR_MAINMENU_FILEMANAGER));
+	volt_draw_texture(Arrow, 100, 25);
 
 	volt_draw_texture(MainMenuButton, 170, 40);
 	volt_draw_texture(FTPIcon, 175, 50);

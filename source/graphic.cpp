@@ -225,6 +225,7 @@ size_t BlueButton = 46;
 // 47, 48, 49, 50 - Animated Stuff. -- Included in "animation.cpp".
 size_t GreenButton = 51;
 size_t ThemeIcon = 52;
+size_t Arrow = 53;
 
 void graphicsInit(void) {
 	
@@ -295,6 +296,7 @@ void graphicsInit(void) {
 	volt_load_texture_png(GreenButton, "romfs:/graphics/Button/GreenButton.png");
 	volt_load_texture_png(BlueButton, "romfs:/graphics/Button/BlueButton.png");
 	volt_load_texture_png(ThemeIcon, "romfs:/graphics/MusicPlayer/Themes Icon.png");
+	volt_load_texture_png(Arrow, "romfs:/graphics/Misc/Arrow.png");
 
 
 	if((access("sdmc:/Universal-Manager/Theme/Image.png", F_OK) == 0)) {
