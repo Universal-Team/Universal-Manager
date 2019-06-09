@@ -1002,9 +1002,20 @@ void updateTWiLight(bool nightly) {
 
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
-		notImplemented();
+		displayMsg("Downloading Universal-Manager\n"
+						"(Nightly)\n\nThis may take a bit.");
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	displayMsg("Now installing the CIA.\n"
+						"(Nightly)");
+		installCia("/Universal-Manager-Nightly.cia");
+
+		deleteFile("sdmc:/Universal-Manager-Nightly.cia");
 	} else {
-		notImplemented();
+		notImplemented(); // To-Do
 }
 }
 
@@ -1209,7 +1220,7 @@ void updateCheats(void) {
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
-	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z", "/usrcheat.dat.7z") != 0) {
+	if (downloadToFile("https://github.com/TWLBot/Builds/raw/master/usrcheat.dat.7z?raw=true", "/usrcheat.dat.7z") != 0) {
 		downloadFailed();
 		return;
 	}

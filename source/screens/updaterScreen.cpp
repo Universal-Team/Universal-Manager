@@ -313,7 +313,8 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
 			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
-			updateUniversalManager(true);
+			//updateUniversalManager(true); -> After the first Build appears, comment this out.
+			notImplemented();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[10])) {
 			if(confirmPopup("Are you sure you want to update PKSM\nRelease?")) {

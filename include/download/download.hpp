@@ -61,6 +61,11 @@ bool checkWifiStatus(void);
 void notConnectedMsg(void);
 
 /**
+ * Display "Not Implemented Yet" for 2s.
+ */
+void notImplemented(void);
+
+/**
  * Get info from the GitHub API about a Release.
  * repo is where to get from. (Ex. "RocketRobz/TWiLightMenu")
  * item is that to get from the API. (Ex. "tag_name")
