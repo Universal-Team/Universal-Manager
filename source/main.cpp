@@ -426,6 +426,9 @@ int main()
 		} else if (!isPlaying() && currentSong != "") {
 			currentSong = "";
 		}
+		if (screenMode == mainScreen && hDown & KEY_START) {
+			break;
+		}
 	}
 	
 	delete sfx_scroll;
