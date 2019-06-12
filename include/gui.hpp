@@ -1,4 +1,4 @@
-	/*
+/*
 *   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
@@ -24,27 +24,36 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#ifndef GUI_HPP
+#define GUI_HPP
+
+#include <3ds.h>
+#include <citro2d.h>
+#include <random>
+#include <stack>
+#include <string.h>
+#include <unordered_map>
+
+#include "sprites.h"
+#include "colors.hpp"
 
 
-// Version numbers.
-char universal_manager_vertext[13];
+// emulated
+#define sprites_res_null_idx 500
 
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+namespace Gui
+{
+    Result init(void);
+    void exit(void);
 
-	C2D_SceneBegin(g_renderTargetTop);
-	C2D_DrawRectSolid(0, 25, 400, 0.5f, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
-	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
-	Gui::Draw_Text(340, 218, 0.65f, BLACK, universal_manager_vertext);
+    C3D_RenderTarget* target(gfxScreen_t t);
 
-	C2D_SceneBegin(g_renderTargetBottom);
-	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+    void clearTextBufs(void);
 
+    void Draw_Text(float x, float y, float size, Colour colour, const char *text);
+    void Draw_Textf(float x, float y, float size, Colour colour, const char* text, ...);
+    
+    void sprite(int key, int x, int y);
 }
+
+#endif

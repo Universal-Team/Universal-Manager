@@ -24,111 +24,16 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "utils/settings.hpp"
-#include "animation.hpp"
-#include "language/language.h"
-#include "common.hpp"
+#include "gui.hpp"
+
+extern C3D_RenderTarget* g_renderTargetTop;
+extern C3D_RenderTarget* g_renderTargetBottom;
 
 #define mainScreen				0
 //###############################
-#define fileScreen				1
-//###############################
-#define creditsScreen			2
-//###############################
-#define musicMainScreen			3
-//###############################
-#define musicListScreen			4
-#define musicPlayerScreen		5
-#define musicPlaylistAddScreen	6
-#define musicPlaylistPlayScreen	7
-#define musicPlaylistEditScreen	8
-#define themeSelectorScreen 	9
-//###############################
-#define settingsScreen			10
-#define uiSettingsScreen		11
-#define uiSettingsScreen2		12
-//###############################
-#define PNGScreen				13
-#define BMPScreen				14
-#define showImageScreen			15
-//###############################
-#define ftpScreen				16
-//###############################
-#define fileManagerScreen		17
-//###############################
-#define updaterSubMenu			18
-#define OtherScreen				19
-#define TWLScreen				20
-#define CFWScreen				21
-//###############################
 
-struct Playlist {
-	std::string name;
-	int position;
-};
 
 extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-void drawFileManagerScreen(void);
-
-// Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
-void drawUISettingsScreen(void);
-void uiSettingsLogic(u32 hDown, touchPosition touch);
-//void drawUISettingsScreen2(void);
-//void uiSettingsLogic2(u32 hDown, touchPosition touch);
-
-// Music Player Screen.
-void drawMusicMain(void);
-void musicMainLogic(u32 hDown, touchPosition touch);
-void musicListLogic(u32 hDown, u32 hHeld);
-void drawMusicList(void);
-void musicPlayerLogic(u32 hDown, touchPosition touch);
-void drawMusicPlayer(void);
-void drawMusicPlaylistAdd(void);
-void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
-void drawMusicPlaylistPlay(void);
-void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
-void drawMusicPlaylistEdit(void);
-void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
-void drawThemeSelector(void);
-void themeSelectorLogic(u32 hDown, u32 hHeld);
-
-// Updater Screens
-// Sub Menu.
-void drawUpdaterSubMenu(void);
-void updaterSubMenuLogic(u32 hDown, touchPosition touch);
-// TWL Screen.
-void drawUpdaterTWL(void);
-void updaterTWLLogic(u32 hDown, touchPosition touch);
-// Other Screen
-void drawUpdaterOther(void);
-void updaterOtherLogic(u32 hDown, touchPosition touch);
-// CFW Screen
-void drawUpdaterCFW(void);
-void updaterCFWLogic(u32 hDown, touchPosition touch);
-
-// Image Viewer!
-void drawPNGImageViewerUI(void);
-void PNGSelectorLogic(u32 hDown, u32 hHeld);
-void drawBMPImageViewerUI(void);
-void BMPSelectorLogic(u32 hDown, u32 hHeld);
-void showImage(void);
-void showImageLogic(u32 hDown, touchPosition touch);
-
-// Miscs.
-void saveMsg(void);
-bool confirmPopup(std::string msg);
-bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
-
-// FTP Stuff.
-void drawFTPScreen(void);
-void ftpLogic(u32 hDown, touchPosition touch);

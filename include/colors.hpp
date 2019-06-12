@@ -1,4 +1,4 @@
-	/*
+/*
 *   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
@@ -24,27 +24,28 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#ifndef COLORS_HPP
+#define COLORS_HPP
 
+#include <citro2d.h>
 
-// Version numbers.
-char universal_manager_vertext[13];
+#define WHITE C2D_Color32(255, 255, 255, 255)
 
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+#define BLACK C2D_Color32(0, 0, 0, 255)
 
-	C2D_SceneBegin(g_renderTargetTop);
-	C2D_DrawRectSolid(0, 25, 400, 0.5f, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
-	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
-	Gui::Draw_Text(340, 218, 0.65f, BLACK, universal_manager_vertext);
+#define GRAY C2D_Color32(127, 127, 127, 255)
 
-	C2D_SceneBegin(g_renderTargetBottom);
-	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+#define GREYISH C2D_Color32(200, 200, 200, 255)
 
-}
+#define BLUE C2D_Color32(0, 0, 128, 255)
+
+#define TRANSPARENT C2D_Color32(0, 0, 0, 0)
+
+#define RED C2D_Color32(255, 0, 0, 255)
+
+#define GREEN C2D_Color32(0, 255, 0, 255)
+
+#define BLUE2 C2D_Color32(0, 0, 255, 255)
+
+typedef u32 Colour;
+#endif
