@@ -52,8 +52,18 @@ namespace Gui
 
     void Draw_Text(float x, float y, float size, Colour colour, const char *text);
     void Draw_Textf(float x, float y, float size, Colour colour, const char* text, ...);
+    void Draw_GetTextSize(float size, float *width, float *height, const char *text);
+    float Draw_GetTextWidth(float size, const char *text);
+    float Draw_GetTextHeight(float size, const char *text);
     
     void sprite(int key, int x, int y);
+    bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
+
+    // GUI Stuff.
+    void drawBgTop(void);
+    void drawBarsTop(void);
+    void drawBgBot(void);
+    void drawBarsBot(void);
 }
 
 #endif

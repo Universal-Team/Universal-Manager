@@ -35,6 +35,7 @@ C3D_RenderTarget* g_renderTargetBottom;
 static C2D_SpriteSheet sprites;
 static C2D_TextBuf dynamicBuf;
 static C2D_TextBuf staticBuf;
+static C2D_TextBuf sizeBuf;
 static std::unordered_map<std::string, C2D_Text> staticMap;
 
 constexpr u32 magicNumber = 0xC7D84AB9;
@@ -82,6 +83,24 @@ void Gui::Draw_Textf(float x, float y, float size, Colour colour, const char* te
 	va_end(args);
 }
 
+void Gui::Draw_GetTextSize(float size, float *width, float *height, const char *text) {
+	C2D_Text c2d_text;
+	C2D_TextParse(&c2d_text, sizeBuf, text);
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
+float Gui::Draw_GetTextWidth(float size, const char *text) {
+	float width = 0;
+	Draw_GetTextSize(size, &width, NULL, text);
+	return width;
+}
+
+float Gui::Draw_GetTextHeight(float size, const char *text) {
+	float height = 0;
+	Draw_GetTextSize(size, NULL, &height, text);
+	return height;
+}
+
 
 static void _draw_mirror_scale(int key, int x, int y, int off, int rep)
 {
@@ -108,6 +127,10 @@ static void _draw_repeat(int key, int x, int y, u8 rows, u8 cols)
     }
 }
 
+bool Gui::Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY) {
+	return C2D_DrawImageAt(image, x, y, 0.5f, NULL, scaleX, scaleY);
+}
+
 Result Gui::init(void)
 {
     C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
@@ -117,6 +140,7 @@ Result Gui::init(void)
     g_renderTargetBottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
     dynamicBuf = C2D_TextBufNew(2048);
     staticBuf  = C2D_TextBufNew(4096);
+    sizeBuf    = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     return 0;
 }
@@ -135,6 +159,10 @@ void Gui::exit(void)
     {
         C2D_TextBufDelete(staticBuf);
     }
+    if (sizeBuf)
+    {
+        C2D_TextBufDelete(sizeBuf);
+    }
     C2D_Fini();
     C3D_Fini();
 }
@@ -150,4 +178,27 @@ void Gui::sprite(int key, int x, int y)
     {
         C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
     }
+}
+
+
+void Gui::drawBgTop(void) {
+    C2D_SceneBegin(g_renderTargetTop);
+	C2D_DrawRectSolid(0, 25, 0.5f, 400, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+}
+
+void Gui::drawBarsTop(void) {
+	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+}
+
+void Gui::drawBgBot(void) {
+	C2D_SceneBegin(g_renderTargetBottom);
+	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+}
+
+void Gui::drawBarsBot(void) {
+	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 }
