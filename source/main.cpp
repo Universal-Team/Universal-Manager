@@ -39,6 +39,11 @@
 #include "gui.hpp"
 #include "screenCommon.hpp"
 
+extern "C" {
+	#include "music/error.h"
+	#include "music/playback.h"
+}
+
 struct ButtonPos {
     int x;
     int y;
@@ -46,6 +51,13 @@ struct ButtonPos {
     int h;
 	int link;
 };
+
+extern std::string currentSong;
+extern std::vector<Playlist> nowPlayingList;
+extern int locInPlaylist;
+extern int musicRepeat;
+extern bool musicShuffle;
+extern bool firstSong;
 
 // Music and sound effects.
 //sound *sfx_scroll = NULL;
@@ -136,27 +148,27 @@ int main()
 				drawCredits();				// Draws the Credits screen
 				break;
 //#########################################################################################################
-		//	case musicMainScreen:
-		//		drawMusicMain();			// Draws the Music Player song selection screen
-		//		break;
-		//	case musicListScreen:
-		//		drawMusicList();			// Draws the Music Player song selection screen
-		//		break;
-		//	case musicPlayerScreen:
-		//		drawMusicPlayer();			// Draws the Music Player playback screen
-		//		break;
-		//	case musicPlaylistAddScreen:
-		//		drawMusicPlaylistAdd();		// Draws the Music Player playlist creation screen
-		//		break;
-		//	case musicPlaylistPlayScreen:
-		//		drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
-		//		break;
-		//	case musicPlaylistEditScreen:
-		//		drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
-		//		break;
-		//	case themeSelectorScreen:
-		//		drawThemeSelector();
-		//		break;
+			case musicMainScreen:
+				drawMusicMain();			// Draws the Music Player song selection screen
+				break;
+			case musicListScreen:
+				drawMusicList();			// Draws the Music Player song selection screen
+				break;
+			case musicPlayerScreen:
+				drawMusicPlayer();			// Draws the Music Player playback screen
+				break;
+			case musicPlaylistAddScreen:
+				drawMusicPlaylistAdd();		// Draws the Music Player playlist creation screen
+				break;
+			case musicPlaylistPlayScreen:
+				drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
+				break;
+			case musicPlaylistEditScreen:
+				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
+				break;
+			case themeSelectorScreen:
+				drawThemeSelector();
+				break;
 //#########################################################################################################
 		//	case settingsScreen:
 		//		drawSettingsScreen();		// Draws the Settings screen
@@ -220,8 +232,8 @@ int main()
 			case fileScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
-		//		} else if (hDown & KEY_A) {
-		//			screenMode = musicListScreen;
+				} else if (hDown & KEY_A) {
+					screenMode = musicListScreen;
 		//		} else if (hDown & KEY_X) {
 		//			screenMode = fileManagerScreen;
 		//		} else if (hDown & KEY_TOUCH) {
@@ -245,27 +257,27 @@ int main()
 				}
 				break;
 //#########################################################################################################
-		//	case musicMainScreen:
-		//		musicMainLogic(hDown, touch);
-		//		break;
-		//	case musicListScreen:
-		//		musicListLogic(hDown, hHeld);
-		//		break;
-		//	case musicPlayerScreen:
-		//		musicPlayerLogic(hDown, touch);
-		//		break;
-		//	case musicPlaylistAddScreen:
-		//		musicPlaylistAddLogic(hDown, hHeld);
-		//		break;
-		//	case musicPlaylistPlayScreen:
-		//		musicPlaylistPlayLogic(hDown, hHeld);
-		//		break;
-		//	case musicPlaylistEditScreen:
-		//		musicPlaylistEditLogic(hDown, hHeld);
-		//		break;
-		//	case themeSelectorScreen:
-		//		themeSelectorLogic(hDown, hHeld);
-		//		break;
+			case musicMainScreen:
+				musicMainLogic(hDown, touch);
+				break;
+			case musicListScreen:
+				musicListLogic(hDown, hHeld);
+				break;
+			case musicPlayerScreen:
+				musicPlayerLogic(hDown, touch);
+				break;
+			case musicPlaylistAddScreen:
+				musicPlaylistAddLogic(hDown, hHeld);
+				break;
+			case musicPlaylistPlayScreen:
+				musicPlaylistPlayLogic(hDown, hHeld);
+				break;
+			case musicPlaylistEditScreen:
+				musicPlaylistEditLogic(hDown, hHeld);
+				break;
+			case themeSelectorScreen:
+				themeSelectorLogic(hDown, hHeld);
+				break;
 //#########################################################################################################
 		//	case settingsScreen:
 		//	if (hDown & KEY_B) {
@@ -320,7 +332,20 @@ int main()
 		//		break;
 			}
 //#########################################################################################################
-
+		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+			if (musicRepeat != 2 && !firstSong) {
+				locInPlaylist++;
+			}
+			firstSong = false;
+			currentSong = nowPlayingList[locInPlaylist].name;
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
+		} else if (isPlaying() && currentSong == "") {
+			stopPlayback();
+		} else if (!isPlaying() && currentSong != "") {
+			currentSong = "";
+		}
 
         C3D_FrameEnd(0);
         Gui::clearTextBufs();

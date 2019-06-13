@@ -81,21 +81,21 @@ void drawCredits(void);
 //void drawUISettingsScreen(void);
 //void uiSettingsLogic(u32 hDown, touchPosition touch);
 
-// Music Player Screen.
-//void drawMusicMain(void);
-//void musicMainLogic(u32 hDown, touchPosition touch);
-//void musicListLogic(u32 hDown, u32 hHeld);
-//void drawMusicList(void);
-//void musicPlayerLogic(u32 hDown, touchPosition touch);
-//void drawMusicPlayer(void);
-//void drawMusicPlaylistAdd(void);
-//void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
-//void drawMusicPlaylistPlay(void);
-//void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
-//void drawMusicPlaylistEdit(void);
-//void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
-//void drawThemeSelector(void);
-//void themeSelectorLogic(u32 hDown, u32 hHeld);
+ //Music Player Screen.
+void drawMusicMain(void);
+void musicMainLogic(u32 hDown, touchPosition touch);
+void musicListLogic(u32 hDown, u32 hHeld);
+void drawMusicList(void);
+void musicPlayerLogic(u32 hDown, touchPosition touch);
+void drawMusicPlayer(void);
+void drawMusicPlaylistAdd(void);
+void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
+void drawMusicPlaylistPlay(void);
+void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
+void drawMusicPlaylistEdit(void);
+void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
+void drawThemeSelector(void);
+void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.

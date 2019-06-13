@@ -31,10 +31,10 @@
 #include <vector>
 #include "fileBrowse.h"
 
-/* extern*/ uint selectedFile;
-/* extern*/ int keyRepeatDelay;
-/* extern*/ bool dirChanged;
-/* extern*/ std::vector<DirEntry> dirContents;
+ extern uint selectedFile;
+ extern int keyRepeatDelay;
+ extern bool dirChanged;
+ extern std::vector<DirEntry> dirContents;
 std::string currentImage = "";
 std::string filename;
 
@@ -68,7 +68,7 @@ void drawPNGImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	Gui::staticText(dirs.c_str(), 26, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);;
+	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();

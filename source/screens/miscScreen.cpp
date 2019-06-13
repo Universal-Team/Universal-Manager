@@ -86,12 +86,16 @@ void drawFTPScreen(void) {
 // NOTE: This'll get the app stuck in a loop while its running, so background
 // processes like the clock won't update while the message bubble is up
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
+	Gui::clearStaticText();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+    C2D_TargetClear(g_renderTargetTop, BLUE2);
+    C2D_TargetClear(g_renderTargetBottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	C2D_DrawRectSolid(50, 60, 0.5f, 300, 120, WHITE);
-	Gui::staticText(msg1.c_str(), 100, 90, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(msg2.c_str(), 100, 110, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
+	Gui::staticText(msg1.c_str(), 170, 90, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(msg2.c_str(), 170, 110, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	C3D_FrameEnd(0);
 	while(1) {
 		gspWaitForVBlank();
@@ -104,5 +108,5 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 245);
+	return confirmPopup(msg, "", "Yes", "No", 200);
 }

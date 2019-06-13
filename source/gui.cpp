@@ -327,6 +327,10 @@ void Gui::DrawBarsBot(void)
 // Text.
 
 void DisplayMsg(const char* text) {
+    Gui::clearStaticText();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+    C2D_TargetClear(g_renderTargetTop, BLUE2);
+    C2D_TargetClear(g_renderTargetBottom, BLUE2);
 	C2D_SceneBegin(g_renderTargetTop);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
