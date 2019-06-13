@@ -206,8 +206,6 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
-			screenMode = musicPlayerScreen;
-			musicPlayerReturn = musicListScreen;
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
 		}
 	} else if (hDown & KEY_B) {
@@ -246,10 +244,9 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		Gui::staticText(nowPlayingText.c_str(), 200, 3, 0.52f, 0.52f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	//	volt_draw_rectangle(18, 175, 100, 20, BLACK);
 		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
-		//C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
-		//C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE); -> Needs to be fixed.
+		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
+		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
 
 	
 	if(!isPaused() && isPlaying()) {
