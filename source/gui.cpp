@@ -323,3 +323,15 @@ void Gui::DrawBarsBot(void)
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 }
+
+// Text.
+
+void DisplayMsg(const char* text) {
+	C2D_SceneBegin(g_renderTargetTop);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText(text, 26, 32, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
+	C3D_FrameEnd(0);
+}

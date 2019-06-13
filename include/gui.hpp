@@ -73,6 +73,10 @@ namespace Gui
     void DrawBarsTop();
     void DrawBGBot();
     void DrawBarsBot();
+
 }
+
+   // Text.
+    void DisplayMsg(const char* text);
 
 #endif

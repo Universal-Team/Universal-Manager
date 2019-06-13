@@ -58,6 +58,7 @@ int screenMode = 0;
 
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
+    {170, 40, 149, 52, ftpScreen},
 };
 
 void screenoff()
@@ -130,13 +131,84 @@ int main()
 			case fileScreen:
 				drawFileManagerSubMenu();	// Draws the File Manager screen
 				break;
+//#########################################################################################################
+			case creditsScreen:
+				drawCredits();				// Draws the Credits screen
+				break;
+//#########################################################################################################
+		//	case musicMainScreen:
+		//		drawMusicMain();			// Draws the Music Player song selection screen
+		//		break;
+		//	case musicListScreen:
+		//		drawMusicList();			// Draws the Music Player song selection screen
+		//		break;
+		//	case musicPlayerScreen:
+		//		drawMusicPlayer();			// Draws the Music Player playback screen
+		//		break;
+		//	case musicPlaylistAddScreen:
+		//		drawMusicPlaylistAdd();		// Draws the Music Player playlist creation screen
+		//		break;
+		//	case musicPlaylistPlayScreen:
+		//		drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
+		//		break;
+		//	case musicPlaylistEditScreen:
+		//		drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
+		//		break;
+		//	case themeSelectorScreen:
+		//		drawThemeSelector();
+		//		break;
+//#########################################################################################################
+		//	case settingsScreen:
+		//		drawSettingsScreen();		// Draws the Settings screen
+		//		break;
+		//	case uiSettingsScreen:
+		//		drawUISettingsScreen();
+		//		break;
+//#########################################################################################################
+			case PNGScreen:
+				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
+				break;
+			case BMPScreen:
+				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
+				break;
+			case showImageScreen:
+				showImage();
+				break;
+//#########################################################################################################
+			case ftpScreen:
+				drawFTPScreen();
+				break;
+//#########################################################################################################
+		//	case fileManagerScreen:
+		//		drawFileManagerScreen();
+		//		break;
+//#########################################################################################################
+		//	case updaterSubMenu:
+		//		drawUpdaterSubMenu();		// Draws the Updater screen
+		//		break;
+		//	case TWLScreen:
+		//		drawUpdaterTWL();
+		//		break;
+		//	case OtherScreen:
+		//		drawUpdaterOther();
+		//		break;
+		//	case CFWScreen:
+		//		drawUpdaterCFW();
+		//		break;
+//#########################################################################################################
 		}
 
-				// Scans inputs for the current screen
+		// Scans inputs for the current screen
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				 if (hDown & KEY_TOUCH) {
+				if (hDown & KEY_A) {
+					screenMode = fileScreen;
+				} else if (hDown & KEY_X) {
+					screenMode = ftpScreen;
+			//	} else if (hDown & KEY_Y) {
+			//		screenMode = updaterSubMenu;
+				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
 						if (touching(touch, mainScreenButtonPos[i])) {
 							screenMode = mainScreenButtonPos[i].link;
@@ -148,9 +220,106 @@ int main()
 			case fileScreen:
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
+		//		} else if (hDown & KEY_A) {
+		//			screenMode = musicListScreen;
+		//		} else if (hDown & KEY_X) {
+		//			screenMode = fileManagerScreen;
+		//		} else if (hDown & KEY_TOUCH) {
+		//			for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
+		//				if (touching(touch, fileScreenButtonPos[i])) {
+		//					screenMode = fileScreenButtonPos[i].link;
+		//				}
+		//			}
 				}
 				break;
-		}
+//#########################################################################################################
+			case creditsScreen:
+				if (hDown & KEY_B) {
+					screenMode = settingsScreen;
+			//	} else if (hDown & KEY_TOUCH) {
+			//		for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
+			//			if (touching(touch, creditsScreenButtonPos[i])) {
+			//				screenMode = creditsScreenButtonPos[i].link;
+			//			}
+			//		}
+				}
+				break;
+//#########################################################################################################
+		//	case musicMainScreen:
+		//		musicMainLogic(hDown, touch);
+		//		break;
+		//	case musicListScreen:
+		//		musicListLogic(hDown, hHeld);
+		//		break;
+		//	case musicPlayerScreen:
+		//		musicPlayerLogic(hDown, touch);
+		//		break;
+		//	case musicPlaylistAddScreen:
+		//		musicPlaylistAddLogic(hDown, hHeld);
+		//		break;
+		//	case musicPlaylistPlayScreen:
+		//		musicPlaylistPlayLogic(hDown, hHeld);
+		//		break;
+		//	case musicPlaylistEditScreen:
+		//		musicPlaylistEditLogic(hDown, hHeld);
+		//		break;
+		//	case themeSelectorScreen:
+		//		themeSelectorLogic(hDown, hHeld);
+		//		break;
+//#########################################################################################################
+		//	case settingsScreen:
+		//	if (hDown & KEY_B) {
+		//		screenMode = mainScreen;
+		//	} else if (hDown & KEY_X) {
+		//		screenMode = uiSettingsScreen;
+		//	} else if (hDown & KEY_TOUCH) {
+		//			for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
+		//				if (touching(touch, settingsScreenButtonPos[i])) {
+		//					screenMode = settingsScreenButtonPos[i].link;
+		//				}
+		//			}
+		//		}
+		//		break;
+		//	case uiSettingsScreen:
+		//		uiSettingsLogic(hDown, touch);
+		//		break;
+//#########################################################################################################
+			case PNGScreen:
+			PNGSelectorLogic(hDown, hHeld);
+				break;
+			case BMPScreen:
+			BMPSelectorLogic(hDown, hHeld);
+				break;
+			case showImageScreen:
+			showImageLogic(hDown, touch);
+				break;
+//#########################################################################################################
+			case ftpScreen:
+			if (hDown & KEY_B) {  // Later : "ftpLogic".
+				screenMode = mainScreen;
+			}
+//#########################################################################################################
+		//		break;
+		//	case fileManagerScreen:
+		//	if(hDown & KEY_B) {
+		//		screenMode = fileScreen;
+		//	}
+//#########################################################################################################
+				break;
+		//	case updaterSubMenu:
+		//		updaterSubMenuLogic(hDown, touch);
+		//		break;
+		//	case TWLScreen:
+		//		updaterTWLLogic(hDown, touch);
+		//		break;
+		//	case OtherScreen:
+		//		updaterOtherLogic(hDown, touch);
+		//		break;
+		//	case CFWScreen:
+		//		updaterCFWLogic(hDown, touch);
+		//		break;
+			}
+//#########################################################################################################
 
 
         C3D_FrameEnd(0);
