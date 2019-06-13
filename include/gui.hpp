@@ -29,6 +29,7 @@
 
 #include <3ds.h>
 #include <citro2d.h>
+#include <citro3d.h>
 #include <random>
 #include <stack>
 #include <string.h>
@@ -36,10 +37,18 @@
 
 #include "sprites.h"
 #include "colors.hpp"
-
+#include "TextPos.hpp"
+#include "3dsutils.hpp"
 
 // emulated
 #define sprites_res_null_idx 500
+
+#define FONT_SIZE_18 0.72f
+#define FONT_SIZE_15 0.6f
+#define FONT_SIZE_14 0.56f
+#define FONT_SIZE_12 0.50f
+#define FONT_SIZE_11 0.46f
+#define FONT_SIZE_9 0.37f
 
 namespace Gui
 {
@@ -50,20 +59,13 @@ namespace Gui
 
     void clearTextBufs(void);
 
-    void Draw_Text(float x, float y, float size, Colour colour, const char *text);
-    void Draw_Textf(float x, float y, float size, Colour colour, const char* text, ...);
-    void Draw_GetTextSize(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidth(float size, const char *text);
-    float Draw_GetTextHeight(float size, const char *text);
+    void dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
+    C2D_Text cacheStaticText(const std::string& strKey);
+    void clearStaticText(void);
+    void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
     
     void sprite(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
-
-    // GUI Stuff.
-    void drawBgTop(void);
-    void drawBarsTop(void);
-    void drawBgBot(void);
-    void drawBarsBot(void);
 }
 
 #endif

@@ -67,41 +67,6 @@ void Gui::clearTextBufs(void)
     C2D_TextBufClear(dynamicBuf);
 }
 
-void Gui::Draw_Text(float x, float y, float size, Colour colour, const char *text) {
-	C2D_Text c2d_text;
-	C2D_TextParse(&c2d_text, dynamicBuf, text);
-	C2D_TextOptimize(&c2d_text);
-	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, colour);
-}
-
-void Gui::Draw_Textf(float x, float y, float size, Colour colour, const char* text, ...) {
-	char buffer[256];
-	va_list args;
-	va_start(args, text);
-	vsnprintf(buffer, 256, text, args);
-	Draw_Text(x, y, size, colour, buffer);
-	va_end(args);
-}
-
-void Gui::Draw_GetTextSize(float size, float *width, float *height, const char *text) {
-	C2D_Text c2d_text;
-	C2D_TextParse(&c2d_text, sizeBuf, text);
-	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
-}
-
-float Gui::Draw_GetTextWidth(float size, const char *text) {
-	float width = 0;
-	Draw_GetTextSize(size, &width, NULL, text);
-	return width;
-}
-
-float Gui::Draw_GetTextHeight(float size, const char *text) {
-	float height = 0;
-	Draw_GetTextSize(size, NULL, &height, text);
-	return height;
-}
-
-
 static void _draw_mirror_scale(int key, int x, int y, int off, int rep)
 {
     C2D_Image sprite = C2D_SpriteSheetGetImage(sprites, key);
@@ -180,25 +145,154 @@ void Gui::sprite(int key, int x, int y)
     }
 }
 
+// Text Stuff.
+void Gui::dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
+{
+    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
 
-void Gui::drawBgTop(void) {
-    C2D_SceneBegin(g_renderTargetTop);
-	C2D_DrawRectSolid(0, 25, 0.5f, 400, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+    static std::vector<std::string> print;
+    static std::vector<int> printX;
+
+    size_t index = 0;
+    while (index != std::string::npos)
+    {
+        print.push_back(str.substr(index, str.find('\n', index) - index));
+        index = str.find('\n', index);
+        if (index != std::string::npos)
+        {
+            index++;
+        }
+    }
+
+    switch (positionX)
+    {
+        case TextPosX::LEFT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x);
+            }
+            break;
+        case TextPosX::CENTER:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
+            }
+            break;
+        case TextPosX::RIGHT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
+            }
+            break;
+    }
+
+    switch (positionY)
+    {
+        case TextPosY::TOP:
+            break;
+        case TextPosY::CENTER:
+            y -= ceilf(0.5f * lineMod * (float)print.size());
+            break;
+        case TextPosY::BOTTOM:
+            y -= lineMod * (float)print.size();
+            break;
+    }
+
+    for (size_t i = 0; i < print.size(); i++)
+    {
+        C2D_Text text;
+        C2D_TextParse(&text, dynamicBuf, print[i].c_str());
+        C2D_TextOptimize(&text);
+        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
+    }
+
+    print.clear();
+    printX.clear();
 }
 
-void Gui::drawBarsTop(void) {
-	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+C2D_Text Gui::cacheStaticText(const std::string& strKey)
+{
+    C2D_Text text;
+    std::unordered_map<std::string, C2D_Text>::const_iterator index = staticMap.find(strKey);
+    if (index == staticMap.end())
+    {
+        C2D_TextParse(&text, staticBuf, strKey.c_str());
+        C2D_TextOptimize(&text);
+        staticMap.emplace(strKey, text);
+    }
+    else
+    {
+        return index->second;
+    }
+
+    return text;
 }
 
-void Gui::drawBgBot(void) {
-	C2D_SceneBegin(g_renderTargetBottom);
-	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+void Gui::clearStaticText()
+{
+    C2D_TextBufClear(staticBuf);
+    staticMap.clear();
 }
 
-void Gui::drawBarsBot(void) {
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
+{
+    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
+
+    static std::vector<std::string> print;
+    static std::vector<int> printX;
+
+    size_t index = 0;
+    while (index != std::string::npos)
+    {
+        print.push_back(strKey.substr(index, strKey.find('\n', index) - index));
+        index = strKey.find('\n', index);
+        if (index != std::string::npos)
+        {
+            index++;
+        }
+    }
+
+    switch (positionX)
+    {
+        case TextPosX::LEFT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x);
+            }
+            break;
+        case TextPosX::CENTER:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
+            }
+            break;
+        case TextPosX::RIGHT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
+            }
+            break;
+    }
+
+    switch (positionY)
+    {
+        case TextPosY::TOP:
+            break;
+        case TextPosY::CENTER:
+            y -= ceilf(0.5f * lineMod * (float)print.size());
+            break;
+        case TextPosY::BOTTOM:
+            y -= lineMod * (float)print.size();
+            break;
+    }
+
+    for (size_t i = 0; i < print.size(); i++)
+    {
+        C2D_Text text = cacheStaticText(print[i].c_str());
+        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
+    }
+
+    print.clear();
+    printX.clear();
 }
+

@@ -34,11 +34,19 @@ void drawMainMenu(void) {
 	// Initialize the Version Number.
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
-	Gui::drawBgTop();
-	Gui::drawBarsTop();
-	Gui::Draw_Text(340, 218, 0.65f, BLACK, universal_manager_vertext);
-	Gui::Draw_Text(100, 3, 0.72f, WHITE, "Universal-Manager");
+	C2D_SceneBegin(g_renderTargetTop);
+	C2D_DrawRectSolid(0, 25, 400, 0.5f, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	//Gui::volt_draw_wtext(100, 3, 0.72f, WHITE, TR(STR_MAINMENU_TITLE));
 
-	Gui::drawBgBot();
-	Gui::drawBarsBot();
+	C2D_SceneBegin(g_renderTargetBottom);
+	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+
 }
