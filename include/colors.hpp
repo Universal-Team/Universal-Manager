@@ -39,6 +39,31 @@
  */
 #define RGBA8(r, g, b, a) ((((r)&0xFF)<<0) | (((g)&0xFF)<<8) | (((b)&0xFF)<<16) | (((a)&0xFF)<<24))
 
+/**
+ * @brief Creates a 8 byte ABGR color
+ * @param a alpha component of the color
+ * @param b blue component of the color
+ * @param g green component of the color
+ * @param r red component of the color
+ */
+#define ABGR8(a, b, g, r) ((((a)&0xFF)<<0) | (((b)&0xFF)<<8) | (((g)&0xFF)<<16) | (((r)&0xFF)<<24))
+
+/**
+ * @brief Converts a RGB565 color to RGBA8 color (adds maximum alpha)
+ * @param rgb 565 to be converted
+ * @param a alpha
+ */
+#define RGB565_TO_RGBA8(rgb, a) \
+	(RGBA8(((rgb>>11)&0x1F)*0xFF/0x1F, ((rgb>>5)&0x3F)*0xFF/0x3F, (rgb&0x1F)*0xFF/0x1F, a&0xFF))
+	
+/**
+ * @brief Converts a RGB565 color to ABGR8 color (adds maximum alpha)
+ * @param rgb 565 to be converted
+ * @param a alpha
+ */
+#define RGB565_TO_ABGR8(rgb, a) \
+	(RGBA8(a&0xFF, (rgb&0x1F)*0xFF/0x1F, ((rgb>>5)&0x3F)*0xFF/0x3F, ((rgb>>11)&0x1F)*0xFF/0x1F))
+
 
 #define WHITE C2D_Color32(255, 255, 255, 255)
 

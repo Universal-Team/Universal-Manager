@@ -333,40 +333,27 @@ void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, floa
 void Gui::DrawBGTop(void) 
 {
 	C2D_SceneBegin(g_renderTargetTop);
-	C2D_DrawRectSolid(0, 25, 400, 0.5f, 190, BLUE);
+	C2D_DrawRectSolid(0, 25, 0.5f, 400, 190, settings.universal.bg);
 	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
 }
 
 void Gui::DrawBarsTop(void) 
 {
-    // Blending stuff.
-    C2D_ImageTint bars;
-    C2D_SetImageTint(&bars, C2D_TopLeft, RED, 1);
-    C2D_SetImageTint(&bars, C2D_TopRight, GREEN, 1);
-    C2D_SetImageTint(&bars, C2D_BotLeft, BLUE, 1);
-    C2D_SetImageTint(&bars, C2D_BotRight, WHITE, 1);
-
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_top_screen_top_idx), 0, 0, 0.5f, &bars);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_top_screen_bot_idx), 0, 215, 0.5f, &bars);
+    Gui::Draw_ImageBlend(sprites_top_screen_top_idx, 0, 0, settings.universal.bars);
+    Gui::Draw_ImageBlend(sprites_top_screen_bot_idx, 0, 215, settings.universal.bars);
 }
 
 void Gui::DrawBGBot(void)
 {
 	C2D_SceneBegin(g_renderTargetBottom);
-	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
+	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, settings.universal.bg);
 	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
 }
 
 void Gui::DrawBarsBot(void)
 {
-        // Blending stuff.
-    C2D_ImageTint bars;
-    C2D_SetImageTint(&bars, C2D_TopLeft, RED, 1);
-    C2D_SetImageTint(&bars, C2D_TopRight, GREEN, 1);
-    C2D_SetImageTint(&bars, C2D_BotLeft, BLUE, 1);
-    C2D_SetImageTint(&bars, C2D_BotRight, WHITE, 1);
     Gui::Draw_ImageBlend(sprites_bottom_screen_top_idx, 0, 0, settings.universal.bars);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_bottom_screen_bot_idx), 0, 215, 0.5f, &bars);
+    Gui::Draw_ImageBlend(sprites_bottom_screen_bot_idx, 0, 215, settings.universal.bars);
 }
 
 // Text.

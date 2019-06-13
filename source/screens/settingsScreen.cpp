@@ -25,6 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "colors.hpp"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
@@ -67,20 +68,6 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Music BG
 	{220, 28, 87, 33, -1},
-
-	// Saving.
-	{10, 28, 87, 33, -1},
-
-	// Bubble Colors.
-	{46, 98, 87, 33, -1},
-	{129, 98, 87, 33, -1},
-	{220, 98, 87, 33, -1},
-
-	// Animation Mode.
-	{220, 28, 87, 33, -1},
-
-	// Percent Mode.
-	{220, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -129,20 +116,20 @@ void drawUISettingsScreen(void) {
 	// Bars.
 	Gui::staticText("Bars", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 35, 88);
-	//Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 46, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 56, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 129, 88);
-	//Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 140, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 150, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 220, 88);
-	//Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 229, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 239, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Background.
 	Gui::staticText("Background", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 35, 168);
-	//Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 46, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 56, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 129, 168);
-	//Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 140, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 150, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_updaterButton_idx, 220, 168);
-	//Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 229, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 239, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Gui::staticText(musicModes[settings.universal.music].c_str(), 260, 38, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
@@ -183,8 +170,6 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
-		} else if (touching(touch, uiSettingsButtonPos[8])) {
-			SaveUniversalSettings();
 	}
 }
 }
