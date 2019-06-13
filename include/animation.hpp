@@ -24,21 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
+#ifndef ANIMATION_HPP
+#define ANIMATION_HPP
+
+#include <3ds.h>
 #include "gui.hpp"
-#include "animation.hpp"
 
-extern C3D_RenderTarget* g_renderTargetTop;
-extern C3D_RenderTarget* g_renderTargetBottom;
+// Animated BG Functions.
+void animatedBGTop(void);
+void animatedBGBot(void);
 
-#define mainScreen				0
-//###############################
-#define fileScreen				1
-//###############################
 
-extern int screenMode;
-
-// Main Menu Screen.
-void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
+#endif // ANIMATION_HPP

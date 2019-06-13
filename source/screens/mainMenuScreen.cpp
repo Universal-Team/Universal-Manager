@@ -35,11 +35,13 @@ void drawMainMenu(void) {
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
