@@ -55,6 +55,11 @@ extern C3D_RenderTarget* g_renderTargetTop;
 extern C3D_RenderTarget* g_renderTargetBottom;	
 int screenMode = 0;
 
+
+ButtonPos mainScreenButtonPos[] = {
+    {0, 40, 149, 52, fileScreen},
+};
+
 void screenoff()
 {
     gspLcdInit();\
@@ -110,24 +115,41 @@ int main()
         hidScanInput();
          u32 hHeld = hidKeysHeld();
          u32 hDown = hidKeysDown();
+		 hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         C2D_TargetClear(g_renderTargetTop, BLUE2);
         C2D_TargetClear(g_renderTargetBottom, BLUE2);
 
-		 switch(screenMode) {
+		// Draws a screen based on screenMode
+		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
 				drawMainMenu();				// Draws the Main Menu screen
 				break;
+//#########################################################################################################
+			case fileScreen:
+				drawFileManagerSubMenu();	// Draws the File Manager screen
+				break;
 		}
 
-		// Scans inputs for the current screen
+				// Scans inputs for the current screen
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				if (hDown & KEY_START) {
-					break;
+				 if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
+						if (touching(touch, mainScreenButtonPos[i])) {
+							screenMode = mainScreenButtonPos[i].link;
+						}
+					}
 				}
+				break;
+//#########################################################################################################
+			case fileScreen:
+				if (hDown & KEY_B) {
+					screenMode = mainScreen;
+				}
+				break;
 		}
 
 

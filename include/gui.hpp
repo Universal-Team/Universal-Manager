@@ -44,6 +44,7 @@
 #define sprites_res_null_idx 500
 
 #define FONT_SIZE_18 0.72f
+#define FONT_SIZE_17 0.7f
 #define FONT_SIZE_15 0.6f
 #define FONT_SIZE_14 0.56f
 #define FONT_SIZE_12 0.50f
@@ -66,6 +67,12 @@ namespace Gui
     
     void sprite(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
+
+    // Basic GUI.
+    void DrawBGTop();
+    void DrawBarsTop();
+    void DrawBGBot();
+    void DrawBarsBot();
 }
 
 #endif

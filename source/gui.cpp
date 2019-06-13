@@ -296,3 +296,30 @@ void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, floa
     printX.clear();
 }
 
+// Basic GUI Stuff.
+
+void Gui::DrawBGTop(void) 
+{
+	C2D_SceneBegin(g_renderTargetTop);
+	C2D_DrawRectSolid(0, 25, 400, 0.5f, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+}
+
+void Gui::DrawBarsTop(void) 
+{
+	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+}
+
+void Gui::DrawBGBot(void)
+{
+	C2D_SceneBegin(g_renderTargetBottom);
+	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, BLUE);
+	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+}
+
+void Gui::DrawBarsBot(void)
+{
+	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+}

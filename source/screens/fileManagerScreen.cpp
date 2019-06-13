@@ -1,4 +1,4 @@
-	/*
+/*
 *   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
@@ -26,35 +26,21 @@
 
 #include "screens/screenCommon.hpp"
 
-
-// Version numbers.
-char universal_manager_vertext[13];
-
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
+void drawFileManagerSubMenu(void) {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("FileManager Sub Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
-	Gui::staticText("FileManager", 85, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	// Music List Button.
+	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
+	Gui::sprite(sprites_music_icon_idx, 105, 50);
+	Gui::staticText("Music Player", 190, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
-	Gui::staticText("FTP", 230, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
-	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
-	Gui::staticText("Updater", 80, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
-	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Gui::staticText("Settings", 240, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	// Image Viewer Button.
+	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
+	Gui::sprite(sprites_image_icon_idx, 105, 130);
+	Gui::staticText("Image Viewer", 190, 137, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }

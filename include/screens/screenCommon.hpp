@@ -31,9 +31,13 @@ extern C3D_RenderTarget* g_renderTargetBottom;
 
 #define mainScreen				0
 //###############################
-
+#define fileScreen				1
+//###############################
 
 extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
+
+// File Manager Sub Menu Screen.
+void drawFileManagerSubMenu(void);
