@@ -144,6 +144,8 @@ int main()
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
+	//LoadUniversalSettings();
+
 	// make folders if they don't exist
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.

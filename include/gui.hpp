@@ -35,7 +35,10 @@
 #include <string.h>
 #include <unordered_map>
 
+// Spritesheets.
 #include "sprites.h"
+#include "animation.h"
+
 #include "colors.hpp"
 #include "TextPos.hpp"
 #include "3dsutils.hpp"
@@ -66,6 +69,7 @@ namespace Gui
     void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
     
     void sprite(int key, int x, int y);
+    void AnimationSprite(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
 
     // Basic GUI.

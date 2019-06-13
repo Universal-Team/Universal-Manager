@@ -34,9 +34,6 @@
 static int animated_bubblesYPos[2] = {0};
 static bool animated_bubbleMoveDelay = false;
 
-size_t animatedTextureTop[2] = {47, 48};
-size_t animatedTextureBottom[2] = {49, 50};
-
 void animatedBGTop(void) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
@@ -47,10 +44,10 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::sprite(sprites_bubbles_top_1_idx, 0, animated_bubblesYPos[0]);
-	Gui::sprite(sprites_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240);
-	Gui::sprite(sprites_bubbles_top_2_idx, 0, animated_bubblesYPos[1]);
-	Gui::sprite(sprites_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240);
+	Gui::AnimationSprite(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]);
+	Gui::AnimationSprite(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240);
+	Gui::AnimationSprite(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]);
+	Gui::AnimationSprite(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240);
 }
 
 void animatedBGBot(void) {
@@ -63,8 +60,8 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::sprite(sprites_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]);
-	Gui::sprite(sprites_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240);
-	Gui::sprite(sprites_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]);
-	Gui::sprite(sprites_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240);
+	Gui::AnimationSprite(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]);
+	Gui::AnimationSprite(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240);
+	Gui::AnimationSprite(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]);
+	Gui::AnimationSprite(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240);
 }

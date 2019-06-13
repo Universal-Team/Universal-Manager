@@ -247,9 +247,9 @@ void drawMusicPlayer(void) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		Gui::staticText(nowPlayingText.c_str(), 200, 3, 0.52f, 0.52f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	//	volt_draw_rectangle(18, 175, 100, 20, BLACK);
-		//Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
 		//C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
-		//C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE); needs to be fixed.
+		//C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE); -> Needs to be fixed.
 
 	
 	if(!isPaused() && isPlaying()) {
@@ -265,10 +265,13 @@ void drawMusicPlayer(void) {
 		// Placeholder for Metadata Stuff..
 	 	if (settings.universal.music == 0) {
 	} else if (settings.universal.music == 1) {
-		//volt_draw_text(15, 40, 0.7f, 0.7f, BLACK, "Song Name");
-		//volt_draw_text(15, 60, 0.7f, 0.7f, BLACK, "Author Name");
-		//volt_draw_text(15, 80, 0.7f, 0.7f, BLACK, "Album Name");
-		//volt_draw_text(15, 100, 0.7f, 0.7f, BLACK, "Release Year?");
+		Gui::staticText("Song Name", 70, 40, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Author Name", 70, 60, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Album Name", 70, 80, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Release Year", 70, 100, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	} else if (settings.universal.music == 2) {
 	}
 	}

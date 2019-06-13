@@ -26,19 +26,23 @@
 
 #include "gui.hpp"
 #include "screenCommon.hpp"
+#include "settings.hpp"
 #include <assert.h>
 #include <stdarg.h>
+
 
 C3D_RenderTarget* g_renderTargetTop;
 C3D_RenderTarget* g_renderTargetBottom;
 
 static C2D_SpriteSheet sprites;
+static C2D_SpriteSheet animation;
 static C2D_TextBuf dynamicBuf;
 static C2D_TextBuf staticBuf;
 static C2D_TextBuf sizeBuf;
 static std::unordered_map<std::string, C2D_Text> staticMap;
 
 constexpr u32 magicNumber = 0xC7D84AB9;
+
 
 static Tex3DS_SubTexture _select_box(const C2D_Image& image, int x, int y, int endX, int endY)
 {
@@ -107,6 +111,7 @@ Result Gui::init(void)
     staticBuf  = C2D_TextBufNew(4096);
     sizeBuf    = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
+    animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     return 0;
 }
 
@@ -115,6 +120,10 @@ void Gui::exit(void)
     if (sprites)
     {
         C2D_SpriteSheetFree(sprites);
+    }
+    if (animation)
+    {
+        C2D_SpriteSheetFree(animation);
     }
     if (dynamicBuf)
     {
@@ -142,6 +151,19 @@ void Gui::sprite(int key, int x, int y)
     else
     {
         C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
+    }
+}
+
+void Gui::AnimationSprite(int key, int x, int y)
+{
+    if (key == sprites_res_null_idx)
+    {
+        return;
+    }
+    // standard case
+    else
+    {
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
     }
 }
 
@@ -307,8 +329,15 @@ void Gui::DrawBGTop(void)
 
 void Gui::DrawBarsTop(void) 
 {
-	Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+    // Blending stuff.
+    C2D_ImageTint bars;
+    C2D_SetImageTint(&bars, C2D_TopLeft, RED, 1);
+    C2D_SetImageTint(&bars, C2D_TopRight, GREEN, 1);
+    C2D_SetImageTint(&bars, C2D_BotLeft, BLUE, 1);
+    C2D_SetImageTint(&bars, C2D_BotRight, WHITE, 1);
+
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_top_screen_top_idx), 0, 0, 0.5f, &bars);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_top_screen_bot_idx), 0, 215, 0.5f, &bars);
 }
 
 void Gui::DrawBGBot(void)
@@ -320,8 +349,15 @@ void Gui::DrawBGBot(void)
 
 void Gui::DrawBarsBot(void)
 {
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+        // Blending stuff.
+    C2D_ImageTint bars;
+    C2D_SetImageTint(&bars, C2D_TopLeft, RED, 1);
+    C2D_SetImageTint(&bars, C2D_TopRight, GREEN, 1);
+    C2D_SetImageTint(&bars, C2D_BotLeft, BLUE, 1);
+    C2D_SetImageTint(&bars, C2D_BotRight, WHITE, 1);
+
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_bottom_screen_top_idx), 0, 0, 0.5f, &bars);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_bottom_screen_bot_idx), 0, 215, 0.5f, &bars);
 }
 
 // Text.
