@@ -54,12 +54,10 @@ extern C3D_RenderTarget* g_renderTargetBottom;
 //###############################
 #define ftpScreen				15
 //###############################
-#define fileManagerScreen		16
-//###############################
-#define updaterSubMenu			17
-#define OtherScreen				18
-#define TWLScreen				19
-#define CFWScreen				20
+#define updaterSubMenu			16
+#define OtherScreen				17
+#define TWLScreen				18
+#define CFWScreen				19
 //###############################
 
 struct Playlist {
@@ -76,10 +74,10 @@ void drawMainMenu(void);
 void drawFileManagerSubMenu(void);
 
 // Settings Screen.
-//void drawSettingsScreen(void);
+void drawSettingsScreen(void);
 void drawCredits(void);
-//void drawUISettingsScreen(void);
-//void uiSettingsLogic(u32 hDown, touchPosition touch);
+void drawUISettingsScreen(void);
+void uiSettingsLogic(u32 hDown, touchPosition touch);
 
  //Music Player Screen.
 void drawMusicMain(void);

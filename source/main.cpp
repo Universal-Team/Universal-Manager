@@ -72,6 +72,7 @@ ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, ftpScreen},
 	{0, 150, 149, 52, updaterSubMenu},
+    {170, 150, 149, 52, settingsScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
@@ -79,6 +80,25 @@ ButtonPos fileScreenButtonPos[] = {
 	{100, 120, 149, 52, PNGScreen},
     {293, 213, 27, 27, mainScreen},
 };
+
+ButtonPos settingsScreenButtonPos[] = {
+    {0, 40, 149, 52, creditsScreen},
+    {293, 213, 27, 27, mainScreen},
+	{170, 40, 149, 52, uiSettingsScreen},
+};
+
+ButtonPos uisettingsScreenButtonPos[] = {
+    {293, 213, 27, 27, settingsScreen},
+};
+
+ButtonPos updaterScreenButtonPos[] = {
+    {293, 213, 27, 27, mainScreen},
+};
+
+ButtonPos creditsScreenButtonPos[] = {
+    {293, 213, 27, 27, settingsScreen},
+};
+
 
 void screenoff()
 {
@@ -177,12 +197,12 @@ int main()
 				drawThemeSelector();
 				break;
 //#########################################################################################################
-		//	case settingsScreen:
-		//		drawSettingsScreen();		// Draws the Settings screen
-		//		break;
-		//	case uiSettingsScreen:
-		//		drawUISettingsScreen();
-		//		break;
+			case settingsScreen:
+				drawSettingsScreen();		// Draws the Settings screen
+				break;
+			case uiSettingsScreen:
+				drawUISettingsScreen();
+				break;
 //#########################################################################################################
 			case PNGScreen:
 				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
@@ -221,8 +241,8 @@ int main()
 					screenMode = fileScreen;
 				} else if (hDown & KEY_X) {
 					screenMode = ftpScreen;
-			//	} else if (hDown & KEY_Y) {
-			//		screenMode = updaterSubMenu;
+				} else if (hDown & KEY_Y) {
+					screenMode = updaterSubMenu;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
 						if (touching(touch, mainScreenButtonPos[i])) {
@@ -249,12 +269,12 @@ int main()
 			case creditsScreen:
 				if (hDown & KEY_B) {
 					screenMode = settingsScreen;
-			//	} else if (hDown & KEY_TOUCH) {
-			//		for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
-			//			if (touching(touch, creditsScreenButtonPos[i])) {
-			//				screenMode = creditsScreenButtonPos[i].link;
-			//			}
-			//		}
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
+						if (touching(touch, creditsScreenButtonPos[i])) {
+							screenMode = creditsScreenButtonPos[i].link;
+						}
+					}
 				}
 				break;
 //#########################################################################################################
@@ -280,22 +300,22 @@ int main()
 				themeSelectorLogic(hDown, hHeld);
 				break;
 //#########################################################################################################
-		//	case settingsScreen:
-		//	if (hDown & KEY_B) {
-		//		screenMode = mainScreen;
-		//	} else if (hDown & KEY_X) {
-		//		screenMode = uiSettingsScreen;
-		//	} else if (hDown & KEY_TOUCH) {
-		//			for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
-		//				if (touching(touch, settingsScreenButtonPos[i])) {
-		//					screenMode = settingsScreenButtonPos[i].link;
-		//				}
-		//			}
-		//		}
-		//		break;
-		//	case uiSettingsScreen:
-		//		uiSettingsLogic(hDown, touch);
-		//		break;
+			case settingsScreen:
+			if (hDown & KEY_B) {
+				screenMode = mainScreen;
+			} else if (hDown & KEY_X) {
+				screenMode = uiSettingsScreen;
+			} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
+						if (touching(touch, settingsScreenButtonPos[i])) {
+							screenMode = settingsScreenButtonPos[i].link;
+						}
+					}
+				}
+				break;
+			case uiSettingsScreen:
+				uiSettingsLogic(hDown, touch);
+				break;
 //#########################################################################################################
 			case PNGScreen:
 			PNGSelectorLogic(hDown, hHeld);
