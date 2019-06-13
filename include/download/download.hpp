@@ -99,30 +99,6 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 std::vector<ThemeEntry> getThemeList(std::string repo, std::string path);
 
 /**
- * Show the latest release's name and message.
- * repo is where to get from. (Ex. "RocketRobz/TWiLightMenu")
- */
-bool showReleaseInfo(std::string repo, bool drawMessageText);
-
-/**
- * Show the latest commit's name and message.
- * repo is where to get from. (Ex. "RocketRobz/TWiLightMenu")
- */
-bool showCommitInfo(std::string repo, bool drawMessageText);
-
-/**
- * Prepare text for showing a release/commit message.
- * text is the text you want to show.
- */
-void setMessageText(const std::string &text);
-
-/**
- * Draw text prepared by setMessageText.
- * position is which line start on.
- */
-void drawMessageText(int position, bool drawMessageText);
-
-/**
  * Check for updates.
  */
 void checkForUpdates(void);

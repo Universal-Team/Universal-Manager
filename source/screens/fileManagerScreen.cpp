@@ -27,39 +27,20 @@
 #include "screens/screenCommon.hpp"
 
 void drawFileManagerSubMenu(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FileManager Sub Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("FileManager Sub Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 	// Music List Button.
-	volt_draw_texture(MainMenuButton, 100, 40);
-	volt_draw_texture(MusicIcon, 105, 50);
-	volt_draw_text(140, 57, 0.7f, 0.7f, BLACK, "Music Player");
+	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
+	Gui::sprite(sprites_music_icon_idx, 105, 50);
+	Gui::staticText("Music Player", 190, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Image Viewer Button.
-	volt_draw_texture(MainMenuButton, 100, 120);
-	volt_draw_texture(ImageIcon, 105, 130);
-	volt_draw_text(137, 137, 0.68f, 0.68f, BLACK, "Image Viewer");
-	volt_end_draw();
-}
-
-void drawFileManagerScreen(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FileManager Menu");
-	drawBatteryTop();
-
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
+	Gui::sprite(sprites_image_icon_idx, 105, 130);
+	Gui::staticText("Image Viewer", 190, 137, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }

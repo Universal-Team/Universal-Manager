@@ -1,4 +1,4 @@
-/*
+	/*
 *   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
@@ -34,33 +34,29 @@ void drawMainMenu(void) {
 	// Initialize the Version Number.
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
-	drawBgTop();
+	Gui::DrawBGTop();
 	animatedBGTop();
-	drawBarsTop();
-	volt_draw_wtext_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, TR(STR_MAINMENU_TITLE));
-	displayTime();
-	drawBatteryTop();
-	volt_draw_text(340, 218, 0.65f, 0.65f, BLACK, universal_manager_vertext);
+	Gui::DrawBarsTop();
+	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
+	Gui::DrawBGBot();
 	animatedBGBot();
-	drawBarsBotNormal();
+	Gui::DrawBarsBot();
 
-	volt_draw_texture(MainMenuButton, 0, 40);
-	volt_draw_texture(FileManagerIcon, 5, 50);
-	volt_draw_wtext(40, 57, 0.65f, 0.65f, BLACK, TR(STR_MAINMENU_FILEMANAGER));
-	volt_draw_texture_blend(Arrow, 100, 25, settings.universal.bars);
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
+	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
+	Gui::staticText("FileManager", 85, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, 170, 40);
-	volt_draw_texture(FTPIcon, 175, 50);
-	volt_draw_wtext(210, 57, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_FTP));
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
+	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
+	Gui::staticText("FTP", 230, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, 0, 150);
-	volt_draw_texture(UpdaterIcon, 5, 160);
-	volt_draw_wtext(40, 167, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_UPDATER));
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
+	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
+	Gui::staticText("Updater", 80, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, 170, 150);
-	volt_draw_texture(SettingsIcon, 175, 160);
-	volt_draw_wtext(210, 167, 0.7f, 0.7f, BLACK, TR(STR_MAINMENU_SETTINGS));
-	volt_end_draw();
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
+	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
+	Gui::staticText("Settings", 240, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }

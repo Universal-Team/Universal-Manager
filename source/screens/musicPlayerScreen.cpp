@@ -1,6 +1,6 @@
 /*
 *   This file is part of Universal-Manager
-*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
+*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -29,9 +29,10 @@
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-
+//#include "common.hpp"
 #include "fileBrowse.h"
 #include "keyboard.h"
+#include "settings.hpp"
 
 extern "C" {
 	#include "music/playback.h"
@@ -67,6 +68,7 @@ uint selectedPlstItem = 0;
 int movingPlstItem = -1;
 std::vector<std::string> plstContents;
 
+
 extern bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos mainButtonPos[] = {
@@ -84,35 +86,43 @@ ButtonPos playerButtonPos[] = {
 	{280, 175, 30, 30, -1},
 };
 
+std::string secondsToString(u64 seconds) {
+    int h = 0, m = 0, s = 0;
+    h = (seconds / 3600);
+    m = (seconds - (3600 * h)) / 60;
+    s = (seconds - (3600 * h) - (m * 60));
+
+	char string[35];
+
+    if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
+    else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
+	
+	return string;
+}
+
 void drawMusicMain() {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
-	drawBatteryTop();
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
+	Gui::clearStaticText();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Music Player Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
-	volt_draw_texture(MainMenuButton, mainButtonPos[0].x, mainButtonPos[0].y);
-	volt_draw_texture(MusicIcon, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
-	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Songs");
+	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
+	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
+	Gui::staticText("Songs", 80, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, mainButtonPos[1].x, mainButtonPos[1].y);
-	volt_draw_texture_blend(PlayIconSmall, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
-	volt_draw_texture(PlayIconSmall2, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
-	volt_draw_text(210, 57, 0.7f, 0.7f, BLACK, "Now playing");
+	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
+	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
+	Gui::staticText("Now playing", 255, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, mainButtonPos[2].x, mainButtonPos[2].y);
-	volt_draw_texture(PlaylistIcon, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
-	volt_draw_text(40, 167, 0.7f, 0.7f, BLACK, "Playlists");
+	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[2].x, mainButtonPos[2].y);
+	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
+	Gui::staticText("Playlists", 80, 167, 0.65f, 0.65f, BLACK,TextPosX::CENTER, TextPosY::TOP);
 
-	 volt_draw_texture(MainMenuButton, mainButtonPos[3].x, mainButtonPos[3].y);
-	 volt_draw_texture(ThemeIcon, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
-	 volt_draw_text(210, 167, 0.7f, 0.7f, BLACK, "Themes");
-	 volt_end_draw();
+	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
+	 Gui::staticText("Themes", 230, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -135,12 +145,9 @@ void musicMainLogic(u32 hDown, touchPosition touch) {
 
 void drawMusicList(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Music Player Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -158,6 +165,7 @@ void drawMusicList(void) {
 		dirChanged = false;
 	}
 	std::string dirs;
+	std::string dirs2;
 	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
 		if (i == selectedFile) {
 			dirs += "> " + dirContents[i].name + "\n";
@@ -168,15 +176,14 @@ void drawMusicList(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	else if(dirContents[selectedFile].name == currentSong)	dirs += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	if (dirContents[selectedFile].isDirectory)	dirs2 += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else if(dirContents[selectedFile].name == currentSong)	dirs2 += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else	dirs2 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(dirs2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void musicListLogic(u32 hDown, u32 hHeld) {
@@ -198,10 +205,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 				nowPlayingList.push_back(song);
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
-				//volt_free_texture(Cover);
 			}
-			screenMode = musicPlayerScreen;
-			musicPlayerReturn = musicListScreen;
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
 		}
 	} else if (hDown & KEY_B) {
@@ -221,13 +225,11 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
-			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
@@ -235,55 +237,49 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 }
 
 void drawMusicPlayer(void) {
-	MusicPlayerImageChoice();
-	drawBarsTop();
+	Gui::clearStaticText();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		volt_draw_text(0, 3, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
-		volt_draw_rectangle(18, 175, 100, 20, BLACK);
-		volt_draw_text(20, 177, 0.45f, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
-		volt_draw_rectangle(18, 192, 364, 20, BLACK);
-		volt_draw_rectangle(20, 194, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, settings.universal.bars);
+		Gui::staticText(nowPlayingText.c_str(), 200, 3, 0.52f, 0.52f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
+		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
+		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
+
+	
+	if(!isPaused() && isPlaying()) {
+		Gui::staticText("\uE000 : Pause   \uE001 : Back   \uE002 : Stop song", 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	} else if(isPaused() && isPlaying()) {
+		Gui::staticText("\uE000 : Play   \uE001 : Back   \uE002 : Stop song", 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	} else {
+		Gui::staticText("No song selected.", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText("\uE001 : Back", 200, 200, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	}
+
 
 		// Placeholder for Metadata Stuff..
-		if (settings.universal.music == 0) {
+	 	if (settings.universal.music == 0) {
 	} else if (settings.universal.music == 1) {
-		volt_draw_text(15, 40, 0.7f, 0.7f, BLACK, "Song Name");
-		volt_draw_text(15, 60, 0.7f, 0.7f, BLACK, "Author Name");
-		volt_draw_text(15, 80, 0.7f, 0.7f, BLACK, "Album Name");
-		volt_draw_text(15, 100, 0.7f, 0.7f, BLACK, "Release Year?");
+		Gui::staticText("Song Name", 70, 40, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Author Name", 70, 60, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Album Name", 70, 80, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+
+		Gui::staticText("Release Year", 70, 100, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	} else if (settings.universal.music == 2) {
 	}
 	}
-	
-	if(!isPaused() && isPlaying()) {
-		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
-	} else if(isPaused() && isPlaying()) {
-		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
-	} else {
-		volt_draw_text(0, 4, 0.72f, 0.72f, WHITE, "No song selected.");
-		volt_draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE001 : Back");
-	}
-
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	displayTime();
-	drawBatteryBot();
-	volt_draw_texture_blend(!isPaused() ? PauseIcon : PlayIcon, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
-	volt_draw_texture(!isPaused() ? PauseIcon2 : PlayIcon2, playerButtonPos[0].x, playerButtonPos[0].y);
-
-	volt_draw_texture_blend(LeftIcon, playerButtonPos[1].x, playerButtonPos[1].y, settings.universal.bars);
-	volt_draw_texture(LeftIcon2, playerButtonPos[1].x, playerButtonPos[1].y);
-
-	volt_draw_texture_blend(RightIcon, playerButtonPos[2].x, playerButtonPos[2].y, settings.universal.bars);
-	volt_draw_texture(RightIcon2, playerButtonPos[2].x, playerButtonPos[2].y);
-
-	volt_draw_texture_blend(ShuffleIcon, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
-	volt_draw_texture_blend(RepeatIcon, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
-	if (musicRepeat)	volt_draw_text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, WHITE, (musicRepeat == 1 ? "A" : "S"));
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
+	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
+	Gui::sprite(sprites_left_arrow_normal_idx, playerButtonPos[1].x, playerButtonPos[1].y);
+	Gui::sprite(sprites_right_icon_normal_idx, playerButtonPos[2].x, playerButtonPos[2].y);
+	Gui::sprite(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y);
+	Gui::sprite(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y);
+	if (musicRepeat)	Gui::staticText((musicRepeat == 1 ? "A" : "S"), playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -350,12 +346,9 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 
 void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -372,6 +365,7 @@ void drawMusicPlaylistAdd(void) {
 	}
 
 	std::string plstList;
+	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -382,13 +376,12 @@ void drawMusicPlaylistAdd(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
+	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
@@ -441,13 +434,11 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedPlst--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
-			scrollSfx();
 			selectedPlst++;
 			keyRepeatDelay = 3;
 		}
@@ -456,12 +447,9 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 
 void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -473,6 +461,7 @@ void drawMusicPlaylistPlay(void) {
 	}
 
 	std::string plstList;
+	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -483,13 +472,12 @@ void drawMusicPlaylistPlay(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+	plstList2 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
+	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
@@ -499,7 +487,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 						 "Now Playing or play them now?",
 						 "Play Now",
 						 "Add to Now Playing",
-						 117)) {
+						 200)) {
 			nowPlayingList.clear();
 		}
 		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
@@ -529,13 +517,11 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicPlaylistEditScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedPlst--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
-			scrollSfx();
 			selectedPlst++;
 			keyRepeatDelay = 3;
 		}
@@ -543,14 +529,12 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 }
 
 void drawMusicPlaylistEdit() {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	std::string plstList;
+	std::string plstList2;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
 		if (i == selectedPlstItem) {
 			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
@@ -563,13 +547,11 @@ void drawMusicPlaylistEdit() {
 	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
-
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	plstList2 += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
+	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
@@ -599,13 +581,11 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlstItem > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedPlstItem--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
-			scrollSfx();
 			selectedPlstItem++;
 			keyRepeatDelay = 3;
 		}
@@ -615,12 +595,9 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 
 void drawThemeSelector(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Theme Selector");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Theme Selector", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -645,12 +622,10 @@ void drawThemeSelector(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+		Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void themeSelectorLogic(u32 hDown, u32 hHeld) { 
@@ -664,20 +639,27 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
 			if (settings.universal.music == 0) {
-			displayMsg("Your Current Setting doesn't allow it.\nChange Your Setting in the UI Settings.\n(Music)");
+			DisplayMsg("Not Implemented Yet.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (settings.universal.music == 1) {
-			if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
-			volt_free_texture(Cover);
-			volt_load_texture_png(Cover2, dirContents[selectedFile].name.c_str());
-			} 
+			//if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
+			//volt_free_texture(Cover);
+			//volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
+			//} 
+			DisplayMsg("Not Implemented Yet.");
+			for (int i = 0; i < 60*4; i++) {
+			gspWaitForVBlank();
+			}
 		} else if (settings.universal.music == 2) {
-			if(confirmPopup("Do you want, to use this Image?")) {
-			volt_free_texture(MusicPlayerImage);
-			volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
-		}
+			//if(confirmPopup("Do you want, to use this Image?")) {
+			//volt_free_texture(MusicPlayerImage);
+			//volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
+			DisplayMsg("Not Implemented Yet.");
+			for (int i = 0; i < 60*4; i++) {
+			gspWaitForVBlank();
+			}
 		}
 		}
 	} else if (hDown & KEY_B) {
@@ -694,13 +676,11 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = musicMainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
-			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}

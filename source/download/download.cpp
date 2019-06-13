@@ -31,9 +31,8 @@
 
 #include "download/extract.hpp"
 #include "inifile.h"
-#include "graphic.h"
+#include "gui.hpp"
 #include "fileBrowse.h"
-#include "voltlib/volt.h"
 #include "utils/settings.hpp"
 #include "colors.hpp"
 #include "download/thread.hpp"
@@ -309,28 +308,28 @@ bool checkWifiStatus(void) {
 }
 
 void downloadFailed(void) {
-	displayMsg("Download failed!\n");
+	DisplayMsg("Download failed!\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void notImplemented(void) {
-	displayMsg("Not implemented Yet.\n");
+	DisplayMsg("Not implemented Yet.\n");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void doneMsg(void) {
-	displayMsg("Done!");
+	DisplayMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void notConnectedMsg(void) {
-	displayMsg("Please connect to Wi-Fi");
+	DisplayMsg("Please connect to Wi-Fi");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -616,157 +615,21 @@ void downloadTheme(std::string path) {
 	std::vector<ThemeEntry> themeContents = getThemeList("Universal-Team/extras", path);
 	for(uint i=0;i<themeContents.size();i++) {
 		if(themeContents[i].downloadUrl != "") {
-			displayMsg(("Downloading: "+themeContents[i].name).c_str());
+			DisplayMsg(("Downloading: "+themeContents[i].name).c_str());
 			downloadToFile(themeContents[i].downloadUrl, themeContents[i].sdPath);
 		} else {
-			displayMsg(("Downloading: "+themeContents[i].name).c_str());
+			DisplayMsg(("Downloading: "+themeContents[i].name).c_str());
 			mkdir((themeContents[i].sdPath).c_str(), 0777);
 			downloadTheme(themeContents[i].path);
 		}
 	}
 }
 
-bool showReleaseInfo(std::string repo, bool showExitText)
-{
-	jsonName = getLatestRelease(repo, "name");
-	std::string jsonBody = getLatestRelease(repo, "body");
-	
-	setMessageText(jsonBody);
-	int textPosition = 0;
-	bool redrawText = true;
-
-	while(1) {
-		if(redrawText) {
-			drawMessageText(textPosition, showExitText);
-			redrawText = false;
-		}
-
-		gspWaitForVBlank();
-		hidScanInput();
-		const u32 hDown = hidKeysDown();
-		const u32 hHeld = hidKeysHeld();
-
-		if(hHeld & KEY_UP || hHeld & KEY_DOWN) {
-			for(int i=0;i<9;i++)
-				gspWaitForVBlank();
-		}
-		
-		if (hDown & KEY_A || (hDown & KEY_Y && !showExitText) || (hDown & KEY_TOUCH && !showExitText)) {
-			return true;
-		} else if (hDown & KEY_B) {
-			return false;
-		} else if (hHeld & KEY_UP) {
-			if(textPosition > 0) {
-				textPosition--;
-				redrawText = true;
-			}
-		} else if (hHeld & KEY_DOWN) {
-			if(textPosition < (int)(_topText.size() - 10)) {
-				textPosition++;
-				redrawText = true;
-			}
-		}
-	}
-}
-
-bool showCommitInfo(std::string repo, bool showExitText)
-{
-	jsonName = getLatestCommit(repo, "sha").substr(0,7);
-	std::string jsonBody = getLatestCommit(repo, "commit", "message");
-	setMessageText(jsonBody);
-	int textPosition = 0;
-	bool redrawText = true;
-
-	while(1) {
-		if(redrawText) {
-			drawMessageText(textPosition, showExitText);
-			redrawText = false;
-		}
-
-		gspWaitForVBlank();
-		hidScanInput();
-		const u32 hDown = hidKeysDown();
-		const u32 hHeld = hidKeysHeld();
-
-		if(hHeld & KEY_UP || hHeld & KEY_DOWN) {
-			for(int i=0;i<9;i++)
-				gspWaitForVBlank();
-		}
-		
-		if (hDown & KEY_A || (hDown & KEY_Y && !showExitText) || (hDown & KEY_TOUCH && !showExitText)) {
-			return true;
-		} else if (hDown & KEY_B) {
-			return false;
-		} else if (hHeld & KEY_UP) {
-			if(textPosition > 0) {
-				textPosition--;
-				redrawText = true;
-			}
-		} else if (hHeld & KEY_DOWN) {
-			if(textPosition < (int)(_topText.size() - 10)) {
-				textPosition++;
-				redrawText = true;
-			}
-		}
-	}
-}
-
-void setMessageText(const std::string &text)
-{
-	std::string _topTextStr(text);
-	std::vector<std::string> words;
-	std::size_t pos;
-	// std::replace( _topTextStr.begin(), _topTextStr.end(), '\n', ' ');
-	_topTextStr.erase(std::remove(_topTextStr.begin(), _topTextStr.end(), '\r'), _topTextStr.end());
-	while((pos = _topTextStr.find(' ')) != std::string::npos) {
-		words.push_back(_topTextStr.substr(0, pos));
-		_topTextStr = _topTextStr.substr(pos + 1);
-	}
-	if(_topTextStr.size())
-		words.push_back(_topTextStr);
-	std::string temp;
-	_topText.clear();
-	for(auto word : words)
-	{
-		int width = volt_get_text_width((temp + " " + word).c_str(), 0.45f, 0.45f);
-		if(word.find('\n') != -1u)
-		{
-			word.erase(std::remove(word.begin(), word.end(), '\n'), word.end());
-			temp += " " + word;
-			_topText.push_back(temp);
-			temp = "";
-		}
-		else if(width > 256)
-		{
-			_topText.push_back(temp);
-			temp = word;
-		}
-		else
-		{
-			temp += " " + word;
-		}
-	}
-	if(temp.size())
-	   _topText.push_back(temp);
-}
-
-void drawMessageText(int position, bool showExitText)
-{
-	if(showExitText)
-	volt_draw_text(30, 200, 0.5f, 0.5f, WHITE, "\uE001: Cancel   \uE000: Update");
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_text(25, 24, .7, .7, WHITE, jsonName.c_str());
-	for (int i = 0; i < (int)_topText.size() && i < (showExitText ? 9 : 10); i++) {
-	volt_draw_text(24, ((i * 16) + 48), 0.45f, 0.45f, WHITE, _topText[i+position].c_str());
-	volt_end_draw();
-}
-}
-
 void displayProgressBar() {
 	char str[256];
 	while(showProgressBar) {
 		snprintf(str, sizeof(str), "%s\n%s%s\n%i %s", progressBarMsg, (!progressBarType ? "" : "\nCurrently extracting:\n"), (!progressBarType ? "" : extractingFile.c_str()), (!progressBarType ? (int)round(result_written/1000) : filesExtracted), (!progressBarType ? "KB downloaded." : (filesExtracted == 1 ? "file extracted." :"files extracted.")));
-		displayMsg(str);
+		DisplayMsg(str);
 		gspWaitForVBlank();
 	}
 }
@@ -899,7 +762,7 @@ void updateBootstrap(bool nightly) {
 		saveUpdateData();
 		updateAvailable[3] = false; // For Later.
 	} else {	
-		displayMsg("Downloading nds-bootstrap...\n(Release)");
+		DisplayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
 		showProgressBar = true;
 		progressBarType = 0;
@@ -947,7 +810,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
 		showProgressBar = false;
 
-		displayMsg("Now installing the CIAs.\n"
+		DisplayMsg("Now installing the CIAs.\n"
 						"(Nightly)");
 		// installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -961,7 +824,7 @@ void updateTWiLight(bool nightly) {
 		saveUpdateData();
 		updateAvailable[1] = false; // For Later.
 	} else {
-		displayMsg("Downloading TWiLightMenu++\n"
+		DisplayMsg("Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
@@ -983,7 +846,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
 		showProgressBar = false;
 
-		displayMsg("Now installing the CIAs.\n"
+		DisplayMsg("Now installing the CIAs.\n"
 						"(Release)");
 		installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
@@ -1002,14 +865,14 @@ void updateTWiLight(bool nightly) {
 
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
-		displayMsg("Downloading Universal-Manager\n"
+		DisplayMsg("Downloading Universal-Manager\n"
 						"(Nightly)\n\nThis may take a bit.");
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	displayMsg("Now installing the CIA.\n"
+	DisplayMsg("Now installing the CIA.\n"
 						"(Nightly)");
 		installCia("/Universal-Manager-Nightly.cia");
 
@@ -1021,7 +884,7 @@ void updateUniversalManager(bool nightly) {
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		displayMsg("Now Downloading Luma3DS\n" 
+		DisplayMsg("Now Downloading Luma3DS\n" 
 						"(Nightly)");
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			downloadFailed();
@@ -1032,14 +895,14 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		displayMsg("Now Downloading Luma3DS\n"
+		DisplayMsg("Now Downloading Luma3DS\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("extracting Boot.firm\n"
+		DisplayMsg("extracting Boot.firm\n"
 						"(Release)");
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
 
@@ -1053,14 +916,14 @@ void updateLuma(bool nightly) {
 }
 
 void downloadGodMode9(void) {
-	displayMsg("Now Downloading GodMode9\n"
+	DisplayMsg("Now Downloading GodMode9\n"
 						"(Release)");
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Extracting GodMode9.firm\n"
+		DisplayMsg("Extracting GodMode9.firm\n"
 						"(Release)");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
@@ -1074,14 +937,14 @@ void downloadGodMode9(void) {
 	}
 
 void updatePKSM(void) {
-		displayMsg("Downloading PKSM\n"
+		DisplayMsg("Downloading PKSM\n"
 						"(Release)\n\nThis may take a while.");
 		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Installing PKSM.cia\n"
+		DisplayMsg("Installing PKSM.cia\n"
 						"(Release)\n\n\n\n\n\n\n\n\n\n"
 						"This may take a while..");
 		installCia("/PKSM-Release.cia");
@@ -1096,13 +959,13 @@ void updatePKSM(void) {
 }
 
 void updateCheckpoint(void) {
-	displayMsg("Downloading Checkpoint.cia (Release)\n");
+	DisplayMsg("Downloading Checkpoint.cia (Release)\n");
 		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		displayMsg("Installing Checkpoint.cia\n"
+		DisplayMsg("Installing Checkpoint.cia\n"
 						"(Release)");
 		installCia("/Checkpoint-Release.cia");
 
@@ -1152,10 +1015,10 @@ void downloadThemes(void) {
 		}
 		themesText += "\n\n\n\n\n";
 		themesText += "B: Back   A: Continue";
-		displayMsg(themesText.c_str());
+		DisplayMsg(themesText.c_str());
 	}
 
-	displayMsg("Getting theme list...");
+	DisplayMsg("Getting theme list...");
 
 	std::vector<ThemeEntry> themeList;
 	themeList = getThemeList("Universal-Team/extras", "Universal-Manager/"+themeFolders[selectedMusicTheme]+"/themes");
@@ -1171,7 +1034,7 @@ void downloadThemes(void) {
 		if(keyRepeatDelay)	keyRepeatDelay--;
 		if(hDown & KEY_A) {
 			mkdir((themeList[selectedTheme].sdPath).c_str(), 0777);
-			displayMsg(("Downloading: "+themeList[selectedTheme].name).c_str());
+			DisplayMsg(("Downloading: "+themeList[selectedTheme].name).c_str());
 			downloadTheme(themeList[selectedTheme].path);
 		} else if(hDown & KEY_B) {
 			selectedTheme = 0;
@@ -1211,7 +1074,7 @@ void downloadThemes(void) {
 			themesText += "\n";
 		}
 		themesText += "B: Back   A: Choose";
-		displayMsg(themesText.c_str());
+		DisplayMsg(themesText.c_str());
 	}
 }
 

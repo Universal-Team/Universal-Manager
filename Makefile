@@ -78,14 +78,14 @@ CFLAGS	:=	-g -Wall -O2 -DVERSION_MAJOR=$(VERSION_MAJOR) -DVERSION_MINOR=$(VERSIO
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
+CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS -D_GNU_SOURCE=1
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctru -lm -lstdc++
+LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro2d -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctru -lm -lstdc++
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -189,7 +189,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) #$(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #------------------------------------------------------------------------------

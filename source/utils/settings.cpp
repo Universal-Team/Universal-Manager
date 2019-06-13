@@ -26,6 +26,7 @@
 
 #include "utils/settings.hpp"
 #include "inifile.h"
+#include "colors.hpp"
 
 #include <unistd.h>
 #include <string>
@@ -40,45 +41,15 @@ static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
-	settings.universal.bars = settingsini.GetInt("UI", "BARS", BLACK); // Bars color
+	settings.universal.bars = settingsini.GetInt("UI", "BARS", RED); // Bars color
 	settings.universal.bg = settingsini.GetInt("UI", "BG", GRAY); // Background Color
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
 	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.
-	settings.universal.language = settingsini.GetInt("UI", "LANGUAGE", 1); // Language
 
 	// Animated BG.
 	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
-	settings.universal.color = settingsini.GetInt("ANIMATED", "COLOR", DARK_BLUE); // Color of the Bubbles.
-	
-
+	settings.universal.color = settingsini.GetInt("ANIMATED", "COLOR", BLUE); // Color of the Bubbles.
 }
-
-// Language.
-		static const char *const language_text[] = {
-			"日本語",	// Japanese
-			"English",	// English
-			"Français",	// French
-			"Deutsch",	// German
-			"Italiano",	// Italian
-			"Español",	// Spanish
-			"简体中文",		// Simplified Chinese (TODO) (font seems to miss some characters)
-			"Korean",	// Korean [Font is missing characters]
-			"Nederlands",	// Dutch
-			"Português",	// Portuguese
-			"Russian",	// Russian (TODO) [Font's characters are too wide]
-			"繁體中文",		// Traditional Chinese (TODO)
-			"Turkish",		// Turkish
-			"Finnish",		// Finnish
-		};
-
-		// TODO: Cache the conversion?
-	/*	wstring languagevaluetext;
-		if (settings.universal.language >= 0 && settings.universal.language < 14) {
-			languagevaluetext = utf8_to_wstring(language_text[settings.universal.language]);
-		} else {
-			// TODO: Translate?
-			languagevaluetext = latin1_to_wstring("System");
-		}*/
 
 /**
  * Save settings.
@@ -88,7 +59,6 @@ void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "BG", settings.universal.bg);
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
 	settingsini.SetInt("UI", "BATTERY", settings.universal.battery);
-	settingsini.SetInt("UI", "LANGUAGE", settings.universal.language);
 
 	// Animated BG.
 	settingsini.SetInt("ANIMATED", "ENABLE", settings.universal.animation);

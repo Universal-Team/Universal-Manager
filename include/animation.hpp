@@ -28,15 +28,9 @@
 #define ANIMATION_HPP
 
 #include <3ds.h>
-#include "voltlib/volt.h"
-#include "textures.hpp"
-
-// Textures.
-extern size_t animatedTextureTop[2];
-extern size_t animatedTextureBottom[2];
+#include "gui.hpp"
 
 // Animated BG Functions.
-void animation_Init(void);
 void animatedBGTop(void);
 void animatedBGBot(void);
 

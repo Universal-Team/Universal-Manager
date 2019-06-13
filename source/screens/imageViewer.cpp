@@ -1,6 +1,6 @@
 /*
 *   This file is part of Universal-Manager
-*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
+*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -31,21 +31,19 @@
 #include <vector>
 #include "fileBrowse.h"
 
-extern uint selectedFile;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-extern std::vector<DirEntry> dirContents;
+ extern uint selectedFile;
+ extern int keyRepeatDelay;
+ extern bool dirChanged;
+ extern std::vector<DirEntry> dirContents;
 std::string currentImage = "";
 std::string filename;
 
 
 void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Image Viewer Menu [PNG]", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -70,22 +68,17 @@ void drawPNGImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	displayTime();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Image Viewer Menu [BMP]", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -110,26 +103,20 @@ void drawBMPImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	volt_draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	Gui::staticText(dirs.c_str(), 26, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);;
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	displayTime();
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 
 void showImage(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_texture(SDImage, 0, 0);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Not Implemented Yet.", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_on(GFX_BOTTOM, GFX_LEFT);
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotNormal();
-	volt_draw_text(110, 4, 0.45f, 0.45f, WHITE, "Press B to exit.");
-	volt_end_draw();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void BMPSelectorLogic(u32 hDown, u32 hHeld) { 
@@ -142,11 +129,11 @@ void BMPSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
-			volt_free_texture(SDImage);
-			volt_load_texture_bmp(SDImage, dirContents[selectedFile].name.c_str());
+			//if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
+			//volt_free_texture(SDImage);
+			//volt_load_texture_bmp(SDImage, dirContents[selectedFile].name.c_str());
 			screenMode = showImageScreen;
-			}
+			//}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
@@ -162,13 +149,11 @@ void BMPSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = PNGScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
-			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
@@ -185,11 +170,11 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
-			volt_free_texture(SDImage);
-			volt_load_texture_png(SDImage, dirContents[selectedFile].name.c_str());
+		//	if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
+		//	volt_free_texture(SDImage);
+		//	volt_load_texture_png(SDImage, dirContents[selectedFile].name.c_str());
 			screenMode = showImageScreen;
-			}
+		//	}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
@@ -205,13 +190,11 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 		screenMode = BMPScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
-			scrollSfx();
 			selectedFile--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
-			scrollSfx();
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}

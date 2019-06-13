@@ -25,6 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "colors.hpp"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
@@ -67,20 +68,6 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Music BG
 	{220, 28, 87, 33, -1},
-
-	// Saving.
-	{10, 28, 87, 33, -1},
-
-	// Bubble Colors.
-	{46, 98, 87, 33, -1},
-	{129, 98, 87, 33, -1},
-	{220, 98, 87, 33, -1},
-
-	// Animation Mode.
-	{220, 28, 87, 33, -1},
-
-	// Percent Mode.
-	{220, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -104,94 +91,54 @@ std::string getColorName(int color, int bgr) {
 }
 
 void drawSettingsScreen(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Settings");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
-	volt_draw_texture(MainMenuButton, 0, 40);
-	volt_draw_text(40, 57, 0.7f, 0.7f, BLACK, "Credits");
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
+	Gui::staticText("Credits", 40, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(MainMenuButton, 170, 40);
-	volt_draw_text(200, 57, 0.7f, 0.7f, BLACK, "UI Settings");
-	volt_end_draw();
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
+	Gui::staticText("UI Settings", 230, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void drawUISettingsScreen(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings");
-	drawBatteryTop();
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::clearStaticText();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("UI Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 	// Bars.
-	volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
-	volt_draw_texture(RedButton, 35, 88);
-	volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
-	volt_draw_texture(GreenButton, 129, 88);
-	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
-	volt_draw_texture(BlueButton, 220, 88);
-	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
+	Gui::staticText("Bars", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 35, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 56, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 129, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 150, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 220, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 239, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Background.
-	volt_draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
-	volt_draw_texture(RedButton, 35, 168);
-	volt_draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
-	volt_draw_texture(GreenButton, 129, 168);
-	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
-	volt_draw_texture(BlueButton, 220, 168);
-	volt_draw_text(229, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
+	Gui::staticText("Background", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 35, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 56, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 129, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 150, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_updaterButton_idx, 220, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 239, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(UpdaterButton, 220, 28);
-	volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, musicModes[settings.universal.music].c_str());
-	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
+	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	Gui::staticText(musicModes[settings.universal.music].c_str(), 260, 38, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Music Mode:", 110, 38, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Save Settings. ;P
-	volt_draw_texture(UpdaterButton, 10, 28);
-	volt_draw_text(19, 38, 0.7f, 0.7f, BLACK, "Save");
-
-	// Maybe Text Color later? 
-	volt_end_draw();
+	//Gui::sprite(sprites_updaterButton_idx, 10, 28);
+	//Gui::staticText("Save", 19, 38, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
-
-/*void drawUISettingsScreen2(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "UI Settings Page 2");
-	drawBatteryTop();
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
-
-		// Bubbles.
-	//volt_draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubble");
-	volt_draw_texture_blend(RGBButton, 35, 88, RED);
-	//volt_draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 2).c_str());
-	volt_draw_texture_blend(RGBButton, 129, 88, GREEN);
-	//volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 1).c_str());
-	volt_draw_texture_blend(RGBButton, 220, 88, BLUE);
-	//volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.color, 0).c_str());
-
-	volt_draw_texture(UpdaterButton, 220, 28);
-	//volt_draw_text(229, 38, 0.65f, 0.65f, BLACK, animationModes[settings.universal.animation].c_str());
-	volt_draw_text(110, 38, 0.7f, 0.7f, BLACK, "Animation :");
-
-	volt_draw_texture(UpdaterButton, 220, 168);
-	//volt_draw_text(229, 178, 0.65f, 0.65f, BLACK, percentModes[settings.universal.battery].c_str());
-	volt_draw_text(110, 178, 0.7f, 0.7f, BLACK, "Percentage :");
-}*/
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int red;
@@ -199,8 +146,6 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
-		//} else if (hDown & KEY_R) {
-		//	screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			red = keyboardInputInt("Red");
@@ -225,39 +170,6 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
-		} else if (touching(touch, uiSettingsButtonPos[8])) {
-			SaveUniversalSettings();
-			saveMsg();
 	}
 }
 }
-
-/*void uiSettingsLogic2(u32 hDown, touchPosition touch) {
-	int red;
-	int green;
-	int blue;
-		if (hDown & KEY_B) {
-		screenMode = settingsScreen;
-		} else if (hDown & KEY_L) {
-			screenMode = uiSettingsScreen;
-	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, uiSettingsButtonPos[9])) {
-			red = keyboardInputInt("Red");
-			settings.universal.color = RGBA8(red, getColorValue(settings.universal.color, 1), getColorValue(settings.universal.color, 0), 255);
-		} else if (touching(touch, uiSettingsButtonPos[10])) {
-			green = keyboardInputInt("Green (0-255)");
-			settings.universal.color = RGBA8(getColorValue(settings.universal.color, 2), green, getColorValue(settings.universal.color, 0), 255);
-		} else if (touching(touch, uiSettingsButtonPos[11])) {
-			blue = keyboardInputInt("Blue (0-255)");
-			settings.universal.color = RGBA8(getColorValue(settings.universal.color, 2), getColorValue(settings.universal.color, 1), blue, 255);
-		} else if (touching(touch, uiSettingsButtonPos[12])) {
-				settings.universal.animation++;
-			if (settings.universal.animation > 1) settings.universal.animation = 0;
-		} else if (touching(touch, uiSettingsButtonPos[13])) {
-				settings.universal.battery++;
-			if (settings.universal.battery > 1) settings.universal.battery = 0;
-		} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenMode = uiSettingsButtonPos[6].link;
-	}
-}
-}*/

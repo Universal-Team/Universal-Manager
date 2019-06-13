@@ -25,9 +25,6 @@
 */
 
 #include "animation.hpp"
-#include "graphic.h"
-#include "textures.hpp"
-#include "voltlib/volt.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,21 +34,7 @@
 static int animated_bubblesYPos[2] = {0};
 static bool animated_bubbleMoveDelay = false;
 
-size_t animatedTextureTop[2] = {47, 48};
-size_t animatedTextureBottom[2] = {49, 50};
-
-
-void animation_Init(void) {
-    volt_load_texture_png(animatedTextureTop[0], "romfs:/graphics/animated/Bubbles_Top_1.png");
-	volt_load_texture_png(animatedTextureTop[1], "romfs:/graphics/animated/Bubbles_Top_2.png");
-
-	volt_load_texture_png(animatedTextureBottom[0], "romfs:/graphics/animated/Bubbles_Bottom_1.png");
-	volt_load_texture_png(animatedTextureBottom[1], "romfs:/graphics/animated/Bubbles_Bottom_2.png");
-}
-
 void animatedBGTop(void) {
-		if (settings.universal.animation == 0) {
-	} else if (settings.universal.animation == 1) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -61,16 +44,13 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	volt_draw_texture_blend(animatedTextureTop[0], 0, animated_bubblesYPos[0], settings.universal.color);
-	volt_draw_texture_blend(animatedTextureTop[0], 0, animated_bubblesYPos[0]+240, settings.universal.color);
-	volt_draw_texture_blend(animatedTextureTop[1], 0, animated_bubblesYPos[1], settings.universal.color);
-	volt_draw_texture_blend(animatedTextureTop[1], 0, animated_bubblesYPos[1]+240, settings.universal.color);
-}
+	Gui::AnimationSprite(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]);
+	Gui::AnimationSprite(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240);
+	Gui::AnimationSprite(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]);
+	Gui::AnimationSprite(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240);
 }
 
 void animatedBGBot(void) {
-	if (settings.universal.animation == 0) {
-	} else if (settings.universal.animation == 1) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -80,69 +60,8 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	volt_draw_texture_blend(animatedTextureBottom[0], 0, animated_bubblesYPos[0], settings.universal.color);
-	volt_draw_texture_blend(animatedTextureBottom[0], 0, animated_bubblesYPos[0]+240, settings.universal.color);
-	volt_draw_texture_blend(animatedTextureBottom[1], 0, animated_bubblesYPos[1], settings.universal.color);
-	volt_draw_texture_blend(animatedTextureBottom[1], 0, animated_bubblesYPos[1]+240, settings.universal.color);
+	Gui::AnimationSprite(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]);
+	Gui::AnimationSprite(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240);
+	Gui::AnimationSprite(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]);
+	Gui::AnimationSprite(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240);
 }
-}
-
-/**
- * Make the dialog box appear.				// Ported from TWLoader.
- * @param text Dialog box text.
- */
-/*void DialogBoxAppear(int x, int y, const char *text) {
-	if (showdialogbox)
-		return;
-
-	// Save the dialog text so we can make
-	// use if it if nullptr is specified.
-	if (text) {
-		dialog_text = text;
-	}
-
-	int movespeed = 22;
-	for (int i = 0; i < 240; i += movespeed) {
-		if (movespeed <= 1) {
-			movespeed = 1;
-		} else {
-			movespeed -= 0.2;
-		}
-		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
-		if (screenmode == SCREEN_MODE_SETTINGS) {
-			pp2d_draw_texture(settingstex, 0, 0);
-		}
-		volt_draw_texture(dialogboxtex, 0, i-240);			
-		volt_draw_text(x, y+i-240, 0.5f, 0.5f, BLACK, dialog_text.c_str());
-		volt_end_draw();
-	}
-	showdialogbox = true;
-}*/
-
-/**
- * Make the dialog box disappear.
- * @param text Dialog box text.
- */
-/*void DialogBoxDisappear(int x, int y, const char *text) {
-	if (!showdialogbox)
-		return;
-
-	// Save the dialog text so we can make
-	// use if it if nullptr is specified.
-	if (text) {
-		dialog_text = text;
-	}
-
-	int movespeed = 1;
-	for (int i = 0; i < 240; i += movespeed) {
-		movespeed += 1;
-		volt_begin_draw(GFX_BOTTOM, GFX_LEFT);
-		if (screenmode == SCREEN_MODE_SETTINGS) {
-			volt_draw_texture(settingstex, 0, 0);
-		}
-		volt_draw_texture(dialogboxtex, 0, i);
-		volt_draw_text(x, y+i, 0.5f, 0.5f, BLACK, dialog_text.c_str());
-		volt_end_draw();
-	}
-	showdialogbox = false;
-}*/

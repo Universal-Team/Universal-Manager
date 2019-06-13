@@ -24,12 +24,11 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "graphic.h"
-#include "textures.hpp"
-#include "utils/settings.hpp"
+#include "gui.hpp"
 #include "animation.hpp"
-#include "language/language.h"
-#include "common.hpp"
+
+extern C3D_RenderTarget* g_renderTargetTop;
+extern C3D_RenderTarget* g_renderTargetBottom;
 
 #define mainScreen				0
 //###############################
@@ -48,20 +47,17 @@
 //###############################
 #define settingsScreen			10
 #define uiSettingsScreen		11
-#define uiSettingsScreen2		12
 //###############################
-#define PNGScreen				13
-#define BMPScreen				14
-#define showImageScreen			15
+#define PNGScreen				12
+#define BMPScreen				13
+#define showImageScreen			14
 //###############################
-#define ftpScreen				16
+#define ftpScreen				15
 //###############################
-#define fileManagerScreen		17
-//###############################
-#define updaterSubMenu			18
-#define OtherScreen				19
-#define TWLScreen				20
-#define CFWScreen				21
+#define updaterSubMenu			16
+#define OtherScreen				17
+#define TWLScreen				18
+#define CFWScreen				19
 //###############################
 
 struct Playlist {
@@ -76,17 +72,14 @@ void drawMainMenu(void);
 
 // File Manager Sub Menu Screen.
 void drawFileManagerSubMenu(void);
-void drawFileManagerScreen(void);
 
 // Settings Screen.
 void drawSettingsScreen(void);
 void drawCredits(void);
 void drawUISettingsScreen(void);
 void uiSettingsLogic(u32 hDown, touchPosition touch);
-//void drawUISettingsScreen2(void);
-//void uiSettingsLogic2(u32 hDown, touchPosition touch);
 
-// Music Player Screen.
+ //Music Player Screen.
 void drawMusicMain(void);
 void musicMainLogic(u32 hDown, touchPosition touch);
 void musicListLogic(u32 hDown, u32 hHeld);
@@ -125,10 +118,9 @@ void showImage(void);
 void showImageLogic(u32 hDown, touchPosition touch);
 
 // Miscs.
-void saveMsg(void);
+//void saveMsg(void);
 bool confirmPopup(std::string msg);
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
 
 // FTP Stuff.
 void drawFTPScreen(void);
-void ftpLogic(u32 hDown, touchPosition touch);

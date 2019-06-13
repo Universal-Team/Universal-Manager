@@ -25,7 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "ftp/ftp.h"
+//#include "ftp/ftp.h"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
@@ -55,21 +55,11 @@ ButtonPos ftpButtonPos[] = {
 
 
 void drawCredits(void) {
-	volt_draw_on(GFX_TOP, GFX_LEFT);
-	volt_draw_texture(CreditsImage, 0, 0);
+	C2D_SceneBegin(g_renderTargetTop);
+	Gui::sprite(sprites_universal_credits_idx, 0, 0);
 	
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
-	drawBatteryBot();
-	volt_end_draw();
-}
-
-void saveMsg(void) {
-	displayMsg("Settings Saved!\n");
-	for (int i = 0; i < 60*2; i++) {
-		gspWaitForVBlank();
-	}
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 void ftpLogic(u32 hDown, touchPosition touch) {
@@ -86,31 +76,27 @@ void ftpLogic(u32 hDown, touchPosition touch) {
 
 
 void drawFTPScreen(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "FTP Mode");
-	drawBatteryTop();
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
-	volt_end_draw();
-}
-
-bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 245);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("FTP Mode", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
 // processes like the clock won't update while the message bubble is up
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
-	volt_begin_draw(GFX_TOP, GFX_LEFT);
-	volt_draw_rectangle(50, 60, 300, 120, settings.universal.bars);
-	volt_draw_text_center(GFX_TOP, 90, 0.45f, 0.45f, WHITE, msg1.c_str());
-	volt_draw_text_center(GFX_TOP, 110, 0.45f, 0.45f, WHITE, msg2.c_str());
-	volt_draw_text(ynXPos, 160, 0.45f, 0.45f, WHITE, ("\uE001 : "+no+"   \uE000 : "+yes).c_str());
-	volt_end_draw();
+	Gui::clearStaticText();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+    C2D_TargetClear(g_renderTargetTop, BLUE2);
+    C2D_TargetClear(g_renderTargetBottom, BLUE2);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
+	Gui::staticText(msg1.c_str(), 170, 90, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(msg2.c_str(), 170, 110, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	C3D_FrameEnd(0);
 	while(1) {
 		gspWaitForVBlank();
 		hidScanInput();
@@ -120,4 +106,7 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 			return false;
 		}
 	}
+}
+bool confirmPopup(std::string msg) {
+	return confirmPopup(msg, "", "Yes", "No", 200);
 }

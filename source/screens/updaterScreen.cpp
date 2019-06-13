@@ -124,25 +124,19 @@ bool updateAvailable[] = {
 
 
 void drawUpdaterSubMenu(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	displayTime();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Updater Sub Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[13].x, downloadButtonPos[13].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[14].x, downloadButtonPos[14].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[15].x, downloadButtonPos[15].y);
-	volt_draw_text(49, 58, 0.7f, 0.7f, BLACK, "CFW");
-	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "TWL");
-	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Other");
-	//volt_draw_texture(UpdaterIcon, 0, 208); // Not working Yet correctly.
-	volt_end_draw();
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[15].x, downloadButtonPos[15].y);
+	Gui::staticText("CFW", 79, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("TWL", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Other", 259, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
@@ -166,47 +160,37 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 }
 
 void drawUpdaterTWL(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "TWL Update Screen");
-	drawBatteryTop();
-	displayTime();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("TWL Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 	// TWL Menu Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[0].x, downloadButtonPos[0].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[1].x, downloadButtonPos[1].y);
-	volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "TWLMENU++");
-	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
-	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[0].x, downloadButtonPos[0].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[1].x, downloadButtonPos[1].y);
+	Gui::staticText("TWLMENU++", 60, 58, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// NDS-Bootstrap Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[2].x, downloadButtonPos[2].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[3].x, downloadButtonPos[3].y);
-	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "NDS-Bootstrap");
-	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
-	volt_draw_text(229, 98, 0.7f, 0.7f, BLACK, "Nightly");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[2].x, downloadButtonPos[2].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[3].x, downloadButtonPos[3].y);
+	Gui::staticText("NDS-Bootstrap", 60, 98, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Nightly", 259, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[4].x, downloadButtonPos[4].y);
-	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Extras");
-	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Cheats");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[4].x, downloadButtonPos[4].y);
+	Gui::staticText("Extras", 30, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Cheats", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Draw The Pages and Back Icon.
-	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
-	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	volt_draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
-		if(updateAvailable[i]) {
-			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
-		}
-	}
-	*/volt_end_draw();
+	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("1", 260, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
+	Gui::staticText("2", 270, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
+	Gui::staticText("3", 280, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
 }
 
 void updaterTWLLogic(u32 hDown, touchPosition touch) {
@@ -253,52 +237,42 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 }
 
 */void drawUpdaterOther(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "Other Updater Screen");
-	displayTime();
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("Other Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 		// Universal-Manager Buttons.
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[5].x, downloadButtonPos[5].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[6].x, downloadButtonPos[6].y);
-	volt_draw_text(0, 58, BIG_SIZE, BIG_SIZE, BLACK, "UNIV-Manager");
-	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
-	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[5].x, downloadButtonPos[5].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[6].x, downloadButtonPos[6].y);
+	Gui::staticText("UNIV-Manager", 60, 58, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
-	volt_draw_texture(UpdaterButton, downloadButtonPos[10].x, downloadButtonPos[10].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[10].x, downloadButtonPos[10].y);
 	// PKSM Buttons.
-	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "PKSM");
-	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
+	Gui::staticText("PKSM", 30, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	// Checkpoint Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[11].x, downloadButtonPos[11].y);
-	volt_draw_text(0, 138, 0.7f, 0.7f, BLACK, "Checkpoint");
-	volt_draw_text(140, 138, 0.7f, 0.7f, BLACK, "Release");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[11].x, downloadButtonPos[11].y);
+	Gui::staticText("Checkpoint", 50, 138, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Themes Download Button.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[16].x, downloadButtonPos[16].y);
-	volt_draw_text(0, 178, 0.7f, 0.7f, BLACK, "extras");
-	volt_draw_text(140, 178, 0.7f, 0.7f, BLACK, "Themes");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
+	Gui::staticText("extras", 30, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Themes", 170, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	
 
 	// Draw The Pages and Back Icon.
-	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
-	volt_draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	volt_draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
-	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[10]))-1; i >= 8; i--) {
-		if(updateAvailable[i]) {
-			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // Needs to be fixed later.
-		}
-	}
-	*/volt_end_draw();
+	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("1", 260, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
+	Gui::staticText("2", 270, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
+	Gui::staticText("3", 280, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
 }
 
 void updaterOtherLogic(u32 hDown, touchPosition touch) {
@@ -333,41 +307,31 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 }
 
 void drawUpdaterCFW(void) {
-	drawBgTop();
-	animatedBGTop();
-	drawBarsTop();
-	volt_draw_text_center(GFX_TOP, 3, 0.72f, 0.72f, WHITE, "CFW Update Screen");
-	displayTime();
-	drawBatteryTop();
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::staticText("CFW Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
-	drawBgBot();
-	animatedBGBot();
-	drawBarsBotBack();
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 	// Luma 3DS Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[7].x, downloadButtonPos[7].y);
-	volt_draw_texture(UpdaterButton, downloadButtonPos[8].x, downloadButtonPos[8].y);
-	volt_draw_text(0, 58, 0.7f, 0.7f, BLACK, "Luma3DS");
-	volt_draw_text(140, 58, 0.7f, 0.7f, BLACK, "Release");
-	volt_draw_text(229, 58, 0.7f, 0.7f, BLACK, "Nightly");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[7].x, downloadButtonPos[7].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[8].x, downloadButtonPos[8].y);
+	Gui::staticText("Luma3DS", 50, 58, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	 // GodMode9 Buttons.
-	volt_draw_texture(UpdaterButton, downloadButtonPos[9].x, downloadButtonPos[9].y);
-	volt_draw_text(0, 98, 0.7f, 0.7f, BLACK, "GodMode9");
-	volt_draw_text(140, 98, 0.7f, 0.7f, BLACK, "Release");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[9].x, downloadButtonPos[9].y);
+	Gui::staticText("GodMode9", 50, 98, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Draw The Pages and Back Icon.
-	volt_draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
-	volt_draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-	volt_draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	volt_draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	/*for (int i = (int)(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[7]))-1; i >= 0; i--) {
-		if(updateAvailable[i]) {
-			volt_draw_texture(Dot, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6);
-		}
-	}
-	*/volt_end_draw();
+	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("1", 260, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
+	Gui::staticText("2", 270, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
+	Gui::staticText("3", 280, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
 }
 
 void updaterCFWLogic(u32 hDown, touchPosition touch) {
