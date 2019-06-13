@@ -54,9 +54,9 @@
 
 #define RED C2D_Color32(255, 0, 0, 255)
 
-#define GREEN C2D_Color32(0, 255, 0, 255)
+#define GREEN RGBA8(0, 255, 0, 255)
 
 #define BLUE2 C2D_Color32(0, 0, 255, 255)
 
-typedef u32 Colour;
+typedef u32 Color;
 #endif

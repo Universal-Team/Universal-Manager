@@ -141,6 +141,7 @@ int main()
 	acInit();
     gfxInitDefault();
 	Gui::init();
+	LoadUniversalSettings();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -370,6 +371,7 @@ int main()
     }
 
 	Gui::exit();
+	SaveUniversalSettings();
 	hidExit();
 	srvExit();
 	romfsExit();

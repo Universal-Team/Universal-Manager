@@ -100,6 +100,16 @@ bool Gui::Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float
 	return C2D_DrawImageAt(image, x, y, 0.5f, NULL, scaleX, scaleY);
 }
 
+void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
+{
+    C2D_ImageTint tint;
+    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
+}
+
 Result Gui::init(void)
 {
     C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
@@ -355,8 +365,7 @@ void Gui::DrawBarsBot(void)
     C2D_SetImageTint(&bars, C2D_TopRight, GREEN, 1);
     C2D_SetImageTint(&bars, C2D_BotLeft, BLUE, 1);
     C2D_SetImageTint(&bars, C2D_BotRight, WHITE, 1);
-
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_bottom_screen_top_idx), 0, 0, 0.5f, &bars);
+    Gui::Draw_ImageBlend(sprites_bottom_screen_top_idx, 0, 0, settings.universal.bars);
     C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, sprites_bottom_screen_bot_idx), 0, 215, 0.5f, &bars);
 }
 
@@ -374,3 +383,4 @@ void DisplayMsg(const char* text) {
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
 }
+
