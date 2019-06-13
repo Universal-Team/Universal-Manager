@@ -38,6 +38,7 @@
 
 #include "gui.hpp"
 #include "screenCommon.hpp"
+#include "settings.hpp"
 
 extern "C" {
 	#include "music/error.h"
