@@ -71,6 +71,13 @@ int screenMode = 0;
 ButtonPos mainScreenButtonPos[] = {
     {0, 40, 149, 52, fileScreen},
     {170, 40, 149, 52, ftpScreen},
+	{0, 150, 149, 52, updaterSubMenu},
+};
+
+ButtonPos fileScreenButtonPos[] = {
+    {100, 40, 149, 52, musicMainScreen},
+	{100, 120, 149, 52, PNGScreen},
+    {293, 213, 27, 27, mainScreen},
 };
 
 void screenoff()
@@ -191,22 +198,18 @@ int main()
 				drawFTPScreen();
 				break;
 //#########################################################################################################
-		//	case fileManagerScreen:
-		//		drawFileManagerScreen();
-		//		break;
-//#########################################################################################################
-		//	case updaterSubMenu:
-		//		drawUpdaterSubMenu();		// Draws the Updater screen
-		//		break;
-		//	case TWLScreen:
-		//		drawUpdaterTWL();
-		//		break;
-		//	case OtherScreen:
-		//		drawUpdaterOther();
-		//		break;
-		//	case CFWScreen:
-		//		drawUpdaterCFW();
-		//		break;
+			case updaterSubMenu:
+				drawUpdaterSubMenu();		// Draws the Updater screen
+				break;
+			case TWLScreen:
+				drawUpdaterTWL();
+				break;
+			case OtherScreen:
+				drawUpdaterOther();
+				break;
+			case CFWScreen:
+				drawUpdaterCFW();
+				break;
 //#########################################################################################################
 		}
 
@@ -233,15 +236,13 @@ int main()
 				if (hDown & KEY_B) {
 					screenMode = mainScreen;
 				} else if (hDown & KEY_A) {
-					screenMode = musicListScreen;
-		//		} else if (hDown & KEY_X) {
-		//			screenMode = fileManagerScreen;
-		//		} else if (hDown & KEY_TOUCH) {
-		//			for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
-		//				if (touching(touch, fileScreenButtonPos[i])) {
-		//					screenMode = fileScreenButtonPos[i].link;
-		//				}
-		//			}
+					screenMode = musicMainScreen;
+				} else if (hDown & KEY_TOUCH) {
+					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
+						if (touching(touch, fileScreenButtonPos[i])) {
+							screenMode = fileScreenButtonPos[i].link;
+						}
+					}
 				}
 				break;
 //#########################################################################################################
@@ -311,25 +312,19 @@ int main()
 				screenMode = mainScreen;
 			}
 //#########################################################################################################
-		//		break;
-		//	case fileManagerScreen:
-		//	if(hDown & KEY_B) {
-		//		screenMode = fileScreen;
-		//	}
-//#########################################################################################################
 				break;
-		//	case updaterSubMenu:
-		//		updaterSubMenuLogic(hDown, touch);
-		//		break;
-		//	case TWLScreen:
-		//		updaterTWLLogic(hDown, touch);
-		//		break;
-		//	case OtherScreen:
-		//		updaterOtherLogic(hDown, touch);
-		//		break;
-		//	case CFWScreen:
-		//		updaterCFWLogic(hDown, touch);
-		//		break;
+			case updaterSubMenu:
+				updaterSubMenuLogic(hDown, touch);
+				break;
+			case TWLScreen:
+				updaterTWLLogic(hDown, touch);
+				break;
+			case OtherScreen:
+				updaterOtherLogic(hDown, touch);
+				break;
+			case CFWScreen:
+				updaterCFWLogic(hDown, touch);
+				break;
 			}
 //#########################################################################################################
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {

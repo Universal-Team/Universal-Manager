@@ -331,10 +331,9 @@ void DisplayMsg(const char* text) {
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(g_renderTargetTop, BLUE2);
     C2D_TargetClear(g_renderTargetBottom, BLUE2);
-	C2D_SceneBegin(g_renderTargetTop);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Gui::staticText(text, 26, 32, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(text, 200, 32, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);

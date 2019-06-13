@@ -99,17 +99,17 @@ void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.
-//void drawUpdaterSubMenu(void);
-//void updaterSubMenuLogic(u32 hDown, touchPosition touch);
+void drawUpdaterSubMenu(void);
+void updaterSubMenuLogic(u32 hDown, touchPosition touch);
 // TWL Screen.
-//void drawUpdaterTWL(void);
-//void updaterTWLLogic(u32 hDown, touchPosition touch);
+void drawUpdaterTWL(void);
+void updaterTWLLogic(u32 hDown, touchPosition touch);
 // Other Screen
-//void drawUpdaterOther(void);
-//void updaterOtherLogic(u32 hDown, touchPosition touch);
+void drawUpdaterOther(void);
+void updaterOtherLogic(u32 hDown, touchPosition touch);
 // CFW Screen
-//void drawUpdaterCFW(void);
-//void updaterCFWLogic(u32 hDown, touchPosition touch);
+void drawUpdaterCFW(void);
+void updaterCFWLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 void drawPNGImageViewerUI(void);
