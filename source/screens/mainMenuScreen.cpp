@@ -42,7 +42,7 @@ void drawMainMenu(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);

@@ -134,10 +134,6 @@ void drawUISettingsScreen(void) {
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Gui::staticText(musicModes[settings.universal.music].c_str(), 260, 38, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText("Music Mode:", 110, 38, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-
-	// Save Settings. ;P
-	//Gui::sprite(sprites_updaterButton_idx, 10, 28);
-	//Gui::staticText("Save", 19, 38, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {

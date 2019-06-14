@@ -330,6 +330,13 @@ void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, floa
 
 // Basic GUI Stuff.
 
+void Gui::DrawBarsBottomBack(void) {
+    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, settings.universal.bars);
+    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+    Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
+}
+
 void Gui::DrawBGTop(void) 
 {
 	C2D_SceneBegin(g_renderTargetTop);
@@ -339,8 +346,10 @@ void Gui::DrawBGTop(void)
 
 void Gui::DrawBarsTop(void) 
 {
-    Gui::Draw_ImageBlend(sprites_top_screen_top_idx, 0, 0, settings.universal.bars);
-    Gui::Draw_ImageBlend(sprites_top_screen_bot_idx, 0, 215, settings.universal.bars);
+    C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, settings.universal.bars);
+    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
+    Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
 }
 
 void Gui::DrawBGBot(void)
@@ -352,8 +361,10 @@ void Gui::DrawBGBot(void)
 
 void Gui::DrawBarsBot(void)
 {
-    Gui::Draw_ImageBlend(sprites_bottom_screen_top_idx, 0, 0, settings.universal.bars);
-    Gui::Draw_ImageBlend(sprites_bottom_screen_bot_idx, 0, 215, settings.universal.bars);
+    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, settings.universal.bars);
+    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+    Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 }
 
 // Text.
