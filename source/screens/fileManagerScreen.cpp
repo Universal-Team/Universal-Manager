@@ -39,10 +39,10 @@ void drawFileManagerSubMenu(void) {
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
 	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	Gui::staticText("Music Player", 190, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Music Player", 190, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	// Image Viewer Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
 	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	Gui::staticText("Image Viewer", 190, 137, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Image Viewer", 190, 137, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }

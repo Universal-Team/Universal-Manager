@@ -9,12 +9,14 @@ battery71.png
 battery85.png
 battery100.png
 batteryCharge.png
+BlueButton.png
 bottom_screen_bot.png
 bottom_screen_bot_back.png
 bottom_screen_top.png
 cover_glow.png
 cover_normal.png
 dot.png
+GreenButton.png
 fileManagerIcon.png
 ftpIcon.png
 image_icon.png
@@ -29,6 +31,7 @@ play_icon_normal.png
 play_icon_small_glow.png
 play_icon_small_normal.png
 playlist_icon.png
+RedButton.png
 repeat_icon.png
 rgbButton.png
 right_icon_glow.png
@@ -36,6 +39,7 @@ right_icon_normal.png
 settingsIcon.png
 shuffle_icon.png
 themes.png
+TitleButton.png
 top_screen_bot.png
 top_screen_top.png
 universal_bg_bottom.png

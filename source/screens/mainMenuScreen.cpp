@@ -46,17 +46,17 @@ void drawMainMenu(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
-	Gui::staticText("FileManager", 85, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("FileManager", 85, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
 	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
-	Gui::staticText("FTP", 230, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("FTP", 230, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
 	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
-	Gui::staticText("Updater", 80, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Updater", 80, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
 	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Gui::staticText("Settings", 245, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Settings", 245, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }

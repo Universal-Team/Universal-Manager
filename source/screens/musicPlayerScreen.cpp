@@ -113,18 +113,18 @@ void drawMusicMain() {
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
 	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
-	Gui::staticText("Songs", 80, 57, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Songs", 80, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
 	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
-	Gui::staticText("Now playing", 255, 57, 0.65f, 0.65f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Now playing", 255, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[2].x, mainButtonPos[2].y);
 	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
-	Gui::staticText("Playlists", 80, 167, 0.65f, 0.65f, BLACK,TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Playlists", 80, 167, 0.65f, 0.65f, WHITE,TextPosX::CENTER, TextPosY::TOP);
 
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
-	 Gui::staticText("Themes", 230, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	 Gui::staticText("Themes", 230, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
