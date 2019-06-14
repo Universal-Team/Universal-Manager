@@ -125,10 +125,12 @@ bool updateAvailable[] = {
 
 void drawUpdaterSubMenu(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Updater Sub Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
@@ -161,11 +163,13 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 
 void drawUpdaterTWL(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("TWL Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	// TWL Menu Buttons.
@@ -238,11 +242,13 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 
 */void drawUpdaterOther(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Other Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 		// Universal-Manager Buttons.
@@ -308,11 +314,13 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 
 void drawUpdaterCFW(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("CFW Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	// Luma 3DS Buttons.

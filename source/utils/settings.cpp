@@ -41,7 +41,7 @@ static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 Settings_t settings;
 
 void LoadUniversalSettings(void) {
-	settings.universal.bars = settingsini.GetInt("UI", "BARS", RED); // Bars color
+	settings.universal.bars = settingsini.GetInt("UI", "BARS", BARCOLOR); // Bars color
 	settings.universal.bg = settingsini.GetInt("UI", "BG", GRAY); // Background Color
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
 	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.

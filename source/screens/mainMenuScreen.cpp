@@ -42,7 +42,7 @@ void drawMainMenu(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
@@ -58,5 +58,5 @@ void drawMainMenu(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
 	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Gui::staticText("Settings", 240, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Settings", 245, 167, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }

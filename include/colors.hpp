@@ -83,5 +83,6 @@
 
 #define BLUE2 C2D_Color32(0, 0, 255, 255)
 
+#define BARCOLOR RGBA8(0, 108, 255, 255)
 typedef u32 Color;
 #endif

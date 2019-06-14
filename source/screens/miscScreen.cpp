@@ -59,6 +59,7 @@ void drawCredits(void) {
 	Gui::sprite(sprites_universal_credits_idx, 0, 0);
 	
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
@@ -77,9 +78,11 @@ void ftpLogic(u32 hDown, touchPosition touch) {
 
 void drawFTPScreen(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("FTP Mode", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 

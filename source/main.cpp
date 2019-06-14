@@ -139,13 +139,12 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
+	LoadUniversalSettings();
     gfxInitDefault();
 	Gui::init();
-	LoadUniversalSettings();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
-	//LoadUniversalSettings();
 
 	// make folders if they don't exist
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
@@ -370,8 +369,8 @@ int main()
         Gui::clearTextBufs();
     }
 
-	Gui::exit();
 	SaveUniversalSettings();
+	Gui::exit();
 	hidExit();
 	srvExit();
 	romfsExit();

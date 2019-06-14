@@ -42,6 +42,7 @@ std::string filename;
 void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Image Viewer Menu [PNG]", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -71,12 +72,14 @@ void drawPNGImageViewerUI(void) {
 	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
 void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Image Viewer Menu [BMP]", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -106,16 +109,19 @@ void drawBMPImageViewerUI(void) {
 	Gui::staticText(dirs.c_str(), 26, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);;
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
 
 void showImage(void) {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Not Implemented Yet.", 110, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 

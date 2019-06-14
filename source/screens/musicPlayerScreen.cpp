@@ -104,9 +104,11 @@ void drawMusicMain() {
 	// Theme Stuff.
 	Gui::clearStaticText();
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Music Player Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
@@ -146,6 +148,7 @@ void musicMainLogic(u32 hDown, touchPosition touch) {
 void drawMusicList(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Music Player Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -183,6 +186,7 @@ void drawMusicList(void) {
 	Gui::staticText(dirs2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
@@ -239,6 +243,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlayer(void) {
 	Gui::clearStaticText();
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 
 	if(isPlaying()) {
@@ -273,6 +278,7 @@ void drawMusicPlayer(void) {
 	}
 	}
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
 	Gui::sprite(sprites_left_arrow_normal_idx, playerButtonPos[1].x, playerButtonPos[1].y);
@@ -347,6 +353,7 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
@@ -381,6 +388,7 @@ void drawMusicPlaylistAdd(void) {
 	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
@@ -448,6 +456,7 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
@@ -477,6 +486,7 @@ void drawMusicPlaylistPlay(void) {
 	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
@@ -530,6 +540,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 
 void drawMusicPlaylistEdit() {
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -551,6 +562,7 @@ void drawMusicPlaylistEdit() {
 	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
@@ -596,6 +608,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 void drawThemeSelector(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
+	animatedBGTop();
 	Gui::DrawBarsTop();
 	Gui::staticText("Theme Selector", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -625,6 +638,7 @@ void drawThemeSelector(void) {
 		Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
+	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
