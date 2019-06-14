@@ -89,5 +89,6 @@ namespace Gui
     void DisplayTime(void);
 
     void drawBatteryTop(void);
+    void drawBatteryBot(void);
 
 #endif

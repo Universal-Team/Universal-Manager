@@ -61,6 +61,7 @@ void drawCredits(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
+	DisplayTime();
 }
 
 void ftpLogic(u32 hDown, touchPosition touch) {
@@ -80,6 +81,8 @@ void drawFTPScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("FTP Mode", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -95,10 +98,13 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
     C2D_TargetClear(g_renderTargetBottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
 	Gui::staticText(msg1.c_str(), 170, 90, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(msg2.c_str(), 170, 110, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
 	while(1) {
 		gspWaitForVBlank();

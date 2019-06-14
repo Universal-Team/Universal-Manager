@@ -44,6 +44,8 @@ void drawPNGImageViewerUI(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Image Viewer Menu [PNG]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
@@ -81,6 +83,8 @@ void drawBMPImageViewerUI(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Image Viewer Menu [BMP]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
@@ -118,6 +122,8 @@ void showImage(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Not Implemented Yet.", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();

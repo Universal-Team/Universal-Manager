@@ -94,6 +94,8 @@ void drawSettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
@@ -112,6 +114,8 @@ void drawUISettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("UI Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();

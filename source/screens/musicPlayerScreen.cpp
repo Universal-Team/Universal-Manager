@@ -106,6 +106,8 @@ void drawMusicMain() {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Music Player Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -152,6 +154,8 @@ void drawMusicList(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Music Player Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
@@ -282,6 +286,8 @@ void drawMusicPlayer(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
+	DisplayTime();
+	drawBatteryBot();
 
 	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
 	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
@@ -364,6 +370,8 @@ void drawMusicPlaylistAdd(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -467,6 +475,8 @@ void drawMusicPlaylistPlay(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
@@ -551,6 +561,8 @@ void drawMusicPlaylistEdit() {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	std::string plstList;
@@ -619,6 +631,8 @@ void drawThemeSelector(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Theme Selector", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	if (dirChanged) {
