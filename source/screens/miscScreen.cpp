@@ -60,7 +60,7 @@ void drawCredits(void) {
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
 }
 
 void ftpLogic(u32 hDown, touchPosition touch) {
@@ -83,7 +83,7 @@ void drawFTPScreen(void) {
 	Gui::staticText("FTP Mode", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background

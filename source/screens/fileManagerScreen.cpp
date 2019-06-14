@@ -34,7 +34,7 @@ void drawFileManagerSubMenu(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
 
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
