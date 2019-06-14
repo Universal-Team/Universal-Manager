@@ -382,3 +382,50 @@ void DisplayMsg(const char* text) {
 	C3D_FrameEnd(0);
 }
 
+void DisplayTime(void) {
+    C2D_Text timeText;
+    C2D_TextParse(&timeText, dynamicBuf, DateTime::timeStr().c_str());
+    C2D_TextOptimize(&timeText);
+    C2D_DrawText(&timeText, C2D_WithColor, 4.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+}
+
+// Battery stuff.
+
+void drawBatteryTop(void) {
+	u8 batteryChargeState = 0;
+	char percent[5];
+
+	u8 batteryPercent;
+	mcuGetBatteryLevel(&batteryPercent);
+	if(batteryPercent == 0) {
+	Gui::sprite(sprites_battery0_idx, 330, 15);
+	} else if (batteryPercent > 0 && batteryPercent <= 15) {
+	Gui::sprite(sprites_battery15_idx, 330, 5);
+	} else if(batteryPercent > 15 && batteryPercent <= 28) {
+	Gui::sprite(sprites_battery28_idx, 330, 5);
+	} else if(batteryPercent > 28 && batteryPercent <= 43) {
+    Gui::sprite(sprites_battery43_idx, 330, 5);
+	} else if(batteryPercent > 43 && batteryPercent <= 57) {
+	Gui::sprite(sprites_battery57_idx, 330, 5);
+	} else if(batteryPercent > 57 && batteryPercent <= 71) {
+	Gui::sprite(sprites_battery71_idx, 330, 5);
+	} else if(batteryPercent > 71 && batteryPercent <= 99) {
+	Gui::sprite(sprites_battery85_idx, 330, 5);
+	} else if(batteryPercent == 100) {
+	Gui::sprite(sprites_battery100_idx, 330, 5);
+	}
+
+    if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
+		Gui::sprite(sprites_batteryCharge_idx, 330, 5);
+	}
+	if(batteryPercent == 100) {
+		Gui::staticText("100%%", 348, 4, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	} else {
+		snprintf(percent, 5, "%d%%", batteryPercent);
+        C2D_Text percentText;
+        C2D_TextParse(&percentText, dynamicBuf, percent);
+		C2D_TextOptimize(&percentText);
+        C2D_DrawText(&percentText, C2D_WithColor, 345.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+}
+}
+// To-Do : Code Cleanup.

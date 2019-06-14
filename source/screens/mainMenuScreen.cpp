@@ -37,6 +37,8 @@ void drawMainMenu(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
 	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
 

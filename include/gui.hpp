@@ -43,6 +43,9 @@
 #include "TextPos.hpp"
 #include "3dsutils.hpp"
 
+// Battery Stuff.
+#include "ptmu_x.h"
+
 // emulated
 #define sprites_res_null_idx 500
 
@@ -83,5 +86,8 @@ namespace Gui
 
    // Text.
     void DisplayMsg(const char* text);
+    void DisplayTime(void);
+
+    void drawBatteryTop(void);
 
 #endif

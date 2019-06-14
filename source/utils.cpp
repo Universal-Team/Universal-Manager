@@ -493,3 +493,11 @@ std::string StringUtils::wrap(const std::string& text, float scaleX, float maxWi
 
     return wrapped;
 }
+
+// Utils for the GUI.
+std::string DateTime::timeStr(void)
+{
+    time_t unixTime       = time(NULL);
+    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+    return StringUtils::format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
+}

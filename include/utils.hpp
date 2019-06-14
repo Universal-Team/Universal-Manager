@@ -37,6 +37,10 @@
 #include <string.h>
 #include <string>
 
+namespace DateTime {
+    std::string timeStr(void);
+}
+
 namespace StringUtils
 {
     std::string format(const std::string& fmt_str, ...);

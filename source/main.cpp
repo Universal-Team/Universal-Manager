@@ -39,6 +39,7 @@
 #include "gui.hpp"
 #include "screenCommon.hpp"
 #include "settings.hpp"
+#include "ptmu_x.h"
 
 extern "C" {
 	#include "music/error.h"
@@ -142,6 +143,9 @@ int main()
 	LoadUniversalSettings();
     gfxInitDefault();
 	Gui::init();
+	ptmuInit();	// For battery status
+	ptmuxInit();	// For AC adapter status
+	mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -156,9 +160,9 @@ int main()
     while (aptMainLoop())
     {
         hidScanInput();
-         u32 hHeld = hidKeysHeld();
-         u32 hDown = hidKeysDown();
-		 hidTouchRead(&touch);
+        u32 hHeld = hidKeysHeld();
+        u32 hDown = hidKeysDown();
+		hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         C2D_TargetClear(g_renderTargetTop, BLUE2);
         C2D_TargetClear(g_renderTargetBottom, BLUE2);
@@ -362,7 +366,11 @@ int main()
 		} else if (!isPlaying() && currentSong != "") {
 			currentSong = "";
 		}
-
+		if (hDown & KEY_START && screenMode == mainScreen) 
+		{
+			break;
+		}
+		
         C3D_FrameEnd(0);
         Gui::clearTextBufs();
     }
