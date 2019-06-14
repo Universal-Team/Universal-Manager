@@ -116,6 +116,7 @@ void drawMusicMain() {
 	Gui::staticText("Songs", 80, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
+	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
 	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
 	Gui::staticText("Now playing", 255, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
@@ -124,7 +125,8 @@ void drawMusicMain() {
 	Gui::staticText("Playlists", 80, 167, 0.65f, 0.65f, WHITE,TextPosX::CENTER, TextPosY::TOP);
 
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
-	 Gui::staticText("Themes", 230, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
+	 Gui::staticText("Themes", 255, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -280,12 +282,19 @@ void drawMusicPlayer(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
+
+	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
 	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
+
+	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, playerButtonPos[1].x, playerButtonPos[1].y, settings.universal.bars);
 	Gui::sprite(sprites_left_arrow_normal_idx, playerButtonPos[1].x, playerButtonPos[1].y);
+
+	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, playerButtonPos[2].x, playerButtonPos[2].y, settings.universal.bars);
 	Gui::sprite(sprites_right_icon_normal_idx, playerButtonPos[2].x, playerButtonPos[2].y);
+
 	Gui::sprite(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y);
 	Gui::sprite(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y);
-	if (musicRepeat)	Gui::staticText((musicRepeat == 1 ? "A" : "S"), playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	if (musicRepeat)	Gui::staticText((musicRepeat == 1 ? "A" : "S"), playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
