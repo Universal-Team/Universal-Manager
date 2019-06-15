@@ -25,7 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
-//#include "ftp/ftp.h"
+#include "bftps.h"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
@@ -67,6 +67,7 @@ void drawCredits(void) {
 void ftpLogic(u32 hDown, touchPosition touch) {
 		if (hDown & KEY_B) {
 		screenMode = mainScreen;
+		bftps_stop();
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
 			if (touching(touch, ftpButtonPos[i])) {
@@ -76,8 +77,27 @@ void ftpLogic(u32 hDown, touchPosition touch) {
 	}
 }
 
+const char* my_basename(const char* path) {
+    const char *pLastSlash = path;
+    while (*path != '\0') {
+        if (*path == '/')
+            pLastSlash = path+1;
+        path++;
+    }
+    return pLastSlash;
+}
 
 void drawFTPScreen(void) {
+
+        bftps_start();
+
+	Result ret = 0;
+	char buf[137], buf2[512];
+	u32 wifiStatus = 0;
+
+	int position = 0, progress = 0, xlim = 270;
+
+
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -87,6 +107,60 @@ void drawFTPScreen(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
+
+		ret = ACU_GetWifiStatus(&wifiStatus);
+
+		if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
+			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "FTP initialized")) / 2), 40, 0.48f, WHITE, "FTP initialized");
+			//snprintf(buf, 137, "IP: %s:5000", R_FAILED(ret)? "Failed to get IP" : hostname);
+                        snprintf(buf, 137, "%s", bftps_name());
+
+ 				const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
+                        if (transfersInfo) {
+                            const bftps_file_transfer_t* file = transfersInfo;
+                           // while (file) { for now only show the first file on the list
+                                if (file->mode == FILE_SENDING) {
+                                    float fraction = ((float) file->filePosition / (float) file->fileSize);
+                                    snprintf(buf2, 512, "Sending %.2f%%", fraction * (float) 100);
+                                    //file name should have an elipsis when is to longer
+                                    Draw_Text(((320 - Draw_GetTextWidth(0.45f, buf2)) / 2), 150, 0.45f, WHITE, buf2);
+                                    Draw_Text(((320 - Draw_GetTextWidth(0.35f, my_basename(file->name))) / 2), 170, 0.35f, WHITE, my_basename(file->name));
+                                    position = 0;
+                                    progress = 40+round(fraction * (float)(xlim-40));
+                                }                                   
+                                else {
+                                    snprintf(buf2, 512, "Receiving %.2fMB", 
+                                            ((float) file->filePosition / ((float) 1024 * (float) 1024)));
+                                    //file name should have an elipsis when is to longer
+                                    Draw_Text(((320 - Draw_GetTextWidth(0.45f, buf2)) / 2), 150, 0.45f, WHITE, buf2);
+                                    Draw_Text(((320 - Draw_GetTextWidth(0.35f, my_basename(file->name))) / 2), 170, 0.35f, WHITE, my_basename(file->name));                                    
+                                    progress = 40;
+                                    position += 4;			
+                                    if (position >= xlim)
+					position = 34;
+                                }
+                                    //aux = aux->next;
+                            //}
+                            bftps_file_transfer_cleanup(transfersInfo); 
+                            
+                            C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, WHITE);
+                            C2D_DrawRectSolid(position, 140, 0.5f, progress, 3, WHITE);
+                            
+                            // Boundary stuff
+                            C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, BLACK);
+                            C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, BLACK); 
+                            
+                        }
+		}
+		else {
+			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Failed to initialize FTP.")) / 2), 40, 0.48f, WHITE, "Failed to initialize FTP.");
+			snprintf(buf, 18, "WiFi not enabled.");
+		}
+
+		Draw_Text(((320 - Draw_GetTextWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
+		Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Tap the FTP icon to disable the FTP connection.")) / 2), 120, 0.48f, WHITE, "Tap the FTP icon to disable the FTP connection.");
+
+		C3D_FrameEnd(0);
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
