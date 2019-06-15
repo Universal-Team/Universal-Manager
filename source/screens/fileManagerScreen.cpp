@@ -32,7 +32,7 @@ void drawFileManagerSubMenu(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "FileManager Sub Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, FONT_SIZE_18, FONT_SIZE_18, WHITE, "FileManager Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -41,10 +41,10 @@ void drawFileManagerSubMenu(void) {
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
 	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	draw_text(190, 57, 0.65f, 0.65f, WHITE, "Music Player");
+	draw_text(140, 57, 0.7f, 0.7f, WHITE, "Music Player");
 
 	// Image Viewer Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
 	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	draw_text(190, 137, 0.65f, 0.65f, WHITE, "Image Viewer");
+	draw_text(137, 137, 0.68f, 0.68f, WHITE, "Image Viewer");
 }

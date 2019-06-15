@@ -217,7 +217,7 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	draw_text(200, 32, 0.45f, 0.45f, BLACK, text);
+	draw_text(26, 32, 0.45f, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);

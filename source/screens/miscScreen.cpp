@@ -66,8 +66,10 @@ void drawCredits(void) {
 
 void ftpLogic(u32 hDown, touchPosition touch) {
 		if (hDown & KEY_B) {
-		screenMode = mainScreen;
+			//break;
+		usleep(100000);
 		bftps_stop();
+		screenMode = mainScreen;
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
 			if (touching(touch, ftpButtonPos[i])) {
@@ -103,7 +105,7 @@ void drawFTPScreen(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, 0.72f, 0.72f, WHITE, "FTP Mode");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
@@ -111,7 +113,7 @@ void drawFTPScreen(void) {
 	ret = ACU_GetWifiStatus(&wifiStatus);
 
 	if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-		draw_text(150, 40, 0.5f, 0.5f, WHITE, "FTP initialized");
+		draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "FTP initialized");
                         snprintf(buf, 137, "%s", bftps_name());
 
  	const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
@@ -123,8 +125,8 @@ void drawFTPScreen(void) {
                      float fraction = ((float) file->filePosition / (float) file->fileSize);
                      snprintf(buf3, 512, "Sending %.2f%%", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
 
-                         draw_text(150, 110, 0.5f, 0.5f, WHITE, buf3);
-						 draw_text(150, 90, 0.5f, 0.5f, WHITE, my_basename(file->name)); 
+                         draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf3);
+					    draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name)); 
                                     position = 0;
                                     progress = 40+round(fraction * (float)(xlim-40));
                                 }                                   
@@ -132,8 +134,8 @@ void drawFTPScreen(void) {
                                     snprintf(buf2, 512, "Receiving %.2fMB", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
                                             
                                     //file name should have an elipsis when is to longer
-                                    draw_text(150, 110, 0.5f, 0.5f, WHITE, buf2);
-									draw_text(150, 90, 0.5f, 0.5f, WHITE, my_basename(file->name));                                    
+                                    draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf2);
+									draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name));                                    
                                     progress = 40;
                                     position += 4;			
                                     if (position >= xlim)
@@ -153,10 +155,10 @@ void drawFTPScreen(void) {
                         }
 		}
 		else {
-			draw_text(150, 40, 0.5f, 0.5f, WHITE, "Failed to initialize FTP.");
-			draw_text(150, 60, 0.5f, 0.5f, WHITE, "WiFi not enabled.");
+			draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "Failed to initialize FTP.");
+			draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.5f, 0.5f, WHITE, "WiFi not enabled.");
 		}
-		draw_text(150, 60, 0.5f, 0.5f, WHITE, buf);
+		draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.5f, 0.5f, WHITE, buf);
 		C3D_FrameEnd(0);
 }
 
@@ -171,8 +173,8 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	Gui::DrawBarsTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	draw_text(170, 90, 0.45f, 0.45f, BLACK, msg1.c_str());
-	draw_text(170, 110, 0.45f, 0.45f, BLACK, msg2.c_str());
+	draw_text_center(GFX_TOP, 90, 0.5f, 0.45f, 0.45f, WHITE, msg1.c_str());
+	draw_text_center(GFX_TOP, 110, 0.5f, 0.45f, 0.45f, WHITE, msg2.c_str());
 	draw_text(ynXPos, 160, 0.45f, 0.45f, BLACK, ("\uE001 : "+no+"   \uE000 : "+yes).c_str());
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
@@ -188,5 +190,5 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 200);
+	return confirmPopup(msg, "", "Yes", "No", 245);
 }

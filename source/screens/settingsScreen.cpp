@@ -96,17 +96,17 @@ void drawSettingsScreen(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Settings");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Settings");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	draw_text(50, 57, 0.7f, 0.7f, WHITE, "Credits");
+	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Credits");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	draw_text(230, 57, 0.7f, 0.7f, WHITE, "UI Settings");
+	draw_text(200, 57, 0.7f, 0.7f, WHITE, "UI Settings");
 }
 
 void drawUISettingsScreen(void) {
@@ -115,31 +115,31 @@ void drawUISettingsScreen(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "UI Settings");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
 
 	// Bars.
-	draw_text(170, 58, 0.7f, 0.7f, BLACK, "Bars");
+	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	draw_text(76, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
+	draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	draw_text(160, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
+	draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	draw_text(259, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
+	draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
-	draw_text(170, 138, 0.7f, 0.7f, BLACK, "Background");
+	draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
 	Gui::sprite(sprites_RedButton_idx, 35, 168);
-	draw_text(76, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
+	draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 168);
-	draw_text(160, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
+	draw_text(140, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 168);
-	draw_text(259, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
+	draw_text(229, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
-	draw_text(260, 38, 0.65f, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
+	draw_text(229, 38, 0.65f, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
 	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
 }
 

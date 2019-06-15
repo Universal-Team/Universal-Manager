@@ -107,27 +107,27 @@ void drawMusicMain() {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Player Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
 	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
-	draw_text(80, 57, 0.7f, 0.7f, WHITE, "Songs");
+	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Songs");
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
 	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
 	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
-	draw_text(255, 57, 0.65f, 0.65f, WHITE, "Now playing");
+	draw_text(210, 57, 0.65f, 0.65f, WHITE, "Now playing");
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[2].x, mainButtonPos[2].y);
 	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
-	draw_text(80, 167, 0.65f, 0.65f, WHITE, "Playlists");
+	draw_text(40, 167, 0.65f, 0.65f, WHITE, "Playlists");
 
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
 	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
-	 draw_text(255, 167, 0.7f, 0.7f, WHITE, "Themes");
+	 draw_text(210, 167, 0.7f, 0.7f, WHITE, "Themes");
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -155,7 +155,7 @@ void drawMusicList(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -173,8 +173,6 @@ void drawMusicList(void) {
 		dirChanged = false;
 	}
 	std::string dirs;
-	std::string dirs2;
-	std::string dirs3;
 	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
 		if (i == selectedFile) {
 			dirs += "> " + dirContents[i].name + "\n";
@@ -185,12 +183,10 @@ void drawMusicList(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	if (dirContents[selectedFile].isDirectory)	dirs2 += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	else if(dirContents[selectedFile].name == currentSong)	dirs2 += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	else	dirs3 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist, SEL : Show Player";
-	draw_text(170, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
-	draw_text(170, 210, 0.45f, 0.45f, WHITE, dirs2.c_str());
-	draw_text(200, 210, 0.45f, 0.45f, WHITE, dirs3.c_str());
+	if (dirContents[selectedFile].isDirectory)	dirs += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else if(dirContents[selectedFile].name == currentSong)	dirs += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else	dirs += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist, SEL : Show Player";
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -258,19 +254,19 @@ void drawMusicPlayer(void) {
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		draw_text(200, 3, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
+		draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
 		// Not working yet. draw_text(100, 177, 0.45f, 0.45f, WHITE, secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
 		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
 
 	
 	if(!isPaused() && isPlaying()) {
-		draw_text(170, 220, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
+		draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
 	} else if(isPaused() && isPlaying()) {
-		draw_text(170, 220, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
+		draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
 	} else {
-		draw_text(200, 3, 0.72f, 0.72f, WHITE, "No song selected.");
-		draw_text(200, 200, 0.45f, 0.45f, WHITE, "\uE001 : Back");
+		draw_text(0, 4, 0.72f, 0.72f, WHITE, "No song selected.");
+		draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE001 : Back");
 	}
 
 
@@ -281,11 +277,11 @@ void drawMusicPlayer(void) {
 			snprintf(buf, 137, "%.80s", ID3.artist);
 			snprintf(buf2, 137, "%.80s", ID3.year);
 			snprintf(buf3, 137, "%.80s", ID3.title);
-		draw_text(200, 40, 0.7f, 0.7f, WHITE, buf3);
+		draw_text(15, 40, 0.7f, 0.7f, WHITE, buf3);
 
-		draw_text(200, 60, 0.7f, 0.7f, WHITE, buf);
+		draw_text(15, 60, 0.7f, 0.7f, WHITE, buf);
 
-		draw_text(200, 100, 0.7f, 0.7f, WHITE, buf2);
+		draw_text(15, 80, 0.7f, 0.7f, WHITE, buf2);
 	} else if (settings.universal.music == 2) {
 	}
 	}
@@ -387,7 +383,7 @@ void drawMusicPlaylistAdd(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -404,7 +400,6 @@ void drawMusicPlaylistAdd(void) {
 	}
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -415,9 +410,8 @@ void drawMusicPlaylistAdd(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
-	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
-	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
+	plstList += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -492,7 +486,7 @@ void drawMusicPlaylistPlay(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -504,7 +498,6 @@ void drawMusicPlaylistPlay(void) {
 	}
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -515,9 +508,8 @@ void drawMusicPlaylistPlay(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
-	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
-	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
+	plstList += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -578,10 +570,9 @@ void drawMusicPlaylistEdit() {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
 		if (i == selectedPlstItem) {
 			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
@@ -594,9 +585,8 @@ void drawMusicPlaylistEdit() {
 	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
-	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
-	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
+	plstList += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
@@ -648,7 +638,7 @@ void drawThemeSelector(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Theme Selector");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Theme Selector");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -673,7 +663,7 @@ void drawThemeSelector(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-		draw_text(170, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+		draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
