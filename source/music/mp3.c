@@ -17,7 +17,7 @@ static u64 frames_read = 0, total_samples = 0;
 /* Helper for v1 printing, get these strings their zero byte. */
 static void safe_print(char *tag, char *name, char *data, size_t size) {
 	char safe[31];
-	if (size > 30) 
+	if (size > 40) 
 		return;
 	memcpy(safe, data, size);
 	safe[size] = 0;

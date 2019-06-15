@@ -306,8 +306,8 @@ void drawMusicPlayer(void) {
 	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, playerButtonPos[2].x, playerButtonPos[2].y, settings.universal.bars);
 	Gui::sprite(sprites_right_icon_normal_idx, playerButtonPos[2].x, playerButtonPos[2].y);
 
-	Gui::sprite(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y);
-	Gui::sprite(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y);
+	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
+	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
 	if (musicRepeat)	Gui::staticText((musicRepeat == 1 ? "A" : "S"), playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 }
 
