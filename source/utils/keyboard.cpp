@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <string>
 #include <3ds.h>
+#include <citro3d.h>
 
 /**
  * This method show the software original keyboard from the 3ds OS. 
@@ -54,7 +55,7 @@ std::string keyboardInput(const char* hint) {
  */
 
 int keyboardInputInt(const char* hint) {
-	
+	C3D_FrameEnd(0);
 	SwkbdState keyState;
     char input[4];
 

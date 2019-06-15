@@ -122,22 +122,22 @@ void drawUISettingsScreen(void) {
 	Gui::DrawBarsBottomBack();
 
 	// Bars.
-//	Gui::staticText("Bars", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_RedButton_idx, 35, 88);
-//	Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 76, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-//	Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 160, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-//	Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 259, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Bars", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 76, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 160, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 259, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	// Background.
-//	Gui::staticText("Background", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_RedButton_idx, 35, 168);
-//	Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 76, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_GreenButton_idx, 129, 168);
-//	Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 160, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-//	Gui::sprite(sprites_BlueButton_idx, 220, 168);
-//	Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 259, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText("Background", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_RedButton_idx, 35, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 76, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_GreenButton_idx, 129, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 160, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::sprite(sprites_BlueButton_idx, 220, 168);
+	Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 259, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Gui::staticText(musicModes[settings.universal.music].c_str(), 260, 38, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
@@ -145,30 +145,30 @@ void drawUISettingsScreen(void) {
 }
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
-	//int red;
-	//int green;
-	//int blue;
+	int red;
+	int green;
+	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
-			//red = keyboardInputInt("Red");
-			//settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+			red = keyboardInputInt("Red");
+			settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
 		} else if (touching(touch, uiSettingsButtonPos[1])) {
-			//green = keyboardInputInt("Green (0-255)");
-			//settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+			green = keyboardInputInt("Green (0-255)");
+			settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
 		} else if (touching(touch, uiSettingsButtonPos[2])) {
-			//blue = keyboardInputInt("Blue (0-255)");
-			//settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+			blue = keyboardInputInt("Blue (0-255)");
+			settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
 		} else if (touching(touch, uiSettingsButtonPos[3])) {
-			//red = keyboardInputInt("Red");
-			//settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
+			red = keyboardInputInt("Red");
+			settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
 		} else if (touching(touch, uiSettingsButtonPos[4])) {
-			//green = keyboardInputInt("Green (0-255)");
-			//settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
+			green = keyboardInputInt("Green (0-255)");
+			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
-			//blue = keyboardInputInt("Blue (0-255)");
-			//settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+			blue = keyboardInputInt("Blue (0-255)");
+			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
