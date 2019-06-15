@@ -251,6 +251,8 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 } 
 
 void drawMusicPlayer(void) {
+	char buf[1024], buf2[1024], buf3[1024];
+
 	Gui::clearStaticText();
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -277,13 +279,15 @@ void drawMusicPlayer(void) {
 		// Placeholder for Metadata Stuff..
 	 	if (settings.universal.music == 0) {
 	} else if (settings.universal.music == 1) {
-		Gui::staticText("Song Name", 70, 40, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-		Gui::staticText("Author Name", 70, 60, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+			snprintf(buf, 137, "%.80s", ID3.artist);
+			snprintf(buf2, 137, "%.80s", ID3.year);
+			snprintf(buf3, 137, "%.80s", ID3.title);
+		Gui::staticText(buf3, 200, 40, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-		Gui::staticText("Album Name", 70, 80, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText(buf, 200, 60, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
-		Gui::staticText("Release Year", 70, 100, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText(buf2, 200, 100, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	} else if (settings.universal.music == 2) {
 	}
 	}
@@ -320,6 +324,9 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		togglePlayback();
 	} else if (hDown & KEY_X) {
 		stopPlayback();
+		memset(ID3.artist, 0, 30);
+		memset(ID3.title, 0, 30);
+		memset(ID3.year, 0, 4);
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
 	} else if (hDown & KEY_TOUCH) {
@@ -327,8 +334,14 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 			togglePlayback();
 		} else if (touching(touch, playerButtonPos[1])) {
 			goto prevSong;
+			memset(ID3.artist, 0, 30);
+			memset(ID3.title, 0, 30);
+			memset(ID3.year, 0, 4);
 		} else if (touching(touch, playerButtonPos[2])) {
 			goto nextSong;
+			memset(ID3.artist, 0, 30);
+			memset(ID3.title, 0, 30);
+			memset(ID3.year, 0, 4);
 		} else if (touching(touch, playerButtonPos[3])) {
 			goto toggleShuffle;
 		} else if (touching(touch, playerButtonPos[4])) {

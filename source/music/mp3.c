@@ -13,6 +13,78 @@ static uint8_t			channels;
 
 static u64 frames_read = 0, total_samples = 0;
 
+
+/* Helper for v1 printing, get these strings their zero byte. */
+static void safe_print(char *tag, char *name, char *data, size_t size) {
+	char safe[31];
+	if (size > 30) 
+		return;
+	memcpy(safe, data, size);
+	safe[size] = 0;
+	snprintf(tag, 34, "%s: %s\n", name, safe);
+}
+
+/* Print out ID3v1 info. */
+static void print_v1(ID3_Tag *ID3tag, mpg123_id3v1 *v1) {
+	safe_print(ID3tag->title, "", v1->title, sizeof(v1->title));
+	safe_print(ID3tag->artist, "", v1->artist, sizeof(v1->artist));
+	safe_print(ID3tag->album, "", v1->album, sizeof(v1->album));
+	safe_print(ID3tag->year, "", v1->year, sizeof(v1->year));
+}
+
+/* Split up a number of lines separated by \n, \r, both or just zero byte
+   and print out each line with specified prefix. */
+static void print_lines(char *data, const char *prefix, mpg123_string *inlines) {
+	size_t i;
+	int hadcr = 0, hadlf = 0;
+	char *lines = NULL;
+	char *line  = NULL;
+	size_t len = 0;
+
+	if (inlines != NULL && inlines->fill) {
+		lines = inlines->p;
+		len   = inlines->fill;
+	}
+	else 
+		return;
+
+	line = lines;
+	for (i = 0; i < len; ++i) {
+		if (lines[i] == '\n' || lines[i] == '\r' || lines[i] == 0) {
+			char save = lines[i]; /* saving, changing, restoring a byte in the data */
+			if (save == '\n') 
+				++hadlf;
+			if (save == '\r') 
+				++hadcr;
+			if ((hadcr || hadlf) && (hadlf % 2 == 0) && (hadcr % 2 == 0)) 
+				line = "";
+
+			if (line) {
+				lines[i] = 0;
+				if (data == NULL)
+					printf("%s%s\n", prefix, line);
+				else
+					snprintf(data, 0x1F, "%s%s\n", prefix, line);
+				line = NULL;
+				lines[i] = save;
+			}
+		}
+		else {
+			hadlf = hadcr = 0;
+			if (line == NULL) 
+				line = lines + i;
+		}
+	}
+}
+
+/* Print out the named ID3v2  fields. */
+static void print_v2(ID3_Tag *ID3tag, mpg123_id3v2 *v2) {
+	print_lines(ID3tag->title, "", v2->title);
+	print_lines(ID3tag->artist, "", v2->artist);
+	print_lines(ID3tag->album, "", v2->album);
+	print_lines(ID3tag->year, "",    v2->year);
+}
+
 /**
  * Set decoder parameters for MP3.
  *
@@ -42,6 +114,7 @@ int initMp3(const char* file)
 {
 	int err = 0;
 	int encoding = 0;
+	int meta = 0;
 
 	if((err = mpg123_init()) != MPG123_OK)
 		return err;
@@ -57,6 +130,21 @@ int initMp3(const char* file)
 	{
 		printf("Trouble with mpg123: %s\n", mpg123_strerror(mh));
 		return -1;
+	}
+
+	mpg123_id3v1 *v1;
+	mpg123_id3v2 *v2;
+
+	mpg123_seek(mh, 0, SEEK_SET);
+	meta = mpg123_meta_check(mh);
+
+	if (meta & MPG123_ID3 && mpg123_id3(mh, &v1, &v2) == MPG123_OK) {
+		if (v1 != NULL)
+			print_v1(&ID3, v1);
+
+		if (v2 != NULL) {
+			print_v2(&ID3, v2);
+		}
 	}
 
 	/*
