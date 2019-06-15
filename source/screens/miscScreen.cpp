@@ -55,7 +55,7 @@ ButtonPos ftpButtonPos[] = {
 
 
 void drawCredits(void) {
-	set_screen(top);
+	C2D_SceneBegin(top);
 	Gui::sprite(sprites_universal_credits_idx, 0, 0);
 	
 	Gui::DrawBGBot();
@@ -66,10 +66,8 @@ void drawCredits(void) {
 
 void ftpLogic(u32 hDown, touchPosition touch) {
 		if (hDown & KEY_B) {
-			//break;
-		usleep(100000);
-		bftps_stop();
 		screenMode = mainScreen;
+		bftps_stop();
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
 			if (touching(touch, ftpButtonPos[i])) {
@@ -105,7 +103,7 @@ void drawFTPScreen(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode"); // - Fine.
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
@@ -113,7 +111,7 @@ void drawFTPScreen(void) {
 	ret = ACU_GetWifiStatus(&wifiStatus);
 
 	if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-		draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "FTP initialized");
+		draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "FTP initialized"); // Fine.
                         snprintf(buf, 137, "%s", bftps_name());
 
  	const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
@@ -125,8 +123,8 @@ void drawFTPScreen(void) {
                      float fraction = ((float) file->filePosition / (float) file->fileSize);
                      snprintf(buf3, 512, "Sending %.2f%%", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
 
-                         draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf3);
-					    draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name)); 
+                         draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf3); // Fine.
+						 draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name));
                                     position = 0;
                                     progress = 40+round(fraction * (float)(xlim-40));
                                 }                                   
@@ -155,17 +153,17 @@ void drawFTPScreen(void) {
                         }
 		}
 		else {
-			draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "Failed to initialize FTP.");
-			draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.5f, 0.5f, WHITE, "WiFi not enabled.");
+			Gui::staticText("Failed to initialize FTP.", 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
+			Gui::staticText("WiFi not enabled.", 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
 		}
-		draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.5f, 0.5f, WHITE, buf);
+		Gui::staticText(buf, 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
 		C3D_FrameEnd(0);
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
 // processes like the clock won't update while the message bubble is up
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
-	//Gui::clearStaticText();
+	Gui::clearStaticText();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
@@ -173,9 +171,9 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	Gui::DrawBarsTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	draw_text_center(GFX_TOP, 90, 0.5f, 0.45f, 0.45f, WHITE, msg1.c_str());
-	draw_text_center(GFX_TOP, 110, 0.5f, 0.45f, 0.45f, WHITE, msg2.c_str());
-	draw_text(ynXPos, 160, 0.45f, 0.45f, BLACK, ("\uE001 : "+no+"   \uE000 : "+yes).c_str());
+	Gui::staticText(msg1.c_str(), 170, 90, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(msg2.c_str(), 170, 110, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -190,5 +188,5 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 245);
+	return confirmPopup(msg, "", "Yes", "No", 200);
 }

@@ -38,7 +38,159 @@ static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
 C2D_TextBuf staticBuf, dynamicBuf;
 static C2D_TextBuf widthBuf;
+static std::unordered_map<std::string, C2D_Text> staticMap;
 
+
+// Text Stuff.
+void Gui::dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
+{
+    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
+
+    static std::vector<std::string> print;
+    static std::vector<int> printX;
+
+    size_t index = 0;
+    while (index != std::string::npos)
+    {
+        print.push_back(str.substr(index, str.find('\n', index) - index));
+        index = str.find('\n', index);
+        if (index != std::string::npos)
+        {
+            index++;
+        }
+    }
+
+    switch (positionX)
+    {
+        case TextPosX::LEFT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x);
+            }
+            break;
+        case TextPosX::CENTER:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
+            }
+            break;
+        case TextPosX::RIGHT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
+            }
+            break;
+    }
+
+    switch (positionY)
+    {
+        case TextPosY::TOP:
+            break;
+        case TextPosY::CENTER:
+            y -= ceilf(0.5f * lineMod * (float)print.size());
+            break;
+        case TextPosY::BOTTOM:
+            y -= lineMod * (float)print.size();
+            break;
+    }
+
+    for (size_t i = 0; i < print.size(); i++)
+    {
+        C2D_Text text;
+        C2D_TextParse(&text, dynamicBuf, print[i].c_str());
+        C2D_TextOptimize(&text);
+        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
+    }
+
+    print.clear();
+    printX.clear();
+}
+
+C2D_Text Gui::cacheStaticText(const std::string& strKey)
+{
+    C2D_Text text;
+    std::unordered_map<std::string, C2D_Text>::const_iterator index = staticMap.find(strKey);
+    if (index == staticMap.end())
+    {
+        C2D_TextParse(&text, staticBuf, strKey.c_str());
+        C2D_TextOptimize(&text);
+        staticMap.emplace(strKey, text);
+    }
+    else
+    {
+        return index->second;
+    }
+
+    return text;
+}
+
+void Gui::clearStaticText()
+{
+    C2D_TextBufClear(staticBuf);
+    staticMap.clear();
+}
+
+void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
+{
+    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
+
+    static std::vector<std::string> print;
+    static std::vector<int> printX;
+
+    size_t index = 0;
+    while (index != std::string::npos)
+    {
+        print.push_back(strKey.substr(index, strKey.find('\n', index) - index));
+        index = strKey.find('\n', index);
+        if (index != std::string::npos)
+        {
+            index++;
+        }
+    }
+
+    switch (positionX)
+    {
+        case TextPosX::LEFT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x);
+            }
+            break;
+        case TextPosX::CENTER:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
+            }
+            break;
+        case TextPosX::RIGHT:
+            for (size_t i = 0; i < print.size(); i++)
+            {
+                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
+            }
+            break;
+    }
+
+    switch (positionY)
+    {
+        case TextPosY::TOP:
+            break;
+        case TextPosY::CENTER:
+            y -= ceilf(0.5f * lineMod * (float)print.size());
+            break;
+        case TextPosY::BOTTOM:
+            y -= lineMod * (float)print.size();
+            break;
+    }
+
+    for (size_t i = 0; i < print.size(); i++)
+    {
+        C2D_Text text = cacheStaticText(print[i].c_str());
+        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
+    }
+
+    print.clear();
+    printX.clear();
+}
 
 static Tex3DS_SubTexture _select_box(const C2D_Image& image, int x, int y, int endX, int endY)
 {

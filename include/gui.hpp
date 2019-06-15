@@ -42,6 +42,8 @@
 #include "utils.hpp"
 
 #include "colors.hpp"
+#include "TextPos.hpp"
+#include "3dsutils.hpp"
 
 // Battery Stuff.
 #include "ptmu_x.h"
@@ -70,6 +72,11 @@ namespace Gui
     void sprite(int key, int x, int y);
     void AnimationSprite(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
+
+    void dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
+    C2D_Text cacheStaticText(const std::string& strKey);
+    void clearStaticText(void);
+    void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
 
     // Basic GUI.
     void DrawBGTop();

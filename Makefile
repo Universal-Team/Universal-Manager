@@ -55,9 +55,9 @@ VERSION_MICRO := 0
 #---------------------------------------------------------------------------------
 TARGET		:=	Universal-Manager
 BUILD		:=	build
-SOURCES		:=	source source/voltlib source/screens source/music source/download source/utils source/language
+SOURCES		:=	source source/voltlib source/screens source/music source/download source/utils source/language source/ftp
 DATA		:=	data
-INCLUDES	:=	include include/voltlib include/screens include/music include/download include/utils include/language include/language/strings
+INCLUDES	:=	include include/voltlib include/screens include/music include/download include/utils include/language include/language/strings include/ftp
 GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
@@ -85,7 +85,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lbftps -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro2d -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctru -lm -lstdc++
+LIBS	:= -lbftps -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro2d -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctrud -lm -lstdc++
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
