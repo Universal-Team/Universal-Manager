@@ -175,6 +175,7 @@ void drawMusicList(void) {
 	}
 	std::string dirs;
 	std::string dirs2;
+	std::string dirs3;
 	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
 		if (i == selectedFile) {
 			dirs += "> " + dirContents[i].name + "\n";
@@ -187,9 +188,10 @@ void drawMusicList(void) {
 	}
 	if (dirContents[selectedFile].isDirectory)	dirs2 += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	else if(dirContents[selectedFile].name == currentSong)	dirs2 += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
-	else	dirs2 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
+	else	dirs3 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist, SEL : Show Player";
 	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::staticText(dirs2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(dirs3.c_str(), 200, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -243,8 +245,10 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
-	}
+	} else if (hDown & KEY_SELECT) {
+	screenMode = musicPlayerScreen;
 }
+} 
 
 void drawMusicPlayer(void) {
 	Gui::clearStaticText();
