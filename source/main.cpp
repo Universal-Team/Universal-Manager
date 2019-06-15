@@ -65,8 +65,8 @@ extern bool firstSong;
 //sound *sfx_scroll = NULL;
 
 static touchPosition touch;
-extern C3D_RenderTarget* g_renderTargetTop;
-extern C3D_RenderTarget* g_renderTargetBottom;	
+extern C3D_RenderTarget* top;
+extern C3D_RenderTarget* bottom;	
 int screenMode = 0;
 
 
@@ -145,7 +145,7 @@ int main()
 	Gui::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	mcuInit(); // Comment this out, if you use Citra.
+	//mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -164,8 +164,8 @@ int main()
         u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(g_renderTargetTop, BLUE2);
-        C2D_TargetClear(g_renderTargetBottom, BLUE2);
+        C2D_TargetClear(top, BLUE2);
+        C2D_TargetClear(bottom, BLUE2);
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {

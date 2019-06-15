@@ -46,7 +46,7 @@ void drawPNGImageViewerUI(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Image Viewer Menu [PNG]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -71,7 +71,7 @@ void drawPNGImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(170, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -85,7 +85,7 @@ void drawBMPImageViewerUI(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Image Viewer Menu [BMP]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 4, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -110,7 +110,7 @@ void drawBMPImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	Gui::staticText(dirs.c_str(), 26, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);;
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -124,7 +124,7 @@ void showImage(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Not Implemented Yet.", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 4, 0.72f, 0.72f, WHITE, "Not Implemented Yet.");
 
 	Gui::DrawBGBot();
 	animatedBGBot();

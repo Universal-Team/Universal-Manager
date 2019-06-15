@@ -102,33 +102,32 @@ std::string secondsToString(u64 seconds) {
 
 void drawMusicMain() {
 	// Theme Stuff.
-	Gui::clearStaticText();
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Music Player Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
 	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
-	Gui::staticText("Songs", 80, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(80, 57, 0.7f, 0.7f, WHITE, "Songs");
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
 	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
 	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
-	Gui::staticText("Now playing", 255, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(255, 57, 0.65f, 0.65f, WHITE, "Now playing");
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[2].x, mainButtonPos[2].y);
 	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
-	Gui::staticText("Playlists", 80, 167, 0.65f, 0.65f, WHITE,TextPosX::CENTER, TextPosY::TOP);
+	draw_text(80, 167, 0.65f, 0.65f, WHITE, "Playlists");
 
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
 	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
-	 Gui::staticText("Themes", 255, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	 draw_text(255, 167, 0.7f, 0.7f, WHITE, "Themes");
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -156,7 +155,7 @@ void drawMusicList(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Music Player Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -189,9 +188,9 @@ void drawMusicList(void) {
 	if (dirContents[selectedFile].isDirectory)	dirs2 += "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	else if(dirContents[selectedFile].name == currentSong)	dirs2 += "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist";
 	else	dirs3 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist, SEL : Show Player";
-	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(dirs2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(dirs3.c_str(), 200, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(170, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	draw_text(170, 210, 0.45f, 0.45f, WHITE, dirs2.c_str());
+	draw_text(200, 210, 0.45f, 0.45f, WHITE, dirs3.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -253,26 +252,25 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlayer(void) {
 	char buf[1024], buf2[1024], buf3[1024];
 
-	Gui::clearStaticText();
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		Gui::staticText(nowPlayingText.c_str(), 200, 3, 0.52f, 0.52f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
+		draw_text(200, 3, 0.52f, 0.52f, WHITE, nowPlayingText.c_str());
+		// Not working yet. draw_text(100, 177, 0.45f, 0.45f, WHITE, secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
 		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
 
 	
 	if(!isPaused() && isPlaying()) {
-		Gui::staticText("\uE000 : Pause   \uE001 : Back   \uE002 : Stop song", 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(170, 220, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
 	} else if(isPaused() && isPlaying()) {
-		Gui::staticText("\uE000 : Play   \uE001 : Back   \uE002 : Stop song", 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(170, 220, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
 	} else {
-		Gui::staticText("No song selected.", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-		Gui::staticText("\uE001 : Back", 200, 200, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(200, 3, 0.72f, 0.72f, WHITE, "No song selected.");
+		draw_text(200, 200, 0.45f, 0.45f, WHITE, "\uE001 : Back");
 	}
 
 
@@ -283,11 +281,11 @@ void drawMusicPlayer(void) {
 			snprintf(buf, 137, "%.80s", ID3.artist);
 			snprintf(buf2, 137, "%.80s", ID3.year);
 			snprintf(buf3, 137, "%.80s", ID3.title);
-		Gui::staticText(buf3, 200, 40, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(200, 40, 0.7f, 0.7f, WHITE, buf3);
 
-		Gui::staticText(buf, 200, 60, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(200, 60, 0.7f, 0.7f, WHITE, buf);
 
-		Gui::staticText(buf2, 200, 100, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(200, 100, 0.7f, 0.7f, WHITE, buf2);
 	} else if (settings.universal.music == 2) {
 	}
 	}
@@ -308,7 +306,7 @@ void drawMusicPlayer(void) {
 
 	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
 	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
-	if (musicRepeat)	Gui::staticText((musicRepeat == 1 ? "A" : "S"), playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	if (musicRepeat)	draw_text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -389,7 +387,7 @@ void drawMusicPlaylistAdd(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -418,8 +416,8 @@ void drawMusicPlaylistAdd(void) {
 		plstList += "\n";
 	}
 	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"   \uE001 : Back   \uE002 : Delete   \uE003 : New";
-	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -494,7 +492,7 @@ void drawMusicPlaylistPlay(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -518,8 +516,8 @@ void drawMusicPlaylistPlay(void) {
 		plstList += "\n";
 	}
 	plstList2 += "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit";
-	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -580,7 +578,7 @@ void drawMusicPlaylistEdit() {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Music Playlist Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
 	std::string plstList2;
@@ -597,8 +595,8 @@ void drawMusicPlaylistEdit() {
 		plstList += "\n";
 	}
 	plstList2 += "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move";
-	Gui::staticText(plstList.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(plstList2.c_str(), 170, 210, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(170, 32, 0.45f, 0.45f, WHITE, plstList.c_str());
+	draw_text(170, 210, 0.45f, 0.45f, WHITE, plstList2.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
@@ -650,7 +648,7 @@ void drawThemeSelector(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Theme Selector", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Theme Selector");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -675,7 +673,7 @@ void drawThemeSelector(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-		Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		draw_text(170, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

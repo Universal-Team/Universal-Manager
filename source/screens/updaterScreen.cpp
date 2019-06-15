@@ -129,7 +129,7 @@ void drawUpdaterSubMenu(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Updater Sub Menu", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -138,9 +138,9 @@ void drawUpdaterSubMenu(void) {
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[15].x, downloadButtonPos[15].y);
-	Gui::staticText("CFW", 79, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("TWL", 170, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Other", 259, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(79, 58, 0.7f, 0.7f, WHITE, "CFW");
+	draw_text(170, 58, 0.7f, 0.7f, WHITE, "TWL");
+	draw_text(259, 58, 0.7f, 0.7f, WHITE, "Other");
 }
 
 void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
@@ -169,7 +169,7 @@ void drawUpdaterTWL(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("TWL Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -180,28 +180,28 @@ void drawUpdaterTWL(void) {
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[0].x, downloadButtonPos[0].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[1].x, downloadButtonPos[1].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	Gui::staticText("TWLMENU++", 60, 58, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(60, 58, 0.65f, 0.65f, WHITE, "TWLMENU++");
+	draw_text(170, 58, 0.7f, 0.7f, WHITE, "Release");
+	draw_text(259, 58, 0.7f, 0.7f, WHITE, "Nightly");
 
 	// NDS-Bootstrap Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[2].x, downloadButtonPos[2].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[3].x, downloadButtonPos[3].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	Gui::staticText("NDS-Bootstrap", 60, 98, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Nightly", 259, 98, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(60, 98, 0.65f, 0.65f, WHITE, "NDS-Bootstrap");
+	draw_text(170, 98, 0.7f, 0.7f, WHITE, "Release");
+	draw_text(259, 98, 0.7f, 0.7f, WHITE, "Nightly");
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[4].x, downloadButtonPos[4].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
-	Gui::staticText("Extras", 30, 138, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Cheats", 170, 138, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(30, 138, 0.7f, 0.7f, WHITE, "Extras");
+	draw_text(170, 138, 0.7f, 0.7f, WHITE, "Cheats");
 
 	// Draw The Pages and Back Icon.
-	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("1", 260, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
-	Gui::staticText("2", 270, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
-	Gui::staticText("3", 280, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }
 
 void updaterTWLLogic(u32 hDown, touchPosition touch) {
@@ -253,7 +253,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Other Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -265,33 +265,33 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[5].x, downloadButtonPos[5].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[6].x, downloadButtonPos[6].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	Gui::staticText("UNIV-Manager", 60, 58, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(60, 58, 0.65f, 0.65f, WHITE, "UNIV-Manager");
+	draw_text(170, 58, 0.7f, 0.7f, WHITE, "Release");
+	draw_text(259, 58, 0.7f, 0.7f, WHITE, "Nightly");
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[10].x, downloadButtonPos[10].y);
 	// PKSM Buttons.
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	Gui::staticText("PKSM", 30, 98, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(30, 98, 0.7f, 0.7f, WHITE, "PKSM");
+	draw_text(170, 98, 0.7f, 0.7f, WHITE, "Release");
 	// Checkpoint Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[11].x, downloadButtonPos[11].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
-	Gui::staticText("Checkpoint", 50, 138, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 138, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(50, 138, 0.65f, 0.65f, WHITE, "Checkpoint");
+	draw_text(170, 138, 0.7f, 0.7f, WHITE, "Release");
 
 	// Themes Download Button.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 168);
-	Gui::staticText("extras", 30, 178, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Themes", 170, 178, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(30, 178, 0.7f, 0.7f, WHITE, "extras");
+	draw_text(170, 178, 0.7f, 0.7f, WHITE, "Themes");
 	
 
 	// Draw The Pages and Back Icon.
-	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("1", 260, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
-	Gui::staticText("2", 270, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
-	Gui::staticText("3", 280, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
+	draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
 }
 
 void updaterOtherLogic(u32 hDown, touchPosition touch) {
@@ -331,7 +331,7 @@ void drawUpdaterCFW(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("CFW Updater Screen", 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -342,21 +342,21 @@ void drawUpdaterCFW(void) {
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[7].x, downloadButtonPos[7].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[8].x, downloadButtonPos[8].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	Gui::staticText("Luma3DS", 50, 58, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Nightly", 259, 58, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(50, 58, 0.65f, 0.65f, WHITE, "Luma3DS");
+	draw_text(170, 58, 0.7f, 0.7f, WHITE, "Release");
+	draw_text(259, 58, 0.7f, 0.7f, WHITE, "Nightly");
 
 	 // GodMode9 Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[9].x, downloadButtonPos[9].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	Gui::staticText("GodMode9", 50, 98, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Release", 170, 98, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(50, 98, 0.65f, 0.65f, WHITE, "GodMode9");
+	draw_text(170, 98, 0.7f, 0.7f, WHITE, "Release");
 
 	// Draw The Pages and Back Icon.
-	Gui::staticText("Current Page:", 170, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("1", 260, 4, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP); //Draw First Page Number.
-	Gui::staticText("2", 270, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Second Page Number.
-	Gui::staticText("3", 280, 4, 0.50, 0.50, BLACK, TextPosX::CENTER, TextPosY::TOP); //Draw Third Page Number.
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+	draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
+	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }
 
 void updaterCFWLogic(u32 hDown, touchPosition touch) {

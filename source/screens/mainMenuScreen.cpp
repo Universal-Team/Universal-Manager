@@ -39,8 +39,8 @@ void drawMainMenu(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Universal-Manager", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(universal_manager_vertext, 340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, "Universal-Manager");
+	draw_text(340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, universal_manager_vertext);
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -48,17 +48,17 @@ void drawMainMenu(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
-	Gui::staticText("FileManager", 85, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(85, 57, 0.65f, 0.65f, WHITE, "FileManager");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
 	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
-	Gui::staticText("FTP", 230, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(230, 57, 0.7f, 0.7f, WHITE, "FTP");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
 	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
-	Gui::staticText("Updater", 80, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(80, 167, 0.7f, 0.7f, WHITE, "Updater");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
 	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Gui::staticText("Settings", 245, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(245, 167, 0.7f, 0.7f, WHITE, "Settings");
 }

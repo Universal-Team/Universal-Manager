@@ -27,8 +27,8 @@
 #include "gui.hpp"
 #include "animation.hpp"
 
-extern C3D_RenderTarget* g_renderTargetTop;
-extern C3D_RenderTarget* g_renderTargetBottom;
+extern C3D_RenderTarget* top;
+extern C3D_RenderTarget* bottom;
 
 #define mainScreen				0
 //###############################
