@@ -89,10 +89,10 @@ const char* my_basename(const char* path) {
 
 void drawFTPScreen(void) {
 
-        bftps_start();
+	bftps_start();
 
 	Result ret = 0;
-	char buf[137], buf2[512];
+	char buf[137], buf2[512], buf3[512];
 	u32 wifiStatus = 0;
 
 	int position = 0, progress = 0, xlim = 270;
@@ -108,36 +108,36 @@ void drawFTPScreen(void) {
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
 
-		ret = ACU_GetWifiStatus(&wifiStatus);
+	ret = ACU_GetWifiStatus(&wifiStatus);
 
-		if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "FTP initialized")) / 2), 40, 0.48f, WHITE, "FTP initialized");
-			//snprintf(buf, 137, "IP: %s:5000", R_FAILED(ret)? "Failed to get IP" : hostname);
+	if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
+		Gui::staticText("FTP initialized", 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
                         snprintf(buf, 137, "%s", bftps_name());
 
- 				const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
-                        if (transfersInfo) {
-                            const bftps_file_transfer_t* file = transfersInfo;
-                           // while (file) { for now only show the first file on the list
-                                if (file->mode == FILE_SENDING) {
-                                    float fraction = ((float) file->filePosition / (float) file->fileSize);
-                                    snprintf(buf2, 512, "Sending %.2f%%", fraction * (float) 100);
-                                    //file name should have an elipsis when is to longer
-                                    Draw_Text(((320 - Draw_GetTextWidth(0.45f, buf2)) / 2), 150, 0.45f, WHITE, buf2);
-                                    Draw_Text(((320 - Draw_GetTextWidth(0.35f, my_basename(file->name))) / 2), 170, 0.35f, WHITE, my_basename(file->name));
+ 	const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
+        if (transfersInfo) {
+            const bftps_file_transfer_t* file = transfersInfo;
+
+             // while (file) { for now only show the first file on the list
+                 if (file->mode == FILE_SENDING) {
+                     float fraction = ((float) file->filePosition / (float) file->fileSize);
+                     snprintf(buf3, 512, "Sending %.2f%%", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
+
+                         Gui::staticText(buf3, 150, 110, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+						 Gui::staticText(my_basename(file->name), 158, 90, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
                                     position = 0;
                                     progress = 40+round(fraction * (float)(xlim-40));
                                 }                                   
                                 else {
-                                    snprintf(buf2, 512, "Receiving %.2fMB", 
-                                            ((float) file->filePosition / ((float) 1024 * (float) 1024)));
+                                    snprintf(buf2, 512, "Receiving %.2fMB", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
+                                            
                                     //file name should have an elipsis when is to longer
-                                    Draw_Text(((320 - Draw_GetTextWidth(0.45f, buf2)) / 2), 150, 0.45f, WHITE, buf2);
-                                    Draw_Text(((320 - Draw_GetTextWidth(0.35f, my_basename(file->name))) / 2), 170, 0.35f, WHITE, my_basename(file->name));                                    
+                                    Gui::staticText(buf2, 150, 110, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+									Gui::staticText(my_basename(file->name), 150, 90, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);                                    
                                     progress = 40;
                                     position += 4;			
                                     if (position >= xlim)
-					position = 34;
+					position = 0;
                                 }
                                     //aux = aux->next;
                             //}
@@ -153,13 +153,10 @@ void drawFTPScreen(void) {
                         }
 		}
 		else {
-			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Failed to initialize FTP.")) / 2), 40, 0.48f, WHITE, "Failed to initialize FTP.");
-			snprintf(buf, 18, "WiFi not enabled.");
+			Gui::staticText("Failed to initialize FTP.", 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+			Gui::staticText("WiFi not enabled.", 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 		}
-
-		Draw_Text(((320 - Draw_GetTextWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
-		Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Tap the FTP icon to disable the FTP connection.")) / 2), 120, 0.48f, WHITE, "Tap the FTP icon to disable the FTP connection.");
-
+		Gui::staticText(buf, 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 		C3D_FrameEnd(0);
 }
 
