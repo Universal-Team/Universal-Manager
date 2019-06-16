@@ -50,6 +50,20 @@ void animatedBGTop(void) {
 	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
 	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
 	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
+} else if (settings.universal.animation == 2) {
+			if (!animated_bubbleMoveDelay) {
+		animated_bubblesYPos[0]--;
+		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
+	}
+	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
+
+	animated_bubblesYPos[1]--;
+	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
+
+	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
 }
 }
 
@@ -69,5 +83,19 @@ void animatedBGBot(void) {
 	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
 	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
 	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
+} else if (settings.universal.animation == 2) {
+			if (!animated_bubbleMoveDelay) {
+		animated_bubblesYPos[0]--;
+		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
+	}
+	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
+
+	animated_bubblesYPos[1]--;
+	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
+
+	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
 }
 }

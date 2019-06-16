@@ -48,7 +48,7 @@ struct ButtonPos {
 
 extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
-std::string animationModes[] = {"Disabled", "Enabled"};
+std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"};
 
 
@@ -251,7 +251,7 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), getColorValue(settings.universal.animationcolor, 1), blue, 255);
 		} else if (touching(touch, uiSettingsButtonPos[11])) {
 			settings.universal.animation++;
-			if (settings.universal.animation > 1) settings.universal.animation = 0;
+			if (settings.universal.animation > 2) settings.universal.animation = 0;
 			} else if (touching(touch, uiSettingsButtonPos[12])) {
 			settings.universal.battery++;
 			if (settings.universal.battery > 1) settings.universal.battery = 0;
