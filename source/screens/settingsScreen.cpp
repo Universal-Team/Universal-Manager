@@ -49,6 +49,7 @@ struct ButtonPos {
 extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 std::string animationModes[] = {"Disabled", "Enabled"};
+std::string percentModes[] = {"Hidden", "Shown"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -75,6 +76,9 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Animation enable.
 	{220, 28, 87, 33, -1},
+
+	// Battery percent.
+	{220, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -113,7 +117,7 @@ void drawSettingsScreen(void) {
 	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Credits");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	draw_text(200, 57, 0.7f, 0.7f, WHITE, "UI Settings");
+	draw_text(200, 57, 0.7f, 0.7f, WHITE, "Settings");
 }
 
 void drawUISettingsScreen(void) {
@@ -160,6 +164,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
+		SaveUniversalSettings();
 		} else if (hDown & KEY_R) {
 			screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
@@ -183,6 +188,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
+			SaveUniversalSettings();
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
@@ -197,7 +203,7 @@ void drawUISettingsScreen2(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings 2");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
@@ -215,6 +221,10 @@ void drawUISettingsScreen2(void) {
 	draw_text(229, 38, 0.65f, 0.65f, WHITE, animationModes[settings.universal.animation].c_str());
 	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Animation:");
 
+	Gui::sprite(sprites_updaterButton_idx, 220, 168);
+	draw_text(229, 178, 0.7f, 0.7f, WHITE, percentModes[settings.universal.battery].c_str());
+	draw_text(129, 178, 0.7f, 0.7f, BLACK, "Percent :");
+
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
@@ -226,6 +236,7 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
+		SaveUniversalSettings();
 		} else if (hDown & KEY_L) {
 			screenMode = uiSettingsScreen;
 	} else if (hDown & KEY_TOUCH) {
@@ -241,6 +252,12 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[11])) {
 			settings.universal.animation++;
 			if (settings.universal.animation > 1) settings.universal.animation = 0;
+			} else if (touching(touch, uiSettingsButtonPos[12])) {
+			settings.universal.battery++;
+			if (settings.universal.battery > 1) settings.universal.battery = 0;
+			} else if (touching(touch, uiSettingsButtonPos[6])) {
+			screenMode = uiSettingsButtonPos[6].link;
+			SaveUniversalSettings();
 }
 	}
 }

@@ -396,6 +396,7 @@ void DisplayTime(void) {
 
 void drawBatteryTop(void) {
 	  u8 batteryChargeState = 0;
+      char percent[5];
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
@@ -413,11 +414,25 @@ void drawBatteryTop(void) {
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
 		Gui::sprite(sprites_batteryCharge_idx, 361, 0);
-	}
+    }
+
+        if (settings.universal.battery == 0) {
+        } else if (settings.universal.battery == 1) {
+	if(batteryPercent == 100) {
+		draw_text(310, 4, 0.7f, 0.7f, WHITE, "100%%");
+	} else {
+		snprintf(percent, 5, "%d%%", batteryPercent);
+        C2D_Text percentText;
+        C2D_TextParse(&percentText, dynamicBuf, percent);
+		C2D_TextOptimize(&percentText);
+        C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+}
+}
 }
 
 void drawBatteryBot(void) {
 	 u8 batteryChargeState = 0;
+     char percent[5];
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
@@ -436,6 +451,19 @@ void drawBatteryBot(void) {
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
 		Gui::sprite(sprites_batteryCharge_idx, 281, 0);
 	}
+
+            if (settings.universal.battery == 0) {
+        } else if (settings.universal.battery == 1) {
+    	if(batteryPercent == 100) {
+		draw_text(230, 4, 0.7f, 0.7f, WHITE, "100%%");
+	} else {
+		snprintf(percent, 5, "%d%%", batteryPercent);
+        C2D_Text percentText;
+        C2D_TextParse(&percentText, dynamicBuf, percent);
+		C2D_TextOptimize(&percentText);
+        C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+}
+}
 }
 
 static void get_text_dimensions(const char * text, float scaleX, float scaleY, float * width, float * height)
