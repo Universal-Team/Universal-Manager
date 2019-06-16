@@ -422,7 +422,7 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
-	draw_text(26, 32, 0.45f, 0.45f, BLACK, text);
+	Gui::staticText(text, 200, 36, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
