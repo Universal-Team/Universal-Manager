@@ -72,20 +72,24 @@ ButtonPos downloadFunctionButtonPos[] = {
 	// Back Icon.
 	{293, 213, 27, 27, -1},
 
+	// Themes.
 	{129, 168, 87, 33, -1},
+
+	// pkmn-chest
+	{220, 88, 87, 33, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
 	// TWLMenu
-	{129, 48, 87, 33},
-	{220, 48, 87, 33},
+	{129, 48, 87, 33}, 
+	{220, 48, 87, 33}, 
 	// NDS-Bootstrap
-	{129, 88, 87, 33},
-	{220, 88, 87, 33},
+	{129, 88, 87, 33}, 
+	{220, 88, 87, 33}, 
 	// Usrcheat.dat
-	{129, 128, 87, 33},
+	{129, 128, 87, 33}, 
 	// Universal-Manager
-	{129, 48, 87, 33},
+	{129, 48, 87, 33}, 
 	{220, 48, 87, 33},
 	// Luma 3DS
 	{129, 48, 87, 33},
@@ -105,7 +109,9 @@ ButtonPos downloadButtonPos[] = {
 	{129, 48, 87, 33, TWLScreen},
 	{220, 48, 87, 33, OtherScreen},
 
-	{129, 168, 87, 33},
+	{129, 168, 87, 33}, // ? Forgot it.
+	// PKMN-Chest
+	{220, 88, 87, 33},
 };
 
 bool updateAvailable[] = {
@@ -286,6 +292,10 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::sprite(sprites_TitleButton_idx, 0, 168);
 	draw_text(0, 178, 0.7f, 0.7f, WHITE, "Extras");
 	draw_text(140, 178, 0.7f, 0.7f, WHITE, "Themes");
+
+	// PKMN-Chest.
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[17].x, downloadButtonPos[17].y);
+	draw_text(226, 98, 0.7f, 0.7f, WHITE, "PK-Chest");
 	
 
 	// Draw The Pages and Back Icon.
@@ -323,6 +333,11 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 			screenMode = updaterSubMenu;
 		} else if (touching(touch, downloadFunctionButtonPos[14])) {
 			downloadThemes();
+		} else if (touching(touch, downloadFunctionButtonPos[15])) {
+			if(confirmPopup("Are you sure you want to update PKMN-Chest\nRelease?")) {
+			notImplemented();
+			//updatePKMNChestRelease(); // By the first Release.
+			}
 		}
 }
 }

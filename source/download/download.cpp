@@ -59,6 +59,7 @@ std::string latestLumaNightlyCache = "";
 std::string godMode9Cache = "";
 std::string latestPKSMReleaseCache = "";
 std::string latestCheckpointReleaseCache = "";
+std::string latestpkmnchestReleaseCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -688,6 +689,12 @@ std::string latestCheckpointRelease(void) {
 	return latestCheckpointReleaseCache;
 }
 
+std::string latestpkmnchestRelease(void) {
+	if (latestpkmnchestReleaseCache == "")
+		latestpkmnchestReleaseCache = getLatestRelease("Universal-Team/pkmn-chest", "tag_name");
+	return latestpkmnchestReleaseCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -719,6 +726,7 @@ void checkForUpdates() {
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
 	std::string pksmVersion = getInstalledVersion("PKSM");
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
+	std::string pkmnchestRelease = getInstalledVersion("PKMN-CHEST-RELEASE");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -735,6 +743,7 @@ void checkForUpdates() {
 	updateAvailable[8] = godMode9Version != latestGodMode9();
 	updateAvailable[9] = pksmVersion != latestPKSMRelease();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
+	updateAvailable[11] = pkmnchestRelease != latestpkmnchestRelease();
 }
 
 
@@ -1097,4 +1106,21 @@ void updateCheats(void) {
 	deleteFile("sdmc:/usrcheat.dat.7z");
 
 	doneMsg();
+}
+
+void updatePKMNChestRelease(void) {
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest Release...");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+		downloadFailed();
+		return;
+	}
+
+
+		setInstalledVersion("PKMN-CHEST-RELEASE", latestpkmnchestRelease());
+		saveUpdateData();
+		updateAvailable[11] = false;
+		doneMsg();
 }

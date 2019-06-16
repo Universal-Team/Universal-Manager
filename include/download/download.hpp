@@ -147,3 +147,8 @@ void downloadThemes(void);
  * Update DeadSkullzJr's cheat DB to the latest version.
  */
 void updateCheats(void);
+
+/**
+ * Update PKMN-Chest to the latest Release Version.
+ */
+void updatePKMNChestRelease(void);
