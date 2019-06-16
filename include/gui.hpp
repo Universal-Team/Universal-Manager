@@ -39,8 +39,8 @@
 // Spritesheets.
 #include "sprites.h"
 #include "animation.h"
-#include "utils.hpp"
 
+#include "utils.hpp"
 #include "colors.hpp"
 #include "TextPos.hpp"
 #include "3dsutils.hpp"
