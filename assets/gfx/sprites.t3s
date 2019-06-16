@@ -1,12 +1,9 @@
 --atlas -f rgba -z auto
 arrow.png
 battery0.png
-battery15.png
-battery28.png
-battery43.png
-battery57.png
-battery71.png
-battery85.png
+battery25.png
+battery50.png
+battery75.png
 battery100.png
 batteryCharge.png
 BlueButton.png
