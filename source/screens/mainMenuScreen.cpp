@@ -41,7 +41,7 @@ void drawMainMenu(void) {
 	drawBatteryTop();
 	//Gui::sprite(sprites_battery0_idx, 361, 0); // Showing Purpose.
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Universal-Manager");
-	draw_text(340, 218, FONT_SIZE_18, FONT_SIZE_18, BLACK, universal_manager_vertext);
+	draw_text(340, 218, FONT_SIZE_18, FONT_SIZE_18, WHITE, universal_manager_vertext);
 
 	Gui::DrawBGBot();
 	animatedBGBot();
