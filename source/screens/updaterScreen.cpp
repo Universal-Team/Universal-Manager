@@ -169,7 +169,7 @@ void drawUpdaterTWL(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 200, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -200,8 +200,9 @@ void drawUpdaterTWL(void) {
 	// Draw The Pages and Back Icon.
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
+	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 275, 2, RED);
+	draw_text(300, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }
 
 void updaterTWLLogic(u32 hDown, touchPosition touch) {
@@ -253,7 +254,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 200, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -290,8 +291,9 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	// Draw The Pages and Back Icon.
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
+	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
+	draw_text(300, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 295, 2, RED);
 }
 
 void updaterOtherLogic(u32 hDown, touchPosition touch) {
@@ -331,7 +333,7 @@ void drawUpdaterCFW(void) {
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 200, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -355,8 +357,9 @@ void drawUpdaterCFW(void) {
 	// Draw The Pages and Back Icon.
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-	draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 255, 2, RED);
+	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
+	draw_text(300, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }
 
 void updaterCFWLogic(u32 hDown, touchPosition touch) {

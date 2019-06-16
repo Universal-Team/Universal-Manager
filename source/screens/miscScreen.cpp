@@ -62,6 +62,7 @@ void drawCredits(void) {
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
 	DisplayTime();
+	drawBatteryBot();
 }
 
 void ftpLogic(u32 hDown, touchPosition touch) {
