@@ -75,7 +75,7 @@ ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
-	{170, 150, 149, 52, themeSelectorScreen},
+	//{170, 150, 149, 52, themeSelectorScreen},
 };
 
 ButtonPos playerButtonPos[] = {
@@ -125,9 +125,9 @@ void drawMusicMain() {
 	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	draw_text(40, 167, 0.65f, 0.65f, WHITE, "Playlists");
 
-	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
-	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
-	 draw_text(210, 167, 0.7f, 0.7f, WHITE, "Themes");
+	// Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
+	// Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
+	// draw_text(210, 167, 0.7f, 0.7f, WHITE, "Themes");
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -286,8 +286,8 @@ void drawMusicPlayer(void) {
 		draw_text(15, 60, 0.7f, 0.7f, WHITE, buf);
 
 		draw_text(15, 80, 0.7f, 0.7f, WHITE, buf2);
-	} else if (settings.universal.music == 2) {
-	}
+	//} else if (settings.universal.music == 2) {
+	//}
 	}
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -307,6 +307,7 @@ void drawMusicPlayer(void) {
 	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
 	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
 	if (musicRepeat)	draw_text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
+}
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -641,7 +642,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 }
 
 
-void drawThemeSelector(void) {
+/* void drawThemeSelector(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -737,4 +738,4 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			keyRepeatDelay = 3;
 		}
 	}
-}
+}*/

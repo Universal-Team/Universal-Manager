@@ -79,7 +79,7 @@ ButtonPos mainScreenButtonPos[] = {
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicMainScreen},
-	{100, 120, 149, 52, PNGScreen},
+//	{100, 120, 149, 52, PNGScreen},
     {293, 213, 27, 27, mainScreen},
 };
 
@@ -200,9 +200,9 @@ int main()
 			case musicPlaylistEditScreen:
 				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
 				break;
-			case themeSelectorScreen:
-				drawThemeSelector();
-				break;
+//			case themeSelectorScreen:
+//				drawThemeSelector();
+//				break;
 //#########################################################################################################
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
@@ -214,15 +214,15 @@ int main()
 				drawUISettingsScreen2();
 				break;
 //#########################################################################################################
-			case PNGScreen:
-				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
-				break;
-			case BMPScreen:
-				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
-				break;
-			case showImageScreen:
-				showImage();
-				break;
+//			case PNGScreen:
+//				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
+//				break;
+//			case BMPScreen:
+//				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
+//				break;
+//			case showImageScreen:
+//				showImage();
+//				break;
 //#########################################################################################################
 			case ftpScreen:
 				drawFTPScreen();
@@ -306,9 +306,9 @@ int main()
 			case musicPlaylistEditScreen:
 				musicPlaylistEditLogic(hDown, hHeld);
 				break;
-			case themeSelectorScreen:
-				themeSelectorLogic(hDown, hHeld);
-				break;
+//			case themeSelectorScreen:
+//				themeSelectorLogic(hDown, hHeld);
+//				break;
 //#########################################################################################################
 			case settingsScreen:
 			if (hDown & KEY_B) {
@@ -328,15 +328,15 @@ int main()
 				uiSettingsLogic2(hDown, touch);
 				break;
 //#########################################################################################################
-			case PNGScreen:
-			PNGSelectorLogic(hDown, hHeld);
-				break;
-			case BMPScreen:
-			BMPSelectorLogic(hDown, hHeld);
-				break;
-			case showImageScreen:
-			showImageLogic(hDown, touch);
-				break;
+//			case PNGScreen:
+//			PNGSelectorLogic(hDown, hHeld);
+//				break;
+//			case BMPScreen:
+//			BMPSelectorLogic(hDown, hHeld);
+//				break;
+//			case showImageScreen:
+//			showImageLogic(hDown, touch);
+//				break;
 //#########################################################################################################
 			case ftpScreen:
 			ftpLogic(hDown, touch);

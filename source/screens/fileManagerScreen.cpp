@@ -44,7 +44,7 @@ void drawFileManagerSubMenu(void) {
 	draw_text(140, 57, 0.7f, 0.7f, WHITE, "Music Player");
 
 	// Image Viewer Button.
-	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
-	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	draw_text(137, 137, 0.68f, 0.68f, WHITE, "Image Viewer");
+//	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
+//	Gui::sprite(sprites_image_icon_idx, 105, 130);
+//	draw_text(137, 137, 0.68f, 0.68f, WHITE, "Image Viewer");
 }

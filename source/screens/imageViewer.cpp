@@ -39,7 +39,7 @@ std::string currentImage = "";
 std::string filename;
 
 
-void drawPNGImageViewerUI(void) {
+/* void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -217,4 +217,4 @@ void showImageLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = PNGScreen;
 	} 
-}
+}*/

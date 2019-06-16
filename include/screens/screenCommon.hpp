@@ -49,9 +49,9 @@ extern C3D_RenderTarget* bottom;
 #define uiSettingsScreen		11
 #define uiSettingsScreen2		12
 //###############################
-#define PNGScreen				13
-#define BMPScreen				14
-#define showImageScreen			15
+//#define PNGScreen				13
+//#define BMPScreen				14
+//#define showImageScreen			15
 //###############################
 #define ftpScreen				16
 //###############################
@@ -95,8 +95,8 @@ void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
-void drawThemeSelector(void);
-void themeSelectorLogic(u32 hDown, u32 hHeld);
+//void drawThemeSelector(void);
+//void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.
@@ -113,12 +113,12 @@ void drawUpdaterCFW(void);
 void updaterCFWLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
-void drawPNGImageViewerUI(void);
-void PNGSelectorLogic(u32 hDown, u32 hHeld);
-void drawBMPImageViewerUI(void);
-void BMPSelectorLogic(u32 hDown, u32 hHeld);
-void showImage(void);
-void showImageLogic(u32 hDown, touchPosition touch);
+//void drawPNGImageViewerUI(void);
+//void PNGSelectorLogic(u32 hDown, u32 hHeld);
+//void drawBMPImageViewerUI(void);
+//void BMPSelectorLogic(u32 hDown, u32 hHeld);
+//void showImage(void);
+//void showImageLogic(u32 hDown, touchPosition touch);
 
 // Miscs.
 //void saveMsg(void);
