@@ -60,7 +60,7 @@ void drawCredits(void) {
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 	DisplayTime();
 	drawBatteryBot();
 }
@@ -107,7 +107,7 @@ void drawFTPScreen(void) {
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode"); // - Fine.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	ret = ACU_GetWifiStatus(&wifiStatus);
 

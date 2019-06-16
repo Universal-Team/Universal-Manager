@@ -382,6 +382,13 @@ void Gui::DrawOverlayBot(void)
 	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
 }
 
+void Gui::DrawOverlayBotBack(void)
+{
+	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, settings.universal.bars);
+	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
+    Gui::sprite(sprites_back_idx, 293, 213);
+}
+
 void Gui::chooseLayoutTop(void) {
     if (settings.universal.layout == 0) {
         Gui::DrawBarsTop();
@@ -395,6 +402,14 @@ void Gui::chooseLayoutBot(void) {
         Gui::DrawBarsBot();
     } else if (settings.universal.layout == 1) {
         Gui::DrawOverlayBot();
+    }
+}
+
+void Gui::chooseLayoutBotBack(void) {
+    if (settings.universal.layout == 0) {
+        Gui::DrawBarsBottomBack();
+    } else if (settings.universal.layout == 1) {
+        Gui::DrawOverlayBotBack();
     }
 }
 

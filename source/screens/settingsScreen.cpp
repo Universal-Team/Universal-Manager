@@ -115,7 +115,7 @@ void drawSettingsScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Credits");
@@ -133,7 +133,7 @@ void drawUISettingsScreen(void) {
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	// Bars.
 	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
@@ -211,7 +211,7 @@ void drawUISettingsScreen2(void) {
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	// Bars.
 	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubbles");

@@ -133,7 +133,7 @@ void drawUpdaterSubMenu(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
@@ -174,7 +174,7 @@ void drawUpdaterTWL(void) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	// TWL Menu Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[0].x, downloadButtonPos[0].y);
@@ -259,7 +259,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 		// Universal-Manager Buttons.
 
@@ -338,7 +338,7 @@ void drawUpdaterCFW(void) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::chooseLayoutBotBack();
 
 	// Luma 3DS Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[7].x, downloadButtonPos[7].y);

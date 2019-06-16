@@ -46,8 +46,9 @@
 #define sprites_themes_idx 42
 #define sprites_updaterIcon_idx 43
 #define sprites_arrow_idx 44
-#define sprites_cover_glow_idx 45
-#define sprites_cover_normal_idx 46
-#define sprites_dot_idx 47
-#define sprites_frame_idx 48
-#define sprites_universal_credits_idx 49
+#define sprites_back_idx 45
+#define sprites_cover_glow_idx 46
+#define sprites_cover_normal_idx 47
+#define sprites_dot_idx 48
+#define sprites_frame_idx 49
+#define sprites_universal_credits_idx 50

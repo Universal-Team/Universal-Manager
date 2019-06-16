@@ -85,8 +85,10 @@ namespace Gui
     void DrawBarsBot(void);
     void DrawOverlayTop(void);
     void DrawOverlayBot(void);
+    void DrawOverlayBotBack(void);
     void chooseLayoutTop(void);
     void chooseLayoutBot(void);
+    void chooseLayoutBotBack(void);
 
     
     void Draw_ImageBlend(int key, int x, int y, u32 color);
