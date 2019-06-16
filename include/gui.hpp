@@ -84,6 +84,7 @@ namespace Gui
     void DrawBGBot();
     void DrawBarsBot();
     void Draw_ImageBlend(int key, int x, int y, u32 color);
+    void Draw_ImageBlend2(int key, int x, int y, u32 color);
     void DrawBarsBottomBack(void);
 }
 

@@ -49,7 +49,6 @@ struct ButtonPos {
 extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 std::string animationModes[] = {"Disabled", "Enabled"};
-std::string percentModes[] = {"Hidden", "Shown"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -67,6 +66,14 @@ ButtonPos uiSettingsButtonPos[] = {
 	{293, 213, 27, 27, settingsScreen},
 
 	// Music BG
+	{220, 28, 87, 33, -1},
+
+	// Bubble Color.
+	{46, 98, 87, 33, -1},
+	{129, 98, 87, 33, -1},
+	{220, 98, 87, 33, -1},
+
+	// Animation enable.
 	{220, 28, 87, 33, -1},
 };
 
@@ -141,6 +148,10 @@ void drawUISettingsScreen(void) {
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	draw_text(229, 38, 0.65f, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
 	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
+
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+	draw_text(270, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 }
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
@@ -149,6 +160,8 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
+		} else if (hDown & KEY_R) {
+			screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			red = keyboardInputInt("Red");
@@ -175,4 +188,59 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			if (settings.universal.music > 2) settings.universal.music = 0;
 	}
 }
+}
+
+
+void drawUISettingsScreen2(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings 2");
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBottomBack();
+
+	// Bars.
+	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubbles");
+	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 2).c_str());
+	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 1).c_str());
+	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 0).c_str());
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	draw_text(229, 38, 0.65f, 0.65f, WHITE, animationModes[settings.universal.animation].c_str());
+	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Animation:");
+
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	draw_text(270, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+}
+
+void uiSettingsLogic2(u32 hDown, touchPosition touch) {
+	int red;
+	int green;
+	int blue;
+		if (hDown & KEY_B) {
+		screenMode = settingsScreen;
+		} else if (hDown & KEY_L) {
+			screenMode = uiSettingsScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, uiSettingsButtonPos[8])) {
+			red = keyboardInputInt("Red");
+			settings.universal.animationcolor = RGBA8(red, getColorValue(settings.universal.animationcolor, 1), getColorValue(settings.universal.animationcolor, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[9])) {
+			green = keyboardInputInt("Green (0-255)");
+			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), green, getColorValue(settings.universal.animationcolor, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[10])) {
+			blue = keyboardInputInt("Blue (0-255)");
+			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), getColorValue(settings.universal.animationcolor, 1), blue, 255);
+		} else if (touching(touch, uiSettingsButtonPos[11])) {
+			settings.universal.animation++;
+			if (settings.universal.animation > 1) settings.universal.animation = 0;
+}
+	}
 }

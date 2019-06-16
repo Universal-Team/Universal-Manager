@@ -210,6 +210,9 @@ int main()
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
+			case uiSettingsScreen2:
+				drawUISettingsScreen2();
+				break;
 //#########################################################################################################
 			case PNGScreen:
 				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
@@ -310,8 +313,6 @@ int main()
 			case settingsScreen:
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
-			} else if (hDown & KEY_X) {
-				screenMode = uiSettingsScreen;
 			} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
 						if (touching(touch, settingsScreenButtonPos[i])) {
@@ -322,6 +323,9 @@ int main()
 				break;
 			case uiSettingsScreen:
 				uiSettingsLogic(hDown, touch);
+				break;
+			case uiSettingsScreen2:
+				uiSettingsLogic2(hDown, touch);
 				break;
 //#########################################################################################################
 			case PNGScreen:

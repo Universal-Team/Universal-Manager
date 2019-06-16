@@ -258,6 +258,16 @@ void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
     C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
 }
 
+void Gui::Draw_ImageBlend2(int key, int x, int y, u32 color)
+{
+    C2D_ImageTint tint;
+    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f, &tint);
+}
+
 Result Gui::init(void)
 {
     C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
