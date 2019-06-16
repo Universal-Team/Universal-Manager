@@ -201,7 +201,7 @@ void drawUpdaterTWL(void) {
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 275, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 	draw_text(300, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }
 
@@ -284,8 +284,8 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	// Themes Download Button.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 168);
-	draw_text(30, 178, 0.7f, 0.7f, WHITE, "extras");
-	draw_text(170, 178, 0.7f, 0.7f, WHITE, "Themes");
+	draw_text(0, 178, 0.7f, 0.7f, WHITE, "Extras");
+	draw_text(140, 178, 0.7f, 0.7f, WHITE, "Themes");
 	
 
 	// Draw The Pages and Back Icon.
@@ -293,7 +293,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	draw_text(300, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 295, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 2, RED);
 }
 
 void updaterOtherLogic(u32 hDown, touchPosition touch) {
@@ -357,7 +357,7 @@ void drawUpdaterCFW(void) {
 	// Draw The Pages and Back Icon.
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 255, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	draw_text(300, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
 }

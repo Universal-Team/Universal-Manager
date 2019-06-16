@@ -155,7 +155,7 @@ void drawUISettingsScreen(void) {
 
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 255, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 }
 
@@ -229,7 +229,7 @@ void drawUISettingsScreen2(void) {
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 275, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 }
 
 void uiSettingsLogic2(u32 hDown, touchPosition touch) {
