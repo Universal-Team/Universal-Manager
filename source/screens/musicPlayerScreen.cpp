@@ -291,7 +291,7 @@ void drawMusicPlayer(void) {
 	}
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 	DisplayTime();
 	drawBatteryBot();
 
