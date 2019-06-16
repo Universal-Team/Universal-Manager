@@ -107,7 +107,7 @@ void drawMusicMain() {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
@@ -155,7 +155,7 @@ void drawMusicList(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
 
 	if (dirChanged) {
 		dirContents.clear();
@@ -388,7 +388,7 @@ void drawMusicPlaylistAdd(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -493,7 +493,7 @@ void drawMusicPlaylistPlay(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -579,7 +579,7 @@ void drawMusicPlaylistEdit() {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
 	std::string plstList2;
@@ -649,7 +649,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Theme Selector");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Theme Selector");
 
 	if (dirChanged) {
 		dirContents.clear();

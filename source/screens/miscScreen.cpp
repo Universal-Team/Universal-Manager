@@ -104,7 +104,7 @@ void drawFTPScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode"); // - Fine.
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode"); // - Fine.
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();

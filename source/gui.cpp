@@ -421,10 +421,10 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	draw_text(26, 32, 0.45f, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
 }
 
@@ -432,7 +432,7 @@ void DisplayTime(void) {
     C2D_Text timeText;
     C2D_TextParse(&timeText, dynamicBuf, DateTime::timeStr().c_str());
     C2D_TextOptimize(&timeText);
-    C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.7f, 0.7f, WHITE);
+    C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 
 // Battery stuff.
@@ -462,13 +462,13 @@ void drawBatteryTop(void) {
         if (settings.universal.battery == 0) {
         } else if (settings.universal.battery == 1) {
 	if(batteryPercent == 100) {
-		draw_text(310, 4, 0.7f, 0.7f, WHITE, "100%%");
+		draw_text(310, 0, 0.65f, 0.65f, WHITE, "100%%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextParse(&percentText, dynamicBuf, percent);
 		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+        C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 }
 }
@@ -498,13 +498,13 @@ void drawBatteryBot(void) {
             if (settings.universal.battery == 0) {
         } else if (settings.universal.battery == 1) {
     	if(batteryPercent == 100) {
-		draw_text(230, 4, 0.7f, 0.7f, WHITE, "100%%");
+		draw_text(230, 0, 0.65f, 0.65f, WHITE, "100%%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextParse(&percentText, dynamicBuf, percent);
 		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+        C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 }
 }

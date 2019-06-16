@@ -129,7 +129,7 @@ void drawUpdaterSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -169,7 +169,7 @@ void drawUpdaterTWL(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -254,7 +254,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -333,7 +333,7 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();

@@ -32,7 +32,7 @@ void drawFileManagerSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, FONT_SIZE_18, FONT_SIZE_18, WHITE, "FileManager Sub Menu");
+	draw_text_center(GFX_TOP, 0, 0.5f, FONT_SIZE_18, FONT_SIZE_18, WHITE, "FileManager Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();

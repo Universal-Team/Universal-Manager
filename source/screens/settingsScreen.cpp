@@ -111,7 +111,7 @@ void drawSettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Settings");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Settings");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -130,7 +130,7 @@ void drawUISettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
@@ -208,7 +208,7 @@ void drawUISettingsScreen2(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
+	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
