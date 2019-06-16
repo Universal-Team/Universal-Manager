@@ -164,8 +164,8 @@ int main()
         u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(top, BLUE2);
-        C2D_TargetClear(bottom, BLUE2);
+        //C2D_TargetClear(top, BLUE2);
+        //C2D_TargetClear(bottom, BLUE2);
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {

@@ -343,7 +343,7 @@ void Gui::DrawBarsBottomBack(void) {
 void Gui::DrawBGTop(void) 
 {
     set_screen(top);
-	C2D_DrawRectSolid(0, 25, 0.5f, 400, 190, settings.universal.bg);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, settings.universal.bg);
 	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
 }
 
@@ -358,7 +358,7 @@ void Gui::DrawBarsTop(void)
 void Gui::DrawBGBot(void)
 {
 	set_screen(bottom);
-	C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, settings.universal.bg);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, settings.universal.bg);
 	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
 }
 
@@ -368,6 +368,34 @@ void Gui::DrawBarsBot(void)
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, settings.universal.bars);
     Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
     Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+}
+
+void Gui::DrawOverlayTop(void)
+{
+    Gui::Draw_ImageBlend(sprites_overlay_top_idx, 0, 0, settings.universal.bars);
+	Gui::sprite(sprites_overlay_top_2_idx, 0, 0);
+}
+
+void Gui::DrawOverlayBot(void)
+{
+	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, settings.universal.bars);
+	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
+}
+
+void Gui::chooseLayoutTop(void) {
+    if (settings.universal.layout == 0) {
+        Gui::DrawBarsTop();
+    } else if (settings.universal.layout == 1) {
+        Gui::DrawOverlayTop();
+    }
+}
+
+void Gui::chooseLayoutBot(void) {
+    if (settings.universal.layout == 0) {
+        Gui::DrawBarsBot();
+    } else if (settings.universal.layout == 1) {
+        Gui::DrawOverlayBot();
+    }
 }
 
 // Text.
@@ -389,7 +417,7 @@ void DisplayTime(void) {
     C2D_Text timeText;
     C2D_TextParse(&timeText, dynamicBuf, DateTime::timeStr().c_str());
     C2D_TextOptimize(&timeText);
-    C2D_DrawText(&timeText, C2D_WithColor, 4.0f, 3.0f, 0.5f, 0.7f, 0.7f, WHITE);
+    C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.7f, 0.7f, WHITE);
 }
 
 // Battery stuff.

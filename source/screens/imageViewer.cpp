@@ -43,7 +43,7 @@ std::string filename;
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
@@ -75,14 +75,14 @@ std::string filename;
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
@@ -114,21 +114,21 @@ void drawBMPImageViewerUI(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 
 void showImage(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Not Implemented Yet.");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void BMPSelectorLogic(u32 hDown, u32 hHeld) { 

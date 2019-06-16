@@ -82,8 +82,8 @@ ButtonPos playerButtonPos[] = {
 	{130, 90, 60, 60, -1},
 	{80, 100, 40, 40, -1},
 	{200, 100, 40, 40, -1},
-	{240, 175, 30, 30, -1},
-	{280, 175, 30, 30, -1},
+	{240, 170, 30, 30, -1},
+	{280, 170, 30, 30, -1},
 };
 
 std::string secondsToString(u64 seconds) {
@@ -104,13 +104,13 @@ void drawMusicMain() {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
 	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
@@ -152,7 +152,7 @@ void drawMusicList(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Player Menu");
@@ -194,7 +194,7 @@ void drawMusicList(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void musicListLogic(u32 hDown, u32 hHeld) {
@@ -254,23 +254,23 @@ void drawMusicPlayer(void) {
 
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		draw_text_center(GFX_TOP, 3, 0.5f, 0.50f, 0.50f, WHITE, nowPlayingText.c_str());
-		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
-		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
-		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
+		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 162, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
+		C2D_DrawRectSolid(18, 177, 0.5f, 364, 20, BLACK);
+		C2D_DrawRectSolid(20, 179, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
 
 	
 	if(!isPaused() && isPlaying()) {
-		draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
+		draw_text(26, 223, 0.45f, 0.45f, WHITE, "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song");
 	} else if(isPaused() && isPlaying()) {
-		draw_text(26, 221, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
+		draw_text(26, 223, 0.45f, 0.45f, WHITE, "\uE000 : Play   \uE001 : Back   \uE002 : Stop song");
 	} else {
-		draw_text(0, 3, 0.72f, 0.72f, WHITE, "No song selected.");
-		draw_text(26, 208, 0.45f, 0.45f, WHITE, "\uE001 : Back");
+		draw_text(0, 2, 0.72f, 0.72f, WHITE, "No song selected.");
+		draw_text(26, 223, 0.45f, 0.45f, WHITE, "\uE001 : Back");
 	}
 
 
@@ -385,7 +385,7 @@ void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -422,7 +422,7 @@ void drawMusicPlaylistAdd(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
@@ -490,7 +490,7 @@ void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -522,7 +522,7 @@ void drawMusicPlaylistPlay(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
@@ -576,7 +576,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlaylistEdit() {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Music Playlist Menu");
@@ -600,7 +600,7 @@ void drawMusicPlaylistEdit() {
 	draw_text(26, 208, 0.45f, 0.45f, WHITE, plstList2.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
@@ -646,7 +646,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Theme Selector");
@@ -678,7 +678,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void themeSelectorLogic(u32 hDown, u32 hHeld) { 

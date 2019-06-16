@@ -126,14 +126,14 @@ bool updateAvailable[] = {
 void drawUpdaterSubMenu(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
@@ -166,7 +166,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterTWL(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
@@ -174,7 +174,7 @@ void drawUpdaterTWL(void) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	// TWL Menu Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[0].x, downloadButtonPos[0].y);
@@ -251,7 +251,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 */void drawUpdaterOther(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
@@ -259,7 +259,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 		// Universal-Manager Buttons.
 
@@ -330,7 +330,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 void drawUpdaterCFW(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
@@ -338,7 +338,7 @@ void drawUpdaterCFW(void) {
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	// Luma 3DS Buttons.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[7].x, downloadButtonPos[7].y);

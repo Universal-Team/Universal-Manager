@@ -50,6 +50,7 @@ extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", /*"BG"*/};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"};
+std::string layoutModes[] = {"Bars", "Bars v2"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -79,6 +80,9 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Battery percent.
 	{220, 168, 87, 33, -1},
+
+		// Layout.
+	{10, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -104,14 +108,14 @@ std::string getColorName(int color, int bgr) {
 void drawSettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Settings");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Credits");
@@ -123,13 +127,13 @@ void drawSettingsScreen(void) {
 void drawUISettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	// Bars.
 	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
@@ -201,13 +205,13 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 void drawUISettingsScreen2(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	// Bars.
 	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubbles");
@@ -225,6 +229,9 @@ void drawUISettingsScreen2(void) {
 	Gui::sprite(sprites_updaterButton_idx, 220, 168);
 	draw_text(229, 178, 0.7f, 0.7f, WHITE, percentModes[settings.universal.battery].c_str());
 	draw_text(129, 178, 0.7f, 0.7f, BLACK, "Percent :");
+
+	Gui::sprite(sprites_updaterButton_idx, 10, 168);
+	draw_text(19, 178, 0.7f, 0.7f, WHITE, layoutModes[settings.universal.layout].c_str());
 
 	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -257,6 +264,9 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			} else if (touching(touch, uiSettingsButtonPos[12])) {
 			settings.universal.battery++;
 			if (settings.universal.battery > 1) settings.universal.battery = 0;
+			} else if (touching(touch, uiSettingsButtonPos[13])) {
+			settings.universal.layout++;
+			if (settings.universal.layout > 1) settings.universal.layout = 0;
 			} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 			SaveUniversalSettings();

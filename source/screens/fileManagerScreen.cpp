@@ -29,14 +29,14 @@
 void drawFileManagerSubMenu(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
 	draw_text_center(GFX_TOP, 3, 0.5f, FONT_SIZE_18, FONT_SIZE_18, WHITE, "FileManager Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBot();
 
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);

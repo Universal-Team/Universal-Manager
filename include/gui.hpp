@@ -78,11 +78,17 @@ namespace Gui
     void clearStaticText(void);
     void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
 
-    // Basic GUI.
-    void DrawBGTop();
-    void DrawBarsTop();
-    void DrawBGBot();
-    void DrawBarsBot();
+    // Layouts!
+    void DrawBGTop(void);
+    void DrawBarsTop(void);
+    void DrawBGBot(void);
+    void DrawBarsBot(void);
+    void DrawOverlayTop(void);
+    void DrawOverlayBot(void);
+    void chooseLayoutTop(void);
+    void chooseLayoutBot(void);
+
+    
     void Draw_ImageBlend(int key, int x, int y, u32 color);
     void Draw_ImageBlend2(int key, int x, int y, u32 color);
     void DrawBarsBottomBack(void);
