@@ -255,7 +255,7 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		draw_text_center(GFX_TOP, 3, 0.5f, 0.72f, 0.72f, WHITE, nowPlayingText.c_str());
-		// Not working yet. draw_text(100, 177, 0.45f, 0.45f, WHITE, secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 177, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
 		C2D_DrawRectSolid(18, 192, 0.5f, 364, 20, BLACK);
 		C2D_DrawRectSolid(20, 194, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
 
