@@ -61,6 +61,7 @@ extern C3D_RenderTarget* bottom;
 #define TWLScreen				19
 #define CFWScreen				20
 //###############################
+#define keyboardScreen			21
 
 struct Playlist {
 	std::string name;
@@ -129,3 +130,6 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 // FTP Stuff.
 void drawFTPScreen(void);
 void ftpLogic(u32 hDown, touchPosition touch);
+
+// Keyboard Stuff.
+void drawKeyboardScreen(void);

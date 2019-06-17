@@ -38,7 +38,6 @@ void drawMainMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	//Gui::sprite(sprites_battery0_idx, 361, 0); // Showing Purpose.
 	Gui::staticText((i18n::localize("UNIVERSAL_MANAGER")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(340, 218, FONT_SIZE_18, FONT_SIZE_18, WHITE, universal_manager_vertext);
 

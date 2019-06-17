@@ -51,4 +51,5 @@
 #define sprites_cover_normal_idx 47
 #define sprites_dot_idx 48
 #define sprites_frame_idx 49
-#define sprites_universal_credits_idx 50
+#define sprites_keyboard_idx 50
+#define sprites_universal_credits_idx 51
