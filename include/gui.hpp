@@ -1,6 +1,6 @@
 /*
-*   This file is part of Universal-Updater
-*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
+*   This file is part of Universal-Manager
+*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -24,28 +24,92 @@
 *         reasonable ways as different from the original version.
 */
 
-// UI STUFF
+#ifndef GUI_HPP
+#define GUI_HPP
 
-void loadBasicGraphic(void);
+#include <3ds.h>
+#include <citro2d.h>
+#include <citro3d.h>
+#include <random>
+#include <stack>
+#include <string.h>
+#include <unordered_map>
+#include <wchar.h>
 
-void draw_Bars_Bottom(void);
+// Spritesheets.
+#include "sprites.h"
+#include "animation.h"
 
-void draw_Bars_Top(void);
+#include "utils.hpp"
+#include "colors.hpp"
+#include "TextPos.hpp"
+#include "3dsutils.hpp"
 
-void draw_Background_Bottom(void);
+// Battery Stuff.
+#include "ptmu_x.h"
 
-void draw_Background_Top(void);
+// emulated
+#define sprites_res_null_idx 500
 
-void draw_Dialogbox_Color(void);
+#define FONT_SIZE_18 0.72f
+#define FONT_SIZE_17 0.7f
+#define FONT_SIZE_15 0.6f
+#define FONT_SIZE_14 0.56f
+#define FONT_SIZE_12 0.50f
+#define FONT_SIZE_11 0.46f
+#define FONT_SIZE_9 0.37f
+#define MAX_LINES 10
 
-void displayMsg(const char* text);
+namespace Gui
+{
+    Result init(void);
+    void exit(void);
 
-// Layouts!
+    C3D_RenderTarget* target(gfxScreen_t t);
 
-void draw_Border(void);
+    void clearTextBufs(void);
+    
+    void sprite(int key, int x, int y);
+    void AnimationSprite(int key, int x, int y);
+    bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
 
-void draw_Bar(void);
+    void dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
+    C2D_Text cacheStaticText(const std::string& strKey);
+    void clearStaticText(void);
+    void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
 
-void draw_SD(void);
+    // Layouts!
+    void DrawBGTop(void);
+    void DrawBarsTop(void);
+    void DrawBGBot(void);
+    void DrawBarsBot(void);
+    void DrawOverlayTop(void);
+    void DrawOverlayBot(void);
+    void DrawOverlayBotBack(void);
+    void chooseLayoutTop(void);
+    void chooseLayoutBot(void);
+    void chooseLayoutBotBack(void);
 
-void chooseLayout(void);
+    
+    void Draw_ImageBlend(int key, int x, int y, u32 color);
+    void Draw_ImageBlend2(int key, int x, int y, u32 color);
+    void DrawBarsBottomBack(void);
+}
+
+   // Text.
+    void DisplayMsg(const std::string& strKey);
+    void DisplayTime(void);
+
+    void drawBatteryTop(void);
+    void drawBatteryBot(void);
+
+    void set_screen(C3D_RenderTarget * screen);
+    void draw_text(float x, float y, float scaleX, float scaleY, u32 color, const char * text);
+    void draw_text_wrap(float x, float y, float z, float scaleX, float scaleY, u32 color, const char * text, float max_width);
+    void draw_text_wrap_scaled(float x, float y, float z, Color color, const char * text, float max_scale, float min_scale, float max_width);
+    void draw_text_center(gfxScreen_t target, float y, float z, float scaleX, float scaleY, u32 color, const char * text);
+
+    void start_frame(void);
+    void end_frame(void);
+
+#endif

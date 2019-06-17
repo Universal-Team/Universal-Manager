@@ -45,25 +45,25 @@ BANNERTOOL 	?= bannertool
 endif
 
 #---------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------
 # Version number
 #---------------------------------------------------------------------------------
 
-VERSION_MAJOR := 1
+VERSION_MAJOR := 3
 VERSION_MINOR := 0
 VERSION_MICRO := 0
+
 #---------------------------------------------------------------------------------
-TARGET		:=	Universal-Updater
+TARGET		:=	Universal-Manager
 BUILD		:=	build
-SOURCES		:=	source source/json source/utils source/sound source/voltlib source/screens
+SOURCES		:=	source source/voltlib source/screens source/music source/download source/utils source/i18n source/ftp
 DATA		:=	data
-INCLUDES	:=	include include/json include/utils include/sound include/voltlib include/screens
+INCLUDES	:=	include include/voltlib include/screens include/music include/download include/utils include/i18n include/ftp
 GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
 APP_AUTHOR	:=	Universal-Team
-APP_DESCRIPTION :=  	Universal-Updater
+APP_DESCRIPTION :=  	Universal-Manager
 ICON		:=	app/icon.png
 BNR_IMAGE	:=  app/banner.png
 BNR_AUDIO	:=	app/BannerAudio.wav
@@ -74,24 +74,24 @@ RSF_FILE	:=	app/build-cia.rsf
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O2 -mword-relocations \
+CFLAGS	:=	-g -Wall -O2 -DVERSION_MAJOR=$(VERSION_MAJOR) -DVERSION_MINOR=$(VERSION_MINOR) -DVERSION_MICRO=$(VERSION_MICRO) -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
+CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS -D_GNU_SOURCE=1
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctru -lm -lstdc++
+LIBS	:= -lbftps -lcurl -lmbedtls -lmbedx509 -lmbedcrypto  -larchive -lbz2 -llzma -lz -lcitro2d -lcitro3d -lSDL_mixer -lSDL -lmpg123 -lvorbisidec -logg -lmikmod -lmad -lctrud -lm -lstdc++
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CTRULIB) $(PORTLIBS)
+LIBDIRS	:= $(CURDIR)/bftps $(PORTLIBS) $(CTRULIB) 
 
 
 #---------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) #$(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #------------------------------------------------------------------------------
@@ -230,9 +230,9 @@ $(OUTPUT).elf	:	$(OFILES)
 $(OUTPUT).cia	:	$(OUTPUT).elf $(OUTPUT).smdh
 	$(BANNERTOOL) makebanner -i "../app/banner.png" -a "../app/BannerAudio.wav" -o "../app/banner.bin"
 
-	$(BANNERTOOL) makesmdh -i "../app/icon.png" -s "Universal-Updater" -l "Universal-Updater" -p "$(APP_AUTHOR)" -o "../app/icon.bin"
+	$(BANNERTOOL) makesmdh -i "../app/icon.png" -s "Universal-Manager" -l "Universal-Manager" -p "$(APP_AUTHOR)" -o "../app/icon.bin"
 
-	$(MAKEROM) -f cia -target t -exefslogo -o "../Universal-Updater.cia" -elf "../Universal-Updater.elf" -rsf "../app/build-cia.rsf" -banner "../app/banner.bin" -icon "../app/icon.bin" -logo "../app/logo.bcma.lz" -DAPP_ROMFS="$(TOPDIR)/$(ROMFS)" -major $(VERSION_MAJOR) -minor $(VERSION_MINOR) -micro $(VERSION_MICRO) -DAPP_VERSION_MAJOR="$(VERSION_MAJOR)"
+	$(MAKEROM) -f cia -target t -exefslogo -o "../Universal-Manager.cia" -elf "../Universal-Manager.elf" -rsf "../app/build-cia.rsf" -banner "../app/banner.bin" -icon "../app/icon.bin" -logo "../app/logo.bcma.lz" -DAPP_ROMFS="$(TOPDIR)/$(ROMFS)" -major $(VERSION_MAJOR) -minor $(VERSION_MINOR) -micro $(VERSION_MICRO) -DAPP_VERSION_MAJOR="$(VERSION_MAJOR)"
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
 #---------------------------------------------------------------------------------
