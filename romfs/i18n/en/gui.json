@@ -1,3 +1,7 @@
 {
-    "UNIVERSAL_MANAGER": "Universal-Manager"
+    "UNIVERSAL_MANAGER": "Universal-Manager",
+    "FILEMANAGER":       "FileManager",
+    "FTP":               "FTP",
+    "UPDATER":           "Updater",
+    "SETTINGS":          "Settings"
 }
