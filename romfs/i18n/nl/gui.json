@@ -13,5 +13,22 @@
     "FTP_MODE":                 "FTP Mode",
     "FTP_INITIALIZE":           "FTP initialized",
     "FTP_FAILED":               "Failed to initialize FTP.",
-    "NOT_ENABLED":              "Wifi not enabled."
+    "NOT_ENABLED":              "Wifi not enabled.",
+    "MUSIC_PLAYER_MENU":        "Music Player Menu",
+    "SONGS":                    "Songs",
+    "NOW_PLAYING":              "Now playing",
+    "PLAYLISTS":                "Playlists",
+    "THEMES":                   "Themes",
+    "MUSIC_PLAYER_MENU_1":      "\n\uE000 : Open Folder   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist",
+    "MUSIC_PLAYER_MENU_2":      "\n\uE000 : Show Player   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist",
+    "MUSIC_PLAYER_MENU_3":      "\n\uE000 : Play   \uE001 : Back   \uE002 : Exit   \uE003 : Add to Playlist, SEL : Show Player",
+    "CURRENT_SONG":             "Current Song: ",
+    "MUSIC_PLAYER_1":           "\uE000 : Pause   \uE001 : Back   \uE002 : Stop song",
+    "MUSIC_PLAYER_2":           "\uE000 : Play   \uE001 : Back   \uE002 : Stop song",
+    "NO_SONG_SELECTED":         "No Song Selected.",
+    "MUSIC_PLAYER_BACK":        "\uE001 : Back",
+    "MUSIC_PLAYLIST_MENU":      "Music Playlist Menu",
+    "MUSIC_PLAYLIST_2":         "\n\uE000 : Play   \uE001 : Back   \uE002 : Delete   \uE003 : Edit",
+    "MUSIC_PLAYLIST_EDIT":      "\n\uE000 : Save   \uE001 : Back   \uE002 : Delete   \uE003 : Move",
+    "THEME_SELECTOR":           "Theme Selector"
 }
