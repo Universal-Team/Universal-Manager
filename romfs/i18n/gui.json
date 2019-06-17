@@ -77,5 +77,6 @@
     "THEMES_TEXT":                          "Do you want to download Images for the Music Player?\n",
     "THEMES_TEXT_2":                        "B: Back   A: Continue",
     "THEMES_TEXT_3":                        "B: Back   A: Choose",
-    "DOWNLOAD_PKMN_CHEST":                  "Downloading PKMN-Chest...\nRelease"
+    "DOWNLOAD_PKMN_CHEST":                  "Downloading PKMN-Chest...\nRelease",
+    "CURRENT_PAGE":                         "Current Page:"
 }

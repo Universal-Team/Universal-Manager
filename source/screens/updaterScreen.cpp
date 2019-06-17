@@ -204,7 +204,7 @@ void drawUpdaterTWL(void) {
 	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Cheats");
 
 	// Draw The Pages and Back Icon.
-	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
@@ -299,7 +299,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	
 
 	// Draw The Pages and Back Icon.
-	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 	draw_text(300, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
@@ -347,7 +347,7 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("CFW_UPDATER_SCREEN")), 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("CFW_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -369,7 +369,7 @@ void drawUpdaterCFW(void) {
 	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
 
 	// Draw The Pages and Back Icon.
-	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.

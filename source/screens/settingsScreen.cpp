@@ -47,7 +47,7 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {"DEFAULT", "COVER"/*"BG"*/};
+std::string musicModes[] = {("DEFAULT"), "COVER"/*"BG"*/};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
@@ -156,7 +156,7 @@ void drawUISettingsScreen(void) {
 	draw_text(229, 38, 0.65f, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
 	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
 
-	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
@@ -232,7 +232,7 @@ void drawUISettingsScreen2(void) {
 	Gui::sprite(sprites_updaterButton_idx, 10, 168);
 	draw_text(19, 178, 0.7f, 0.7f, WHITE, layoutModes[settings.universal.layout].c_str());
 
-	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
 	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
