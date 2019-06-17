@@ -47,10 +47,10 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {(i18n::localize("DEFAULT")), (i18n::localize("COVER"))/*(i18n::localize("BG"))*/}; // Failed to initialized.
-std::string animationModes[] = {(i18n::localize("DISABLED")), (i18n::localize("BUBBLES")), (i18n::localize("GEOMETRY"))}; // Failed to initialized.
-std::string percentModes[] = {(i18n::localize("HIDDEN")), (i18n::localize("SHOWN"))}; // Failed to initialized.
-std::string layoutModes[] = {(i18n::localize("BARS1")), (i18n::localize("BARS2"))}; // Failed to initialized.
+std::string musicModes[] = {"DEFAULT", "COVER"/*"BG"*/};
+std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
+std::string percentModes[] = {"Hidden", "Shown"}; 
+std::string layoutModes[] = {"Bars", "Bars v2"}; 
 
 
 ButtonPos uiSettingsButtonPos[] = {
