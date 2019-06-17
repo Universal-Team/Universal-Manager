@@ -883,8 +883,18 @@ void updateUniversalManager(bool nightly) {
 
 		deleteFile("sdmc:/Universal-Manager-Nightly.cia");
 	} else {
-		notImplemented(); // To-Do
+		DisplayMsg((i18n::localize("DOWNLOAD_UNIVERSAL_MANAGER_RELEASE")));
+		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	DisplayMsg((i18n::localize("INSTALL_UNIVERSAL_MANAGER_RELEASE")));
+		installCia("/Universal-Manager-Release.cia");
+
+		deleteFile("sdmc:/Universal-Manager-Release.cia");
 }
+doneMsg();
 }
 
 void updateLuma(bool nightly) {
