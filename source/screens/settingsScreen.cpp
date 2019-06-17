@@ -47,9 +47,10 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
-std::string animationModes[] = {"Disabled", "Enabled"};
-std::string percentModes[] = {"Hidden", "Shown"};
+std::string musicModes[] = {"DEFAULT", "COVER"/*"BG"*/};
+std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
+std::string percentModes[] = {"Hidden", "Shown"}; 
+std::string layoutModes[] = {"Bars", "Bars v2"}; 
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -68,6 +69,20 @@ ButtonPos uiSettingsButtonPos[] = {
 
 	// Music BG
 	{220, 28, 87, 33, -1},
+
+	// Bubble Color.
+	{46, 98, 87, 33, -1},
+	{129, 98, 87, 33, -1},
+	{220, 98, 87, 33, -1},
+
+	// Animation enable.
+	{220, 28, 87, 33, -1},
+
+	// Battery percent.
+	{220, 168, 87, 33, -1},
+
+		// Layout.
+	{10, 168, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -93,55 +108,58 @@ std::string getColorName(int color, int bgr) {
 void drawSettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
-
+	Gui::staticText((i18n::localize("SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBotBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	Gui::staticText("Credits", 50, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("CREDITS")), 50, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	Gui::staticText("UI Settings", 230, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("SETTINGS")), 230, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void drawUISettingsScreen(void) {
-	Gui::clearStaticText();
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("UI Settings", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("UI_SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBotBack();
 
 	// Bars.
-	Gui::staticText("Bars", 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("BARS")), 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Gui::staticText(getColorName(settings.universal.bars, 2).c_str(), 76, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Gui::staticText(getColorName(settings.universal.bars, 1).c_str(), 160, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Gui::staticText(getColorName(settings.universal.bars, 0).c_str(), 259, 98, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
-	Gui::staticText("Background", 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("BACKGROUND")), 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_RedButton_idx, 35, 168);
-	Gui::staticText(getColorName(settings.universal.bg, 2).c_str(), 76, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 168);
-	Gui::staticText(getColorName(settings.universal.bg, 1).c_str(), 160, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(140, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 168);
-	Gui::staticText(getColorName(settings.universal.bg, 0).c_str(), 259, 178, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(229, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
-	Gui::staticText(musicModes[settings.universal.music].c_str(), 260, 38, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText("Music Mode:", 110, 38, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(229, 38, 0.65f, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
+	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Music Mode:");
+
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+	draw_text(280, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
 }
 
 void uiSettingsLogic(u32 hDown, touchPosition touch) {
@@ -150,6 +168,9 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = settingsScreen;
+		SaveUniversalSettings();
+		} else if (hDown & KEY_R) {
+			screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			red = keyboardInputInt("Red");
@@ -171,9 +192,83 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
+			SaveUniversalSettings();
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
-			if (settings.universal.music > 2) settings.universal.music = 0;
+			if (settings.universal.music > 1) settings.universal.music = 0;
 	}
 }
+}
+
+
+void drawUISettingsScreen2(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Gui::staticText((i18n::localize("ANIMATION_SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBotBack();
+
+	// Bars.
+	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bubbles");
+	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 2).c_str());
+	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	draw_text(140, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 1).c_str());
+	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 0).c_str());
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	draw_text(229, 38, 0.65f, 0.65f, WHITE, animationModes[settings.universal.animation].c_str());
+	draw_text(110, 38, 0.7f, 0.7f, BLACK, "Animation:");
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 168);
+	draw_text(229, 178, 0.7f, 0.7f, WHITE, percentModes[settings.universal.battery].c_str());
+	draw_text(129, 178, 0.7f, 0.7f, BLACK, "Percent :");
+
+	Gui::sprite(sprites_updaterButton_idx, 10, 168);
+	draw_text(19, 178, 0.7f, 0.7f, WHITE, layoutModes[settings.universal.layout].c_str());
+
+	draw_text(170, 4, 0.50, 0.50, WHITE, "Current Page:");
+	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
+	draw_text(280, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+}
+
+void uiSettingsLogic2(u32 hDown, touchPosition touch) {
+	int red;
+	int green;
+	int blue;
+		if (hDown & KEY_B) {
+		screenMode = settingsScreen;
+		SaveUniversalSettings();
+		} else if (hDown & KEY_L) {
+			screenMode = uiSettingsScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, uiSettingsButtonPos[8])) {
+			red = keyboardInputInt("Red");
+			settings.universal.animationcolor = RGBA8(red, getColorValue(settings.universal.animationcolor, 1), getColorValue(settings.universal.animationcolor, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[9])) {
+			green = keyboardInputInt("Green (0-255)");
+			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), green, getColorValue(settings.universal.animationcolor, 0), 255);
+		} else if (touching(touch, uiSettingsButtonPos[10])) {
+			blue = keyboardInputInt("Blue (0-255)");
+			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), getColorValue(settings.universal.animationcolor, 1), blue, 255);
+		} else if (touching(touch, uiSettingsButtonPos[11])) {
+			settings.universal.animation++;
+			if (settings.universal.animation > 2) settings.universal.animation = 0;
+			} else if (touching(touch, uiSettingsButtonPos[12])) {
+			settings.universal.battery++;
+			if (settings.universal.battery > 1) settings.universal.battery = 0;
+			} else if (touching(touch, uiSettingsButtonPos[13])) {
+			settings.universal.layout++;
+			if (settings.universal.layout > 1) settings.universal.layout = 0;
+			} else if (touching(touch, uiSettingsButtonPos[6])) {
+			screenMode = uiSettingsButtonPos[6].link;
+			SaveUniversalSettings();
+}
+	}
 }

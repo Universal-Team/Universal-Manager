@@ -26,9 +26,10 @@
 
 #include "gui.hpp"
 #include "animation.hpp"
+#include "i18n.hpp"
 
-extern C3D_RenderTarget* g_renderTargetTop;
-extern C3D_RenderTarget* g_renderTargetBottom;
+extern C3D_RenderTarget* top;
+extern C3D_RenderTarget* bottom;
 
 #define mainScreen				0
 //###############################
@@ -47,17 +48,18 @@ extern C3D_RenderTarget* g_renderTargetBottom;
 //###############################
 #define settingsScreen			10
 #define uiSettingsScreen		11
+#define uiSettingsScreen2		12
 //###############################
-#define PNGScreen				12
-#define BMPScreen				13
-#define showImageScreen			14
+//#define PNGScreen				13
+//#define BMPScreen				14
+//#define showImageScreen			15
 //###############################
-#define ftpScreen				15
+#define ftpScreen				16
 //###############################
-#define updaterSubMenu			16
-#define OtherScreen				17
-#define TWLScreen				18
-#define CFWScreen				19
+#define updaterSubMenu			17
+#define OtherScreen				18
+#define TWLScreen				19
+#define CFWScreen				20
 //###############################
 
 struct Playlist {
@@ -78,6 +80,8 @@ void drawSettingsScreen(void);
 void drawCredits(void);
 void drawUISettingsScreen(void);
 void uiSettingsLogic(u32 hDown, touchPosition touch);
+void drawUISettingsScreen2(void);
+void uiSettingsLogic2(u32 hDown, touchPosition touch);
 
  //Music Player Screen.
 void drawMusicMain(void);
@@ -92,8 +96,8 @@ void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
-void drawThemeSelector(void);
-void themeSelectorLogic(u32 hDown, u32 hHeld);
+//void drawThemeSelector(void);
+//void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.
@@ -110,12 +114,12 @@ void drawUpdaterCFW(void);
 void updaterCFWLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
-void drawPNGImageViewerUI(void);
-void PNGSelectorLogic(u32 hDown, u32 hHeld);
-void drawBMPImageViewerUI(void);
-void BMPSelectorLogic(u32 hDown, u32 hHeld);
-void showImage(void);
-void showImageLogic(u32 hDown, touchPosition touch);
+//void drawPNGImageViewerUI(void);
+//void PNGSelectorLogic(u32 hDown, u32 hHeld);
+//void drawBMPImageViewerUI(void);
+//void BMPSelectorLogic(u32 hDown, u32 hHeld);
+//void showImage(void);
+//void showImageLogic(u32 hDown, touchPosition touch);
 
 // Miscs.
 //void saveMsg(void);

@@ -39,15 +39,14 @@ std::string currentImage = "";
 std::string filename;
 
 
-void drawPNGImageViewerUI(void) {
+/* void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Image Viewer Menu [PNG]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-
+	Gui::staticText((i18n::localize("PNG_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -71,22 +70,21 @@ void drawPNGImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	Gui::staticText(dirs.c_str(), 170, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void drawBMPImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Image Viewer Menu [BMP]", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-
+	Gui::staticText((i18n::localize("BMP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -110,25 +108,24 @@ void drawBMPImageViewerUI(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	Gui::staticText(dirs.c_str(), 26, 32, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);;
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 
 void showImage(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("Not Implemented Yet.", 200, 4, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-
+	Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::chooseLayoutBot();
 }
 
 void BMPSelectorLogic(u32 hDown, u32 hHeld) { 
@@ -217,4 +214,4 @@ void showImageLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = PNGScreen;
 	} 
-}
+}*/

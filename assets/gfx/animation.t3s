@@ -1,0 +1,10 @@
+--atlas -f rgba -z auto
+animation/bubbles/bubbles_bottom_1.png
+animation/bubbles/bubbles_bottom_2.png
+animation/bubbles/bubbles_top_1.png
+animation/bubbles/bubbles_top_2.png
+
+animation/geometry/bottomscreen2V1.png
+animation/geometry/bottomscreenV1.png
+animation/geometry/topscreen2V1.png
+animation/geometry/topscreenV1.png

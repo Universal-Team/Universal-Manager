@@ -29,6 +29,7 @@
 
 #include <3ds.h>
 #include "gui.hpp"
+#include "settings.hpp"
 
 // Animated BG Functions.
 void animatedBGTop(void);

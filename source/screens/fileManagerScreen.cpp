@@ -29,22 +29,22 @@
 void drawFileManagerSubMenu(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::DrawBarsTop();
+	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText("FileManager Sub Menu", 200, 3, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("FILEMANAGER_SUBMENU")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBottomBack();
+	Gui::chooseLayoutBotBack();
 
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
 	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	Gui::staticText("Music Player", 190, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("MUSICPLAYER")), 190, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	// Image Viewer Button.
-	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
-	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	Gui::staticText("Image Viewer", 190, 137, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+//	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
+//	Gui::sprite(sprites_image_icon_idx, 105, 130);
+//	Gui::staticText((i18n::localize("IMAGE_VIEWER")), 190, 137, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }

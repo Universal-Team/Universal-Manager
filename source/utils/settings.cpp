@@ -45,10 +45,11 @@ void LoadUniversalSettings(void) {
 	settings.universal.bg = settingsini.GetInt("UI", "BG", GRAY); // Background Color
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
 	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.
+	settings.universal.layout = settingsini.GetInt("UI", "LAYOUT", 0); // The Current Layout (Bars)
 
 	// Animated BG.
 	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
-	settings.universal.color = settingsini.GetInt("ANIMATED", "COLOR", BLUE); // Color of the Bubbles.
+	settings.universal.animationcolor = settingsini.GetInt("ANIMATED", "COLOR", BLUE); // The Color of the Bubbles.
 }
 
 /**
@@ -59,10 +60,11 @@ void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "BG", settings.universal.bg);
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
 	settingsini.SetInt("UI", "BATTERY", settings.universal.battery);
+	settingsini.SetInt("UI", "LAYOUT", settings.universal.layout);
 
 	// Animated BG.
 	settingsini.SetInt("ANIMATED", "ENABLE", settings.universal.animation);
-	settingsini.SetInt("ANIMATED", "COLOR", settings.universal.color);
+	settingsini.SetInt("ANIMATED", "COLOR", settings.universal.animationcolor);
 
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }

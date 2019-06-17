@@ -40,6 +40,7 @@
 #include "screenCommon.hpp"
 #include "settings.hpp"
 #include "ptmu_x.h"
+#include "i18n.hpp"
 
 extern "C" {
 	#include "music/error.h"
@@ -65,8 +66,8 @@ extern bool firstSong;
 //sound *sfx_scroll = NULL;
 
 static touchPosition touch;
-extern C3D_RenderTarget* g_renderTargetTop;
-extern C3D_RenderTarget* g_renderTargetBottom;	
+extern C3D_RenderTarget* top;
+extern C3D_RenderTarget* bottom;	
 int screenMode = 0;
 
 
@@ -79,7 +80,7 @@ ButtonPos mainScreenButtonPos[] = {
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicMainScreen},
-	{100, 120, 149, 52, PNGScreen},
+//	{100, 120, 149, 52, PNGScreen},
     {293, 213, 27, 27, mainScreen},
 };
 
@@ -143,9 +144,10 @@ int main()
 	LoadUniversalSettings();
     gfxInitDefault();
 	Gui::init();
+	i18n::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	mcuInit(); // Comment this out, if you use Citra.
+	//mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -164,8 +166,8 @@ int main()
         u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(g_renderTargetTop, BLUE2);
-        C2D_TargetClear(g_renderTargetBottom, BLUE2);
+        C2D_TargetClear(top, BLUE2);
+        C2D_TargetClear(bottom, BLUE2);
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {
@@ -200,9 +202,9 @@ int main()
 			case musicPlaylistEditScreen:
 				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
 				break;
-			case themeSelectorScreen:
-				drawThemeSelector();
-				break;
+//			case themeSelectorScreen:
+//				drawThemeSelector();
+//				break;
 //#########################################################################################################
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
@@ -210,16 +212,19 @@ int main()
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
+			case uiSettingsScreen2:
+				drawUISettingsScreen2();
+				break;
 //#########################################################################################################
-			case PNGScreen:
-				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
-				break;
-			case BMPScreen:
-				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
-				break;
-			case showImageScreen:
-				showImage();
-				break;
+//			case PNGScreen:
+//				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
+//				break;
+//			case BMPScreen:
+//				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
+//				break;
+//			case showImageScreen:
+//				showImage();
+//				break;
 //#########################################################################################################
 			case ftpScreen:
 				drawFTPScreen();
@@ -303,15 +308,13 @@ int main()
 			case musicPlaylistEditScreen:
 				musicPlaylistEditLogic(hDown, hHeld);
 				break;
-			case themeSelectorScreen:
-				themeSelectorLogic(hDown, hHeld);
-				break;
+//			case themeSelectorScreen:
+//				themeSelectorLogic(hDown, hHeld);
+//				break;
 //#########################################################################################################
 			case settingsScreen:
 			if (hDown & KEY_B) {
 				screenMode = mainScreen;
-			} else if (hDown & KEY_X) {
-				screenMode = uiSettingsScreen;
 			} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
 						if (touching(touch, settingsScreenButtonPos[i])) {
@@ -323,16 +326,19 @@ int main()
 			case uiSettingsScreen:
 				uiSettingsLogic(hDown, touch);
 				break;
+			case uiSettingsScreen2:
+				uiSettingsLogic2(hDown, touch);
+				break;
 //#########################################################################################################
-			case PNGScreen:
-			PNGSelectorLogic(hDown, hHeld);
-				break;
-			case BMPScreen:
-			BMPSelectorLogic(hDown, hHeld);
-				break;
-			case showImageScreen:
-			showImageLogic(hDown, touch);
-				break;
+//			case PNGScreen:
+//			PNGSelectorLogic(hDown, hHeld);
+//				break;
+//			case BMPScreen:
+//			BMPSelectorLogic(hDown, hHeld);
+//				break;
+//			case showImageScreen:
+//			showImageLogic(hDown, touch);
+//				break;
 //#########################################################################################################
 			case ftpScreen:
 			ftpLogic(hDown, touch);

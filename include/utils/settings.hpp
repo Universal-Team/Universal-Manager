@@ -35,8 +35,9 @@ typedef struct _Settings_t {
 		int bg;
 		int music;
 		int battery;
+		int layout;
 		int animation;
-		int color;
+		int animationcolor;
 	} universal;
 } Settings_t;
 extern Settings_t settings;
@@ -50,11 +51,5 @@ void LoadUniversalSettings(void);
  * Save the Universal settings.
  */
 void SaveUniversalSettings(void);
-
-// 3D offsets.
-typedef struct _Offset3D {
-	float topbg;
-} Offset3D;
-extern Offset3D offset3D[2];	// 0 == Left; 1 == Right
 
 #endif /* SETTINGS_HPP */
