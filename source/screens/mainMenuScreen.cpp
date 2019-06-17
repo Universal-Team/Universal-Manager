@@ -25,7 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
-
+#include "i18n.hpp"
 
 // Version numbers.
 char universal_manager_vertext[13];
@@ -40,7 +40,7 @@ void drawMainMenu(void) {
 	DisplayTime();
 	drawBatteryTop();
 	//Gui::sprite(sprites_battery0_idx, 361, 0); // Showing Purpose.
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Universal-Manager");
+	Gui::staticText((i18n::localize("UNIVERSAL_MANAGER")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(340, 218, FONT_SIZE_18, FONT_SIZE_18, WHITE, universal_manager_vertext);
 
 	Gui::DrawBGBot();
