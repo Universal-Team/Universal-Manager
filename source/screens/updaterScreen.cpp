@@ -135,7 +135,7 @@ void drawUpdaterSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Updater Sub Menu");
+	Gui::staticText((i18n::localize("UPDATER_SUB_MENU")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -175,7 +175,7 @@ void drawUpdaterTWL(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "TWL Updater Screen");
+	Gui::staticText((i18n::localize("TWL_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -220,23 +220,23 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 		screenMode = OtherScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
-			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
+			if(confirmPopup((i18n::localize("TWLMENU_RELEASE")))) {
 			updateTWiLight(false);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[1])) {
-			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Nightly?")) {
+			if(confirmPopup((i18n::localize("TWLMENU_NIGHTLY")))) {
 			updateTWiLight(true);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[2])) {
-			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Release?")) {
+			if(confirmPopup((i18n::localize("NDS_BOOTSTRAP_RELEASE")))) {
 			updateBootstrap(false);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[3])) {
-			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
+			if(confirmPopup((i18n::localize("NDS_BOOTSTRAP_NIGHTLY")))) {
 			updateBootstrap(true);
 			}
 			} else if (touching(touch, downloadFunctionButtonPos[4])) {
-			if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
+			if(confirmPopup((i18n::localize("USRCHEAT_DAT")))) {
 			updateCheats();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[13])) {
@@ -260,7 +260,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Other Updater Screen");
+	Gui::staticText((i18n::localize("OTHER_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -313,20 +313,20 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 		screenMode = TWLScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[5])) {
-			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
+			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_RELEASE")))) {
 			updateUniversalManager(false);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
-			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
+			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_NIGHTLY")))) {
 			//updateUniversalManager(true); -> After the first Build appears, comment this out.
 			notImplemented();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[10])) {
-			if(confirmPopup("Are you sure you want to update PKSM\nRelease?")) {
+			if(confirmPopup((i18n::localize("PKSM_RELEASE")))) {
 			updatePKSM();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[11])) {
-			if(confirmPopup("Are you sure you want to update Checkpoint\nRelease?")) {
+			if(confirmPopup((i18n::localize("CHECKPOINT_RELEASE")))) {
 			updateCheckpoint();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[13])) {
@@ -334,7 +334,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, downloadFunctionButtonPos[14])) {
 			downloadThemes();
 		} else if (touching(touch, downloadFunctionButtonPos[15])) {
-			if(confirmPopup("Are you sure you want to update PKMN-Chest\nRelease?")) {
+			if(confirmPopup((i18n::localize("PKMN_CHEST_RELEASE")))) {
 			updatePKMNChestRelease(); 
 			}
 		}
@@ -347,7 +347,7 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "CFW Updater Screen");
+	Gui::staticText((i18n::localize("CFW_UPDATER_SCREEN")), 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	
 	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
@@ -382,15 +382,15 @@ void updaterCFWLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = TWLScreen;
 	} else if (touching(touch, downloadFunctionButtonPos[7])) {
-			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
+			if(confirmPopup((i18n::localize("LUMA3DS_RELEASE")))) {
 			updateLuma(false);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[8])) {
-			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
+			if(confirmPopup((i18n::localize("LUMA3DS_NIGHTLY")))) {
 			updateLuma(true);
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[9])) {
-			if(confirmPopup("Are you sure you want to update GodMode9\nRelease?")) {
+			if(confirmPopup((i18n::localize("GODMODE9_RELEASE")))) {
 			downloadGodMode9();
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[13])) {
