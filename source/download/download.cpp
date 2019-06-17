@@ -1109,10 +1109,7 @@ void updateCheats(void) {
 }
 
 void updatePKMNChestRelease(void) {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest Release...");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
+	DisplayMsg("Downloading PKMN-Chest Release...");
 	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
 		downloadFailed();
 		return;

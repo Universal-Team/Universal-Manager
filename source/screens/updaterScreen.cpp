@@ -335,8 +335,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 			downloadThemes();
 		} else if (touching(touch, downloadFunctionButtonPos[15])) {
 			if(confirmPopup("Are you sure you want to update PKMN-Chest\nRelease?")) {
-			notImplemented();
-			//updatePKMNChestRelease(); // By the first Release.
+			updatePKMNChestRelease(); 
 			}
 		}
 }
