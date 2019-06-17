@@ -268,8 +268,9 @@ void drawMusicPlayer(void) {
 		Gui::staticText((i18n::localize("MUSIC_PLAYER_1")), 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	} else if(isPaused() && isPlaying()) {
 		Gui::staticText((i18n::localize("MUSIC_PLAYER_2")), 170, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-		Gui::staticText((i18n::localize("NO_SONG_SELECTED")), 200, 3, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-		Gui::staticText((i18n::localize("MUSIC_PLAYER_BACK")), 200, 200, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	} else {
+		Gui::staticText((i18n::localize("NO_SONG_SELECTED")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::staticText((i18n::localize("MUSIC_PLAYER_BACK")), 200, 220, 0.45f, 0.45f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	}
 
 
