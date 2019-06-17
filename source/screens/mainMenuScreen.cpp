@@ -25,7 +25,6 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "i18n.hpp"
 
 // Version numbers.
 char universal_manager_vertext[13];

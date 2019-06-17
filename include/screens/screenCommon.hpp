@@ -26,6 +26,7 @@
 
 #include "gui.hpp"
 #include "animation.hpp"
+#include "i18n.hpp"
 
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;

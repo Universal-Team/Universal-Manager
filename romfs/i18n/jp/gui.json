@@ -1,7 +1,10 @@
 {
-    "UNIVERSAL_MANAGER": "Universal-Manager",
-    "FILEMANAGER":       "FileManager",
-    "FTP":               "FTP",
-    "UPDATER":           "Updater",
-    "SETTINGS":          "Settings"
+    "UNIVERSAL_MANAGER":        "Universal-Manager",
+    "FILEMANAGER":              "FileManager",
+    "FTP":                      "FTP",
+    "UPDATER":                  "Updater",
+    "SETTINGS":                 "Settings",
+    "FILEMANAGER_SUBMENU":      "Filemanager Sub Menu",
+    "MUSICPLAYER":              "Music Player",
+    "IMAGE_VIEWER":             "Image Viewer"
 }
