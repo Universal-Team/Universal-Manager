@@ -46,8 +46,7 @@ std::string filename;
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Image Viewer Menu [PNG]");
-
+	Gui::staticText((i18n::localize("PNG_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -85,8 +84,7 @@ void drawBMPImageViewerUI(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Image Viewer Menu [BMP]");
-
+	Gui::staticText((i18n::localize("BMP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -124,8 +122,7 @@ void showImage(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Not Implemented Yet.");
-
+	Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();

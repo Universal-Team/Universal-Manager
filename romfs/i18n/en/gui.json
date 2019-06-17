@@ -6,5 +6,12 @@
     "SETTINGS":                 "Settings",
     "FILEMANAGER_SUBMENU":      "Filemanager Sub Menu",
     "MUSICPLAYER":              "Music Player",
-    "IMAGE_VIEWER":             "Image Viewer"
+    "IMAGE_VIEWER":             "Image Viewer",
+    "PNG_MODE":                 "Image Viewer Menu [PNG]",
+    "BMP_MODE":                 "Image Viewer Menu [BMP]",
+    "NOTIMPLEMENTEDYET":        "Not Implemented Yet.",
+    "FTP_MODE":                 "FTP Mode",
+    "FTP_INITIALIZE":           "FTP initialized",
+    "FTP_FAILED":               "Failed to initialize FTP.",
+    "NOT_ENABLED":              "Wifi not enabled."
 }

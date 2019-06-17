@@ -104,15 +104,14 @@ void drawFTPScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "FTP Mode"); // - Fine.
-	Gui::DrawBGBot();
+	Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	ret = ACU_GetWifiStatus(&wifiStatus);
 
 	if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-		draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.5f, 0.5f, WHITE, "FTP initialized"); // Fine.
+		Gui::staticText((i18n::localize("FTP_INITIALIZE")), 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
                         snprintf(buf, 137, "%s", bftps_name());
 
  	const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
@@ -154,8 +153,8 @@ void drawFTPScreen(void) {
                         }
 		}
 		else {
-			Gui::staticText("Failed to initialize FTP.", 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
-			Gui::staticText("WiFi not enabled.", 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
+			Gui::staticText((i18n::localize("FTP_FAILED")), 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+			Gui::staticText((i18n::localize("NOT_ENABLED")), 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 		}
 		Gui::staticText(buf, 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
 		C3D_FrameEnd(0);
@@ -189,5 +188,5 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 200);
+	return confirmPopup(msg, "", (i18n::localize("YES")), (i18n::localize("NO")), 200);
 }
