@@ -47,10 +47,10 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {"DEFAULT", "COVER", /*"BG"*/};
-std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
-std::string percentModes[] = {"Hidden", "Shown"};
-std::string layoutModes[] = {"Bars", "Bars v2"};
+std::string musicModes[] = {(i18n::localize("DEFAULT")), (i18n::localize("COVER"))/*(i18n::localize("BG"))*/}; // Failed to initialized.
+std::string animationModes[] = {(i18n::localize("DISABLED")), (i18n::localize("BUBBLES")), (i18n::localize("GEOMETRY"))}; // Failed to initialized.
+std::string percentModes[] = {(i18n::localize("HIDDEN")), (i18n::localize("SHOWN"))}; // Failed to initialized.
+std::string layoutModes[] = {(i18n::localize("BARS1")), (i18n::localize("BARS2"))}; // Failed to initialized.
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -111,17 +111,16 @@ void drawSettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Settings");
-
+	Gui::staticText((i18n::localize("SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	draw_text(40, 57, 0.7f, 0.7f, WHITE, "Credits");
+	Gui::staticText((i18n::localize("CREDITS")), 50, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	draw_text(200, 57, 0.7f, 0.7f, WHITE, "Settings");
+	Gui::staticText((i18n::localize("SETTINGS")), 230, 57, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void drawUISettingsScreen(void) {
@@ -130,13 +129,13 @@ void drawUISettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "UI Settings");
+	Gui::staticText((i18n::localize("UI_SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Bars.
-	draw_text(120, 58, 0.7f, 0.7f, BLACK, "Bars");
+	Gui::staticText((i18n::localize("BARS")), 170, 58, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
 	draw_text(46, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
@@ -145,7 +144,7 @@ void drawUISettingsScreen(void) {
 	draw_text(229, 98, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
-	draw_text(120, 138, 0.7f, 0.7f, BLACK, "Background");
+	Gui::staticText((i18n::localize("BACKGROUND")), 170, 138, 0.7f, 0.7f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::sprite(sprites_RedButton_idx, 35, 168);
 	draw_text(46, 178, 0.7f, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 168);
@@ -208,7 +207,7 @@ void drawUISettingsScreen2(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	draw_text_center(GFX_TOP, 0, 0.5f, 0.72f, 0.72f, WHITE, "Animation Settings");
+	Gui::staticText((i18n::localize("ANIMATION_SETTINGS")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
