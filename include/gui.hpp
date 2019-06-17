@@ -97,7 +97,7 @@ namespace Gui
 }
 
    // Text.
-    void DisplayMsg(const char* text);
+    void DisplayMsg(const std::string& strKey);
     void DisplayTime(void);
 
     void drawBatteryTop(void);

@@ -415,14 +415,14 @@ void Gui::chooseLayoutBotBack(void) {
 
 // Text.
 
-void DisplayMsg(const char* text) {
+void DisplayMsg(const std::string& strKey) {
     //Gui::clearStaticText();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
-	Gui::staticText(text, 200, 36, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText(strKey, 200, 36, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
