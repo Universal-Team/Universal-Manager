@@ -26,7 +26,8 @@ If applicable, add screenshots to help explain your problem.
   - [ ] New 3DS
   - [ ] New 3DS XL
   - [ ] New 2DS XL
-- Version [e.g. v3.0.0]
+  - Luma 3DS Version [e.g. v9.1]
+  - Version [e.g. v3.0.0]
 
 **Additional context**
 Add any other context about the problem here.
