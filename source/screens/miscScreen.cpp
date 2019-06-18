@@ -25,7 +25,7 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "bftps.h"
+#include <bftps.h>
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
