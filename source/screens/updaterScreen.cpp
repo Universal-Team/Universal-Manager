@@ -314,12 +314,15 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[5])) {
 			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_RELEASE")))) {
+			updatingSelf = true;
 			updateUniversalManager(false);
+			updatingSelf = false;
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[6])) {
 			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_NIGHTLY")))) {
-			//updateUniversalManager(true); -> After the first Build appears, comment this out.
-			notImplemented();
+			updatingSelf = true;
+			updateUniversalManager(true);
+			updatingSelf = false;
 			}
 		} else if (touching(touch, downloadFunctionButtonPos[10])) {
 			if(confirmPopup((i18n::localize("PKSM_RELEASE")))) {

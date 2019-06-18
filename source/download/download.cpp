@@ -874,7 +874,7 @@ void updateTWiLight(bool nightly) {
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
 		DisplayMsg((i18n::localize("DOWNLOAD_UNIVERSAL_MANAGER_NIGHTLY")));
-		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
 		downloadFailed();
 		return;
 	}
