@@ -83,5 +83,7 @@
     "PKMN_CHEST_NIGHTLY":                   "Are you sure you want to update PKMN-Chest\nTo Nightly?",
     "DOWNLOAD_PKMN_CHEST_NIGHTLY":          "Downloading PKMN-Chest...\nNightly",
     "INSTALL_PKMN_CHEST_NIGHTLY":           "Now Install the CIA...",
-    "INSTALL_PKMN_CHEST_RELEASE":           "Now Install the CIA..."
+    "INSTALL_PKMN_CHEST_RELEASE":           "Now Install the CIA...",
+    "RELAUNCH_RELEASE":                     "Are you sure you want to update Relaunch\nTo Release?",
+    "RELAUNCH_NIGHTLY":                     "Are you sure you want to update Relaunch\nTo Nightly?"
 }

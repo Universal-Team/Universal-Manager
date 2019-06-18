@@ -80,6 +80,10 @@ ButtonPos downloadFunctionButtonPos[] = {
 
 	// PKMN-Chest Nightly.
 	{129, 88, 87, 33, -1},
+
+	// Relaunch.
+	{129, 128, 87, 33, -1},
+	{220, 128, 87, 33, -1},
 };
 
 ButtonPos downloadButtonPos[] = {
@@ -120,6 +124,10 @@ ButtonPos downloadButtonPos[] = {
 
 	//Universal-Screen
 	{38, 88, 87, 33, UniversalScreen},
+
+	// Relaunch.
+	{129, 128, 87, 33},
+	{220, 128, 87, 33},
 };
 
 bool updateAvailable[] = {
@@ -422,6 +430,13 @@ void drawUniversalScreen(void) {
 	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
 	draw_text(226, 98, 0.7f, 0.7f, WHITE, "Nightly");
 
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[20].x, downloadButtonPos[20].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[21].x, downloadButtonPos[21].y);
+	Gui::sprite(sprites_TitleButton_idx, 0, 128);
+	draw_text(0, 138, 0.65f, 0.65f, WHITE, "RELAUNCH");
+	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Release");
+	draw_text(226, 138, 0.7f, 0.7f, WHITE, "Nightly");
+
 	// Draw The Pages and Back Icon.
 	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(240, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -458,6 +473,14 @@ void UniversalLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, downloadFunctionButtonPos[15])) {
 			if(confirmPopup((i18n::localize("PKMN_CHEST_NIGHTLY")))) {
 			updatePKMNChestNightly(); 
+			}
+			} else if (touching(touch, downloadFunctionButtonPos[17])) {
+			if(confirmPopup((i18n::localize("RELAUNCH_RELEASE")))) {
+			updateRelaunchRelease(); 
+			}
+		} else if (touching(touch, downloadFunctionButtonPos[18])) {
+			if(confirmPopup((i18n::localize("RELAUNCH_NIGHTLY")))) {
+			updateRelaunchNightly(); 
 			}
 }
 }

@@ -1150,3 +1150,35 @@ void updatePKMNChestNightly(void) {
 		updateAvailable[12] = false;
 		doneMsg();
 }
+
+void updateRelaunchNightly(void) {
+	DisplayMsg("Downloading Relaunch...\nNightly");
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Relaunch.7z?raw=true", "/Relaunch-Nightly.7z") != 0) {
+		downloadFailed();
+		return;
+	}
+
+		DisplayMsg("Extracting Relaunch...");
+		extractArchive("/Relaunch-Nightly.7z", "Relaunch/3DS/", "/");
+		installCia("/Relaunch.cia");
+
+		deleteFile("sdmc:/Relaunch-Nightly.7z");
+		deleteFile("sdmc:/Relaunch.cia");
+		doneMsg();
+}
+
+void updateRelaunchRelease(void) {
+	DisplayMsg("Downloading Relaunch...\nRelease");
+	if (downloadFromRelease("https://github.com/Universal-Team/Relaunch", "Relaunch\\.7z", "/Relaunch-Release.7z") != 0) {
+		downloadFailed();
+		return;
+}
+
+		DisplayMsg("Extracting Relaunch...");
+		extractArchive("/Relaunch-Release.7z", "Relaunch/3DS/", "/");
+		installCia("/Relaunch.cia");
+
+		deleteFile("sdmc:/Relaunch-Release.7z");
+		deleteFile("sdmc:/Relaunch.cia");
+		doneMsg();
+}

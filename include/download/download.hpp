@@ -157,3 +157,13 @@ void updatePKMNChestRelease(void);
  * Update PKMN-Chest to the latest Nightly Build.
  */
 void updatePKMNChestNightly(void);
+
+/**
+ * Update Relaunch to the latest Nightly Build.
+ */
+void updateRelaunchNightly(void);
+
+/**
+ * Update Relaunch to the latest Release Version.
+ */
+void updateRelaunchRelease(void);
