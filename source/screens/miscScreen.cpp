@@ -25,12 +25,14 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include <bftps.h>
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
 
+extern "C" {
+    #include "ftp.h"
+}
 struct ButtonPos {
 	int x;
 	int y;
@@ -68,37 +70,27 @@ void drawCredits(void) {
 void ftpLogic(u32 hDown, touchPosition touch) {
 		if (hDown & KEY_B) {
 		screenMode = mainScreen;
-		bftps_stop();
+		ftp_exit();
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
 			if (touching(touch, ftpButtonPos[i])) {
+				ftp_exit();
 				screenMode = ftpButtonPos[i].link;
 			}
 		}
 	}
 }
 
-const char* my_basename(const char* path) {
-    const char *pLastSlash = path;
-    while (*path != '\0') {
-        if (*path == '/')
-            pLastSlash = path+1;
-        path++;
-    }
-    return pLastSlash;
-}
-
 void drawFTPScreen(void) {
 
-	bftps_start();
+	ftp_init();
 
-	Result ret = 0;
-	char buf[137], buf2[512], buf3[512];
+	char buf[25];
 	u32 wifiStatus = 0;
 
-	int position = 0, progress = 0, xlim = 270;
+	int pBar = 0, xlim = 270;
 
-
+	ftp_loop();
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
@@ -108,56 +100,7 @@ void drawFTPScreen(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-	ret = ACU_GetWifiStatus(&wifiStatus);
-
-	if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-		Gui::staticText((i18n::localize("FTP_INITIALIZE")), 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-                        snprintf(buf, 137, "%s", bftps_name());
-
- 	const bftps_file_transfer_t* transfersInfo = bftps_file_transfer_retrieve();
-        if (transfersInfo) {
-            const bftps_file_transfer_t* file = transfersInfo;
-
-             // while (file) { for now only show the first file on the list
-                 if (file->mode == FILE_SENDING) {
-                     float fraction = ((float) file->filePosition / (float) file->fileSize);
-                     snprintf(buf3, 512, "Sending %.2f%%", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
-
-                         draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf3); // Fine.
-						 draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name));
-                                    position = 0;
-                                    progress = 40+round(fraction * (float)(xlim-40));
-                                }                                   
-                                else {
-                                    snprintf(buf2, 512, "Receiving %.2fMB", ((float) file->filePosition / ((float) 1024 * (float) 1024)));
-                                            
-                                    //file name should have an elipsis when is to longer
-                                    draw_text_center(GFX_BOTTOM, 110, 0.5f, 0.5f, 0.5f, WHITE, buf2);
-									draw_text_center(GFX_BOTTOM, 90, 0.5f, 0.5f, 0.5f, WHITE, my_basename(file->name));                                    
-                                    progress = 40;
-                                    position += 4;			
-                                    if (position >= xlim)
-					position = 0;
-                                }
-                                    //aux = aux->next;
-                            //}
-                            bftps_file_transfer_cleanup(transfersInfo); 
-                            
-                            C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, WHITE);
-                            C2D_DrawRectSolid(position, 140, 0.5f, progress, 3, WHITE);
-                            
-                            // Boundary stuff
-                            C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, BLACK);
-                            C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, BLACK); 
-                            
-                        }
-		}
-		else {
-			Gui::staticText((i18n::localize("FTP_FAILED")), 150, 40, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-			Gui::staticText((i18n::localize("NOT_ENABLED")), 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-		}
-		Gui::staticText(buf, 150, 60, 0.5f, 0.5f, WHITE, TextPosX::CENTER, TextPosY::TOP); // - Crash.
-		C3D_FrameEnd(0);
+	ACU_GetWifiStatus(&wifiStatus);
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
