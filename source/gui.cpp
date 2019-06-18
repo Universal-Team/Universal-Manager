@@ -354,6 +354,7 @@ void Gui::DrawBGTop(void)
                 Gui::sprite(sprites_stripes_idx, x, y);
             }
 }
+} else if (settings.universal.bgl == 2) {
 }
 }
 
@@ -381,6 +382,7 @@ void Gui::DrawBGBot(void)
             }
         }
     }
+} else if (settings.universal.bgl == 2) {
 }
 }
 

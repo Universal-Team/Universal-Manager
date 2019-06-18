@@ -51,7 +51,7 @@ std::string musicModes[] = {("DEFAULT"), "COVER"/*"BG"*/};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
-std::string layout2Modes[] = {"BG1", "BG2"};
+std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -275,7 +275,7 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			if (settings.universal.layout > 1) settings.universal.layout = 0;
 			} else if (touching(touch, uiSettingsButtonPos[14])) {
 			settings.universal.bgl++;
-			if (settings.universal.bgl > 1) settings.universal.bgl = 0;
+			if (settings.universal.bgl > 2) settings.universal.bgl = 0;
 			} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 			SaveUniversalSettings();
