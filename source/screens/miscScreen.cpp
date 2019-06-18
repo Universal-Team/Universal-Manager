@@ -69,12 +69,13 @@ void drawCredits(void) {
 
 void ftpLogic(u32 hDown, touchPosition touch) {
 		if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
+		memset(ftp_file_transfer, 0, 50); // Empty transfer status
 		ftp_exit();
+		screenMode = mainScreen;
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
 			if (touching(touch, ftpButtonPos[i])) {
-				ftp_exit();
 				screenMode = ftpButtonPos[i].link;
 			}
 		}
@@ -82,7 +83,6 @@ void ftpLogic(u32 hDown, touchPosition touch) {
 }
 
 void drawFTPScreen(void) {
-
 	ftp_init();
 
 	char buf[25];
@@ -90,17 +90,63 @@ void drawFTPScreen(void) {
 
 	int pBar = 0, xlim = 270;
 
+	while(screenMode == ftpScreen)
+	{
 	ftp_loop();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);	Gui::DrawBGBot();
+	Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);	
+	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-	ACU_GetWifiStatus(&wifiStatus);
+			if (wifiStatus == 0)
+		{
+			draw_text_center(GFX_BOTTOM, 20, 0.5f, 0.48f, 0.48f, WHITE, "Failed to initialize FTP.");
+			sprintf(buf, "WiFi not enabled.");
+		}
+		else
+		{
+			draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.48f, 0.48f, WHITE, "FTP initialized");
+			
+			u32 ip = gethostid();
+			sprintf(buf, "IP: %lu.%lu.%lu.%lu:5000", ip & 0xFF, (ip>>8)&0xFF, (ip>>16)&0xFF, (ip>>24)&0xFF);
+
+			draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.48f, 0.48f, WHITE, buf);
+
+			if (strlen(ftp_accepted_connection) != 0)
+				draw_text_center(GFX_BOTTOM, 80, 0.5f, 0.48f, 0.48f, WHITE, ftp_accepted_connection);
+
+			if (strlen(ftp_file_transfer) != 0)
+				draw_text_center(GFX_BOTTOM, 100, 0.5f, 0.45f, 0.45f, WHITE, ftp_file_transfer);
+
+			if (isTransfering)
+			{
+				C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, WHITE);
+				C2D_DrawRectSolid(pBar, 140, 0.5f, 40, 3, WHITE);
+
+				// Boundary stuff
+				C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, WHITE);
+				C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, WHITE); 
+				pBar += 4;
+			
+				if (pBar >= xlim)
+					pBar = 34;
+			}
+		}
+
+		draw_text_center(GFX_BOTTOM, 200, 0.5f, 0.48f, 0.48f, WHITE, "Press B to disable the FTP Connection.");
+
+		C3D_FrameEnd(0);
+	}
+	memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
+	memset(ftp_file_transfer, 0, 50); // Empty transfer status
+	ftp_exit();
+	screenMode = mainScreen;
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
