@@ -55,9 +55,9 @@ steps:
     cp ../../../Universal-Manager.3dsx Universal-Manager.3dsx
     cp ../../../Universal-Manager.cia Universal-Manager.cia
     qrencode -o Universal-Manager.png https://github.com/Universal-Team/extras/releases/download/v$CURRENT_DATE/Universal-Manager.cia
-    git stage *
+    git stage .
     git commit -m "Universal-Manager | $(COMMIT_TAG)"
-    git push origin builds
+    git push origin master
     git tag v$CURRENT_DATE
     echo '##vso[task.setvariable variable=TWLBOT_COMMIT]'$(git log -1 --format="%H")
   displayName: "Commit to Universal-Team/extras"
