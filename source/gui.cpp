@@ -639,3 +639,7 @@ float Draw_GetTextHeight(float size, const char *text) {
 	Draw_GetTextSize(size, NULL, &height, text);
 	return height;
 }
+
+bool Draw_Rect(float x, float y, float w, float h, u32 color) {
+	return C2D_DrawRectSolid(x, y, 0.5f, w, h, color);
+}

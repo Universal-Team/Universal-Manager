@@ -259,9 +259,11 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = (i18n::localize("CURRENT_SONG")) + currentSong.substr(currentSong.find_last_of("/")+1);
 		draw_text_center(GFX_TOP, 0, 0.5f, 0.50f, 0.50f, WHITE, nowPlayingText.c_str());
-		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 100, 162, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
-		C2D_DrawRectSolid(18, 177, 0.5f, 364, 20, BLACK);
-		C2D_DrawRectSolid(20, 179, 0.5f, ((float)Audio_GetPosition()/Audio_GetLength())*360, 16, WHITE);
+		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 200, 162, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
+		if (Audio_GetPosition() != -1) {
+		Draw_Rect(100, 179, 207, 16, C2D_Color32(97, 97, 97, 150));
+		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, WHITE);
+		}
 
 	
 	if(!isPaused() && isPlaying()) {

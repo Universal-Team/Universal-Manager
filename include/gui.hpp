@@ -119,5 +119,6 @@ namespace Gui
     void Draw_GetTextSize(float size, float *width, float *height, const char *text);
     float Draw_GetTextWidth(float size, const char *text);
     float Draw_GetTextHeight(float size, const char *text);
+    bool Draw_Rect(float x, float y, float w, float h, u32 color);
 
 #endif
