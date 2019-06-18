@@ -61,6 +61,7 @@ std::string godMode9Cache = "";
 std::string latestPKSMReleaseCache = "";
 std::string latestCheckpointReleaseCache = "";
 std::string latestpkmnchestReleaseCache = "";
+std::string latestpkmnchestNightlyCache = "";
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -696,6 +697,12 @@ std::string latestpkmnchestRelease(void) {
 	return latestpkmnchestReleaseCache;
 }
 
+std::string latestpkmnchestNightly(void) {
+	if (latestpkmnchestNightlyCache == "")
+		latestpkmnchestNightlyCache = getLatestCommit("Universal-Team/pkmn-chest", "sha").substr(0,7);
+	return latestpkmnchestNightlyCache;
+}
+
 void saveUpdateData(void) {
 	versionsFile.SaveIniFile("sdmc:/Universal-Manager/currentVersions.ini");
 }
@@ -728,6 +735,7 @@ void checkForUpdates() {
 	std::string pksmVersion = getInstalledVersion("PKSM");
 	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
 	std::string pkmnchestRelease = getInstalledVersion("PKMN-CHEST-RELEASE");
+	std::string pkmnchestNightly = getInstalledVersion("PKMN-CHEST-NIGHTLY");
 
 	if (menuChannel == "release")
 		updateAvailable[0] = menuVersion != latestMenuRelease();
@@ -745,6 +753,7 @@ void checkForUpdates() {
 	updateAvailable[9] = pksmVersion != latestPKSMRelease();
 	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
 	updateAvailable[11] = pkmnchestRelease != latestpkmnchestRelease();
+	updateAvailable[12] = pkmnchestNightly != latestpkmnchestNightly();
 }
 
 
@@ -1108,14 +1117,36 @@ void updateCheats(void) {
 
 void updatePKMNChestRelease(void) {
 	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST")));
-	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
+	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_RELEASE")));
+		installCia("/PKMN-Chest-Nightly.cia");
+
+		deleteFile("sdmc:/PKMN-Chest-Release.cia");
 
 		setInstalledVersion("PKMN-CHEST-RELEASE", latestpkmnchestRelease());
 		saveUpdateData();
 		updateAvailable[11] = false;
+		doneMsg();
+}
+
+void updatePKMNChestNightly(void) {
+	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST_NIGHTLY")));
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_NIGHTLY")));
+		installCia("/PKMN-Chest-Nightly.cia");
+
+		deleteFile("sdmc:/PKMN-Chest-Nightly.cia");
+
+		setInstalledVersion("PKMN-CHEST-NIGHTLY", latestpkmnchestNightly());
+		saveUpdateData();
+		updateAvailable[12] = false;
 		doneMsg();
 }

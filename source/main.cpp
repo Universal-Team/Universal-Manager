@@ -242,6 +242,9 @@ int main()
 			case CFWScreen:
 				drawUpdaterCFW();
 				break;
+			case UniversalScreen:
+				drawUniversalScreen();
+				break;
 //#########################################################################################################
 		}
 
@@ -355,6 +358,9 @@ int main()
 				break;
 			case CFWScreen:
 				updaterCFWLogic(hDown, touch);
+				break;
+			case UniversalScreen:
+				UniversalLogic(hDown, touch);
 				break;
 			}
 //#########################################################################################################

@@ -78,5 +78,10 @@
     "DOWNLOAD_PKMN_CHEST":                  "Downloading PKMN-Chest...\nRelease",
     "CURRENT_PAGE":                         "Current Page:",
     "DOWNLOAD_UNIVERSAL_MANAGER_RELEASE":   "Downloading Universal-Manager...\nRelease",
-    "INSTALL_UNIVERSAL_MANAGER_RELEASE":    "Now Installing the CIA..."
+    "INSTALL_UNIVERSAL_MANAGER_RELEASE":    "Now Installing the CIA...",
+    "UNIVERSAL_SCREEN":                     "Universal Screen",
+    "PKMN_CHEST_NIGHTLY":                   "Are you sure you want to update PKMN-Chest\nTo Nightly?",
+    "DOWNLOAD_PKMN_CHEST_NIGHTLY":          "Downloading PKMN-Chest...\nNightly",
+    "INSTALL_PKMN_CHEST_NIGHTLY":           "Now Install the CIA...",
+    "INSTALL_PKMN_CHEST_RELEASE":           "Now Install the CIA..."
 }

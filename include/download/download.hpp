@@ -152,3 +152,8 @@ void updateCheats(void);
  * Update PKMN-Chest to the latest Release Version.
  */
 void updatePKMNChestRelease(void);
+
+/**
+ * Update PKMN-Chest to the latest Nightly Build.
+ */
+void updatePKMNChestNightly(void);

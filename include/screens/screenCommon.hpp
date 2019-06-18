@@ -60,8 +60,9 @@ extern C3D_RenderTarget* bottom;
 #define OtherScreen				18
 #define TWLScreen				19
 #define CFWScreen				20
+#define UniversalScreen			21
 //###############################
-#define keyboardScreen			21
+#define keyboardScreen			22
 
 struct Playlist {
 	std::string name;
@@ -113,6 +114,9 @@ void updaterOtherLogic(u32 hDown, touchPosition touch);
 // CFW Screen
 void drawUpdaterCFW(void);
 void updaterCFWLogic(u32 hDown, touchPosition touch);
+// Universal Screen.
+void drawUniversalScreen(void);
+void UniversalLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
 //void drawPNGImageViewerUI(void);
