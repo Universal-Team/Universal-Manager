@@ -36,7 +36,7 @@ C3D_RenderTarget* bottom;
 
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
-C2D_TextBuf staticBuf, dynamicBuf;
+C2D_TextBuf staticBuf, dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
 static std::unordered_map<std::string, C2D_Text> staticMap;
 
@@ -278,6 +278,7 @@ Result Gui::init(void)
     staticBuf = C2D_TextBufNew(4096);
     dynamicBuf = C2D_TextBufNew(4096);
     widthBuf = C2D_TextBufNew(4096);
+    sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     return 0;
@@ -296,6 +297,7 @@ void Gui::exit(void)
     C2D_TextBufDelete(widthBuf);
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(staticBuf);
+    C2D_TextBufDelete(sizeBuf);
     C2D_Fini();
     C3D_Fini();
 }
@@ -590,11 +592,10 @@ void draw_text_center(gfxScreen_t target, float y, float z, float scaleX, float 
     }
 }
 
-void end_frame(void)
-{
-    C2D_TextBufClear(dynamicBuf);
-    C2D_TextBufClear(widthBuf);
-    C3D_FrameEnd(0);
+void Draw_EndFrame(void) {
+	C2D_TextBufClear(dynamicBuf);
+	C2D_TextBufClear(sizeBuf);
+	C3D_FrameEnd(0);
 }
 
 void start_frame(void)
@@ -602,4 +603,39 @@ void start_frame(void)
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
+}
+
+// 3DShell.
+void Draw_Text(float x, float y, float size, u32 color, const char *text) {
+	C2D_Text c2d_text;
+	C2D_TextParse(&c2d_text, dynamicBuf, text);
+	C2D_TextOptimize(&c2d_text);
+	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+}
+
+void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) {
+	char buffer[256];
+	va_list args;
+	va_start(args, text);
+	vsnprintf(buffer, 256, text, args);
+	Draw_Text(x, y, size, color, buffer);
+	va_end(args);
+}
+
+void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
+	C2D_Text c2d_text;
+	C2D_TextParse(&c2d_text, sizeBuf, text);
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
+float Draw_GetTextWidth(float size, const char *text) {
+	float width = 0;
+	Draw_GetTextSize(size, &width, NULL, text);
+	return width;
+}
+
+float Draw_GetTextHeight(float size, const char *text) {
+	float height = 0;
+	Draw_GetTextSize(size, NULL, &height, text);
+	return height;
 }

@@ -112,4 +112,12 @@ namespace Gui
     void start_frame(void);
     void end_frame(void);
 
+    // 3DShell -> Most likely for FTP.
+    void Draw_EndFrame(void);
+    void Draw_Text(float x, float y, float size, u32 color, const char *text);
+    void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...);
+    void Draw_GetTextSize(float size, float *width, float *height, const char *text);
+    float Draw_GetTextWidth(float size, const char *text);
+    float Draw_GetTextHeight(float size, const char *text);
+
 #endif

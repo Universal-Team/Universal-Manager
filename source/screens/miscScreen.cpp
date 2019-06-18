@@ -67,65 +67,48 @@ void drawCredits(void) {
 	drawBatteryBot();
 }
 
-void ftpLogic(u32 hDown, touchPosition touch) {
-		if (hDown & KEY_B) {
-		memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
-		memset(ftp_file_transfer, 0, 50); // Empty transfer status
-		ftp_exit();
-		screenMode = mainScreen;
-	} else if(hDown & KEY_TOUCH) {
-		for(uint i=0;i<(sizeof(ftpButtonPos)/sizeof(ftpButtonPos[0]));i++) {
-			if (touching(touch, ftpButtonPos[i])) {
-				screenMode = ftpButtonPos[i].link;
-			}
-		}
-	}
-}
-
 void drawFTPScreen(void) {
 	ftp_init();
 
-	char buf[25];
+	Result ret = 0;
+	char buf[137], hostname[128];
 	u32 wifiStatus = 0;
 
 	int pBar = 0, xlim = 270;
 
-	while(screenMode == ftpScreen)
-	{
-	ftp_loop();
-	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);	
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	ret = gethostname(hostname, sizeof(hostname));
 
-			if (wifiStatus == 0)
-		{
-			draw_text_center(GFX_BOTTOM, 20, 0.5f, 0.48f, 0.48f, WHITE, "Failed to initialize FTP.");
-			sprintf(buf, "WiFi not enabled.");
-		}
-		else
-		{
-			draw_text_center(GFX_BOTTOM, 40, 0.5f, 0.48f, 0.48f, WHITE, "FTP initialized");
-			
-			u32 ip = gethostid();
-			sprintf(buf, "IP: %lu.%lu.%lu.%lu:5000", ip & 0xFF, (ip>>8)&0xFF, (ip>>16)&0xFF, (ip>>24)&0xFF);
+	//if (R_SUCCEEDED(gspLcdInit())) {
+	//	GSPLCD_PowerOffBacklight(GSPLCD_SCREEN_TOP);
+	//	gspLcdExit();
+	//}
 
-			draw_text_center(GFX_BOTTOM, 60, 0.5f, 0.48f, 0.48f, WHITE, buf);
+	while(screenMode == ftpScreen) {
+		ftp_loop();
+		
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		Gui::DrawBGTop();
+		animatedBGTop();
+		Gui::chooseLayoutTop();
+		DisplayTime();
+		drawBatteryTop();	
+		Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Gui::DrawBGBot();
+		animatedBGBot();
+		Gui::chooseLayoutBot();
+		ret = ACU_GetWifiStatus(&wifiStatus);
+
+		if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
+			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "FTP initialized")) / 2), 40, 0.48f, WHITE, "FTP initialized");
+			snprintf(buf, 137, "IP: %s:5000", R_FAILED(ret)? "Failed to get IP" : hostname);
 
 			if (strlen(ftp_accepted_connection) != 0)
-				draw_text_center(GFX_BOTTOM, 80, 0.5f, 0.48f, 0.48f, WHITE, ftp_accepted_connection);
+				Draw_Text(((320 - Draw_GetTextWidth(0.48f, ftp_accepted_connection)) / 2), 80, 0.48f, WHITE, ftp_accepted_connection);
 
 			if (strlen(ftp_file_transfer) != 0)
-				draw_text_center(GFX_BOTTOM, 100, 0.5f, 0.45f, 0.45f, WHITE, ftp_file_transfer);
+				Draw_Text(((320 - Draw_GetTextWidth(0.45f, ftp_file_transfer)) / 2), 150, 0.45f, WHITE, ftp_file_transfer);
 
-			if (isTransfering)
-			{
+			if (isTransfering) {
 				C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, WHITE);
 				C2D_DrawRectSolid(pBar, 140, 0.5f, 40, 3, WHITE);
 
@@ -138,14 +121,27 @@ void drawFTPScreen(void) {
 					pBar = 34;
 			}
 		}
+		else {
+			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Failed to initialize FTP.")) / 2), 40, 0.48f, WHITE, "Failed to initialize FTP.");
+			snprintf(buf, 18, "WiFi not enabled.");
+		}
 
-		draw_text_center(GFX_BOTTOM, 200, 0.5f, 0.48f, 0.48f, WHITE, "Press B to disable the FTP Connection.");
+		Draw_Text(((320 - Draw_GetTextWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
+		Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Press B to Return to the Main Menu.")) / 2), 220, 0.48f, WHITE, "Press B to Return to the Main Menu.");
 
-		C3D_FrameEnd(0);
+		Draw_EndFrame();
+
+		hidScanInput();
+		u32 hDown = hidKeysDown();
+
+		if (hDown & KEY_B)
+			break;
 	}
+
 	memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
 	memset(ftp_file_transfer, 0, 50); // Empty transfer status
 	ftp_exit();
+
 	screenMode = mainScreen;
 }
 
