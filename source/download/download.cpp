@@ -772,7 +772,7 @@ void updateBootstrap(bool nightly) {
 		saveUpdateData();
 		updateAvailable[3] = false; // For Later.
 	} else {	
-		DisplayMsg((i18n::localize("DOWNLOAD_NDS_BOOTSTRAP_RELEASE")));
+		DisplayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
 		showProgressBar = true;
 		progressBarType = 0;
@@ -833,7 +833,8 @@ void updateTWiLight(bool nightly) {
 		saveUpdateData();
 		updateAvailable[1] = false; // For Later.
 	} else {
-		DisplayMsg((i18n::localize("DOWNLOAD_TWLMENU_RELEASE")));
+		DisplayMsg("Downloading TWiLightMenu++\n"
+						"(Release)\n\nThis may take a while.");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading TWiLightMenu++\n"
 						"(Release)\n\nThis may take a while.");
 		showProgressBar = true;
