@@ -344,7 +344,17 @@ void Gui::DrawBGTop(void)
 {
     set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, settings.universal.bg);
+    if (settings.universal.bgl == 0) {
 	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+    } else if (settings.universal.bgl == 1) {
+            for (int x = 0; x < 400; x += 14)
+        {
+            for (int y = 0; y < 240; y += 14)
+            {
+                Gui::sprite(sprites_stripes_idx, x, y);
+            }
+}
+}
 }
 
 void Gui::DrawBarsTop(void) 
@@ -359,7 +369,19 @@ void Gui::DrawBGBot(void)
 {
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, settings.universal.bg);
+    if (settings.universal.bgl == 0) {
 	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+    } else if (settings.universal.bgl == 1) {
+       {
+        for (int x = 0; x < 320; x += 14)
+        {
+            for (int y = 0; y < 240; y += 14)
+            {
+                Gui::sprite(sprites_stripes2_idx, x, y);
+            }
+        }
+    }
+}
 }
 
 void Gui::DrawBarsBot(void)

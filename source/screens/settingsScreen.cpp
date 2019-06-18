@@ -51,6 +51,7 @@ std::string musicModes[] = {("DEFAULT"), "COVER"/*"BG"*/};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
+std::string layout2Modes[] = {"BG1", "BG2"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -81,8 +82,11 @@ ButtonPos uiSettingsButtonPos[] = {
 	// Battery percent.
 	{220, 168, 87, 33, -1},
 
-		// Layout.
+		// Bars Layout.
 	{10, 168, 87, 33, -1},
+
+		// BG Layout.
+	{10, 28, 87, 33, -1},
 };
 
 int getColorValue(int color, int bgr) {
@@ -228,9 +232,12 @@ void drawUISettingsScreen2(void) {
 	Gui::sprite(sprites_updaterButton_idx, 220, 168);
 	draw_text(229, 178, 0.7f, 0.7f, WHITE, percentModes[settings.universal.battery].c_str());
 	draw_text(129, 178, 0.7f, 0.7f, BLACK, "Percent :");
-
+	// Bars Layouts.
 	Gui::sprite(sprites_updaterButton_idx, 10, 168);
 	draw_text(19, 178, 0.7f, 0.7f, WHITE, layoutModes[settings.universal.layout].c_str());
+	// BG Layouts.
+	Gui::sprite(sprites_updaterButton_idx, 10, 28);
+	draw_text(19, 38, 0.7f, 0.7f, WHITE, layout2Modes[settings.universal.bgl].c_str());
 
 	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	draw_text(260, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -266,6 +273,9 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			} else if (touching(touch, uiSettingsButtonPos[13])) {
 			settings.universal.layout++;
 			if (settings.universal.layout > 1) settings.universal.layout = 0;
+			} else if (touching(touch, uiSettingsButtonPos[14])) {
+			settings.universal.bgl++;
+			if (settings.universal.bgl > 1) settings.universal.bgl = 0;
 			} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 			SaveUniversalSettings();

@@ -36,6 +36,7 @@ typedef struct _Settings_t {
 		int music;
 		int battery;
 		int layout;
+		int bgl;
 		int animation;
 		int animationcolor;
 	} universal;

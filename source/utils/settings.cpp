@@ -46,6 +46,7 @@ void LoadUniversalSettings(void) {
 	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
 	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.
 	settings.universal.layout = settingsini.GetInt("UI", "LAYOUT", 0); // The Current Layout (Bars)
+	settings.universal.bgl = settingsini.GetInt("UI", "LAYOUTBG", 0); // BG Layouts.
 
 	// Animated BG.
 	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
@@ -61,6 +62,7 @@ void SaveUniversalSettings(void) {
 	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
 	settingsini.SetInt("UI", "BATTERY", settings.universal.battery);
 	settingsini.SetInt("UI", "LAYOUT", settings.universal.layout);
+	settingsini.SetInt("UI", "LAYOUTBG", settings.universal.bgl);
 
 	// Animated BG.
 	settingsini.SetInt("ANIMATED", "ENABLE", settings.universal.animation);
