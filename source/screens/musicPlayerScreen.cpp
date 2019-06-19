@@ -261,7 +261,7 @@ void drawMusicPlayer(void) {
 		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 200, 162, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
 		if (Audio_GetPosition() != -1) {
 		Draw_Rect(100, 179, 207, 16, C2D_Color32(97, 97, 97, 150));
-		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, WHITE);
+		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, settings.universal.bars);
 		}
 
 	
@@ -278,15 +278,6 @@ void drawMusicPlayer(void) {
 		// Placeholder for Metadata Stuff..
 	 	if (settings.universal.music == 0) {
 	} else if (settings.universal.music == 1) {
-
-//			snprintf(buf, 137, "%.80s", ID3.artist);
-//			snprintf(buf2, 137, "%.80s", ID3.year);
-//			snprintf(buf3, 137, "%.80s", ID3.title);
-//		draw_text(15, 40, 0.7f, 0.7f, WHITE, buf3);
-
-//		draw_text(15, 60, 0.7f, 0.7f, WHITE, buf);
-
-		//draw_text(15, 80, 0.7f, 0.7f, WHITE, buf2);
 			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
 			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
 			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
