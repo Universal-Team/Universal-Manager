@@ -281,9 +281,10 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = (i18n::localize("CURRENT_SONG")) + currentSong.substr(currentSong.find_last_of("/")+1);
 		draw_text_center(GFX_TOP, 0, 0.5f, 0.50f, 0.50f, WHITE, nowPlayingText.c_str());
+		Draw_Rect(155, 162, 85, 10, GRAY);
 		Gui::staticText((secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str(), 200, 162, 0.45f, 0.45f, WHITE,  TextPosX::CENTER, TextPosY::TOP);
 		if (Audio_GetPosition() != -1) {
-		Draw_Rect(100, 179, 207, 16, C2D_Color32(97, 97, 97, 150));
+		Draw_Rect(100, 179, 207, 16, GRAY);
 		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, settings.universal.bars);
 		}
 
