@@ -14,6 +14,7 @@
 
 static volatile bool stop = true;
 static enum file_types file_type = FILE_TYPE_ERROR;
+Audio_Metadata metadata;
 
 /**
  * Pause or play current file.
@@ -71,6 +72,9 @@ void playFile(void* infoIn)
 	int				ret = -1;
 	const char*		file = info->file;
 	bool			isNdspInit = false;
+
+	static const Audio_Metadata empty;
+	metadata = empty;
 
 	/* Reset previous stop command */
 	stop = false;

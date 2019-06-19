@@ -2,15 +2,6 @@
 #include "music/playback.h"
 
 
-typedef struct {
-	char title[80];
-	char album[80];
-	char artist[80];
-	char year[0x5];
-} ID3_Tag;
-
-ID3_Tag ID3;
-
 /**
  * Set decoder parameters for MP3.
  *

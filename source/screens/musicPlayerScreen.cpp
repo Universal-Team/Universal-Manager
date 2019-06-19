@@ -250,7 +250,6 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 } 
 
 void drawMusicPlayer(void) {
-	char buf[1024], buf2[1024], buf3[1024];
 
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -280,16 +279,22 @@ void drawMusicPlayer(void) {
 	 	if (settings.universal.music == 0) {
 	} else if (settings.universal.music == 1) {
 
-			snprintf(buf, 137, "%.80s", ID3.artist);
-			snprintf(buf2, 137, "%.80s", ID3.year);
-			snprintf(buf3, 137, "%.80s", ID3.title);
-		draw_text(15, 40, 0.7f, 0.7f, WHITE, buf3);
+//			snprintf(buf, 137, "%.80s", ID3.artist);
+//			snprintf(buf2, 137, "%.80s", ID3.year);
+//			snprintf(buf3, 137, "%.80s", ID3.title);
+//		draw_text(15, 40, 0.7f, 0.7f, WHITE, buf3);
 
-		draw_text(15, 60, 0.7f, 0.7f, WHITE, buf);
+//		draw_text(15, 60, 0.7f, 0.7f, WHITE, buf);
 
-		draw_text(15, 80, 0.7f, 0.7f, WHITE, buf2);
-	//} else if (settings.universal.music == 2) {
-	//}
+		//draw_text(15, 80, 0.7f, 0.7f, WHITE, buf2);
+			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
+			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
+			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
+			Draw_Text(15, 80, 0.45f, WHITE, strupr(metadata.album));
+			Draw_Text(15, 100, 0.45f, WHITE, strupr(metadata.year));
+		} else {
+			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
+		}
 	}
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -325,9 +330,6 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 		togglePlayback();
 	} else if (hDown & KEY_X) {
 		stopPlayback();
-		memset(ID3.artist, 0, 30);
-		memset(ID3.title, 0, 30);
-		memset(ID3.year, 0, 4);
 	} else if (hDown & KEY_B) {
 		screenMode = musicPlayerReturn;
 	} else if (hDown & KEY_TOUCH) {
@@ -335,14 +337,8 @@ void musicPlayerLogic(u32 hDown, touchPosition touch) {
 			togglePlayback();
 		} else if (touching(touch, playerButtonPos[1])) {
 			goto prevSong;
-			memset(ID3.artist, 0, 30);
-			memset(ID3.title, 0, 30);
-			memset(ID3.year, 0, 4);
 		} else if (touching(touch, playerButtonPos[2])) {
 			goto nextSong;
-			memset(ID3.artist, 0, 30);
-			memset(ID3.title, 0, 30);
-			memset(ID3.year, 0, 4);
 		} else if (touching(touch, playerButtonPos[3])) {
 			goto toggleShuffle;
 		} else if (touching(touch, playerButtonPos[4])) {

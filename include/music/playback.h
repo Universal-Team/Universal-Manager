@@ -7,6 +7,19 @@
 /* Channel to play music on */
 #define CHANNEL	0x09
 
+typedef struct {
+	bool has_meta;
+    char title[31];
+    char album[31];
+    char artist[31];
+    char year[5];
+    //char comment[31];
+    //char genre[31];
+    //C2D_Image cover_image;
+} Audio_Metadata;
+
+extern Audio_Metadata metadata;
+
 struct decoder_fn
 {
 	int (* init)(const char* file);
