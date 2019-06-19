@@ -109,12 +109,12 @@ void drawFTPScreen(void) {
 				Draw_Text(((320 - Draw_GetTextWidth(0.45f, ftp_file_transfer)) / 2), 150, 0.45f, WHITE, ftp_file_transfer);
 
 			if (isTransfering) {
-				C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, WHITE);
+				C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, BLACK);
 				C2D_DrawRectSolid(pBar, 140, 0.5f, 40, 3, WHITE);
 
 				// Boundary stuff
-				C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, WHITE);
-				C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, WHITE); 
+				C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, BLACK);
+				C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, BLACK); 
 				pBar += 4;
 			
 				if (pBar >= xlim)

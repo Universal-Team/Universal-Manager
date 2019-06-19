@@ -37,6 +37,7 @@
 extern "C" {
 	#include "music/playback.h"
 	#include "music/mp3.h"
+	#include "C2D_helper.h"
 }
 
 struct ButtonPos {
@@ -71,11 +72,18 @@ std::vector<std::string> plstContents;
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
+static C2D_Image musicImage;
+
+static bool Draw_Image(void)
+{
+	return C2D_DrawImageAt(musicImage, 0, 25, 0.5);
+}
+
 ButtonPos mainButtonPos[] = {
     {0, 40, 149, 52, musicListScreen},
     {170, 40, 149, 52, musicPlayerScreen},
     {0, 150, 149, 52, musicPlaylistPlayScreen},
-	//{170, 150, 149, 52, themeSelectorScreen},
+	{170, 150, 149, 52, themeSelectorScreen},
 };
 
 ButtonPos playerButtonPos[] = {
@@ -125,9 +133,9 @@ void drawMusicMain() {
 	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
 	Gui::staticText((i18n::localize("PLAYLISTS")), 80, 167, 0.65f, 0.65f, WHITE,TextPosX::CENTER, TextPosY::TOP);
 
-	// Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
-	// Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
-	// Gui::staticText((i18n::localize("THEMES")), 255, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
+	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
+	 Gui::staticText((i18n::localize("THEMES")), 255, 167, 0.7f, 0.7f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
@@ -255,6 +263,21 @@ void drawMusicPlayer(void) {
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 
+		// Placeholder for Metadata Stuff..
+	 	if (settings.universal.music == 0) {
+	} else if (settings.universal.music == 1) {
+			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
+			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
+			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
+			Draw_Text(15, 80, 0.45f, WHITE, strupr(metadata.album));
+			Draw_Text(15, 100, 0.45f, WHITE, strupr(metadata.year));
+		} else {
+			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
+		}
+	} else if (settings.universal.music == 2) {
+		Draw_Image(); 
+	}
+	
 	if(isPlaying()) {
 		std::string nowPlayingText = (i18n::localize("CURRENT_SONG")) + currentSong.substr(currentSong.find_last_of("/")+1);
 		draw_text_center(GFX_TOP, 0, 0.5f, 0.50f, 0.50f, WHITE, nowPlayingText.c_str());
@@ -275,18 +298,6 @@ void drawMusicPlayer(void) {
 	}
 
 
-		// Placeholder for Metadata Stuff..
-	 	if (settings.universal.music == 0) {
-	} else if (settings.universal.music == 1) {
-			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
-			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
-			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
-			Draw_Text(15, 80, 0.45f, WHITE, strupr(metadata.album));
-			Draw_Text(15, 100, 0.45f, WHITE, strupr(metadata.year));
-		} else {
-			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
-		}
-	}
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
@@ -631,7 +642,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 }
 
 
-/* void drawThemeSelector(void) {
+ void drawThemeSelector(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -681,26 +692,18 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
 			if (settings.universal.music == 0) {
-			DisplayMsg("Not Implemented Yet.");
+			DisplayMsg("Put the Music Mode to `BG`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (settings.universal.music == 1) {
-			//if(confirmPopup("Do you want, to use this Image\n As a Cover?")) {
-			//volt_free_texture(Cover);
-			//volt_load_texture_png(Cover, dirContents[selectedFile].name.c_str());
-			//} 
-			DisplayMsg("Not Implemented Yet.");
+			DisplayMsg("Put the Music Mode to `BG`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (settings.universal.music == 2) {
-			//if(confirmPopup("Do you want, to use this Image?")) {
-			//volt_free_texture(MusicPlayerImage);
-			//volt_load_texture_png(MusicPlayerImage, dirContents[selectedFile].name.c_str());
-			DisplayMsg("Not Implemented Yet.");
-			for (int i = 0; i < 60*4; i++) {
-			gspWaitForVBlank();
+			if(confirmPopup("Do you want, to use this Image?")) {
+			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
 			}
 		}
 		}
@@ -727,4 +730,4 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			keyRepeatDelay = 3;
 		}
 	}
-}*/
+}

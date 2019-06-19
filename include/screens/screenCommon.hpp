@@ -98,8 +98,8 @@ void drawMusicPlaylistPlay(void);
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld);
 void drawMusicPlaylistEdit(void);
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld);
-//void drawThemeSelector(void);
-//void themeSelectorLogic(u32 hDown, u32 hHeld);
+void drawThemeSelector(void);
+void themeSelectorLogic(u32 hDown, u32 hHeld);
 
 // Updater Screens
 // Sub Menu.

@@ -47,7 +47,7 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {("DEFAULT"), "COVER"/*"BG"*/};
+std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
@@ -199,7 +199,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			SaveUniversalSettings();
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
-			if (settings.universal.music > 1) settings.universal.music = 0;
+			if (settings.universal.music > 2) settings.universal.music = 0;
 	}
 }
 }

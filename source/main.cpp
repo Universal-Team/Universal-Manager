@@ -147,7 +147,7 @@ int main()
 	i18n::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	//mcuInit(); // Comment this out, if you use Citra.
+	mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -202,9 +202,9 @@ int main()
 			case musicPlaylistEditScreen:
 				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
 				break;
-//			case themeSelectorScreen:
-//				drawThemeSelector();
-//				break;
+			case themeSelectorScreen:
+				drawThemeSelector();
+				break;
 //#########################################################################################################
 			case settingsScreen:
 				drawSettingsScreen();		// Draws the Settings screen
@@ -311,9 +311,9 @@ int main()
 			case musicPlaylistEditScreen:
 				musicPlaylistEditLogic(hDown, hHeld);
 				break;
-//			case themeSelectorScreen:
-//				themeSelectorLogic(hDown, hHeld);
-//				break;
+			case themeSelectorScreen:
+				themeSelectorLogic(hDown, hHeld);
+				break;
 //#########################################################################################################
 			case settingsScreen:
 			if (hDown & KEY_B) {
@@ -344,7 +344,6 @@ int main()
 				break;
 //#########################################################################################################
 			case ftpScreen:
-			//ftpLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case updaterSubMenu:
