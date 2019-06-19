@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include <vector>
 #include "fileBrowse.h"
+#include "C2D_helper.h"
 
  extern uint selectedFile;
  extern int keyRepeatDelay;
@@ -38,8 +39,26 @@
 std::string currentImage = "";
 std::string filename;
 
+static C2D_Image image;
 
-/* void drawPNGImageViewerUI(void) {
+static void FreeImage(C2D_Image *image) {
+	C3D_TexDelete(image->tex);
+	linearFree((Tex3DS_SubTexture *)image->subtex);
+	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
+	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
+}
+
+static bool Draw_Image(void)
+{
+	return C2D_DrawImage(image, 0, 0);
+}
+
+static void LoadTexture(char *path) {
+	Draw_LoadImageFile(& image, path);
+}
+
+
+void drawPNGImageViewerUI(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -122,6 +141,7 @@ void showImage(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
+	//Draw_Image(); // To-Do.
 	Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -179,12 +199,12 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-		//	if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
-		//	volt_free_texture(SDImage);
-		//	volt_load_texture_png(SDImage, dirContents[selectedFile].name.c_str());
+			//if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
+			//FreeImage(&image);
+			//LoadTexture("sdmc:/Test.png");
 			screenMode = showImageScreen;
-		//	}
-		}
+			}
+		//}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
@@ -213,5 +233,6 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 void showImageLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = PNGScreen;
+		//FreeImage(&image);
 	} 
-}*/
+}

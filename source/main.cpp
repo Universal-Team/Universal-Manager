@@ -80,7 +80,7 @@ ButtonPos mainScreenButtonPos[] = {
 
 ButtonPos fileScreenButtonPos[] = {
     {100, 40, 149, 52, musicMainScreen},
-//	{100, 120, 149, 52, PNGScreen},
+	{100, 120, 149, 52, PNGScreen},
     {293, 213, 27, 27, mainScreen},
 };
 
@@ -147,7 +147,7 @@ int main()
 	i18n::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	mcuInit(); // Comment this out, if you use Citra.
+	//mcuInit(); // Comment this out, if you use Citra.
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -216,15 +216,15 @@ int main()
 				drawUISettingsScreen2();
 				break;
 //#########################################################################################################
-//			case PNGScreen:
-//				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
-//				break;
-//			case BMPScreen:
-//				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
-//				break;
-//			case showImageScreen:
-//				showImage();
-//				break;
+			case PNGScreen:
+				drawPNGImageViewerUI();		// Draw the Image Viewer screen [PNG]
+				break;
+			case BMPScreen:
+				drawBMPImageViewerUI();		// Draw the Image Viewer screen [BMP]
+				break;
+			case showImageScreen:
+				showImage();
+				break;
 //#########################################################################################################
 			case ftpScreen:
 				drawFTPScreen();
@@ -333,15 +333,15 @@ int main()
 				uiSettingsLogic2(hDown, touch);
 				break;
 //#########################################################################################################
-//			case PNGScreen:
-//			PNGSelectorLogic(hDown, hHeld);
-//				break;
-//			case BMPScreen:
-//			BMPSelectorLogic(hDown, hHeld);
-//				break;
-//			case showImageScreen:
-//			showImageLogic(hDown, touch);
-//				break;
+			case PNGScreen:
+			PNGSelectorLogic(hDown, hHeld);
+				break;
+			case BMPScreen:
+			BMPSelectorLogic(hDown, hHeld);
+				break;
+			case showImageScreen:
+			showImageLogic(hDown, touch);
+				break;
 //#########################################################################################################
 			case ftpScreen:
 			//ftpLogic(hDown, touch);
