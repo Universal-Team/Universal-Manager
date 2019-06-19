@@ -9,7 +9,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #define STBI_NO_STDIO
-#define STBI_NO_GIF
 #define STBI_NO_HDR
 #define STBI_NO_PIC
 #define STBI_NO_PSD
@@ -21,18 +20,6 @@
 
 #define BYTES_PER_PIXEL 4
 #define TRANSPARENT_COLOR 0xFFFFFFFF
-
-static u64 FSFILE_FRead(void *dst, u32 size, Handle file) {
-	Result ret = 0;
-	u32 bytes_read = 0;
-	u64 offset = 0;
-
-	if (R_FAILED(ret = FSFILE_Read(file, &bytes_read, offset, (u32 *)dst, size)))
-		return ret;
-
-	offset += bytes_read;
-	return offset;
-}
 
 static u8 *Draw_LoadExternalImageFile(const char *path, u32 *data_size) {
 	Result ret = 0;

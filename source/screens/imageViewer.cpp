@@ -30,7 +30,10 @@
 #include <unistd.h>
 #include <vector>
 #include "fileBrowse.h"
+
+extern "C" {
 #include "C2D_helper.h"
+}
 
  extern uint selectedFile;
  extern int keyRepeatDelay;
@@ -50,11 +53,7 @@ static void FreeImage(C2D_Image *image) {
 
 static bool Draw_Image(void)
 {
-	return C2D_DrawImage(image, 0, 0);
-}
-
-static void LoadTexture(char *path) {
-	Draw_LoadImageFile(& image, path);
+	return C2D_DrawImageAt(image, 0, 0, 0.5);
 }
 
 
@@ -65,7 +64,7 @@ void drawPNGImageViewerUI(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("PNG_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("PNG_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -103,7 +102,7 @@ void drawBMPImageViewerUI(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("BMP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("BMP_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -136,13 +135,14 @@ void drawBMPImageViewerUI(void) {
 
 
 void showImage(void) {
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	//Draw_Image(); // To-Do.
-	Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	//Gui::DrawBGTop();
+	//animatedBGTop();
+	//Gui::chooseLayoutTop();
+	//DisplayTime();
+	//drawBatteryTop();
+	C2D_SceneBegin(top);
+	Draw_Image(); 
+	//Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
@@ -158,11 +158,10 @@ void BMPSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-			//if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
-			//volt_free_texture(SDImage);
-			//volt_load_texture_bmp(SDImage, dirContents[selectedFile].name.c_str());
+			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240 pixel.")) {
+			Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
 			screenMode = showImageScreen;
-			//}
+			}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
@@ -199,12 +198,12 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-			//if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240pixel.")) {
+			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240 pixel.")) {
 			//FreeImage(&image);
-			//LoadTexture("sdmc:/Test.png");
+			Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
 			screenMode = showImageScreen;
 			}
-		//}
+		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
@@ -233,6 +232,6 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 void showImageLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = PNGScreen;
-		//FreeImage(&image);
+		FreeImage(&image);
 	} 
 }
