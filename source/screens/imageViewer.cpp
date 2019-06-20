@@ -41,6 +41,7 @@ extern "C" {
  extern std::vector<DirEntry> dirContents;
 std::string currentImage = "";
 std::string filename;
+double imageScale = 1.0f;
 
 static C2D_Image image;
 
@@ -53,7 +54,7 @@ static void FreeImage(C2D_Image *image) {
 
 static bool Draw_Image(void)
 {
-	return C2D_DrawImageAt(image, 0, 0, 0.5);
+	return C2D_DrawImageAt(image, 0, 0, 0.5, nullptr, imageScale, imageScale);
 }
 
 
@@ -148,8 +149,12 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 }
 
 void showImageLogic(u32 hDown, touchPosition touch) {
-	if (hDown & KEY_B) {
+	if(hDown & KEY_UP) {
+		imageScale += 0.1;
+	} else if(hDown & KEY_DOWN) {
+		imageScale -= 0.1;
+	} else if (hDown & KEY_B) {
 		screenMode = ImageSelectorScreen;
 		FreeImage(&image);
-	} 
+	}
 }
