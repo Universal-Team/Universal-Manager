@@ -73,17 +73,13 @@ void drawFileBrowse(void) {
 	DisplayTime();
 	drawBatteryTop();
 	Gui::staticText((i18n::localize("FILE_MANAGER")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	if (dirChanged) {
-		dirContents.clear();
-		std::vector<DirEntry> dirContentsTemp;
-		getDirectoryContents(dirContentsTemp);
-		for(uint i=0;i<dirContentsTemp.size();i++) {
-				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
-				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
-				dirContentsTemp[i].isDirectory)) {
-				dirContents.push_back(dirContentsTemp[i]);
-			}
-		}
+		if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                    dirContents.push_back(dirContentsTemp[i]);
+            }
 		dirChanged = false;
 	}
 	std::string dirs;
