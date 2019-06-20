@@ -35,7 +35,7 @@
 #include <malloc.h>
 #include <sstream>
 
-#include "keyboard.h"
+#include "keyboard.hpp"
 #include "utils/settings.hpp"
 
 struct ButtonPos {
@@ -177,23 +177,41 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			screenMode = uiSettingsScreen2;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
-			red = keyboardInputInt("Red");
-			settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				red = temp;
+				settings.universal.bars = RGBA8(red, getColorValue(settings.universal.bars, 1), getColorValue(settings.universal.bars, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[1])) {
-			green = keyboardInputInt("Green (0-255)");
-			settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				green = temp;
+				settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), green, getColorValue(settings.universal.bars, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[2])) {
-			blue = keyboardInputInt("Blue (0-255)");
-			settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				blue = temp;
+				settings.universal.bars = RGBA8(getColorValue(settings.universal.bars, 2), getColorValue(settings.universal.bars, 1), blue, 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[3])) {
-			red = keyboardInputInt("Red");
-			settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				red = temp;
+				settings.universal.bg = RGBA8(red, getColorValue(settings.universal.bg, 1), getColorValue(settings.universal.bg, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[4])) {
-			green = keyboardInputInt("Green (0-255)");
-			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				green = temp;
+				settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), green, getColorValue(settings.universal.bg, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
-			blue = keyboardInputInt("Blue (0-255)");
-			settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				blue = temp;
+				settings.universal.bg = RGBA8(getColorValue(settings.universal.bg, 2), getColorValue(settings.universal.bg, 1), blue, 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenMode = uiSettingsButtonPos[6].link;
 			SaveUniversalSettings();
@@ -256,14 +274,23 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			screenMode = uiSettingsScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[8])) {
-			red = keyboardInputInt("Red");
-			settings.universal.animationcolor = RGBA8(red, getColorValue(settings.universal.animationcolor, 1), getColorValue(settings.universal.animationcolor, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				red = temp;
+				settings.universal.animationcolor = RGBA8(red, getColorValue(settings.universal.animationcolor, 1), getColorValue(settings.universal.animationcolor, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[9])) {
-			green = keyboardInputInt("Green (0-255)");
-			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), green, getColorValue(settings.universal.animationcolor, 0), 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				green = temp;
+				settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), green, getColorValue(settings.universal.animationcolor, 0), 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[10])) {
-			blue = keyboardInputInt("Blue (0-255)");
-			settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), getColorValue(settings.universal.animationcolor, 1), blue, 255);
+			int temp = Input::getUint(255);
+			if(temp != -1) {
+				blue = temp;
+				settings.universal.animationcolor = RGBA8(getColorValue(settings.universal.animationcolor, 2), getColorValue(settings.universal.animationcolor, 1), blue, 255);
+			}
 		} else if (touching(touch, uiSettingsButtonPos[11])) {
 			settings.universal.animation++;
 			if (settings.universal.animation > 2) settings.universal.animation = 0;

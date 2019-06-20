@@ -31,7 +31,7 @@
 #include <vector>
 //#include "common.hpp"
 #include "fileBrowse.h"
-#include "keyboard.h"
+#include "keyboard.hpp"
 #include "settings.hpp"
 
 extern "C" {
@@ -461,7 +461,7 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_B) {
 		screenMode = musicListScreen;
 	} else if (hDown & KEY_Y) {
-		std::string newPlaylist = keyboardInput("Enter new playlist name:");
+		std::string newPlaylist = Input::getLine();
 		if(newPlaylist != "") {
 			FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+newPlaylist+".plst").c_str(), "w");
 			fclose(plst);

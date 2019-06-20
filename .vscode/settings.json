@@ -76,6 +76,9 @@
         "typeinfo": "cpp",
         "unordered_map": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "bit": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     }
 }
