@@ -48,6 +48,8 @@ struct ButtonPos {
 	int link;
 };
 
+bool imageLoaded = false;
+
 uint selectedFile = 0;
 int keyRepeatDelay = 3;
 bool dirChanged = true;
@@ -275,7 +277,11 @@ void drawMusicPlayer(void) {
 			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
 		}
 	} else if (settings.universal.music == 2) {
+		if (imageLoaded == true) {
 		Draw_Image(); 
+	} else if (imageLoaded == false) {
+			Draw_Text(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
+	}
 	}
 	
 	if(isPlaying()) {
@@ -706,6 +712,7 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		} else if (settings.universal.music == 2) {
 			if(confirmPopup("Do you want, to use this Image?")) {
 			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
+			imageLoaded = true;
 			}
 		}
 		}
