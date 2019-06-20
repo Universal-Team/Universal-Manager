@@ -50,19 +50,18 @@ extern C3D_RenderTarget* bottom;
 #define uiSettingsScreen		11
 #define uiSettingsScreen2		12
 //###############################
-#define PNGScreen				13
-#define BMPScreen				14
-#define showImageScreen			15
+#define ImageSelectorScreen		13
+#define showImageScreen			14
 //###############################
-#define ftpScreen				16
+#define ftpScreen				15
 //###############################
-#define updaterSubMenu			17
-#define OtherScreen				18
-#define TWLScreen				19
-#define CFWScreen				20
-#define UniversalScreen			21
+#define updaterSubMenu			16
+#define OtherScreen				17
+#define TWLScreen				18
+#define CFWScreen				19
+#define UniversalScreen			20
 //###############################
-#define keyboardScreen			22
+#define keyboardScreen			21
 
 struct Playlist {
 	std::string name;
@@ -119,10 +118,8 @@ void drawUniversalScreen(void);
 void UniversalLogic(u32 hDown, touchPosition touch);
 
 // Image Viewer!
-void drawPNGImageViewerUI(void);
-void PNGSelectorLogic(u32 hDown, u32 hHeld);
-void drawBMPImageViewerUI(void);
-void BMPSelectorLogic(u32 hDown, u32 hHeld);
+void drawImageSelectorScreen(void);
+void ImageSelectorLogic(u32 hDown, u32 hHeld);
 void showImage(void);
 void showImageLogic(u32 hDown, touchPosition touch);
 

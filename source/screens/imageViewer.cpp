@@ -57,58 +57,21 @@ static bool Draw_Image(void)
 }
 
 
-void drawPNGImageViewerUI(void) {
+void drawImageSelectorScreen(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("PNG_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Gui::staticText((i18n::localize("IMAGE_SELECTOR_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
 		getDirectoryContents(dirContentsTemp);
 		for(uint i=0;i<dirContentsTemp.size();i++) {
 				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
-				dirContentsTemp[i].isDirectory)) {
-				dirContents.push_back(dirContentsTemp[i]);
-			}
-		}
-		dirChanged = false;
-	}
-	std::string dirs;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
-}
-
-void drawBMPImageViewerUI(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Gui::staticText((i18n::localize("BMP_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	if (dirChanged) {
-		dirContents.clear();
-		std::vector<DirEntry> dirContentsTemp;
-		getDirectoryContents(dirContentsTemp);
-		for(uint i=0;i<dirContentsTemp.size();i++) {
-				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
+				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
 				dirContentsTemp[i].isDirectory)) {
 				dirContents.push_back(dirContentsTemp[i]);
 			}
@@ -135,20 +98,18 @@ void drawBMPImageViewerUI(void) {
 
 
 void showImage(void) {
-	//Gui::DrawBGTop();
-	//animatedBGTop();
-	//Gui::chooseLayoutTop();
-	//DisplayTime();
-	//drawBatteryTop();
 	C2D_SceneBegin(top);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, BLACK);
 	Draw_Image(); 
-	//Gui::staticText((i18n::localize("NOTIMPLEMENTEDYET")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
+	DisplayTime();
+	drawBatteryBot();
+	Gui::staticText((i18n::localize("IMAGE")), 160, 220, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
 }
 
-void BMPSelectorLogic(u32 hDown, u32 hHeld) { 
+void ImageSelectorLogic(u32 hDown, u32 hHeld) { 
 	if (keyRepeatDelay)	keyRepeatDelay--; 
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
@@ -173,49 +134,6 @@ void BMPSelectorLogic(u32 hDown, u32 hHeld) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
-		} else if (hDown & KEY_X) {
-		screenMode = PNGScreen;
-	} else if (hHeld & KEY_UP) {
-		if (selectedFile > 0 && !keyRepeatDelay) {
-			selectedFile--;
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedFile < dirContents.size()-1) {
-			selectedFile++;
-			keyRepeatDelay = 3;
-		}
-	}
-}
-
-void PNGSelectorLogic(u32 hDown, u32 hHeld) { 
-	if (keyRepeatDelay)	keyRepeatDelay--; 
-	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
-		} else {
-			if(dirContents[selectedFile].name != currentImage) {
-			}
-			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240 pixel.")) {
-			//FreeImage(&image);
-			Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			screenMode = showImageScreen;
-			}
-		}
-	} else if (hDown & KEY_B) {
-		char path[PATH_MAX];
-		getcwd(path, PATH_MAX);
-		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = fileScreen;
-		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
-		}
-	} else if (hDown & KEY_X) {
-		screenMode = BMPScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -231,7 +149,7 @@ void PNGSelectorLogic(u32 hDown, u32 hHeld) {
 
 void showImageLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenMode = PNGScreen;
+		screenMode = ImageSelectorScreen;
 		FreeImage(&image);
 	} 
 }
