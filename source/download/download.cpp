@@ -1140,12 +1140,12 @@ void updatePKMNChestRelease(void) {
 
 void updatePKMNChestNightly(void) {
 	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST_NIGHTLY")));
-		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
 		downloadFailed();
 		return;
 	}
