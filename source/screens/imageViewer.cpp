@@ -100,15 +100,12 @@ void drawImageSelectorScreen(void) {
 
 
 void showImage(void) {
-	C2D_SceneBegin(top);
-	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, BLACK);
+	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
+	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
+	set_screen(top);
 	Draw_Image(); 
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
-	DisplayTime();
-	drawBatteryBot();
-	Gui::staticText((i18n::localize("IMAGE")), 160, 220, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
 }
 
 void ImageSelectorLogic(u32 hDown, u32 hHeld) { 
