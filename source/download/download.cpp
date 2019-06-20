@@ -1122,6 +1122,11 @@ void updatePKMNChestRelease(void) {
 		return;
 	}
 
+	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+		downloadFailed();
+		return;
+	}
+
 	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_RELEASE")));
 		installCia("/PKMN-Chest-Nightly.cia");
 
@@ -1136,6 +1141,11 @@ void updatePKMNChestRelease(void) {
 void updatePKMNChestNightly(void) {
 	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST_NIGHTLY")));
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
+		downloadFailed();
+		return;
+	}
+
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
 		downloadFailed();
 		return;
 	}
