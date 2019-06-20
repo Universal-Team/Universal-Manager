@@ -130,6 +130,10 @@ bool Draw_LoadImageFile(C2D_Image *texture, const char *path) {
 	return true;
 }
 
+void GetImageSizeFile(const char *path, int *width, int *height) {
+	stbi_load(path, &width, &height, NULL, STBI_rgb_alpha);
+}
+
 bool Draw_LoadImageMemory(C2D_Image *texture, void *data, size_t size) {
 	stbi_uc *image = NULL;
 	int width = 0, height = 0;

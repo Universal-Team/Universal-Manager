@@ -35,15 +35,14 @@ extern "C" {
 #include "C2D_helper.h"
 }
 
- extern uint selectedFile;
- extern int keyRepeatDelay;
- extern bool dirChanged;
- extern std::vector<DirEntry> dirContents;
+extern uint selectedFile;
+extern int keyRepeatDelay;
+extern bool dirChanged;
+extern std::vector<DirEntry> dirContents;
 std::string currentImage = "";
 std::string filename;
 double imageScale = 1.0f;
-int positionX = 0;
-int positionY = 0;
+int positionX = 0, positionY = 0, width = 0, height = 0;
 
 static C2D_Image image;
 
@@ -124,6 +123,7 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240 pixel.")) {
 			Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
+			GetImageSizeFile(dirContents[selectedFile].name.c_str(), &width, &height);
 			screenMode = showImageScreen;
 			}
 		}
@@ -151,18 +151,18 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 }
 
 void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(hDown & KEY_R) {
-		imageScale += 0.1;
-	} else if(hDown & KEY_L) {
-		imageScale -= 0.1;
+	if(hHeld & KEY_R) {
+		if(imageScale < 10)	imageScale += 0.1;
+	} else if(hHeld & KEY_L) {
+		if(imageScale > 0)	imageScale -= 0.1;
 	} else if (hHeld & KEY_RIGHT) {
-		 positionX += 1.0;
+		if(positionX < 400-width)	positionX += 1.0;
 	} else if (hHeld & KEY_LEFT) {
-		positionX -= 1.0;
+		if(positionX > 0)	positionX -= 1.0;
 	} else if (hHeld & KEY_UP) {
-		positionY -= 1.0;
+		if(positionY > 0)	positionY--;
 	} else if (hHeld & KEY_DOWN) {
-		positionY += 1.0;
+		if(positionY < 240-height)	positionY++;
 	} else if (hDown & KEY_B) {
 		screenMode = ImageSelectorScreen;
 		FreeImage(&image);
