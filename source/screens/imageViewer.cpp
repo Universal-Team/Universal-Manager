@@ -42,8 +42,8 @@ extern "C" {
 std::string currentImage = "";
 std::string filename;
 double imageScale = 1.0f;
-bool positionX = 1.0f;
-bool positionY = 1.0f;
+int positionX = 0;
+int positionY = 0;
 
 static C2D_Image image;
 
@@ -150,19 +150,19 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 	}
 }
 
-void showImageLogic(u32 hDown, touchPosition touch) {
+void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(hDown & KEY_R) {
 		imageScale += 0.1;
 	} else if(hDown & KEY_L) {
 		imageScale -= 0.1;
-	} else if (hDown & KEY_RIGHT) {
+	} else if (hHeld & KEY_RIGHT) {
 		 positionX += 1.0;
-	} else if (hDown & KEY_LEFT) {
+	} else if (hHeld & KEY_LEFT) {
 		positionX -= 1.0;
-	} else if (hDown & KEY_UP) {
-		positionY += 1.0;
-	} else if (hDown & KEY_DOWN) {
+	} else if (hHeld & KEY_UP) {
 		positionY -= 1.0;
+	} else if (hHeld & KEY_DOWN) {
+		positionY += 1.0;
 	} else if (hDown & KEY_B) {
 		screenMode = ImageSelectorScreen;
 		FreeImage(&image);

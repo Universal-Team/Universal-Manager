@@ -121,7 +121,7 @@ void UniversalLogic(u32 hDown, touchPosition touch);
 void drawImageSelectorScreen(void);
 void ImageSelectorLogic(u32 hDown, u32 hHeld);
 void showImage(void);
-void showImageLogic(u32 hDown, touchPosition touch);
+void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
 // Miscs.
 //void saveMsg(void);

@@ -334,7 +334,7 @@ int main()
 			ImageSelectorLogic(hDown, hHeld);
 				break;
 			case showImageScreen:
-			showImageLogic(hDown, touch);
+			showImageLogic(hDown, hHeld, touch);
 				break;
 //#########################################################################################################
 			case ftpScreen:
