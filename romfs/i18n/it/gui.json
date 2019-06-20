@@ -85,5 +85,6 @@
     "INSTALL_PKMN_CHEST_NIGHTLY":           "Now Install the CIA...",
     "INSTALL_PKMN_CHEST_RELEASE":           "Now Install the CIA...",
     "RELAUNCH_RELEASE":                     "Are you sure you want to update Relaunch\nTo Release?",
-    "RELAUNCH_NIGHTLY":                     "Are you sure you want to update Relaunch\nTo Nightly?"
+    "RELAUNCH_NIGHTLY":                     "Are you sure you want to update Relaunch\nTo Nightly?",
+    "FILE_MANAGER":                         "File Manager"
 }

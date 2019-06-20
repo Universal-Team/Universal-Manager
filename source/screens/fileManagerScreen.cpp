@@ -25,6 +25,22 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
+#include "fileBrowse.h"
+
+extern "C" {
+#include "C2D_helper.h"
+}
+
+ extern uint selectedFile;
+ extern int keyRepeatDelay;
+ extern bool dirChanged;
+ extern std::vector<DirEntry> dirContents;
+std::string currentFile = "";
+std::string currentFiles;
 
 void drawFileManagerSubMenu(void) {
 	Gui::DrawBGTop();
@@ -47,4 +63,68 @@ void drawFileManagerSubMenu(void) {
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
 	Gui::sprite(sprites_image_icon_idx, 105, 130);
 	Gui::staticText((i18n::localize("IMAGE_VIEWER")), 190, 137, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+}
+
+void drawFileBrowse(void) {
+	// Theme Stuff.
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Gui::staticText((i18n::localize("FILE_MANAGER")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	if (dirChanged) {
+		dirContents.clear();
+		std::vector<DirEntry> dirContentsTemp;
+		getDirectoryContents(dirContentsTemp);
+		for(uint i=0;i<dirContentsTemp.size();i++) {
+				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
+				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
+				dirContentsTemp[i].isDirectory)) {
+				dirContents.push_back(dirContentsTemp[i]);
+			}
+		}
+		dirChanged = false;
+	}
+	std::string dirs;
+	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
+		if (i == selectedFile) {
+			dirs += "> " + dirContents[i].name + "\n";
+		} else {
+			dirs += "  " + dirContents[i].name + "\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
+		dirs += "\n";
+	}
+	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
+}
+
+void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (keyRepeatDelay)	keyRepeatDelay--; 
+		if (hDown & KEY_B) {
+		char path[PATH_MAX];
+		getcwd(path, PATH_MAX);
+		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
+			screenMode = fileScreen;
+		} else {
+		chdir("..");
+		selectedFile = 0;
+		dirChanged = true;
+		}
+	} else if (hHeld & KEY_UP) {
+		if (selectedFile > 0 && !keyRepeatDelay) {
+			selectedFile--;
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedFile < dirContents.size()-1) {
+			selectedFile++;
+			keyRepeatDelay = 3;
+		}
+	}
 }

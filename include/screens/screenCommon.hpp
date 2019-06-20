@@ -61,7 +61,7 @@ extern C3D_RenderTarget* bottom;
 #define CFWScreen				19
 #define UniversalScreen			20
 //###############################
-#define keyboardScreen			21
+#define fileManager				21
 
 struct Playlist {
 	std::string name;
@@ -130,3 +130,7 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 
 // FTP Stuff.
 void drawFTPScreen(void);
+
+// File Manager.
+void drawFileBrowse(void);
+void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch);
