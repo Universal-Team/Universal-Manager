@@ -382,6 +382,7 @@ int main()
 		}
 		if (hDown & KEY_START && screenMode == mainScreen) 
 		{
+			stopPlayback();
 			break;
 		}
 		
@@ -390,6 +391,7 @@ int main()
     }
 
 	SaveUniversalSettings();
+	stopPlayback();
 	Gui::exit();
 	hidExit();
 	srvExit();
