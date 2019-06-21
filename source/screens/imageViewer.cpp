@@ -148,14 +148,30 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 }
 
 void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hHeld & KEY_CPAD_RIGHT) {
-		if(positionX < 400-(imageSize.width*imageScale))	positionX += 2;
-	} else if (hHeld & KEY_CPAD_LEFT) {
-		if(positionX > 0)	positionX -= 2;
-	} else if (hHeld & KEY_CPAD_UP) {
-		if(positionY > 0)	positionY -= 2;
+	if (hHeld & KEY_CPAD_UP) {
+		if(imageSize.height*imageScale < 240) {
+			if(positionY > 0)	positionY -= imageScale*2;
+		} else {
+			if(positionY > 240-(imageSize.height*imageScale))	positionY -= imageScale*2;
+		}
 	} else if (hHeld & KEY_CPAD_DOWN) {
-		if(positionY < 240-(imageSize.height*imageScale))	positionY += 2;
+		if(imageSize.height*imageScale < 240) {
+			if(positionY < 240-(imageSize.height*imageScale))	positionY += imageScale*2;
+		} else {
+			if(positionY < 0)	positionY += imageScale*2;
+		}
+	} else if (hHeld & KEY_CPAD_LEFT) {
+		if(imageSize.width*imageScale < 400) {
+			if(positionX > 0)	positionX -= imageScale*2;
+		} else {
+			if(positionX > 400-(imageSize.width*imageScale))	positionX -= imageScale*2;
+		}
+	} else if (hHeld & KEY_CPAD_RIGHT) {
+		if(imageSize.width*imageScale < 400) {
+			if(positionX < 400-(imageSize.width*imageScale))	positionX += imageScale*2;
+		} else {
+			if(positionX < 0)	positionX += imageScale*2;
+		}
 	} else if(hHeld & KEY_UP) {
 		if(imageScale < 10)	imageScale += 0.1;
 	} else if(hHeld & KEY_DOWN) {
