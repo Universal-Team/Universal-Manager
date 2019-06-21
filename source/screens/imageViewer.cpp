@@ -151,18 +151,18 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 }
 
 void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(hHeld & KEY_R) {
+	if (hHeld & KEY_CPAD_RIGHT) {
+		if(positionX < 400-(width*imageScale))	positionX += 2;
+	} else if (hHeld & KEY_CPAD_LEFT) {
+		if(positionX > 0)	positionX -= 2;
+	} else if (hHeld & KEY_CPAD_UP) {
+		if(positionY > 0)	positionY -= 2;
+	} else if (hHeld & KEY_CPAD_DOWN) {
+		if(positionY < 240-(height*imageScale))	positionY += 2;
+	} else if(hHeld & KEY_UP) {
 		if(imageScale < 10)	imageScale += 0.1;
-	} else if(hHeld & KEY_L) {
+	} else if(hHeld & KEY_DOWN) {
 		if(imageScale > 0)	imageScale -= 0.1;
-	} else if (hHeld & KEY_RIGHT) {
-		if(positionX < 400-(width*imageScale))	positionX += 1.0;
-	} else if (hHeld & KEY_LEFT) {
-		if(positionX > 0)	positionX -= 1.0;
-	} else if (hHeld & KEY_UP) {
-		if(positionY > 0)	positionY--;
-	} else if (hHeld & KEY_DOWN) {
-		if(positionY < 240-(height*imageScale))	positionY++;
 	} else if (hDown & KEY_B) {
 		screenMode = ImageSelectorScreen;
 		FreeImage(&image);
