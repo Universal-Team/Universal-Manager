@@ -243,6 +243,9 @@ int main()
 				drawUniversalScreen();
 				break;
 //#########################################################################################################
+			case fileManager:
+				drawFileBrowse();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -269,6 +272,8 @@ int main()
 					screenMode = mainScreen;
 				} else if (hDown & KEY_A) {
 					screenMode = musicMainScreen;
+				} else if (hDown & KEY_X) {
+					screenMode = fileManager;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
 						if (touching(touch, fileScreenButtonPos[i])) {
@@ -355,7 +360,11 @@ int main()
 			case UniversalScreen:
 				UniversalLogic(hDown, touch);
 				break;
-			}
+//########################################################################################################
+			case fileManager:
+				fileManagerLogic(hDown, hHeld, touch);
+				break;
+		}
 //#########################################################################################################
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
 			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;

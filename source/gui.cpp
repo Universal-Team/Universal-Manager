@@ -442,7 +442,7 @@ void Gui::chooseLayoutBotBack(void) {
 // Text.
 
 void DisplayMsg(const std::string& strKey) {
-    //Gui::clearStaticText();
+    Gui::clearStaticText();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
