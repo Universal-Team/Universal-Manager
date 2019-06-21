@@ -100,7 +100,7 @@ static void Draw_C3DTexToC2DImage(C3D_Tex *tex, Tex3DS_SubTexture *subtex, void 
 	linearFree(buf);
 }
 
-bool Draw_LoadImageFile(C2D_Image *texture, const char *path) {
+struct ImageSize Draw_LoadImageFile(C2D_Image *texture, const char *path) {
 	stbi_uc *image = NULL;
 	int width = 0, height = 0;
 
@@ -127,7 +127,11 @@ bool Draw_LoadImageFile(C2D_Image *texture, const char *path) {
 	Draw_C3DTexToC2DImage(tex, subtex, image, (u32)(width * height * BYTES_PER_PIXEL), (u32)width, (u32)height, GPU_RGBA8);
 	texture->tex = tex;
 	texture->subtex = subtex;
-	return true;
+
+	struct ImageSize imageSize;
+	imageSize.width = width;
+	imageSize.height = height;
+	return imageSize;
 }
 
 void GetImageSizeFile(const char *path, int *width, int *height) {
