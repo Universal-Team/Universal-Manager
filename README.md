@@ -2,7 +2,7 @@
 
 Universal-Manager, a Multimedia Manager for Nintendo 3DS.
 
-![Universal Manager Banner](https://github.com/Universal-Team/Universal-Manager/tree/master/resources/Banner-4K.png)
+![Universal Manager Banner](https://github.com/Universal-Team/Universal-Manager/tree/master/resources/Banner.png)
 
 ****
 **Compiling**
