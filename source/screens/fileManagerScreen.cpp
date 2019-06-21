@@ -112,6 +112,8 @@ void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
+		} else if (hDown & KEY_X) {
+			displayActionBox();
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;

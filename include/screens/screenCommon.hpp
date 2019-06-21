@@ -134,3 +134,4 @@ void drawFTPScreen(void);
 // File Manager.
 void drawFileBrowse(void);
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch);
+bool displayActionBox(void);
