@@ -75,6 +75,7 @@ void drawImageSelectorScreen(void) {
 		for(uint i=0;i<dirContentsTemp.size();i++) {
 				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
 				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
+				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "jpg") == 0 ||
 				dirContentsTemp[i].isDirectory)) {
 				dirContents.push_back(dirContentsTemp[i]);
 			}
