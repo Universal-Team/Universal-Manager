@@ -180,5 +180,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hDown & KEY_B) {
 		screenMode = ImageSelectorScreen;
 		FreeImage(&image);
+	} else if(hDown & KEY_SELECT) {
+		imageScale = 1.0f;
 	}
 }
