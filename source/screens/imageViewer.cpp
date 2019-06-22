@@ -120,7 +120,7 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
-			if(confirmPopup("Do you want, to see this Image?\nMake sure it is maximal 400x240 pixel.")) {
+			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
 			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
 			screenMode = showImageScreen;
 			}
@@ -182,5 +182,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		FreeImage(&image);
 	} else if(hDown & KEY_SELECT) {
 		imageScale = 1.0f;
+		positionX = 0;
+		positionY = 0;
 	}
 }
