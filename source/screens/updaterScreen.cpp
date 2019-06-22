@@ -286,20 +286,6 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-		// Universal-Manager Buttons.
-
-
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[10].x, downloadButtonPos[10].y);
-	// PKSM Buttons.
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	draw_text(0, 58, 0.7f, 0.7f, WHITE, "PKSM");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Release");
-	// Checkpoint Buttons.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[11].x, downloadButtonPos[11].y);
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	draw_text(0, 98, 0.65f, 0.65f, WHITE, "Checkpoint");
-	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
-
 	// Themes Download Button.
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
@@ -325,15 +311,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
 	} else if (hDown & KEY_TOUCH) {
-		 if (touching(touch, downloadFunctionButtonPos[10])) {
-			if(confirmPopup((i18n::localize("PKSM_RELEASE")))) {
-			updatePKSM();
-			}
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
-			if(confirmPopup((i18n::localize("CHECKPOINT_RELEASE")))) {
-			updateCheckpoint();
-			}
-		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+			if (touching(touch, downloadFunctionButtonPos[13])) {
 			screenMode = updaterSubMenu;
 		} else if (touching(touch, downloadFunctionButtonPos[14])) {
 			downloadThemes();

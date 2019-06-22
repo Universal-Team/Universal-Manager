@@ -129,16 +129,6 @@ void updateLuma(bool nightly);
 void downloadGodMode9(void);
 
 /**
- * Update PKSM to latest Release.
- */
-void updatePKSM(void);
-
-/**
- * Update Checkpoint to latest Release.
- */
-void updateCheckpoint(void);
-
-/**
  * Download themes from Universal-Team/extras.
  */
 void downloadThemes(void);

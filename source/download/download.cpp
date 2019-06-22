@@ -58,8 +58,6 @@ std::string latestBootstrapNightlyCache = "";
 std::string latestLumaReleaseCache = "";
 std::string latestLumaNightlyCache = "";
 std::string godMode9Cache = "";
-std::string latestPKSMReleaseCache = "";
-std::string latestCheckpointReleaseCache = "";
 std::string latestpkmnchestReleaseCache = "";
 std::string latestpkmnchestNightlyCache = "";
 
@@ -679,18 +677,6 @@ std::string latestGodMode9(void) {
 	return godMode9Cache;
 }
 
-std::string latestPKSMRelease(void) {
-	if (latestPKSMReleaseCache == "")
-		latestPKSMReleaseCache = getLatestRelease("FlagBrew/PKSM", "tag_name");
-	return latestPKSMReleaseCache;
-}
-
-std::string latestCheckpointRelease(void) {
-	if (latestCheckpointReleaseCache == "")
-		latestCheckpointReleaseCache = getLatestRelease("FlagBrew/Checkpoint", "tag_name");
-	return latestCheckpointReleaseCache;
-}
-
 std::string latestpkmnchestRelease(void) {
 	if (latestpkmnchestReleaseCache == "")
 		latestpkmnchestReleaseCache = getLatestRelease("Universal-Team/pkmn-chest", "tag_name");
@@ -732,8 +718,6 @@ void checkForUpdates() {
 	std::string lumaRelease = getInstalledVersion("LUMA3DS-RELEASE");
 	std::string lumaNightly = getInstalledVersion("LUMA3DS-NIGHTLY");
 	std::string godMode9Version = getInstalledVersion ("GODMODE9");
-	std::string pksmVersion = getInstalledVersion("PKSM");
-	std::string checkpointRelease = getInstalledVersion("CHECKPOINT-RELEASE");
 	std::string pkmnchestRelease = getInstalledVersion("PKMN-CHEST-RELEASE");
 	std::string pkmnchestNightly = getInstalledVersion("PKMN-CHEST-NIGHTLY");
 
@@ -750,8 +734,6 @@ void checkForUpdates() {
 	updateAvailable[6] = lumaRelease != latestLumaRelease();
 	updateAvailable[7] = lumaNightly != latestLumaNightly();
 	updateAvailable[8] = godMode9Version != latestGodMode9();
-	updateAvailable[9] = pksmVersion != latestPKSMRelease();
-	updateAvailable[10] = checkpointRelease != latestCheckpointRelease();
 	updateAvailable[11] = pkmnchestRelease != latestpkmnchestRelease();
 	updateAvailable[12] = pkmnchestNightly != latestpkmnchestNightly();
 }
@@ -954,43 +936,6 @@ void downloadGodMode9(void) {
 		saveUpdateData();
 		updateAvailable[8] = false;
 	doneMsg(); 
-	}
-
-void updatePKSM(void) {
-		DisplayMsg((i18n::localize("DOWNLOAD_PKSM")));
-		if (downloadFromRelease("https://github.com/FlagBrew/PKSM", "PKSM\\.cia", "/PKSM-Release.cia") != 0) {
-			downloadFailed();
-			return;
-		}
-
-		DisplayMsg((i18n::localize("INSTALL_PKSM")));
-		installCia("/PKSM-Release.cia");
-
-		deleteFile("sdmc:/PKSM-Release.cia");
-
-		setInstalledChannel("PKSM", "release");
-		setInstalledVersion("PKSM", latestPKSMRelease());
-		saveUpdateData();
-		updateAvailable[9] = false;
-	doneMsg();
-}
-
-void updateCheckpoint(void) {
-	DisplayMsg((i18n::localize("DOWNLOAD_CHECKPOINT")));
-		if (downloadFromRelease("https://github.com/FlagBrew/Checkpoint", "Checkpoint\\.cia", "/Checkpoint-Release.cia") != 0) {
-			downloadFailed();
-			return;
-		}
-
-		DisplayMsg((i18n::localize("INSTALL_CHECKPOINT")));
-		installCia("/Checkpoint-Release.cia");
-
-		deleteFile("sdmc:/Checkpoint-Release.cia");
-
-		setInstalledVersion("CHECKPOINT-RELEASE", latestCheckpointRelease());
-		saveUpdateData();
-		updateAvailable[10] = false;
-	doneMsg();
 }
 
 void downloadThemes(void) {
