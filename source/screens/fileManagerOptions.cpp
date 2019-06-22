@@ -35,11 +35,46 @@ extern "C" {
 #include "C2D_helper.h"
 }
 
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+
+ButtonPos FunctionPos[] = {
+    {59, 70, 93, 35, -1},
+    {165, 70, 93, 35, -1},
+    {59, 110, 93, 35, -1},
+	{165, 110, 93, 35, -1},
+	{59, 150, 93, 35, -1},
+	{165, 150, 93, 35, -1},
+};
+
+
+
 bool displayActionBox(void) {
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     set_screen(bottom);
-	Gui::Draw_ImageBlend(sprites_actionBox_idx, 54, 30, settings.universal.bars);
-	Gui::sprite(sprites_actionBox2_idx, 54, 30);
+	//Gui::Draw_ImageBlend(sprites_actionBox_idx, 54, 30, settings.universal.bars);
+	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, settings.universal.bars);
+	Gui::sprite(sprites_actionBox_idx, 54, 30);
+
+	// Buttons.
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[0].x, FunctionPos[0].y);
+	draw_text(FunctionPos[0].x+12, FunctionPos[0].y+10, 0.6f, 0.6f, WHITE, "Rename");
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[1].x, FunctionPos[1].y);
+	draw_text(FunctionPos[1].x+12, FunctionPos[1].y+10, 0.6f, 0.6f, WHITE, "Delete");
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[2].x, FunctionPos[2].y);
+	//draw_text(FunctionPos[2].x+12, FunctionPos[2].y+10, 0.6f, 0.6f, WHITE, "");
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[3].x, FunctionPos[3].y);
+	//draw_text(FunctionPos[3].x+12, FunctionPos[3].y+10, 0.6f, 0.6f, WHITE, "");
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[4].x, FunctionPos[4].y);
+	//draw_text(FunctionPos[4].x+12, FunctionPos[4].y+10, 0.6f, 0.6f, WHITE, "");
+	Gui::sprite(sprites_FileManagerButton_idx, FunctionPos[5].x, FunctionPos[5].y);
+	//draw_text(FunctionPos[5].x+12, FunctionPos[5].y+10, 0.6f, 0.6f, WHITE, "");
+
     Draw_EndFrame();
     while(1) {
 		gspWaitForVBlank();
