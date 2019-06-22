@@ -63,17 +63,13 @@ ButtonPos downloadFunctionButtonPos[] = {
 	{220, 48, 87, 33, -1},
 	// GodMode9
 	{129, 88, 87, 33, -1},
-	// PKSM
-	{129, 48, 87, 33, -1},
-	// Checkpoint
-	{129, 88, 87, 33, -1},
 	// Check for Update!
 	{0, 208, 32, 32, -1},
 	// Back Icon.
 	{293, 213, 27, 27, -1},
 
 	// Themes.
-	{129, 128, 87, 33, -1},
+	{129, 48, 87, 33, -1},
 
 	// pkmn-chest
 	{220, 88, 87, 33, -1},
@@ -104,10 +100,6 @@ ButtonPos downloadButtonPos[] = {
 
 	// GodMode9
 	{129, 88, 87, 33},
-	// PKSM
-	{129, 48, 87, 33},
-	// Checkpoint
-	{129, 88, 87, 33},
 	// ?
 	{129, 128, 87, 33},
 
@@ -116,7 +108,7 @@ ButtonPos downloadButtonPos[] = {
 	{129, 48, 87, 33, TWLScreen},
 	{220, 48, 87, 33, OtherScreen},
 
-	{129, 128, 87, 33}, // Music Player Theme.
+	{129, 48, 87, 33}, // Music Player Theme.
 	// PKMN-Chest
 	{220, 88, 87, 33},
 	// PKMN-Chest Nightly.
@@ -157,10 +149,10 @@ void drawUpdaterSubMenu(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[11].x, downloadButtonPos[11].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[12].x, downloadButtonPos[12].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[15].x, downloadButtonPos[15].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[19].x, downloadButtonPos[19].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[17].x, downloadButtonPos[17].y);
 	draw_text(49, 58, 0.7f, 0.7f, WHITE, "CFW");
 	draw_text(140, 58, 0.7f, 0.7f, WHITE, "TWL");
 	draw_text(229, 58, 0.7f, 0.7f, WHITE, "Other");
@@ -182,7 +174,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 			checkForUpdates();
 			}
 		}
-*/} else if (touching(touch, downloadFunctionButtonPos[13])) {
+*/} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			screenMode = mainScreen;
 		}
 }
@@ -258,7 +250,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 			if(confirmPopup((i18n::localize("USRCHEAT_DAT")))) {
 			updateCheats();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			screenMode = updaterSubMenu;
 		}
 	}
@@ -287,10 +279,10 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	Gui::chooseLayoutBotBack();
 
 	// Themes Download Button.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
-	Gui::sprite(sprites_TitleButton_idx, 0, 128);
-	draw_text(0, 138, 0.7f, 0.7f, WHITE, "Extras");
-	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Themes");
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
+	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	draw_text(0, 58, 0.65f, 0.65f, WHITE, "Extras");
+	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Themes");
 
 	
 
@@ -311,9 +303,9 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
 	} else if (hDown & KEY_TOUCH) {
-			if (touching(touch, downloadFunctionButtonPos[13])) {
+			if (touching(touch, downloadFunctionButtonPos[11])) {
 			screenMode = updaterSubMenu;
-		} else if (touching(touch, downloadFunctionButtonPos[14])) {
+		} else if (touching(touch, downloadFunctionButtonPos[12])) {
 			downloadThemes();
 }
 }
@@ -372,7 +364,7 @@ void updaterCFWLogic(u32 hDown, touchPosition touch) {
 			if(confirmPopup((i18n::localize("GODMODE9_RELEASE")))) {
 			downloadGodMode9();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			screenMode = updaterSubMenu;
 		}
 		}
@@ -401,15 +393,15 @@ void drawUniversalScreen(void) {
 
 	// NDS-Bootstrap Buttons.
 	// PKMN-Chest.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[17].x, downloadButtonPos[17].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[18].x, downloadButtonPos[18].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[15].x, downloadButtonPos[15].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
 	draw_text(0, 98, 0.65f, 0.65f, WHITE, "PKMN-Chest");
 	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
 	draw_text(226, 98, 0.7f, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[20].x, downloadButtonPos[20].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[21].x, downloadButtonPos[21].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[18].x, downloadButtonPos[18].y);
+	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[19].x, downloadButtonPos[19].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
 	draw_text(0, 138, 0.65f, 0.65f, WHITE, "RELAUNCH");
 	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Release");
@@ -442,21 +434,21 @@ void UniversalLogic(u32 hDown, touchPosition touch) {
 			updateUniversalManager(true);
 			updatingSelf = false;
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[13])) {
+		} else if (touching(touch, downloadFunctionButtonPos[11])) {
 			screenMode = updaterSubMenu;
-		} else if (touching(touch, downloadFunctionButtonPos[16])) {
+		} else if (touching(touch, downloadFunctionButtonPos[14])) {
 			if(confirmPopup((i18n::localize("PKMN_CHEST_RELEASE")))) {
 			updatePKMNChestRelease(); 
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[15])) {
+		} else if (touching(touch, downloadFunctionButtonPos[13])) {
 			if(confirmPopup((i18n::localize("PKMN_CHEST_NIGHTLY")))) {
 			updatePKMNChestNightly(); 
 			}
-			} else if (touching(touch, downloadFunctionButtonPos[17])) {
+			} else if (touching(touch, downloadFunctionButtonPos[15])) {
 			if(confirmPopup((i18n::localize("RELAUNCH_RELEASE")))) {
 			updateRelaunchRelease(); 
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[18])) {
+		} else if (touching(touch, downloadFunctionButtonPos[16])) {
 			if(confirmPopup((i18n::localize("RELAUNCH_NIGHTLY")))) {
 			updateRelaunchNightly(); 
 			}
