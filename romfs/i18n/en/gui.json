@@ -86,5 +86,7 @@
     "INSTALL_PKMN_CHEST_RELEASE":           "Now Install the CIA...",
     "RELAUNCH_RELEASE":                     "Are you sure you want to update Relaunch\nTo Release?",
     "RELAUNCH_NIGHTLY":                     "Are you sure you want to update Relaunch\nTo Nightly?",
-    "FILE_MANAGER":                         "File Manager"
+    "FILE_MANAGER":                         "File Manager",
+    "SCRIPT_MAIN_SCREEN":                   "Scripts Main Screen",
+    "SCRIPT_MAIN_SCREEN_2":                  "\uE001 : Back"
 }

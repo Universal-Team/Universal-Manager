@@ -62,6 +62,7 @@ extern C3D_RenderTarget* bottom;
 #define UniversalScreen			20
 //###############################
 #define fileManager				21
+#define scriptMainScreen		22
 
 struct Playlist {
 	std::string name;
@@ -135,3 +136,7 @@ void drawFTPScreen(void);
 void drawFileBrowse(void);
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch);
 bool displayActionBox(void);
+
+// Script Screen Stuff.
+void drawScriptMainScreen(void);
+void scriptMainScreenLogic(u32 hDown, u32 hHeld);

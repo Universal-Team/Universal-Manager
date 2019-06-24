@@ -246,6 +246,10 @@ int main()
 			case fileManager:
 				drawFileBrowse();
 				break;
+//#########################################################################################################
+			case scriptMainScreen:
+				drawScriptMainScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -363,6 +367,10 @@ int main()
 //########################################################################################################
 			case fileManager:
 				fileManagerLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case scriptMainScreen:
+				scriptMainScreenLogic(hDown, hHeld);
 				break;
 		}
 //#########################################################################################################
