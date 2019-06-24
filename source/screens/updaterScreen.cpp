@@ -515,6 +515,19 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
+	} else if (hDown & KEY_Y) {
+		std::string newScript = Input::getLine();
+		if(newScript != "") {
+			FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
+			fclose(scpt);
+			//dirChanged = true;
+	}
+	} else if (hDown & KEY_X) {
+		if (selectedScpt != 0) {
+			if(confirmPopup("Are you sure you want to delete this Script?")) {
+				remove(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str());
+			}
+		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedScpt > 0 && !keyRepeatDelay) {
 			selectedScpt--;
