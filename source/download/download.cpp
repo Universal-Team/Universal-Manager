@@ -1073,7 +1073,7 @@ void updatePKMNChestRelease(void) {
 	}
 
 	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_RELEASE")));
-		installCia("/PKMN-Chest-Nightly.cia");
+		installCia("/PKMN-Chest-Release.cia");
 
 		deleteFile("sdmc:/PKMN-Chest-Release.cia");
 
