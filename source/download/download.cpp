@@ -1067,7 +1067,7 @@ void updatePKMNChestRelease(void) {
 		return;
 	}
 
-	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
 		downloadFailed();
 		return;
 	}
@@ -1090,7 +1090,7 @@ void updatePKMNChestNightly(void) {
 		return;
 	}
 
-	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
 		downloadFailed();
 		return;
 	}
