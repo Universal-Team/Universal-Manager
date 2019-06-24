@@ -511,16 +511,23 @@ void drawScriptMainScreen(void) {
 	Gui::chooseLayoutBot();
 }
 
+static void runScript(void) { // To-Do.
+
+}
+
 void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	if (hDown & KEY_B) {
+	if(hDown & KEY_A) {
+		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
+			runScript();
+		} 
+	} else if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_Y) {
 		std::string newScript = Input::getLine();
 		if(newScript != "") {
 			FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
 			fclose(scpt);
-			//dirChanged = true;
 	}
 	} else if (hDown & KEY_X) {
 		if (selectedScpt != 0) {

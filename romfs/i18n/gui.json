@@ -88,5 +88,5 @@
     "RELAUNCH_NIGHTLY":                     "Are you sure you want to update Relaunch\nTo Nightly?",
     "FILE_MANAGER":                         "File Manager",
     "SCRIPT_MAIN_SCREEN":                   "Scripts Main Screen",
-    "SCRIPT_MAIN_SCREEN_2":                  "\uE001 : Back \uE003 : Create \uE002 : Delete"
+    "SCRIPT_MAIN_SCREEN_2":                  "\uE001 : Back \uE003 : Create \uE002 : Delete \uE000 : start"
 }
