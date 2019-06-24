@@ -492,7 +492,7 @@ void drawScriptMainScreen(void) {
 
 	std::string scptList;
 	std::string scptList2;
-	for (uint i=(selectedScpt<12) ? 0 : selectedScpt-12;scpts.size()&&i<((selectedScpt<12) ? 13 : selectedScpt+1);i++) {
+	for (uint i=(selectedScpt<12) ? 0 : selectedScpt-12;i<scpts.size()&&i<((selectedScpt<12) ? 13 : selectedScpt+1);i++) {
 		if (i == selectedScpt) {
 			scptList += "> " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
 		} else {
@@ -504,7 +504,7 @@ void drawScriptMainScreen(void) {
 	}
 	scptList2 += (i18n::localize("SCRIPT_MAIN_SCREEN_2"));
 	draw_text(26, 32, 0.45f, 0.45f, WHITE, scptList.c_str());
-	draw_text(26, 208, 0.45f, 0.45f, WHITE, scptList2.c_str());
+	draw_text(26, 220, 0.45f, 0.45f, WHITE, scptList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
