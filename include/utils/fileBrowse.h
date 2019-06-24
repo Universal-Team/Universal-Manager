@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 
-struct DirEntry
-{
+struct DirEntry {
 	std::string name;
+	std::string path;
 	bool isDirectory;
 	char tid[5];
 	off_t size;

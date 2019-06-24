@@ -30,11 +30,16 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include "extract.hpp"
 #include "fileBrowse.h"
+#include "fileOperations.h"
+#include "keyboard.hpp"
 
 extern "C" {
 #include "C2D_helper.h"
+#include "cia.h"
 }
+
 
 struct ButtonPos {
 	int x;
@@ -44,6 +49,11 @@ struct ButtonPos {
 	std::string text;
 };
 
+extern uint selectedFile;
+extern std::vector<DirEntry> dirContents;
+
+DirEntry clipboard;
+
 ButtonPos functionPos[] = {
 	{59, 70, 93, 35, "Rename"},
 	{165, 70, 93, 35, "Delete"},
@@ -52,8 +62,6 @@ ButtonPos functionPos[] = {
 	{59, 150, 93, 35, ""},
 	{165, 150, 93, 35, ""},
 };
-
-
 
 bool displayActionBox(void) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -69,11 +77,54 @@ bool displayActionBox(void) {
 	}
 
 	Draw_EndFrame();
+	int selection = 0;
 	while(1) {
 		gspWaitForVBlank();
 		hidScanInput();
-		if(keysDown() & KEY_A) {
-			return true;
+		if(keysDown() & KEY_UP) {
+			if(selection > 0)	selection--;
+		} else if(keysDown() & KEY_DOWN) {
+			if(selection < 5)	selection++;
+		} else if(keysDown() & KEY_A) {
+			switch(selection) {
+				case 0: { // Rename
+					std::string newName = Input::getLine();
+					if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
+					break;
+				} case 1: // Delete
+					remove(dirContents[selectedFile].name.c_str());
+					break;
+				case 2: { // Copy / Paste
+					char path[PATH_MAX];
+					getcwd(path, PATH_MAX);
+					if(clipboard.name == "") {
+						clipboard = dirContents[selectedFile];
+						clipboard.path = path;
+					} else {
+						if(strcmp(path, clipboard.path.c_str()) != 0) {
+							if(clipboard.isDirectory)
+								mkdir(clipboard.name.c_str(), 0777);
+							fcopy((clipboard.path+clipboard.name).c_str(), (path+clipboard.name).c_str());
+							clipboard.name = "";
+						}
+					}
+					break;
+				} case 3: { // Create folder
+					std::string newName = Input::getLine();
+					mkdir(newName.c_str(), 0777);
+					break;
+				} case 4: { // Extract
+					char path[PATH_MAX];
+					getcwd(path, PATH_MAX);
+					std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
+					mkdir(outPath.c_str(), 0777);
+					extractArchive(dirContents[selectedFile].name, "/", outPath);
+					break;
+				} case 5: // Install
+					installCia(dirContents[selectedFile].name.c_str());
+					break;
+			}
+		return true;
 		} else if(keysDown() & KEY_B) {
 			return false;
 		}
