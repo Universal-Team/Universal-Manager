@@ -40,6 +40,7 @@ std::string Input::getLine(uint maxLength) {
 	while(1) {
 		do {
 			C3D_FrameEnd(0);
+			Gui::clearTextBufs();
 			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			Gui::DrawBGTop();
 			animatedBGTop();

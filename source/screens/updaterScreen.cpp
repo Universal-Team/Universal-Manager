@@ -33,6 +33,9 @@
 #include "fileBrowse.h"
 #include "keyboard.hpp"
 #include "settings.hpp"
+#include "scripts.hpp"
+#include <string>
+using std::string;
 
 bool updatingSelf = false;
 
@@ -511,15 +514,20 @@ void drawScriptMainScreen(void) {
 	Gui::chooseLayoutBot();
 }
 
-static void runScript(void) { // To-Do.
 
+void testWrite(void) {
+	FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), "a");
+	std::string scriptLine1 = Input::getLine();
+	fputs((scriptLine1.c_str()), scpt);
+	fclose(scpt);
 }
 
 void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
 		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
-			runScript();
+			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
+			//testWrite();
 		} 
 	} else if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
