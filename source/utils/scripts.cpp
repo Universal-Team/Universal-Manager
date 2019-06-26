@@ -41,22 +41,17 @@ struct Scpt {
 
 Scpt getScptFromLine(std::string line) {
 	Scpt scpt;
-	if(line.find("	") != 0) {
-		scpt.function = line.substr(0, line.find("	"));
-		line = line.substr(line.find("	")+1);
-	}
-	if(line.find("	") != 0) {
-		scpt.param1 = line.substr(0, line.find("	"));
-		line = line.substr(line.find("	")+1);
-	}
-	if(line.find("	") != 0) {
-		scpt.param2 = line.substr(0, line.find("	"));
-		line = line.substr(line.find("	")+1);
-	}
-	if(line.find("	") != 0) {
-		scpt.param3 = line.substr(0, line.find("	"));
-		line = line.substr(line.find("	")+1);
-	}
+	scpt.function = line.substr(0, line.find("	"));
+	line = line.substr(line.find("	")+1);
+	
+	scpt.param1 = line.substr(0, std::min(line.find("	"), line.length()-1));
+	line = line.substr(line.find("	")+1);
+
+	scpt.param2 = line.substr(0, std::min(line.find("	"), line.length()-1));
+	line = line.substr(line.find("	")+1);
+
+	scpt.param3 = line.substr(0, std::min(line.find("	"), line.length()-1));
+	line = line.substr(line.find("	")+1);
 	return scpt;
 }
 
