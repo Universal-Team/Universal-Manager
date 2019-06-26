@@ -26,6 +26,8 @@
 
 #include "download.hpp"
 #include "extract.hpp"
+#include "gui.hpp"
+#include "screenCommon.hpp"
 #include <fstream>
 
 extern "C" {
@@ -80,6 +82,18 @@ void runScript(std::string path) {
 
 			if(scpt.function == "delete") {
 				deleteFile(scpt.param1.c_str());
+			}
+			
+			if(scpt.function == "msg") {
+				DisplayMsg(scpt.param1);
+			}
+
+			if(scpt.function == "screenTop") {
+				set_screen(top);
+			}
+
+			if(scpt.function == "screenBot") {
+				set_screen(bottom);
 			}
 		}
 	}
