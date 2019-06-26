@@ -26,40 +26,66 @@
 
 #include "download.hpp"
 #include "extract.hpp"
+#include <fstream>
 
 extern "C" {
 #include "cia.h"
 }
 
 struct Scpt {
-    std::string function;
-    std::string param1;
-    std::string param2;
-    std::string param3;
+	std::string function;
+	std::string param1;
+	std::string param2;
+	std::string param3;
 };
 
-Scpt scptIn;
-
-// Read line to scptIn
+Scpt getScptFromLine(std::string line) {
+	Scpt scpt;
+	if(line.find("	") != 0) {
+		scpt.function = line.substr(0, line.find("	"));
+		line = line.substr(line.find("	")+1);
+	}
+	if(line.find("	") != 0) {
+		scpt.param1 = line.substr(0, line.find("	"));
+		line = line.substr(line.find("	")+1);
+	}
+	if(line.find("	") != 0) {
+		scpt.param2 = line.substr(0, line.find("	"));
+		line = line.substr(line.find("	")+1);
+	}
+	if(line.find("	") != 0) {
+		scpt.param3 = line.substr(0, line.find("	"));
+		line = line.substr(line.find("	")+1);
+	}
+	return scpt;
+}
 
 void runScript(std::string path) {
-if(scptIn.function == "downloadRelease") {
-    downloadFromRelease(scptIn.param1, scptIn.param2, scptIn.param3);
-}
+	std::ifstream in(path);
+	if(in.good()) {
+		std::string line;
+		while(std::getline(in, line)) {
+			Scpt scpt = getScptFromLine(line);
 
-if(scptIn.function == "downloadFile") {
-    downloadToFile(scptIn.param1, scptIn.param2);
-}
+			if(scpt.function == "downloadRelease") {
+				downloadFromRelease(scpt.param1, scpt.param2, scpt.param3);
+			}
 
-if(scptIn.function == "extract") {
-    extractArchive(scptIn.param1, scptIn.param2, scptIn.param3);
-}
+			if(scpt.function == "downloadFile") {
+				downloadToFile(scpt.param1, scpt.param2);
+			}
 
-if(scptIn.function == "install") {
-	installCia(scptIn.param1.c_str());
-}
+			if(scpt.function == "extract") {
+				extractArchive(scpt.param1, scpt.param2, scpt.param3);
+			}
 
-if(scptIn.function == "delete") {
-	deleteFile(scptIn.param1.c_str());
-}
+			if(scpt.function == "install") {
+				installCia(scpt.param1.c_str());
+			}
+
+			if(scpt.function == "delete") {
+				deleteFile(scpt.param1.c_str());
+			}
+		}
+	}
 }
