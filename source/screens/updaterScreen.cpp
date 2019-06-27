@@ -27,15 +27,8 @@
 #include "screens/screenCommon.hpp"
 #include "download/download.hpp"
 #include <algorithm>
-#include <fstream>
 #include <unistd.h>
-#include <vector>
-#include "fileBrowse.h"
-#include "keyboard.hpp"
 #include "settings.hpp"
-#include "scripts.hpp"
-#include <string>
-using std::string;
 
 bool updatingSelf = false;
 
@@ -46,17 +39,6 @@ struct ButtonPos {
 	int h;
 	int link;
 };
-
-extern uint selectedFile;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-extern std::vector<DirEntry> dirContents;
-uint selectedScpt = 0;
-std::vector<DirEntry> scpts;
-
-uint selectedScptItem = 0;
-int movingScptItem = -1;
-std::vector<std::string> scptContents;
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
@@ -179,8 +161,6 @@ void drawUpdaterSubMenu(void) {
 void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = mainScreen;
-	} else if (hDown & KEY_X) {
-		screenMode = scriptMainScreen;
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]));i++) {
 			if (touching(touch, downloadButtonPos[i])) {
@@ -473,85 +453,4 @@ void UniversalLogic(u32 hDown, touchPosition touch) {
 			}
 }
 }
-}
-
-void drawScriptMainScreen(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Gui::staticText((i18n::localize("SCRIPT_MAIN_SCREEN")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
-	
-	if(dirChanged) {
-		char startPath[PATH_MAX];
-		getcwd(startPath, PATH_MAX);
-		chdir("sdmc:/Universal-Manager/scripts/");
-		getDirectoryContents(scpts);
-		chdir(startPath);
-	}
-
-	std::string scptList;
-	std::string scptList2;
-	for (uint i=(selectedScpt<12) ? 0 : selectedScpt-12;i<scpts.size()&&i<((selectedScpt<12) ? 13 : selectedScpt+1);i++) {
-		if (i == selectedScpt) {
-			scptList += "> " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
-		} else {
-			scptList += "  " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
-		}
-	}
-	for (uint i=0;i<((scpts.size()<13) ? 13-scpts.size() : 0);i++) {
-		scptList += "\n";
-	}
-	scptList2 += (i18n::localize("SCRIPT_MAIN_SCREEN_2"));
-	draw_text(26, 32, 0.45f, 0.45f, WHITE, scptList.c_str());
-	draw_text(26, 220, 0.45f, 0.45f, WHITE, scptList2.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
-}
-
-
-void testWrite(void) {
-	FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), "a");
-	std::string scriptLine1 = Input::getLine();
-	fputs((scriptLine1.c_str()), scpt);
-	fclose(scpt);
-}
-
-void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	if(hDown & KEY_A) {
-		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
-			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
-			//testWrite();
-		} 
-	} else if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
-	} else if (hDown & KEY_Y) {
-		std::string newScript = Input::getLine();
-		if(newScript != "") {
-			FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
-			fclose(scpt);
-	}
-	} else if (hDown & KEY_X) {
-		if (selectedScpt != 0) {
-			if(confirmPopup("Are you sure you want to delete this Script?")) {
-				remove(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str());
-			}
-		}
-	} else if (hHeld & KEY_UP) {
-		if (selectedScpt > 0 && !keyRepeatDelay) {
-			selectedScpt--;
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedScpt < scpts.size()-1) {
-			selectedScpt++;
-			keyRepeatDelay = 3;
-		}
-	}
 }

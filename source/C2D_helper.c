@@ -1,10 +1,6 @@
 #include <assert.h>
 #include <stdarg.h>
-
-#include "common.hpp"
 #include "C2D_helper.h"
-//#include "gui.hpp"
-#include "fs.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -20,6 +16,8 @@
 
 #define BYTES_PER_PIXEL 4
 #define TRANSPARENT_COLOR 0xFFFFFFFF
+
+FS_Archive archive, sdmc_archive, nand_archive;
 
 static u8 *Draw_LoadExternalImageFile(const char *path, u32 *data_size) {
 	Result ret = 0;

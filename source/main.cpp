@@ -261,7 +261,7 @@ int main()
 				} else if (hDown & KEY_X) {
 					screenMode = ftpScreen;
 				} else if (hDown & KEY_Y) {
-					screenMode = updaterSubMenu;
+					screenMode = scriptMainScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
 						if (touching(touch, mainScreenButtonPos[i])) {
