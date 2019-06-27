@@ -192,60 +192,9 @@ void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, floa
     printX.clear();
 }
 
-static Tex3DS_SubTexture _select_box(const C2D_Image& image, int x, int y, int endX, int endY)
-{
-    Tex3DS_SubTexture tex = *image.subtex;
-    if (x != endX)
-    {
-        int deltaX  = endX - x;
-        float texRL = tex.left - tex.right;
-        tex.left    = tex.left - (float)texRL / tex.width * x;
-        tex.right   = tex.left - (float)texRL / tex.width * deltaX;
-        tex.width   = deltaX;
-    }
-    if (y != endY)
-    {
-        float texTB = tex.top - tex.bottom;
-        int deltaY  = endY - y;
-        tex.top     = tex.top - (float)texTB / tex.height * y;
-        tex.bottom  = tex.top - (float)texTB / tex.height * deltaY;
-        tex.height  = deltaY;
-    }
-    return tex;
-}
-
 void Gui::clearTextBufs(void)
 {
     C2D_TextBufClear(dynamicBuf);
-}
-
-static void _draw_mirror_scale(int key, int x, int y, int off, int rep)
-{
-    C2D_Image sprite = C2D_SpriteSheetGetImage(sprites, key);
-    // Left side
-    Tex3DS_SubTexture tex = _select_box(sprite, 0, 0, off, 0);
-    C2D_DrawImageAt({sprite.tex, &tex}, x, y, 0.5f);
-    // Right side
-    C2D_DrawImageAt({sprite.tex, &tex}, x + off + rep, y, 0.5f, nullptr, -1.0f, 1.0f);
-    // Center
-    tex = _select_box(sprite, off, 0, sprite.subtex->width, 0);
-    C2D_DrawImageAt({sprite.tex, &tex}, x + off, y, 0.5f, nullptr, rep, 1.0f);
-}
-
-static void _draw_repeat(int key, int x, int y, u8 rows, u8 cols)
-{
-    C2D_Image sprite = C2D_SpriteSheetGetImage(sprites, key);
-    for (u8 row = 0; row < rows; row++)
-    {
-        for (u8 col = 0; col < cols; col++)
-        {
-            C2D_DrawImageAt(sprite, x + col * sprite.subtex->width, y + row * sprite.subtex->height, 0.5f);
-        }
-    }
-}
-
-bool Gui::Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY) {
-	return C2D_DrawImageAt(image, x, y, 0.5f, NULL, scaleX, scaleY);
 }
 
 void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
@@ -535,35 +484,12 @@ void drawBatteryBot(void) {
 }
 }
 
-static void get_text_dimensions(const char * text, float scaleX, float scaleY, float * width, float * height)
-{
-    C2D_Text c2d_text;
-    C2D_TextParse(&c2d_text, widthBuf, text);
-    C2D_TextGetDimensions(&c2d_text, scaleX, scaleY, width, height);
-}
-
-static void draw_c2d_text(float x, float y, float z, float scaleX, float scaleY, u32 color, C2D_Text * text)
-{
-    C2D_DrawText(text, C2D_WithColor, x, y, z, scaleX, scaleY, color);
-}
-
 void draw_text(float x, float y, float scaleX, float scaleY, u32 color, const char * text)
 {
     C2D_Text c2d_text;
     C2D_TextParse(&c2d_text, dynamicBuf, text);
     C2D_TextOptimize(&c2d_text);
     C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5, scaleX, scaleY, color);
-}
-
-
-
-static void draw_c2d_text_center(gfxScreen_t target, float y, float z, float scaleX, float scaleY, u32 color, C2D_Text * text)
-{
-    float width = 0;
-    C2D_TextGetDimensions(text, scaleX, scaleY, &width, NULL);
-    float offset = (target == GFX_TOP ? 400 : 320)/2 - width/2;
-
-    C2D_DrawText(text, C2D_WithColor, offset, y, z, scaleX, scaleY, color);
 }
 
 void draw_text_center(gfxScreen_t target, float y, float z, float scaleX, float scaleY, u32 color, const char * text)
