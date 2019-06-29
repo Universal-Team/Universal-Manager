@@ -82,8 +82,8 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     font = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
-    if((access("sdmc:/Universal-Manager/font.bcfnt", F_OK) == 0)) {
-    font1 = C2D_FontLoad("sdmc:/Universal-Manager/font.bcfnt");
+    if((access("sdmc:/Universal-Manager/Font.bcfnt", F_OK) == 0)) {
+    font1 = C2D_FontLoad("sdmc:/Universal-Manager/Font.bcfnt");
     } else {
     }
     return 0;

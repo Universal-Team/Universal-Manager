@@ -288,7 +288,7 @@ void drawMusicPlayer(void) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		Draw_Text(0, 0, 0.50f, WHITE, nowPlayingText.c_str());
 		Draw_Rect(155, 164, 85, 10, GRAY);
-		Draw_Text(160, 166, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		Draw_Text(160, 162, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		if (Audio_GetPosition() != -1) {
 		Draw_Rect(100, 179, 207, 16, GRAY);
 		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, settings.universal.bars);
