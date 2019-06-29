@@ -48,7 +48,7 @@ void drawFileManagerSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("FILEMANAGER_SUBMENU")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Filemanager Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -57,12 +57,12 @@ void drawFileManagerSubMenu(void) {
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
 	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	Gui::staticText((i18n::localize("MUSICPLAYER")), 190, 57, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(190, 57, 0.65f, WHITE, "Music Player");
 
 	// Image Viewer Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
 	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	Gui::staticText((i18n::localize("IMAGE_VIEWER")), 190, 137, 0.65f, 0.65f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(190, 137, 0.65f, WHITE, "Image Viewer");
 }
 
 void drawFileBrowse(void) {
@@ -72,7 +72,7 @@ void drawFileBrowse(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("FILE_MANAGER")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(200, 0, 0.68f, WHITE, "File Manager");
 		if (dirChanged) {
             dirContents.clear();
             std::vector<DirEntry> dirContentsTemp;
@@ -93,7 +93,7 @@ void drawFileBrowse(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

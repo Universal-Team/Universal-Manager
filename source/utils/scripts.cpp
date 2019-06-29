@@ -85,7 +85,7 @@ void runScript(std::string path) {
 			}
 			
 			if(scpt.function == "msg") {
-				DisplayMsg(scpt.param1);
+				DisplayMsg(scpt.param1.c_str());
 			}
 
 			if(scpt.function == "screenTop") {

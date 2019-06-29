@@ -40,7 +40,6 @@
 #include "screenCommon.hpp"
 #include "settings.hpp"
 #include "ptmu_x.h"
-#include "i18n.hpp"
 
 extern "C" {
 	#include "music/error.h"
@@ -144,7 +143,6 @@ int main()
 	LoadUniversalSettings();
     gfxInitDefault();
 	Gui::init();
-	i18n::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
 	// mcuInit(); // Comment this out, if you use Citra.

@@ -37,7 +37,6 @@
 #include "colors.hpp"
 #include "download/thread.hpp"
 #include "screens/screenCommon.hpp"
-#include "i18n.hpp"
 
 extern "C" {
 	#include "download/cia.h"
@@ -309,28 +308,28 @@ bool checkWifiStatus(void) {
 }
 
 void downloadFailed(void) {
-	DisplayMsg((i18n::localize("DOWNLOAD_FAILED")));
+	DisplayMsg("Download Failed!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void notImplemented(void) {
-	DisplayMsg((i18n::localize("NOT_IMPLEMENTED_YET_MSG")));
+	DisplayMsg("Not Implemented Yet.");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void doneMsg(void) {
-	DisplayMsg((i18n::localize("DONE_MSG")));
+	DisplayMsg("Done!");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
 }
 
 void notConnectedMsg(void) {
-	DisplayMsg((i18n::localize("NOT_CONNECTED_MSG")));
+	DisplayMsg("Please Connect to WiFi.");
 	for (int i = 0; i < 60*2; i++) {
 		gspWaitForVBlank();
 	}
@@ -811,7 +810,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
 		showProgressBar = false;
 
-		DisplayMsg((i18n::localize("INSTALL_TWLMENU_NIGHTLY")));
+		DisplayMsg("Now Installing the CIAs..");
 		// installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
 
@@ -846,7 +845,7 @@ void updateTWiLight(bool nightly) {
 		extractArchive("/TWiLightMenu-release.7z", "DSi&3DS - SD card users/", "/");
 		showProgressBar = false;
 
-		DisplayMsg((i18n::localize("INSTALL_TWLMENU_RELEASE")));
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
 
@@ -864,24 +863,24 @@ void updateTWiLight(bool nightly) {
 
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
-		DisplayMsg((i18n::localize("DOWNLOAD_UNIVERSAL_MANAGER_NIGHTLY")));
+		DisplayMsg("Downloading Universal-Manager...\nNightly");
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	DisplayMsg((i18n::localize("INSTALL_UNIVERSAL_MANAGER_NIGHTLY")));
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Universal-Manager-Nightly.cia");
 
 		deleteFile("sdmc:/Universal-Manager-Nightly.cia");
 	} else {
-		DisplayMsg((i18n::localize("DOWNLOAD_UNIVERSAL_MANAGER_RELEASE")));
+		DisplayMsg("Downloading Universal-Manager...\nRelease");
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
 		downloadFailed();
 		return;
 	}
 
-	DisplayMsg((i18n::localize("INSTALL_UNIVERSAL_MANAGER_RELEASE")));
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Universal-Manager-Release.cia");
 
 		deleteFile("sdmc:/Universal-Manager-Release.cia");
@@ -891,7 +890,7 @@ doneMsg();
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		DisplayMsg((i18n::localize("DOWNLOAD_LUMA3DS_NIGHTLY")));
+		DisplayMsg("Downloading Luma 3DS...\nNightly");
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			downloadFailed();
 			return;
@@ -901,13 +900,13 @@ void updateLuma(bool nightly) {
 		saveUpdateData();
 		updateAvailable[7] = false;
 	} else {	
-		DisplayMsg((i18n::localize("DOWNLOAD_LUMA3DS_RELEASE")));
+		DisplayMsg("Downloading Luma 3DS...\nRelease");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		DisplayMsg((i18n::localize("EXTRACT_LUMA3DS_RELEASE")));
+		DisplayMsg("Extracting Luma3DS...");
 		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
 
 		deleteFile("sdmc:/Luma3DS.7z");
@@ -920,13 +919,13 @@ void updateLuma(bool nightly) {
 }
 
 void downloadGodMode9(void) {
-	DisplayMsg((i18n::localize("DOWNLOAD_GODMODE9")));
+	DisplayMsg("Downloading GodMode9...\nRelease");
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
-		DisplayMsg((i18n::localize("EXTRACTING_GODMODE9")));
+		DisplayMsg("Extracting GodMode9...");
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
 
@@ -966,7 +965,7 @@ void downloadThemes(void) {
 				keyRepeatDelay = 3;
 			}
 		}
-		std::string themesText = (i18n::localize("THEMES_TEXT"));
+		std::string themesText = "Do you want to download Images for the Music Player?\n";
 		for(int i=0;i<0;i++) {
 			if(i == selectedMusicTheme) {
 				themesText += "> " + themeNames[i] + "\n";
@@ -975,7 +974,7 @@ void downloadThemes(void) {
 			}
 		}
 		themesText += "\n\n\n\n\n";
-		themesText += (i18n::localize("THEMES_TEXT_2"));
+		themesText += "B: Back   A: Continue";
 		DisplayMsg(themesText.c_str());
 	}
 
@@ -1034,7 +1033,7 @@ void downloadThemes(void) {
 		for(uint i=0;i<((themeList.size()<10) ? 11-themeList.size() : 0);i++) {
 			themesText += "\n";
 		}
-		themesText += (i18n::localize("THEMES_TEXT_3"));
+		themesText += "B: Back   A: Choose";
 		DisplayMsg(themesText.c_str());
 	}
 }
@@ -1061,8 +1060,8 @@ void updateCheats(void) {
 }
 
 void updatePKMNChestRelease(void) {
-	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST")));
-	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
+	DisplayMsg("Downloading PKMN-Chest...\nRelease");
+		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
 		downloadFailed();
 		return;
 	}
@@ -1072,7 +1071,7 @@ void updatePKMNChestRelease(void) {
 		return;
 	}
 
-	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_RELEASE")));
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/PKMN-Chest-Release.cia");
 
 		deleteFile("sdmc:/PKMN-Chest-Release.cia");
@@ -1084,7 +1083,7 @@ void updatePKMNChestRelease(void) {
 }
 
 void updatePKMNChestNightly(void) {
-	DisplayMsg((i18n::localize("DOWNLOAD_PKMN_CHEST_NIGHTLY")));
+	DisplayMsg("Downloading PKMN-Chest...\nNightly");
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
 		downloadFailed();
 		return;
@@ -1095,7 +1094,7 @@ void updatePKMNChestNightly(void) {
 		return;
 	}
 
-	DisplayMsg((i18n::localize("INSTALL_PKMN_CHEST_NIGHTLY")));
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/PKMN-Chest-Nightly.cia");
 
 		deleteFile("sdmc:/PKMN-Chest-Nightly.cia");
