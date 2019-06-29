@@ -51,6 +51,9 @@ void LoadUniversalSettings(void) {
 	// Animated BG.
 	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
 	settings.universal.animationcolor = settingsini.GetInt("ANIMATED", "COLOR", BLUE); // The Color of the Bubbles.
+
+	// Misc.
+	settings.universal.font = settingsini.GetInt("FONT", "CUSTOM", 0); // 0 - ROMFS Font, 1 - SD Font.
 }
 
 /**
@@ -67,6 +70,9 @@ void SaveUniversalSettings(void) {
 	// Animated BG.
 	settingsini.SetInt("ANIMATED", "ENABLE", settings.universal.animation);
 	settingsini.SetInt("ANIMATED", "COLOR", settings.universal.animationcolor);
+
+	// Misc.
+	settingsini.SetInt("FONT", "CUSTOM", settings.universal.font);
 
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }

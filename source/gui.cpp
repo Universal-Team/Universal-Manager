@@ -29,6 +29,7 @@
 #include "settings.hpp"
 #include <assert.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 
 C3D_RenderTarget* top;
@@ -39,10 +40,12 @@ static C2D_SpriteSheet animation;
 C2D_TextBuf staticBuf, dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
 C2D_Font font;
+C2D_Font font1;
 
 void Gui::clearTextBufs(void)
 {
     C2D_TextBufClear(dynamicBuf);
+    C2D_TextBufClear(sizeBuf);
 }
 
 void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
@@ -79,6 +82,10 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     font = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
+    if((access("sdmc:/Universal-Manager/font.bcfnt", F_OK) == 0)) {
+    font1 = C2D_FontLoad("sdmc:/Universal-Manager/font.bcfnt");
+    } else {
+    }
     return 0;
 }
 
@@ -97,6 +104,7 @@ void Gui::exit(void)
     C2D_TextBufDelete(staticBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(font);
+    C2D_FontFree(font1);
     C2D_Fini();
     C3D_Fini();
 }
@@ -255,7 +263,11 @@ void DisplayMsg(const char* text) {
 
 void DisplayTime(void) {
     C2D_Text timeText;
-    C2D_TextParse(&timeText, dynamicBuf, DateTime::timeStr().c_str());
+    if (settings.universal.font == 0) {
+    C2D_TextFontParse(&timeText, font, sizeBuf, DateTime::timeStr().c_str());
+    } else if (settings.universal.font == 1) {
+    C2D_TextFontParse(&timeText, font1, sizeBuf, DateTime::timeStr().c_str());
+    }
     C2D_TextOptimize(&timeText);
     C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
@@ -291,7 +303,11 @@ void drawBatteryTop(void) {
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        C2D_TextParse(&percentText, dynamicBuf, percent);
+        if (settings.universal.font == 0) {
+        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        } else if (settings.universal.font == 1) {
+        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
@@ -327,7 +343,11 @@ void drawBatteryBot(void) {
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        C2D_TextParse(&percentText, dynamicBuf, percent);
+        if (settings.universal.font == 0) {
+        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        } else if (settings.universal.font == 1) {
+        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
@@ -349,7 +369,11 @@ void start_frame(void)
 
 void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
-	C2D_TextFontParse(&c2d_text, font, dynamicBuf, text);
+    if (settings.universal.font == 0) {
+        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+    } else if (settings.universal.font == 1) {
+	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    }
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
 }
@@ -365,7 +389,11 @@ void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) 
 
 void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
 	C2D_Text c2d_text;
-	C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+    if (settings.universal.font == 0) {
+        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+    } else if (settings.universal.font == 1) {
+	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    }
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 

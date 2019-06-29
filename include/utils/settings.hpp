@@ -39,6 +39,7 @@ typedef struct _Settings_t {
 		int bgl;
 		int animation;
 		int animationcolor;
+		int font;
 	} universal;
 } Settings_t;
 extern Settings_t settings;

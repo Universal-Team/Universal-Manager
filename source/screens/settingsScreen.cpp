@@ -52,6 +52,7 @@ std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
 std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
+std::string customFont[] = {"ROMFS", "SD"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -87,6 +88,10 @@ ButtonPos uiSettingsButtonPos[] = {
 
 		// BG Layout.
 	{10, 28, 87, 33, -1},
+
+		// Custom Font.
+	{10, 28, 87, 33, -1},
+	
 };
 
 int getColorValue(int color, int bgr) {
@@ -159,6 +164,10 @@ void drawUISettingsScreen(void) {
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Draw_Text(229, 38, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
 	Draw_Text(110, 38, 0.7f, BLACK, "Music Mode:");
+	
+	// Font
+	Gui::sprite(sprites_updaterButton_idx, 10, 28);
+	Draw_Text(19, 38, 0.7f, WHITE, customFont[settings.universal.font].c_str());
 
 	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
@@ -218,6 +227,13 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
+	} else if(touching(touch, uiSettingsButtonPos[15])) {
+			settings.universal.font++;
+    	if((access("sdmc:/Universal-Manager/font.bcfnt", F_OK) == 0)) {
+			if (settings.universal.font > 1) settings.universal.font = 0;
+		} else {
+			if (settings.universal.font > 0) settings.universal.font = 0;
+		}
 	}
 }
 }
