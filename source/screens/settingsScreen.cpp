@@ -228,13 +228,8 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			settings.universal.music++;
 			if (settings.universal.music > 2) settings.universal.music = 0;
 	} else if(touching(touch, uiSettingsButtonPos[15])) {
-			settings.universal.font++;
-    	if((access("sdmc:/Universal-Manager/Font.bcfnt", F_OK) == 0)) {
-			if (settings.universal.font > 1) settings.universal.font = 0;
-		} else {
-			if (settings.universal.font > 0) settings.universal.font = 0;
-		}
-	}
+			screenMode = FontSelectionScreen;
+}
 }
 }
 

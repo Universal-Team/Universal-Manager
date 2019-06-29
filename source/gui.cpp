@@ -37,10 +37,10 @@ C3D_RenderTarget* bottom;
 
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
-C2D_TextBuf staticBuf, dynamicBuf, sizeBuf;
+C2D_TextBuf dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
-C2D_Font font;
-C2D_Font font1;
+C2D_Font defaultFont;
+C2D_Font customFont;
 
 void Gui::clearTextBufs(void)
 {
@@ -75,17 +75,13 @@ Result Gui::init(void)
     C2D_Prepare();
     top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
-    staticBuf = C2D_TextBufNew(4096);
     dynamicBuf = C2D_TextBufNew(4096);
     widthBuf = C2D_TextBufNew(4096);
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
-    font = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
-    if((access("sdmc:/Universal-Manager/Font.bcfnt", F_OK) == 0)) {
-    font1 = C2D_FontLoad("sdmc:/Universal-Manager/Font.bcfnt");
-    } else {
-    }
+    defaultFont = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
+    customFont = C2D_FontLoad("sdmc:/Universal-Manager/Font.bcfnt");
     return 0;
 }
 
@@ -101,10 +97,9 @@ void Gui::exit(void)
     }
     C2D_TextBufDelete(widthBuf);
     C2D_TextBufDelete(dynamicBuf);
-    C2D_TextBufDelete(staticBuf);
     C2D_TextBufDelete(sizeBuf);
-    C2D_FontFree(font);
-    C2D_FontFree(font1);
+    C2D_FontFree(defaultFont);
+    C2D_FontFree(customFont);
     C2D_Fini();
     C3D_Fini();
 }
@@ -264,9 +259,9 @@ void DisplayMsg(const char* text) {
 void DisplayTime(void) {
     C2D_Text timeText;
     if (settings.universal.font == 0) {
-    C2D_TextFontParse(&timeText, font, sizeBuf, DateTime::timeStr().c_str());
+    C2D_TextFontParse(&timeText, defaultFont, sizeBuf, DateTime::timeStr().c_str());
     } else if (settings.universal.font == 1) {
-    C2D_TextFontParse(&timeText, font1, sizeBuf, DateTime::timeStr().c_str());
+    C2D_TextFontParse(&timeText, customFont, sizeBuf, DateTime::timeStr().c_str());
     }
     C2D_TextOptimize(&timeText);
     C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -304,9 +299,9 @@ void drawBatteryTop(void) {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         if (settings.universal.font == 0) {
-        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
         } else if (settings.universal.font == 1) {
-        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -344,9 +339,9 @@ void drawBatteryBot(void) {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         if (settings.universal.font == 0) {
-        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
         } else if (settings.universal.font == 1) {
-        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -370,9 +365,9 @@ void start_frame(void)
 void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
     if (settings.universal.font == 0) {
-        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+        C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
     } else if (settings.universal.font == 1) {
-	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
     }
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
@@ -390,9 +385,9 @@ void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) 
 void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
 	C2D_Text c2d_text;
     if (settings.universal.font == 0) {
-        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+        C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
     } else if (settings.universal.font == 1) {
-	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
     }
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }

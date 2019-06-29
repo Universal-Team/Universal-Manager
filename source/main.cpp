@@ -249,6 +249,10 @@ int main()
 			case scriptMainScreen:
 				drawScriptMainScreen();
 				break;
+//#########################################################################################################
+			case FontSelectionScreen:
+				drawFontSelection();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -370,6 +374,10 @@ int main()
 //#########################################################################################################
 			case scriptMainScreen:
 				scriptMainScreenLogic(hDown, hHeld);
+				break;
+//########################################################################################################
+			case FontSelectionScreen:
+				FontSelectionLogic(hDown, hHeld);
 				break;
 		}
 //#########################################################################################################
