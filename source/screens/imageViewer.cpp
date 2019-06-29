@@ -67,7 +67,7 @@ void drawImageSelectorScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, 0.68f, WHITE, "Image Selector");
+	Draw_Text(130, 0, 0.68f, WHITE, "Image Selector");
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;

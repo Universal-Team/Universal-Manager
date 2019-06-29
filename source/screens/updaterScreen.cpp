@@ -142,7 +142,7 @@ void drawUpdaterSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Updater Sub Menu");
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -178,7 +178,7 @@ void drawUpdaterTWL(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "TWL Updater Screen");
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "TWL Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -196,7 +196,7 @@ void drawUpdaterTWL(void) {
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[2].x, downloadButtonPos[2].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[3].x, downloadButtonPos[3].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	Draw_Text(0, 98, 0.65f, WHITE, "NDS-Bootstrap");
+	Draw_Text(0, 98, 0.60f, WHITE, "NDS-Bootstrap");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
@@ -205,7 +205,7 @@ void drawUpdaterTWL(void) {
 	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
@@ -253,7 +253,7 @@ void drawUpdaterOther(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Other Updater Screen");
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Other Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -267,7 +267,7 @@ void drawUpdaterOther(void) {
 
 	
 
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
@@ -297,7 +297,7 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "CFW Updater Screen");
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "CFW Updater Screen");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -318,7 +318,7 @@ void drawUpdaterCFW(void) {
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
 	// Draw The Pages and Back Icon.
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
@@ -354,7 +354,7 @@ void drawUniversalScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -376,17 +376,17 @@ void drawUniversalScreen(void) {
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.65f, WHITE, "PKMN-Chest");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
-	Draw_Text(226, 98, 0.7f, WHITE, "Nightly");
+	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[18].x, downloadButtonPos[18].y);
 	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[19].x, downloadButtonPos[19].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
 	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
 	Draw_Text(140, 138, 0.7f, WHITE, "Release");
-	Draw_Text(226, 138, 0.7f, WHITE, "Nightly");
+	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
 
 	// Draw The Pages and Back Icon.
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.

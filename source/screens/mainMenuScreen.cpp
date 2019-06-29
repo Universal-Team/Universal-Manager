@@ -38,7 +38,7 @@ void drawMainMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
 	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
 
 	Gui::DrawBGBot();
@@ -47,7 +47,7 @@ void drawMainMenu(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
-	Draw_Text(85, 57, 0.65f, WHITE, "Filemanager");
+	Draw_Text(40, 57, 0.65f, WHITE, "Filemanager");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
 	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
@@ -55,9 +55,9 @@ void drawMainMenu(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
 	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
-	Draw_Text(80, 167, 0.7f, WHITE, "Updater");
+	Draw_Text(50, 167, 0.7f, WHITE, "Updater");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
 	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Draw_Text(245, 167, 0.7f, WHITE, "Settings");
+	Draw_Text(220, 167, 0.7f, WHITE, "Settings");
 }

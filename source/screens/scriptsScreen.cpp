@@ -54,7 +54,7 @@ void drawScriptMainScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Script Main Screen");
+	Draw_Text(90, 0, FONT_SIZE_18, WHITE, "Script Main Screen");
 	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 	
 	if(dirChanged) {
@@ -77,7 +77,7 @@ void drawScriptMainScreen(void) {
 	for (uint i=0;i<((scpts.size()<13) ? 13-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
-	scptList2 += "\uE001 : Back \uE003 : Create \uE002 : Delete \uE000 : start";
+	scptList2 += "B : Back Y : Create X : Delete A : start";
 	Draw_Text(26, 32, 0.45f, WHITE, scptList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, scptList2.c_str());
 

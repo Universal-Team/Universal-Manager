@@ -48,7 +48,7 @@ void drawFileManagerSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Filemanager Sub Menu");
+	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Filemanager Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -57,12 +57,12 @@ void drawFileManagerSubMenu(void) {
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
 	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	Draw_Text(190, 57, 0.65f, WHITE, "Music Player");
+	Draw_Text(137, 57, 0.65f, WHITE, "Music Player");
 
 	// Image Viewer Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
 	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	Draw_Text(190, 137, 0.65f, WHITE, "Image Viewer");
+	Draw_Text(137, 137, 0.65f, WHITE, "Image Viewer");
 }
 
 void drawFileBrowse(void) {
@@ -72,7 +72,7 @@ void drawFileBrowse(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, 0.68f, WHITE, "File Manager");
+	Draw_Text(120, 0, 0.68f, WHITE, "File Manager");
 		if (dirChanged) {
             dirContents.clear();
             std::vector<DirEntry> dirContentsTemp;

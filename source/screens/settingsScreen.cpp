@@ -120,16 +120,16 @@ void drawSettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Settings");
+	Draw_Text(140, 0, FONT_SIZE_18, WHITE, "Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	Draw_Text(50, 57, 0.7f, WHITE, "Credits");
+	Draw_Text(40, 57, 0.7f, WHITE, "Credits");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	Draw_Text(230, 57, 0.7f, WHITE, "Settings");
+	Draw_Text(210, 57, 0.7f, WHITE, "Settings");
 }
 
 void drawUISettingsScreen(void) {
@@ -138,38 +138,38 @@ void drawUISettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "UI-Settings");
+	Draw_Text(120, 0, FONT_SIZE_18, WHITE, "UI-Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Bars.
-	Draw_Text(170, 58, 0.7f, WHITE, "Bars");
+	Draw_Text(100, 58, 0.7f, WHITE, "Bars");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Draw_Text(46, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
+	Draw_Text(56, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Draw_Text(140, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
+	Draw_Text(150, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Draw_Text(229, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
+	Draw_Text(239, 98, 0.7f, BLACK, getColorName(settings.universal.bars, 0).c_str());
 
 	// Background.
-	Draw_Text(170, 138, 0.7f, WHITE, "Background");
+	Draw_Text(100, 138, 0.7f, WHITE, "Background");
 	Gui::sprite(sprites_RedButton_idx, 35, 168);
-	Draw_Text(46, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
+	Draw_Text(56, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 168);
-	Draw_Text(140, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
+	Draw_Text(150, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 168);
-	Draw_Text(229, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
+	Draw_Text(239, 178, 0.7f, BLACK, getColorName(settings.universal.bg, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Draw_Text(229, 38, 0.65f, WHITE, musicModes[settings.universal.music].c_str());
-	Draw_Text(110, 38, 0.7f, BLACK, "Music Mode:");
+	Draw_Text(110, 38, 0.65f, BLACK, "Music Mode:");
 	
 	// Font
 	Gui::sprite(sprites_updaterButton_idx, 10, 28);
 	Draw_Text(19, 38, 0.7f, WHITE, customFont[settings.universal.font].c_str());
 
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
@@ -245,19 +245,19 @@ void drawUISettingsScreen2(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200, 0, FONT_SIZE_18, WHITE, "Animation Settings");
+	Draw_Text(110, 0, FONT_SIZE_18, WHITE, "Animation Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Bars.
-	Draw_Text(120, 58, 0.7f, BLACK, "Bubbles");
+	Draw_Text(70, 58, 0.7f, BLACK, "Animation Color");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Draw_Text(46, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 2).c_str());
+	Draw_Text(56, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Draw_Text(140, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 1).c_str());
+	Draw_Text(150, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Draw_Text(229, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 0).c_str());
+	Draw_Text(239, 98, 0.7f, BLACK, getColorName(settings.universal.animationcolor, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Draw_Text(229, 38, 0.65f, WHITE, animationModes[settings.universal.animation].c_str());
@@ -273,7 +273,7 @@ void drawUISettingsScreen2(void) {
 	Gui::sprite(sprites_updaterButton_idx, 10, 28);
 	Draw_Text(19, 38, 0.7f, WHITE, layout2Modes[settings.universal.bgl].c_str());
 
-	Draw_Text(170, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
