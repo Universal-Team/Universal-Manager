@@ -901,15 +901,15 @@ void updateLuma(bool nightly) {
 		updateAvailable[7] = false;
 	} else {	
 		DisplayMsg("Downloading Luma 3DS...\nRelease");
-		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.7z", "/Luma3DS.7z") != 0) {
+		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.zip", "/Luma3DS.zip") != 0) {
 			downloadFailed();
 			return;
 		}
 
 		DisplayMsg("Extracting Luma3DS...");
-		extractArchive("/Luma3DS.7z", "boot.firm", "/boot.firm");
+		extractArchive("/Luma3DS.zip", "boot.firm", "/boot.firm");
 
-		deleteFile("sdmc:/Luma3DS.7z");
+		deleteFile("sdmc:/Luma3DS.zip");
 
 		setInstalledVersion("LUMA3DS-RELEASE", latestLumaRelease());
 		saveUpdateData();
