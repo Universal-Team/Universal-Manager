@@ -29,6 +29,7 @@
 #include "settings.hpp"
 #include <assert.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 
 C3D_RenderTarget* top;
@@ -38,163 +39,13 @@ static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
 C2D_TextBuf staticBuf, dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
-static std::unordered_map<std::string, C2D_Text> staticMap;
-
-
-// Text Stuff.
-void Gui::dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
-{
-    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
-
-    static std::vector<std::string> print;
-    static std::vector<int> printX;
-
-    size_t index = 0;
-    while (index != std::string::npos)
-    {
-        print.push_back(str.substr(index, str.find('\n', index) - index));
-        index = str.find('\n', index);
-        if (index != std::string::npos)
-        {
-            index++;
-        }
-    }
-
-    switch (positionX)
-    {
-        case TextPosX::LEFT:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x);
-            }
-            break;
-        case TextPosX::CENTER:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
-            }
-            break;
-        case TextPosX::RIGHT:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
-            }
-            break;
-    }
-
-    switch (positionY)
-    {
-        case TextPosY::TOP:
-            break;
-        case TextPosY::CENTER:
-            y -= ceilf(0.5f * lineMod * (float)print.size());
-            break;
-        case TextPosY::BOTTOM:
-            y -= lineMod * (float)print.size();
-            break;
-    }
-
-    for (size_t i = 0; i < print.size(); i++)
-    {
-        C2D_Text text;
-        C2D_TextParse(&text, dynamicBuf, print[i].c_str());
-        C2D_TextOptimize(&text);
-        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
-    }
-
-    print.clear();
-    printX.clear();
-}
-
-C2D_Text Gui::cacheStaticText(const std::string& strKey)
-{
-    C2D_Text text;
-    std::unordered_map<std::string, C2D_Text>::const_iterator index = staticMap.find(strKey);
-    if (index == staticMap.end())
-    {
-        C2D_TextParse(&text, staticBuf, strKey.c_str());
-        C2D_TextOptimize(&text);
-        staticMap.emplace(strKey, text);
-    }
-    else
-    {
-        return index->second;
-    }
-
-    return text;
-}
-
-void Gui::clearStaticText()
-{
-    C2D_TextBufClear(staticBuf);
-    staticMap.clear();
-}
-
-void Gui::staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY)
-{
-    const float lineMod = ceilf(scaleY * fontGetInfo()->lineFeed);
-
-    static std::vector<std::string> print;
-    static std::vector<int> printX;
-
-    size_t index = 0;
-    while (index != std::string::npos)
-    {
-        print.push_back(strKey.substr(index, strKey.find('\n', index) - index));
-        index = strKey.find('\n', index);
-        if (index != std::string::npos)
-        {
-            index++;
-        }
-    }
-
-    switch (positionX)
-    {
-        case TextPosX::LEFT:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x);
-            }
-            break;
-        case TextPosX::CENTER:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX)) / 2));
-            }
-            break;
-        case TextPosX::RIGHT:
-            for (size_t i = 0; i < print.size(); i++)
-            {
-                printX.push_back(x - (ceilf(StringUtils::textWidth(print[i], scaleX))));
-            }
-            break;
-    }
-
-    switch (positionY)
-    {
-        case TextPosY::TOP:
-            break;
-        case TextPosY::CENTER:
-            y -= ceilf(0.5f * lineMod * (float)print.size());
-            break;
-        case TextPosY::BOTTOM:
-            y -= lineMod * (float)print.size();
-            break;
-    }
-
-    for (size_t i = 0; i < print.size(); i++)
-    {
-        C2D_Text text = cacheStaticText(print[i].c_str());
-        C2D_DrawText(&text, C2D_WithColor, printX[i], y + lineMod * i, 0.5f, scaleX, scaleY, color);
-    }
-
-    print.clear();
-    printX.clear();
-}
+C2D_Font font;
+C2D_Font font1;
 
 void Gui::clearTextBufs(void)
 {
     C2D_TextBufClear(dynamicBuf);
+    C2D_TextBufClear(sizeBuf);
 }
 
 void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
@@ -230,6 +81,11 @@ Result Gui::init(void)
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
+    font = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
+    if((access("sdmc:/Universal-Manager/font.bcfnt", F_OK) == 0)) {
+    font1 = C2D_FontLoad("sdmc:/Universal-Manager/font.bcfnt");
+    } else {
+    }
     return 0;
 }
 
@@ -247,6 +103,8 @@ void Gui::exit(void)
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(staticBuf);
     C2D_TextBufDelete(sizeBuf);
+    C2D_FontFree(font);
+    C2D_FontFree(font1);
     C2D_Fini();
     C3D_Fini();
 }
@@ -390,14 +248,14 @@ void Gui::chooseLayoutBotBack(void) {
 
 // Text.
 
-void DisplayMsg(const std::string& strKey) {
-    Gui::clearStaticText();
+void DisplayMsg(const char* text) {
+    Gui::clearTextBufs();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
-	Gui::staticText(strKey, 200, 36, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(26, 32, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
@@ -405,7 +263,11 @@ void DisplayMsg(const std::string& strKey) {
 
 void DisplayTime(void) {
     C2D_Text timeText;
-    C2D_TextParse(&timeText, dynamicBuf, DateTime::timeStr().c_str());
+    if (settings.universal.font == 0) {
+    C2D_TextFontParse(&timeText, font, sizeBuf, DateTime::timeStr().c_str());
+    } else if (settings.universal.font == 1) {
+    C2D_TextFontParse(&timeText, font1, sizeBuf, DateTime::timeStr().c_str());
+    }
     C2D_TextOptimize(&timeText);
     C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
@@ -437,11 +299,15 @@ void drawBatteryTop(void) {
         if (settings.universal.battery == 0) {
         } else if (settings.universal.battery == 1) {
 	if(batteryPercent == 100) {
-		draw_text(310, 0, 0.65f, 0.65f, WHITE, "100%");
+		Draw_Text(310, 0, 0.65f, WHITE, "100%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        C2D_TextParse(&percentText, dynamicBuf, percent);
+        if (settings.universal.font == 0) {
+        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        } else if (settings.universal.font == 1) {
+        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
@@ -473,49 +339,19 @@ void drawBatteryBot(void) {
             if (settings.universal.battery == 0) {
         } else if (settings.universal.battery == 1) {
     	if(batteryPercent == 100) {
-		draw_text(230, 0, 0.65f, 0.65f, WHITE, "100%");
+		Draw_Text(230, 0, 0.65f, WHITE, "100%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        C2D_TextParse(&percentText, dynamicBuf, percent);
+        if (settings.universal.font == 0) {
+        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
+        } else if (settings.universal.font == 1) {
+        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 }
-}
-
-void draw_text(float x, float y, float scaleX, float scaleY, u32 color, const char * text)
-{
-    C2D_Text c2d_text;
-    C2D_TextParse(&c2d_text, dynamicBuf, text);
-    C2D_TextOptimize(&c2d_text);
-    C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5, scaleX, scaleY, color);
-}
-
-void draw_text_center(gfxScreen_t target, float y, float z, float scaleX, float scaleY, u32 color, const char * text)
-{
-    C2D_Text text_arr[MAX_LINES];
-    float offsets_arr[MAX_LINES];
-    int actual_lines = 0;
-    const char * end = text - 1;
-
-    do {
-        end = C2D_TextParseLine(&text_arr[actual_lines], dynamicBuf, end + 1, actual_lines);
-        actual_lines++;
-    } while(*end == '\n');
-
-    for(int i = 0; i < actual_lines; i++)
-    {
-        C2D_TextOptimize(&text_arr[i]);
-        float width = 0;
-        C2D_TextGetDimensions(&text_arr[i], scaleX, scaleY, &width, NULL);
-        offsets_arr[i] = (target == GFX_TOP ? 400 : 320)/2 - width/2;
-    }
-
-    for(int i = 0; i < actual_lines; i++)
-    {
-        C2D_DrawText(&text_arr[i], C2D_WithColor, offsets_arr[i], y, z, scaleX, scaleY, color);
-    }
 }
 
 void Draw_EndFrame(void) {
@@ -531,10 +367,13 @@ void start_frame(void)
     C2D_TargetClear(bottom, BLUE2);
 }
 
-// 3DShell.
 void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
-	C2D_TextParse(&c2d_text, dynamicBuf, text);
+    if (settings.universal.font == 0) {
+        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+    } else if (settings.universal.font == 1) {
+	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    }
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
 }
@@ -550,7 +389,11 @@ void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) 
 
 void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
 	C2D_Text c2d_text;
-	C2D_TextParse(&c2d_text, sizeBuf, text);
+    if (settings.universal.font == 0) {
+        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
+    } else if (settings.universal.font == 1) {
+	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    }
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 
@@ -568,4 +411,11 @@ float Draw_GetTextHeight(float size, const char *text) {
 
 bool Draw_Rect(float x, float y, float w, float h, u32 color) {
 	return C2D_DrawRectSolid(x, y, 0.5f, w, h, color);
+}
+
+std::string DateTime::timeStr(void)
+{
+    time_t unixTime       = time(NULL);
+    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+    return StringUtils::format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
 }

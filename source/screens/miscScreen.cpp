@@ -78,23 +78,16 @@ void drawFTPScreen(void) {
 
 	ret = gethostname(hostname, sizeof(hostname));
 
-	//if (R_SUCCEEDED(gspLcdInit())) {
-	//	GSPLCD_PowerOffBacklight(GSPLCD_SCREEN_TOP);
-	//	gspLcdExit();
-	//}
-
 	while(screenMode == ftpScreen) {
 		ftp_loop();
-		
+		Gui::clearTextBufs();
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		Gui::DrawBGTop();
-		animatedBGTop();
 		Gui::chooseLayoutTop();
 		DisplayTime();
 		drawBatteryTop();	
-		Gui::staticText((i18n::localize("FTP_MODE")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+		Draw_Text(135, 0, 0.72f, WHITE, "FTP Mode");
 		Gui::DrawBGBot();
-		animatedBGBot();
 		Gui::chooseLayoutBot();
 		ret = ACU_GetWifiStatus(&wifiStatus);
 
@@ -148,7 +141,7 @@ void drawFTPScreen(void) {
 // NOTE: This'll get the app stuck in a loop while its running, so background
 // processes like the clock won't update while the message bubble is up
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
-	Gui::clearStaticText();
+	Gui::clearTextBufs();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
@@ -156,9 +149,9 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	Gui::staticText(msg1.c_str(), 170, 90, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(msg2.c_str(), 170, 110, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
-	Gui::staticText(("\uE001 : "+no+"   \uE000 : "+yes).c_str(), ynXPos, 160, 0.45f, 0.45f, BLACK, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(100, 90, 0.45f, BLACK, msg1.c_str());
+	Draw_Text(120, 110, 0.45f, BLACK, msg2.c_str());
+	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("A : "+no+"   B : "+yes).c_str());
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
@@ -173,5 +166,5 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", (i18n::localize("YES")), (i18n::localize("NO")), 200);
+	return confirmPopup(msg, "", "Yes", "No", 100);
 }

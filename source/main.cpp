@@ -40,7 +40,6 @@
 #include "screenCommon.hpp"
 #include "settings.hpp"
 #include "ptmu_x.h"
-#include "i18n.hpp"
 
 extern "C" {
 	#include "music/error.h"
@@ -144,7 +143,6 @@ int main()
 	LoadUniversalSettings();
     gfxInitDefault();
 	Gui::init();
-	i18n::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
 	// mcuInit(); // Comment this out, if you use Citra.
@@ -168,6 +166,7 @@ int main()
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         C2D_TargetClear(top, BLUE2);
         C2D_TargetClear(bottom, BLUE2);
+		Gui::clearTextBufs();
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {

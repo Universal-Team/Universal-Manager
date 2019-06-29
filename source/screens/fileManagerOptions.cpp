@@ -66,14 +66,13 @@ ButtonPos functionPos[] = {
 bool displayActionBox(void) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(bottom);
-	//Gui::Draw_ImageBlend(sprites_actionBox_idx, 54, 30, settings.universal.bars);
 	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, settings.universal.bars);
 	Gui::sprite(sprites_actionBox_idx, 54, 30);
 
 	// Buttons.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
 		Gui::sprite(sprites_FileManagerButton_idx, functionPos[i].x, functionPos[i].y);
-		draw_text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, 0.6f, WHITE, functionPos[i].text.c_str());
+		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 
 	Draw_EndFrame();

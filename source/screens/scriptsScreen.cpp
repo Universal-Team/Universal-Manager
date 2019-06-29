@@ -54,7 +54,7 @@ void drawScriptMainScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("SCRIPT_MAIN_SCREEN")), 200, 0, FONT_SIZE_18, FONT_SIZE_18, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(90, 0, FONT_SIZE_18, WHITE, "Script Main Screen");
 	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 	
 	if(dirChanged) {
@@ -77,9 +77,9 @@ void drawScriptMainScreen(void) {
 	for (uint i=0;i<((scpts.size()<13) ? 13-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
-	scptList2 += (i18n::localize("SCRIPT_MAIN_SCREEN_2"));
-	draw_text(26, 32, 0.45f, 0.45f, WHITE, scptList.c_str());
-	draw_text(26, 220, 0.45f, 0.45f, WHITE, scptList2.c_str());
+	scptList2 += "B : Back Y : Create X : Delete A : start";
+	Draw_Text(26, 32, 0.45f, WHITE, scptList.c_str());
+	Draw_Text(26, 220, 0.45f, WHITE, scptList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
