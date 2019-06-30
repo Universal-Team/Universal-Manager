@@ -41,7 +41,8 @@ extern bool dirChanged;
 extern std::vector<DirEntry> dirContents;
 uint selectedBcfnt = 0;
 std::vector<DirEntry> bcfnts;
-extern C2D_Font customFont;
+extern C2D_Font SDFont;
+extern C2D_Font RomfsFont;
 
 void drawFontSelectionRomfs(void) {
 	// Theme Stuff.
@@ -121,13 +122,13 @@ void drawFontSelectionSD(void) {
 }
 
 static void selectFontSD(void) {
-		customFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
+		SDFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
 		Config::Font = 1;
 }
 
 static void selectFontRomfs(void) {
-		customFont = C2D_FontLoad(("romfs:/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
-		Config::Font = 1;
+		RomfsFont = C2D_FontLoad(("romfs:/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
+		Config::Font = 0;
 }
 
 void FontSelectionLogicRomfs(u32 hDown, u32 hHeld) {
