@@ -133,6 +133,9 @@ bool updateAvailable[] = {
 	false,
 	false,
 	false,
+	false,
+	false,
+	false,
 };
 
 
@@ -211,6 +214,10 @@ void drawUpdaterTWL(void) {
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+
+//	if(updateAvailable[i]) {
+//				Gui::sprite(sprites_dot_idx, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // I dunno, how to do that..
+//			}
 }
 
 void updaterTWLLogic(u32 hDown, touchPosition touch) {
@@ -220,6 +227,8 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 		screenMode = CFWScreen;
 	} else if (hDown & KEY_R) {
 		screenMode = OtherScreen;
+	} else if (hDown & KEY_X) {
+		checkForUpdates();
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, downloadFunctionButtonPos[0])) {
 			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
@@ -273,6 +282,10 @@ void drawUpdaterOther(void) {
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+
+//	if(updateAvailable[i]) {
+//				Gui::sprite(sprites_dot_idx, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // I dunno, how to do that..
+//			}
 }
 
 void updaterOtherLogic(u32 hDown, touchPosition touch) {
@@ -324,6 +337,10 @@ void drawUpdaterCFW(void) {
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 2, RED);
+
+//	if(updateAvailable[i]) {
+//				Gui::sprite(sprites_dot_idx, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // I dunno, how to do that..
+//			}
 }
 
 void updaterCFWLogic(u32 hDown, touchPosition touch) {
@@ -392,6 +409,10 @@ void drawUniversalScreen(void) {
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, WHITE, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 2, RED);
+
+//	if(updateAvailable[i]) {
+//				Gui::sprite(sprites_dot_idx, downloadButtonPos[i].x+75, downloadButtonPos[i].y-6); // I dunno, how to do that..
+//			}
 }
 
 void UniversalLogic(u32 hDown, touchPosition touch) {
