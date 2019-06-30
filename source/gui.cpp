@@ -37,10 +37,10 @@ C3D_RenderTarget* bottom;
 
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
-C2D_TextBuf staticBuf, dynamicBuf, sizeBuf;
+C2D_TextBuf dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
-C2D_Font font;
-C2D_Font font1;
+C2D_Font defaultFont;
+C2D_Font customFont;
 
 void Gui::clearTextBufs(void)
 {
@@ -75,17 +75,12 @@ Result Gui::init(void)
     C2D_Prepare();
     top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
-    staticBuf = C2D_TextBufNew(4096);
     dynamicBuf = C2D_TextBufNew(4096);
     widthBuf = C2D_TextBufNew(4096);
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
-    font = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
-    if((access("sdmc:/Universal-Manager/Font.bcfnt", F_OK) == 0)) {
-    font1 = C2D_FontLoad("sdmc:/Universal-Manager/Font.bcfnt");
-    } else {
-    }
+    defaultFont = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
     return 0;
 }
 
@@ -101,10 +96,9 @@ void Gui::exit(void)
     }
     C2D_TextBufDelete(widthBuf);
     C2D_TextBufDelete(dynamicBuf);
-    C2D_TextBufDelete(staticBuf);
     C2D_TextBufDelete(sizeBuf);
-    C2D_FontFree(font);
-    C2D_FontFree(font1);
+    C2D_FontFree(defaultFont);
+    C2D_FontFree(customFont);
     C2D_Fini();
     C3D_Fini();
 }
@@ -143,8 +137,8 @@ void Gui::AnimationSprite(int key, int x, int y)
 // Basic GUI Stuff.
 
 void Gui::DrawBarsBottomBack(void) {
-    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, settings.universal.bars);
-    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
+    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
     Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
     Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
 }
@@ -152,10 +146,10 @@ void Gui::DrawBarsBottomBack(void) {
 void Gui::DrawBGTop(void) 
 {
     set_screen(top);
-	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, settings.universal.bg);
-    if (settings.universal.bgl == 0) {
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, Config::bgColor);
+    if (Config::layoutBG == 0) {
 	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
-    } else if (settings.universal.bgl == 1) {
+    } else if (Config::layoutBG == 1) {
             for (int x = 0; x < 400; x += 14)
         {
             for (int y = 0; y < 240; y += 14)
@@ -163,14 +157,14 @@ void Gui::DrawBGTop(void)
                 Gui::sprite(sprites_stripes_idx, x, y);
             }
 }
-} else if (settings.universal.bgl == 2) {
+} else if (Config::layoutBG == 2) {
 }
 }
 
 void Gui::DrawBarsTop(void) 
 {
-    C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, settings.universal.bars);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, Config::barColor);
+    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, Config::barColor);
     Gui::sprite(sprites_top_screen_top_idx, 0, 0);
     Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
 }
@@ -178,10 +172,10 @@ void Gui::DrawBarsTop(void)
 void Gui::DrawBGBot(void)
 {
 	set_screen(bottom);
-	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, settings.universal.bg);
-    if (settings.universal.bgl == 0) {
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
+    if (Config::layoutBG == 0) {
 	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-    } else if (settings.universal.bgl == 1) {
+    } else if (Config::layoutBG == 1) {
        {
         for (int x = 0; x < 320; x += 14)
         {
@@ -191,57 +185,57 @@ void Gui::DrawBGBot(void)
             }
         }
     }
-} else if (settings.universal.bgl == 2) {
+} else if (Config::layoutBG == 2) {
 }
 }
 
 void Gui::DrawBarsBot(void)
 {
-    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, settings.universal.bars);
-    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, settings.universal.bars);
+    C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
+    C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
     Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
     Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 }
 
 void Gui::DrawOverlayTop(void)
 {
-    Gui::Draw_ImageBlend(sprites_overlay_top_idx, 0, 0, settings.universal.bars);
+    Gui::Draw_ImageBlend(sprites_overlay_top_idx, 0, 0, Config::barColor);
 	Gui::sprite(sprites_overlay_top_2_idx, 0, 0);
 }
 
 void Gui::DrawOverlayBot(void)
 {
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, settings.universal.bars);
+	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
 	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
 }
 
 void Gui::DrawOverlayBotBack(void)
 {
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, settings.universal.bars);
+	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
 	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
     Gui::sprite(sprites_back_idx, 293, 213);
 }
 
 void Gui::chooseLayoutTop(void) {
-    if (settings.universal.layout == 0) {
+    if (Config::layout == 0) {
         Gui::DrawBarsTop();
-    } else if (settings.universal.layout == 1) {
+    } else if (Config::layout == 1) {
         Gui::DrawOverlayTop();
     }
 }
 
 void Gui::chooseLayoutBot(void) {
-    if (settings.universal.layout == 0) {
+    if (Config::layout == 0) {
         Gui::DrawBarsBot();
-    } else if (settings.universal.layout == 1) {
+    } else if (Config::layout == 1) {
         Gui::DrawOverlayBot();
     }
 }
 
 void Gui::chooseLayoutBotBack(void) {
-    if (settings.universal.layout == 0) {
+    if (Config::layout == 0) {
         Gui::DrawBarsBottomBack();
-    } else if (settings.universal.layout == 1) {
+    } else if (Config::layout == 1) {
         Gui::DrawOverlayBotBack();
     }
 }
@@ -255,7 +249,8 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
-	Draw_Text(26, 32, 0.45f, BLACK, text);
+    Gui::sprite(sprites_textbox_idx, 10, 25);
+	Draw_Text(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
@@ -263,10 +258,10 @@ void DisplayMsg(const char* text) {
 
 void DisplayTime(void) {
     C2D_Text timeText;
-    if (settings.universal.font == 0) {
-    C2D_TextFontParse(&timeText, font, sizeBuf, DateTime::timeStr().c_str());
-    } else if (settings.universal.font == 1) {
-    C2D_TextFontParse(&timeText, font1, sizeBuf, DateTime::timeStr().c_str());
+    if (Config::Font == 0) {
+    C2D_TextFontParse(&timeText, defaultFont, sizeBuf, DateTime::timeStr().c_str());
+    } else if (Config::Font == 1) {
+    C2D_TextFontParse(&timeText, customFont, sizeBuf, DateTime::timeStr().c_str());
     }
     C2D_TextOptimize(&timeText);
     C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -296,17 +291,17 @@ void drawBatteryTop(void) {
 		Gui::sprite(sprites_batteryCharge_idx, 361, 0);
     }
 
-        if (settings.universal.battery == 0) {
-        } else if (settings.universal.battery == 1) {
+        if (Config::percentDisplay == 0) {
+        } else if (Config::percentDisplay == 1) {
 	if(batteryPercent == 100) {
 		Draw_Text(310, 0, 0.65f, WHITE, "100%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        if (settings.universal.font == 0) {
-        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
-        } else if (settings.universal.font == 1) {
-        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        if (Config::Font == 0) {
+        C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
+        } else if (Config::Font == 1) {
+        C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -336,17 +331,17 @@ void drawBatteryBot(void) {
 		Gui::sprite(sprites_batteryCharge_idx, 281, 0);
 	}
 
-            if (settings.universal.battery == 0) {
-        } else if (settings.universal.battery == 1) {
+            if (Config::percentDisplay == 0) {
+        } else if (Config::percentDisplay == 1) {
     	if(batteryPercent == 100) {
 		Draw_Text(230, 0, 0.65f, WHITE, "100%");
 	} else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
-        if (settings.universal.font == 0) {
-        C2D_TextFontParse(&percentText, font, sizeBuf, percent);
-        } else if (settings.universal.font == 1) {
-        C2D_TextFontParse(&percentText, font1, sizeBuf, percent);
+        if (Config::Font == 0) {
+        C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
+        } else if (Config::Font == 1) {
+        C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -369,10 +364,10 @@ void start_frame(void)
 
 void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
-    if (settings.universal.font == 0) {
-        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
-    } else if (settings.universal.font == 1) {
-	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    if (Config::Font == 0) {
+        C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
+    } else if (Config::Font == 1) {
+	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
     }
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
@@ -389,10 +384,10 @@ void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) 
 
 void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
 	C2D_Text c2d_text;
-    if (settings.universal.font == 0) {
-        C2D_TextFontParse(&c2d_text, font, sizeBuf, text);
-    } else if (settings.universal.font == 1) {
-	    C2D_TextFontParse(&c2d_text, font1, sizeBuf, text);
+    if (Config::Font == 0) {
+        C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
+    } else if (Config::Font == 1) {
+	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
     }
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }

@@ -35,8 +35,8 @@ static int animated_bubblesYPos[2] = {0};
 static bool animated_bubbleMoveDelay = false;
 
 void animatedBGTop(void) {
-	if (settings.universal.animation == 0) {
-	} else if (settings.universal.animation == 1) {
+	if (Config::animation == 0) {
+	} else if (Config::animation == 1) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -46,11 +46,11 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
-} else if (settings.universal.animation == 2) {
+	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+} else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -60,16 +60,16 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
 }
 
 void animatedBGBot(void) {
-	if (settings.universal.animation == 0) {
-	} else if (settings.universal.animation == 1) {
+	if (Config::animation == 0) {
+	} else if (Config::animation == 1) {
 		if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -79,11 +79,11 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
-} else if (settings.universal.animation == 2) {
+	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+} else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
@@ -93,9 +93,9 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0]+240, settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], settings.universal.animationcolor);
-	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, settings.universal.animationcolor);
+	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
 }

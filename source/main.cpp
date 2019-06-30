@@ -66,7 +66,7 @@ extern bool firstSong;
 
 static touchPosition touch;
 extern C3D_RenderTarget* top;
-extern C3D_RenderTarget* bottom;	
+extern C3D_RenderTarget* bottom;
 int screenMode = 0;
 
 
@@ -140,12 +140,15 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
-	LoadUniversalSettings();
+	Config::loadConfig();
     gfxInitDefault();
 	Gui::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	// mcuInit(); // Comment this out, if you use Citra.
+	if (Config::Citra == 0) {
+	mcuInit();
+	} else if (Config::Citra == 1) {
+	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -248,6 +251,10 @@ int main()
 //#########################################################################################################
 			case scriptMainScreen:
 				drawScriptMainScreen();
+				break;
+//#########################################################################################################
+			case FontSelectionScreen:
+				drawFontSelection();
 				break;
 		}
 
@@ -371,6 +378,10 @@ int main()
 			case scriptMainScreen:
 				scriptMainScreenLogic(hDown, hHeld);
 				break;
+//########################################################################################################
+			case FontSelectionScreen:
+				FontSelectionLogic(hDown, hHeld);
+				break;
 		}
 //#########################################################################################################
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
@@ -397,7 +408,7 @@ int main()
         Gui::clearTextBufs();
     }
 
-	SaveUniversalSettings();
+	Config::saveConfig();
 	stopPlayback();
 	Gui::exit();
 	hidExit();
