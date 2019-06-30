@@ -145,7 +145,10 @@ int main()
 	Gui::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	// mcuInit(); // Comment this out, if you use Citra.
+	if (Config::Citra == 0) {
+	mcuInit();
+	} else if (Config::Citra == 1) {
+	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
