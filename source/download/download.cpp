@@ -974,7 +974,7 @@ void downloadThemes(void) {
 			}
 		}
 		themesText += "\n\n\n\n\n";
-		themesText += "B: Back   A: Continue";
+		themesText += "			B: Back   A: Continue";
 		DisplayMsg(themesText.c_str());
 	}
 
@@ -1033,7 +1033,7 @@ void downloadThemes(void) {
 		for(uint i=0;i<((themeList.size()<10) ? 11-themeList.size() : 0);i++) {
 			themesText += "\n";
 		}
-		themesText += "B: Back   A: Choose";
+		themesText += "				B: Back   A: Choose";
 		DisplayMsg(themesText.c_str());
 	}
 }

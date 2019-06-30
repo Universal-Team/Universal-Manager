@@ -66,7 +66,7 @@ extern bool firstSong;
 
 static touchPosition touch;
 extern C3D_RenderTarget* top;
-extern C3D_RenderTarget* bottom;	
+extern C3D_RenderTarget* bottom;
 int screenMode = 0;
 
 

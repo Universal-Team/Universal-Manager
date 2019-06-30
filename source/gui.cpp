@@ -81,7 +81,6 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     defaultFont = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
-    customFont = C2D_FontLoad("sdmc:/Universal-Manager/Font.bcfnt");
     return 0;
 }
 
@@ -250,7 +249,8 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
-	Draw_Text(26, 32, 0.45f, BLACK, text);
+    Gui::sprite(sprites_textbox_idx, 10, 25);
+	Draw_Text(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);

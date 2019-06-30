@@ -73,7 +73,7 @@ void drawFontSelection(void) {
 	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
 		bcfntList += "\n";
 	}
-	bcfntList2 += "A : Select Font Select : Select Standard Font B : Back";
+	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back";
 	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
 
@@ -83,10 +83,8 @@ void drawFontSelection(void) {
 }
 
 static void selectFont(void) {
-		C2D_FontFree(customFont);
-		customFont = C2D_FontLoad(bcfnts[selectedBcfnt].name.c_str());
+		customFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
 		settings.universal.font = 1;
-		screenMode = uiSettingsScreen;
 }
 
 void FontSelectionLogic(u32 hDown, u32 hHeld) {
@@ -94,12 +92,15 @@ void FontSelectionLogic(u32 hDown, u32 hHeld) {
 	if(hDown & KEY_A) {
 		if(confirmPopup("Do you want to use this Font : \n\n "+bcfnts[selectedBcfnt].name+"")) {
 		selectFont();
+		screenMode = uiSettingsScreen;
 		} 
 	} else if (hDown & KEY_B) {
 		screenMode = uiSettingsScreen;
 	} else if (hDown & KEY_SELECT) {
+		if(confirmPopup("Do you want to use the Default Font?")) {
 		settings.universal.font = 0;
 		screenMode = uiSettingsScreen;
+		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedBcfnt > 0 && !keyRepeatDelay) {
 			selectedBcfnt--;

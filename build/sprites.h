@@ -57,4 +57,5 @@
 #define sprites_dot_idx 53
 #define sprites_frame_idx 54
 #define sprites_keyboard_idx 55
-#define sprites_universal_credits_idx 56
+#define sprites_textbox_idx 56
+#define sprites_universal_credits_idx 57

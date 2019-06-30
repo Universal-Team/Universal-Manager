@@ -151,7 +151,7 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
 	Draw_Text(100, 90, 0.45f, BLACK, msg1.c_str());
 	Draw_Text(120, 110, 0.45f, BLACK, msg2.c_str());
-	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("A : "+no+"   B : "+yes).c_str());
+	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
 	C3D_FrameEnd(0);
