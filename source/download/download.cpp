@@ -761,15 +761,15 @@ void checkForUpdates() {
 
 	updateAvailable[2] = bootstrapRelease != latestBootstrapRelease();
 	updateAvailable[3] = boostrapNightly != latestBootstrapNightly();
-	updateAvailable[4] = lumaRelease != latestLumaRelease();
-	updateAvailable[5] = lumaNightly != latestLumaNightly();
-	updateAvailable[6] = godMode9Version != latestGodMode9();
-	updateAvailable[7] = universalRelease != latestUniversalRelease();
-	updateAvailable[8] = universalNightly != latestUniversalNightly();
-	updateAvailable[9] = pkmnchestRelease != latestpkmnchestRelease();
-	updateAvailable[10] = pkmnchestNightly != latestpkmnchestNightly();
-	updateAvailable[11] = relaunchRelease != latestRelaunchRelease();
-	updateAvailable[12] = relaunchNightly != latestRelaunchNightly();
+	updateAvailable[5] = lumaRelease != latestLumaRelease();
+	updateAvailable[6] = lumaNightly != latestLumaNightly();
+	updateAvailable[7] = godMode9Version != latestGodMode9();
+	updateAvailable[8] = universalRelease != latestUniversalRelease();
+	updateAvailable[9] = universalNightly != latestUniversalNightly();
+	updateAvailable[10] = pkmnchestRelease != latestpkmnchestRelease();
+	updateAvailable[11] = pkmnchestNightly != latestpkmnchestNightly();
+	updateAvailable[12] = relaunchRelease != latestRelaunchRelease();
+	updateAvailable[13] = relaunchNightly != latestRelaunchNightly();
 }
 
 
@@ -911,7 +911,7 @@ void updateUniversalManager(bool nightly) {
 
 		setInstalledVersion("UNIVERSAL-MANAGER-NIGHTLY", latestUniversalNightly());
 		saveUpdateData();
-		updateAvailable[8] = false;
+		updateAvailable[9] = false;
 	} else {
 		DisplayMsg("Downloading Universal-Manager...\nRelease");
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
@@ -926,7 +926,7 @@ void updateUniversalManager(bool nightly) {
 
 		setInstalledVersion("UNIVERSAL-MANAGER-RELEASE", latestUniversalRelease());
 		saveUpdateData();
-		updateAvailable[7] = false; 
+		updateAvailable[8] = false; 
 }
 doneMsg();
 }
@@ -941,7 +941,7 @@ void updateLuma(bool nightly) {
 
 		setInstalledVersion("LUMA3DS-NIGHTLY", latestLumaNightly());
 		saveUpdateData();
-		updateAvailable[5] = false;
+		updateAvailable[6] = false;
 	} else {	
 		DisplayMsg("Downloading Luma 3DS...\nRelease");
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.zip", "/Luma3DS.zip") != 0) {
@@ -956,7 +956,7 @@ void updateLuma(bool nightly) {
 
 		setInstalledVersion("LUMA3DS-RELEASE", latestLumaRelease());
 		saveUpdateData();
-		updateAvailable[4] = false;
+		updateAvailable[5] = false;
 	}
 	doneMsg();
 }
@@ -976,7 +976,7 @@ void downloadGodMode9(void) {
 
 		setInstalledVersion("GODMODE9", latestGodMode9());
 		saveUpdateData();
-		updateAvailable[6] = false;
+		updateAvailable[7] = false;
 	doneMsg(); 
 }
 
@@ -1121,7 +1121,7 @@ void updatePKMNChestRelease(void) {
 
 		setInstalledVersion("PKMN-CHEST-RELEASE", latestpkmnchestRelease());
 		saveUpdateData();
-		updateAvailable[9] = false;
+		updateAvailable[10] = false;
 		doneMsg();
 }
 
@@ -1144,7 +1144,7 @@ void updatePKMNChestNightly(void) {
 
 		setInstalledVersion("PKMN-CHEST-NIGHTLY", latestpkmnchestNightly());
 		saveUpdateData();
-		updateAvailable[10] = false;
+		updateAvailable[11] = false;
 		doneMsg();
 }
 
@@ -1163,7 +1163,7 @@ void updateRelaunchNightly(void) {
 		deleteFile("sdmc:/Relaunch.cia");
 		setInstalledVersion("RELAUNCH-NIGHTLY", latestRelaunchNightly());
 		saveUpdateData();
-		updateAvailable[12] = false;
+		updateAvailable[13] = false;
 		doneMsg();
 }
 
@@ -1182,6 +1182,6 @@ void updateRelaunchRelease(void) {
 		deleteFile("sdmc:/Relaunch.cia");
 		setInstalledVersion("RELAUNCH-RELEASE", latestRelaunchRelease());
 		saveUpdateData();
-		updateAvailable[11] = false;
+		updateAvailable[12] = false;
 		doneMsg();
 }
