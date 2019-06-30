@@ -80,7 +80,7 @@ Result Gui::init(void)
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
-    defaultFont = C2D_FontLoad("romfs:/Fonts/Default-Font.bcfnt");
+    defaultFont = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
     return 0;
 }
 

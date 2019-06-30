@@ -228,7 +228,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			Config::musicMode++;
 			if (Config::musicMode > 2) Config::musicMode = 0;
 	} else if(touching(touch, uiSettingsButtonPos[15])) {
-			screenMode = FontSelectionScreenRomfs;
+			screenMode = FontSelectionScreen;
 }
 }
 }

@@ -43,52 +43,14 @@ uint selectedBcfnt = 0;
 std::vector<DirEntry> bcfnts;
 extern C2D_Font customFont;
 
-void drawFontSelectionRomfs(void) {
+void drawFontSelection(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(80, 0, 0.6f, WHITE, "Font Select Screen [ROMFS]");
-	
-	if(dirChanged) {
-		char startPath[PATH_MAX];
-		getcwd(startPath, PATH_MAX);
-		chdir("romfs:/Fonts/");
-		getDirectoryContents(bcfnts);
-		chdir(startPath);
-	}
-
-	std::string bcfntList;
-	std::string bcfntList2;
-	for (uint i=(selectedBcfnt<12) ? 0 : selectedBcfnt-12;i<bcfnts.size()&&i<((selectedBcfnt<12) ? 13 : selectedBcfnt+1);i++) {
-		if (i == selectedBcfnt) {
-			bcfntList += "> " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
-		} else {
-			bcfntList += "  " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
-		}
-	}
-	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
-		bcfntList += "\n";
-	}
-	bcfntList2 += "A : Select Font  SELECT : Switch Location Font  B : Back";
-	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
-}
-
-void drawFontSelectionSD(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Font Select Screen [SD]");
+	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Font Select Screen");
 	mkdir("sdmc:/Universal-Manager/Fonts/", 0777);
 	
 	if(dirChanged) {
@@ -111,7 +73,7 @@ void drawFontSelectionSD(void) {
 	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
 		bcfntList += "\n";
 	}
-	bcfntList2 += "A : Select Font  SELECT : Switch Location  B : Back";
+	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back";
 	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
 
@@ -120,51 +82,25 @@ void drawFontSelectionSD(void) {
 	Gui::chooseLayoutBot();
 }
 
-static void selectFontSD(void) {
+static void selectFont(void) {
 		customFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
 		Config::Font = 1;
 }
 
-static void selectFontRomfs(void) {
-		customFont = C2D_FontLoad(("romfs:/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
-		Config::Font = 1;
-}
-
-void FontSelectionLogicRomfs(u32 hDown, u32 hHeld) {
+void FontSelectionLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
 		if(confirmPopup("Do you want to use this Font : \n\n "+bcfnts[selectedBcfnt].name+"")) {
-		selectFontRomfs();
+		selectFont();
 		screenMode = uiSettingsScreen;
 		} 
 	} else if (hDown & KEY_B) {
 		screenMode = uiSettingsScreen;
 	} else if (hDown & KEY_SELECT) {
-		screenMode = FontSelectionScreenSD;
-	} else if (hHeld & KEY_UP) {
-		if (selectedBcfnt > 0 && !keyRepeatDelay) {
-			selectedBcfnt--;
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedBcfnt < bcfnts.size()-1) {
-			selectedBcfnt++;
-			keyRepeatDelay = 3;
-		}
-	}
-}
-
-void FontSelectionLogicSD(u32 hDown, u32 hHeld) {
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	if(hDown & KEY_A) {
-		if(confirmPopup("Do you want to use this Font : \n\n "+bcfnts[selectedBcfnt].name+"")) {
-		selectFontSD();
+		if(confirmPopup("Do you want to use the Default Font?")) {
+		Config::Font = 0;
 		screenMode = uiSettingsScreen;
-		} 
-	} else if (hDown & KEY_B) {
-		screenMode = uiSettingsScreen;
-	} else if (hDown & KEY_SELECT) {
-		screenMode = FontSelectionScreenRomfs;
+		}
 	} else if (hHeld & KEY_UP) {
 		if (selectedBcfnt > 0 && !keyRepeatDelay) {
 			selectedBcfnt--;

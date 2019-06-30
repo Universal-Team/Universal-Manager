@@ -253,11 +253,8 @@ int main()
 				drawScriptMainScreen();
 				break;
 //#########################################################################################################
-			case FontSelectionScreenSD:
-				drawFontSelectionSD();
-				break;
-			case FontSelectionScreenRomfs:
-				drawFontSelectionRomfs();
+			case FontSelectionScreen:
+				drawFontSelection();
 				break;
 		}
 
@@ -382,11 +379,8 @@ int main()
 				scriptMainScreenLogic(hDown, hHeld);
 				break;
 //########################################################################################################
-			case FontSelectionScreenSD:
-				FontSelectionLogicSD(hDown, hHeld);
-				break;
-			case FontSelectionScreenRomfs:
-				FontSelectionLogicRomfs(hDown, hHeld);
+			case FontSelectionScreen:
+				FontSelectionLogic(hDown, hHeld);
 				break;
 		}
 //#########################################################################################################
