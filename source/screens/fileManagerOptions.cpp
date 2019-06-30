@@ -66,7 +66,7 @@ ButtonPos functionPos[] = {
 bool displayActionBox(void) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(bottom);
-	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, settings.universal.bars);
+	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, Config::barColor);
 	Gui::sprite(sprites_actionBox_idx, 54, 30);
 
 	// Buttons.

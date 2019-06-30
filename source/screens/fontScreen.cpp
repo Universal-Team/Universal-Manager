@@ -84,7 +84,7 @@ void drawFontSelection(void) {
 
 static void selectFont(void) {
 		customFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
-		settings.universal.font = 1;
+		Config::Font = 1;
 }
 
 void FontSelectionLogic(u32 hDown, u32 hHeld) {
@@ -98,7 +98,7 @@ void FontSelectionLogic(u32 hDown, u32 hHeld) {
 		screenMode = uiSettingsScreen;
 	} else if (hDown & KEY_SELECT) {
 		if(confirmPopup("Do you want to use the Default Font?")) {
-		settings.universal.font = 0;
+		Config::Font = 0;
 		screenMode = uiSettingsScreen;
 		}
 	} else if (hHeld & KEY_UP) {

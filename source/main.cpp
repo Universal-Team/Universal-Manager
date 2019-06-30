@@ -140,7 +140,7 @@ int main()
 	srvInit();
 	hidInit();
 	acInit();
-	LoadUniversalSettings();
+	Config::loadConfig();
     gfxInitDefault();
 	Gui::init();
 	ptmuInit();	// For battery status
@@ -405,7 +405,7 @@ int main()
         Gui::clearTextBufs();
     }
 
-	SaveUniversalSettings();
+	Config::saveConfig();
 	stopPlayback();
 	Gui::exit();
 	hidExit();

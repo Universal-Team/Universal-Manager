@@ -37,42 +37,38 @@ using std::wstring;
 
 static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
-// Settings
-Settings_t settings;
+int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay, Config::layout, Config::layoutBG; // [UI]
+int Config::animation, Config::animationColor; // [ANIMATED]
+int Config::Font; // [FONT]
 
-void LoadUniversalSettings(void) {
-	settings.universal.bars = settingsini.GetInt("UI", "BARS", BARCOLOR); // Bars color
-	settings.universal.bg = settingsini.GetInt("UI", "BG", GRAY); // Background Color
-	settings.universal.music = settingsini.GetInt("UI", "MUSIC", 0); // Music Background
-	settings.universal.battery = settingsini.GetInt("UI", "BATTERY", 0); // Shows the Percentage for the Battery.
-	settings.universal.layout = settingsini.GetInt("UI", "LAYOUT", 0); // The Current Layout (Bars)
-	settings.universal.bgl = settingsini.GetInt("UI", "LAYOUTBG", 0); // BG Layouts.
-
-	// Animated BG.
-	settings.universal.animation = settingsini.GetInt("ANIMATED", "ENABLE", 1); // 1 -> Enabled / 0 -> Disabled.
-	settings.universal.animationcolor = settingsini.GetInt("ANIMATED", "COLOR", BLUE); // The Color of the Bubbles.
-
-	// Misc.
-	settings.universal.font = settingsini.GetInt("FONT", "CUSTOM", 0); // 0 - ROMFS Font, 1 - SD Font.
+void Config::loadConfig() {
+	// [UI]
+	Config::barColor = settingsini.GetInt("UI", "BARS", BARCOLOR);
+	Config::bgColor = settingsini.GetInt("UI", "BG", GRAY);
+	Config::musicMode = settingsini.GetInt("UI", "MUSIC", 0);
+	Config::percentDisplay = settingsini.GetInt("UI", "BATTERY", 0);
+	Config::layout = settingsini.GetInt("UI", "LAYOUT", 0);
+	Config::layoutBG = settingsini.GetInt("UI", "LAYOUTBG", 0);
+	// [ANIMATED]
+	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
+	Config::animationColor = settingsini.GetInt("ANIMATED", "COLOR", BLUE);
+	// [FONT]
+	Config::Font = settingsini.GetInt("FONT", "CUSTOM", 0);
 }
 
-/**
- * Save settings.
- */
-void SaveUniversalSettings(void) {
-	settingsini.SetInt("UI", "BARS", settings.universal.bars);
-	settingsini.SetInt("UI", "BG", settings.universal.bg);
-	settingsini.SetInt("UI", "MUSIC", settings.universal.music);
-	settingsini.SetInt("UI", "BATTERY", settings.universal.battery);
-	settingsini.SetInt("UI", "LAYOUT", settings.universal.layout);
-	settingsini.SetInt("UI", "LAYOUTBG", settings.universal.bgl);
-
-	// Animated BG.
-	settingsini.SetInt("ANIMATED", "ENABLE", settings.universal.animation);
-	settingsini.SetInt("ANIMATED", "COLOR", settings.universal.animationcolor);
-
-	// Misc.
-	settingsini.SetInt("FONT", "CUSTOM", settings.universal.font);
+void Config::saveConfig() {
+	// [UI]
+	settingsini.SetInt("UI", "BARS", Config::barColor);
+	settingsini.SetInt("UI", "BG", Config::bgColor);
+	settingsini.SetInt("UI", "MUSIC", Config::musicMode);
+	settingsini.SetInt("UI", "BATTERY", Config::percentDisplay);
+	settingsini.SetInt("UI", "LAYOUT", Config::layout);
+	settingsini.SetInt("UI", "LAYOUTBG", Config::layoutBG);
+	// [ANIMATED]
+	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
+	settingsini.SetInt("ANIMATED", "COLOR", Config::animationColor);
+	// [FONT]
+	settingsini.SetInt("FONT", "CUSTOM", Config::Font);
 
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }

@@ -127,7 +127,7 @@ void drawMusicMain() {
 	Draw_Text(40, 57, 0.7f, WHITE, "Songs");
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
-	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, settings.universal.bars);
+	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, Config::barColor);
 	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
 	Draw_Text(210, 57, 0.65f, WHITE, "Now Playing");
 
@@ -266,8 +266,8 @@ void drawMusicPlayer(void) {
 	Gui::chooseLayoutTop();
 
 		// Placeholder for Metadata Stuff..
-	 	if (settings.universal.music == 0) {
-	} else if (settings.universal.music == 1) {
+	 	if (Config::musicMode == 0) {
+	} else if (Config::musicMode == 1) {
 			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
 			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
 			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
@@ -276,7 +276,7 @@ void drawMusicPlayer(void) {
 		} else {
 			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
 		}
-	} else if (settings.universal.music == 2) {
+	} else if (Config::musicMode == 2) {
 		if (imageLoaded == true) {
 		Draw_Image(); 
 	} else if (imageLoaded == false) {
@@ -291,7 +291,7 @@ void drawMusicPlayer(void) {
 		Draw_Text(160, 162, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		if (Audio_GetPosition() != -1) {
 		Draw_Rect(100, 179, 207, 16, GRAY);
-		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, settings.universal.bars);
+		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, Config::barColor);
 		}
 
 	
@@ -311,17 +311,17 @@ void drawMusicPlayer(void) {
 	DisplayTime();
 	drawBatteryBot();
 
-	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, playerButtonPos[0].x, playerButtonPos[0].y, settings.universal.bars);
+	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, playerButtonPos[0].x, playerButtonPos[0].y, Config::barColor);
 	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
 
-	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, playerButtonPos[1].x, playerButtonPos[1].y, settings.universal.bars);
+	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, playerButtonPos[1].x, playerButtonPos[1].y, Config::barColor);
 	Gui::sprite(sprites_left_arrow_normal_idx, playerButtonPos[1].x, playerButtonPos[1].y);
 
-	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, playerButtonPos[2].x, playerButtonPos[2].y, settings.universal.bars);
+	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, playerButtonPos[2].x, playerButtonPos[2].y, Config::barColor);
 	Gui::sprite(sprites_right_icon_normal_idx, playerButtonPos[2].x, playerButtonPos[2].y);
 
-	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : settings.universal.bars));
-	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : settings.universal.bars));
+	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : Config::barColor));
+	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : Config::barColor));
 	if (musicRepeat)	Draw_Text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
 }
 }
@@ -700,17 +700,17 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		} else {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
-			if (settings.universal.music == 0) {
+			if (Config::musicMode == 0) {
 			DisplayMsg("Put the Music Mode to `BG`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
-		} else if (settings.universal.music == 1) {
+		} else if (Config::musicMode == 1) {
 			DisplayMsg("Put the Music Mode to `BG`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
-		} else if (settings.universal.music == 2) {
+		} else if (Config::musicMode == 2) {
 			if(confirmPopup("Do you want, to use this Image?")) {
 			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
 			imageLoaded = true;

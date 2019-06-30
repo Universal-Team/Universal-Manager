@@ -29,29 +29,14 @@
 
 #include <string>
 
-typedef struct _Settings_t {
-	struct {
-		int bars;
-		int bg;
-		int music;
-		int battery;
-		int layout;
-		int bgl;
-		int animation;
-		int animationcolor;
-		int font;
-	} universal;
-} Settings_t;
-extern Settings_t settings;
 
-/**
- * Load the Universal settings.
- */
-void LoadUniversalSettings(void);
+namespace Config {
+	extern int barColor, bgColor, musicMode, percentDisplay, layout, layoutBG; // [UI]
+	extern int animation, animationColor; // [ANIMATED]
+	extern int Font; // [FONT]
 
-/**
- * Save the Universal settings.
- */
-void SaveUniversalSettings(void);
+	void loadConfig();
+	void saveConfig();
+}
 
 #endif /* SETTINGS_HPP */
