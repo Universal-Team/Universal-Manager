@@ -89,6 +89,7 @@ static void selectFont(void) {
 
 void FontSelectionLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if(hDown & KEY_A) {
 		if(confirmPopup("Do you want to use this Font : \n\n "+bcfnts[selectedBcfnt].name+"")) {
 		selectFont();

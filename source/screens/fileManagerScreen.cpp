@@ -102,7 +102,14 @@ void drawFileBrowse(void) {
 
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--; 
-		if (hDown & KEY_B) {
+	gspWaitForVBlank();
+	if (hDown & KEY_A) {
+		if (dirContents[selectedFile].isDirectory) {
+			chdir(dirContents[selectedFile].name.c_str());
+			selectedFile = 0;
+			dirChanged = true;
+		}
+		} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {

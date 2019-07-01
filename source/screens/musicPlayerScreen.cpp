@@ -209,6 +209,7 @@ void drawMusicList(void) {
 
 void musicListLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -434,6 +435,7 @@ void drawMusicPlaylistAdd(void) {
 
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if(hDown & KEY_A) {
 		std::vector<DirEntry> selectedFiles;
 		if(dirContents[selectedFile].isDirectory) {
@@ -534,6 +536,7 @@ void drawMusicPlaylistPlay(void) {
 
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if(hDown & KEY_A) {
 		if(confirmPopup("Would you like to add to these songs to",
 						 "Now Playing or play them now?",
@@ -612,6 +615,7 @@ void drawMusicPlaylistEdit() {
 
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if(hDown & KEY_A) {
 		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "w");
 		for(uint i=0;i<plstContents.size();i++) {
@@ -690,8 +694,9 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 	Gui::chooseLayoutBot();
 }
 
-void themeSelectorLogic(u32 hDown, u32 hHeld) { 
-	if (keyRepeatDelay)	keyRepeatDelay--; 
+void themeSelectorLogic(u32 hDown, u32 hHeld) {
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());

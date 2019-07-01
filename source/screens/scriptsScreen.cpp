@@ -96,6 +96,7 @@ void testWrite(void) {
 
 void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if(hDown & KEY_A) {
 		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
 			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);

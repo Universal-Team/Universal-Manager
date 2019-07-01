@@ -111,7 +111,8 @@ void showImage(void) {
 }
 
 void ImageSelectorLogic(u32 hDown, u32 hHeld) { 
-	if (keyRepeatDelay)	keyRepeatDelay--; 
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
