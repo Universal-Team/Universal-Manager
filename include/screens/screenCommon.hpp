@@ -26,7 +26,6 @@
 
 #include "gui.hpp"
 #include "animation.hpp"
-#include "i18n.hpp"
 
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
@@ -63,6 +62,7 @@ extern C3D_RenderTarget* bottom;
 //###############################
 #define fileManager				21
 #define scriptMainScreen		22
+#define FontSelectionScreen		23
 
 struct Playlist {
 	std::string name;
@@ -140,3 +140,7 @@ bool displayActionBox(void);
 // Script Screen Stuff.
 void drawScriptMainScreen(void);
 void scriptMainScreenLogic(u32 hDown, u32 hHeld);
+
+// Font Selection stuff.
+void drawFontSelection(void);
+void FontSelectionLogic(u32 hDown, u32 hHeld);

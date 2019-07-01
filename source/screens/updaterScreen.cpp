@@ -40,93 +40,142 @@ struct ButtonPos {
 	int link;
 };
 
-extern bool touching(touchPosition touch, ButtonPos button);
-
-
-ButtonPos downloadFunctionButtonPos[] = {
-	// TWLMenu
-	{129, 48, 87, 33, -1},
-	{220, 48, 87, 33, -1},
-	// NDS-Bootstrap
-	{129, 88, 87, 33, -1},
-	{220, 88, 87, 33, -1},
-
-	// Usrcheat.dat
-	{129, 128, 87, 33, -1},
-
-	// Universal-Manager
-	{129, 48, 87, 33, -1},
-	{220, 48, 87, 33, -1},
-	// Luma 3DS.
-	{129, 48, 87, 33, -1},
-	{220, 48, 87, 33, -1},
-	// GodMode9
-	{129, 88, 87, 33, -1},
-	// Check for Update!
-	{0, 208, 32, 32, -1},
-	// Back Icon.
-	{293, 213, 27, 27, -1},
-
-	// Themes.
-	{129, 48, 87, 33, -1},
-
-	// pkmn-chest
-	{220, 88, 87, 33, -1},
-
-	// PKMN-Chest Nightly.
-	{129, 88, 87, 33, -1},
-
-	// Relaunch.
-	{129, 128, 87, 33, -1},
-	{220, 128, 87, 33, -1},
+//#################################################
+struct {
+	int x;
+	int y;
+} mainButtons[] = {
+	{ 38, 48}, // CFW Screen
+	{ 129, 48}, // TWL Screen
+	{ 220, 48}, // Other Screen
+	{ 38, 88}, // Universal Screen
 };
 
-ButtonPos downloadButtonPos[] = {
-	// TWLMenu
-	{129, 48, 87, 33}, 
-	{220, 48, 87, 33}, 
-	// NDS-Bootstrap
-	{129, 88, 87, 33}, 
-	{220, 88, 87, 33}, 
-	// Usrcheat.dat
-	{129, 128, 87, 33}, 
-	// Universal-Manager
-	{129, 48, 87, 33}, 
-	{220, 48, 87, 33},
-	// Luma 3DS
-	{129, 48, 87, 33},
-	{220, 48, 87, 33},
-
-	// GodMode9
-	{129, 88, 87, 33},
-	// ?
-	{129, 128, 87, 33},
-
-	// Sub Menu.
-	{38, 48, 87, 33, CFWScreen},
-	{129, 48, 87, 33, TWLScreen},
-	{220, 48, 87, 33, OtherScreen},
-
-	{129, 48, 87, 33}, // Music Player Theme.
-	// PKMN-Chest
-	{220, 88, 87, 33},
-	// PKMN-Chest Nightly.
-	{129, 88, 87, 33},
-
-	//Universal-Screen
-	{38, 88, 87, 33, UniversalScreen},
-
-	// Relaunch.
-	{129, 128, 87, 33},
-	{220, 128, 87, 33},
+size_t mainButtonsTex[] = {
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
 };
+
+ButtonPos mainFunction[] = {
+	{38, 48, 87, 33, -1}, // CFW Screen
+	{129, 48, 87, 33, -1}, // TWL Screen
+	{220, 48, 87, 33, -1}, // Other Screen
+	{38, 88, 87, 33, -1}, // Universal Screen
+	{293, 213, 27, 27, -1}, // Back Button.
+};
+
+//###################################################
+struct {
+	int x;
+	int y;
+} CFWButtons[] = {
+	{ 129, 48,}, // Luma3DS Release
+	{ 220, 48}, // Luma3DS Nightly
+	{ 129, 88}, // GodMode9 Release
+};
+
+size_t CFWButtonsTex[] = {
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+};
+
+ButtonPos CFWFunction[] = {
+	{129, 48, 87, 33, -1}, // Luma3DS Release
+	{220, 48, 87, 33, -1}, // Luma3DS Nightly
+	{129, 88, 87, 33, -1}, // GodMode9 Release
+	{293, 213, 27, 27, -1}, // Back Button.
+};
+//############################################################
+struct {
+	int x;
+	int y;
+} TWLButtons[] = {
+	{ 129, 48,}, // TWLMENU Release
+	{ 220, 48}, // TWLMENU Nightly
+	{ 129, 88}, // NDSB Release
+	{220, 88}, // NDSB Nightly
+	{129, 128}, // usrcheat.dat
+};
+
+size_t TWLButtonsTex[] = {
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+};
+
+ButtonPos TWLFunction[] = {
+	{129, 48, 87, 33, -1}, // TWLMENU Release
+	{220, 48, 87, 33, -1}, // TWLMENU Nightly
+	{129, 88, 87, 33, -1}, // NDSB Release
+	{220, 88, 87, 33, -1}, // NDSB Nightly
+	{129, 128, 87, 33, -1}, // usrcheat.dat
+	{293, 213, 27, 27, -1}, // Back Button.
+};
+//#############################################################
+struct {
+	int x;
+	int y;
+} OTHERButtons[] = {
+	{ 129, 48,}, // Themes
+};
+
+size_t OTHERButtonsTex[] = {
+	sprites_updaterButton_idx,
+};
+
+ButtonPos OTHERFunction[] = {
+	{129, 48, 87, 33, -1}, // Themes
+	{293, 213, 27, 27, -1}, // Back Button.
+};
+//###############################################################
+struct {
+	int x;
+	int y;
+} UNIVButtons[] = {
+	{ 129, 48,}, // UNIV Manager Release
+	{ 220, 48}, // UNIV Manager Nightly
+	{ 129, 88}, // Pokemon Chest Release
+	{220, 88}, // Pokemon Chest Nightly
+	{129, 128}, // Relaunch Release
+	{220, 128}, // Relaunch Nightly
+};
+
+size_t UNIVButtonsTex[] = {
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+	sprites_updaterButton_idx,
+};
+
+ButtonPos UNIVFunction[] = {
+	{129, 48, 87, 33, -1}, // Univ Manager Release
+	{220, 48, 87, 33, -1}, // Univ Manager Nightly
+	{129, 88, 87, 33, -1}, // Pokemon Chest Release
+	{220, 88, 87, 33, -1}, // Pokemon Chest Nightly
+	{129, 128, 87, 33, -1}, // Relaunch Release
+	{220, 128, 87, 33, -1}, // Relaunch Nightly
+	{293, 213, 27, 27, -1}, // Back Button.
+};
+//###################################################################
 
 bool updateAvailable[] = {
 	false,
 	false,
 	false,
 	false,
+
+
 	false,
+	false,
+	false,
+
 	false,
 	false,
 	false,
@@ -134,6 +183,8 @@ bool updateAvailable[] = {
 	false,
 	false,
 };
+
+extern bool touching(touchPosition touch, ButtonPos button);
 
 
 void drawUpdaterSubMenu(void) {
@@ -142,40 +193,42 @@ void drawUpdaterSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("UPDATER_SUB_MENU")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[11].x, downloadButtonPos[11].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[12].x, downloadButtonPos[12].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[13].x, downloadButtonPos[13].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[17].x, downloadButtonPos[17].y);
-	draw_text(49, 58, 0.7f, 0.7f, WHITE, "CFW");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "TWL");
-	draw_text(229, 58, 0.7f, 0.7f, WHITE, "Other");
-	draw_text(49, 98, 0.7f, 0.7f, WHITE, "UNIV");
+	for (int i = (int)(sizeof(mainButtons)/sizeof(mainButtons[0]))-1; i >= 0; i--) {
+		Gui::sprite(mainButtonsTex[i], mainButtons[i].x, mainButtons[i].y);
+	}
+	Draw_Text(49, 58, 0.7f, WHITE, "CFW");
+	Draw_Text(140, 58, 0.7f, WHITE, "TWL");
+	Draw_Text(229, 58, 0.7f, WHITE, "Other");
+	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
 }
 
 void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = mainScreen;
+	} else if (hDown & KEY_X) {
+		if(confirmPopup("Do you want to check for Updates?")) {
+		DisplayMsg("Checking for Updates...\nPlease wait...");
+		checkForUpdates();
+		}
 	} else if(hDown & KEY_TOUCH) {
-		for(uint i=0;i<(sizeof(downloadButtonPos)/sizeof(downloadButtonPos[0]));i++) {
-			if (touching(touch, downloadButtonPos[i])) {
-				screenMode = downloadButtonPos[i].link;
-			}
-		}
-/*	} else if (touching(touch, downloadFunctionButtonPos[11])) {
-			if(confirmPopup("Are you sure you want to check for Updates?\nThis only works the First Time.")) {
-			displayMsg("Checking for Updates.. please wait.");
-			checkForUpdates();
-			}
-		}
-*/} else if (touching(touch, downloadFunctionButtonPos[11])) {
+				if (touching(touch, mainFunction[0])) {
+			screenMode = CFWScreen;
+		} else if (touching(touch, mainFunction[1])) {
+			screenMode = TWLScreen;
+		} else if (touching(touch, mainFunction[2])) {
+			screenMode = OtherScreen;
+		} else if (touching(touch, mainFunction[3])) {
+			screenMode = UniversalScreen;
+		} else if(touching(touch, mainFunction[4])) {
 			screenMode = mainScreen;
 		}
+	}
 }
 
 void drawUpdaterTWL(void) {
@@ -184,41 +237,43 @@ void drawUpdaterTWL(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("TWL_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "TWL Updater Screen");
 	
-	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// TWL Menu Buttons.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[0].x, downloadButtonPos[0].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[1].x, downloadButtonPos[1].y);
+	for (int i = (int)(sizeof(TWLButtons)/sizeof(TWLButtons[0]))-1; i >= 0; i--) {
+		Gui::sprite(TWLButtonsTex[i], TWLButtons[i].x, TWLButtons[i].y);
+	}
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	draw_text(0, 58, 0.65f, 0.65f, WHITE, "TWLMENU++");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(229, 58, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 58, 0.65f, WHITE, "TWLMENU++");
+	Draw_Text(140, 58, 0.7f, WHITE, "Release");
+	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	// NDS-Bootstrap Buttons.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[2].x, downloadButtonPos[2].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[3].x, downloadButtonPos[3].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	draw_text(0, 98, 0.65f, 0.65f, WHITE, "NDS-Bootstrap");
-	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(229, 98, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 98, 0.60f, WHITE, "NDS-Bootstrap");
+	Draw_Text(140, 98, 0.7f, WHITE, "Release");
+	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[4].x, downloadButtonPos[4].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
-	draw_text(0, 138, 0.7f, 0.7f, WHITE, "Extras");
-	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Cheats");
+	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
+	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
-	// Draw The Pages and Back Icon.
-	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	draw_text(240, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	draw_text(260, 4, 0.50, 0.50, WHITE, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	draw_text(300, 4, 0.50, 0.50, BLACK, "4"); //Draw Fourth Page Number.
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(260, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
+	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+
+	for(int i=0;i<(sizeof(TWLButtons)/sizeof(TWLButtons[0]));i++) {
+    if(updateAvailable[i]) {
+        Gui::sprite(sprites_dot_idx, TWLButtons[i].x+75, TWLButtons[i].y-6);
+    }
+}
 }
 
 void updaterTWLLogic(u32 hDown, touchPosition touch) {
@@ -229,68 +284,60 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = OtherScreen;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, downloadFunctionButtonPos[0])) {
-			if(confirmPopup((i18n::localize("TWLMENU_RELEASE")))) {
+		if (touching(touch, TWLFunction[0])) {
+			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
 			updateTWiLight(false);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[1])) {
-			if(confirmPopup((i18n::localize("TWLMENU_NIGHTLY")))) {
+		} else if (touching(touch, TWLFunction[1])) {
+			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Nightly?")) {
 			updateTWiLight(true);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[2])) {
-			if(confirmPopup((i18n::localize("NDS_BOOTSTRAP_RELEASE")))) {
+		} else if (touching(touch, TWLFunction[2])) {
+			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Release?")) {
 			updateBootstrap(false);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[3])) {
-			if(confirmPopup((i18n::localize("NDS_BOOTSTRAP_NIGHTLY")))) {
+		} else if (touching(touch, TWLFunction[3])) {
+			if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
 			updateBootstrap(true);
 			}
-			} else if (touching(touch, downloadFunctionButtonPos[4])) {
-			if(confirmPopup((i18n::localize("USRCHEAT_DAT")))) {
+			} else if (touching(touch, TWLFunction[4])) {
+			if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
 			updateCheats();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+		} else if (touching(touch, TWLFunction[5])) {
 			screenMode = updaterSubMenu;
 		}
 	}
 }
-	/*	
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
-			if(confirmPopup("Are you sure you want to check for Updates?\nThis only works the First Time.")) {
-			displayMsg("Checking for Updates.. please wait.");
-			checkForUpdates();
-			}
-		}
-	}
-}
 
-*/void drawUpdaterOther(void) {
+void drawUpdaterOther(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("OTHER_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Other Updater Screen");
 	
-	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Themes Download Button.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[14].x, downloadButtonPos[14].y);
+	for (int i = (int)(sizeof(OTHERButtons)/sizeof(OTHERButtons[0]))-1; i >= 0; i--) {
+		Gui::sprite(OTHERButtonsTex[i], OTHERButtons[i].x, OTHERButtons[i].y);
+	}
+
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	draw_text(0, 58, 0.65f, 0.65f, WHITE, "Extras");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Themes");
+	Draw_Text(0, 58, 0.65f, WHITE, "Extras");
+	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
 
 	
 
-	// Draw The Pages and Back Icon.
-	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	draw_text(240, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	draw_text(260, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, WHITE, "3"); //Draw Third Page Number.
-	draw_text(300, 4, 0.50, 0.50, BLACK, "4"); //Draw Fourth Page Number.
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
+	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 }
 
@@ -302,9 +349,9 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
 	} else if (hDown & KEY_TOUCH) {
-			if (touching(touch, downloadFunctionButtonPos[11])) {
+			if (touching(touch, OTHERFunction[1])) {
 			screenMode = updaterSubMenu;
-		} else if (touching(touch, downloadFunctionButtonPos[12])) {
+		} else if (touching(touch, OTHERFunction[0])) {
 			downloadThemes();
 }
 }
@@ -316,34 +363,40 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("CFW_UPDATER_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	
-	// Draw the Main Bottom Screen Background.
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "CFW Updater Screen");
+
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Luma 3DS Buttons.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[7].x, downloadButtonPos[7].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[8].x, downloadButtonPos[8].y);
+	for (int i = (int)(sizeof(CFWButtons)/sizeof(CFWButtons[0]))-1; i >= 0; i--) {
+		Gui::sprite(CFWButtonsTex[i], CFWButtons[i].x, CFWButtons[i].y);
+	}
+
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	draw_text(0, 58, 0.65f, 0.65f, WHITE, "Luma3DS");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(229, 58, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 58, 0.65f, WHITE, "Luma3DS");
+	Draw_Text(140, 58, 0.7f, WHITE, "Release");
+	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	 // GodMode9 Buttons.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[9].x, downloadButtonPos[9].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	draw_text(0, 98, 0.65f, 0.65f, WHITE, "GodMode9");
-	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
+	Draw_Text(0, 98, 0.65f, WHITE, "GodMode9");
+	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
 	// Draw The Pages and Back Icon.
-	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	draw_text(240, 4, 0.50, 0.50, WHITE, "1"); //Draw First Page Number.
-	draw_text(260, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	draw_text(300, 4, 0.50, 0.50, BLACK, "4"); //Draw Fourth Page Number.
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
+	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 2, RED);
+
+	for(int i=0;i<(sizeof(CFWButtons)/sizeof(CFWButtons[0]));i++) {
+    if(updateAvailable[i+4]) {
+        Gui::sprite(sprites_dot_idx, CFWButtons[i].x+75, CFWButtons[i].y-6);
+    }
+}
 }
 
 void updaterCFWLogic(u32 hDown, touchPosition touch) {
@@ -351,19 +404,19 @@ void updaterCFWLogic(u32 hDown, touchPosition touch) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_R) {
 		screenMode = TWLScreen;
-	} else if (touching(touch, downloadFunctionButtonPos[7])) {
-			if(confirmPopup((i18n::localize("LUMA3DS_RELEASE")))) {
+	} else if (touching(touch, CFWFunction[0])) {
+			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
 			updateLuma(false);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[8])) {
-			if(confirmPopup((i18n::localize("LUMA3DS_NIGHTLY")))) {
+		} else if (touching(touch, CFWFunction[1])) {
+			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
 			updateLuma(true);
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[9])) {
-			if(confirmPopup((i18n::localize("GODMODE9_RELEASE")))) {
+		} else if (touching(touch, CFWFunction[2])) {
+			if(confirmPopup("Are you sure you want to update GodMode9\nTo Release?")) {
 			downloadGodMode9();
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+		} else if (touching(touch, CFWFunction[3])) {
 			screenMode = updaterSubMenu;
 		}
 		}
@@ -374,45 +427,47 @@ void drawUniversalScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("UNIVERSAL_SCREEN")), 200, 0, 0.72f, 0.72f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
 	
-	// Draw the Main Bottom Screen Background.
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
 	// Universal-Manager Buttons.
 
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[5].x, downloadButtonPos[5].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[6].x, downloadButtonPos[6].y);
+	for (int i = (int)(sizeof(UNIVButtons)/sizeof(UNIVButtons[0]))-1; i >= 0; i--) {
+		Gui::sprite(UNIVButtonsTex[i], UNIVButtons[i].x, UNIVButtons[i].y);
+	}
+
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
-	draw_text(0, 58, 0.65f, 0.65f, WHITE, "UNIV-Manager");
-	draw_text(140, 58, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(229, 58, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 58, 0.65f, WHITE, "UNIV-Manager");
+	Draw_Text(140, 58, 0.7f, WHITE, "Release");
+	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
-	// NDS-Bootstrap Buttons.
 	// PKMN-Chest.
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[15].x, downloadButtonPos[15].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[16].x, downloadButtonPos[16].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 88);
-	draw_text(0, 98, 0.65f, 0.65f, WHITE, "PKMN-Chest");
-	draw_text(140, 98, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(226, 98, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 98, 0.65f, WHITE, "PKMN-Chest");
+	Draw_Text(140, 98, 0.7f, WHITE, "Release");
+	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[18].x, downloadButtonPos[18].y);
-	Gui::sprite(sprites_updaterButton_idx, downloadButtonPos[19].x, downloadButtonPos[19].y);
 	Gui::sprite(sprites_TitleButton_idx, 0, 128);
-	draw_text(0, 138, 0.65f, 0.65f, WHITE, "RELAUNCH");
-	draw_text(140, 138, 0.7f, 0.7f, WHITE, "Release");
-	draw_text(226, 138, 0.7f, 0.7f, WHITE, "Nightly");
+	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
+	Draw_Text(140, 138, 0.7f, WHITE, "Release");
+	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
 
 	// Draw The Pages and Back Icon.
-	Gui::staticText((i18n::localize("CURRENT_PAGE")), 170, 0, 0.50, 0.50, WHITE, TextPosX::CENTER, TextPosY::TOP);
-	draw_text(240, 4, 0.50, 0.50, BLACK, "1"); //Draw First Page Number.
-	draw_text(260, 4, 0.50, 0.50, BLACK, "2"); //Draw Second Page Number.
-	draw_text(280, 4, 0.50, 0.50, BLACK, "3"); //Draw Third Page Number.
-	draw_text(300, 4, 0.50, 0.50, WHITE, "4"); //Draw Fourth Page Number.
+	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Draw_Text(300, 4, 0.50, WHITE, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 2, RED);
+
+	for(int i=0;i<(sizeof(UNIVButtons)/sizeof(UNIVButtons[0]));i++) {
+    if(updateAvailable[i]) {
+        Gui::sprite(sprites_dot_idx, UNIVButtons[i].x+75, UNIVButtons[i].y-6);
+    }
+}
 }
 
 void UniversalLogic(u32 hDown, touchPosition touch) {
@@ -421,34 +476,34 @@ void UniversalLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_L) {
 		screenMode = OtherScreen;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, downloadFunctionButtonPos[5])) {
-			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_RELEASE")))) {
+		if (touching(touch, UNIVFunction[0])) {
+			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
 			updatingSelf = true;
 			updateUniversalManager(false);
 			updatingSelf = false;
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[6])) {
-			if(confirmPopup((i18n::localize("UNIVERSAL_MANAGER_NIGHTLY")))) {
+		} else if (touching(touch, UNIVFunction[1])) {
+			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
 			updatingSelf = true;
 			updateUniversalManager(true);
 			updatingSelf = false;
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[11])) {
+		} else if (touching(touch, UNIVFunction[6])) {
 			screenMode = updaterSubMenu;
-		} else if (touching(touch, downloadFunctionButtonPos[14])) {
-			if(confirmPopup((i18n::localize("PKMN_CHEST_RELEASE")))) {
+		} else if (touching(touch, UNIVFunction[2])) {
+			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
 			updatePKMNChestRelease(); 
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[13])) {
-			if(confirmPopup((i18n::localize("PKMN_CHEST_NIGHTLY")))) {
+		} else if (touching(touch, UNIVFunction[3])) {
+			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Nightly?")) {
 			updatePKMNChestNightly(); 
 			}
-			} else if (touching(touch, downloadFunctionButtonPos[15])) {
-			if(confirmPopup((i18n::localize("RELAUNCH_RELEASE")))) {
+			} else if (touching(touch, UNIVFunction[4])) {
+			if(confirmPopup("Are you sure you want to update Relaunch\nTo Release?")) {
 			updateRelaunchRelease(); 
 			}
-		} else if (touching(touch, downloadFunctionButtonPos[16])) {
-			if(confirmPopup((i18n::localize("RELAUNCH_NIGHTLY")))) {
+		} else if (touching(touch, UNIVFunction[5])) {
+			if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
 			updateRelaunchNightly(); 
 			}
 }

@@ -35,15 +35,13 @@
 #include <string.h>
 #include <unordered_map>
 #include <wchar.h>
+#include "common.hpp"
 
 // Spritesheets.
 #include "sprites.h"
 #include "animation.h"
 
-#include "utils.hpp"
 #include "colors.hpp"
-#include "TextPos.hpp"
-#include "3dsutils.hpp"
 
 // Battery Stuff.
 #include "ptmu_x.h"
@@ -58,7 +56,10 @@
 #define FONT_SIZE_12 0.50f
 #define FONT_SIZE_11 0.46f
 #define FONT_SIZE_9 0.37f
-#define MAX_LINES 10
+
+namespace DateTime {
+    std::string timeStr(void);
+}
 
 namespace Gui
 {
@@ -72,11 +73,6 @@ namespace Gui
     void sprite(int key, int x, int y);
     void AnimationSprite(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
-
-    void dynamicText(const std::string& str, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
-    C2D_Text cacheStaticText(const std::string& strKey);
-    void clearStaticText(void);
-    void staticText(const std::string& strKey, int x, int y, float scaleX, float scaleY, u32 color, TextPosX positionX, TextPosY positionY);
 
     // Layouts!
     void DrawBGTop(void);
@@ -97,20 +93,15 @@ namespace Gui
 }
 
    // Text.
-    void DisplayMsg(const std::string& strKey);
+    void DisplayMsg(const char* text);
     void DisplayTime(void);
 
     void drawBatteryTop(void);
     void drawBatteryBot(void);
 
     void set_screen(C3D_RenderTarget * screen);
-    void draw_text(float x, float y, float scaleX, float scaleY, u32 color, const char * text);
-    void draw_text_wrap(float x, float y, float z, float scaleX, float scaleY, u32 color, const char * text, float max_width);
-    void draw_text_wrap_scaled(float x, float y, float z, Color color, const char * text, float max_scale, float min_scale, float max_width);
-    void draw_text_center(gfxScreen_t target, float y, float z, float scaleX, float scaleY, u32 color, const char * text);
 
     void start_frame(void);
-    void end_frame(void);
 
     // 3DShell -> Most likely for FTP.
     void Draw_EndFrame(void);

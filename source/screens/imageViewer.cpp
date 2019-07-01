@@ -67,7 +67,7 @@ void drawImageSelectorScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::staticText((i18n::localize("IMAGE_SELECTOR_MODE")), 200, 0, 0.68f, 0.68f, WHITE, TextPosX::CENTER, TextPosY::TOP);
+	Draw_Text(130, 0, 0.68f, WHITE, "Image Selector");
 	if (dirChanged) {
 		dirContents.clear();
 		std::vector<DirEntry> dirContentsTemp;
@@ -93,7 +93,7 @@ void drawImageSelectorScreen(void) {
 	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
 		dirs += "\n";
 	}
-	draw_text(26, 32, 0.45f, 0.45f, WHITE, dirs.c_str());
+	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

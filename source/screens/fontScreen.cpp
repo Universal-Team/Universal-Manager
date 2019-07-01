@@ -25,9 +25,8 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "scripts.hpp"
 #include "fileBrowse.h"
-#include "keyboard.hpp"
+#include "settings.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -40,88 +39,76 @@ extern uint selectedFile;
 extern int keyRepeatDelay;
 extern bool dirChanged;
 extern std::vector<DirEntry> dirContents;
-uint selectedScpt = 0;
-std::vector<DirEntry> scpts;
+uint selectedBcfnt = 0;
+std::vector<DirEntry> bcfnts;
+extern C2D_Font customFont;
 
-uint selectedScptItem = 0;
-int movingScptItem = -1;
-std::vector<std::string> scptContents;
-
-void drawScriptMainScreen(void) {
+void drawFontSelection(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(90, 0, FONT_SIZE_18, WHITE, "Script Main Screen");
-	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
+	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Font Select Screen");
+	mkdir("sdmc:/Universal-Manager/Fonts/", 0777);
 	
 	if(dirChanged) {
 		char startPath[PATH_MAX];
 		getcwd(startPath, PATH_MAX);
-		chdir("sdmc:/Universal-Manager/scripts/");
-		getDirectoryContents(scpts);
+		chdir("sdmc:/Universal-Manager/Fonts/");
+		getDirectoryContents(bcfnts);
 		chdir(startPath);
 	}
 
-	std::string scptList;
-	std::string scptList2;
-	for (uint i=(selectedScpt<12) ? 0 : selectedScpt-12;i<scpts.size()&&i<((selectedScpt<12) ? 13 : selectedScpt+1);i++) {
-		if (i == selectedScpt) {
-			scptList += "> " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
+	std::string bcfntList;
+	std::string bcfntList2;
+	for (uint i=(selectedBcfnt<12) ? 0 : selectedBcfnt-12;i<bcfnts.size()&&i<((selectedBcfnt<12) ? 13 : selectedBcfnt+1);i++) {
+		if (i == selectedBcfnt) {
+			bcfntList += "> " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
 		} else {
-			scptList += "  " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
+			bcfntList += "  " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
 		}
 	}
-	for (uint i=0;i<((scpts.size()<13) ? 13-scpts.size() : 0);i++) {
-		scptList += "\n";
+	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
+		bcfntList += "\n";
 	}
-	scptList2 += "B : Back Y : Create X : Delete A : start";
-	Draw_Text(26, 32, 0.45f, WHITE, scptList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, scptList2.c_str());
+	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back";
+	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
+	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
 }
 
-
-void testWrite(void) {
-	FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), "a");
-	std::string scriptLine1 = Input::getLine();
-	fputs((scriptLine1.c_str()), scpt);
-	fclose(scpt);
+static void selectFont(void) {
+		customFont = C2D_FontLoad(("sdmc:/Universal-Manager/Fonts/"+bcfnts[selectedBcfnt].name).c_str());
+		Config::Font = 1;
 }
 
-void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
+void FontSelectionLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
 	if(hDown & KEY_A) {
-		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
-			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
+		if(confirmPopup("Do you want to use this Font : \n\n "+bcfnts[selectedBcfnt].name+"")) {
+		selectFont();
+		screenMode = uiSettingsScreen;
 		} 
 	} else if (hDown & KEY_B) {
-		screenMode = mainScreen;
-	} else if (hDown & KEY_Y) {
-		std::string newScript = Input::getLine();
-		if(newScript != "") {
-			FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
-			fclose(scpt);
-	}
-	} else if (hDown & KEY_X) {
-		if (selectedScpt != 0) {
-			if(confirmPopup("Are you sure you want to delete this Script?")) {
-				remove(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str());
-			}
+		screenMode = uiSettingsScreen;
+	} else if (hDown & KEY_SELECT) {
+		if(confirmPopup("Do you want to use the Default Font?")) {
+		Config::Font = 0;
+		screenMode = uiSettingsScreen;
 		}
 	} else if (hHeld & KEY_UP) {
-		if (selectedScpt > 0 && !keyRepeatDelay) {
-			selectedScpt--;
+		if (selectedBcfnt > 0 && !keyRepeatDelay) {
+			selectedBcfnt--;
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedScpt < scpts.size()-1) {
-			selectedScpt++;
+		if (selectedBcfnt < bcfnts.size()-1) {
+			selectedBcfnt++;
 			keyRepeatDelay = 3;
 		}
 	}
