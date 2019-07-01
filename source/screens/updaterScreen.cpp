@@ -45,10 +45,10 @@ struct {
 	int x;
 	int y;
 } mainButtons[] = {
-	{ 38, 48}, // CFW Screen
-	{ 129, 48}, // TWL Screen
-	{ 220, 48}, // Other Screen
-	{ 38, 88}, // Universal Screen
+	{38, 48}, // CFW Screen
+	{129, 48}, // TWL Screen
+	{220, 48}, // Other Screen
+	{38, 88}, // Universal Screen
 };
 
 size_t mainButtonsTex[] = {
@@ -71,9 +71,9 @@ struct {
 	int x;
 	int y;
 } CFWButtons[] = {
-	{ 129, 48,}, // Luma3DS Release
-	{ 220, 48}, // Luma3DS Nightly
-	{ 129, 88}, // GodMode9 Release
+	{129, 48,}, // Luma3DS Release
+	{220, 48}, // Luma3DS Nightly
+	{129, 88}, // GodMode9 Release
 };
 
 size_t CFWButtonsTex[] = {
@@ -93,9 +93,9 @@ struct {
 	int x;
 	int y;
 } TWLButtons[] = {
-	{ 129, 48,}, // TWLMENU Release
-	{ 220, 48}, // TWLMENU Nightly
-	{ 129, 88}, // NDSB Release
+	{129, 48,}, // TWLMENU Release
+	{220, 48}, // TWLMENU Nightly
+	{129, 88}, // NDSB Release
 	{220, 88}, // NDSB Nightly
 	{129, 128}, // usrcheat.dat
 };
@@ -121,15 +121,18 @@ struct {
 	int x;
 	int y;
 } OTHERButtons[] = {
-	{ 129, 48,}, // Themes
+	{129, 48,}, // Themes
+	{220, 48}, // Scripts
 };
 
 size_t OTHERButtonsTex[] = {
+	sprites_updaterButton_idx,
 	sprites_updaterButton_idx,
 };
 
 ButtonPos OTHERFunction[] = {
 	{129, 48, 87, 33, -1}, // Themes
+	{220, 48, 87, 33, -1}, // Scripts
 	{293, 213, 27, 27, -1}, // Back Button.
 };
 //###############################################################
@@ -137,9 +140,9 @@ struct {
 	int x;
 	int y;
 } UNIVButtons[] = {
-	{ 129, 48,}, // UNIV Manager Release
-	{ 220, 48}, // UNIV Manager Nightly
-	{ 129, 88}, // Pokemon Chest Release
+	{129, 48,}, // UNIV Manager Release
+	{220, 48}, // UNIV Manager Nightly
+	{129, 88}, // Pokemon Chest Release
 	{220, 88}, // Pokemon Chest Nightly
 	{129, 128}, // Relaunch Release
 	{220, 128}, // Relaunch Nightly
@@ -330,6 +333,7 @@ void drawUpdaterOther(void) {
 	Gui::sprite(sprites_TitleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "Extras");
 	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
+	Draw_Text(229, 58, 0.7f, WHITE, "Scripts");
 
 	
 
@@ -349,11 +353,13 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
 	} else if (hDown & KEY_TOUCH) {
-			if (touching(touch, OTHERFunction[1])) {
-			screenMode = updaterSubMenu;
-		} else if (touching(touch, OTHERFunction[0])) {
+			if (touching(touch, OTHERFunction[0])) {
 			downloadThemes();
-}
+		} else if (touching(touch, OTHERFunction[1])) {
+			downloadScripts();
+		} else if(touching(touch, OTHERFunction[2])) {
+			screenMode = updaterSubMenu;
+		}
 }
 }
 

@@ -1136,7 +1136,7 @@ void downloadScripts(void) {
 		for(uint i=0;i<((scriptList.size()<10) ? 11-scriptList.size() : 0);i++) {
 			scriptText += "\n";
 		}
-		scriptText += (i18n::localize("THEMES_TEXT_3"));
+		scriptText += "				B: Back   A: Choose";
 		DisplayMsg(scriptText.c_str());
 	}
 }
