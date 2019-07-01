@@ -979,52 +979,14 @@ void downloadGodMode9(void) {
 		updateAvailable[7] = false;
 	doneMsg(); 
 }
-
 void downloadThemes(void) {
-	int selectedMusicTheme = 0;
 	int keyRepeatDelay = 0;
-	std::string themeNames[] = {"Music Theme"};
-	std::string themeFolders[] = {"Themes"};
-	chooseMusicTheme:
-	while(1) {
-		gspWaitForVBlank();
-		hidScanInput();
-		const u32 hDown = hidKeysDown();
-		const u32 hHeld = hidKeysHeld();
-		if(keyRepeatDelay)	keyRepeatDelay--;
-		if(hDown & KEY_A) {
-			break;
-		} else if(hDown & KEY_B) {
-			return;
-		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
-			if(selectedMusicTheme > 0) {
-				selectedMusicTheme--;
-				keyRepeatDelay = 3;
-			}
-		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
-			if(selectedMusicTheme < 3) {
-				selectedMusicTheme++;
-				keyRepeatDelay = 3;
-			}
-		}
-		std::string themesText = "Do you want to download Images for the Music Player?\n";
-		for(int i=0;i<0;i++) {
-			if(i == selectedMusicTheme) {
-				themesText += "> " + themeNames[i] + "\n";
-			} else {
-				themesText += "  " + themeNames[i] + "\n";
-			}
-		}
-		themesText += "\n\n\n\n\n";
-		themesText += "			B: Back   A: Continue";
-		DisplayMsg(themesText.c_str());
-	}
 
 	DisplayMsg("Getting theme list...");
 
 	std::vector<ThemeEntry> themeList;
-	themeList = getThemeList("Universal-Team/extras", "Universal-Manager/"+themeFolders[selectedMusicTheme]);
-	mkdir(("sdmc:/Universal-Manager/"+themeFolders[selectedMusicTheme]).c_str(), 0777);
+	themeList = getThemeList("Universal-Team/extras", "Themes");
+	mkdir("sdmc:/Universal-Manager/Themes", 0777);
 
 	int selectedTheme = 0;
 	while(1) {
@@ -1036,10 +998,10 @@ void downloadThemes(void) {
 		if(hDown & KEY_A) {
 			mkdir((themeList[selectedTheme].sdPath).c_str(), 0777);
 			DisplayMsg(("Downloading: "+themeList[selectedTheme].name).c_str());
-			downloadTheme(themeList[selectedTheme].path);
+			downloadToFile(themeList[selectedTheme].downloadUrl, "sdmc:/Universal-Manager/Themes/"+themeList[selectedTheme].name);
 		} else if(hDown & KEY_B) {
 			selectedTheme = 0;
-			goto chooseMusicTheme;
+			return;
 		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
 			if(selectedTheme > 0) {
 				selectedTheme--;
@@ -1063,19 +1025,19 @@ void downloadThemes(void) {
 			}
 			keyRepeatDelay = 3;
 		}
-		std::string themesText;
+		std::string themeText;
 		for(int i=(selectedTheme<10) ? 0 : selectedTheme-10;i<(int)themeList.size()&&i<((selectedTheme<10) ? 11 : selectedTheme+1);i++) {
 			if(i == selectedTheme) {
-				themesText += "> " + themeList[i].name + "\n";
+				themeText += "> " + themeList[i].name + "\n";
 			} else {
-				themesText += "  " + themeList[i].name + "\n";
+				themeText += "  " + themeList[i].name + "\n";
 			}
 		}
 		for(uint i=0;i<((themeList.size()<10) ? 11-themeList.size() : 0);i++) {
-			themesText += "\n";
+			themeText += "\n";
 		}
-		themesText += "				B: Back   A: Choose";
-		DisplayMsg(themesText.c_str());
+		themeText += "				B: Back   A: Choose";
+		DisplayMsg(themeText.c_str());
 	}
 }
 
