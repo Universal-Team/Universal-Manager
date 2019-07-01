@@ -134,6 +134,11 @@ void downloadGodMode9(void);
 void downloadThemes(void);
 
 /**
+ * Download scripts from Universal-Team/extras.
+ */
+void downloadScripts(void);
+
+/**
  * Update DeadSkullzJr's cheat DB to the latest version.
  */
 void updateCheats(void);

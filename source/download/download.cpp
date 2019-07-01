@@ -939,11 +939,10 @@ void downloadGodMode9(void) {
 }
 
 void downloadThemes(void) {
-
 	int selectedMusicTheme = 0;
 	int keyRepeatDelay = 0;
 	std::string themeNames[] = {"Music Theme"};
-	std::string themeFolders[] = {"Theme"};
+	std::string themeFolders[] = {"Themes"};
 	chooseMusicTheme:
 	while(1) {
 		gspWaitForVBlank();
@@ -982,9 +981,8 @@ void downloadThemes(void) {
 	DisplayMsg("Getting theme list...");
 
 	std::vector<ThemeEntry> themeList;
-	themeList = getThemeList("Universal-Team/extras", "Universal-Manager/"+themeFolders[selectedMusicTheme]+"/themes");
+	themeList = getThemeList("Universal-Team/extras", "Universal-Manager/"+themeFolders[selectedMusicTheme]);
 	mkdir(("sdmc:/Universal-Manager/"+themeFolders[selectedMusicTheme]).c_str(), 0777);
-	mkdir(("sdmc:/Universal-Manager/"+themeFolders[selectedMusicTheme]+"/themes/").c_str(), 0777);
 
 	int selectedTheme = 0;
 	while(1) {
@@ -1036,6 +1034,68 @@ void downloadThemes(void) {
 		}
 		themesText += (i18n::localize("THEMES_TEXT_3"));
 		DisplayMsg(themesText.c_str());
+	}
+}
+
+void downloadScripts(void) {
+	int keyRepeatDelay = 0;
+
+	DisplayMsg("Getting script list...");
+
+	std::vector<ThemeEntry> scriptList;
+	scriptList = getThemeList("Universal-Team/extras", "scripts");
+	mkdir("sdmc:/Universal-Manager/Scripts", 0777);
+
+	int selectedScript = 0;
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
+		if(keyRepeatDelay)	keyRepeatDelay--;
+		if(hDown & KEY_A) {
+			mkdir((scriptList[selectedScript].sdPath).c_str(), 0777);
+			DisplayMsg(("Downloading: "+scriptList[selectedScript].name).c_str());
+			downloadToFile(scriptList[selectedScript].downloadUrl, "sdmc:/Universal-Manager/Scripts/"+scriptList[selectedScript].name);
+		} else if(hDown & KEY_B) {
+			selectedScript = 0;
+			return;
+		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+			if(selectedScript > 0) {
+				selectedScript--;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+			if(selectedScript < (int)scriptList.size()-1) {
+				selectedScript++;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_LEFT && !keyRepeatDelay) {
+			selectedScript -= 10;
+			if(selectedScript < 0) {
+				selectedScript = 0;
+			}
+			keyRepeatDelay = 3;
+		} else if(hHeld & KEY_RIGHT && !keyRepeatDelay) {
+			selectedScript += 10;
+			if(selectedScript > (int)scriptList.size()) {
+				selectedScript = scriptList.size()-1;
+			}
+			keyRepeatDelay = 3;
+		}
+		std::string scriptText;
+		for(int i=(selectedScript<10) ? 0 : selectedScript-10;i<(int)scriptList.size()&&i<((selectedScript<10) ? 11 : selectedScript+1);i++) {
+			if(i == selectedScript) {
+				scriptText += "> " + scriptList[i].name + "\n";
+			} else {
+				scriptText += "  " + scriptList[i].name + "\n";
+			}
+		}
+		for(uint i=0;i<((scriptList.size()<10) ? 11-scriptList.size() : 0);i++) {
+			scriptText += "\n";
+		}
+		scriptText += (i18n::localize("THEMES_TEXT_3"));
+		DisplayMsg(scriptText.c_str());
 	}
 }
 
