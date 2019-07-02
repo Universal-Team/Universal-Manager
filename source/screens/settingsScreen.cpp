@@ -52,7 +52,7 @@ std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
 std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
-std::string customFont[] = {"ROMFS", "SD"};
+std::string customFont[] = {"ROMFS", "SD", "SYSTEM"};
 
 
 ButtonPos uiSettingsButtonPos[] = {

@@ -41,6 +41,7 @@ C2D_TextBuf dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
 C2D_Font defaultFont;
 C2D_Font customFont;
+C2D_Font systemFont;
 
 void Gui::clearTextBufs(void)
 {
@@ -81,6 +82,7 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     defaultFont = C2D_FontLoad("romfs:/gfx/Font.bcfnt");
+    systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     return 0;
 }
 
@@ -262,6 +264,8 @@ void DisplayTime(void) {
     C2D_TextFontParse(&timeText, defaultFont, sizeBuf, DateTime::timeStr().c_str());
     } else if (Config::Font == 1) {
     C2D_TextFontParse(&timeText, customFont, sizeBuf, DateTime::timeStr().c_str());
+    } else if (Config::Font == 2) {
+    C2D_TextFontParse(&timeText, systemFont, sizeBuf, DateTime::timeStr().c_str());
     }
     C2D_TextOptimize(&timeText);
     C2D_DrawText(&timeText, C2D_WithColor, 1.0f, 1.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -302,6 +306,8 @@ void drawBatteryTop(void) {
         C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
         } else if (Config::Font == 1) {
         C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
+        } else if (Config::Font == 2) {
+        C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -342,6 +348,8 @@ void drawBatteryBot(void) {
         C2D_TextFontParse(&percentText, defaultFont, sizeBuf, percent);
         } else if (Config::Font == 1) {
         C2D_TextFontParse(&percentText, customFont, sizeBuf, percent);
+        } else if (Config::Font == 2) {
+        C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
         }
 		C2D_TextOptimize(&percentText);
         C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
@@ -368,6 +376,8 @@ void Draw_Text(float x, float y, float size, u32 color, const char *text) {
         C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
     } else if (Config::Font == 1) {
 	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
+    } else if (Config::Font == 2) {
+        C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
     }
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
@@ -388,6 +398,8 @@ void Draw_GetTextSize(float size, float *width, float *height, const char *text)
         C2D_TextFontParse(&c2d_text, defaultFont, sizeBuf, text);
     } else if (Config::Font == 1) {
 	    C2D_TextFontParse(&c2d_text, customFont, sizeBuf, text);
+    } else if (Config::Font == 2) {
+        C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
     }
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }

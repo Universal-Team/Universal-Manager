@@ -73,7 +73,7 @@ void drawFontSelection(void) {
 	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
 		bcfntList += "\n";
 	}
-	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back";
+	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back   Y : SystemFont";
 	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
 
@@ -100,6 +100,11 @@ void FontSelectionLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_SELECT) {
 		if(confirmPopup("Do you want to use the Default Font?")) {
 		Config::Font = 0;
+		screenMode = uiSettingsScreen;
+		}
+		} else if (hDown & KEY_Y) {
+		if(confirmPopup("Do you want to use the System Font?")) {
+		Config::Font = 2;
 		screenMode = uiSettingsScreen;
 		}
 	} else if (hHeld & KEY_UP) {

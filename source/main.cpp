@@ -142,6 +142,7 @@ int main()
 	acInit();
 	Config::loadConfig();
     gfxInitDefault();
+	cfguInit();
 	Gui::init();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
@@ -410,6 +411,7 @@ int main()
 
 	Config::saveConfig();
 	stopPlayback();
+	cfguExit();
 	Gui::exit();
 	hidExit();
 	srvExit();
