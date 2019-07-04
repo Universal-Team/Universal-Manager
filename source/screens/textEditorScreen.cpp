@@ -42,7 +42,7 @@ void drawTextEditorScreen(void) {
 	drawBatteryTop();
 	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
 
-	Draw_Text(0, 140, FONT_SIZE_18, WHITE, "This is a work in progress.");
+	Draw_Text(100, 100, FONT_SIZE_18, WHITE, "This is a work in progress.");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
