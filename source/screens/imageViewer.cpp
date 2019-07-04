@@ -61,7 +61,7 @@ static bool Draw_Image(void)
 
 
 void drawImageSelectorScreen(void) {
-	drawFileBrowser("Image Viewer");
+	drawFileBrowser("Image Selector");
 }
 
 
