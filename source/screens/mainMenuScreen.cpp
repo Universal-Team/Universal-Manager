@@ -54,6 +54,7 @@ void drawMainMenu(void) {
 	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
+	Gui::sprite(sprites_scriptIcon_idx, 5, 100);
 	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
