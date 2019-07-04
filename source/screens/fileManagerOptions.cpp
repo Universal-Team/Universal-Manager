@@ -57,10 +57,10 @@ DirEntry clipboard;
 ButtonPos functionPos[] = {
 	{59, 70, 93, 35, "Rename"},
 	{165, 70, 93, 35, "Delete"},
-	{59, 110, 93, 35, ""},
-	{165, 110, 93, 35, ""},
-	{59, 150, 93, 35, ""},
-	{165, 150, 93, 35, ""},
+	{59, 110, 93, 35, "Copy/Paste"},
+	{165, 110, 93, 35, "Create"},
+	{59, 150, 93, 35, "Extract"},
+	{165, 150, 93, 35, "Install"},
 };
 
 bool displayActionBox(void) {
@@ -71,7 +71,7 @@ bool displayActionBox(void) {
 
 	// Buttons.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::sprite(sprites_FileManagerButton_idx, functionPos[i].x, functionPos[i].y);
+		Gui::sprite(sprites_FileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
 		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 

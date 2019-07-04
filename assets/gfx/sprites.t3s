@@ -8,7 +8,8 @@ sprites/battery/battery100.png
 sprites/battery/batteryCharge.png
 
 sprites/buttons/BlueButton.png
-sprites/buttons/FileManagerButton.png
+sprites/buttons/FileManagerSelected.png
+sprites/buttons/FileManagerUnselected.png
 sprites/buttons/GreenButton.png
 sprites/buttons/mainMenuButton.png
 sprites/buttons/RedButton.png
