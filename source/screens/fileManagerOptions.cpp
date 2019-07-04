@@ -69,6 +69,7 @@ static void renameFile(void) {
 }
 
 static void deleteFile(void) {
+	DisplayMsg("Delete is in progress...\nPlease wait...");
 	remove(dirContents[selectedFile].name.c_str());
 }
 
@@ -82,6 +83,7 @@ static void copyPaste(void) {
 	if(strcmp(path, clipboard.path.c_str()) != 0) {
 	if(clipboard.isDirectory)
 	mkdir(clipboard.name.c_str(), 0777);
+	DisplayMsg("Paste is in progress...\nPlease wait...");
 	fcopy((clipboard.path+clipboard.name).c_str(), (path+clipboard.name).c_str());
 	clipboard.name = "";
 		}
@@ -98,10 +100,12 @@ static void extractArchive(void) {
 	getcwd(path, PATH_MAX);
 	std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
 	mkdir(outPath.c_str(), 0777);
+	DisplayMsg("Extract is in progress...\nPlease wait...");
 	extractArchive(dirContents[selectedFile].name, "/", outPath);
 }
 
 static void install(void) {
+	DisplayMsg("Install is in progress...\nPlease wait...");
 	installCia(dirContents[selectedFile].name.c_str());
 }
 
@@ -128,11 +132,15 @@ bool displayActionBox(void) {
 			if(selection < 5)	selection++;
 		} else if(keysDown() & KEY_A) {
 			switch(selection) {
-				case 0: { 
+				case 0: {
+					if(confirmPopup("Do you want to rename this File?")) { 
 					renameFile();
+					}
 					break;
-				} case 1: 
+				} case 1:
+					if(confirmPopup("Do you want to delete this File?")) {
 					deleteFile();
+					}
 					break;
 				case 2: { 
 					copyPaste();
@@ -140,11 +148,15 @@ bool displayActionBox(void) {
 				} case 3: { 
 					createFolder();
 					break;
-				} case 4: { 
+				} case 4: {
+					if(confirmPopup("Do you want to extract this Archive?")) {
 					extractArchive();
+					}
 					break;
-				} case 5: 
+				} case 5:
+					if(confirmPopup("Do you want to install this CIA?")) {
 					install();
+					}
 					break;
 			}
 		return true;
