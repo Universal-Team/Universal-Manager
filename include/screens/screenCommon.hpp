@@ -62,6 +62,7 @@ extern C3D_RenderTarget* bottom;
 #define fileManager				20
 #define scriptMainScreen		21
 #define FontSelectionScreen		22
+#define TextEditorScreen		23
 
 struct Playlist {
 	std::string name;
@@ -142,3 +143,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld);
 // Font Selection stuff.
 void drawFontSelection(void);
 void FontSelectionLogic(u32 hDown, u32 hHeld);
+
+// Text Editor Stuff.
+void drawTextEditorScreen(void);
+void TextEditorLogic(u32 hDown, u32 hHeld);

@@ -234,6 +234,10 @@ int main()
 			case FontSelectionScreen:
 				drawFontSelection();
 				break;
+//#########################################################################################################
+			case TextEditorScreen:
+				drawTextEditorScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -324,6 +328,10 @@ int main()
 //########################################################################################################
 			case FontSelectionScreen:
 				FontSelectionLogic(hDown, hHeld);
+				break;
+//#########################################################################################################
+			case TextEditorScreen:
+				TextEditorLogic(hDown, hHeld);
 				break;
 		}
 //#########################################################################################################
