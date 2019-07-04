@@ -63,6 +63,48 @@ ButtonPos functionPos[] = {
 	{165, 150, 93, 35, "Install"},
 };
 
+static void renameFile(void) {
+	std::string newName = Input::getLine();
+	if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
+}
+
+static void deleteFile(void) {
+	remove(dirContents[selectedFile].name.c_str());
+}
+
+static void copyPaste(void) {
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	if(clipboard.name == "") {
+	clipboard = dirContents[selectedFile];
+	clipboard.path = path;
+	} else {
+	if(strcmp(path, clipboard.path.c_str()) != 0) {
+	if(clipboard.isDirectory)
+	mkdir(clipboard.name.c_str(), 0777);
+	fcopy((clipboard.path+clipboard.name).c_str(), (path+clipboard.name).c_str());
+	clipboard.name = "";
+		}
+	}
+}
+
+static void createFolder(void) {
+	std::string newName = Input::getLine();
+	mkdir(newName.c_str(), 0777);
+}
+
+static void extractArchive(void) {
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
+	mkdir(outPath.c_str(), 0777);
+	extractArchive(dirContents[selectedFile].name, "/", outPath);
+}
+
+static void install(void) {
+	installCia(dirContents[selectedFile].name.c_str());
+}
+
 bool displayActionBox(void) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(bottom);
@@ -86,41 +128,23 @@ bool displayActionBox(void) {
 			if(selection < 5)	selection++;
 		} else if(keysDown() & KEY_A) {
 			switch(selection) {
-				case 0: { // Rename
-					std::string newName = Input::getLine();
-					if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
+				case 0: { 
+					renameFile();
 					break;
-				} case 1: // Delete
-					remove(dirContents[selectedFile].name.c_str());
+				} case 1: 
+					deleteFile();
 					break;
-				case 2: { // Copy / Paste
-					char path[PATH_MAX];
-					getcwd(path, PATH_MAX);
-					if(clipboard.name == "") {
-						clipboard = dirContents[selectedFile];
-						clipboard.path = path;
-					} else {
-						if(strcmp(path, clipboard.path.c_str()) != 0) {
-							if(clipboard.isDirectory)
-								mkdir(clipboard.name.c_str(), 0777);
-							fcopy((clipboard.path+clipboard.name).c_str(), (path+clipboard.name).c_str());
-							clipboard.name = "";
-						}
-					}
+				case 2: { 
+					copyPaste();
 					break;
-				} case 3: { // Create folder
-					std::string newName = Input::getLine();
-					mkdir(newName.c_str(), 0777);
+				} case 3: { 
+					createFolder();
 					break;
-				} case 4: { // Extract
-					char path[PATH_MAX];
-					getcwd(path, PATH_MAX);
-					std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
-					mkdir(outPath.c_str(), 0777);
-					extractArchive(dirContents[selectedFile].name, "/", outPath);
+				} case 4: { 
+					extractArchive();
 					break;
-				} case 5: // Install
-					installCia(dirContents[selectedFile].name.c_str());
+				} case 5: 
+					install();
 					break;
 			}
 		return true;
