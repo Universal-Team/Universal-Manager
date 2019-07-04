@@ -69,30 +69,8 @@ extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
 int screenMode = 0;
 
-
-ButtonPos mainScreenButtonPos[] = {
-    {0, 25, 149, 52, fileScreen},
-    {170, 25, 149, 52, ftpScreen},
-	{0, 90, 149, 52, scriptMainScreen},
-	{170, 90, 149, 52, musicMainScreen},
-	{0, 150, 149, 52, updaterSubMenu},
-    {170, 150, 149, 52, settingsScreen},
-};
-
-ButtonPos fileScreenButtonPos[] = {
-    {100, 40, 149, 52, fileManager},
-	{100, 120, 149, 52, ImageSelectorScreen},
-    {293, 213, 27, 27, mainScreen},
-};
-
-ButtonPos settingsScreenButtonPos[] = {
-    {0, 40, 149, 52, creditsScreen},
-    {293, 213, 27, 27, mainScreen},
-	{170, 40, 149, 52, uiSettingsScreen},
-};
-
 ButtonPos uisettingsScreenButtonPos[] = {
-    {293, 213, 27, 27, settingsScreen},
+    {293, 213, 27, 27, mainScreen},
 };
 
 ButtonPos updaterScreenButtonPos[] = {
@@ -100,7 +78,7 @@ ButtonPos updaterScreenButtonPos[] = {
 };
 
 ButtonPos creditsScreenButtonPos[] = {
-    {293, 213, 27, 27, settingsScreen},
+    {293, 213, 27, 27, mainScreen2},
 };
 
 
@@ -178,42 +156,39 @@ int main()
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				drawMainMenu();				// Draws the Main Menu screen
+				drawMainMenu();
 				break;
 //#########################################################################################################
-			case fileScreen:
-				drawFileManagerSubMenu();	// Draws the File Manager screen
+			case mainScreen2:
+				drawMainMenu2();
 				break;
 //#########################################################################################################
 			case creditsScreen:
-				drawCredits();				// Draws the Credits screen
+				drawCredits();
 				break;
 //#########################################################################################################
 			case musicMainScreen:
-				drawMusicMain();			// Draws the Music Player song selection screen
+				drawMusicMain();
 				break;
 			case musicListScreen:
-				drawMusicList();			// Draws the Music Player song selection screen
+				drawMusicList();
 				break;
 			case musicPlayerScreen:
-				drawMusicPlayer();			// Draws the Music Player playback screen
+				drawMusicPlayer();
 				break;
 			case musicPlaylistAddScreen:
-				drawMusicPlaylistAdd();		// Draws the Music Player playlist creation screen
+				drawMusicPlaylistAdd();
 				break;
 			case musicPlaylistPlayScreen:
-				drawMusicPlaylistPlay();		// Draws the Music Player playlist selection screen
+				drawMusicPlaylistPlay();
 				break;
 			case musicPlaylistEditScreen:
-				drawMusicPlaylistEdit();		// Draws the Music Player playlist selection screen
+				drawMusicPlaylistEdit();
 				break;
 			case themeSelectorScreen:
 				drawThemeSelector();
 				break;
 //#########################################################################################################
-			case settingsScreen:
-				drawSettingsScreen();		// Draws the Settings screen
-				break;
 			case uiSettingsScreen:
 				drawUISettingsScreen();
 				break;
@@ -222,7 +197,7 @@ int main()
 				break;
 //#########################################################################################################
 			case ImageSelectorScreen:
-				drawImageSelectorScreen();		// Draw the Image Selector Screen.
+				drawImageSelectorScreen();
 				break;
 			case showImageScreen:
 				showImage();
@@ -233,7 +208,7 @@ int main()
 				break;
 //#########################################################################################################
 			case updaterSubMenu:
-				drawUpdaterSubMenu();		// Draws the Updater screen
+				drawUpdaterSubMenu();
 				break;
 			case TWLScreen:
 				drawUpdaterTWL();
@@ -265,40 +240,16 @@ int main()
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				if (hDown & KEY_A) {
-					screenMode = fileScreen;
-				} else if (hDown & KEY_X) {
-					screenMode = ftpScreen;
-				} else if (hDown & KEY_Y) {
-					screenMode = scriptMainScreen;
-				} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(mainScreenButtonPos)/sizeof(mainScreenButtonPos[0]));i++) {
-						if (touching(touch, mainScreenButtonPos[i])) {
-							screenMode = mainScreenButtonPos[i].link;
-						}
-					}
-				}
+				MainMenu1Logic(hDown, touch);
 				break;
 //#########################################################################################################
-			case fileScreen:
-				if (hDown & KEY_B) {
-					screenMode = mainScreen;
-				} else if (hDown & KEY_A) {
-					screenMode = musicMainScreen;
-				} else if (hDown & KEY_X) {
-					screenMode = fileManager;
-				} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(fileScreenButtonPos)/sizeof(fileScreenButtonPos[0]));i++) {
-						if (touching(touch, fileScreenButtonPos[i])) {
-							screenMode = fileScreenButtonPos[i].link;
-						}
-					}
-				}
+			case mainScreen2:
+				MainMenu2Logic(hDown, touch);
 				break;
 //#########################################################################################################
 			case creditsScreen:
 				if (hDown & KEY_B) {
-					screenMode = settingsScreen;
+					screenMode = mainScreen2;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
 						if (touching(touch, creditsScreenButtonPos[i])) {
@@ -330,17 +281,6 @@ int main()
 				themeSelectorLogic(hDown, hHeld);
 				break;
 //#########################################################################################################
-			case settingsScreen:
-			if (hDown & KEY_B) {
-				screenMode = mainScreen;
-			} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(settingsScreenButtonPos)/sizeof(settingsScreenButtonPos[0]));i++) {
-						if (touching(touch, settingsScreenButtonPos[i])) {
-							screenMode = settingsScreenButtonPos[i].link;
-						}
-					}
-				}
-				break;
 			case uiSettingsScreen:
 				uiSettingsLogic(hDown, touch);
 				break;

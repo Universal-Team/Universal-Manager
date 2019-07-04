@@ -94,7 +94,7 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = fileScreen;
+			screenMode = mainScreen2;
 		} else {
 		chdir("..");
 		selectedFile = 0;

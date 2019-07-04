@@ -67,7 +67,7 @@ ButtonPos uiSettingsButtonPos[] = {
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
 
-	{293, 213, 27, 27, settingsScreen},
+	{293, 213, 27, 27, mainScreen},
 
 	// Music BG
 	{220, 28, 87, 33, -1},
@@ -114,24 +114,6 @@ std::string getColorName(int color, int bgr) {
 	return colorName;
 }
 
-void drawSettingsScreen(void) {
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(140, 0, FONT_SIZE_18, WHITE, "Settings");
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBotBack();
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	Draw_Text(40, 57, 0.7f, WHITE, "Credits");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	Draw_Text(210, 57, 0.7f, WHITE, "Settings");
-}
-
 void drawUISettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -146,24 +128,24 @@ void drawUISettingsScreen(void) {
 	// Bars.
 	Draw_Text(100, 58, 0.7f, WHITE, "Bars");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Draw_Text(56, 98, 0.7f, BLACK, getColorName(Config::barColor, 2).c_str());
+	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Draw_Text(150, 98, 0.7f, BLACK, getColorName(Config::barColor, 1).c_str());
+	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Draw_Text(239, 98, 0.7f, BLACK, getColorName(Config::barColor, 0).c_str());
+	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
 
 	// Background.
 	Draw_Text(100, 138, 0.7f, WHITE, "Background");
 	Gui::sprite(sprites_RedButton_idx, 35, 168);
-	Draw_Text(56, 178, 0.7f, BLACK, getColorName(Config::bgColor, 2).c_str());
+	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 168);
-	Draw_Text(150, 178, 0.7f, BLACK, getColorName(Config::bgColor, 1).c_str());
+	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 168);
-	Draw_Text(239, 178, 0.7f, BLACK, getColorName(Config::bgColor, 0).c_str());
+	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Draw_Text(229, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
-	Draw_Text(110, 38, 0.65f, BLACK, "Music Mode:");
+	Draw_Text(110, 38, 0.65f, WHITE, "Music Mode:");
 	
 	// Font
 	Gui::sprite(sprites_updaterButton_idx, 10, 28);
@@ -180,7 +162,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 	int green;
 	int blue;
 		if (hDown & KEY_B) {
-		screenMode = settingsScreen;
+		screenMode = mainScreen;
 		Config::saveConfig();
 		} else if (hDown & KEY_R) {
 			screenMode = uiSettingsScreen2;
@@ -246,21 +228,21 @@ void drawUISettingsScreen2(void) {
 	Gui::chooseLayoutBotBack();
 
 	// Bars.
-	Draw_Text(70, 58, 0.7f, BLACK, "Animation Color");
+	Draw_Text(70, 58, 0.7f, WHITE, "Animation Color");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Draw_Text(56, 98, 0.7f, BLACK, getColorName(Config::animationColor, 2).c_str());
+	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
 	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Draw_Text(150, 98, 0.7f, BLACK, getColorName(Config::animationColor, 1).c_str());
+	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
 	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Draw_Text(239, 98, 0.7f, BLACK, getColorName(Config::animationColor, 0).c_str());
+	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
 	Draw_Text(229, 38, 0.65f, WHITE, animationModes[Config::animation].c_str());
-	Draw_Text(110, 38, 0.7f, BLACK, "Animation:");
+	Draw_Text(110, 38, 0.7f, WHITE, "Animation:");
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 168);
 	Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
-	Draw_Text(129, 178, 0.7f, BLACK, "Percent :");
+	Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
 	// Bars Layouts.
 	Gui::sprite(sprites_updaterButton_idx, 10, 168);
 	Draw_Text(19, 178, 0.7f, WHITE, layoutModes[Config::layout].c_str());
@@ -279,7 +261,7 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 	int green;
 	int blue;
 		if (hDown & KEY_B) {
-		screenMode = settingsScreen;
+		screenMode = mainScreen;
 		Config::saveConfig();
 		} else if (hDown & KEY_L) {
 			screenMode = uiSettingsScreen;

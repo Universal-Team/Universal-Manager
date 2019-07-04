@@ -42,28 +42,6 @@ extern "C" {
 std::string currentFile = "";
 std::string currentFiles;
 
-void drawFileManagerSubMenu(void) {
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Filemanager Sub Menu");
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBotBack();
-
-	// Music List Button.
-	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
-	Draw_Text(137, 57, 0.65f, WHITE, "File Manager");
-
-	// Image Viewer Button.
-	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
-	Gui::sprite(sprites_image_icon_idx, 105, 130);
-	Draw_Text(137, 137, 0.65f, WHITE, "Image Viewer");
-}
-
 void drawFileBrowse(void) {
 	drawFileBrowser("File Manager");
 }
@@ -81,7 +59,7 @@ void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = fileScreen;
+			screenMode = mainScreen;
 		} else {
 		chdir("..");
 		selectedFile = 0;
