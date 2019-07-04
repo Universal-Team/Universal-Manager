@@ -32,7 +32,7 @@ extern C3D_RenderTarget* bottom;
 
 #define mainScreen				0
 //###############################
-#define fileScreen				1
+#define mainScreen2				1
 //###############################
 #define creditsScreen			2
 //###############################
@@ -45,24 +45,24 @@ extern C3D_RenderTarget* bottom;
 #define musicPlaylistEditScreen	8
 #define themeSelectorScreen 	9
 //###############################
-#define settingsScreen			10
-#define uiSettingsScreen		11
-#define uiSettingsScreen2		12
+#define uiSettingsScreen		10
+#define uiSettingsScreen2		11
 //###############################
-#define ImageSelectorScreen		13
-#define showImageScreen			14
+#define ImageSelectorScreen		12
+#define showImageScreen			13
 //###############################
-#define ftpScreen				15
+#define ftpScreen				14
 //###############################
-#define updaterSubMenu			16
-#define OtherScreen				17
-#define TWLScreen				18
-#define CFWScreen				19
-#define UniversalScreen			20
+#define updaterSubMenu			15
+#define OtherScreen				16
+#define TWLScreen				17
+#define CFWScreen				18
+#define UniversalScreen			19
 //###############################
-#define fileManager				21
-#define scriptMainScreen		22
-#define FontSelectionScreen		23
+#define fileManager				20
+#define scriptMainScreen		21
+#define FontSelectionScreen		22
+#define TextEditorScreen		23
 
 struct Playlist {
 	std::string name;
@@ -73,13 +73,11 @@ extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
+void MainMenu1Logic(u32 hDown, touchPosition touch);
+void drawMainMenu2(void);
+void MainMenu2Logic(u32 hDown, touchPosition touch);
 
 // Settings Screen.
-void drawSettingsScreen(void);
-void drawCredits(void);
 void drawUISettingsScreen(void);
 void uiSettingsLogic(u32 hDown, touchPosition touch);
 void drawUISettingsScreen2(void);
@@ -128,6 +126,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch);
 //void saveMsg(void);
 bool confirmPopup(std::string msg);
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
+void drawCredits(void);
 
 // FTP Stuff.
 void drawFTPScreen(void);
@@ -144,3 +143,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld);
 // Font Selection stuff.
 void drawFontSelection(void);
 void FontSelectionLogic(u32 hDown, u32 hHeld);
+
+// Text Editor Stuff.
+void drawTextEditorScreen(void);
+void TextEditorLogic(u32 hDown, u32 hHeld);

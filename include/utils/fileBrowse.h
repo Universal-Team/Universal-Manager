@@ -1,7 +1,6 @@
 #ifndef FILE_BROWSE_H
 #define FILE_BROWSE_H
 
-// #include "download.hpp"
 #include <sys/stat.h>
 #include <dirent.h>
 #include <string>
@@ -23,5 +22,7 @@ typedef struct {
 void findNdsFiles(std::vector<DirEntry>& dirContents);
 
 void getDirectoryContents(std::vector<DirEntry>& dirContents);
+
+void drawFileBrowser(const char *text);
 
 #endif //FILE_BROWSE_H

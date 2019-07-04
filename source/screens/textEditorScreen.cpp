@@ -25,57 +25,32 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include <algorithm>
-#include <fstream>
-#include <unistd.h>
-#include <vector>
 #include "fileBrowse.h"
+#include "settings.hpp"
+#include <vector>
+#include <string>
+#include <fstream>
+#include <algorithm>
+#include <unistd.h>
+using std::string;
 
-extern "C" {
-#include "C2D_helper.h"
+void drawTextEditorScreen(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
+
+	Draw_Text(100, 100, FONT_SIZE_18, WHITE, "This is a work in progress.");
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
 }
 
- extern uint selectedFile;
- extern int keyRepeatDelay;
- extern bool dirChanged;
- extern std::vector<DirEntry> dirContents;
-std::string currentFile = "";
-std::string currentFiles;
-
-void drawFileBrowse(void) {
-	drawFileBrowser("File Manager");
-}
-
-void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (keyRepeatDelay)	keyRepeatDelay--; 
-	gspWaitForVBlank();
-	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
-		}
-		} else if (hDown & KEY_B) {
-		char path[PATH_MAX];
-		getcwd(path, PATH_MAX);
-		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
-		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
-		}
-	} else if (hDown & KEY_X) {
-			displayActionBox();
-	} else if (hHeld & KEY_UP) {
-		if (selectedFile > 0 && !keyRepeatDelay) {
-			selectedFile--;
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedFile < dirContents.size()-1) {
-			selectedFile++;
-			keyRepeatDelay = 3;
-		}
+void TextEditorLogic(u32 hDown, u32 hHeld) {
+	if (hDown & KEY_B) {
+		screenMode = mainScreen2;
 	}
 }

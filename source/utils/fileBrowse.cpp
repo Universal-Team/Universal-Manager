@@ -7,9 +7,17 @@
 #include <vector>
 
 #include "gui.hpp"
+#include "animation.hpp"
+
 int file_count = 0;
 
 extern bool continueFileScan;
+extern uint selectedFile;
+extern int keyRepeatDelay;
+extern bool dirChanged;
+extern std::vector<DirEntry> dirContents;
+//extern std::string currentFile = "";
+//extern std::string currentFiles;
 
 
 /**
@@ -136,4 +144,39 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 		
 		closedir(pdir);
 	}	
+}
+
+void drawFileBrowser(const char *text) {
+	// Theme Stuff.
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(120, 0, 0.68f, WHITE, text);
+		if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                    dirContents.push_back(dirContentsTemp[i]);
+            }
+		dirChanged = false;
+	}
+	std::string dirs;
+	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
+		if (i == selectedFile) {
+			dirs += "> " + dirContents[i].name + "\n";
+		} else {
+			dirs += "  " + dirContents[i].name + "\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
+		dirs += "\n";
+	}
+	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
 }
