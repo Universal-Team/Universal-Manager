@@ -61,43 +61,7 @@ static bool Draw_Image(void)
 
 
 void drawImageSelectorScreen(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(130, 0, 0.68f, WHITE, "Image Selector");
-	if (dirChanged) {
-		dirContents.clear();
-		std::vector<DirEntry> dirContentsTemp;
-		getDirectoryContents(dirContentsTemp);
-		for(uint i=0;i<dirContentsTemp.size();i++) {
-				if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
-				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
-				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "jpg") == 0 ||
-				dirContentsTemp[i].isDirectory)) {
-				dirContents.push_back(dirContentsTemp[i]);
-			}
-		}
-		dirChanged = false;
-	}
-	std::string dirs;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
+	drawFileBrowser("Image Viewer");
 }
 
 

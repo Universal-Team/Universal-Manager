@@ -45,19 +45,26 @@ void drawMainMenu(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBot();
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 40);
-	Gui::sprite(sprites_fileManagerIcon_idx, 5, 50);
-	Draw_Text(40, 57, 0.65f, WHITE, "Filemanager");
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
+	Gui::sprite(sprites_fileManagerIcon_idx, 5, 35);
+	Draw_Text(40, 42, 0.65f, WHITE, "Filemanager");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 40);
-	Gui::sprite(sprites_ftpIcon_idx, 175, 50);
-	Draw_Text(230, 57, 0.7f, WHITE, "FTP");
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
+	Gui::sprite(sprites_ftpIcon_idx, 175, 35);
+	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 150);
-	Gui::sprite(sprites_updaterIcon_idx, 5, 160);
-	Draw_Text(50, 167, 0.7f, WHITE, "Updater");
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
+	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 150);
-	Gui::sprite(sprites_settingsIcon_idx, 175, 160);
-	Draw_Text(220, 167, 0.7f, WHITE, "Settings");
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
+	Gui::sprite(sprites_music_icon_idx, 175, 100);
+	Draw_Text(230, 107, 0.7f, WHITE, "Music");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Gui::sprite(sprites_updaterIcon_idx, 5, 170);
+	Draw_Text(50, 177, 0.7f, WHITE, "Updater");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
+	Gui::sprite(sprites_settingsIcon_idx, 175, 170);
+	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
 }

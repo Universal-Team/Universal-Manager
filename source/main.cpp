@@ -71,14 +71,16 @@ int screenMode = 0;
 
 
 ButtonPos mainScreenButtonPos[] = {
-    {0, 40, 149, 52, fileScreen},
-    {170, 40, 149, 52, ftpScreen},
+    {0, 25, 149, 52, fileScreen},
+    {170, 25, 149, 52, ftpScreen},
+	{0, 90, 149, 52, scriptMainScreen},
+	{170, 90, 149, 52, musicMainScreen},
 	{0, 150, 149, 52, updaterSubMenu},
     {170, 150, 149, 52, settingsScreen},
 };
 
 ButtonPos fileScreenButtonPos[] = {
-    {100, 40, 149, 52, musicMainScreen},
+    {100, 40, 149, 52, fileManager},
 	{100, 120, 149, 52, ImageSelectorScreen},
     {293, 213, 27, 27, mainScreen},
 };

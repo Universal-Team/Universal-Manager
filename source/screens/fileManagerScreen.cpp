@@ -56,8 +56,7 @@ void drawFileManagerSubMenu(void) {
 
 	// Music List Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 40);
-	Gui::sprite(sprites_music_icon_idx, 105, 50);
-	Draw_Text(137, 57, 0.65f, WHITE, "Music Player");
+	Draw_Text(137, 57, 0.65f, WHITE, "File Manager");
 
 	// Image Viewer Button.
 	Gui::sprite(sprites_mainMenuButton_idx, 100, 120);
@@ -66,38 +65,7 @@ void drawFileManagerSubMenu(void) {
 }
 
 void drawFileBrowse(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(120, 0, 0.68f, WHITE, "File Manager");
-		if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                    dirContents.push_back(dirContentsTemp[i]);
-            }
-		dirChanged = false;
-	}
-	std::string dirs;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
+	drawFileBrowser("File Manager");
 }
 
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
@@ -119,7 +87,7 @@ void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
-		} else if (hDown & KEY_X) {
+	} else if (hDown & KEY_X) {
 			displayActionBox();
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {

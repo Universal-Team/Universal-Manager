@@ -142,7 +142,7 @@ void drawMusicMain() {
 
 void musicMainLogic(u32 hDown, touchPosition touch) {
 	if(hDown & KEY_B) {
-		screenMode = fileScreen;
+		screenMode = mainScreen;
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
 			if (touching(touch, mainButtonPos[i])) {
@@ -159,52 +159,7 @@ void musicMainLogic(u32 hDown, touchPosition touch) {
 }
 
 void drawMusicList(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Music Player Menu");
-
-	if (dirChanged) {
-		dirContents.clear();
-		std::vector<DirEntry> dirContentsTemp;
-		getDirectoryContents(dirContentsTemp);
-		for(uint i=0;i<dirContentsTemp.size();i++) {
-			if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "mp3") == 0 ||
-				// strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "m4a") == 0 ||
-				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "wav") == 0 ||
-				strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "ogg") == 0 ||
-				dirContentsTemp[i].isDirectory)) {
-				dirContents.push_back(dirContentsTemp[i]);
-			}
-		}
-		dirChanged = false;
-	}
-	std::string dirs;
-	std::string dirs2;
-	std::string dirs3;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-	if (dirContents[selectedFile].isDirectory)	dirs2 += "A : Open Folder   B : Back   X : Exit   Y : Add to Playlist";
-	else if(dirContents[selectedFile].name == currentSong)	dirs2 += "SEL : Show Player   B : Back   X : Exit   Y : Add to Playlist";
-	else	dirs3 += "A : Play   B : Back   X : Exit   Y : Add to Playlist, SEL : Show Player";
-	Draw_Text(26, 28, 0.45f, WHITE, dirs.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, dirs2.c_str());
-	Draw_Text(5, 220, 0.45f, WHITE, dirs3.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
+	drawFileBrowser("Music Player Menu");
 }
 
 void musicListLogic(u32 hDown, u32 hHeld) {
@@ -654,44 +609,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 
 
  void drawThemeSelector(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(110, 0, FONT_SIZE_18, WHITE, "Theme Selector");
-
-	if (dirChanged) {
-		dirContents.clear();
-		std::vector<DirEntry> dirContentsTemp;
-		getDirectoryContents(dirContentsTemp);
-		for(uint i=0;i<dirContentsTemp.size();i++) {
-			if ((strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "png") == 0 ||
-			strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "bmp") == 0 ||
-			strcasecmp(dirContentsTemp[i].name.substr(dirContentsTemp[i].name.length()-3, 3).c_str(), "jpg") == 0 ||
-				dirContentsTemp[i].isDirectory)) {
-				dirContents.push_back(dirContentsTemp[i]);
-			}
-		}
-		dirChanged = false;
-	}
-	std::string dirs;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
-		} else {
-			dirs += "  " + dirContents[i].name + "\n";
-		}
-	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
-	}
-		Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
+	drawFileBrowser("Theme Selector");
 }
 
 void themeSelectorLogic(u32 hDown, u32 hHeld) {
