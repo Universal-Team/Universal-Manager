@@ -156,10 +156,11 @@ char Input::checkKeyboard(int hDown, int hHeld) {
 	Gui::sprite(sprites_keyboard_idx, 0, 130);
 	if(caps)	C2D_DrawRectSolid(modifierKeys[1].x, modifierKeys[1].y+(130), 0.5f, 20, 20, BLUE);
 	if(shift)	C2D_DrawRectSolid(modifierKeys[3].x, modifierKeys[3].y+(130), 0.5f, 30, 20, BLUE);
+	if(hDown & KEY_TOUCH)	keyDownDelay = 15;
 	if(keyDownDelay > 0) {
 		keyDownDelay--;
 	} else if(keyDownDelay == 0) {
-		keyDownDelay = 5;
+		keyDownDelay = 3;
 	}
 
 	if(hDown & KEY_TOUCH || (hHeld & KEY_TOUCH && keyDownDelay == 0)) {
