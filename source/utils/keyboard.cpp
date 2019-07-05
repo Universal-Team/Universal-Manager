@@ -36,12 +36,12 @@ Key modifierKeys[] = {
 
 void drawKeyboard() {
 	for(uint i=0;i<(sizeof(keys)/sizeof(keys[0]));i++) {
-		C2D_DrawRectSolid(keys[i].x, keys[i].y+103, 0.5f, 20, 20, Config::barColor);
+		C2D_DrawRectSolid(keys[i].x, keys[i].y+103, 0.5f, 20, 20, Config::barColor & C2D_Color32(255, 255, 255, 200));
 		char c[2] = {shift || caps ? (char)toupper(keys[i].character[0]) : keys[i].character[0]};
 		Draw_Text(keys[i].x+(10-(Draw_GetTextWidth(FONT_SIZE_12, c)/2)), keys[i].y+103+(10-(Draw_GetTextHeight(FONT_SIZE_12, c)/2)), FONT_SIZE_12, WHITE, c);
 	}
 	for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
-		C2D_DrawRectSolid(modifierKeys[i].x, modifierKeys[i].y+103, 0.5f, modifierKeys[i].w, 20, Config::barColor);
+		C2D_DrawRectSolid(modifierKeys[i].x, modifierKeys[i].y+103, 0.5f, modifierKeys[i].w, 20, Config::barColor & C2D_Color32(255, 255, 255, 200));
 	}
 }
 
@@ -66,8 +66,8 @@ std::string Input::getLine(uint maxLength) {
 			animatedBGBot();
 			Gui::chooseLayoutBot();
 			drawKeyboard();
-			C2D_DrawRectSolid(0, 110, 0.5f, 320, 20, C2D_Color32(0, 0, 68, 200));
-			Draw_Text(5, 113, 0.6, WHITE, (string+(cursorBlink-- > 0 ? "_" : "")).c_str());
+			C2D_DrawRectSolid(0, 81, 0.5f, 320, 20, Config::barColor & C2D_Color32(200, 200, 200, 200));
+			Draw_Text(5, 82, 0.6, WHITE, (string+(cursorBlink-- > 0 ? "_" : "")).c_str());
 			if(cursorBlink < -20)	cursorBlink = 20;
 			scanKeys();
 			hDown = keysDown();
@@ -166,7 +166,6 @@ int Input::getUint(int max) {
 int keyDownDelay = 5;
 
 char Input::checkKeyboard(int hDown, int hHeld) {
-	// Gui::sprite(sprites_keyboard_idx, 0, 103);
 	drawKeyboard();
 	if(caps)	C2D_DrawRectSolid(modifierKeys[1].x, modifierKeys[1].y+(103), 0.5f, 20, 20, BLUE);
 	if(shift)	C2D_DrawRectSolid(modifierKeys[3].x, modifierKeys[3].y+(103), 0.5f, 30, 20, BLUE);
