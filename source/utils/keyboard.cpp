@@ -9,10 +9,13 @@
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
 
+bool caps = false, shift = false, enter = false;
+
 struct Key {
 	std::string character;
 	int x;
 	int y;
+	int w;
 };
 
 Key keys[] = {
@@ -22,11 +25,11 @@ Key keys[] = {
 	{"z", 35, 67}, {"x", 60, 67}, {"c", 85, 67}, {"v", 110, 67}, {"b", 135, 67}, {"n", 160, 67}, {"m", 185, 67}, {",", 210, 67}, {".", 235, 67}, {"/", 260, 67},
 };
 Key modifierKeys[] = {
-	{"bksp", 300, 0},	// Backspace
-	{"caps", 0, 45},	// Caps Lock
-	{"entr", 300, 45},	// Enter
-	{"lsft", 0, 67},	// Left Shift
-	{"rsft", 285, 67},	// Right Shift
+	{"bksp", 300, 0, 20},	// Backspace
+	{"caps", 0, 45, 20},	// Caps Lock
+	{"entr", 300, 45, 20},	// Enter
+	{"lsft", 0, 67, 30},	// Left Shift
+	{"rsft", 285, 67, 30},	// Right Shift
 };
 
 std::string Input::getLine() { return Input::getLine(-1); }
@@ -36,7 +39,7 @@ std::string Input::getLine(uint maxLength) {
 	touchPosition touch;
 	std::string string;
 	int keyDownDelay = 10, cursorBlink = 20;
-	bool caps = false, shift = false, enter = false;
+	caps = false, shift = false, enter = false;
 	while(1) {
 		do {
 			C3D_FrameEnd(0);
@@ -145,4 +148,55 @@ int Input::getUint(int max) {
 	int i = atoi(s.c_str());
 	if(i>max)	return 255;
 	return i;
+}
+
+int keyDownDelay = 5;
+
+char Input::checkKeyboard(int hDown, int hHeld) {
+	Gui::sprite(sprites_keyboard_idx, 0, 130);
+	if(caps)	C2D_DrawRectSolid(modifierKeys[1].x, modifierKeys[1].y+(130), 0.5f, 20, 20, BLUE);
+	if(shift)	C2D_DrawRectSolid(modifierKeys[3].x, modifierKeys[3].y+(130), 0.5f, 30, 20, BLUE);
+	if(keyDownDelay > 0) {
+		keyDownDelay--;
+	} else if(keyDownDelay == 0) {
+		keyDownDelay = 5;
+	}
+
+	if(hDown & KEY_TOUCH || (hHeld & KEY_TOUCH && keyDownDelay == 0)) {
+		touchPosition touch;
+		touchRead(&touch);
+		// Check if a regular key was pressed
+		for(uint i=0;i<(sizeof(keys)/sizeof(keys[0]));i++) {
+			if((touch.px > keys[i].x-2 && touch.px < keys[i].x+22) && (touch.py > keys[i].y+(130)-2 && touch.py < keys[i].y+22+(130))) {
+				char c = keys[i].character[0];
+				c = shift || caps ? toupper(c) : c;
+				shift = false;
+				return c;
+			}
+		}
+		// Check if space was pressed
+		Key key = {" ", 85, 90};
+		if((touch.px > key.x-2 && touch.px < key.x+120) && (touch.py > key.y+(130)-2 && touch.py < key.y+20+(130))) {
+			shift = false;
+			return key.character[0];
+		}
+		// Check if a modifier key was pressed
+		for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
+			if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+modifierKeys[i].w+2) && (touch.py > modifierKeys[i].y+(130)-2 && touch.py < modifierKeys[i].y+22+(130))) {
+				if(modifierKeys[i].character == "bksp") {
+					return '\b';
+				} else if(modifierKeys[i].character == "caps") {
+					caps = !caps;
+				} else if(modifierKeys[i].character == "entr") {
+					return '\n';
+				} else if(modifierKeys[i].character == "lsft") {
+					shift = !shift;
+				} else if(modifierKeys[i].character == "rsft") {
+					shift = !shift;
+				}
+				break;
+			}
+		}
+	}
+	return '\0';
 }

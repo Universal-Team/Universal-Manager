@@ -26,6 +26,7 @@
 
 #include "screens/screenCommon.hpp"
 #include "fileBrowse.h"
+#include "keyboard.hpp"
 #include "settings.hpp"
 #include <vector>
 #include <string>
@@ -53,7 +54,7 @@ void readFile(void) {
 }
 
 void drawTextEditorScreen(void) {
-	readFile();
+	if(!textRead)	readFile();
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
@@ -102,6 +103,7 @@ void drawTextEditorScreen(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
+	gspWaitForVBlank();
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {
@@ -120,4 +122,16 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 	if (textEditorCurPos > textEditorScrnPos + rowsDisplayed) {
 		textEditorScrnPos = textEditorCurPos - rowsDisplayed;
 	}
+
+	char c = Input::checkKeyboard(hDown, hHeld);
+	if(c == '\b') {
+		if(textEditorText[textEditorCurPos].size() > 0)	textEditorText[textEditorCurPos].resize(textEditorText[textEditorCurPos].size()-1);
+		else if(textEditorCurPos != 0) {
+			textEditorText.erase(textEditorText.begin()+textEditorCurPos);
+			textEditorCurPos--;
+		}
+	} else if(c == '\n') {
+		textEditorCurPos++;
+		textEditorText.insert(textEditorText.begin()+textEditorCurPos, "");
+	} else if(c != '\0')	textEditorText[textEditorCurPos] += c;
 }

@@ -8,6 +8,7 @@ namespace Input {
 	std::string getLine(uint maxLength);
 	// -1 if invaild text entered
 	int getUint(int max);
+	char checkKeyboard(int hDown, int hHeld);
 }
 
 #endif
