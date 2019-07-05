@@ -107,9 +107,9 @@ void drawTextEditorScreen(void) {
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {
-	if(hHeld & KEY_UP) {
+	if(hHeld & KEY_CPAD_UP || hDown & KEY_UP) {
 		if(textEditorCurPos > 0) textEditorCurPos--;
-	} else if(hHeld & KEY_DOWN) {
+	} else if(hHeld & KEY_CPAD_DOWN || hDown & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
 	} else if(hDown & KEY_B) {
 		std::ofstream out("test.txt");
