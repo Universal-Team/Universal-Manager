@@ -112,6 +112,11 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 	} else if(hHeld & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
 	} else if(hDown & KEY_B) {
+		std::ofstream out("test.txt");
+		for(uint i=0;i<textEditorText.size();i++) {
+			out << textEditorText[i] << std::endl;
+		}
+
 		screenMode = mainScreen2;
 	}
 
