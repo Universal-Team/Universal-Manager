@@ -34,19 +34,21 @@
 #include <unistd.h>
 
 bool textRead = false;
-uint textEditorLine = 0;
-uint textEditorLines = 0;
 uint textEditorCurPos = 0;
 uint textEditorScrnPos = 0;
-std::vector<std::string> textEditorText = {"test", "1,", "2,", "3!"};
+std::vector<std::string> textEditorText;
+uint rowsDisplayed = 0;
 
 void readFile(void) {
 	textEditorText.clear();
 	std::string line;
 	std::ifstream in("test.txt");
-	while(std::getline(in, line)) {
-		textEditorText.push_back(line);
+	if(in.good()) {
+		while(std::getline(in, line)) {
+			textEditorText.push_back(line);
+		}
 	}
+	in.close();
 	textRead = true;
 }
 
@@ -60,20 +62,41 @@ void drawTextEditorScreen(void) {
 	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, "Text Editor Screen")/2)), 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
 
 	int textX = Draw_GetTextWidth(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
-	for(uint i=0;i+textEditorScrnPos<textEditorText.size() && i<15;i++) {
-		if(i+textEditorScrnPos == textEditorCurPos) {
-			Draw_Text(0, 28+(i*12), FONT_SIZE_12, BLACK, std::to_string(i).c_str());
-			Draw_Text(textX, 28+(i*12), FONT_SIZE_12, BLUE, textEditorText[i+textEditorScrnPos].c_str());
+	for(uint i=0, ii=0;i+textEditorScrnPos<textEditorText.size() && ii<15;i++) {
+		std::vector<std::string> lines;
+		uint sizeDone = 0;
+		do {
+			std::string line = textEditorText[i+textEditorScrnPos].substr(sizeDone);
+			while(Draw_GetTextWidth(FONT_SIZE_12, line.c_str()) > 400-textX) {
+				line.resize(line.size()-1);
+			}
+			lines.push_back(line);
+			sizeDone += line.size();
+		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
+
+		if(i+textEditorScrnPos == textEditorCurPos ) {
+			Draw_Text(0, 28+(ii*12), FONT_SIZE_12, BLACK, std::to_string(i+textEditorScrnPos+1).c_str());
+
+			for(uint l=0;l<lines.size();l++) {
+				Draw_Text(textX, 28+(ii*12), FONT_SIZE_12, BLUE, lines[l].c_str());
+				ii++;
+			}
 		} else {
-			Draw_Text(0, 28+(i*12), FONT_SIZE_12, GRAY, std::to_string(i).c_str());
-			Draw_Text(textX, 28+(i*12), FONT_SIZE_12, BLACK, textEditorText[i+textEditorScrnPos].c_str());
+			Draw_Text(0, 28+(ii*12), FONT_SIZE_12, GRAY, std::to_string(i+textEditorScrnPos+1).c_str());
+			
+			for(uint l=0;l<lines.size();l++) {
+				Draw_Text(textX, 28+(ii*12), FONT_SIZE_12, BLACK, lines[l].c_str());
+				ii++;
+			}
 		}
+
+		rowsDisplayed = i;
 	}
 
-	std::string totalLines = "Lines: " + std::to_string(textEditorLines);
+	std::string totalLines = "Lines: " + std::to_string(textEditorText.size());
 	Draw_Text(4, 220, FONT_SIZE_18, WHITE, totalLines.c_str());
 
-	std::string currentLine = "Current Line: " + std::to_string(textEditorLine);
+	std::string currentLine = "Current Line: " + std::to_string(textEditorCurPos+1);
 	Draw_Text(400-Draw_GetTextWidth(FONT_SIZE_18, currentLine.c_str())-4, 220, FONT_SIZE_18, WHITE, currentLine.c_str());
 
 	Gui::DrawBGBot();
@@ -94,7 +117,7 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 	if (textEditorCurPos < textEditorScrnPos) 	{
 		textEditorScrnPos = textEditorCurPos;
 	}
-	if (textEditorCurPos > textEditorScrnPos + 14) {
-		textEditorScrnPos = textEditorCurPos - 14;
+	if (textEditorCurPos > textEditorScrnPos + rowsDisplayed) {
+		textEditorScrnPos = textEditorCurPos - rowsDisplayed;
 	}
 }
