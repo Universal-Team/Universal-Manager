@@ -32,17 +32,49 @@
 #include <fstream>
 #include <algorithm>
 #include <unistd.h>
-using std::string;
+
+bool textRead = false;
+uint textEditorLine = 0;
+uint textEditorLines = 0;
+uint textEditorCurPos = 0;
+uint textEditorScrnPos = 0;
+std::vector<std::string> textEditorText = {"test", "1,", "2,", "3!"};
+
+void readFile(void) {
+	textEditorText.clear();
+	std::string line;
+	std::ifstream in("test.txt");
+	while(std::getline(in, line)) {
+		textEditorText.push_back(line);
+	}
+	textRead = true;
+}
 
 void drawTextEditorScreen(void) {
+	readFile();
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(80, 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
+	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, "Text Editor Screen")/2)), 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
 
-	Draw_Text(100, 100, FONT_SIZE_18, WHITE, "This is a work in progress.");
+	int textX = Draw_GetTextWidth(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
+	for(uint i=0;i+textEditorScrnPos<textEditorText.size() && i<15;i++) {
+		if(i+textEditorScrnPos == textEditorCurPos) {
+			Draw_Text(0, 28+(i*12), FONT_SIZE_12, BLACK, std::to_string(i).c_str());
+			Draw_Text(textX, 28+(i*12), FONT_SIZE_12, BLUE, textEditorText[i+textEditorScrnPos].c_str());
+		} else {
+			Draw_Text(0, 28+(i*12), FONT_SIZE_12, GRAY, std::to_string(i).c_str());
+			Draw_Text(textX, 28+(i*12), FONT_SIZE_12, BLACK, textEditorText[i+textEditorScrnPos].c_str());
+		}
+	}
+
+	std::string totalLines = "Lines: " + std::to_string(textEditorLines);
+	Draw_Text(4, 220, FONT_SIZE_18, WHITE, totalLines.c_str());
+
+	std::string currentLine = "Current Line: " + std::to_string(textEditorLine);
+	Draw_Text(400-Draw_GetTextWidth(FONT_SIZE_18, currentLine.c_str())-4, 220, FONT_SIZE_18, WHITE, currentLine.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -50,7 +82,19 @@ void drawTextEditorScreen(void) {
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {
-	if (hDown & KEY_B) {
+	if(hHeld & KEY_UP) {
+		if(textEditorCurPos > 0) textEditorCurPos--;
+	} else if(hHeld & KEY_DOWN) {
+		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
+	} else if(hDown & KEY_B) {
 		screenMode = mainScreen2;
+	}
+
+	// Scroll screen if needed
+	if (textEditorCurPos < textEditorScrnPos) 	{
+		textEditorScrnPos = textEditorCurPos;
+	}
+	if (textEditorCurPos > textEditorScrnPos + 14) {
+		textEditorScrnPos = textEditorCurPos - 14;
 	}
 }
