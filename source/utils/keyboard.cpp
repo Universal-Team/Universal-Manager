@@ -2,6 +2,7 @@
 #include "gui.hpp"
 #include "settings.hpp"
 #include "keyboard.hpp"
+#include "settings.hpp"
 #include <string>
 #include <stdio.h>
 #include <ctype.h>
@@ -26,11 +27,23 @@ Key keys[] = {
 };
 Key modifierKeys[] = {
 	{"bksp", 300, 0, 20},	// Backspace
-	{"caps", 0, 45, 20},	// Caps Lock
+	{"caps",   0, 45, 20},	// Caps Lock
 	{"entr", 300, 45, 20},	// Enter
-	{"lsft", 0, 67, 30},	// Left Shift
+	{"lsft",   0, 67, 30},	// Left Shift
 	{"rsft", 285, 67, 30},	// Right Shift
+	{" ",     85, 90, 120},	// Space
 };
+
+void drawKeyboard() {
+	for(uint i=0;i<(sizeof(keys)/sizeof(keys[0]));i++) {
+		C2D_DrawRectSolid(keys[i].x, keys[i].y+103, 0.5f, 20, 20, Config::barColor);
+		char c[2] = {shift || caps ? (char)toupper(keys[i].character[0]) : keys[i].character[0]};
+		Draw_Text(keys[i].x+(10-(Draw_GetTextWidth(FONT_SIZE_12, c)/2)), keys[i].y+103+(10-(Draw_GetTextHeight(FONT_SIZE_12, c)/2)), FONT_SIZE_12, WHITE, c);
+	}
+	for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
+		C2D_DrawRectSolid(modifierKeys[i].x, modifierKeys[i].y+103, 0.5f, modifierKeys[i].w, 20, Config::barColor);
+	}
+}
 
 std::string Input::getLine() { return Input::getLine(-1); }
 
@@ -52,7 +65,7 @@ std::string Input::getLine(uint maxLength) {
 			Gui::DrawBGBot();
 			animatedBGBot();
 			Gui::chooseLayoutBot();
-			Gui::sprite(sprites_keyboard_idx, 0, 130);
+			drawKeyboard();
 			C2D_DrawRectSolid(0, 110, 0.5f, 320, 20, C2D_Color32(0, 0, 68, 200));
 			Draw_Text(5, 113, 0.6, WHITE, (string+(cursorBlink-- > 0 ? "_" : "")).c_str());
 			if(cursorBlink < -20)	cursorBlink = 20;
@@ -62,13 +75,13 @@ std::string Input::getLine(uint maxLength) {
 				keyDownDelay--;
 			} else if(keyDownDelay == 0) {
 				keyDownDelay--;
-				// drawImage(0, 130, keyboardData.width, keyboardData.height, keyboard, false);
-				// if(caps) drawRectangle(modifierKeys[1].x, modifierKeys[1].y+(130), 16, 16, GRAY, false);
+				// drawImage(0, 103, keyboardData.width, keyboardData.height, keyboard, false);
+				// if(caps) drawRectangle(modifierKeys[1].x, modifierKeys[1].y+(103), 16, 16, GRAY, false);
 			}
 		} while(!hDown);
 		if(keyDownDelay > 0) {
-			// drawImage(0, 130, keyboardData.width, keyboardData.height, keyboard, false);
-			// if(caps) drawRectangle(modifierKeys[1].x, modifierKeys[1].y+(130), 16, 16, GRAY, false);
+			// drawImage(0, 103, keyboardData.width, keyboardData.height, keyboard, false);
+			// if(caps) drawRectangle(modifierKeys[1].x, modifierKeys[1].y+(103), 16, 16, GRAY, false);
 		}
 		keyDownDelay = 10;
 
@@ -77,8 +90,8 @@ std::string Input::getLine(uint maxLength) {
 			if(string.length() < maxLength) {
 				// Check if a regular key was pressed
 				for(uint i=0;i<(sizeof(keys)/sizeof(keys[0]));i++) {
-					if((touch.px > keys[i].x-2 && touch.px < keys[i].x+18) && (touch.py > keys[i].y+(130)-2 && touch.py < keys[i].y+18+(130))) {
-						// drawRectangle(keys[i].x, keys[i].y+(130), 16, 16, DARK_GRAY, false);
+					if((touch.px > keys[i].x-2 && touch.px < keys[i].x+18) && (touch.py > keys[i].y+(103)-2 && touch.py < keys[i].y+18+(103))) {
+						// drawRectangle(keys[i].x, keys[i].y+(103), 16, 16, DARK_GRAY, false);
 						char c = keys[i].character[0];
 						string += (shift || caps ? toupper(c) : c);
 						shift = false;
@@ -87,30 +100,30 @@ std::string Input::getLine(uint maxLength) {
 				}
 				// Check if space was pressed
 				Key key = {" ", 85, 90};
-				if((touch.px > key.x-2 && touch.px < key.x+120) && (touch.py > key.y+(130)-2 && touch.py < key.y+20+(130))) {
-					// drawRectangle(key.x, key.y+(130), 96, 16, DARK_GRAY, false);
+				if((touch.px > key.x-2 && touch.px < key.x+120) && (touch.py > key.y+(103)-2 && touch.py < key.y+20+(103))) {
+					// drawRectangle(key.x, key.y+(103), 96, 16, DARK_GRAY, false);
 					string += key.character;
 					shift = false;
-					// Draw_Text(0, 130, 0.5, BLACK, string.c_str());
+					// Draw_Text(0, 103, 0.5, BLACK, string.c_str());
 				}
 			}
 			// Check if a modifier key was pressed
 			for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
-				if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+18) && (touch.py > modifierKeys[i].y+(130)-2 && touch.py < modifierKeys[i].y+18+(130))) {
+				if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+18) && (touch.py > modifierKeys[i].y+(103)-2 && touch.py < modifierKeys[i].y+18+(103))) {
 					if(modifierKeys[i].character == "bksp") {
-						// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(130), 16, 16, DARK_GRAY, false);
+						// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(103), 16, 16, DARK_GRAY, false);
 						string = string.substr(0, string.length()-1);
-						// drawRectangle(0, 130-16, 256, 16, DARKER_GRAY, false);
-						// Draw_Text(0, 130, 0.5, BLACK, string.c_str());
+						// drawRectangle(0, 103-16, 256, 16, DARKER_GRAY, false);
+						// Draw_Text(0, 103, 0.5, BLACK, string.c_str());
 					} else if(modifierKeys[i].character == "caps") {
 						caps = !caps;
-						// if(caps) drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(130), 16, 16, GRAY, false);
+						// if(caps) drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(103), 16, 16, GRAY, false);
 					} else if(modifierKeys[i].character == "entr") {
 						enter = true;
 					} else if(modifierKeys[i].character == "lsft") {
 						shift = !shift;
 						if(shift) {
-							// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(130), 26, 16, GRAY, false);
+							// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(103), 26, 16, GRAY, false);
 							keyDownDelay = -1;
 						} else {
 							keyDownDelay = 0;
@@ -118,7 +131,7 @@ std::string Input::getLine(uint maxLength) {
 					} else if(modifierKeys[i].character == "rsft") {
 						shift = !shift;
 						if(shift) {
-							// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(130), 26, 16, GRAY, false);
+							// drawRectangle(modifierKeys[i].x, modifierKeys[i].y+(103), 26, 16, GRAY, false);
 							keyDownDelay = -1;
 						} else {
 							keyDownDelay = 0;
@@ -128,14 +141,14 @@ std::string Input::getLine(uint maxLength) {
 				}
 			}
 		} else if(hDown & KEY_B) {
-			// drawRectangle(modifierKeys[0].x, modifierKeys[0].y+(130), 16, 16, DARK_GRAY, false);
+			// drawRectangle(modifierKeys[0].x, modifierKeys[0].y+(103), 16, 16, DARK_GRAY, false);
 			string = string.substr(0, string.length()-1);
-			// drawRectangle(0, 130-16, 256, 16, DARKER_GRAY, false);
-			Draw_Text(0, 130, 0.5, BLACK, string.c_str());
+			// drawRectangle(0, 103-16, 256, 16, DARKER_GRAY, false);
+			Draw_Text(0, 103, 0.5, BLACK, string.c_str());
 		}
 		
 		if(hDown & KEY_START || enter) {
-			// drawRectangle(0, 130-16, 256, keyboardData.height+16, DARK_GRAY, false);
+			// drawRectangle(0, 103-16, 256, keyboardData.height+16, DARK_GRAY, false);
 			break;
 		}
 	}
@@ -153,9 +166,10 @@ int Input::getUint(int max) {
 int keyDownDelay = 5;
 
 char Input::checkKeyboard(int hDown, int hHeld) {
-	Gui::sprite(sprites_keyboard_idx, 0, 130);
-	if(caps)	C2D_DrawRectSolid(modifierKeys[1].x, modifierKeys[1].y+(130), 0.5f, 20, 20, BLUE);
-	if(shift)	C2D_DrawRectSolid(modifierKeys[3].x, modifierKeys[3].y+(130), 0.5f, 30, 20, BLUE);
+	// Gui::sprite(sprites_keyboard_idx, 0, 103);
+	drawKeyboard();
+	if(caps)	C2D_DrawRectSolid(modifierKeys[1].x, modifierKeys[1].y+(103), 0.5f, 20, 20, BLUE);
+	if(shift)	C2D_DrawRectSolid(modifierKeys[3].x, modifierKeys[3].y+(103), 0.5f, 30, 20, BLUE);
 	if(hDown & KEY_TOUCH)	keyDownDelay = 15;
 	if(keyDownDelay > 0) {
 		keyDownDelay--;
@@ -168,22 +182,17 @@ char Input::checkKeyboard(int hDown, int hHeld) {
 		touchRead(&touch);
 		// Check if a regular key was pressed
 		for(uint i=0;i<(sizeof(keys)/sizeof(keys[0]));i++) {
-			if((touch.px > keys[i].x-2 && touch.px < keys[i].x+22) && (touch.py > keys[i].y+(130)-2 && touch.py < keys[i].y+22+(130))) {
+			if((touch.px > keys[i].x-2 && touch.px < keys[i].x+22) && (touch.py > keys[i].y+(103)-2 && touch.py < keys[i].y+22+(103))) {
 				char c = keys[i].character[0];
 				c = shift || caps ? toupper(c) : c;
 				shift = false;
 				return c;
 			}
 		}
-		// Check if space was pressed
-		Key key = {" ", 85, 90};
-		if((touch.px > key.x-2 && touch.px < key.x+120) && (touch.py > key.y+(130)-2 && touch.py < key.y+20+(130))) {
-			shift = false;
-			return key.character[0];
-		}
+
 		// Check if a modifier key was pressed
 		for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
-			if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+modifierKeys[i].w+2) && (touch.py > modifierKeys[i].y+(130)-2 && touch.py < modifierKeys[i].y+22+(130))) {
+			if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+modifierKeys[i].w+2) && (touch.py > modifierKeys[i].y+(103)-2 && touch.py < modifierKeys[i].y+22+(103))) {
 				if(modifierKeys[i].character == "bksp") {
 					return '\b';
 				} else if(modifierKeys[i].character == "caps") {
@@ -194,6 +203,9 @@ char Input::checkKeyboard(int hDown, int hHeld) {
 					shift = !shift;
 				} else if(modifierKeys[i].character == "rsft") {
 					shift = !shift;
+				} else if(modifierKeys[i].character == " ") {
+					shift = false;
+					return modifierKeys[i].character[0];
 				}
 				break;
 			}

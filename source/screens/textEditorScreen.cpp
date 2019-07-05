@@ -103,7 +103,6 @@ void drawTextEditorScreen(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
-	gspWaitForVBlank();
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {
