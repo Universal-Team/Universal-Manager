@@ -146,6 +146,15 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 	}	
 }
 
+static void drawUnselectedBoxes(void) {
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 25, GRAY);
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 55, GRAY);
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 90, GRAY);
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 125, GRAY);
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 160, GRAY);
+	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 195, GRAY);
+}
+
 void drawFileBrowser(const char *text) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
@@ -164,17 +173,41 @@ void drawFileBrowser(const char *text) {
 		dirChanged = false;
 	}
 	std::string dirs;
-	for (uint i=(selectedFile<12) ? 0 : selectedFile-12;i<dirContents.size()&&i<((selectedFile<12) ? 13 : selectedFile+1);i++) {
-		if (i == selectedFile) {
-			dirs += "> " + dirContents[i].name + "\n";
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::sprite(sprites_selected_idx, 0, 25);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::sprite(sprites_selected_idx, 0, 55);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::sprite(sprites_selected_idx, 0, 90);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::sprite(sprites_selected_idx, 0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::sprite(sprites_selected_idx, 0, 160);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			dirs +=  dirContents[i].name + "\n\n";
 		} else {
-			dirs += "  " + dirContents[i].name + "\n";
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			dirs += "  " + dirContents[i].name + "\n\n";
 		}
 	}
-	for (uint i=0;i<((dirContents.size()<13) ? 13-dirContents.size() : 0);i++) {
-		dirs += "\n";
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.45f, WHITE, dirs.c_str());
+	Draw_Text(26, 27, 0.56f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

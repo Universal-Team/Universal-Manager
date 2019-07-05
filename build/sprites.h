@@ -60,5 +60,6 @@
 #define sprites_dot_idx 56
 #define sprites_frame_idx 57
 #define sprites_keyboard_idx 58
-#define sprites_textbox_idx 59
-#define sprites_universal_credits_idx 60
+#define sprites_selected_idx 59
+#define sprites_textbox_idx 60
+#define sprites_universal_credits_idx 61
