@@ -67,18 +67,40 @@ void drawScriptMainScreen(void) {
 
 	std::string scptList;
 	std::string scptList2;
-	for (uint i=(selectedScpt<12) ? 0 : selectedScpt-12;i<scpts.size()&&i<((selectedScpt<12) ? 13 : selectedScpt+1);i++) {
-		if (i == selectedScpt) {
-			scptList += "> " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
+	for (uint i=(selectedScpt<5) ? 0 : selectedScpt-5;i<scpts.size()&&i<((selectedScpt<5) ? 6 : selectedScpt+1);i++) {
+		if (selectedScpt == 0) {
+			Gui::sprite(sprites_selected_idx, 0, 25);
+			scptList += scpts[i].name + "\n\n";
+
+		} else if (selectedScpt == 1) {
+			Gui::sprite(sprites_selected_idx, 0, 55);
+			scptList += scpts[i].name + "\n\n";
+
+		} else if (selectedScpt == 2) {
+			Gui::sprite(sprites_selected_idx, 0, 90);
+			scptList += scpts[i].name + "\n\n";
+
+		} else if (selectedScpt == 3) {
+			Gui::sprite(sprites_selected_idx, 0, 125);
+			scptList += scpts[i].name + "\n\n";
+
+		} else if (selectedScpt == 4) {
+			Gui::sprite(sprites_selected_idx, 0, 160);
+			scptList += scpts[i].name + "\n\n";
+
+		} else if (selectedScpt == 5) {
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			scptList += scpts[i].name + "\n\n";
 		} else {
-			scptList += "  " + scpts[i].name.substr(0, scpts[i].name.find_last_of(".")) + "\n";
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			scptList += scpts[i].name + "\n\n";
 		}
 	}
-	for (uint i=0;i<((scpts.size()<13) ? 13-scpts.size() : 0);i++) {
+	for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
 	scptList2 += "B : Back Y : Create X : Delete A : start";
-	Draw_Text(26, 32, 0.45f, WHITE, scptList.c_str());
+	Draw_Text(26, 27, 0.56f, WHITE, scptList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, scptList2.c_str());
 
 	Gui::DrawBGBot();

@@ -63,18 +63,40 @@ void drawFontSelection(void) {
 
 	std::string bcfntList;
 	std::string bcfntList2;
-	for (uint i=(selectedBcfnt<12) ? 0 : selectedBcfnt-12;i<bcfnts.size()&&i<((selectedBcfnt<12) ? 13 : selectedBcfnt+1);i++) {
-		if (i == selectedBcfnt) {
-			bcfntList += "> " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
+	for (uint i=(selectedBcfnt<5) ? 0 : selectedBcfnt-5;i<bcfnts.size()&&i<((selectedBcfnt<5) ? 6 : selectedBcfnt+1);i++) {
+		if (selectedBcfnt == 0) {
+			Gui::sprite(sprites_selected_idx, 0, 25);
+			bcfntList +=  bcfnts[i].name + "\n\n";
+
+		} else if (selectedBcfnt == 1) {
+			Gui::sprite(sprites_selected_idx, 0, 55);
+			bcfntList +=  bcfnts[i].name + "\n\n";
+
+		} else if (selectedBcfnt == 2) {
+			Gui::sprite(sprites_selected_idx, 0, 90);
+			bcfntList +=  bcfnts[i].name + "\n\n";
+
+		} else if (selectedBcfnt == 3) {
+			Gui::sprite(sprites_selected_idx, 0, 125);
+			bcfntList +=  bcfnts[i].name + "\n\n";
+
+		} else if (selectedBcfnt == 4) {
+			Gui::sprite(sprites_selected_idx, 0, 160);
+			bcfntList +=  bcfnts[i].name + "\n\n";
+
+		} else if (selectedBcfnt == 5) {
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			bcfntList +=  bcfnts[i].name + "\n\n";
 		} else {
-			bcfntList += "  " + bcfnts[i].name.substr(0, bcfnts[i].name.find_last_of(".")) + "\n";
+			Gui::sprite(sprites_selected_idx, 0, 195);
+			bcfntList += "  " + bcfnts[i].name + "\n\n";
 		}
 	}
-	for (uint i=0;i<((bcfnts.size()<13) ? 13-bcfnts.size() : 0);i++) {
+	for (uint i=0;i<((bcfnts.size()<6) ? 6-bcfnts.size() : 0);i++) {
 		bcfntList += "\n";
 	}
 	bcfntList2 += "A : Select Font   SELECT : Select Standard Font   B : Back   Y : SystemFont";
-	Draw_Text(26, 32, 0.45f, WHITE, bcfntList.c_str());
+	Draw_Text(26, 27, 0.56f, WHITE, bcfntList.c_str());
 	Draw_Text(26, 220, 0.45f, WHITE, bcfntList2.c_str());
 
 	Gui::DrawBGBot();
