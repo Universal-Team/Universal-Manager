@@ -1043,7 +1043,7 @@ void downloadThemes(void) {
 
 void downloadScripts(void) {
 DisplayMsg("Downloading latest Scripts Package...");
-		if (downloadToFile("https://cdn.discordapp.com/attachments/576727017240788993/595284111074132009/scripts.zip?raw=true", "/Scripts.zip") != 0) {
+		if (downloadToFile("https://cdn.discordapp.com/attachments/596873160083636274/596874729277882381/scripts.zip?raw=true", "/Scripts.zip") != 0) {
 		downloadFailed();
 		return;
 	}
