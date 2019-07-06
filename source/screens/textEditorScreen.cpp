@@ -117,6 +117,11 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		}
 
 		screenMode = mainScreen2;
+	} else if(hDown & KEY_X) {
+		textEditorText.erase(textEditorText.begin()+textEditorCurPos);
+		if(textEditorCurPos != 0) {
+			textEditorCurPos--;
+		}
 	}
 
 	// Scroll screen if needed
@@ -130,9 +135,9 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 	char c = Input::checkKeyboard(hDown, hHeld);
 	if(c == '\b') {
 		if(textEditorText[textEditorCurPos].size() > 0)	textEditorText[textEditorCurPos].resize(textEditorText[textEditorCurPos].size()-1);
-		else if(textEditorCurPos != 0) {
+		else {
 			textEditorText.erase(textEditorText.begin()+textEditorCurPos);
-			textEditorCurPos--;
+			if(textEditorCurPos != 0)	textEditorCurPos--;
 		}
 	} else if(c == '\n') {
 		textEditorCurPos++;
