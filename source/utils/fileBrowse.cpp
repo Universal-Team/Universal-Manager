@@ -201,7 +201,7 @@ void drawFileBrowser(const char *text) {
 			dirs +=  dirContents[i].name + "\n\n";
 		} else {
 			Gui::sprite(sprites_selected_idx, 0, 195);
-			dirs += "  " + dirContents[i].name + "\n\n";
+			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
