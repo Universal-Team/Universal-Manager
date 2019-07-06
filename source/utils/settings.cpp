@@ -39,7 +39,6 @@ static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
 int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay, Config::layout, Config::layoutBG; // [UI]
 int Config::animation, Config::animationColor; // [ANIMATED]
-int Config::Font; // [FONT]
 int Config::Citra; // [Citra]
 
 void Config::loadConfig() {
@@ -53,8 +52,6 @@ void Config::loadConfig() {
 	// [ANIMATED]
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
 	Config::animationColor = settingsini.GetInt("ANIMATED", "COLOR", BLUE);
-	// [FONT]
-	Config::Font = settingsini.GetInt("FONT", "CUSTOM", 0);
 	// [CITRA]
 	Config::Citra = settingsini.GetInt("CITRA", "ENABLED", 0);
 }
@@ -70,8 +67,6 @@ void Config::saveConfig() {
 	// [ANIMATED]
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
 	settingsini.SetInt("ANIMATED", "COLOR", Config::animationColor);
-	// [FONT]
-	settingsini.SetInt("FONT", "CUSTOM", Config::Font);
 
 	// [CITRA]
 	settingsini.SetInt("CITRA", "ENABLED", Config::Citra);
