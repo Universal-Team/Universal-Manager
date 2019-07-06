@@ -171,6 +171,9 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 			selectedFile = 0;
 			dirChanged = true;
 		} else {
+			if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0) ||
+			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "wav") == 0) ||
+			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "ogg") == 0)) {
 			if(dirContents[selectedFile].name != currentSong) {
 				nowPlayingList.clear();
 				char path[PATH_MAX];
@@ -184,6 +187,12 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
 			togglePlayback(); // Since it would otherwise pause it in main.cpp
+		} else {
+			DisplayMsg("This is not a valid Music File!\nThe supported Formats are :\nMP3, WAV and OGG.");
+			for (int i = 0; i < 60*2; i++) {
+				gspWaitForVBlank();
+			}
+		}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
