@@ -231,10 +231,6 @@ int main()
 				drawScriptMainScreen();
 				break;
 //#########################################################################################################
-			case FontSelectionScreen:
-				drawFontSelection();
-				break;
-//#########################################################################################################
 			case TextEditorScreen:
 				drawTextEditorScreen();
 				break;
@@ -324,10 +320,6 @@ int main()
 //#########################################################################################################
 			case scriptMainScreen:
 				scriptMainScreenLogic(hDown, hHeld);
-				break;
-//########################################################################################################
-			case FontSelectionScreen:
-				FontSelectionLogic(hDown, hHeld);
 				break;
 //#########################################################################################################
 			case TextEditorScreen:
