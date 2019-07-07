@@ -113,7 +113,9 @@ std::string getColorName(int color, int bgr) {
 	return colorName;
 }
 
-void drawUISettingsScreen(void) {
+int settingsPage = 0;
+
+void drawSettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
@@ -124,6 +126,9 @@ void drawUISettingsScreen(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
+	// First Settings Page.
+
+	if (settingsPage == 0) {
 	// Bars.
 	Draw_Text(100, 58, 0.7f, WHITE, "Bars");
 	Gui::sprite(sprites_RedButton_idx, 35, 88);
@@ -150,20 +155,54 @@ void drawUISettingsScreen(void) {
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+
+	// Second Settings Page.
+
+	} else if (settingsPage == 1) {
+	// Bars.
+	Draw_Text(70, 58, 0.7f, WHITE, "Animation Color");
+	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
+	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
+	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	Draw_Text(229, 38, 0.65f, WHITE, animationModes[Config::animation].c_str());
+	Draw_Text(110, 38, 0.7f, WHITE, "Animation:");
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 168);
+	Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
+	Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
+	// Bars Layouts.
+	Gui::sprite(sprites_updaterButton_idx, 10, 168);
+	Draw_Text(19, 178, 0.7f, WHITE, layoutModes[Config::layout].c_str());
+	// BG Layouts.
+	Gui::sprite(sprites_updaterButton_idx, 10, 28);
+	Draw_Text(19, 38, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
+
+	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+}
 }
 
-void uiSettingsLogic(u32 hDown, touchPosition touch) {
+void SettingsLogic(u32 hDown, touchPosition touch) {
 	int red;
 	int green;
 	int blue;
 		if (hDown & KEY_B) {
 		screenMode = mainScreen;
 		Config::saveConfig();
-		} else if (hDown & KEY_R) {
-			screenMode = uiSettingsScreen2;
-		} else if (hDown & KEY_SELECT) {
-		helperBox(" Press \uE053 to switch to the Second Page.");
-		} else if (hDown & KEY_TOUCH) {
+		} else if (settingsPage == 0 && hDown & KEY_R) {
+			settingsPage = 1;
+		} else if (settingsPage == 1 && hDown & KEY_L) {
+			settingsPage = 0;
+
+		// First Settings Page.
+		} else if (settingsPage == 0 && hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
@@ -207,62 +246,9 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 			Config::musicMode++;
 			if (Config::musicMode > 2) Config::musicMode = 0;
 }
-}
-}
 
-
-void drawUISettingsScreen2(void) {
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(110, 0, FONT_SIZE_18, WHITE, "Animation Settings");
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBotBack();
-
-	// Bars.
-	Draw_Text(70, 58, 0.7f, WHITE, "Animation Color");
-	Gui::sprite(sprites_RedButton_idx, 35, 88);
-	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
-	Gui::sprite(sprites_GreenButton_idx, 129, 88);
-	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
-	Gui::sprite(sprites_BlueButton_idx, 220, 88);
-	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
-
-	Gui::sprite(sprites_updaterButton_idx, 220, 28);
-	Draw_Text(229, 38, 0.65f, WHITE, animationModes[Config::animation].c_str());
-	Draw_Text(110, 38, 0.7f, WHITE, "Animation:");
-
-	Gui::sprite(sprites_updaterButton_idx, 220, 168);
-	Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
-	Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
-	// Bars Layouts.
-	Gui::sprite(sprites_updaterButton_idx, 10, 168);
-	Draw_Text(19, 178, 0.7f, WHITE, layoutModes[Config::layout].c_str());
-	// BG Layouts.
-	Gui::sprite(sprites_updaterButton_idx, 10, 28);
-	Draw_Text(19, 38, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
-
-	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
-}
-
-void uiSettingsLogic2(u32 hDown, touchPosition touch) {
-	int red;
-	int green;
-	int blue;
-		if (hDown & KEY_B) {
-		screenMode = mainScreen;
-		Config::saveConfig();
-		} else if (hDown & KEY_L) {
-			screenMode = uiSettingsScreen;
-		} else if (hDown & KEY_SELECT) {
-		helperBox(" Press \uE052 to switch to the First Page.");
-		} else if (hDown & KEY_TOUCH) {
+		// Second Settings Page.
+	} else if (settingsPage == 1 && hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[8])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
@@ -297,5 +283,5 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 			screenMode = uiSettingsButtonPos[6].link;
 			Config::saveConfig();
 }
-	}
+}
 }

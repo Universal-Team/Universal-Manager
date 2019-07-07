@@ -112,7 +112,7 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 			out << textEditorText[i] << std::endl;
 		}
 
-		screenMode = mainScreen2;
+		screenMode = mainScreen;
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);
 		if(textEditorCurPos != 0) {

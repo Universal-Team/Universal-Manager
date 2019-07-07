@@ -94,14 +94,14 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen2;
+			screenMode = mainScreen;
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_X) {
-		screenMode = mainScreen2;
+		screenMode = mainScreen;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;

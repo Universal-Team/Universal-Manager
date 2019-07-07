@@ -81,7 +81,7 @@ ButtonPos updaterScreenButtonPos[] = {
 };
 
 ButtonPos creditsScreenButtonPos[] = {
-    {293, 213, 27, 27, mainScreen2},
+    {293, 213, 27, 27, mainScreen},
 };
 
 
@@ -165,10 +165,6 @@ int main()
 				drawMainMenu();
 				break;
 //#########################################################################################################
-			case mainScreen2:
-				drawMainMenu2();
-				break;
-//#########################################################################################################
 			case creditsScreen:
 				drawCredits();
 				break;
@@ -195,11 +191,8 @@ int main()
 				drawThemeSelector();
 				break;
 //#########################################################################################################
-			case uiSettingsScreen:
-				drawUISettingsScreen();
-				break;
-			case uiSettingsScreen2:
-				drawUISettingsScreen2();
+			case SettingsScreen:
+				drawSettingsScreen();
 				break;
 //#########################################################################################################
 			case ImageSelectorScreen:
@@ -253,16 +246,12 @@ int main()
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				MainMenu1Logic(hDown, touch);
-				break;
-//#########################################################################################################
-			case mainScreen2:
-				MainMenu2Logic(hDown, touch);
+				MainMenuLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case creditsScreen:
 				if (hDown & KEY_B) {
-					screenMode = mainScreen2;
+					screenMode = mainScreen;
 				} else if (hDown & KEY_TOUCH) {
 					for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
 						if (touching(touch, creditsScreenButtonPos[i])) {
@@ -294,11 +283,8 @@ int main()
 				themeSelectorLogic(hDown, hHeld);
 				break;
 //#########################################################################################################
-			case uiSettingsScreen:
-				uiSettingsLogic(hDown, touch);
-				break;
-			case uiSettingsScreen2:
-				uiSettingsLogic2(hDown, touch);
+			case SettingsScreen:
+				SettingsLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case ImageSelectorScreen:

@@ -33,38 +33,35 @@ extern C3D_RenderTarget* bottom;
 
 #define mainScreen				0
 //###############################
-#define mainScreen2				1
+#define creditsScreen			1
 //###############################
-#define creditsScreen			2
+#define musicMainScreen			2
 //###############################
-#define musicMainScreen			3
+#define musicListScreen			3
+#define musicPlayerScreen		4
+#define musicPlaylistAddScreen	5
+#define musicPlaylistPlayScreen	6
+#define musicPlaylistEditScreen	7
+#define themeSelectorScreen 	8
 //###############################
-#define musicListScreen			4
-#define musicPlayerScreen		5
-#define musicPlaylistAddScreen	6
-#define musicPlaylistPlayScreen	7
-#define musicPlaylistEditScreen	8
-#define themeSelectorScreen 	9
+#define SettingsScreen			9
 //###############################
-#define uiSettingsScreen		10
-#define uiSettingsScreen2		11
+#define ImageSelectorScreen		10
+#define showImageScreen			11
 //###############################
-#define ImageSelectorScreen		12
-#define showImageScreen			13
+#define ftpScreen				12
 //###############################
-#define ftpScreen				14
+#define updaterSubMenu			13
+#define OtherScreen				14
+#define TWLScreen				15
+#define CFWScreen				16
+#define UniversalScreen			17
 //###############################
-#define updaterSubMenu			15
-#define OtherScreen				16
-#define TWLScreen				17
-#define CFWScreen				18
-#define UniversalScreen			19
-//###############################
-#define fileManager				20
-#define scriptMainScreen		21
-#define TextEditorScreen		22
-#define buttonTesterScreen		23
-#define scriptCreatorFunctions	24
+#define fileManager				18
+#define scriptMainScreen		19
+#define TextEditorScreen		20
+#define buttonTesterScreen		21
+#define scriptCreatorFunctions	22
 
 struct Playlist {
 	std::string name;
@@ -75,15 +72,11 @@ extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
-void MainMenu1Logic(u32 hDown, touchPosition touch);
-void drawMainMenu2(void);
-void MainMenu2Logic(u32 hDown, touchPosition touch);
+void MainMenuLogic(u32 hDown, touchPosition touch);
 
 // Settings Screen.
-void drawUISettingsScreen(void);
-void uiSettingsLogic(u32 hDown, touchPosition touch);
-void drawUISettingsScreen2(void);
-void uiSettingsLogic2(u32 hDown, touchPosition touch);
+void drawSettingsScreen(void);
+void SettingsLogic(u32 hDown, touchPosition touch);
 
  //Music Player Screen.
 void drawMusicMain(void);

@@ -171,6 +171,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	}
 }
 
+int screenPage = 0;
 
 void drawScriptsCreatorFunctions(void) {
 	Gui::DrawBGTop();
@@ -184,7 +185,7 @@ void drawScriptsCreatorFunctions(void) {
 	Gui::chooseLayoutBot();
 
 	// Functions.
-
+	if (screenPage == 0) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
 	Draw_Text(8, 42, 0.65f, WHITE, "downloadRelease");
 
@@ -202,10 +203,18 @@ void drawScriptsCreatorFunctions(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
 	Draw_Text(225, 177, 0.7f, WHITE, "msg");
+} else if (screenPage == 1) {
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
+	Draw_Text(8, 42, 0.65f, WHITE, "mkdir");
+}
 }
 
 void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch) {
-	if (hDown & KEY_TOUCH) {
+	if (screenPage == 1 && hDown & KEY_L) {
+		screenPage = 0;
+	} else if (screenPage == 0 && hDown & KEY_R) {
+		screenPage = 1;
+	} else if (hDown & KEY_TOUCH) {
 	if (touching(touch, scriptCreatorFunctionButtonPos[0])) {
 		screenMode = scriptMainScreen;
 	}

@@ -56,7 +56,7 @@ ButtonPos ftpButtonPos[] = {
 
 ButtonPos buttonTesterButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, mainScreen2},
+	{293, 213, 27, 27, mainScreen},
 };
 
 

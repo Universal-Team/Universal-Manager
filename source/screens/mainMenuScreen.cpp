@@ -35,21 +35,20 @@ struct ButtonPos {
 };
 extern bool touching(touchPosition touch, ButtonPos button);
 
-ButtonPos mainScreen1ButtonPos[] = {
-    {0, 25, 149, 52, fileManager},
-    {170, 25, 149, 52, ftpScreen},
-	{0, 90, 149, 52, scriptMainScreen},
-	{170, 90, 149, 52, musicMainScreen},
-	{0, 150, 149, 52, updaterSubMenu},
-    {170, 150, 149, 52, uiSettingsScreen},
+ButtonPos mainScreenButtonPos[] = {
+    {0, 25, 149, 52, -1},
+    {170, 25, 149, 52, -1},
+	{0, 90, 149, 52, -1},
+	{170, 90, 149, 52, -1},
+	{0, 150, 149, 52, -1},
+    {170, 150, 149, 52, -1},
+    {0, 25, 149, 52, -1},
+	{170, 25, 149, 52, -1},
+	{0, 90, 149, 52, -1},
+	{170, 90, 149, 52, -1},
 };
 
-ButtonPos mainScreen2ButtonPos[] = {
-    {0, 25, 149, 52, ImageSelectorScreen},
-	{170, 25, 149, 52, creditsScreen},
-	{0, 90, 149, 52, TextEditorScreen},
-	{170, 90, 149, 52, buttonTesterScreen},
-};
+int mainMenuPage = 0;
 
 // Version numbers.
 char universal_manager_vertext[13];
@@ -70,6 +69,8 @@ void drawMainMenu(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBot();
 
+	// First Page.
+	if (mainMenuPage == 0) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 35);
 	Draw_Text(40, 42, 0.65f, WHITE, "Filemanager");
@@ -98,38 +99,9 @@ void drawMainMenu(void) {
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-}
 
-void MainMenu1Logic(u32 hDown, touchPosition touch) {
-	if (hDown & KEY_R) {
-		screenMode = mainScreen2;
-	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press FileManager, to open the Filemanager File Browse. \n Press FTP to open the FTP Screen. \n Press Scripts to open the Scripts Screen. \n Press Music to open the Music Screen. \n Press Updater to open the Updater Sub Menu. \n Press Settings to open the Settings.\n\n Press \uE053 to switch to the Second Page.");
-		} else if (hDown & KEY_TOUCH) {
-			for(uint i=0;i<(sizeof(mainScreen1ButtonPos)/sizeof(mainScreen1ButtonPos[0]));i++) {
-				if (touching(touch, mainScreen1ButtonPos[i])) {
-					screenMode = mainScreen1ButtonPos[i].link;
-			}
-		}
-	}
-}
-
-void drawMainMenu2(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::chooseLayoutTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBot();
-
+	// Second Page.
+	} else if (mainMenuPage == 1) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
 	Gui::sprite(sprites_image_icon_idx, 5, 35);
 	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
@@ -149,17 +121,40 @@ void drawMainMenu2(void) {
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 }
+}
 
-void MainMenu2Logic(u32 hDown, touchPosition touch) {
-	if (hDown & KEY_L) {
-		screenMode = mainScreen;
-	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press Image Viewer, to open the Image Selector. \n\n Press Credits to see the Credits. \n\n Press Text Editor to open the Text Editor.\n\n Press \uE052 to switch to the First Page.");
-		} else if (hDown & KEY_TOUCH) {
-			for(uint i=0;i<(sizeof(mainScreen2ButtonPos)/sizeof(mainScreen2ButtonPos[0]));i++) {
-				if (touching(touch, mainScreen2ButtonPos[i])) {
-					screenMode = mainScreen2ButtonPos[i].link;
+void MainMenuLogic(u32 hDown, touchPosition touch) {
+	if (mainMenuPage == 0 && hDown & KEY_R) {
+		mainMenuPage = 1;
+		} else if (mainMenuPage == 1 && hDown & KEY_L) {
+		mainMenuPage = 0;
+
+		// First Page.
+		} else if (mainMenuPage == 0 && hDown & KEY_TOUCH) {
+			if (touching(touch, mainScreenButtonPos[0])) {
+				screenMode = fileManager;
+			} else if (touching(touch, mainScreenButtonPos[1])) {
+				screenMode = ftpScreen;
+			} else if (touching(touch, mainScreenButtonPos[2])) {
+				screenMode = scriptMainScreen;
+			} else if (touching(touch, mainScreenButtonPos[3])) {
+				screenMode = musicMainScreen;
+			} else if (touching(touch, mainScreenButtonPos[4])) {
+				screenMode = updaterSubMenu;
+			} else if (touching(touch, mainScreenButtonPos[5])) {
+				screenMode = SettingsScreen;
 			}
-		}
+
+			// Second Page.
+		} else if (mainMenuPage == 1 && hDown & KEY_TOUCH) {
+			if (touching(touch, mainScreenButtonPos[6])) {
+				screenMode = ImageSelectorScreen;
+			} else if (touching(touch, mainScreenButtonPos[7])) {
+				screenMode = creditsScreen;
+			} else if (touching(touch, mainScreenButtonPos[8])) {
+				screenMode = TextEditorScreen;
+			} else if (touching(touch, mainScreenButtonPos[9])) {
+				screenMode = buttonTesterScreen;
 	}
+}
 }
