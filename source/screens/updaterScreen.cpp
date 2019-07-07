@@ -441,7 +441,7 @@ void drawUniversalScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
+	Draw_Text(84, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
