@@ -100,6 +100,8 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
+	} else if (hDown & KEY_X) {
+		screenMode = mainScreen2;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
