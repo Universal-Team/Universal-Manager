@@ -57,12 +57,15 @@ struct ButtonPos {
 extern bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos scriptCreatorFunctionButtonPos[] = {
+	// First Page.
     {0, 25, 149, 52, -1},
     {170, 25, 149, 52, -1},
 	{0, 90, 149, 52, -1},
 	{170, 90, 149, 52, -1},
 	{0, 150, 149, 52, -1},
     {170, 150, 149, 52, -1},
+	// Second Page.
+	{0, 25, 149, 52, -1},
 };
 
 void drawScriptMainScreen(void) {
@@ -203,9 +206,21 @@ void drawScriptsCreatorFunctions(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
 	Draw_Text(225, 177, 0.7f, WHITE, "msg");
-} else if (screenPage == 1) {
+
+	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	} else if (screenPage == 1) {
+
+	// Second Page.
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
-	Draw_Text(8, 42, 0.65f, WHITE, "mkdir");
+	Draw_Text(50, 42, 0.65f, WHITE, "mkdir");
+
+	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 }
 }
 
