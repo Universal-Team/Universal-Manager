@@ -47,6 +47,24 @@ uint selectedScptItem = 0;
 int movingScptItem = -1;
 std::vector<std::string> scptContents;
 
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+extern bool touching(touchPosition touch, ButtonPos button);
+
+ButtonPos scriptCreatorFunctionButtonPos[] = {
+    {0, 25, 149, 52, -1},
+    {170, 25, 149, 52, -1},
+	{0, 90, 149, 52, -1},
+	{170, 90, 149, 52, -1},
+	{0, 150, 149, 52, -1},
+    {170, 150, 149, 52, -1},
+};
+
 void drawScriptMainScreen(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
@@ -148,5 +166,48 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hDown & KEY_SELECT) {
 		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
+	} else if (hDown & KEY_START) {
+		screenMode = scriptCreatorFunctions;
+	}
+}
+
+
+void drawScriptsCreatorFunctions(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(125, 0, 0.72f, WHITE, "Script Creator");
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
+
+	// Functions.
+
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
+	Draw_Text(8, 42, 0.65f, WHITE, "downloadRelease");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
+	Draw_Text(190, 42, 0.7f, WHITE, "downloadFile");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
+	Draw_Text(45, 107, 0.65f, WHITE, "extract");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
+	Draw_Text(222, 104, 0.7f, WHITE, "install");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Draw_Text(45, 177, 0.7f, WHITE, "delete");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
+	Draw_Text(225, 177, 0.7f, WHITE, "msg");
+}
+
+void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch) {
+	if (hDown & KEY_TOUCH) {
+	if (touching(touch, scriptCreatorFunctionButtonPos[0])) {
+		screenMode = scriptMainScreen;
+	}
 	}
 }

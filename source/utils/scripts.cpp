@@ -32,7 +32,6 @@
 
 extern "C" {
 #include "cia.h"
-#include "C2D_helper.h"
 }
 
 struct Scpt {
@@ -41,20 +40,6 @@ struct Scpt {
 	std::string param2;
 	std::string param3;
 };
-
-static C2D_Image scriptImage;
-
-static bool DrawImage(void)
-{
-	return C2D_DrawImageAt(scriptImage, 0, 0, 0);
-}
-
-static void FreeImage(C2D_Image *image) {
-	C3D_TexDelete(image->tex);
-	linearFree((Tex3DS_SubTexture *)image->subtex);
-	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
-	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
-}
 
 Scpt getScptFromLine(std::string line) {
 	Scpt scpt;
@@ -117,17 +102,6 @@ void runScript(std::string path) {
 				set_screen(bottom);
 			}
 
-			if(scpt.function == "LoadImage") {
-			Draw_LoadImageFile(&scriptImage, scpt.param1.c_str());
-			}
-
-			if(scpt.function == "DrawImage") {
-				DrawImage();
-			}
-
-			if(scpt.function == "FreeImage") {
-				FreeImage(&scriptImage);
-			}
 		}
 	}
 }

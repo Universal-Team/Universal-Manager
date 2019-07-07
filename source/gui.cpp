@@ -38,7 +38,6 @@ C3D_RenderTarget* bottom;
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
 C2D_TextBuf dynamicBuf, sizeBuf;
-static C2D_TextBuf widthBuf;
 C2D_Font systemFont, editorFont;
 
 void Gui::clearTextBufs(void)
@@ -75,7 +74,6 @@ Result Gui::init(void)
     top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
     dynamicBuf = C2D_TextBufNew(4096);
-    widthBuf = C2D_TextBufNew(4096);
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
@@ -94,7 +92,6 @@ void Gui::exit(void)
     {
         C2D_SpriteSheetFree(animation);
     }
-    C2D_TextBufDelete(widthBuf);
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(editorFont);
@@ -288,9 +285,9 @@ void drawBatteryTop(void) {
 
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
-	if(batteryPercent == 100) {
+	    if(batteryPercent == 100) {
 		Draw_Text(310, 0, 0.65f, WHITE, "100%");
-	} else {
+	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
@@ -322,11 +319,11 @@ void drawBatteryBot(void) {
 		Gui::sprite(sprites_batteryCharge_idx, 281, 0);
 	}
 
-            if (Config::percentDisplay == 0) {
+        if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
     	if(batteryPercent == 100) {
 		Draw_Text(230, 0, 0.65f, WHITE, "100%");
-	} else {
+	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);

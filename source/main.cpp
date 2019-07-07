@@ -236,6 +236,9 @@ int main()
 			case scriptMainScreen:
 				drawScriptMainScreen();
 				break;
+			case scriptCreatorFunctions:
+				drawScriptsCreatorFunctions();
+				break;
 //#########################################################################################################
 			case TextEditorScreen:
 				drawTextEditorScreen();
@@ -330,6 +333,9 @@ int main()
 //#########################################################################################################
 			case scriptMainScreen:
 				scriptMainScreenLogic(hDown, hHeld);
+				break;
+			case scriptCreatorFunctions:
+				scriptCreatorFunctionsLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case TextEditorScreen:

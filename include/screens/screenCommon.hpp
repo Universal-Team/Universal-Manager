@@ -64,6 +64,7 @@ extern C3D_RenderTarget* bottom;
 #define scriptMainScreen		21
 #define TextEditorScreen		22
 #define buttonTesterScreen		23
+#define scriptCreatorFunctions	24
 
 struct Playlist {
 	std::string name;
@@ -141,6 +142,8 @@ bool displayActionBox(void);
 // Script Screen Stuff.
 void drawScriptMainScreen(void);
 void scriptMainScreenLogic(u32 hDown, u32 hHeld);
+void drawScriptsCreatorFunctions(void);
+void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch);
 
 // Text Editor Stuff.
 void drawTextEditorScreen(void);
