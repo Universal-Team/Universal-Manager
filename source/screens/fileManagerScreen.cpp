@@ -79,5 +79,7 @@ void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE002 to open the Action Menu.");
 	}
 }

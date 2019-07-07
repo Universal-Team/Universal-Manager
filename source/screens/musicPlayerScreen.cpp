@@ -143,6 +143,8 @@ void drawMusicMain() {
 void musicMainLogic(u32 hDown, touchPosition touch) {
 	if(hDown & KEY_B) {
 		screenMode = mainScreen;
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press Songs to open the Song File Browse. \n \n Press Now Playing to open the Music Player. \n \n Press Playlists to open the Playlist Menu. \n \n Press Themes to Select an Image for the Music Player. \n \n (You need the BG Mode in the Settings!)");
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
 			if (touching(touch, mainButtonPos[i])) {
@@ -221,9 +223,11 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hDown & KEY_START) {
 	screenMode = musicPlayerScreen;
-}
+} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE000 to Play the selected Song. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu. \n \n Press \uE003 to open the Playlist Menu. \n \n Press Start to open the Music Player.");
+	}
 } 
 
 void drawMusicPlayer(void) {
@@ -390,9 +394,9 @@ void drawMusicPlaylistAdd(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"B : Back   X : Delete   Y : New";
+	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"";
 	Draw_Text(170, 32, 0.45f, WHITE, plstList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, plstList2.c_str());
+	Draw_Text(26, 210, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -460,6 +464,8 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE000 to Add this Song to the Selected Playlist. \n \n Press \uE001 to return to the Song List. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to create a Playlist.");
 	}
 }
 
@@ -482,7 +488,6 @@ void drawMusicPlaylistPlay(void) {
 	}
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -493,9 +498,7 @@ void drawMusicPlaylistPlay(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "A : Play   B : Back   X : Delete   Y : Edit";
 	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -550,6 +553,8 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
 	}
 }
 
@@ -562,7 +567,6 @@ void drawMusicPlaylistEdit() {
 	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
 		if (i == selectedPlstItem) {
 			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
@@ -575,9 +579,7 @@ void drawMusicPlaylistEdit() {
 	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "A : Save   B : Back   X : Delete   Y : Move";
 	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, plstList2.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
@@ -621,6 +623,8 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE000 to Save The Playlist. \n \n Press \uE001 to return to the Playlist Screen. \n \n Press \uE002 to Delete a Song from the Playlist. \n \n Press \uE003 to move Songs.");
 	}
 }
 
@@ -681,5 +685,7 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press \uE000 to Select an Image. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu.");
 	}
 }
