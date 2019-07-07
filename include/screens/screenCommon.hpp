@@ -125,6 +125,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch);
 //void saveMsg(void);
 bool confirmPopup(std::string msg);
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
+bool helperBox(std::string msg1);
 void drawCredits(void);
 
 // FTP Stuff.

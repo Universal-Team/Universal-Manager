@@ -165,6 +165,27 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 		}
 	}
 }
+
+bool helperBox(std::string msg1) {
+	Gui::clearTextBufs();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	Gui::sprite(sprites_textbox_idx, 10, 25);
+	Draw_Text(35, 42, 0.45f, BLACK, msg1.c_str());
+	C3D_FrameEnd(0);
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		if(keysDown() & KEY_A) {
+			return true;
+		} else if(keysDown() & KEY_B) {
+			return false;
+		}
+	}
+}
+
 bool confirmPopup(std::string msg) {
 	return confirmPopup(msg, "", "Yes", "No", 100);
 }

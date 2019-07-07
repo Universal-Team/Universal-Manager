@@ -102,6 +102,8 @@ void drawMainMenu(void) {
 void MainMenu1Logic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_R) {
 		screenMode = mainScreen2;
+	} else if (hDown & KEY_SELECT) {
+		helperBox("Hello! This is the Dialog Box.\n\nPress A or B to close this.");
 		} else if (hDown & KEY_TOUCH) {
 			for(uint i=0;i<(sizeof(mainScreen1ButtonPos)/sizeof(mainScreen1ButtonPos[0]));i++) {
 				if (touching(touch, mainScreen1ButtonPos[i])) {
