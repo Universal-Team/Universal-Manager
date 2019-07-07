@@ -24,11 +24,18 @@
 *         reasonable ways as different from the original version.
 */
 
+#include <3ds.h>
+#include <citro2d.h>
 #include "download.hpp"
 #include "extract.hpp"
 #include "gui.hpp"
 #include "screenCommon.hpp"
 #include <fstream>
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
+#include "fileBrowse.h"
 
 extern "C" {
 #include "cia.h"
@@ -80,6 +87,10 @@ void runScript(std::string path) {
 
 			if(scpt.function == "extract") {
 				extractArchive(scpt.param1, scpt.param2, scpt.param3);
+			}
+
+			if(scpt.function == "mkdir") {
+				mkdir(scpt.param1.c_str(), 0777);
 			}
 
 			if(scpt.function == "install") {
