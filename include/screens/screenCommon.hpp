@@ -63,6 +63,7 @@ extern C3D_RenderTarget* bottom;
 #define fileManager				20
 #define scriptMainScreen		21
 #define TextEditorScreen		22
+#define buttonTesterScreen		23
 
 struct Playlist {
 	std::string name;
@@ -144,3 +145,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld);
 // Text Editor Stuff.
 void drawTextEditorScreen(void);
 void TextEditorLogic(u32 hDown, u32 hHeld);
+
+// Button Tester Screen stuff.
+void drawButtonTesterScreen(void);
+void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch);

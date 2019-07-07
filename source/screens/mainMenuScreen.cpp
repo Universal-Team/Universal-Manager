@@ -48,6 +48,7 @@ ButtonPos mainScreen2ButtonPos[] = {
     {0, 25, 149, 52, ImageSelectorScreen},
 	{170, 25, 149, 52, creditsScreen},
 	{0, 90, 149, 52, TextEditorScreen},
+	{170, 90, 149, 52, buttonTesterScreen},
 };
 
 // Version numbers.
@@ -139,6 +140,9 @@ void drawMainMenu2(void) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
 	Gui::sprite(sprites_textEditorIcon_idx, 5, 100);
 	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
+	Draw_Text(185, 107, 0.7f, WHITE, "Button Tester");
 
 	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.

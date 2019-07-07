@@ -54,6 +54,10 @@ ButtonPos ftpButtonPos[] = {
 	{293, 213, 27, 27, mainScreen},
 };
 
+ButtonPos buttonTesterButtonPos[] = {
+		// Back Icon.
+	{293, 213, 27, 27, mainScreen2},
+};
 
 
 void drawCredits(void) {
@@ -85,7 +89,7 @@ void drawFTPScreen(void) {
 		Gui::DrawBGTop();
 		Gui::chooseLayoutTop();
 		DisplayTime();
-		drawBatteryTop();	
+		drawBatteryTop();
 		Draw_Text(135, 0, 0.72f, WHITE, "FTP Mode");
 		Gui::DrawBGBot();
 		Gui::chooseLayoutBot();
@@ -186,4 +190,36 @@ bool helperBox(std::string msg1) {
 
 bool confirmPopup(std::string msg) {
 	return confirmPopup(msg, "", "Yes", "No", 100);
+}
+
+void drawButtonTesterScreen(void) {
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(100, 0, 0.72f, WHITE, "Button Tester");
+	Draw_Text(100, 50, 0.72f, WHITE, "Currently Pressed Button : ");
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBotBack();
+	C3D_FrameEnd(0);
+}
+
+void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_A) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Draw_Text(350, 50, 0.72f, WHITE, "\uE000");
+	} else if (hDown & KEY_B) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Draw_Text(350, 50, 0.72f, WHITE, "\uE001");
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, buttonTesterButtonPos[0])) {
+			screenMode = buttonTesterButtonPos[0].link;
+	}
+}
 }

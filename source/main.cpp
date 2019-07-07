@@ -240,6 +240,10 @@ int main()
 			case TextEditorScreen:
 				drawTextEditorScreen();
 				break;
+//#########################################################################################################
+			case buttonTesterScreen:
+				drawButtonTesterScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -330,6 +334,10 @@ int main()
 //#########################################################################################################
 			case TextEditorScreen:
 				TextEditorLogic(hDown, hHeld);
+				break;
+//#########################################################################################################
+			case buttonTesterScreen:
+				buttonTesterLogic(hDown, hHeld, touch);
 				break;
 		}
 //#########################################################################################################
