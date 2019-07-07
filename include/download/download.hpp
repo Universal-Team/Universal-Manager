@@ -162,3 +162,5 @@ void updateRelaunchNightly(void);
  * Update Relaunch to the latest Release Version.
  */
 void updateRelaunchRelease(void);
+
+void downloadFailed(void);

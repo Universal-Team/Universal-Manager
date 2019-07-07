@@ -289,7 +289,7 @@ void updaterTWLLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = OtherScreen;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press L / R to switch Pages.");
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, TWLFunction[0])) {
 			if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
@@ -357,7 +357,7 @@ void updaterOtherLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press L / R to switch Pages.");
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 			if (touching(touch, OTHERFunction[0])) {
 			downloadThemes();
@@ -417,7 +417,7 @@ void updaterCFWLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_R) {
 		screenMode = TWLScreen;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press L / R to switch Pages.");
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (touching(touch, CFWFunction[0])) {
 			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
 			updateLuma(false);
@@ -490,7 +490,7 @@ void UniversalLogic(u32 hDown, touchPosition touch) {
 	} else if (hDown & KEY_L) {
 		screenMode = OtherScreen;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press L / R to switch Pages.");
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, UNIVFunction[0])) {
 			if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {

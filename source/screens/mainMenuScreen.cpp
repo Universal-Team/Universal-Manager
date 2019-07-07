@@ -104,7 +104,7 @@ void MainMenu1Logic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_R) {
 		screenMode = mainScreen2;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press FileManager, to open the Filemanager File Browse. \n Press FTP to open the FTP Screen. \n Press Scripts to open the Scripts Screen. \n Press Music to open the Music Screen. \n Press Updater to open the Updater Sub Menu. \n Press Settings to open the Settings.\n\n Press R to switch to the Second Page.");
+		helperBox(" Press FileManager, to open the Filemanager File Browse. \n Press FTP to open the FTP Screen. \n Press Scripts to open the Scripts Screen. \n Press Music to open the Music Screen. \n Press Updater to open the Updater Sub Menu. \n Press Settings to open the Settings.\n\n Press \uE053 to switch to the Second Page.");
 		} else if (hDown & KEY_TOUCH) {
 			for(uint i=0;i<(sizeof(mainScreen1ButtonPos)/sizeof(mainScreen1ButtonPos[0]));i++) {
 				if (touching(touch, mainScreen1ButtonPos[i])) {
@@ -154,7 +154,7 @@ void MainMenu2Logic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_L) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_SELECT) {
-		helperBox(" Press Image Viewer, to open the Image Selector. \n\n Press Credits to see the Credits. \n\n Press Text Editor to open the Text Editor.\n\n Press L to switch to the First Page.");
+		helperBox(" Press Image Viewer, to open the Image Selector. \n\n Press Credits to see the Credits. \n\n Press Text Editor to open the Text Editor.\n\n Press \uE052 to switch to the First Page.");
 		} else if (hDown & KEY_TOUCH) {
 			for(uint i=0;i<(sizeof(mainScreen2ButtonPos)/sizeof(mainScreen2ButtonPos[0]));i++) {
 				if (touching(touch, mainScreen2ButtonPos[i])) {

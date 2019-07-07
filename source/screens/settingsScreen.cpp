@@ -162,7 +162,7 @@ void uiSettingsLogic(u32 hDown, touchPosition touch) {
 		} else if (hDown & KEY_R) {
 			screenMode = uiSettingsScreen2;
 		} else if (hDown & KEY_SELECT) {
-		helperBox(" Press R to switch to the Second Page.");
+		helperBox(" Press \uE053 to switch to the Second Page.");
 		} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[0])) {
 			int temp = Input::getUint(255);
@@ -261,7 +261,7 @@ void uiSettingsLogic2(u32 hDown, touchPosition touch) {
 		} else if (hDown & KEY_L) {
 			screenMode = uiSettingsScreen;
 		} else if (hDown & KEY_SELECT) {
-		helperBox(" Press L to switch to the First Page.");
+		helperBox(" Press \uE052 to switch to the First Page.");
 		} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, uiSettingsButtonPos[8])) {
 			int temp = Input::getUint(255);

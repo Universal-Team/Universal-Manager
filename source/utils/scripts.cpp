@@ -80,11 +80,17 @@ void runScript(std::string path) {
 			Scpt scpt = getScptFromLine(line);
 
 			if(scpt.function == "downloadRelease") {
-				downloadFromRelease(scpt.param1, scpt.param2, scpt.param3);
+				if (downloadFromRelease(scpt.param1, scpt.param2, scpt.param3) != 0) {
+					downloadFailed();
+					return;
+				}
 			}
 
 			if(scpt.function == "downloadFile") {
-				downloadToFile(scpt.param1, scpt.param2);
+				if (downloadToFile(scpt.param1, scpt.param2) != 0) {
+					downloadFailed();
+					return;
+				}
 			}
 
 			if(scpt.function == "extract") {
