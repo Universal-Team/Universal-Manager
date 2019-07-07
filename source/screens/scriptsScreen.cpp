@@ -66,7 +66,6 @@ void drawScriptMainScreen(void) {
 	}
 
 	std::string scptList;
-	std::string scptList2;
 	for (uint i=(selectedScpt<5) ? 0 : selectedScpt-5;i<scpts.size()&&i<((selectedScpt<5) ? 6 : selectedScpt+1);i++) {
 		if (selectedScpt == 0) {
 			Gui::sprite(sprites_selected_idx, 0, 25);
@@ -99,9 +98,7 @@ void drawScriptMainScreen(void) {
 	for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
-	scptList2 += "B : Back Y : Create X : Delete A : start";
 	Draw_Text(26, 27, 0.56f, WHITE, scptList.c_str());
-	Draw_Text(26, 220, 0.45f, WHITE, scptList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -140,12 +137,16 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	} else if (hHeld & KEY_UP) {
 		if (selectedScpt > 0 && !keyRepeatDelay) {
 			selectedScpt--;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedScpt < scpts.size()-1) {
 			selectedScpt++;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+	} else if (hDown & KEY_SELECT) {
+		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
 	}
 }
