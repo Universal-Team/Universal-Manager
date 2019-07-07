@@ -40,6 +40,7 @@
 #include "screenCommon.hpp"
 #include "settings.hpp"
 #include "ptmu_x.h"
+#include "sound.h"
 
 extern "C" {
 	#include "music/error.h"
@@ -61,8 +62,10 @@ extern int musicRepeat;
 extern bool musicShuffle;
 extern bool firstSong;
 
-// Music and sound effects.
-//sound *sfx_scroll = NULL;
+//Music and sound effects.
+sound *sfx_scroll = NULL;
+
+bool dspfirmfound = false;
 
 static touchPosition touch;
 extern C3D_RenderTarget* top;
@@ -97,11 +100,9 @@ void screenon()
 }
 
 
-/* void loadSoundEffects(void) {
-	if (dspfirmfound) {
-		sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
-	}
-}*/
+static void loadSoundEffects(void) {
+	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
+}
 
 bool touching(touchPosition touch, ButtonPos button) {
 	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
@@ -138,7 +139,12 @@ int main()
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
 
-	//loadSoundEffects();
+ 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+		ndspInit();
+		dspfirmfound = true;
+	 }
+	 
+	loadSoundEffects();
 
 	// Loop as long as the status is not exit
     while (aptMainLoop())
@@ -353,6 +359,7 @@ int main()
 
 	Config::saveConfig();
 	stopPlayback();
+	delete sfx_scroll;
 	cfguExit();
 	Gui::exit();
 	hidExit();

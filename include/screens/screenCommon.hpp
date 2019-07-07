@@ -26,6 +26,7 @@
 
 #include "gui.hpp"
 #include "animation.hpp"
+#include "sound.h"
 
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
