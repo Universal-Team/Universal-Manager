@@ -39,7 +39,7 @@ static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
 C2D_TextBuf dynamicBuf, sizeBuf;
 static C2D_TextBuf widthBuf;
-C2D_Font systemFont;
+C2D_Font systemFont, editorFont;
 
 void Gui::clearTextBufs(void)
 {
@@ -80,6 +80,7 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
+    editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
     return 0;
 }
 
@@ -96,6 +97,7 @@ void Gui::exit(void)
     C2D_TextBufDelete(widthBuf);
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
+    C2D_FontFree(editorFont);
     C2D_Fini();
     C3D_Fini();
 }
@@ -354,6 +356,13 @@ void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
 }
 
+void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text) {
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, editorFont, sizeBuf, text);
+	C2D_TextOptimize(&c2d_text);
+	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+}
+
 void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) {
 	char buffer[256];
 	va_list args;
@@ -369,9 +378,21 @@ void Draw_GetTextSize(float size, float *width, float *height, const char *text)
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 
+void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text) {
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, editorFont, sizeBuf, text);
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
 float Draw_GetTextWidth(float size, const char *text) {
 	float width = 0;
 	Draw_GetTextSize(size, &width, NULL, text);
+	return width;
+}
+
+float Draw_GetTextWidthEditor(float size, const char *text) {
+	float width = 0;
+	Draw_GetTextSizeEditor(size, &width, NULL, text);
 	return width;
 }
 

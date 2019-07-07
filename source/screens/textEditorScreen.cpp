@@ -62,7 +62,7 @@ void drawTextEditorScreen(void) {
 	drawBatteryTop();
 	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, "Text Editor Screen")/2)), 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
 
-	int textX = Draw_GetTextWidth(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
+	int textX = Draw_GetTextWidthEditor(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
 	for(uint i=0, ii=0;i+textEditorScrnPos<textEditorText.size() && ii<15;i++) {
 		std::vector<std::string> lines;
 		uint sizeDone = 0;
@@ -72,17 +72,17 @@ void drawTextEditorScreen(void) {
 		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
 
 		if(i+textEditorScrnPos == textEditorCurPos ) {
-			Draw_Text(0, 28+(ii*12), FONT_SIZE_12, BLACK, std::to_string(i+textEditorScrnPos+1).c_str());
+			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, BLACK, std::to_string(i+textEditorScrnPos+1).c_str());
 
 			for(uint l=0;l<lines.size();l++) {
-				Draw_Text(textX, 28+(ii*12), FONT_SIZE_12, BLUE, lines[l].c_str());
+				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, BLUE, lines[l].c_str());
 				ii++;
 			}
 		} else {
-			Draw_Text(0, 28+(ii*12), FONT_SIZE_12, GRAY, std::to_string(i+textEditorScrnPos+1).c_str());
+			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, GRAY, std::to_string(i+textEditorScrnPos+1).c_str());
 			
 			for(uint l=0;l<lines.size();l++) {
-				Draw_Text(textX, 28+(ii*12), FONT_SIZE_12, BLACK, lines[l].c_str());
+				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, BLACK, lines[l].c_str());
 				ii++;
 			}
 		}
