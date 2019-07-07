@@ -67,12 +67,8 @@ void drawTextEditorScreen(void) {
 		std::vector<std::string> lines;
 		uint sizeDone = 0;
 		do {
-			std::string line = textEditorText[i+textEditorScrnPos].substr(sizeDone);
-			while(Draw_GetTextWidth(FONT_SIZE_12, line.c_str()) > 400-textX) {
-				line.resize(line.size()-1);
-			}
-			lines.push_back(line);
-			sizeDone += line.size();
+			lines.push_back(textEditorText[i+textEditorScrnPos].substr(sizeDone, 50));
+			sizeDone += 50;
 		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
 
 		if(i+textEditorScrnPos == textEditorCurPos ) {
