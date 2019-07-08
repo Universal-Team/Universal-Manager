@@ -267,6 +267,16 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		set_screen(top);
 		Draw_Text(330, 218, 0.72f, WHITE, "\uE055");
 
+		} else if (hDown & KEY_START) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Draw_Text(330, 218, 0.72f, WHITE, "\uE045");
+
+		} else if (hDown & KEY_SELECT) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Draw_Text(330, 218, 0.72f, WHITE, "\uE046");
+
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, buttonTesterButtonPos[0])) {
 			screenMode = buttonTesterButtonPos[0].link;
