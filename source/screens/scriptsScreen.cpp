@@ -43,6 +43,8 @@ extern std::vector<DirEntry> dirContents;
 uint selectedScpt = 0;
 std::vector<DirEntry> scpts;
 
+std::ofstream scpt;
+
 uint selectedScptItem = 0;
 int movingScptItem = -1;
 std::vector<std::string> scptContents;
@@ -170,7 +172,10 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_SELECT) {
 		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
 	} else if (hDown & KEY_START) {
+		if(confirmPopup("Do you want to edit this Script : \n\n "+scpts[selectedScpt].name+"")) {
+		scpt.open(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), std::ofstream::app);
 		screenMode = scriptCreatorFunctions;
+	}
 	}
 }
 
@@ -224,14 +229,70 @@ void drawScriptsCreatorFunctions(void) {
 }
 }
 
+
 void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch) {
-	if (screenPage == 1 && hDown & KEY_L) {
+	if (hDown & KEY_START) {
+		if(confirmPopup("Do you want to save this Script?")) {
+			scpt << std::endl;
+			scpt.close();
+			screenMode = scriptMainScreen;
+	}
+	} else if (screenPage == 1 && hDown & KEY_L) {
 		screenPage = 0;
 	} else if (screenPage == 0 && hDown & KEY_R) {
 		screenPage = 1;
-	} else if (hDown & KEY_TOUCH) {
+	} else if (screenPage == 0 && hDown & KEY_TOUCH) {
 	if (touching(touch, scriptCreatorFunctionButtonPos[0])) {
-		screenMode = scriptMainScreen;
+
+		std::string Function = "downloadRelease	";
+		std::string param1 = Input::getLine();
+		std::string param2 = Input::getLine();
+		std::string param3 = Input::getLine();
+
+		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+
+
+	} else if (touching(touch, scriptCreatorFunctionButtonPos[1])) {
+
+		std::string Function = "downloadFile	";
+		std::string param1 = Input::getLine();
+		std::string param2 = Input::getLine();
+		scpt << Function << param1 << "	" << param2 << std::endl;
+
+
+	} else if (touching(touch, scriptCreatorFunctionButtonPos[2])) {
+
+		std::string Function = "extract	";
+		std::string param1 = Input::getLine();
+		std::string param2 = Input::getLine();
+		std::string param3 = Input::getLine();
+
+		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+
+
+	} else if (touching(touch, scriptCreatorFunctionButtonPos[3])) {
+		std::string Function = "install	";
+		std::string param1 = Input::getLine();
+		scpt << Function << param1 << std::endl;
+
+
+	} 	else if (touching(touch, scriptCreatorFunctionButtonPos[4])) {
+			std::string Function = "delete	";
+		std::string param1 = Input::getLine();
+		scpt << Function << param1 << std::endl;
+
+
+	} else if (touching(touch, scriptCreatorFunctionButtonPos[5])) {
+		std::string Function = "msg	";
+		std::string param1 = Input::getLine();
+		scpt << Function << param1 << std::endl;
 	}
+
+		// Page 2.
+	} else if (screenPage == 1 && hDown & KEY_TOUCH) {
+		std::string Function = "mkdir	";
+		std::string param1 = Input::getLine();
+		scpt << Function << param1 << std::endl;
 	}
 }
+
