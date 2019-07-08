@@ -140,10 +140,10 @@ void drawMusicMain() {
 	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
 }
 
-void musicMainLogic(u32 hDown, touchPosition touch) {
+void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(hDown & KEY_B) {
 		screenMode = mainScreen;
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press Songs to open the Song File Browse. \n \n Press Now Playing to open the Music Player. \n \n Press Playlists to open the Playlist Menu. \n \n Press Themes to Select an Image for the Music Player. \n \n (You need the BG Mode in the Settings!)");
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
@@ -225,7 +225,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hDown & KEY_START) {
 	screenMode = musicPlayerScreen;
-} else if (hDown & KEY_SELECT) {
+} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Song. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu. \n \n Press \uE003 to open the Playlist Menu. \n \n Press Start to open the Music Player.");
 	}
 } 
@@ -305,7 +305,7 @@ bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
 bool playlistShufflePredicate(const Playlist &lhs, const Playlist &rhs) {
 	return rand() % 2;
 }
-void musicPlayerLogic(u32 hDown, touchPosition touch) {
+void musicPlayerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_A) {
 		togglePlayback();
 	} else if (hDown & KEY_X) {
@@ -464,7 +464,7 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Add this Song to the Selected Playlist. \n \n Press \uE001 to return to the Song List. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to create a Playlist.");
 	}
 }
@@ -553,7 +553,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
 	}
 }
@@ -623,7 +623,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Save The Playlist. \n \n Press \uE001 to return to the Playlist Screen. \n \n Press \uE002 to Delete a Song from the Playlist. \n \n Press \uE003 to move Songs.");
 	}
 }
@@ -685,7 +685,7 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Select an Image. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu.");
 	}
 }

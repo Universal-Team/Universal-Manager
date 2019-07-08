@@ -123,8 +123,10 @@ void drawMainMenu(void) {
 }
 }
 
-void MainMenuLogic(u32 hDown, touchPosition touch) {
-	if (mainMenuPage == 0 && hDown & KEY_R) {
+void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
+	} else if (mainMenuPage == 0 && hDown & KEY_R) {
 		mainMenuPage = 1;
 		} else if (mainMenuPage == 1 && hDown & KEY_L) {
 		mainMenuPage = 0;

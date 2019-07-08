@@ -211,7 +211,7 @@ void drawUpdaterSubMenu(void) {
 	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
 }
 
-void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
+void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_X) {
@@ -219,7 +219,7 @@ void updaterSubMenuLogic(u32 hDown, touchPosition touch) {
 		DisplayMsg("Checking for Updates...\nPlease wait...");
 		checkForUpdates();
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE002 to check for Updates.");
 	} else if(hDown & KEY_TOUCH) {
 				if (touching(touch, mainFunction[0])) {
@@ -281,14 +281,14 @@ void drawUpdaterTWL(void) {
 }
 }
 
-void updaterTWLLogic(u32 hDown, touchPosition touch) {
+void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {
 		screenMode = CFWScreen;
 	} else if (hDown & KEY_R) {
 		screenMode = OtherScreen;
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, TWLFunction[0])) {
@@ -349,14 +349,14 @@ void drawUpdaterOther(void) {
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
 }
 
-void updaterOtherLogic(u32 hDown, touchPosition touch) {
+void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {
 		screenMode = TWLScreen;
 	} else if (hDown & KEY_R) {
 		screenMode = UniversalScreen;
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 			if (touching(touch, OTHERFunction[0])) {
@@ -411,12 +411,12 @@ void drawUpdaterCFW(void) {
 }
 }
 
-void updaterCFWLogic(u32 hDown, touchPosition touch) {
+void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_R) {
 		screenMode = TWLScreen;
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (touching(touch, CFWFunction[0])) {
 			if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
@@ -484,12 +484,12 @@ void drawUniversalScreen(void) {
 }
 }
 
-void UniversalLogic(u32 hDown, touchPosition touch) {
+void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {
 		screenMode = OtherScreen;
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, UNIVFunction[0])) {

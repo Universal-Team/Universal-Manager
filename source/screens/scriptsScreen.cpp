@@ -169,7 +169,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
-	} else if (hDown & KEY_SELECT) {
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
 	} else if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to edit this Script : \n\n "+scpts[selectedScpt].name+"")) {
@@ -230,8 +230,12 @@ void drawScriptsCreatorFunctions(void) {
 }
 
 
-void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch) {
-	if (hDown & KEY_START) {
+void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (screenPage == 0 && hHeld & KEY_SELECT) {
+	helperBox("downloadRelease : Download a File from Github's Release.\n\ndownloadFile : Download a File from a URL.\n\nextract : Extract an Archive.\n\ninstall : Install a CIA File from the SD Card.\n\ndelete : Delete a FILE from the SD Card.\n\nmsg : Displays a Message on the Top Screen.");
+	} else if (screenPage == 1 && hHeld & KEY_SELECT) {
+	helperBox("mkdir : Creates a Folder.");
+	} else if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save this Script?")) {
 			scpt.close();
 			screenMode = scriptMainScreen;

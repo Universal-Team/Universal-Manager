@@ -246,7 +246,7 @@ int main()
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				MainMenuLogic(hDown, touch);
+				MainMenuLogic(hDown, hHeld, touch);
 				break;
 //#########################################################################################################
 			case creditsScreen:
@@ -262,13 +262,13 @@ int main()
 				break;
 //#########################################################################################################
 			case musicMainScreen:
-				musicMainLogic(hDown, touch);
+				musicMainLogic(hDown, hHeld, touch);
 				break;
 			case musicListScreen:
 				musicListLogic(hDown, hHeld);
 				break;
 			case musicPlayerScreen:
-				musicPlayerLogic(hDown, touch);
+				musicPlayerLogic(hDown, hHeld, touch);
 				break;
 			case musicPlaylistAddScreen:
 				musicPlaylistAddLogic(hDown, hHeld);
@@ -284,7 +284,7 @@ int main()
 				break;
 //#########################################################################################################
 			case SettingsScreen:
-				SettingsLogic(hDown, touch);
+				SettingsLogic(hDown, hHeld, touch);
 				break;
 //#########################################################################################################
 			case ImageSelectorScreen:
@@ -298,19 +298,19 @@ int main()
 				break;
 //#########################################################################################################
 			case updaterSubMenu:
-				updaterSubMenuLogic(hDown, touch);
+				updaterSubMenuLogic(hDown, hHeld, touch);
 				break;
 			case TWLScreen:
-				updaterTWLLogic(hDown, touch);
+				updaterTWLLogic(hDown, hHeld, touch);
 				break;
 			case OtherScreen:
-				updaterOtherLogic(hDown, touch);
+				updaterOtherLogic(hDown, hHeld, touch);
 				break;
 			case CFWScreen:
-				updaterCFWLogic(hDown, touch);
+				updaterCFWLogic(hDown, hHeld, touch);
 				break;
 			case UniversalScreen:
-				UniversalLogic(hDown, touch);
+				UniversalLogic(hDown, hHeld, touch);
 				break;
 //########################################################################################################
 			case fileManager:
@@ -321,7 +321,7 @@ int main()
 				scriptMainScreenLogic(hDown, hHeld);
 				break;
 			case scriptCreatorFunctions:
-				scriptCreatorFunctionsLogic(hDown, touch);
+				scriptCreatorFunctionsLogic(hDown, hHeld, touch);
 				break;
 //#########################################################################################################
 			case TextEditorScreen:

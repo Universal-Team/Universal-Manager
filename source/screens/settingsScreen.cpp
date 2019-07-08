@@ -189,11 +189,13 @@ void drawSettingsScreen(void) {
 }
 }
 
-void SettingsLogic(u32 hDown, touchPosition touch) {
+void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	int red;
 	int green;
 	int blue;
-		if (hDown & KEY_B) {
+		if (hHeld & KEY_SELECT) {
+			helperBox(" Press \uE052 / \uE053 to switch Pages.");
+		} else if (hDown & KEY_B) {
 		screenMode = mainScreen;
 		Config::saveConfig();
 		} else if (settingsPage == 0 && hDown & KEY_R) {

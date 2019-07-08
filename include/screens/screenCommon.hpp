@@ -72,18 +72,18 @@ extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
-void MainMenuLogic(u32 hDown, touchPosition touch);
+void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
 // Settings Screen.
 void drawSettingsScreen(void);
-void SettingsLogic(u32 hDown, touchPosition touch);
+void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
  //Music Player Screen.
 void drawMusicMain(void);
-void musicMainLogic(u32 hDown, touchPosition touch);
+void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch);
 void musicListLogic(u32 hDown, u32 hHeld);
 void drawMusicList(void);
-void musicPlayerLogic(u32 hDown, touchPosition touch);
+void musicPlayerLogic(u32 hDown, u32 hHeld, touchPosition touch);
 void drawMusicPlayer(void);
 void drawMusicPlaylistAdd(void);
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld);
@@ -97,19 +97,19 @@ void themeSelectorLogic(u32 hDown, u32 hHeld);
 // Updater Screens
 // Sub Menu.
 void drawUpdaterSubMenu(void);
-void updaterSubMenuLogic(u32 hDown, touchPosition touch);
+void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // TWL Screen.
 void drawUpdaterTWL(void);
-void updaterTWLLogic(u32 hDown, touchPosition touch);
+void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Other Screen
 void drawUpdaterOther(void);
-void updaterOtherLogic(u32 hDown, touchPosition touch);
+void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // CFW Screen
 void drawUpdaterCFW(void);
-void updaterCFWLogic(u32 hDown, touchPosition touch);
+void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Universal Screen.
 void drawUniversalScreen(void);
-void UniversalLogic(u32 hDown, touchPosition touch);
+void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
 // Image Viewer!
 void drawImageSelectorScreen(void);
@@ -121,7 +121,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch);
 //void saveMsg(void);
 bool confirmPopup(std::string msg);
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
-bool helperBox(std::string msg1);
+void helperBox(std::string msg1);
 void drawCredits(void);
 
 // FTP Stuff.
@@ -136,7 +136,7 @@ bool displayActionBox(void);
 void drawScriptMainScreen(void);
 void scriptMainScreenLogic(u32 hDown, u32 hHeld);
 void drawScriptsCreatorFunctions(void);
-void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch);
+void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
 // Text Editor Stuff.
 void drawTextEditorScreen(void);
