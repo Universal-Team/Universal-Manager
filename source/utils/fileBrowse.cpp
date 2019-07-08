@@ -181,11 +181,11 @@ void drawFileBrowser(const char *text) {
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 1) {
-			Gui::sprite(sprites_selected_idx, 0, 55);
+			Gui::sprite(sprites_selected_idx, 0, 56);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 2) {
-			Gui::sprite(sprites_selected_idx, 0, 90);
+			Gui::sprite(sprites_selected_idx, 0, 91);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 3) {
@@ -197,10 +197,10 @@ void drawFileBrowser(const char *text) {
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 5) {
-			Gui::sprite(sprites_selected_idx, 0, 195);
+			Gui::sprite(sprites_selected_idx, 0, 190);
 			dirs +=  dirContents[i].name + "\n\n";
 		} else {
-			Gui::sprite(sprites_selected_idx, 0, 195);
+			Gui::sprite(sprites_selected_idx, 0, 190);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
