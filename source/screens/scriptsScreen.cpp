@@ -233,7 +233,6 @@ void drawScriptsCreatorFunctions(void) {
 void scriptCreatorFunctionsLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save this Script?")) {
-			scpt << std::endl;
 			scpt.close();
 			screenMode = scriptMainScreen;
 	}
