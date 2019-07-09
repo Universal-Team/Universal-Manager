@@ -942,24 +942,38 @@ doneMsg();
 
 void updateLuma(bool nightly) {
 	if(nightly) {
-		DisplayMsg("Downloading Luma 3DS...\nNightly");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Luma 3DS...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
+			showProgressBar = false;
 
 		setInstalledVersion("LUMA3DS-NIGHTLY", latestLumaNightly());
 		saveUpdateData();
 		updateAvailable[6] = false;
 	} else {	
 		DisplayMsg("Downloading Luma 3DS...\nRelease");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Luma 3DS...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/AuroraWright/Luma3DS", "Luma3DS.*\\.zip", "/Luma3DS.zip") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		DisplayMsg("Extracting Luma3DS...");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
+						"(Release)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/Luma3DS.zip", "boot.firm", "/boot.firm");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/Luma3DS.zip");
 
@@ -971,15 +985,23 @@ void updateLuma(bool nightly) {
 }
 
 void downloadGodMode9(void) {
-	DisplayMsg("Downloading GodMode9...\nRelease");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GodMode9...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
+			showProgressBar = false;
 			downloadFailed();
 			return;
 		}
 
-		DisplayMsg("Extracting GodMode9...");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
+						"(Release)\n\nThis may take a while.");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
 		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
+		showProgressBar = false;
 
 		deleteFile("sdmc:/GodMode9.zip");
 
@@ -1083,16 +1105,23 @@ void updateCheats(void) {
 }
 
 void updatePKMNChestRelease(void) {
-	DisplayMsg("Downloading PKMN-Chest...\nRelease");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
+		progressBarType = 0;
 	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
+		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIAs..");
 		installCia("/PKMN-Chest-Release.cia");
@@ -1106,16 +1135,23 @@ void updatePKMNChestRelease(void) {
 }
 
 void updatePKMNChestNightly(void) {
-	DisplayMsg("Downloading PKMN-Chest...\nNightly");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
+		progressBarType = 0;
 	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
+		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIAs..");
 		installCia("/PKMN-Chest-Nightly.cia");
@@ -1129,14 +1165,21 @@ void updatePKMNChestNightly(void) {
 }
 
 void updateRelaunchNightly(void) {
-	DisplayMsg("Downloading Relaunch...\nNightly");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Relaunch.7z?raw=true", "/Relaunch-Nightly.7z") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
-		DisplayMsg("Extracting Relaunch...");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nNightly");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/Relaunch-Nightly.7z", "Relaunch/3DS/", "/");
+		showProgressBar = false;
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Relaunch.cia");
 
 		deleteFile("sdmc:/Relaunch-Nightly.7z");
@@ -1148,14 +1191,22 @@ void updateRelaunchNightly(void) {
 }
 
 void updateRelaunchRelease(void) {
-	DisplayMsg("Downloading Relaunch...\nRelease");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 	if (downloadFromRelease("https://github.com/Universal-Team/Relaunch", "Relaunch\\.7z", "/Relaunch-Release.7z") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 }
 
-		DisplayMsg("Extracting Relaunch...");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nRelease");
+		filesExtracted = 0;
+		progressBarType = 1;
 		extractArchive("/Relaunch-Release.7z", "Relaunch/3DS/", "/");
+		showProgressBar = false;
+		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Relaunch.cia");
 
 		deleteFile("sdmc:/Relaunch-Release.7z");
