@@ -66,9 +66,9 @@ ButtonPos calendarButtonPos[] = {
 static void DisplayMonth(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
-	int month = timeStruct->tm_mon + 1;
+	int month = timeStruct->tm_mon;
 
-	Draw_Text(120, 0, 0.72f, WHITE, months[month]);
+	Draw_Text(120, 0, 0.72f, WHITE, months[month].c_str());
 }
 
 std::string GetYear(void) {
@@ -81,12 +81,11 @@ std::string GetYear(void) {
 static void DisplayYear(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
-	int month = timeStruct->tm_mon + 1;
+	int month = timeStruct->tm_mon;
 
-	Draw_Text(130+Draw_GetTextWidth(months[month]), 0, 0.72f, WHITE, std::to_string(GetYear()));
+	Draw_Text(130+Draw_GetTextWidth(0.72f, (months[month].c_str())), 0, 0.72f, WHITE, (GetYear().c_str()));
 }
 
-//50 x -> 30 y
 static void draw31Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
 	Draw_Text(30, 28, 0.72f, WHITE, "1");
