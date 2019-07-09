@@ -162,12 +162,19 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		if(textEditorCurPos > 0) textEditorCurPos--;
 	} else if(hHeld & KEY_CPAD_DOWN || hDown & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
-	} else if(hDown & KEY_B) {
+		} else if (hDown & KEY_START) {
+			if(confirmPopup("Do you want to save your Changes?")) {
 		for(uint i=0;i<textEditorText.size();i++) {
 			out << textEditorText[i] << std::endl;
 		}
 		out.close();
-		screenMode = mainScreen;
+		screenMode = textFileBrowse;
+			}
+		} else if(hDown & KEY_B) {
+		if(confirmPopup("Are you sure you don't want to save your changes?")) {
+		out.close();
+		screenMode = textFileBrowse;
+		}
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);
 		if(textEditorCurPos != 0) {
