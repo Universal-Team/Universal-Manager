@@ -49,7 +49,6 @@ extern bool dirChanged;
 void readFile(std::string path) {
 	textEditorText.clear();
 	std::string line;
-	out.open(path, std::ofstream::app);
 	std::ifstream in(path);
 	if(in.good()) {
 		while(std::getline(in, line)) {
@@ -57,6 +56,7 @@ void readFile(std::string path) {
 		}
 	}
 	in.close();
+	out.open(path);
 	textRead = true;
 }
 
