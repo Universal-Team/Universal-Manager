@@ -45,6 +45,7 @@ uint rowsDisplayed = 0;
 inline uint selectedFile = 0;
 extern int keyRepeatDelay;
 extern bool dirChanged;
+std::string currentEditFile = "";
 
 void readFile(std::string path) {
 	textEditorText.clear();
@@ -73,6 +74,7 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 			selectedFile = 0;
 			dirChanged = true;
 		} else {
+			currentEditFile = dirContents[selectedFile].name;
 			readFile(dirContents[selectedFile].name.c_str());
 			screenMode = TextEditorScreen;
 		}
@@ -113,7 +115,8 @@ void drawTextEditorScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, "Text Editor Screen")/2)), 0, FONT_SIZE_18, WHITE, "Text Editor Screen");
+	std::string currentFileText = currentEditFile;
+	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, currentFileText.c_str())/2)), 0, FONT_SIZE_18, WHITE, currentFileText.c_str());
 
 	int textX = Draw_GetTextWidthEditor(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
 	for(uint i=0, ii=0;i+textEditorScrnPos<textEditorText.size() && ii<15;i++) {
