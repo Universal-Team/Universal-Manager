@@ -160,8 +160,13 @@ int main()
         C2D_TargetClear(bottom, BLUE2);
 		Gui::clearTextBufs();
 
-		if (((hHeld & KEY_L) && (hDown & KEY_R)) || ((hHeld & KEY_R) && (hDown & KEY_L)))
+	if (((hHeld & KEY_L) && (hDown & KEY_R)) || ((hHeld & KEY_R) && (hDown & KEY_L))) {
 		captureScreenshot();
+		DisplayMsg("Screenshot Successfully Created!");
+		for (int i = 0; i < 60*2; i++) {
+		gspWaitForVBlank();
+	}
+}		
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {

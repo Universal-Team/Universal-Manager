@@ -1,7 +1,6 @@
 #include "fs.h"
 #include "screenshot.h"
 
-static int num = 0;
 
 static int generateScreenshot(const char * path)
 {	
@@ -88,15 +87,17 @@ static int generateScreenshot(const char * path)
 	return 0;
 }
 
-static void generateScreenshotFileName(int number, char *fileName, const char *ext)
+static void generateScreenshotFileName(char *fileName, const char *ext)
 {
 	time_t unixTime = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t *)&unixTime);
-	int num = number;
 	int day = timeStruct->tm_mday;
 	int month = timeStruct->tm_mon + 1;
 	int year = timeStruct->tm_year + 1900;
-	sprintf(fileName, "/Universal-Manager/Screenshots/Screenshot_%02d%02d%02d-%i%s", year, month, day, num, ext);
+	int hour = timeStruct->tm_hour;
+	int minutes = timeStruct->tm_min;
+	int seconds = timeStruct->tm_sec;
+	sprintf(fileName, "/Universal-Manager/Screenshots/Screenshot_%02d_%02d_%02d_%02d_%02d_%02d%s", year, month, day, hour, minutes, seconds, ext);
 }
 
 void captureScreenshot(void)
@@ -105,14 +106,7 @@ void captureScreenshot(void)
 	
 	sprintf(filename, "%s", "screenshot"); 
 
-	generateScreenshotFileName(num, filename, ".bmp"); 
-	
-	while (fileExists(fsArchive, filename))
-	{
-		num++;
-		generateScreenshotFileName(num, filename, ".bmp");
-	}
+	generateScreenshotFileName(filename, ".bmp"); 
 	
 	generateScreenshot(filename);
-	num++;
 }
