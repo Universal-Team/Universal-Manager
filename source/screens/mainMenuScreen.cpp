@@ -42,10 +42,12 @@ ButtonPos mainScreenButtonPos[] = {
 	{170, 90, 149, 52, -1},
 	{0, 150, 149, 52, -1},
     {170, 150, 149, 52, -1},
+
     {0, 25, 149, 52, -1},
 	{170, 25, 149, 52, -1},
 	{0, 90, 149, 52, -1},
 	{170, 90, 149, 52, -1},
+	{0, 150, 149, 52, -1},
 };
 
 int mainMenuPage = 0;
@@ -116,6 +118,9 @@ void drawMainMenu(void) {
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
 	Draw_Text(185, 107, 0.7f, WHITE, "Button Tester");
 
+	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Draw_Text(50, 177, 0.7f, WHITE, "Calendar");
+
 	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
@@ -154,9 +159,11 @@ void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[7])) {
 				screenMode = creditsScreen;
 			} else if (touching(touch, mainScreenButtonPos[8])) {
-				screenMode = TextEditorScreen;
+				screenMode = textFileBrowse;
 			} else if (touching(touch, mainScreenButtonPos[9])) {
 				screenMode = buttonTesterScreen;
+			} else if (touching(touch, mainScreenButtonPos[10])) {
+				screenMode = calendarScreen;
 	}
 }
 }

@@ -35,15 +35,22 @@
 #include <unistd.h>
 
 bool textRead = false;
+std::ifstream in;
+std::ofstream out;
 uint textEditorCurPos = 0;
 uint textEditorScrnPos = 0;
 std::vector<std::string> textEditorText;
+inline std::vector<DirEntry> dirContents;
 uint rowsDisplayed = 0;
+inline uint selectedFile = 0;
+extern int keyRepeatDelay;
+extern bool dirChanged;
 
-void readFile(void) {
+void readFile(std::string path) {
 	textEditorText.clear();
 	std::string line;
-	std::ifstream in("test.txt");
+	out.open(path, std::ofstream::app);
+	std::ifstream in(path);
 	if(in.good()) {
 		while(std::getline(in, line)) {
 			textEditorText.push_back(line);
@@ -53,8 +60,54 @@ void readFile(void) {
 	textRead = true;
 }
 
+void drawTextFileBrowse(void) {
+	drawFileBrowser("Text File Browse");
+}
+
+void textFileBrowseLogic(u32 hDown, u32 hHeld) {
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
+	if (hDown & KEY_A) {
+		if (dirContents[selectedFile].isDirectory) {
+			chdir(dirContents[selectedFile].name.c_str());
+			selectedFile = 0;
+			dirChanged = true;
+		} else {
+			readFile(dirContents[selectedFile].name.c_str());
+			screenMode = TextEditorScreen;
+		}
+		} else if (hDown & KEY_B) {
+		char path[PATH_MAX];
+		getcwd(path, PATH_MAX);
+		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
+			screenMode = mainScreen;
+ 		} else {
+		chdir("..");
+		selectedFile = 0;
+		dirChanged = true;
+		}
+		} else if (hHeld & KEY_UP) {
+		if (selectedFile > 0 && !keyRepeatDelay) {
+			selectedFile--;
+			playScrollSfx();
+			keyRepeatDelay = 3;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedFile < dirContents.size()-1) {
+			selectedFile++;
+			playScrollSfx();
+			keyRepeatDelay = 3;
+		}
+	}
+}
+
+
 void drawTextEditorScreen(void) {
-	if(!textRead)	readFile();
+    Gui::clearTextBufs();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+    C2D_TargetClear(top, BLUE2);
+    C2D_TargetClear(bottom, BLUE2);
+	textRead = false;
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
@@ -107,11 +160,10 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 	} else if(hHeld & KEY_CPAD_DOWN || hDown & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
 	} else if(hDown & KEY_B) {
-		std::ofstream out("test.txt");
 		for(uint i=0;i<textEditorText.size();i++) {
 			out << textEditorText[i] << std::endl;
 		}
-
+		out.close();
 		screenMode = mainScreen;
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);

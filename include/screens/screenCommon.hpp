@@ -62,6 +62,8 @@ extern C3D_RenderTarget* bottom;
 #define TextEditorScreen		20
 #define buttonTesterScreen		21
 #define scriptCreatorFunctions	22
+#define calendarScreen			23
+#define textFileBrowse			24
 
 struct Playlist {
 	std::string name;
@@ -141,7 +143,13 @@ void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Text Editor Stuff.
 void drawTextEditorScreen(void);
 void TextEditorLogic(u32 hDown, u32 hHeld);
+void drawTextFileBrowse(void);
+void textFileBrowseLogic(u32 hDown, u32 hHeld);
 
 // Button Tester Screen stuff.
 void drawButtonTesterScreen(void);
 void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Calendar Stuff.
+void drawCalendarScreen(void);
+void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch);

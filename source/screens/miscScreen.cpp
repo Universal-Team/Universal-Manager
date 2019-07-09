@@ -33,6 +33,7 @@
 extern "C" {
     #include "ftp.h"
 }
+
 struct ButtonPos {
 	int x;
 	int y;
@@ -42,7 +43,6 @@ struct ButtonPos {
 };
 
 extern bool touching(touchPosition touch, ButtonPos button);
-
 
 ButtonPos ftpFunctionButtonPos[] = {
 	// Back Icon.
@@ -180,15 +180,6 @@ void helperBox(std::string msg1) {
 	Gui::sprite(sprites_textbox_idx, 10, 25);
 	Draw_Text(35, 42, 0.45f, BLACK, msg1.c_str());
 	C3D_FrameEnd(0);
-//	while(1) {
-//		gspWaitForVBlank();
-//		hidScanInput();
-//		if(keysDown() & KEY_A) {
-//			return true;
-//		} else if(keysDown() & KEY_B) {
-//			return false;
-//		}
-//	}
 }
 
 bool confirmPopup(std::string msg) {

@@ -246,9 +246,16 @@ int main()
 			case TextEditorScreen:
 				drawTextEditorScreen();
 				break;
+			case textFileBrowse:
+				drawTextFileBrowse();
+				break;
 //#########################################################################################################
 			case buttonTesterScreen:
 				drawButtonTesterScreen();
+				break;
+//#########################################################################################################
+			case calendarScreen:
+				drawCalendarScreen();
 				break;
 		}
 
@@ -337,9 +344,16 @@ int main()
 			case TextEditorScreen:
 				TextEditorLogic(hDown, hHeld);
 				break;
+			case textFileBrowse:
+				textFileBrowseLogic(hDown, hHeld);
+				break;
 //#########################################################################################################
 			case buttonTesterScreen:
 				buttonTesterLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case calendarScreen:
+				calendarLogic(hDown, hHeld, touch);
 				break;
 		}
 //#########################################################################################################
