@@ -898,12 +898,16 @@ void updateTWiLight(bool nightly) {
 
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
-		DisplayMsg("Downloading Universal-Manager...\nNightly");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
+		showProgressBar = false;
 		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Universal-Manager-Nightly.cia");
 
@@ -914,11 +918,16 @@ void updateUniversalManager(bool nightly) {
 		updateAvailable[9] = false;
 	} else {
 		DisplayMsg("Downloading Universal-Manager...\nRelease");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
+		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
+		showProgressBar = false;
 		DisplayMsg("Now Installing the CIAs..");
 		installCia("/Universal-Manager-Release.cia");
 
