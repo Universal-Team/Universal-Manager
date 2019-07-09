@@ -39,6 +39,21 @@ struct ButtonPos {
 	int link;
 };
 
+std::vector<std::string> months = {
+	"January",
+	"Febuary",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"
+};
+
 extern bool touching(touchPosition touch, ButtonPos button);
 inline C2D_Font systemFont;
 inline C2D_TextBuf dynamicBuf, sizeBuf;
@@ -50,76 +65,25 @@ ButtonPos calendarButtonPos[] = {
 
 static void DisplayMonth(void) {
 	time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon + 1;
-	if (month == 1) {
-	Draw_Text(120, 0, 0.72f, WHITE, "January");
-	} else if (month == 2) {
-	Draw_Text(110, 0, 0.72f, WHITE, "February");
-	} else if (month == 3) {
-	Draw_Text(140, 0, 0.72f, WHITE, "March");
-	} else if (month == 4) {
-	Draw_Text(140, 0, 0.72f, WHITE, "April");
-	} else if (month == 5) {
-	Draw_Text(160, 0, 0.72f, WHITE, "May");
-	} else if (month == 6) {
-	Draw_Text(150, 0, 0.72f, WHITE, "June");
-	} else if (month == 7) {
-	Draw_Text(150, 0, 0.72f, WHITE, "July");
-	} else if (month == 8) {
-	Draw_Text(130, 220, 0.72f, WHITE, "August");
-	} else if (month == 9) {
-	Draw_Text(100, 0, 0.72f, WHITE, "September");
-	} else if (month == 10) {
-	Draw_Text(120, 0, 0.72f, WHITE, "October");
-	} else if (month == 11) {
-	Draw_Text(110, 0, 0.72f, WHITE, "November");
-	} else if (month == 12) {
-	Draw_Text(110, 0, 0.72f, WHITE, "December");
-	}
+
+	Draw_Text(120, 0, 0.72f, WHITE, months[month]);
 }
 
 std::string GetYear(void) {
 	time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int year = timeStruct->tm_year + 1900;
 	return StringUtils::format("%04i", year);
 }
 
 static void DisplayYear(void) {
 	time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon + 1;
 
-    C2D_Text yearText;
-    C2D_TextFontParse(&yearText, systemFont, sizeBuf, GetYear().c_str());
-    C2D_TextOptimize(&yearText);
-
-	if (month == 1) {
-    C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 2) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 3) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 4) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 5) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 6) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 7) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 8) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 9) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 10) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 11) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	} else if (month == 12) {
-	C2D_DrawText(&yearText, C2D_WithColor, 200.0f, 0.0f, 0.5f, 0.72f, 0.72f, WHITE);
-	}
+	Draw_Text(130+Draw_GetTextWidth(months[month]), 0, 0.72f, WHITE, std::to_string(GetYear()));
 }
 
 //50 x -> 30 y
@@ -503,7 +467,7 @@ static void draw28Days(void) {
 
 static void drawCurrentDay(void) {
 	time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int day = timeStruct->tm_mday;
 
 			if (day == 1) {
@@ -608,7 +572,7 @@ static void drawCurrentDay(void) {
 
 static void getTheDays(void) {
 	time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon + 1;
 
 	if (month == 1) {
