@@ -119,8 +119,8 @@ void drawTextEditorScreen(void) {
 		std::vector<std::string> lines;
 		uint sizeDone = 0;
 		do {
-			lines.push_back(textEditorText[i+textEditorScrnPos].substr(sizeDone, 50));
-			sizeDone += 50;
+			lines.push_back(textEditorText[i+textEditorScrnPos].substr(sizeDone, 61));
+			sizeDone += 61;
 		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
 
 		if(i+textEditorScrnPos == textEditorCurPos ) {
