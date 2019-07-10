@@ -12,3 +12,6 @@ build/vshader.shbin
 *.lst
 .vscode/ipch
 *.DS_Store
+
+bannertool*
+makerom*

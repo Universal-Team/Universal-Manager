@@ -35,8 +35,6 @@
 #include <unistd.h>
 
 bool textRead = false;
-std::ifstream in;
-std::ofstream out;
 uint textEditorCurPos = 0;
 uint textEditorScrnPos = 0;
 std::vector<std::string> textEditorText;
@@ -57,7 +55,6 @@ void readFile(std::string path) {
 		}
 	}
 	in.close();
-	out.open(path);
 	textRead = true;
 }
 
@@ -105,18 +102,17 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 
 
 void drawTextEditorScreen(void) {
-    Gui::clearTextBufs();
-    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-    C2D_TargetClear(top, BLUE2);
-    C2D_TargetClear(bottom, BLUE2);
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLUE2);
+	C2D_TargetClear(bottom, BLUE2);
 	textRead = false;
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	std::string currentFileText = currentEditFile;
-	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, currentFileText.c_str())/2)), 0, FONT_SIZE_18, WHITE, currentFileText.c_str());
+	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, currentEditFile.c_str())/2)), 0, FONT_SIZE_18, WHITE, currentEditFile.c_str());
 
 	int textX = Draw_GetTextWidthEditor(FONT_SIZE_12, std::to_string(textEditorText.size()).c_str()) + 4;
 	for(uint i=0, ii=0;i+textEditorScrnPos<textEditorText.size() && ii<15;i++) {
@@ -162,18 +158,17 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		if(textEditorCurPos > 0) textEditorCurPos--;
 	} else if(hHeld & KEY_CPAD_DOWN || hDown & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
-		} else if (hDown & KEY_START) {
-			if(confirmPopup("Do you want to save your Changes?")) {
-		for(uint i=0;i<textEditorText.size();i++) {
-			out << textEditorText[i] << std::endl;
-		}
-		out.close();
-		screenMode = textFileBrowse;
+	} else if (hDown & KEY_START) {
+		if(confirmPopup("Do you want to save your changes?")) {
+			std::ofstream out(currentEditFile);
+			for(uint i=0;i<textEditorText.size();i++) {
+				out << textEditorText[i] << std::endl;
 			}
-		} else if(hDown & KEY_B) {
-		if(confirmPopup("Are you sure you don't want to save your changes?")) {
-		out.close();
-		screenMode = textFileBrowse;
+			out.close();
+		}
+	} else if(hDown & KEY_B) {
+		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
+			screenMode = textFileBrowse;
 		}
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);

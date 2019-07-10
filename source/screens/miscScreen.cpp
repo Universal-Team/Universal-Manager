@@ -31,7 +31,7 @@
 #include <vector>
 
 extern "C" {
-    #include "ftp.h"
+	#include "ftp.h"
 }
 
 struct ButtonPos {
@@ -149,15 +149,15 @@ void drawFTPScreen(void) {
 // processes like the clock won't update while the message bubble is up
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
 	Gui::clearTextBufs();
-    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-    C2D_TargetClear(top, BLUE2);
-    C2D_TargetClear(bottom, BLUE2);
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLUE2);
+	C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	Draw_Text(100, 90, 0.45f, BLACK, msg1.c_str());
-	Draw_Text(120, 110, 0.45f, BLACK, msg2.c_str());
+	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 90, 0.45f, BLACK, msg1.c_str());
+	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 110, 0.45f, BLACK, msg2.c_str());
 	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
 	Gui::DrawBGBot();
 	Gui::chooseLayoutBot();
@@ -175,7 +175,7 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 
 void helperBox(std::string msg1) {
 	Gui::clearTextBufs();
-    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(top);
 	Gui::sprite(sprites_textbox_idx, 10, 25);
 	Draw_Text(35, 42, 0.45f, BLACK, msg1.c_str());
