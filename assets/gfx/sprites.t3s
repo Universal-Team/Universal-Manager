@@ -31,6 +31,7 @@ sprites/gui/top_screen_top.png
 sprites/gui/universal_bg_bottom.png
 sprites/gui/universal_bg_top.png
 
+sprites/icons/calendarIcon.png
 sprites/icons/fileManagerIcon.png
 sprites/icons/ftpIcon.png
 sprites/icons/image_icon.png

@@ -119,6 +119,7 @@ void drawMainMenu(void) {
 	Draw_Text(185, 107, 0.7f, WHITE, "Button Tester");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Gui::sprite(sprites_calendarIcon_idx, 5, 170);
 	Draw_Text(50, 177, 0.7f, WHITE, "Calendar");
 
 	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
