@@ -116,7 +116,8 @@ void drawMainMenu(void) {
 	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
-	Draw_Text(185, 107, 0.7f, WHITE, "Button Tester");
+	Gui::sprite(sprites_buttonIcon_idx, 175, 100);
+	Draw_Text(215, 107, 0.7f, WHITE, "Btn Tester");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
 	Gui::sprite(sprites_calendarIcon_idx, 5, 170);
