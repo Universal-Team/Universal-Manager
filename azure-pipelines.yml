@@ -43,6 +43,9 @@ steps:
     sudo chmod +x makerom
 
     rm makerom_015_ctrtool.zip
+
+    mv makerom 3ds/makerom
+    mv bannertool 3ds/bannertool
   displayName: 'Setup environment'
 
 - script: |
