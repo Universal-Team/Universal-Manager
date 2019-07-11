@@ -28,14 +28,20 @@
 extern "C" {
 	#include "SDL_helper.h"
 	#include "SDL_FontCache.h"
+	#include "touch_helper.h"
 }
 
+extern TouchInfo touchInfo;
 inline static SDL_Renderer *Rendering;
 
-#define mainScreen				0
+#define mainScreen						0
+#define FileManagerSubMenuScreen		1
 
 extern int screenMode;
 
 // Main Menu Screen.
 void drawMainMenu(void);
-void MainMenuLogic(u64 hDown, touchPosition touch);
+void MainMenuLogic(u64 hDown, TouchInfo touchInfo);
+
+void drawFileManagerSubMenu(void);
+void FileManagerSubMenuLogic(u64 hDown, TouchInfo touchInfo);

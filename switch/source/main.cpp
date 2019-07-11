@@ -40,26 +40,10 @@
 extern "C" {
 	#include "SDL_helper.h"
 	#include "textures.h"
+    #include "touch_helper.h"
 }
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
 
 int screenMode = 0;
-static touchPosition touch;
-u32 touch_count = hidTouchCount();
-
-bool touching(touchPosition touch, ButtonPos button) {
-	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
-		return true;
-	else
-		return false;
-}
 
 static Result servicesInit(void)
 {
@@ -88,11 +72,15 @@ int main(void)
         servicesExit();
         return res;
     }
+    
+	    TouchInfo touchInfo;
+	    Touch_Init(&touchInfo);
 
         while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
         hidScanInput();
+        Touch_Process(&touchInfo);
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        hidTouchRead(&touch, touch_count);
+
         SDL_ClearScreen(BLUE);
 
 		// Draws a screen based on screenMode
@@ -101,14 +89,20 @@ int main(void)
 			case mainScreen:
 				drawMainMenu();
 				break;
+            case FileManagerSubMenuScreen:
+                drawFileManagerSubMenu();
+                break;
         }
 
 		// Scans inputs for the current screen
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				MainMenuLogic(hDown, touch);
+				MainMenuLogic(hDown, touchInfo);
 				break;
+            case FileManagerSubMenuScreen:
+                FileManagerSubMenuLogic(hDown, touchInfo);
+                break;
         }
         SDL_RenderScreen();
         }

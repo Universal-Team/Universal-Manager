@@ -1,4 +1,4 @@
-	/*
+/*
 *   This file is part of Universal-Manager-NX
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
@@ -24,44 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "screens/screenCommon.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
 
-extern "C" {
-	#include "textures.h"
-	#include "touch_helper.h"
-}
+extern TouchInfo touchInfo;
 
-
-extern SDL_Texture *MainMenuButton;
-// Version numbers.
-char universal_manager_vertext[13];
-
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
-	SDL_DrawRect(0, 0, 1280, 720, GRAY);
+void drawFileManagerSubMenu(void) {
+	SDL_DrawRect(0, 0, 1280, 720, BLUE);
 	SDL_DrawRect(0, 0, 1280, 100, BARCOLOR);
 	SDL_DrawRect(0, 620, 1280, 100, BARCOLOR);
-	SDL_DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	SDL_DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
-
-	// Buttons.
-	SDL_DrawImage(MainMenuButton, 40, 150);
-	SDL_DrawImage(MainMenuButton, 40, 300);
-	SDL_DrawImage(MainMenuButton, 40, 450);
+	SDL_DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
 }
-
-void MainMenuLogic(u64 hDown, TouchInfo touchInfo) {
-	//Touch_Init(&touchInfo);
-	//hidScanInput();
-	//Touch_Process(&touchInfo);
-
-	if (hDown & KEY_A)
-		screenMode = FileManagerSubMenuScreen;
-
-	//if (tapped_inside(touchInfo, 40, 150, 300, 105))
-	//	screenMode = FileManagerSubMenuScreen;
+void FileManagerSubMenuLogic(u64 hDown, TouchInfo touchInfo) {
+	if (hDown & KEY_A) {
+		screenMode = mainScreen;
+	}
 }
