@@ -1,3 +1,9 @@
+trigger:
+  branches:
+    include: ['*']
+  tags:
+    include: ['*']
+
 name:  $[format('{0:yyyyMMdd\-HHmmss}', pipeline.startTime)]
 
 variables:
@@ -10,14 +16,10 @@ jobs:
     displayName: "Build 3DS version"
     pool:
       vmImage: 'Ubuntu-16.04'
-    trigger:
-      branches:
-        include: ['*']
-      tags:
-        include: ['*']
+    condition:
       paths:
         include:
-        - 3ds/*
+          - 3ds/*
     steps:
     - script: |
         sudo apt update
