@@ -48,7 +48,8 @@ struct ButtonPos {
 	int link;
 };
 
-bool imageLoaded = false;
+bool themeImageLoaded = false;
+bool coverImageLoaded = false;
 
 uint selectedFile = 0;
 int keyRepeatDelay = 3;
@@ -74,11 +75,16 @@ std::vector<std::string> plstContents;
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
-static C2D_Image musicImage;
+static C2D_Image musicImage, coverImage;
 
-static bool Draw_Image(void)
+static bool Draw_ThemeImage(void)
 {
 	return C2D_DrawImageAt(musicImage, 0, 25, 0.5);
+}
+
+static bool Draw_CoverImage(void)
+{
+	return C2D_DrawImageAt(coverImage, 230, 25, 0.5);
 }
 
 ButtonPos mainButtonPos[] = {
@@ -239,6 +245,7 @@ void drawMusicPlayer(void) {
 		// Placeholder for Metadata Stuff..
 	 	if (Config::musicMode == 0) {
 	} else if (Config::musicMode == 1) {
+
 			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
 			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
 			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
@@ -247,10 +254,18 @@ void drawMusicPlayer(void) {
 		} else {
 			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
 		}
+
+		if (coverImageLoaded == true) {
+			Draw_CoverImage(); 
+		} else if (coverImageLoaded == false) {
+			Gui::sprite(sprites_cover_glow_idx, 250, 30);
+			Gui::sprite(sprites_cover_normal_idx, 250, 30);
+		}
+
 	} else if (Config::musicMode == 2) {
-		if (imageLoaded == true) {
-		Draw_Image(); 
-	} else if (imageLoaded == false) {
+		if (themeImageLoaded == true) {
+		Draw_ThemeImage(); 
+	} else if (themeImageLoaded == false) {
 			Draw_Text(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
 	}
 	}
@@ -258,11 +273,11 @@ void drawMusicPlayer(void) {
 	if(isPlaying()) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		Draw_Text(0, 0, 0.50f, WHITE, nowPlayingText.c_str());
-		Draw_Rect(155, 164, 85, 10, GRAY);
-		Draw_Text(160, 162, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		Draw_Rect(155, 179, 85, 10, GRAY);
+		Draw_Text(157, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		if (Audio_GetPosition() != -1) {
-		Draw_Rect(100, 179, 207, 16, GRAY);
-		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, Config::barColor);
+		Draw_Rect(100, 194, 207, 16, GRAY);
+		Draw_Rect(100, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, Config::barColor);
 		}
 
 	
@@ -645,19 +660,19 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
 			if (Config::musicMode == 0) {
-			DisplayMsg("Put the Music Mode to `BG`.");
+			DisplayMsg("Put the Music Mode to\n `BG` or `COVER`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (Config::musicMode == 1) {
-			DisplayMsg("Put the Music Mode to `BG`.");
-			for (int i = 0; i < 60*4; i++) {
-			gspWaitForVBlank();
+			if(confirmPopup("Do you want, to use this Image\nAs the Cover Image?")) {
+			Draw_LoadImageFile(&coverImage, dirContents[selectedFile].name.c_str());
+			coverImageLoaded = true;
 			}
 		} else if (Config::musicMode == 2) {
-			if(confirmPopup("Do you want, to use this Image?")) {
+			if(confirmPopup("Do you want, to use this Image\nAs the Theme Image?")) {
 			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
-			imageLoaded = true;
+			themeImageLoaded = true;
 			}
 		}
 		}

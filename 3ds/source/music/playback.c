@@ -294,10 +294,6 @@ u64 Audio_GetPosition(void) {
 			// position = WAV_GetPosition();
 			break;
 
-		// case FILE_TYPE_XM:
-		// 	position = XM_GetPosition();
-		// 	break;
-
 		default:
 			break;
 	}
@@ -329,10 +325,6 @@ u64 Audio_GetLength(void) {
 			// length = WAV_GetLength();
 			break;
 
-		// case FILE_TYPE_XM:
-		// 	length = XM_GetLength();
-		// 	break;
-
 		default:
 			break;
 	}
@@ -363,10 +355,6 @@ int Audio_GetRate(void) {
 		case FILE_TYPE_WAV:
 			rate = rateWav();
 			break;
-
-		// case FILE_TYPE_XM:
-		// 	rate = XM_GetLength();
-		// 	break;
 
 		default:
 			break;
