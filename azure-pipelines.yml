@@ -9,7 +9,6 @@ name:  $[format('{0:yyyyMMdd\-HHmmss}', pipeline.startTime)]
 variables:
   CURRENT_DATE: $[format('{0:yyyyMMdd\-HHmmss}', pipeline.startTime)]
   REPOSITORY_NAME: $(Build.Repository.Name)
-  COMMIT_TAG: $(git log --format=%h -1)
   DEVKITPRO: /opt/devkitpro
   DEVKITARM: /opt/devkitpro/devkitARM
 
@@ -153,9 +152,7 @@ jobs:
           git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
           cd extras/builds/Universal-Manager
 
-          $(Build.ArtifactStagingDirectory)/buildDS/* .
-          $(Build.ArtifactStagingDirectory)/build3DS/* .
-          $(Build.ArtifactStagingDirectory)/buildSwitch/* .
+          cp $(Build.ArtifactStagingDirectory)/*/* .
 
           git stage .
           git commit -m "Universal-Manager | $(COMMIT_TAG)"
@@ -177,7 +174,7 @@ jobs:
           title: Universal-Manager | $(COMMIT_TAG)
           releaseNotesSource: input
           releaseNotes: $(COMMIT_MESSAGE)
-          assets: '$(Build.ArtifactStagingDirectory)/**/*'
+          assets: '$(Build.ArtifactStagingDirectory)/*/*'
           isPreRelease: true
           addChangeLog: false
 ########################################
@@ -190,20 +187,10 @@ jobs:
           action: edit
           target: '$(Build.SourceVersion)'
           tag: $(Build.SourceBranchName)
-          assets: '$(Build.ArtifactStagingDirectory)/**/*'
-########################################
-      - task: GitHubRelease@0
-        displayName: "Release to Universal-Team/Universal-Manager"
-        condition: startsWith(variables['Build.SourceBranchName'], 'v')
-        inputs:
-          gitHubConnection: TWLBot
-          repositoryName: Universal-Team/Universal-Manager
-          action: edit
-          target: '$(Build.SourceVersion)'
-          tag: $(Build.SourceBranchName)
-          assets: '$(Build.ArtifactStagingDirectory)/**/*'
+          assets: '$(Build.ArtifactStagingDirectory)/*/*'
 ################################################################################
   - job: sendWebhook
+    displayName: "Send Webhook"
     dependsOn: publish
     steps:
 ########################################
