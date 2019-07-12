@@ -37,8 +37,8 @@ steps:
     sudo chmod +x makerom
     rm makerom_015_ctrtool.zip
 
-    cp makerom 3ds/opt/devkitpro/tools/bin/makerom
-    cp bannertool /opt/devkitpro/tools/bin/bannertool
+    sudo mv makerom /opt/devkitpro/tools/bin
+    sudo mv bannertool /opt/devkitpro/tools/bin
   displayName: 'Setup environment'
 
 - script: |
