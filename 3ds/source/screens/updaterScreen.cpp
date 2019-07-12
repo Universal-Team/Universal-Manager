@@ -252,18 +252,18 @@ void drawUpdaterTWL(void) {
 	for (int i = (int)(sizeof(TWLButtons)/sizeof(TWLButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(TWLButtonsTex[i], TWLButtons[i].x, TWLButtons[i].y);
 	}
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "TWLMENU++");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	// NDS-Bootstrap Buttons.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.60f, WHITE, "NDS-Bootstrap");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 128);
+	Gui::sprite(sprites_titleButton_idx, 0, 128);
 	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
@@ -334,7 +334,7 @@ void drawUpdaterOther(void) {
 		Gui::sprite(OTHERButtonsTex[i], OTHERButtons[i].x, OTHERButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "Extras");
 	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
 	Draw_Text(229, 58, 0.7f, WHITE, "Scripts");
@@ -386,13 +386,13 @@ void drawUpdaterCFW(void) {
 		Gui::sprite(CFWButtonsTex[i], CFWButtons[i].x, CFWButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "Luma3DS");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	 // GodMode9 Buttons.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.65f, WHITE, "GodMode9");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
@@ -453,18 +453,18 @@ void drawUniversalScreen(void) {
 		Gui::sprite(UNIVButtonsTex[i], UNIVButtons[i].x, UNIVButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "UNIV-Manager");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	// PKMN-Chest.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.65f, WHITE, "PKMN-Chest");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 128);
+	Gui::sprite(sprites_titleButton_idx, 0, 128);
 	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
 	Draw_Text(140, 138, 0.7f, WHITE, "Release");
 	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
