@@ -22,10 +22,10 @@ steps:
     sudo dpkg -i pacman.deb
     sudo dkp-pacman -Sy
     sudo dkp-pacman -S nds-dev --noconfirm
-    sudo dkp-pacman -S switch-dev --noconfirm
     sudo dkp-pacman -S 3ds-dev --noconfirm
+    sudo dkp-pacman -S switch-dev --noconfirm
     sudo dkp-pacman -S 3ds-curl 3ds-libarchive 3ds-liblzma 3ds-mbedtls 3ds-bzip2 3ds-zlib 3ds-sdl 3ds-sdl_mixer 3ds-mpg123 --noconfirm
-    sudo dkp-pacman -S  switch-sdl2 switch-sdl2_image switch-libpng switch-libjpeg-turbo switch-sdl2_gfx  switch-sdl2_ttf switch-sdl2_mixer switch-freetype --noconfirm
+    sudo dkp-pacman -S switch-sdl2 switch-sdl2_image switch-libpng switch-libjpeg-turbo switch-sdl2_gfx  switch-sdl2_ttf switch-sdl2_mixer switch-freetype --noconfirm
 
     curl -L https://github.com/Steveice10/bannertool/releases/download/1.1.0/bannertool.zip -o bannertool.zip
     sudo 7z e bannertool.zip linux-x86_64/bannertool
@@ -37,8 +37,8 @@ steps:
     sudo chmod +x makerom
     rm makerom_015_ctrtool.zip
 
-    cp makerom 3ds/makerom
-    cp bannertool 3ds/bannertool
+    cp makerom 3ds/opt/devkitpro/tools/bin/makerom
+    cp bannertool /opt/devkitpro/tools/bin/bannertool
   displayName: 'Setup environment'
 
 - script: |
