@@ -14,11 +14,13 @@ variables:
   DEVKITARM: /opt/devkitpro/devkitARM
 
 jobs:
+################################################################################
   - job: buildDS
     displayName: "Build DS version"
     pool:
       vmImage: 'Ubuntu-16.04'
     steps:
+########################################
     - script: |
         sudo apt update
         sudo apt install haveged p7zip-full
@@ -28,7 +30,7 @@ jobs:
         sudo dkp-pacman -Sy
         sudo dkp-pacman -S nds-dev --noconfirm
       displayName: 'Setup environment'
-
+########################################
     - script: |
         make dsi
         mv dsi/Universal-Manager.nds $(Build.ArtifactStagingDirectory)
@@ -36,7 +38,7 @@ jobs:
         echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
         echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
       displayName: 'Build Universal-Manager'
-
+########################################
     - task: PublishBuildArtifacts@1
       displayName: "Publish build to Azure"
       inputs:
@@ -48,6 +50,7 @@ jobs:
     pool:
       vmImage: 'Ubuntu-16.04'
     steps:
+########################################
     - script: |
         sudo apt update
         sudo apt install haveged p7zip-full qrencode
@@ -70,7 +73,7 @@ jobs:
         sudo mv makerom /opt/devkitpro/tools/bin
         sudo mv bannertool /opt/devkitpro/tools/bin
       displayName: 'Setup environment'
-
+########################################
     - script: |
         make
         mv 3ds/Universal-Manager.cia $(Build.ArtifactStagingDirectory)
@@ -79,7 +82,7 @@ jobs:
         echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
         echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
       displayName: 'Build Universal-Manager'
-
+########################################
     - task: PublishBuildArtifacts@1
       displayName: "Publish build to Azure"
       inputs:
@@ -91,6 +94,7 @@ jobs:
     pool:
       vmImage: 'Ubuntu-16.04'
     steps:
+########################################
     - script: |
         sudo apt update
         sudo apt install haveged p7zip-full
@@ -100,7 +104,7 @@ jobs:
         sudo dkp-pacman -Sy
         sudo dkp-pacman -S switch-dev switch-sdl2 switch-sdl2_image switch-libpng switch-libjpeg-turbo switch-sdl2_gfx  switch-sdl2_ttf switch-sdl2_mixer switch-freetype --noconfirm
       displayName: 'Setup environment'
-
+########################################
     - script: |
         make
         mv switch/Universal-Manager.nro $(Build.ArtifactStagingDirectory)
@@ -108,80 +112,111 @@ jobs:
         echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
         echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
       displayName: 'Build Universal-Manager'
-
+########################################
     - task: PublishBuildArtifacts@1
       displayName: "Publish build to Azure"
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'buildSwitch'
+################################################################################
+  - job: publish
+    displayName: "Publish builds"
+    dependsOn:
+      - buildDS
+      - build3DS
+      - buildSwitch
+    condition: and(succeeded('buildDS'), succeeded('build3DS'), succeeded('buildSwitch'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull')))
 
-# - script: |
-#     export DEVKITPRO="/opt/devkitpro"
-#     export DEVKITARM="/opt/devkitpro/devkitARM"
-#     make
-#     mv dsi/Universal-Manager.nds Universal-Manager.nds
-#     mv 3ds/Universal-Manager.cia Universal-Manager.cia
-#     mv 3ds/Universal-Manager.3dsx Universal-Manager.3dsx
-#     mv switch/Universal-Manager.nro Universal-Manager.nro
-#     export COMMIT_TAG="$(git log --format=%h -1)"
-#     export COMMIT_MESSAGE="$(git log --pretty=format:"%an - %s" -1)"
-#     ls
-#     echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-#     echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
-#   displayName: 'Build Universal-Manager'
+    steps:
+########################################
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          downloadPath: $(Build.ArtifactStagingDirectory)
+          artifactName: 'buildDS'
+        displayName: "Retrieving artifacts from DS Build"
+########################################
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          downloadPath: $(Build.ArtifactStagingDirectory)
+          artifactName: 'build3DS'
+        displayName: "Retrieving artifacts from 3DS build"
+########################################
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          downloadPath: $(Build.ArtifactStagingDirectory)
+          artifactName: 'buildSwitch'
+        displayName: "Retrieving artifacts from Switch build"
+########################################
+      - script: |
+          git config --global user.email "flamekat54@aol.com"
+          git config --global user.name "TWLBot"
+          git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
+          cd extras/builds/Universal-Manager
 
-# - script: |    
-#     git config --global user.email "flamekat54@aol.com"
-#     git config --global user.name "TWLBot"
-#     git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
-#     cd extras/builds/Universal-Manager
-#     cp ../../../Universal-Manager.nds Universal-Manager.nds
-#     cp ../../../Universal-Manager.cia Universal-Manager.cia
-#     cp ../../../Universal-Manager.3dsx Universal-Manager.3dsx
-#     cp ../../../Universal-Manager.nro Universal-Manager.nro
-#     git stage .
-#     git commit -m "Universal-Manager | $(COMMIT_TAG)"
-#     git push origin master
-#     git tag v$CURRENT_DATE
-#     echo '##vso[task.setvariable variable=EXTRAS_COMMIT]'$(git log -1 --format="%H")
-#   displayName: "Commit to Universal-Team/extras"
+          $(Build.ArtifactStagingDirectory)/buildDS/* .
+          $(Build.ArtifactStagingDirectory)/build3DS/* .
+          $(Build.ArtifactStagingDirectory)/buildSwitch/* .
 
-# - task: GitHubRelease@0
-#   displayName: "Release to Universal-Team/extras"
-#   inputs:
-#     gitHubConnection: TWLBot
-#     repositoryName: Universal-Team/extras
-#     action: create
-#     target: $(EXTRAS_COMMIT)
-#     tagSource: 'manual'
-#     tag: v$(CURRENT_DATE)
-#     title: Universal-Manager | $(COMMIT_TAG)
-#     releaseNotesSource: input
-#     releaseNotes: $(COMMIT_MESSAGE)
-#     assets: '$(Build.ArtifactStagingDirectory)/**/*'
-#     isPreRelease: true
-#     addChangeLog: false
+          git stage .
+          git commit -m "Universal-Manager | $(COMMIT_TAG)"
+          git push origin master
+          git tag v$CURRENT_DATE
 
-# - task: GitHubRelease@0
-#   displayName: "Release to Universal-Team/Universal-Manager"
-#   condition: startsWith(variables['Build.SourceBranchName'], 'v')
-#   inputs:
-#     gitHubConnection: TWLBot
-#     repositoryName: Universal-Team/Universal-Manager
-#     action: edit
-#     target: '$(Build.SourceVersion)'
-#     tag: $(Build.SourceBranchName)
-#     assets: '$(Build.ArtifactStagingDirectory)/**/*'
-
-# - script: |
-#     curl -o send.sh https://raw.githubusercontent.com/Universal-Team/discord-webhooks/master/send-azure.sh
-#     chmod +x send.sh
-#     ./send.sh success $WEBHOOK_URL
-#   condition: succeeded()
-#   displayName: "Send success webhook"
-# - script: |
-#     curl -o send.sh https://raw.githubusercontent.com/Universal-Team/discord-webhooks/master/send-azure.sh
-#     chmod +x send.sh
-#     ./send.sh failure $WEBHOOK_URL
-#   condition: failed()
-#   displayName: "Send failure webhook"
+          echo '##vso[task.setvariable variable=EXTRAS_COMMIT]'$(git log -1 --format="%H")
+        displayName: "Commit to Universal-Team/extras"
+########################################
+        - task: GitHubRelease@0
+          displayName: "Release to Universal-Team/extras"
+          inputs:
+            gitHubConnection: TWLBot
+            repositoryName: Universal-Team/extras
+            action: create
+            target: $(EXTRAS_COMMIT)
+            tagSource: 'manual'
+            tag: v$(CURRENT_DATE)
+            title: Universal-Manager | $(COMMIT_TAG)
+            releaseNotesSource: input
+            releaseNotes: $(COMMIT_MESSAGE)
+            assets: '$(Build.ArtifactStagingDirectory)/**/*'
+            isPreRelease: true
+            addChangeLog: false
+########################################
+        - task: GitHubRelease@0
+          displayName: "Release to Universal-Team/Universal-Manager"
+          condition: startsWith(variables['Build.SourceBranchName'], 'v')
+          inputs:
+            gitHubConnection: TWLBot
+            repositoryName: Universal-Team/Universal-Manager
+            action: edit
+            target: '$(Build.SourceVersion)'
+            tag: $(Build.SourceBranchName)
+            assets: '$(Build.ArtifactStagingDirectory)/**/*'
+########################################
+        - task: GitHubRelease@0
+          displayName: "Release to Universal-Team/Universal-Manager"
+          condition: startsWith(variables['Build.SourceBranchName'], 'v')
+          inputs:
+            gitHubConnection: TWLBot
+            repositoryName: Universal-Team/Universal-Manager
+            action: edit
+            target: '$(Build.SourceVersion)'
+            tag: $(Build.SourceBranchName)
+            assets: '$(Build.ArtifactStagingDirectory)/**/*'
+################################################################################
+  - job: sendWebhook
+    dependsOn: publish
+    steps:
+########################################
+      - script: |
+          curl -o send.sh https://raw.githubusercontent.com/Universal-Team/discord-webhooks/master/send-azure.sh
+          chmod +x send.sh
+          ./send.sh success $WEBHOOK_URL
+        condition: succeeded()
+        displayName: "Send success webhook"
+########################################
+      - script: |
+          curl -o send.sh https://raw.githubusercontent.com/Universal-Team/discord-webhooks/master/send-azure.sh
+          chmod +x send.sh
+          ./send.sh failure $WEBHOOK_URL
+        condition: failed()
+        displayName: "Send failure webhook"
