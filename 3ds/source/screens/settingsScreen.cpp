@@ -131,20 +131,20 @@ void drawSettingsScreen(void) {
 	if (settingsPage == 0) {
 	// Bars.
 	Draw_Text(100, 58, 0.7f, WHITE, "Bars");
-	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	Gui::sprite(sprites_redButton_idx, 35, 88);
 	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
-	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	Gui::sprite(sprites_greenButton_idx, 129, 88);
 	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
-	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	Gui::sprite(sprites_blueButton_idx, 220, 88);
 	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
 
 	// Background.
 	Draw_Text(100, 138, 0.7f, WHITE, "Background");
-	Gui::sprite(sprites_RedButton_idx, 35, 168);
+	Gui::sprite(sprites_redButton_idx, 35, 168);
 	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
-	Gui::sprite(sprites_GreenButton_idx, 129, 168);
+	Gui::sprite(sprites_greenButton_idx, 129, 168);
 	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
-	Gui::sprite(sprites_BlueButton_idx, 220, 168);
+	Gui::sprite(sprites_blueButton_idx, 220, 168);
 	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
@@ -161,11 +161,11 @@ void drawSettingsScreen(void) {
 	} else if (settingsPage == 1) {
 	// Bars.
 	Draw_Text(70, 58, 0.7f, WHITE, "Animation Color");
-	Gui::sprite(sprites_RedButton_idx, 35, 88);
+	Gui::sprite(sprites_redButton_idx, 35, 88);
 	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
-	Gui::sprite(sprites_GreenButton_idx, 129, 88);
+	Gui::sprite(sprites_greenButton_idx, 129, 88);
 	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
-	Gui::sprite(sprites_BlueButton_idx, 220, 88);
+	Gui::sprite(sprites_blueButton_idx, 220, 88);
 	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
 
 	Gui::sprite(sprites_updaterButton_idx, 220, 28);
