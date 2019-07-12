@@ -28,7 +28,6 @@ jobs:
         sudo dkp-pacman -Sy
         sudo dkp-pacman -S nds-dev --noconfirm
       displayName: 'Setup environment'
-
       - script: |
           make dsi
           mv dsi/Universal-Manager.nds $(Build.ArtifactStagingDirectory)
