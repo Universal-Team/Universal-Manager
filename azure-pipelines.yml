@@ -74,12 +74,9 @@ jobs:
       displayName: 'Setup environment'
 ########################################
     - script: |
-        make
+        make 3ds
         mv 3ds/Universal-Manager.cia $(Build.ArtifactStagingDirectory)
         mv 3ds/Universal-Manager.3dsx $(Build.ArtifactStagingDirectory)
-
-        echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-        echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
       displayName: 'Build Universal-Manager'
 ########################################
     - task: PublishBuildArtifacts@1
@@ -105,11 +102,8 @@ jobs:
       displayName: 'Setup environment'
 ########################################
     - script: |
-        make
+        make switch
         mv switch/Universal-Manager.nro $(Build.ArtifactStagingDirectory)
-
-        echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-        echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
       displayName: 'Build Universal-Manager'
 ########################################
     - task: PublishBuildArtifacts@1
