@@ -28,18 +28,20 @@ jobs:
         sudo dkp-pacman -Sy
         sudo dkp-pacman -S nds-dev --noconfirm
       displayName: 'Setup environment'
-      - script: |
-          make dsi
-          mv dsi/Universal-Manager.nds $(Build.ArtifactStagingDirectory)
 
-          echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-          echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
-        displayName: 'Build Universal-Manager'
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish build to Azure"
-        inputs:
-          pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-          artifactName: 'buildDS'
+    - script: |
+        make dsi
+        mv dsi/Universal-Manager.nds $(Build.ArtifactStagingDirectory)
+
+        echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
+        echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
+      displayName: 'Build Universal-Manager'
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish build to Azure"
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'buildDS'
 ################################################################################
   - job: build3DS
     displayName: "Build 3DS version"
@@ -68,19 +70,21 @@ jobs:
         sudo mv makerom /opt/devkitpro/tools/bin
         sudo mv bannertool /opt/devkitpro/tools/bin
       displayName: 'Setup environment'
-      - script: |
-          make
-          mv 3ds/Universal-Manager.cia $(Build.ArtifactStagingDirectory)
-          mv 3ds/Universal-Manager.3dsx $(Build.ArtifactStagingDirectory)
 
-          echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-          echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
-        displayName: 'Build Universal-Manager'
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish build to Azure"
-        inputs:
-          pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-          artifactName: 'build3DS'
+    - script: |
+        make
+        mv 3ds/Universal-Manager.cia $(Build.ArtifactStagingDirectory)
+        mv 3ds/Universal-Manager.3dsx $(Build.ArtifactStagingDirectory)
+
+        echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
+        echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
+      displayName: 'Build Universal-Manager'
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish build to Azure"
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'build3DS'
 ################################################################################
   - job: buildSwitch
     displayName: "Build Switch version"
@@ -96,18 +100,20 @@ jobs:
         sudo dkp-pacman -Sy
         sudo dkp-pacman -S switch-dev switch-sdl2 switch-sdl2_image switch-libpng switch-libjpeg-turbo switch-sdl2_gfx  switch-sdl2_ttf switch-sdl2_mixer switch-freetype --noconfirm
       displayName: 'Setup environment'
-      - script: |
-          make
-          mv switch/Universal-Manager.nro $(Build.ArtifactStagingDirectory)
 
-          echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
-          echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
-        displayName: 'Build Universal-Manager'
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish build to Azure"
-        inputs:
-          pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-          artifactName: 'buildSwitch'
+    - script: |
+        make
+        mv switch/Universal-Manager.nro $(Build.ArtifactStagingDirectory)
+
+        echo '##vso[task.setvariable variable=COMMIT_TAG]'$(git log --format=%h -1)
+        echo '##vso[task.setvariable variable=COMMIT_MESSAGE]'$(git log --pretty=format:"%an - %s" -1)
+      displayName: 'Build Universal-Manager'
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish build to Azure"
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'buildSwitch'
 
 # - script: |
 #     export DEVKITPRO="/opt/devkitpro"
