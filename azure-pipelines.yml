@@ -16,10 +16,6 @@ jobs:
     displayName: "Build 3DS version"
     pool:
       vmImage: 'Ubuntu-16.04'
-    condition:
-      paths:
-        include:
-          - 3ds/*
     steps:
     - script: |
         sudo apt update
