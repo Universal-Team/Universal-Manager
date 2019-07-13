@@ -57,6 +57,36 @@ static int mainSelection2 = 0;
 // Version numbers.
 char universal_manager_vertext[13];
 
+static void drawMainMenuSelection1(void) {
+	if (mainSelection1 == 0) {
+		Gui::sprite(sprites_arrow_idx, 30, 23);
+	} else if (mainSelection1 == 1) {
+		Gui::sprite(sprites_arrow_idx, 200, 23);
+	} else if (mainSelection1 == 2) {
+		Gui::sprite(sprites_arrow_idx, 30, 88);
+	} else if (mainSelection1 == 3) {
+		Gui::sprite(sprites_arrow_idx, 200, 88);
+	} else if (mainSelection1 == 4) {
+		Gui::sprite(sprites_arrow_idx, 30, 158);
+	} else if (mainSelection1 == 5) {
+		Gui::sprite(sprites_arrow_idx, 200, 158);
+	}
+}
+
+static void drawMainMenuSelection2(void) {
+	if (mainSelection2 == 0) {
+		Gui::sprite(sprites_arrow_idx, 30, 23);
+	} else if (mainSelection2 == 1) {
+		Gui::sprite(sprites_arrow_idx, 200, 23);
+	} else if (mainSelection2 == 2) {
+		Gui::sprite(sprites_arrow_idx, 30, 88);
+	} else if (mainSelection2 == 3) {
+		Gui::sprite(sprites_arrow_idx, 200, 88);
+	} else if (mainSelection2 == 4) {
+		Gui::sprite(sprites_arrow_idx, 30, 158);
+	}
+}
+
 void drawMainMenu(void) {
 	// Initialize the Version Number.
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
@@ -103,22 +133,7 @@ void drawMainMenu(void) {
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-
-	// Selection for Page 1.
-
-	if (mainSelection1 == 0) {
-		Gui::sprite(sprites_arrow_idx, 30, 23);
-	} else if (mainSelection1 == 1) {
-		Gui::sprite(sprites_arrow_idx, 200, 23);
-	} else if (mainSelection1 == 2) {
-		Gui::sprite(sprites_arrow_idx, 30, 88);
-	} else if (mainSelection1 == 3) {
-		Gui::sprite(sprites_arrow_idx, 200, 88);
-	} else if (mainSelection1 == 4) {
-		Gui::sprite(sprites_arrow_idx, 30, 158);
-	} else if (mainSelection1 == 5) {
-		Gui::sprite(sprites_arrow_idx, 200, 158);
-	}
+	drawMainMenuSelection1();
 
 
 	// Second Page.
@@ -146,20 +161,7 @@ void drawMainMenu(void) {
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
-
-	// Selection for Page 2.
-
-	if (mainSelection2 == 0) {
-		Gui::sprite(sprites_arrow_idx, 30, 23);
-	} else if (mainSelection2 == 1) {
-		Gui::sprite(sprites_arrow_idx, 200, 23);
-	} else if (mainSelection2 == 2) {
-		Gui::sprite(sprites_arrow_idx, 30, 88);
-	} else if (mainSelection2 == 3) {
-		Gui::sprite(sprites_arrow_idx, 200, 88);
-	} else if (mainSelection2 == 4) {
-		Gui::sprite(sprites_arrow_idx, 30, 158);
-	}
+	drawMainMenuSelection2();
 }
 }
 

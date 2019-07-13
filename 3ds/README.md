@@ -28,7 +28,7 @@ Universal-Team : For the Project.
 
 [devkitPro](https://github.com/devkitPro), [Wintermute](https://github.com/WinterMute), [Fincs](https://github.com/fincs), [Smealum](https://github.com/smealum) : For devkitARM, Citro2D, Citro3D and Libctru.
 
-[FlagBrew](https://github.com/FlagBrew) : [PKSM](https://github.com/FlagBrew/PKSM) : for the i18n, the Citro2D Basic GUI.
+[FlagBrew](https://github.com/FlagBrew) : [PKSM](https://github.com/FlagBrew/PKSM) : for the i18n, the Citro2D Basic GUI and the Arrow, which I modified a bit. [Arrow Graphic](https://github.com/FlagBrew/PKSM/blob/master/assets/gfx/ui/pointer_arrow.png)
 
 [Joel16](https://github.com/joel16) : [3DShell](https://github.com/joel16/3DShell) : For the FTP, external Image and Audio Code.
 
