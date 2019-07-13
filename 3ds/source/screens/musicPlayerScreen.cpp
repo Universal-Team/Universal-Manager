@@ -147,13 +147,13 @@ void drawMusicMain() {
 	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
 
 	if (selection == 0) {
-		Gui::sprite(sprites_arrow_idx, 30, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
 	} else if (selection == 1) {
-		Gui::sprite(sprites_arrow_idx, 200, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
 	} else if (selection == 2) {
-		Gui::sprite(sprites_arrow_idx, 30, 148);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 148, Config::barColor);
 	} else if (selection == 3) {
-		Gui::sprite(sprites_arrow_idx, 200, 148);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 148, Config::barColor);
 	}
 }
 

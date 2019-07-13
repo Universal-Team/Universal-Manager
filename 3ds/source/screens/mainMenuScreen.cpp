@@ -59,31 +59,31 @@ char universal_manager_vertext[13];
 
 static void drawMainMenuSelection1(void) {
 	if (mainSelection1 == 0) {
-		Gui::sprite(sprites_arrow_idx, 30, 23);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 23, Config::barColor);
 	} else if (mainSelection1 == 1) {
-		Gui::sprite(sprites_arrow_idx, 200, 23);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 23, Config::barColor);
 	} else if (mainSelection1 == 2) {
-		Gui::sprite(sprites_arrow_idx, 30, 88);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 88, Config::barColor);
 	} else if (mainSelection1 == 3) {
-		Gui::sprite(sprites_arrow_idx, 200, 88);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 88, Config::barColor);
 	} else if (mainSelection1 == 4) {
-		Gui::sprite(sprites_arrow_idx, 30, 158);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 158, Config::barColor);
 	} else if (mainSelection1 == 5) {
-		Gui::sprite(sprites_arrow_idx, 200, 158);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 158, Config::barColor);
 	}
 }
 
 static void drawMainMenuSelection2(void) {
 	if (mainSelection2 == 0) {
-		Gui::sprite(sprites_arrow_idx, 30, 23);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 23, Config::barColor);
 	} else if (mainSelection2 == 1) {
-		Gui::sprite(sprites_arrow_idx, 200, 23);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 23, Config::barColor);
 	} else if (mainSelection2 == 2) {
-		Gui::sprite(sprites_arrow_idx, 30, 88);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 88, Config::barColor);
 	} else if (mainSelection2 == 3) {
-		Gui::sprite(sprites_arrow_idx, 200, 88);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 88, Config::barColor);
 	} else if (mainSelection2 == 4) {
-		Gui::sprite(sprites_arrow_idx, 30, 158);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 158, Config::barColor);
 	}
 }
 

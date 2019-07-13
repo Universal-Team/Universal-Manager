@@ -164,7 +164,7 @@ size_t UNIVButtonsTex[] = {
 };
 
 ButtonPos UNIVFunction[] = {
-	{129, 48, 87, 33, -1}, // Univ Manager Release
+	{129, 48, 87, 33, -1}, // Univ Manager Release 
 	{220, 48, 87, 33, -1}, // Univ Manager Nightly
 	{129, 88, 87, 33, -1}, // Pokemon Chest Release
 	{220, 88, 87, 33, -1}, // Pokemon Chest Nightly
@@ -197,61 +197,61 @@ extern bool touching(touchPosition touch, ButtonPos button);
 
 static void drawSubSelection(void) {
 	if (subSelection == 0) {
-		Gui::sprite(sprites_arrow_idx, 100, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 38, Config::barColor);
 	} else if (subSelection == 1) {
-		Gui::sprite(sprites_arrow_idx, 191, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
 	} else if (subSelection == 2) {
-		Gui::sprite(sprites_arrow_idx, 282, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
 	} else if (subSelection == 3) {
-		Gui::sprite(sprites_arrow_idx, 100, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 78, Config::barColor);
 	}
 }
 
 static void drawCFWSelection(void) {
 	if (cfwSelection == 0) {
-		Gui::sprite(sprites_arrow_idx, 191, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
 	} else if (cfwSelection == 1) {
-		Gui::sprite(sprites_arrow_idx, 282, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
 	} else if (cfwSelection == 2) {
-		Gui::sprite(sprites_arrow_idx, 191, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
 	}
 }
 
 static void drawTWLSelection(void) {
 	if (twlSelection == 0) {
-		Gui::sprite(sprites_arrow_idx, 191, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
 	} else if (twlSelection == 1) {
-		Gui::sprite(sprites_arrow_idx, 282, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
 	} else if (twlSelection == 2) {
-		Gui::sprite(sprites_arrow_idx, 191, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
 	} else if (twlSelection == 3) {
-		Gui::sprite(sprites_arrow_idx, 282, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
 	} else if (twlSelection == 4) {
-		Gui::sprite(sprites_arrow_idx, 191, 118);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
 	}
 }
 
 static void drawOTHERSelection(void) {
 	if (othSelection == 0) {
-		Gui::sprite(sprites_arrow_idx, 191, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
 	} else if (othSelection == 1) {
-		Gui::sprite(sprites_arrow_idx, 282, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
 	}
 }
 
 static void drawUNIVSelection(void) {
 	if (univSelection == 0) {
-		Gui::sprite(sprites_arrow_idx, 191, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
 	} else if (univSelection == 1) {
-		Gui::sprite(sprites_arrow_idx, 282, 38);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
 	} else if (univSelection == 2) {
-		Gui::sprite(sprites_arrow_idx, 191, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
 	} else if (univSelection == 3) {
-		Gui::sprite(sprites_arrow_idx, 282, 78);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
 	} else if (univSelection == 4) {
-		Gui::sprite(sprites_arrow_idx, 191, 118);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
 	} else if (univSelection == 5) {
-		Gui::sprite(sprites_arrow_idx, 282, 118);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 118, Config::barColor);
 	}
 }
 
