@@ -30,6 +30,12 @@
 #include <unistd.h>
 #include "settings.hpp"
 
+static int subSelection = 0;
+static int cfwSelection = 0;
+static int twlSelection = 0;
+static int othSelection = 0;
+static int univSelection = 0;
+
 bool updatingSelf = false;
 
 struct ButtonPos {
@@ -189,6 +195,65 @@ bool updateAvailable[] = {
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
+static void drawSubSelection(void) {
+	if (subSelection == 0) {
+		Gui::sprite(sprites_arrow_idx, 100, 38);
+	} else if (subSelection == 1) {
+		Gui::sprite(sprites_arrow_idx, 191, 38);
+	} else if (subSelection == 2) {
+		Gui::sprite(sprites_arrow_idx, 282, 38);
+	} else if (subSelection == 3) {
+		Gui::sprite(sprites_arrow_idx, 100, 78);
+	}
+}
+
+static void drawCFWSelection(void) {
+	if (cfwSelection == 0) {
+		Gui::sprite(sprites_arrow_idx, 191, 38);
+	} else if (cfwSelection == 1) {
+		Gui::sprite(sprites_arrow_idx, 282, 38);
+	} else if (cfwSelection == 2) {
+		Gui::sprite(sprites_arrow_idx, 191, 78);
+	}
+}
+
+static void drawTWLSelection(void) {
+	if (twlSelection == 0) {
+		Gui::sprite(sprites_arrow_idx, 191, 38);
+	} else if (twlSelection == 1) {
+		Gui::sprite(sprites_arrow_idx, 282, 38);
+	} else if (twlSelection == 2) {
+		Gui::sprite(sprites_arrow_idx, 191, 78);
+	} else if (twlSelection == 3) {
+		Gui::sprite(sprites_arrow_idx, 282, 78);
+	} else if (twlSelection == 4) {
+		Gui::sprite(sprites_arrow_idx, 191, 118);
+	}
+}
+
+static void drawOTHERSelection(void) {
+	if (othSelection == 0) {
+		Gui::sprite(sprites_arrow_idx, 191, 38);
+	} else if (othSelection == 1) {
+		Gui::sprite(sprites_arrow_idx, 282, 38);
+	}
+}
+
+static void drawUNIVSelection(void) {
+	if (univSelection == 0) {
+		Gui::sprite(sprites_arrow_idx, 191, 38);
+	} else if (univSelection == 1) {
+		Gui::sprite(sprites_arrow_idx, 282, 38);
+	} else if (univSelection == 2) {
+		Gui::sprite(sprites_arrow_idx, 191, 78);
+	} else if (univSelection == 3) {
+		Gui::sprite(sprites_arrow_idx, 282, 78);
+	} else if (univSelection == 4) {
+		Gui::sprite(sprites_arrow_idx, 191, 118);
+	} else if (univSelection == 5) {
+		Gui::sprite(sprites_arrow_idx, 282, 118);
+	}
+}
 
 void drawUpdaterSubMenu(void) {
 	Gui::DrawBGTop();
@@ -209,16 +274,38 @@ void drawUpdaterSubMenu(void) {
 	Draw_Text(140, 58, 0.7f, WHITE, "TWL");
 	Draw_Text(229, 58, 0.7f, WHITE, "Other");
 	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
+	drawSubSelection();
 }
 
 void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hDown & KEY_B) {
+	if(hDown & KEY_UP) {
+		if(subSelection > 0)	subSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(subSelection < 3)	subSelection++;
+		} else if(hDown & KEY_A) {
+			switch(subSelection) {
+				case 0: {
+					screenMode = CFWScreen;
+					break;
+				} case 1:
+					screenMode = TWLScreen;
+					break;
+				  case 2: {
+					screenMode = OtherScreen;
+					break;
+				} case 3: {
+					screenMode = UniversalScreen;
+					break;
+				}
+			}
+	} else if (hDown & KEY_B) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Do you want to check for Updates?")) {
 		DisplayMsg("Checking for Updates...\nPlease wait...");
 		checkForUpdates();
 		}
+
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE002 to check for Updates.");
 	} else if(hDown & KEY_TOUCH) {
@@ -279,9 +366,49 @@ void drawUpdaterTWL(void) {
         Gui::sprite(sprites_dot_idx, TWLButtons[i].x+75, TWLButtons[i].y-6);
     }
 }
+	drawTWLSelection();
 }
 
+static void twlSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(twlSelection > 0)	twlSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(twlSelection < 4)	twlSelection++;
+		} else if(hDown & KEY_A) {
+			switch(twlSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
+					updateTWiLight(false);
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Nightly?")) {
+					updateTWiLight(true);
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Release?")) {
+					updateBootstrap(false);
+					}
+					break;
+				} case 3: {
+					if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
+					updateBootstrap(true);
+					}
+					break;
+				} case 4: {
+					if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
+					updateCheats();
+					}
+					break;
+			}
+		}
+		}
+}
+
+
 void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	twlSelectionLogic(hDown);
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {
@@ -329,7 +456,6 @@ void drawUpdaterOther(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-	// Themes Download Button.
 	for (int i = (int)(sizeof(OTHERButtons)/sizeof(OTHERButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(OTHERButtonsTex[i], OTHERButtons[i].x, OTHERButtons[i].y);
 	}
@@ -347,9 +473,29 @@ void drawUpdaterOther(void) {
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+
+	drawOTHERSelection();
+}
+
+static void otherSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(othSelection > 0)	othSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(othSelection < 1)	othSelection++;
+		} else if(hDown & KEY_A) {
+			switch(othSelection) {
+				case 0: {
+					downloadThemes();
+					break;
+				} case 1:
+					downloadScripts();
+					break;
+			}
+		}
 }
 
 void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	otherSelectionLogic(hDown);
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {
@@ -409,9 +555,38 @@ void drawUpdaterCFW(void) {
         Gui::sprite(sprites_dot_idx, CFWButtons[i].x+75, CFWButtons[i].y-6);
     }
 }
+	drawCFWSelection();
+}
+
+static void cfwSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(cfwSelection > 0)	cfwSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(cfwSelection < 2)	cfwSelection++;
+		} else if(hDown & KEY_A) {
+			switch(cfwSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
+					updateLuma(false);
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
+					updateLuma(true);
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update GodMode9\nTo Release?")) {
+					downloadGodMode9();
+					}
+					break;
+			}
+		}
+		}
 }
 
 void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	cfwSelectionLogic(hDown);
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_R) {
@@ -482,9 +657,56 @@ void drawUniversalScreen(void) {
         Gui::sprite(sprites_dot_idx, UNIVButtons[i].x+75, UNIVButtons[i].y-6);
     }
 }
+	drawUNIVSelection();
+}
+
+static void univSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(univSelection > 0)	univSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(univSelection < 5)	univSelection++;
+		} else if(hDown & KEY_A) {
+			switch(univSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
+					updatingSelf = true;
+					updateUniversalManager(false);
+					updatingSelf = false;
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
+					updatingSelf = true;
+					updateUniversalManager(true);
+					updatingSelf = false;
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
+					updatePKMNChestRelease(); 
+					}
+					break;
+				} case 3: {
+					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Nightly?")) {
+					updatePKMNChestNightly(); 
+					}
+					break;
+				} case 4: {
+					if(confirmPopup("Are you sure you want to update Relaunch\nTo Release?")) {
+					updateRelaunchRelease(); 
+					}
+					break;
+				} case 5:
+					if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
+					updateRelaunchNightly(); 
+					}
+					break;
+			}
+		}
 }
 
 void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	univSelectionLogic(hDown);
 	if (hDown & KEY_B) {
 		screenMode = updaterSubMenu;
 	} else if (hDown & KEY_L) {

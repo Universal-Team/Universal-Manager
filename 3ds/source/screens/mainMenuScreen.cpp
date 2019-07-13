@@ -51,6 +51,8 @@ ButtonPos mainScreenButtonPos[] = {
 };
 
 int mainMenuPage = 0;
+static int mainSelection1 = 0;
+static int mainSelection2 = 0;
 
 // Version numbers.
 char universal_manager_vertext[13];
@@ -102,6 +104,23 @@ void drawMainMenu(void) {
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 
+	// Selection for Page 1.
+
+	if (mainSelection1 == 0) {
+		Gui::sprite(sprites_arrow_idx, 30, 23);
+	} else if (mainSelection1 == 1) {
+		Gui::sprite(sprites_arrow_idx, 200, 23);
+	} else if (mainSelection1 == 2) {
+		Gui::sprite(sprites_arrow_idx, 30, 88);
+	} else if (mainSelection1 == 3) {
+		Gui::sprite(sprites_arrow_idx, 200, 88);
+	} else if (mainSelection1 == 4) {
+		Gui::sprite(sprites_arrow_idx, 30, 158);
+	} else if (mainSelection1 == 5) {
+		Gui::sprite(sprites_arrow_idx, 200, 158);
+	}
+
+
 	// Second Page.
 	} else if (mainMenuPage == 1) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
@@ -127,12 +146,86 @@ void drawMainMenu(void) {
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+
+	// Selection for Page 2.
+
+	if (mainSelection2 == 0) {
+		Gui::sprite(sprites_arrow_idx, 30, 23);
+	} else if (mainSelection2 == 1) {
+		Gui::sprite(sprites_arrow_idx, 200, 23);
+	} else if (mainSelection2 == 2) {
+		Gui::sprite(sprites_arrow_idx, 30, 88);
+	} else if (mainSelection2 == 3) {
+		Gui::sprite(sprites_arrow_idx, 200, 88);
+	} else if (mainSelection2 == 4) {
+		Gui::sprite(sprites_arrow_idx, 30, 158);
+	}
 }
 }
 
+static void mainMenuSelectionLogic1(u32 hDown) {
+		if (mainMenuPage == 0 && hDown & KEY_UP) {
+			if(mainSelection1 > 0)	mainSelection1--;
+		} else if (mainMenuPage == 0 && hDown & KEY_DOWN) {
+			if(mainSelection1 < 5)	mainSelection1++;
+		} else if (mainMenuPage == 0 && hDown & KEY_A) {
+			switch(mainSelection1) {
+				case 0: {
+					screenMode = fileManager;
+					break;
+				} case 1:
+					screenMode = ftpScreen;
+					break;
+				  case 2: {
+					screenMode = scriptMainScreen;
+					break;
+				} case 3: {
+					screenMode = musicMainScreen;
+					break;
+				} case 4: {
+					screenMode = updaterSubMenu;
+					break;
+				} case 5:
+					screenMode = SettingsScreen;
+					break;
+			}
+		}
+}
+
+static void mainMenuSelectionLogic2(u32 hDown) {
+		if (mainMenuPage == 1 && hDown & KEY_UP) {
+			if(mainSelection2 > 0)	mainSelection2--;
+		} else if (mainMenuPage == 1 && hDown & KEY_DOWN) {
+			if(mainSelection2 < 4)	mainSelection2++;
+		} else if (mainMenuPage == 1 && hDown & KEY_A) {
+			switch(mainSelection2) {
+				case 0: {
+					screenMode = ImageSelectorScreen;
+					break;
+				} case 1:
+					screenMode = creditsScreen;
+					break;
+				  case 2: {
+					screenMode = textFileBrowse;
+					break;
+				} case 3: {
+					screenMode = buttonTesterScreen;
+					break;
+				} case 4: {
+					screenMode = calendarScreen;
+					break;
+				}
+			}
+		}
+}
+
 void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	mainMenuSelectionLogic1(hDown);
+	mainMenuSelectionLogic2(hDown);
 	if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
+
+		// Page Switching.
 	} else if (mainMenuPage == 0 && hDown & KEY_R) {
 		mainMenuPage = 1;
 		} else if (mainMenuPage == 1 && hDown & KEY_L) {

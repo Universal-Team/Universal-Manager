@@ -35,7 +35,8 @@
 #include <unistd.h>
 using std::string;
 
-
+static int scriptSelection1 = 0;
+static int scriptSelection2 = 0;
 extern uint selectedFile;
 extern int keyRepeatDelay;
 extern bool dirChanged;
@@ -181,6 +182,28 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 
 int screenPage = 0;
 
+static void drawSelection1(void) {
+	if (scriptSelection1 == 0) {
+		Gui::sprite(sprites_arrow_idx, 80, 23);
+	} else if (scriptSelection1 == 1) {
+		Gui::sprite(sprites_arrow_idx, 250, 23);
+	} else if (scriptSelection1 == 2) {
+		Gui::sprite(sprites_arrow_idx, 80, 88);
+	} else if (scriptSelection1 == 3) {
+		Gui::sprite(sprites_arrow_idx, 250, 88);
+	} else if (scriptSelection1 == 4) {
+		Gui::sprite(sprites_arrow_idx, 80, 158);
+	} else if (scriptSelection1 == 5) {
+		Gui::sprite(sprites_arrow_idx, 250, 158);
+	}
+}
+
+static void drawSelection2(void) {
+	if (scriptSelection2 == 0) {
+		Gui::sprite(sprites_arrow_idx, 80, 23);
+	}
+}
+
 void drawScriptsCreatorFunctions(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -216,6 +239,7 @@ void drawScriptsCreatorFunctions(void) {
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	drawSelection1();
 	} else if (screenPage == 1) {
 
 	// Second Page.
@@ -226,11 +250,77 @@ void drawScriptsCreatorFunctions(void) {
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+	drawSelection2();
 }
 }
 
+static void scriptSelectionLogic1(u32 hDown) {
+		if (screenPage == 0 && hDown & KEY_UP) {
+			if(scriptSelection1 > 0)	scriptSelection1--;
+		} else if (screenPage == 0 && hDown & KEY_DOWN) {
+			if(scriptSelection1 < 5)	scriptSelection1++;
+		} else if (screenPage == 0 && hDown & KEY_A) {
+			switch(scriptSelection1) {
+				case 0: {
+				std::string Function = "downloadRelease	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				std::string param3 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+					break;
+				} case 1: {
+				std::string Function = "downloadFile	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << std::endl;
+					break;
+				  } case 2: {
+				std::string Function = "extract	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				std::string param3 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+					break;
+				} case 3: {
+				std::string Function = "install	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << std::endl;
+					break;
+				} case 4: {
+				std::string Function = "delete	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << std::endl;
+					break;
+				} case 5: {
+				std::string Function = "msg	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << std::endl;
+					break;
+			}
+		}
+		}
+}
+
+static void scriptSelectionLogic2(u32 hDown) {
+		if (screenPage == 1 && hDown & KEY_UP) {
+			if(scriptSelection2 > 0)	scriptSelection2--;
+		} else if (screenPage == 1 && hDown & KEY_DOWN) {
+			if(scriptSelection1 < 0)	scriptSelection2++;
+		} else if (screenPage == 1 && hDown & KEY_A) {
+			switch(scriptSelection2) {
+				case 0: {
+				std::string Function = "mkdir	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << std::endl;
+					break;
+				}
+			}
+		}
+}
 
 void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	scriptSelectionLogic1(hDown);
+	scriptSelectionLogic2(hDown);
 	if (screenPage == 0 && hHeld & KEY_SELECT) {
 	helperBox("downloadRelease : Download a File from Github's Release.\n\ndownloadFile : Download a File from a URL.\n\nextract : Extract an Archive.\n\ninstall : Install a CIA File from the SD Card.\n\ndelete : Delete a FILE from the SD Card.\n\nmsg : Displays a Message on the Top Screen.");
 	} else if (screenPage == 1 && hHeld & KEY_SELECT) {
@@ -251,7 +341,6 @@ void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		std::string param1 = Input::getLine();
 		std::string param2 = Input::getLine();
 		std::string param3 = Input::getLine();
-
 		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
 
 
@@ -269,7 +358,6 @@ void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		std::string param1 = Input::getLine();
 		std::string param2 = Input::getLine();
 		std::string param3 = Input::getLine();
-
 		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
 
 
@@ -280,7 +368,7 @@ void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 
 	} 	else if (touching(touch, scriptCreatorFunctionButtonPos[4])) {
-			std::string Function = "delete	";
+		std::string Function = "delete	";
 		std::string param1 = Input::getLine();
 		scpt << Function << param1 << std::endl;
 

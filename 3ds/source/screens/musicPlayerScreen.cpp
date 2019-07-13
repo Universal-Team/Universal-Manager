@@ -71,6 +71,7 @@ bool decForRepeat2 = false;
 uint selectedPlstItem = 0;
 int movingPlstItem = -1;
 std::vector<std::string> plstContents;
+static int selection = 0;
 
 
 extern bool touching(touchPosition touch, ButtonPos button);
@@ -144,10 +145,40 @@ void drawMusicMain() {
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
 	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
 	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
+
+	if (selection == 0) {
+		Gui::sprite(sprites_arrow_idx, 30, 38);
+	} else if (selection == 1) {
+		Gui::sprite(sprites_arrow_idx, 200, 38);
+	} else if (selection == 2) {
+		Gui::sprite(sprites_arrow_idx, 30, 148);
+	} else if (selection == 3) {
+		Gui::sprite(sprites_arrow_idx, 200, 148);
+	}
 }
 
 void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(hDown & KEY_B) {
+	if(keysDown() & KEY_UP) {
+		if(selection > 0)	selection--;
+	} else if(keysDown() & KEY_DOWN) {
+		if(selection < 3)	selection++;
+		} else if(keysDown() & KEY_A) {
+			switch(selection) {
+				case 0: {
+					screenMode = musicListScreen;
+					break;
+				} case 1:
+					screenMode = musicPlayerScreen;
+					break;
+				  case 2: {
+					screenMode = musicPlaylistPlayScreen;
+					break;
+				} case 3: {
+					screenMode = themeSelectorScreen;
+					break;
+				}
+			}
+	} else if(hDown & KEY_B) {
 		screenMode = mainScreen;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press Songs to open the Song File Browse. \n \n Press Now Playing to open the Music Player. \n \n Press Playlists to open the Playlist Menu. \n \n Press Themes to Select an Image for the Music Player. \n \n (You need the BG Mode in the Settings!)");
