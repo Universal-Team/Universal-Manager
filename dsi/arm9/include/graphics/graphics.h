@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
+#include "stringUtils.hpp"
 #include "uvcoordFont.h"
 
 #define BLACK 0

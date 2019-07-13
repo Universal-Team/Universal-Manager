@@ -26,8 +26,8 @@
 
 #include "screens/screenCommon.hpp"
 
-std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, stripes;
-ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, stripesData;
+std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge;
+ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData;
 
 void loadGraphics(void) {
 	batteryChargeData = loadPng("nitro:/graphics/batteryCharge.png", batteryCharge);
@@ -36,5 +36,4 @@ void loadGraphics(void) {
 	battery50Data = loadPng("nitro:/graphics/battery50.png", battery50);
 	battery75Data = loadPng("nitro:/graphics/battery75.png", battery75);
 	battery100Data = loadPng("nitro:/graphics/battery100.png", battery100);
-	stripesData = loadPng("nitro:/graphics/stripes.png", stripes);
 }

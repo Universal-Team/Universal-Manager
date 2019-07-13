@@ -29,16 +29,16 @@
 void drawFileManagerSubMenu(void) {
 	drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //BG.
+	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), true);
 	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), true);
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //BG.
+	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //	Bottom Screen.
 	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), false);
 	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), false);
 
 	printTextTinted("FileManager Sub Menu", DARK_BLUE, 60, 5, true);
 
-	
+	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 }
