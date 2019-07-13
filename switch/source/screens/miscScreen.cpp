@@ -33,10 +33,10 @@
 extern TouchInfo touchInfo;
 
 void drawFileManagerSubMenu(void) {
-	SDL_DrawRect(0, 0, 1280, 720, BLUE);
-	SDL_DrawRect(0, 0, 1280, 100, BARCOLOR);
-	SDL_DrawRect(0, 620, 1280, 100, BARCOLOR);
-	SDL_DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
+	Gui::DrawRect(0, 0, 1280, 720, BLUE);
+	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
+	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
+	Gui::DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
 }
 void FileManagerSubMenuLogic(u64 hDown, TouchInfo touchInfo) {
 	if (hDown & KEY_A) {

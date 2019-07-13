@@ -24,15 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "gui.hpp"
 
 extern "C" {
-	#include "SDL_helper.h"
-	#include "SDL_FontCache.h"
 	#include "touch_helper.h"
 }
 
 extern TouchInfo touchInfo;
-inline static SDL_Renderer *Rendering;
+extern SDL_Renderer *Rendering;
+extern SDL_Window *Window;
 
 #define mainScreen						0
 #define FileManagerSubMenuScreen		1

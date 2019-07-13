@@ -29,6 +29,8 @@
 #include <switch.h>
 #include "colors.hpp"
 #include "screens/screenCommon.hpp"
+#include "gui.hpp"
+#include "textures.hpp"
 #include <algorithm>
 #include <dirent.h>
 #include <malloc.h>
@@ -38,8 +40,6 @@
 #include <unistd.h>
 
 extern "C" {
-	#include "SDL_helper.h"
-	#include "textures.h"
     #include "touch_helper.h"
 }
 
@@ -50,7 +50,7 @@ static Result servicesInit(void)
     Result res = 0;
     romfsInit();
 
-    SDL_Initialize();
+    Gui::Init();
 	Textures_Load();
 
     return 0;
@@ -59,7 +59,7 @@ static Result servicesInit(void)
 static void servicesExit(void)
 {
 //    nsExit();
-	SDL_Terminate();
+	Gui::Exit();
 //    plExit();
     romfsExit();
     Textures_Free();
@@ -81,7 +81,7 @@ int main(void)
         Touch_Process(&touchInfo);
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-        SDL_ClearScreen(BLUE);
+        Gui::ClearScreen(BLUE);
 
 		// Draws a screen based on screenMode
 		switch(screenMode) {
@@ -104,7 +104,7 @@ int main(void)
                 FileManagerSubMenuLogic(hDown, touchInfo);
                 break;
         }
-        SDL_RenderScreen();
+        Gui::RenderScreen();
         }
 
     servicesExit();
