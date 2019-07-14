@@ -64,6 +64,7 @@ extern C3D_RenderTarget* bottom;
 #define scriptCreatorFunctions	22
 #define calendarScreen			23
 #define textFileBrowse			24
+#define pongScreen				25
 
 struct Playlist {
 	std::string name;
@@ -153,3 +154,7 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Calendar Stuff.
 void drawCalendarScreen(void);
 void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Pong Screen.
+void drawPongScreen(void);
+void pongLogic(u32 hDown, u32 hHeld, touchPosition touch);

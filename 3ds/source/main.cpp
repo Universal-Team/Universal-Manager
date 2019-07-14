@@ -65,6 +65,8 @@ extern bool firstSong;
 
 //Music and sound effects.
 sound *sfx_scroll = NULL;
+sound *sfx_pong = NULL;
+sound *sfx_score = NULL;
 
 bool dspfirmfound = false;
 
@@ -103,6 +105,8 @@ void screenon()
 
 static void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
+	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
+	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
 }
 
 bool touching(touchPosition touch, ButtonPos button) {
@@ -257,6 +261,10 @@ int main()
 			case calendarScreen:
 				drawCalendarScreen();
 				break;
+//#########################################################################################################
+			case pongScreen:
+				drawPongScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -355,6 +363,10 @@ int main()
 			case calendarScreen:
 				calendarLogic(hDown, hHeld, touch);
 				break;
+//#########################################################################################################
+			case pongScreen:
+				pongLogic(hDown, hHeld, touch);
+				break;
 		}
 //#########################################################################################################
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
@@ -384,6 +396,8 @@ int main()
 	Config::saveConfig();
 	stopPlayback();
 	delete sfx_scroll;
+	delete sfx_pong;
+	delete sfx_score;
 	cfguExit();
 	Gui::exit();
 	hidExit();
