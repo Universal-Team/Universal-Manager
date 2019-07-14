@@ -32,6 +32,24 @@
 #include <vector>
 #include "sound.h"
 //#include "keyboard.hpp" // Maybe for the Future?
+int paddle1 = 25, paddle2 = 25;
+int multiPlayerMode = 1;
+
+struct ButtonPos {
+	int x;
+	int y;
+	int w;
+	int h;
+	int link;
+};
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
+ButtonPos pongButtonPos[] = {
+	{293, 213, 27, 27, mainScreen},
+};
+
+
 
 void drawPongScreen(void) {
 	Gui::DrawBGTop();
@@ -40,21 +58,58 @@ void drawPongScreen(void) {
 	Draw_Text(300, 0, 0.72f, WHITE, "Score : 0");
 
 	// Draw Paddle + ball.
-	Gui::Draw_ImageBlend(sprites_paddle_idx, 0, 25, Config::barColor);
-	Gui::Draw_ImageBlend(sprites_paddle_idx, 390, 60, Config::barColor);
+	Gui::Draw_ImageBlend(sprites_paddle_idx, 0, paddle1, Config::barColor);
+	Gui::Draw_ImageBlend(sprites_paddle_idx, 390, paddle2, Config::barColor);
 	Gui::Draw_ImageBlend(sprites_ball_idx, 200, 100, Config::barColor);
 
 	Gui::DrawBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
+}
+
+static void player1Control(u32 hDown, u32 hHeld) {
+	if (hDown & KEY_DOWN) {
+		if(paddle1 < 146)	paddle1 += 3.0;
+		if (paddle1 == 145)	paddle1 += 0.0;
+	} else if (hDown & KEY_UP) {
+		if(paddle1 > 24)	paddle1 -= 3.0;
+		if (paddle1 == 25)	paddle1 -= 0.0;
+	} else if (hHeld & KEY_DOWN) {
+		if(paddle1 < 146)	paddle1 += 3.0;
+		if (paddle1 == 145)	paddle1 += 0.0;
+	} else if (hHeld & KEY_UP) {
+		if(paddle1 > 24)	paddle1 -= 3.0;
+		if (paddle1 == 25)	paddle1 -= 0.0;
+}
+}
+
+static void player2Control(u32 hDown, u32 hHeld) {
+		if (hDown & KEY_B) {
+		if(paddle2 < 146)	paddle2 += 3.0;
+		if (paddle2 == 145)	paddle2 += 0.0;
+	} else if (hDown & KEY_X) {
+		if(paddle2 > 24)	paddle2 -= 3.0;
+		if (paddle2 == 25)	paddle2 -= 0.0;
+	} else if (hHeld & KEY_B) {
+		if(paddle2 < 146)	paddle2 += 3.0;
+		if (paddle2 == 145)	paddle2 += 0.0;
+	} else if (hHeld & KEY_X) {
+		if(paddle2 > 24)	paddle2 -= 3.0;
+		if (paddle2 == 25)	paddle2 -= 0.0;
+}
 }
 
 // To-Do -> Do the whole Pong Logic inside it.
 void pongLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hDown & KEY_B) {
-		screenMode = mainScreen;
-	} else if (hDown & KEY_A) {
-		playPongSfx();
-	} else if (hDown & KEY_X) {
-		playScoreSfx();
+	if (multiPlayerMode == 0) {
+		player1Control(hDown, hHeld);
+	} else if (multiPlayerMode == 1) {
+		player1Control(hDown, hHeld);
+		player2Control(hDown, hHeld); 
 	}
+
+	if (hDown & KEY_TOUCH) {
+	if (touching(touch, pongButtonPos[0])) {
+			screenMode = pongButtonPos[0].link;
+	}
+}
 }
