@@ -161,7 +161,7 @@ void drawMainMenu(void) {
 	Draw_Text(50, 177, 0.7f, WHITE, "Calendar");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
-	Draw_Text(220, 177, 0.7f, WHITE, "Pong");
+	Draw_Text(220, 177, 0.7f, WHITE, "Games");
 
 	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -223,7 +223,7 @@ static void mainMenuSelectionLogic2(u32 hDown) {
 					screenMode = calendarScreen;
 					break;
 				} case 5:
-					screenMode = pongScreen;
+					screenMode = gameSubMenuScreen;
 					break;
 			}
 		}
@@ -270,7 +270,7 @@ void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[10])) {
 				screenMode = calendarScreen;
 			} else if (touching(touch, mainScreenButtonPos[11])) {
-				screenMode = pongScreen;
+				screenMode = gameSubMenuScreen;
 	}
 }
 }

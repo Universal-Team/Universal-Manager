@@ -262,6 +262,10 @@ int main()
 				drawCalendarScreen();
 				break;
 //#########################################################################################################
+			case gameSubMenuScreen:
+				drawGamesSubMenuScreen();
+				break;
+//#########################################################################################################
 			case pongScreen:
 				drawPongScreen();
 				break;
@@ -364,8 +368,12 @@ int main()
 				calendarLogic(hDown, hHeld, touch);
 				break;
 //#########################################################################################################
+			case gameSubMenuScreen:
+				gamesSubMenuLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
 			case pongScreen:
-				pongLogic(hDown, hHeld, touch);
+				pongLogic(hDown, hHeld);
 				break;
 		}
 //#########################################################################################################

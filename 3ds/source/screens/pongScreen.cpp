@@ -34,38 +34,157 @@
 #include <vector>
 #include "sound.h"
 //#include "keyboard.hpp" // Maybe for the Future?
+
+// Paddle and Ball Positions.
 int paddle1 = 0, paddle2 = 0;
 int ballX = 200, ballY = 100;
-int multiPlayerMode = 1;
+
+// Modes.
+int multiPlayerMode = 0;
+
+// Sub Menu.
+int subMenu = 1;
+int selection = 0;
+
+// Scores.
+int scoreP1 = 0;
+int scoreP2 = 0;
 
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
+// Score stuff for Player 1.
+static void drawScoreP1(void) {
+	if (scoreP1 == 0) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 0");
+	} else if (scoreP1 == 1) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 1");
+	} else if (scoreP1 == 2) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 2");
+	} else if (scoreP1 == 3) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 3");
+	} else if (scoreP1 == 4) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 4");
+	} else if (scoreP1 == 5) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 5");
+	} else if (scoreP1 == 6) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 6");
+	} else if (scoreP1 == 7) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 7");
+	} else if (scoreP1 == 8) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 8");
+	} else if (scoreP1 == 9) {
+		Draw_Text(0, 0, 0.72f, WHITE, "Score : 9");
+	}
+}
 
-extern bool touching(touchPosition touch, ButtonPos button);
 
-ButtonPos pongButtonPos[] = {
-	{293, 213, 27, 27, mainScreen},
-};
+// Score stuff for Player 2.
+static void drawScoreP2(void) {
+	if (scoreP2 == 0) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 0");
+	} else if (scoreP2 == 1) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 1");
+	} else if (scoreP2 == 2) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 2");
+	} else if (scoreP2 == 3) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 3");
+	} else if (scoreP2 == 4) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 4");
+	} else if (scoreP2 == 5) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 5");
+	} else if (scoreP2 == 6) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 6");
+	} else if (scoreP2 == 7) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 7");
+	} else if (scoreP2 == 8) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 8");
+	} else if (scoreP2 == 9) {
+		Draw_Text(220, 0, 0.72f, WHITE, "Score : 9");
+	}
+}
 
 
+// Draws the Paddles for both Players.
 static void drawPaddle(void) {
 	C2D_DrawRectSolid(10, paddle1, 1.0f, 10, 60, Config::barColor);
 	C2D_DrawRectSolid(380, paddle2, 1.0f, 10, 60, Config::barColor);
 }
 
 
+// Draws the ball. 
 static void drawBall(void) {
 	C2D_DrawCircleSolid(ballX, ballY, 1.0f, 5, Config::barColor);
 }
 
 
-void drawPongScreen(void) {
+// This is for the Sub Menu.
+//#######################################################################################
+static void drawSelection(void) {
+if (selection == 0) {
+	C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
+} else if (selection == 1) {
+	C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
+} else if (selection == 2) {
+	C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
+}
+}
+
+
+static void drawSubMenu(void) {
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Draw_Text(180, 0, 0.72f, WHITE, "Pong");
+	Draw_Text(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
+	
+
+	set_screen(bottom);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
+	Gui::DrawBarsBot();
+
+	// Draw all of the 3 Buttons.
+	Gui::sprite(sprites_mainMenuButton_idx, 90, 25);
+	Draw_Text(110, 42, 0.65f, WHITE, "1 Player Mode");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 90, 90);
+	Draw_Text(110, 107, 0.65f, WHITE, "2 Player Mode");
+
+	Gui::sprite(sprites_mainMenuButton_idx, 90, 160);
+	Draw_Text(130, 177, 0.7f, WHITE, "Exit Pong");
+	drawSelection();
+}
+
+static void selectionLogic(u32 hDown, u32 hHeld) {
+		if (hDown & KEY_UP) {
+			playPongSfx();
+			if(selection > 0)	selection--;
+		} else if (hDown & KEY_DOWN) {
+			playPongSfx();
+			if(selection < 2)	selection++;
+		} else if (hDown & KEY_A) {
+			playScoreSfx();
+			switch(selection) {
+				case 0: {
+					multiPlayerMode = 0;
+					subMenu = 0;
+					selection = 0;
+					break;
+				} case 1:
+					multiPlayerMode = 1;
+					subMenu = 0;
+					selection = 0;
+					break;
+				  case 2: {
+					screenMode = gameSubMenuScreen;
+					selection = 0;
+					break;
+				  }
+			}
+		}
+}
+//#######################################################################################
+
+// This is the actual Screen.
+//#######################################################################################
+static void drawScreen(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
 
@@ -74,12 +193,29 @@ void drawPongScreen(void) {
 
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
-	Draw_Text(0, 0, 0.72f, WHITE, "Score : 0");
-	Draw_Text(220, 0, 0.72f, WHITE, "Score : 0");
-	Gui::DrawBarsBottomBack();
+	Gui::DrawBarsBot();
+	drawScoreP1();
+	drawScoreP2();
+	Draw_Text(80, 80, 0.72f, WHITE, "How to Play :");
+	Draw_Text(80, 100, 0.72f, WHITE, "Player 1 : Up / Down");
+	Draw_Text(80, 120, 0.72f, WHITE, "Player 2 : X / B"); 
+	Draw_Text(80, 140, 0.72f, WHITE, "Start : Quit"); 
+}
+
+//#######################################################################################
+
+
+// Screen Selection.
+void drawPongScreen(void) {
+if (subMenu == 0) {
+	drawScreen();
+} else if (subMenu == 1) {
+	drawSubMenu();
+}
 }
 
 
+// Player 1 Control.
 static void player1Control(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_DOWN) {
 		if(paddle1 < 181)	paddle1 += 4.0;
@@ -97,6 +233,7 @@ static void player1Control(u32 hDown, u32 hHeld) {
 }
 
 
+// Player 2 Control.
 static void player2Control(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_B) {
 		if(paddle2 < 181)	paddle2 += 4.0;
@@ -115,20 +252,25 @@ static void player2Control(u32 hDown, u32 hHeld) {
 
 
 // To-Do -> Do the whole Pong Logic inside it.
-void pongLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (multiPlayerMode == 0) {
+void pongLogic(u32 hDown, u32 hHeld) {
+	if (subMenu == 1) {
+		selectionLogic(hDown, hHeld);
+	}
+
+	if (multiPlayerMode == 0 && subMenu == 0) {
 		player1Control(hDown, hHeld);
 	}
 
-	if (multiPlayerMode == 1) {
+	if (multiPlayerMode == 1 && subMenu == 0) {
 		player1Control(hDown, hHeld);
 		player2Control(hDown, hHeld); 
 	}
 
-
-	if (hDown & KEY_TOUCH) {
-	if (touching(touch, pongButtonPos[0])) {
-			screenMode = pongButtonPos[0].link;
+	if (subMenu == 0 && hDown & KEY_START) {
+		if(confirmPopup("Do you want to return to the Sub Menu?")) {
+			subMenu = 1;
+			paddle1 = 0;
+			paddle2 = 0;
 	}
-}
+	}
 }

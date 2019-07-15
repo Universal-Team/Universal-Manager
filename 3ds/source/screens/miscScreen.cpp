@@ -59,6 +59,12 @@ ButtonPos buttonTesterButtonPos[] = {
 	{293, 213, 27, 27, mainScreen},
 };
 
+ButtonPos gamesSubMenuButtonPos[] = {
+		// Pong. :P
+    {0, 40, 149, 52, -1},
+		// Back Icon.
+	{293, 213, 27, 27, -1},
+};
 
 void drawCredits(void) {
 	C2D_SceneBegin(top);
@@ -276,4 +282,34 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			screenMode = buttonTesterButtonPos[0].link;
 	}
 }
+}
+
+void drawGamesSubMenuScreen(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text(130, 218, 0.72f, WHITE, "Games Tab");
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBotBack();
+
+	// Buttons.
+	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
+	Draw_Text(40, 57, 0.7f, WHITE, "Pong");
+}
+
+void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_B) {
+		screenMode = mainScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, gamesSubMenuButtonPos[0])) {
+			screenMode = pongScreen;
+		} else if (touching(touch, gamesSubMenuButtonPos[1])) {
+			screenMode = mainScreen;
+		}
+	}
 }
