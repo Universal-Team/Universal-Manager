@@ -25,6 +25,8 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include <3ds.h>
+#include <citro2d.h>
 #include <algorithm>
 #include <fstream>
 #include <string>
@@ -32,8 +34,10 @@
 #include <vector>
 #include "sound.h"
 //#include "keyboard.hpp" // Maybe for the Future?
-int paddle1 = 25, paddle2 = 25;
+int paddle1 = 0, paddle2 = 0;
+int ballX = 200, ballY = 100;
 int multiPlayerMode = 1;
+
 
 struct ButtonPos {
 	int x;
@@ -50,62 +54,77 @@ ButtonPos pongButtonPos[] = {
 };
 
 
+static void drawPaddle(void) {
+	C2D_DrawRectSolid(10, paddle1, 1.0f, 10, 60, Config::barColor);
+	C2D_DrawRectSolid(380, paddle2, 1.0f, 10, 60, Config::barColor);
+}
+
+
+static void drawBall(void) {
+	C2D_DrawCircleSolid(ballX, ballY, 1.0f, 5, Config::barColor);
+}
+
 
 void drawPongScreen(void) {
-	Gui::DrawBGTop();
-	Gui::DrawBarsTop();
+	set_screen(top);
+	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
+
+	drawBall();
+	drawPaddle();
+
+	set_screen(bottom);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
 	Draw_Text(0, 0, 0.72f, WHITE, "Score : 0");
-	Draw_Text(300, 0, 0.72f, WHITE, "Score : 0");
-
-	// Draw Paddle + ball.
-	Gui::Draw_ImageBlend(sprites_paddle_idx, 0, paddle1, Config::barColor);
-	Gui::Draw_ImageBlend(sprites_paddle_idx, 390, paddle2, Config::barColor);
-	Gui::Draw_ImageBlend(sprites_ball_idx, 200, 100, Config::barColor);
-
-	Gui::DrawBGBot();
+	Draw_Text(220, 0, 0.72f, WHITE, "Score : 0");
 	Gui::DrawBarsBottomBack();
 }
 
+
 static void player1Control(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_DOWN) {
-		if(paddle1 < 146)	paddle1 += 3.0;
-		if (paddle1 == 145)	paddle1 += 0.0;
+		if(paddle1 < 181)	paddle1 += 4.0;
+		if (paddle1 == 180)	paddle1 += 0.0;
 	} else if (hDown & KEY_UP) {
-		if(paddle1 > 24)	paddle1 -= 3.0;
-		if (paddle1 == 25)	paddle1 -= 0.0;
+		if(paddle1 > -1)	paddle1 -= 4.0;
+		if (paddle1 == 0)	paddle1 -= 0.0;
 	} else if (hHeld & KEY_DOWN) {
-		if(paddle1 < 146)	paddle1 += 3.0;
-		if (paddle1 == 145)	paddle1 += 0.0;
+		if(paddle1 < 181)	paddle1 += 4.0;
+		if (paddle1 == 180)	paddle1 += 0.0;
 	} else if (hHeld & KEY_UP) {
-		if(paddle1 > 24)	paddle1 -= 3.0;
-		if (paddle1 == 25)	paddle1 -= 0.0;
+		if(paddle1 > -1)	paddle1 -= 4.0;
+		if (paddle1 == 0)	paddle1 -= 0.0;
 }
 }
 
+
 static void player2Control(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_B) {
-		if(paddle2 < 146)	paddle2 += 3.0;
-		if (paddle2 == 145)	paddle2 += 0.0;
+		if(paddle2 < 181)	paddle2 += 4.0;
+		if (paddle2 == 180)	paddle2 += 0.0;
 	} else if (hDown & KEY_X) {
-		if(paddle2 > 24)	paddle2 -= 3.0;
-		if (paddle2 == 25)	paddle2 -= 0.0;
+		if(paddle2 > -1)	paddle2 -= 4.0;
+		if (paddle2 == 0)	paddle2 -= 0.0;
 	} else if (hHeld & KEY_B) {
-		if(paddle2 < 146)	paddle2 += 3.0;
-		if (paddle2 == 145)	paddle2 += 0.0;
+		if(paddle2 < 181)	paddle2 += 4.0;
+		if (paddle2 == 180)	paddle2 += 0.0;
 	} else if (hHeld & KEY_X) {
-		if(paddle2 > 24)	paddle2 -= 3.0;
-		if (paddle2 == 25)	paddle2 -= 0.0;
+		if(paddle2 > -1)	paddle2 -= 4.0;
+		if (paddle2 == 0)	paddle2 -= 0.0;
 }
 }
+
 
 // To-Do -> Do the whole Pong Logic inside it.
 void pongLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (multiPlayerMode == 0) {
 		player1Control(hDown, hHeld);
-	} else if (multiPlayerMode == 1) {
+	}
+
+	if (multiPlayerMode == 1) {
 		player1Control(hDown, hHeld);
 		player2Control(hDown, hHeld); 
 	}
+
 
 	if (hDown & KEY_TOUCH) {
 	if (touching(touch, pongButtonPos[0])) {
