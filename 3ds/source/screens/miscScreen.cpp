@@ -68,6 +68,8 @@ ButtonPos gamesSubMenuButtonPos[] = {
 	{293, 213, 27, 27, -1},
 };
 
+int gameSelection = 0;
+
 void drawCredits(void) {
 	C2D_SceneBegin(top);
 	Gui::sprite(sprites_universal_credits_idx, 0, 0);
@@ -286,6 +288,16 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 }
 }
 
+
+static void drawGameSelection(void) {
+	if (gameSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
+	} else if (gameSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
+	}
+}
+
+
 void drawGamesSubMenuScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -305,9 +317,29 @@ void drawGamesSubMenuScreen(void) {
 
 	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
 	Draw_Text(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
+
+	drawGameSelection();
+}
+
+static void gameSelectionLogic(u32 hDown) {
+		if (hDown & KEY_UP) {
+			if(gameSelection > 0)	gameSelection--;
+		} else if (hDown & KEY_DOWN) {
+			if(gameSelection < 1)	gameSelection++;
+		} else if (hDown & KEY_A) {
+			switch(gameSelection) {
+				case 0: {
+					screenMode = pongScreen;
+					break;
+				} case 1:
+					screenMode = tictactoeScreen;
+					break;
+		}
+		}
 }
 
 void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	gameSelectionLogic(hDown);
 	if (hDown & KEY_B) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_TOUCH) {
