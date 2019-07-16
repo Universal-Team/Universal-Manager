@@ -273,9 +273,9 @@ void drawBatteryTop(void) {
 	Gui::sprite(sprites_battery25_idx, 361, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
 	Gui::sprite(sprites_battery50_idx, 361, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 99) {
+	} else if(batteryPercent > 50 && batteryPercent <= 75) {
     Gui::sprite(sprites_battery75_idx, 361, 0);
-	} else if(batteryPercent == 100) {
+	} else if(batteryPercent > 75 && batteryPercent == 100) {
 	Gui::sprite(sprites_battery100_idx, 361, 0);
 	}
 
@@ -309,9 +309,9 @@ void drawBatteryBot(void) {
 	Gui::sprite(sprites_battery25_idx, 281, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
 	Gui::sprite(sprites_battery50_idx, 281, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 99) {
+	} else if(batteryPercent > 50 && batteryPercent <= 75) {
     Gui::sprite(sprites_battery75_idx, 281, 0);
-	} else if(batteryPercent == 100) {
+	} else if(batteryPercent > 75 && batteryPercent == 100) {
 	Gui::sprite(sprites_battery100_idx, 281, 0);
 	}
 
