@@ -62,6 +62,8 @@ ButtonPos buttonTesterButtonPos[] = {
 ButtonPos gamesSubMenuButtonPos[] = {
 		// Pong. :P
     {0, 40, 149, 52, -1},
+		// Tic-Tac-Toe. ;P
+	{170, 40, 149, 52, -1},
 		// Back Icon.
 	{293, 213, 27, 27, -1},
 };
@@ -300,6 +302,9 @@ void drawGamesSubMenuScreen(void) {
 	// Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
 	Draw_Text(40, 57, 0.7f, WHITE, "Pong");
+
+	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
+	Draw_Text(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
 }
 
 void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
@@ -309,6 +314,8 @@ void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (touching(touch, gamesSubMenuButtonPos[0])) {
 			screenMode = pongScreen;
 		} else if (touching(touch, gamesSubMenuButtonPos[1])) {
+			screenMode = tictactoeScreen;
+		} else if (touching(touch, gamesSubMenuButtonPos[2])) {
 			screenMode = mainScreen;
 		}
 	}
