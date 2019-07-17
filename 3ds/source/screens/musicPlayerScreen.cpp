@@ -302,13 +302,22 @@ void drawMusicPlayer(void) {
 	}
 	
 	if(isPlaying()) {
+
+		// Current Song.
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		Draw_Text(0, 0, 0.50f, WHITE, nowPlayingText.c_str());
-		Draw_Rect(155, 179, 85, 10, GRAY);
-		Draw_Text(157, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
-		if (Audio_GetPosition() != -1) {
-		Draw_Rect(100, 194, 207, 16, GRAY);
-		Draw_Rect(100, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, Config::barColor);
+		Draw_Text(0, 0, 0.45f, WHITE, nowPlayingText.c_str());
+
+
+		// If Filetype is MP3, display the Progressbar, else not.
+		if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0)) {
+		// Progressbar - Time.
+		Draw_Rect(100, 179, 207, 10, GRAY);
+		Draw_Text(110, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + "                            " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		// Progressbar - Display.
+		Draw_Rect(120, 194, 150, 12, GRAY);
+		Draw_Rect(120, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 150.0), 12, Config::barColor);
+		} else {
+			Draw_Text(40, 177, 0.45f, WHITE, "Progressbar not available for this Music Format yet.");
 		}
 
 	
