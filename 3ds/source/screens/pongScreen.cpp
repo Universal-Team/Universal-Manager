@@ -36,8 +36,9 @@
 //#include "keyboard.hpp" // Maybe for the Future?
 
 // Paddle and Ball Positions.
-int paddle1 = 0, paddle2 = 0;
-int ballX = 200, ballY = 100;
+int paddle1 = 90, paddle2 = 90;
+double	ballX = 200, ballY = 100,
+		ballXSpd = -3, ballYSpd = 0;
 
 // Modes.
 int multiPlayerMode = 0;
@@ -53,53 +54,13 @@ int scoreP2 = 0;
 
 // Score stuff for Player 1.
 static void drawScoreP1(void) {
-	if (scoreP1 == 0) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 0");
-	} else if (scoreP1 == 1) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 1");
-	} else if (scoreP1 == 2) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 2");
-	} else if (scoreP1 == 3) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 3");
-	} else if (scoreP1 == 4) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 4");
-	} else if (scoreP1 == 5) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 5");
-	} else if (scoreP1 == 6) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 6");
-	} else if (scoreP1 == 7) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 7");
-	} else if (scoreP1 == 8) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 8");
-	} else if (scoreP1 == 9) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 9");
-	}
+	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
 }
 
 
 // Score stuff for Player 2.
 static void drawScoreP2(void) {
-	if (scoreP2 == 0) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 0");
-	} else if (scoreP2 == 1) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 1");
-	} else if (scoreP2 == 2) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 2");
-	} else if (scoreP2 == 3) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 3");
-	} else if (scoreP2 == 4) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 4");
-	} else if (scoreP2 == 5) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 5");
-	} else if (scoreP2 == 6) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 6");
-	} else if (scoreP2 == 7) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 7");
-	} else if (scoreP2 == 8) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 8");
-	} else if (scoreP2 == 9) {
-		Draw_Text(220, 0, 0.72f, WHITE, "Score : 9");
-	}
+	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
 }
 
 
@@ -110,7 +71,7 @@ static void drawPaddle(void) {
 }
 
 
-// Draws the ball. 
+// Draws the ball.
 static void drawBall(void) {
 	C2D_DrawCircleSolid(ballX, ballY, 1.0f, 5, Config::barColor);
 }
@@ -119,13 +80,13 @@ static void drawBall(void) {
 // This is for the Sub Menu.
 //#######################################################################################
 static void drawSelection(void) {
-if (selection == 0) {
-	C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
-} else if (selection == 1) {
-	C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
-} else if (selection == 2) {
-	C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
-}
+	if (selection == 0) {
+		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
+	} else if (selection == 1) {
+		C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
+	} else if (selection == 2) {
+		C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
+	}
 }
 
 
@@ -134,7 +95,6 @@ static void drawSubMenu(void) {
 	Gui::DrawBarsTop();
 	Draw_Text(180, 0, 0.72f, WHITE, "Pong");
 	Draw_Text(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
-	
 
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
@@ -153,32 +113,32 @@ static void drawSubMenu(void) {
 }
 
 static void selectionLogic(u32 hDown, u32 hHeld) {
-		if (hDown & KEY_UP) {
-			playPongSfx();
-			if(selection > 0)	selection--;
-		} else if (hDown & KEY_DOWN) {
-			playPongSfx();
-			if(selection < 2)	selection++;
-		} else if (hDown & KEY_A) {
-			playScoreSfx();
-			switch(selection) {
-				case 0: {
-					multiPlayerMode = 0;
-					subMenu = 0;
-					selection = 0;
-					break;
-				} case 1:
-					multiPlayerMode = 1;
-					subMenu = 0;
-					selection = 0;
-					break;
-				  case 2: {
-					screenMode = gameSubMenuScreen;
-					selection = 0;
-					break;
-				  }
+	if (hDown & KEY_UP) {
+		playPongSfx();
+		if(selection > 0)	selection--;
+	} else if (hDown & KEY_DOWN) {
+		playPongSfx();
+		if(selection < 2)	selection++;
+	} else if (hDown & KEY_A) {
+		playScoreSfx();
+		switch(selection) {
+			case 0: {
+				multiPlayerMode = 0;
+				subMenu = 0;
+				selection = 0;
+				break;
+			} case 1:
+				multiPlayerMode = 1;
+				subMenu = 0;
+				selection = 0;
+				break;
+			case 2: {
+				screenMode = gameSubMenuScreen;
+				selection = 0;
+				break;
 			}
 		}
+	}
 }
 //#######################################################################################
 
@@ -198,8 +158,8 @@ static void drawScreen(void) {
 	drawScoreP2();
 	Draw_Text(80, 80, 0.72f, WHITE, "How to Play :");
 	Draw_Text(80, 100, 0.72f, WHITE, "Player 1 : Up / Down");
-	Draw_Text(80, 120, 0.72f, WHITE, "Player 2 : X / B"); 
-	Draw_Text(80, 140, 0.72f, WHITE, "Start : Quit"); 
+	Draw_Text(80, 120, 0.72f, WHITE, "Player 2 : X / B");
+	Draw_Text(80, 140, 0.72f, WHITE, "Start : Quit");
 }
 
 //#######################################################################################
@@ -207,11 +167,11 @@ static void drawScreen(void) {
 
 // Screen Selection.
 void drawPongScreen(void) {
-if (subMenu == 0) {
-	drawScreen();
-} else if (subMenu == 1) {
-	drawSubMenu();
-}
+	if (subMenu == 0) {
+		drawScreen();
+	} else if (subMenu == 1) {
+		drawSubMenu();
+	}
 }
 
 
@@ -229,7 +189,7 @@ static void player1Control(u32 hDown, u32 hHeld) {
 	} else if (hHeld & KEY_UP) {
 		if(paddle1 > -1)	paddle1 -= 4.0;
 		if (paddle1 == 0)	paddle1 -= 0.0;
-}
+	}
 }
 
 
@@ -247,30 +207,58 @@ static void player2Control(u32 hDown, u32 hHeld) {
 	} else if (hHeld & KEY_X) {
 		if(paddle2 > -1)	paddle2 -= 4.0;
 		if (paddle2 == 0)	paddle2 -= 0.0;
-}
+	}
 }
 
-
-// To-Do -> Do the whole Pong Logic inside it.
 void pongLogic(u32 hDown, u32 hHeld) {
 	if (subMenu == 1) {
 		selectionLogic(hDown, hHeld);
 	}
 
-	if (multiPlayerMode == 0 && subMenu == 0) {
+	if (subMenu == 0) {
 		player1Control(hDown, hHeld);
-	}
+		if(multiPlayerMode == 0) {
+			if(ballY < paddle2+30 && paddle2 > 0)	paddle2--;
+			else if(paddle2 < 180)	paddle2++;
+		} else {
+			player2Control(hDown, hHeld);
+		}
 
-	if (multiPlayerMode == 1 && subMenu == 0) {
-		player1Control(hDown, hHeld);
-		player2Control(hDown, hHeld); 
+		ballX += ballXSpd;
+		ballY += ballYSpd;
+
+		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
+			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
+			ballXSpd = ballXSpd * -1.1;
+			ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
+		}
+
+		if (ballY < 0 || ballY > 230) {
+			ballYSpd = -ballYSpd;
+		}
+
+		if (ballX < 0) {
+			scoreP2++;
+			ballX = 200;
+			ballY = 100;
+			ballXSpd = 3;
+			ballYSpd = 0;
+		} else if (ballX > 400) {
+			scoreP1++;
+			ballX = 200;
+			ballY = 100;
+			ballXSpd = -3;
+			ballYSpd = 0;
+		}
 	}
 
 	if (subMenu == 0 && hDown & KEY_START) {
 		if(confirmPopup("Do you want to return to the Sub Menu?")) {
 			subMenu = 1;
-			paddle1 = 0;
-			paddle2 = 0;
-	}
+			paddle1 = 90;
+			paddle2 = 90;
+			scoreP1 = 0;
+			scoreP2 =0;
+		}
 	}
 }
