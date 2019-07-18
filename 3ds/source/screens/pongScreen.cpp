@@ -142,6 +142,18 @@ static void selectionLogic(u32 hDown, u32 hHeld) {
 }
 //#######################################################################################
 
+
+static void drawEndScreen(void) {
+	set_screen(top);
+	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
+	set_screen(bottom);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
+	Gui::DrawBarsBot();
+	drawScoreP1();
+	drawScoreP2();
+	Draw_Text(80, 140, 0.72f, WHITE, "Select : Restart");
+}
+
 // This is the actual Screen.
 //#######################################################################################
 static void drawScreen(void) {
@@ -154,8 +166,10 @@ static void drawScreen(void) {
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
 	Gui::DrawBarsBot();
+
 	drawScoreP1();
 	drawScoreP2();
+
 	Draw_Text(80, 80, 0.72f, WHITE, "How to Play :");
 	Draw_Text(80, 100, 0.72f, WHITE, "Player 1 : Up / Down");
 	Draw_Text(80, 120, 0.72f, WHITE, "Player 2 : X / B");
@@ -171,6 +185,8 @@ void drawPongScreen(void) {
 		drawScreen();
 	} else if (subMenu == 1) {
 		drawSubMenu();
+	} else if (subMenu == 2) {
+		drawEndScreen();
 	}
 }
 
@@ -178,16 +194,16 @@ void drawPongScreen(void) {
 // Player 1 Control.
 static void player1Control(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_DOWN) {
-		if(paddle1 < 181)	paddle1 += 4.0;
+		if(paddle1 < 181)	paddle1 += 6.0;
 		if (paddle1 == 180)	paddle1 += 0.0;
 	} else if (hDown & KEY_UP) {
-		if(paddle1 > -1)	paddle1 -= 4.0;
+		if(paddle1 > -1)	paddle1 -= 6.0;
 		if (paddle1 == 0)	paddle1 -= 0.0;
 	} else if (hHeld & KEY_DOWN) {
-		if(paddle1 < 181)	paddle1 += 4.0;
+		if(paddle1 < 181)	paddle1 += 6.0;
 		if (paddle1 == 180)	paddle1 += 0.0;
 	} else if (hHeld & KEY_UP) {
-		if(paddle1 > -1)	paddle1 -= 4.0;
+		if(paddle1 > -1)	paddle1 -= 6.0;
 		if (paddle1 == 0)	paddle1 -= 0.0;
 	}
 }
@@ -196,18 +212,60 @@ static void player1Control(u32 hDown, u32 hHeld) {
 // Player 2 Control.
 static void player2Control(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_B) {
-		if(paddle2 < 181)	paddle2 += 4.0;
+		if(paddle2 < 181)	paddle2 += 6.0;
 		if (paddle2 == 180)	paddle2 += 0.0;
 	} else if (hDown & KEY_X) {
-		if(paddle2 > -1)	paddle2 -= 4.0;
+		if(paddle2 > -1)	paddle2 -= 6.0;
 		if (paddle2 == 0)	paddle2 -= 0.0;
 	} else if (hHeld & KEY_B) {
-		if(paddle2 < 181)	paddle2 += 4.0;
+		if(paddle2 < 181)	paddle2 += 6.0;
 		if (paddle2 == 180)	paddle2 += 0.0;
 	} else if (hHeld & KEY_X) {
-		if(paddle2 > -1)	paddle2 -= 4.0;
+		if(paddle2 > -1)	paddle2 -= 6.0;
 		if (paddle2 == 0)	paddle2 -= 0.0;
 	}
+}
+
+static void ballLogic(void) {
+		ballX += ballXSpd;
+		ballY += ballYSpd;
+
+		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
+			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
+			playPongSfx();
+			ballXSpd = ballXSpd * -1.1;
+			ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
+		}
+
+		if (ballY < 0 || ballY > 230) {
+			playPongSfx();
+			ballYSpd = -ballYSpd;
+		}
+
+		if (ballX < 0) {
+			playScoreSfx();
+			scoreP2++;
+			ballX = 200;
+			ballY = 100;
+			ballXSpd = 3;
+			ballYSpd = 0;
+			paddle1 = 90;
+			paddle2 = 90;
+		} else if (ballX > 400) {
+			playScoreSfx();
+			scoreP1++;
+			ballX = 200;
+			ballY = 100;
+			ballXSpd = -3;
+			ballYSpd = 0;
+			paddle1 = 90;
+			paddle2 = 90;
+		}
+}
+
+static void stopLogic(void) {
+			paddle1 = 90;
+			paddle2 = 90;
 }
 
 void pongLogic(u32 hDown, u32 hHeld) {
@@ -216,41 +274,30 @@ void pongLogic(u32 hDown, u32 hHeld) {
 	}
 
 	if (subMenu == 0) {
+	if (scoreP1 == 10 || scoreP2 == 10) {
+		stopLogic();
+		subMenu = 2;
+	} else if (scoreP1 < 10 || scoreP2 < 10) {
+		ballLogic();
+	}
+	}
+
+	if (subMenu == 2 && hDown & KEY_SELECT) {
+		subMenu = 0;
+		paddle1 = 90;
+		paddle2 = 90;
+		scoreP1 = 0;
+		scoreP2 =0;
+	}
+
+	if (subMenu == 0) {
 		player1Control(hDown, hHeld);
 		if(multiPlayerMode == 0) {
 			if(ballY < paddle2+30 && paddle2 > 0)	paddle2--;
 			else if(paddle2 < 180)	paddle2++;
-		} else {
+		} else if (multiPlayerMode == 1) {
 			player2Control(hDown, hHeld);
 		}
-
-		ballX += ballXSpd;
-		ballY += ballYSpd;
-
-		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
-			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
-			ballXSpd = ballXSpd * -1.1;
-			ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
-		}
-
-		if (ballY < 0 || ballY > 230) {
-			ballYSpd = -ballYSpd;
-		}
-
-		if (ballX < 0) {
-			scoreP2++;
-			ballX = 200;
-			ballY = 100;
-			ballXSpd = 3;
-			ballYSpd = 0;
-		} else if (ballX > 400) {
-			scoreP1++;
-			ballX = 200;
-			ballY = 100;
-			ballXSpd = -3;
-			ballYSpd = 0;
-		}
-	}
 
 	if (subMenu == 0 && hDown & KEY_START) {
 		if(confirmPopup("Do you want to return to the Sub Menu?")) {
@@ -261,4 +308,5 @@ void pongLogic(u32 hDown, u32 hHeld) {
 			scoreP2 =0;
 		}
 	}
+}
 }
