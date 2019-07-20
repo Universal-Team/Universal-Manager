@@ -119,23 +119,20 @@ bool touching(touchPosition touch, ButtonPos button) {
 
 int main()
 {
-	aptInit();
-	amInit();
-	sdmcInit();
-	romfsInit();
-	srvInit();
-	hidInit();
 	acInit();
-	Config::loadConfig();
-    gfxInitDefault();
-	cfguInit();
-	Gui::init();
+	amInit();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
 	if (Config::Citra == 0) {
 	mcuInit();
 	} else if (Config::Citra == 1) {
 	}
+	romfsInit();
+	cfguInit();
+	sdmcInit();
+    gfxInitDefault();
+	Gui::init();
+	Config::loadConfig();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -430,13 +427,14 @@ int main()
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
-	cfguExit();
 	Gui::exit();
-	hidExit();
-	srvExit();
+	gfxExit();
+	cfguExit();
 	romfsExit();
 	sdmcExit();
-	aptExit();
+    hidExit();
+	amExit();
+	acExit();
 
     return 0;
 }
