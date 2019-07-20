@@ -60,7 +60,7 @@ inline C2D_TextBuf dynamicBuf, sizeBuf;
 
 ButtonPos calendarButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, mainScreen},
+	{293, 213, 27, 27, utilsScreen},
 };
 
 static void DisplayMonth(void) {

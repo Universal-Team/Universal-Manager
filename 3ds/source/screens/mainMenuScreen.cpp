@@ -48,7 +48,6 @@ ButtonPos mainScreenButtonPos[] = {
 	{0, 90, 149, 52, -1},
 	{170, 90, 149, 52, -1},
 	{0, 150, 149, 52, -1},
-	{170, 150, 149, 52, -1},
 };
 
 int mainMenuPage = 0;
@@ -85,8 +84,6 @@ static void drawMainMenuSelection2(void) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 88, Config::barColor);
 	} else if (mainSelection2 == 4) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 158, Config::barColor);
-	} else if (mainSelection2 == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 158, Config::barColor);
 	}
 }
 
@@ -153,15 +150,10 @@ void drawMainMenu(void) {
 	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
-	Gui::sprite(sprites_buttonIcon_idx, 175, 100);
-	Draw_Text(215, 107, 0.7f, WHITE, "Btn Tester");
+	Draw_Text(215, 107, 0.7f, WHITE, "Utils");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
-	Gui::sprite(sprites_calendarIcon_idx, 5, 170);
-	Draw_Text(50, 177, 0.7f, WHITE, "Calendar");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
-	Draw_Text(220, 177, 0.7f, WHITE, "Games");
+	Draw_Text(50, 177, 0.7f, WHITE, "Games");
 
 	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -204,7 +196,7 @@ static void mainMenuSelectionLogic2(u32 hDown) {
 		if (mainMenuPage == 1 && hDown & KEY_UP) {
 			if(mainSelection2 > 0)	mainSelection2--;
 		} else if (mainMenuPage == 1 && hDown & KEY_DOWN) {
-			if(mainSelection2 < 5)	mainSelection2++;
+			if(mainSelection2 < 4)	mainSelection2++;
 		} else if (mainMenuPage == 1 && hDown & KEY_A) {
 			switch(mainSelection2) {
 				case 0: {
@@ -217,14 +209,12 @@ static void mainMenuSelectionLogic2(u32 hDown) {
 					screenMode = textFileBrowse;
 					break;
 				} case 3: {
-					screenMode = buttonTesterScreen;
+					screenMode = utilsScreen;
 					break;
 				} case 4: {
-					screenMode = calendarScreen;
-					break;
-				} case 5:
 					screenMode = gameSubMenuScreen;
 					break;
+				}
 			}
 		}
 }
@@ -266,11 +256,9 @@ void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[8])) {
 				screenMode = textFileBrowse;
 			} else if (touching(touch, mainScreenButtonPos[9])) {
-				screenMode = buttonTesterScreen;
+				screenMode = utilsScreen;
 			} else if (touching(touch, mainScreenButtonPos[10])) {
-				screenMode = calendarScreen;
-			} else if (touching(touch, mainScreenButtonPos[11])) {
 				screenMode = gameSubMenuScreen;
+		}
 	}
-}
 }

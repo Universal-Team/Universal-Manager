@@ -67,6 +67,8 @@ extern C3D_RenderTarget* bottom;
 #define gameSubMenuScreen		25
 #define pongScreen				26
 #define tictactoeScreen			27
+#define utilsScreen				28
+#define calculatorScreen		29
 
 struct Playlist {
 	std::string name;
@@ -168,3 +170,12 @@ void pongLogic(u32 hDown, u32 hHeld);
 // Tic-Tac-Toe Screen.
 void drawTicTacToeScreen(void);
 void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Utils Stuff.
+
+void drawUtilsScreen(void);
+void utilsLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Calculator Stuff.
+void drawCalculatorScreen(void);
+void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch);

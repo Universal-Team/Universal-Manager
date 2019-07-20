@@ -56,7 +56,7 @@ ButtonPos ftpButtonPos[] = {
 
 ButtonPos buttonTesterButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, mainScreen},
+	{293, 213, 27, 27, utilsScreen},
 };
 
 ButtonPos gamesSubMenuButtonPos[] = {
@@ -68,7 +68,19 @@ ButtonPos gamesSubMenuButtonPos[] = {
 	{293, 213, 27, 27, -1},
 };
 
+ButtonPos utilsButtonPos[] = {
+		// Calendar.
+    {0, 40, 149, 52, -1},
+		// Button Tester. ;P
+	{170, 40, 149, 52, -1},
+		// Calculator.
+	{0, 150, 149, 52, -1},
+		// Back Icon.
+	{293, 213, 27, 27, -1},
+};
+
 int gameSelection = 0;
+int utilsSelection = 0;
 
 void drawCredits(void) {
 	C2D_SceneBegin(top);
@@ -348,6 +360,84 @@ void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, gamesSubMenuButtonPos[1])) {
 			screenMode = tictactoeScreen;
 		} else if (touching(touch, gamesSubMenuButtonPos[2])) {
+			screenMode = mainScreen;
+		}
+	}
+}
+
+
+static void drawUtilsSelection(void) {
+	if (utilsSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
+	} else if (utilsSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
+	} else if (utilsSelection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 148, Config::barColor);
+	}
+}
+
+
+void drawUtilsScreen(void) {
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text(130, 218, 0.72f, WHITE, "Utils Tab");
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBotBack();
+
+	// Buttons.
+	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[0].x, utilsButtonPos[0].y);
+	Gui::sprite(sprites_calendarIcon_idx, utilsButtonPos[0].x+5, utilsButtonPos[0].y+10);
+	Draw_Text(40, 57, 0.7f, WHITE, "Calendar");
+
+	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[1].x, utilsButtonPos[1].y);
+	Gui::sprite(sprites_buttonIcon_idx, utilsButtonPos[1].x+5, utilsButtonPos[1].y+10);
+	Draw_Text(210, 57, 0.65f, WHITE, "Btn Tester");
+
+	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[2].x, utilsButtonPos[2].y);
+	Draw_Text(37, 167, 0.65f, WHITE, "Calculator");
+
+	drawUtilsSelection();
+}
+
+static void utilsSelectionLogic(u32 hDown) {
+		if (hDown & KEY_UP) {
+			if(utilsSelection > 0)	utilsSelection--;
+		} else if (hDown & KEY_DOWN) {
+			if(utilsSelection < 2)	utilsSelection++;
+		} else if (hDown & KEY_A) {
+			switch(utilsSelection) {
+				case 0: {
+					screenMode = calendarScreen;
+					break;
+				} case 1:
+					screenMode = buttonTesterScreen;
+					break;
+				case 2: {
+					screenMode = calculatorScreen;
+					break;
+				}
+		}
+		}
+}
+
+void utilsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	utilsSelectionLogic(hDown);
+	if (hDown & KEY_B) {
+		screenMode = mainScreen;
+	} else if (hDown & KEY_TOUCH) {
+		if (touching(touch, utilsButtonPos[0])) {
+			screenMode = calendarScreen;
+		} else if (touching(touch, utilsButtonPos[1])) {
+			screenMode = buttonTesterScreen;
+		} else if (touching(touch, utilsButtonPos[2])) {
+			screenMode = calculatorScreen;
+		} else if (touching(touch, utilsButtonPos[3])) {
 			screenMode = mainScreen;
 		}
 	}

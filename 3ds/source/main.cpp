@@ -273,6 +273,14 @@ int main()
 			case tictactoeScreen:
 				drawTicTacToeScreen();
 				break;
+//#########################################################################################################
+			case utilsScreen:
+				drawUtilsScreen();
+				break;
+//#########################################################################################################
+			case calculatorScreen:
+				drawCalculatorScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -382,6 +390,14 @@ int main()
 //#########################################################################################################
 			case tictactoeScreen:
 				ticTacToeLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case utilsScreen:
+				utilsLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case calculatorScreen:
+				calculatorLogic(hDown, hHeld, touch);
 				break;
 		}
 //#########################################################################################################

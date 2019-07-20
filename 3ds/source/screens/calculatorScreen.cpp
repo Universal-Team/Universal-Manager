@@ -29,57 +29,59 @@
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "fileBrowse.h"
 
-extern "C" {
-#include "C2D_helper.h"
+struct Key {
+	std::string character;
+	int x;
+	int y;
+};
+
+// To-Do -> Make the positions correctly.
+Key calculatorKeys[] = {
+
+	// Numbers.
+	{"1", 0, 0},
+	{"2", 0, 0},
+	{"3", 0, 0},
+	{"4", 0, 40},
+	{"5", 0, 40},
+	{"6", 0, 40},
+	{"7", 0, 80},
+	{"8", 0, 80},
+	{"9", 0, 80},
+	{"0", 0, 120},
+	{".", 0, 120},
+
+	// Operations.
+	{"+", 0, 40},
+	{"-", 0, 40},
+	{"/", 0, 40},
+	{"*", 0, 40},
+	{"=", 0, 40},
+};
+
+// To-Do.
+static void drawCalculatorKeyboard(void) {
 }
 
- extern uint selectedFile;
- extern int keyRepeatDelay;
- extern bool dirChanged;
- extern std::vector<DirEntry> dirContents;
-std::string currentFile = "";
-std::string currentFiles;
 
-void drawFileBrowse(void) {
-	drawFileBrowser("File Manager");
+void drawCalculatorScreen(void) {
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	Draw_Text(125, 0, 0.72f, WHITE, "Calculator");
+	C2D_SceneBegin(bottom);
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
+	drawCalculatorKeyboard();
 }
 
-void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
-	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
-		}
-		} else if (hDown & KEY_B) {
-		char path[PATH_MAX];
-		getcwd(path, PATH_MAX);
-		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
-		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
-		}
-	} else if (hDown & KEY_X) {
-			displayActionBox();
-	} else if (hHeld & KEY_UP) {
-		if (selectedFile > 0 && !keyRepeatDelay) {
-			selectedFile--;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedFile < dirContents.size()-1) {
-			selectedFile++;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_SELECT) {
-		helperBox(" Press \uE001 to go back a Folder \n \n Press \uE002 to open the Action Menu.");
+// To-Do -> Calculator Logic.
+void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_B) {
+		screenMode = utilsScreen;
 	}
 }
