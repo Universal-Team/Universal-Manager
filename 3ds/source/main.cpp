@@ -427,6 +427,10 @@ int main()
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
+	if (dspfirmfound) {
+		ndspExit();
+	}
+	
 	Gui::exit();
 	gfxExit();
 	cfguExit();
