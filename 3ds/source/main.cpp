@@ -414,7 +414,6 @@ int main()
 		}
 		if (hDown & KEY_START && screenMode == mainScreen) 
 		{
-			stopPlayback();
 			break;
 		}
 		
@@ -423,11 +422,12 @@ int main()
     }
 
 	Config::saveConfig();
-	stopPlayback();
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
-	if (dspfirmfound) {
+	if (isPlaying()) {
+	stopPlayback(); // This seems to do `ndspExit();` already. I hope the Crash is finally fixed?
+	} else if (!isPlaying()) {
 		ndspExit();
 	}
 	
@@ -436,9 +436,8 @@ int main()
 	cfguExit();
 	romfsExit();
 	sdmcExit();
-    hidExit();
-	amExit();
 	acExit();
+	amExit();
 
     return 0;
 }
