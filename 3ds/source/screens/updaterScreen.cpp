@@ -285,21 +285,21 @@ void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if(hDown & KEY_A) {
 			switch(subSelection) {
 				case 0: {
-					screenMode = CFWScreen;
+					screenTransition(CFWScreen);
 					break;
 				} case 1:
-					screenMode = TWLScreen;
+					screenTransition(TWLScreen);
 					break;
 				  case 2: {
-					screenMode = OtherScreen;
+					screenTransition(OtherScreen);
 					break;
 				} case 3: {
-					screenMode = UniversalScreen;
+					screenTransition(UniversalScreen);
 					break;
 				}
 			}
 	} else if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		screenTransition(mainScreen);
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Do you want to check for Updates?")) {
 		DisplayMsg("Checking for Updates...\nPlease wait...");
@@ -310,15 +310,15 @@ void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		helperBox(" Press \uE002 to check for Updates.");
 	} else if(hDown & KEY_TOUCH) {
 				if (touching(touch, mainFunction[0])) {
-			screenMode = CFWScreen;
+			screenTransition(CFWScreen);
 		} else if (touching(touch, mainFunction[1])) {
-			screenMode = TWLScreen;
+			screenTransition(TWLScreen);
 		} else if (touching(touch, mainFunction[2])) {
-			screenMode = OtherScreen;
+			screenTransition(OtherScreen);
 		} else if (touching(touch, mainFunction[3])) {
-			screenMode = UniversalScreen;
+			screenTransition(UniversalScreen);
 		} else if(touching(touch, mainFunction[4])) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		}
 	}
 }
@@ -410,11 +410,11 @@ static void twlSelectionLogic(u32 hDown) {
 void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	twlSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = CFWScreen;
+		screenTransition(CFWScreen);
 	} else if (hDown & KEY_R) {
-		screenMode = OtherScreen;
+		screenTransition(OtherScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -439,7 +439,7 @@ void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			updateCheats();
 			}
 		} else if (touching(touch, TWLFunction[5])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 	}
 }
@@ -497,11 +497,11 @@ static void otherSelectionLogic(u32 hDown) {
 void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	otherSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = TWLScreen;
+		screenTransition(TWLScreen);
 	} else if (hDown & KEY_R) {
-		screenMode = UniversalScreen;
+		screenTransition(UniversalScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -510,7 +510,7 @@ void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, OTHERFunction[1])) {
 			downloadScripts();
 		} else if(touching(touch, OTHERFunction[2])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 }
 }
@@ -588,9 +588,9 @@ static void cfwSelectionLogic(u32 hDown) {
 void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	cfwSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_R) {
-		screenMode = TWLScreen;
+		screenTransition(TWLScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (touching(touch, CFWFunction[0])) {
@@ -606,7 +606,7 @@ void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			downloadGodMode9();
 			}
 		} else if (touching(touch, CFWFunction[3])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 		}
 
@@ -708,9 +708,9 @@ static void univSelectionLogic(u32 hDown) {
 void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	univSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = OtherScreen;
+		screenTransition(OtherScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -727,7 +727,7 @@ void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			updatingSelf = false;
 			}
 		} else if (touching(touch, UNIVFunction[6])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		} else if (touching(touch, UNIVFunction[2])) {
 			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
 			updatePKMNChestRelease(); 

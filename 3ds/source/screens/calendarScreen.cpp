@@ -60,7 +60,7 @@ inline C2D_TextBuf dynamicBuf, sizeBuf;
 
 ButtonPos calendarButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, utilsScreen},
+	{293, 213, 27, 27, -1},
 };
 
 static void DisplayMonth(void) {
@@ -619,9 +619,11 @@ void drawCalendarScreen(void) {
 }
 
 void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hDown & KEY_TOUCH) {
+	if (hDown & KEY_B) {
+		screenTransition(utilsScreen);
+	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, calendarButtonPos[0])) {
-			screenMode = calendarButtonPos[0].link;
+			screenTransition(utilsScreen);
 		}
 	}
 }

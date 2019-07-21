@@ -145,7 +145,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
 		} 
 	} else if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		screenTransition(mainScreen);
 	} else if (hDown & KEY_Y) {
 		std::string newScript = Input::getLine();
 		if(newScript != "") {
@@ -175,7 +175,7 @@ void scriptMainScreenLogic(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to edit this Script : \n\n "+scpts[selectedScpt].name+"")) {
 		scpt.open(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), std::ofstream::app);
-		screenMode = scriptCreatorFunctions;
+		screenTransition(scriptCreatorFunctions);
 	}
 	}
 }
@@ -328,7 +328,7 @@ void scriptCreatorFunctionsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save this Script?")) {
 			scpt.close();
-			screenMode = scriptMainScreen;
+			screenTransition(scriptMainScreen);
 	}
 	} else if (screenPage == 1 && hDown & KEY_L) {
 		screenPage = 0;

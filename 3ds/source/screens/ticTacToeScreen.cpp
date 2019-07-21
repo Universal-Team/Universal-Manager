@@ -197,7 +197,7 @@ static void selectionLogic(u32 hDown, u32 hHeld) {
 					selection = 0;
 					break;
 				  case 2: {
-					screenMode = gameSubMenuScreen;
+					screenTransition(gameSubMenuScreen);
 					selection = 0;
 					break;
 				  }

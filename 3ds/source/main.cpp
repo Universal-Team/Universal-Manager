@@ -123,16 +123,16 @@ int main()
 	amInit();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
+	sdmcInit();
+	Config::loadConfig();
 	if (Config::Citra == 0) {
 	mcuInit();
 	} else if (Config::Citra == 1) {
 	}
 	romfsInit();
 	cfguInit();
-	sdmcInit();
     gfxInitDefault();
 	Gui::init();
-	Config::loadConfig();
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 

@@ -25,6 +25,7 @@
 */
 
 #include "animation.hpp"
+#include "screenCommon.hpp"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,4 +99,9 @@ void animatedBGBot(void) {
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
+}
+
+// To-Do : -> animated Stuff.
+void screenTransition(int screen) {
+	screenMode = screen;
 }

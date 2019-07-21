@@ -171,22 +171,22 @@ static void mainMenuSelectionLogic1(u32 hDown) {
 		} else if (mainMenuPage == 0 && hDown & KEY_A) {
 			switch(mainSelection1) {
 				case 0: {
-					screenMode = fileManager;
+					screenTransition(fileManager);
 					break;
 				} case 1:
-					screenMode = ftpScreen;
+					screenTransition(ftpScreen);
 					break;
 				  case 2: {
-					screenMode = scriptMainScreen;
+					screenTransition(scriptMainScreen);
 					break;
 				} case 3: {
-					screenMode = musicMainScreen;
+					screenTransition(musicMainScreen);
 					break;
 				} case 4: {
-					screenMode = updaterSubMenu;
+					screenTransition(updaterSubMenu);
 					break;
 				} case 5:
-					screenMode = SettingsScreen;
+					screenTransition(SettingsScreen);
 					break;
 			}
 		}
@@ -200,19 +200,19 @@ static void mainMenuSelectionLogic2(u32 hDown) {
 		} else if (mainMenuPage == 1 && hDown & KEY_A) {
 			switch(mainSelection2) {
 				case 0: {
-					screenMode = ImageSelectorScreen;
+					screenTransition(ImageSelectorScreen);
 					break;
 				} case 1:
-					screenMode = creditsScreen;
+					screenTransition(creditsScreen);
 					break;
 				  case 2: {
-					screenMode = textFileBrowse;
+					screenTransition(textFileBrowse);
 					break;
 				} case 3: {
-					screenMode = utilsScreen;
+					screenTransition(utilsScreen);
 					break;
 				} case 4: {
-					screenMode = gameSubMenuScreen;
+					screenTransition(gameSubMenuScreen);
 					break;
 				}
 			}
@@ -234,31 +234,31 @@ void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		// First Page.
 		} else if (mainMenuPage == 0 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[0])) {
-				screenMode = fileManager;
+				screenTransition(fileManager);
 			} else if (touching(touch, mainScreenButtonPos[1])) {
-				screenMode = ftpScreen;
+				screenTransition(ftpScreen);
 			} else if (touching(touch, mainScreenButtonPos[2])) {
-				screenMode = scriptMainScreen;
+				screenTransition(scriptMainScreen);
 			} else if (touching(touch, mainScreenButtonPos[3])) {
-				screenMode = musicMainScreen;
+				screenTransition(musicMainScreen);
 			} else if (touching(touch, mainScreenButtonPos[4])) {
-				screenMode = updaterSubMenu;
+				screenTransition(updaterSubMenu);
 			} else if (touching(touch, mainScreenButtonPos[5])) {
-				screenMode = SettingsScreen;
+				screenTransition(SettingsScreen);
 			}
 
 			// Second Page.
 		} else if (mainMenuPage == 1 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[6])) {
-				screenMode = ImageSelectorScreen;
+				screenTransition(ImageSelectorScreen);
 			} else if (touching(touch, mainScreenButtonPos[7])) {
-				screenMode = creditsScreen;
+				screenTransition(creditsScreen);
 			} else if (touching(touch, mainScreenButtonPos[8])) {
-				screenMode = textFileBrowse;
+				screenTransition(textFileBrowse);
 			} else if (touching(touch, mainScreenButtonPos[9])) {
-				screenMode = utilsScreen;
+				screenTransition(utilsScreen);
 			} else if (touching(touch, mainScreenButtonPos[10])) {
-				screenMode = gameSubMenuScreen;
+				screenTransition(gameSubMenuScreen);
 		}
 	}
 }

@@ -55,7 +55,7 @@ Key calculatorKeys[] = {
 	// Operations.
 	{"+", 0, 40},
 	{"-", 0, 40},
-	{"/", 0, 40},
+	{"÷", 0, 40},
 	{"*", 0, 40},
 	{"=", 0, 40},
 };
@@ -82,6 +82,6 @@ void drawCalculatorScreen(void) {
 // To-Do -> Calculator Logic.
 void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenMode = utilsScreen;
+		screenTransition(utilsScreen);
 	}
 }

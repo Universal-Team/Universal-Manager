@@ -51,12 +51,12 @@ ButtonPos ftpFunctionButtonPos[] = {
 
 ButtonPos ftpButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, mainScreen},
+	{293, 213, 27, 27, -1},
 };
 
 ButtonPos buttonTesterButtonPos[] = {
 		// Back Icon.
-	{293, 213, 27, 27, utilsScreen},
+	{293, 213, 27, 27, -1},
 };
 
 ButtonPos gamesSubMenuButtonPos[] = {
@@ -164,7 +164,7 @@ void drawFTPScreen(void) {
 	memset(ftp_file_transfer, 0, 50); // Empty transfer status
 	ftp_exit();
 
-	screenMode = mainScreen;
+	screenTransition(mainScreen);
 }
 
 // NOTE: This'll get the app stuck in a loop while its running, so background
@@ -295,7 +295,7 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, buttonTesterButtonPos[0])) {
-			screenMode = buttonTesterButtonPos[0].link;
+			screenTransition(utilsScreen);
 	}
 }
 }
@@ -341,10 +341,10 @@ static void gameSelectionLogic(u32 hDown) {
 		} else if (hDown & KEY_A) {
 			switch(gameSelection) {
 				case 0: {
-					screenMode = pongScreen;
+					screenTransition(pongScreen);
 					break;
 				} case 1:
-					screenMode = tictactoeScreen;
+					screenTransition(tictactoeScreen);
 					break;
 		}
 		}
@@ -356,11 +356,11 @@ void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		screenMode = mainScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, gamesSubMenuButtonPos[0])) {
-			screenMode = pongScreen;
+			screenTransition(pongScreen);
 		} else if (touching(touch, gamesSubMenuButtonPos[1])) {
-			screenMode = tictactoeScreen;
+			screenTransition(tictactoeScreen);
 		} else if (touching(touch, gamesSubMenuButtonPos[2])) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		}
 	}
 }
@@ -413,13 +413,13 @@ static void utilsSelectionLogic(u32 hDown) {
 		} else if (hDown & KEY_A) {
 			switch(utilsSelection) {
 				case 0: {
-					screenMode = calendarScreen;
+					screenTransition(calendarScreen);
 					break;
 				} case 1:
-					screenMode = buttonTesterScreen;
+					screenTransition(buttonTesterScreen);
 					break;
 				case 2: {
-					screenMode = calculatorScreen;
+					screenTransition(calculatorScreen);
 					break;
 				}
 		}
@@ -429,16 +429,16 @@ static void utilsSelectionLogic(u32 hDown) {
 void utilsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	utilsSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		screenTransition(mainScreen);
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, utilsButtonPos[0])) {
-			screenMode = calendarScreen;
+			screenTransition(calendarScreen);
 		} else if (touching(touch, utilsButtonPos[1])) {
-			screenMode = buttonTesterScreen;
+			screenTransition(buttonTesterScreen);
 		} else if (touching(touch, utilsButtonPos[2])) {
-			screenMode = calculatorScreen;
+			screenTransition(calculatorScreen);
 		} else if (touching(touch, utilsButtonPos[3])) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		}
 	}
 }

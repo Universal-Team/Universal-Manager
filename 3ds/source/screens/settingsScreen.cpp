@@ -66,7 +66,7 @@ ButtonPos uiSettingsButtonPos[] = {
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
 
-	{293, 213, 27, 27, mainScreen},
+	{293, 213, 27, 27, -1},
 
 	// Music BG
 	{220, 28, 87, 33, -1},
@@ -233,7 +233,7 @@ void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (hHeld & KEY_SELECT) {
 			helperBox(" Press \uE052 / \uE053 to switch Pages.");
 		} else if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		screenTransition(mainScreen);
 		Config::saveConfig();
 		} else if (settingsPage == 0 && hDown & KEY_R) {
 			settingsPage = 1;
@@ -283,7 +283,7 @@ void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), getColorValue(Config::bgColor, 1), blue, 255);
 			}
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenMode = uiSettingsButtonPos[6].link;
+			screenTransition(mainScreen);
 			Config::saveConfig();
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			Config::musicMode++;
@@ -323,7 +323,7 @@ void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			Config::layoutBG++;
 			if (Config::layoutBG > 2) Config::layoutBG = 0;
 			} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenMode = uiSettingsButtonPos[6].link;
+			screenTransition(mainScreen);
 			Config::saveConfig();
 }
 		// Third Settings Page.
@@ -364,6 +364,9 @@ void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				blue = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);
 			}
-	}
+	} else if (touching(touch, uiSettingsButtonPos[6])) {
+			screenTransition(mainScreen);
+			Config::saveConfig();
+}
 }
 }

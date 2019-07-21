@@ -73,13 +73,13 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 		} else {
 			currentEditFile = dirContents[selectedFile].name;
 			readFile(dirContents[selectedFile].name.c_str());
-			screenMode = TextEditorScreen;
+			screenTransition(TextEditorScreen);
 		}
 		} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
  		} else {
 		chdir("..");
 		selectedFile = 0;
@@ -168,7 +168,7 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if(hDown & KEY_B) {
 		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
-			screenMode = textFileBrowse;
+			screenTransition(textFileBrowse);
 		}
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);
