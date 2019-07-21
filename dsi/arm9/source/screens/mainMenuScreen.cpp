@@ -41,4 +41,6 @@ void drawMainMenu(void) {
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 }
