@@ -35,7 +35,7 @@ using std::wstring;
 
 #include <3ds.h>
 
-static CIniFile settingsini( "sdmc:/Universal-Player/Settings.ini" );
+static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
 int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay, Config::layout, Config::layoutBG; // [UI]
 int Config::animation, Config::animationColor; // [ANIMATED]
@@ -85,6 +85,6 @@ void Config::saveConfig() {
 	// [SCREEN]
 	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
 
-	settingsini.SaveIniFile("sdmc:/Universal-Player/Settings.ini");
+	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 
