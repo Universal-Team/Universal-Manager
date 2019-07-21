@@ -35,12 +35,13 @@ using std::wstring;
 
 #include <3ds.h>
 
-static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
+static CIniFile settingsini( "sdmc:/Universal-Player/Settings.ini" );
 
 int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay, Config::layout, Config::layoutBG; // [UI]
 int Config::animation, Config::animationColor; // [ANIMATED]
-int Config::Citra; // [Citra]
+int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
+int Config::Screen; // [SCREEN] 
 
 void Config::loadConfig() {
 	// [UI]
@@ -58,6 +59,8 @@ void Config::loadConfig() {
 	// [TEXTCOLOR]
 	Config::selectedText = settingsini.GetInt("TEXTCOLOR", "SELECTED", BLUE);
 	Config::unselectedText = settingsini.GetInt("TEXTCOLOR", "UNSELECTED", BLACK);
+	// [SCREEN]
+	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
 }
 
 void Config::saveConfig() {
@@ -78,7 +81,10 @@ void Config::saveConfig() {
 	// [TEXTCOLOR]
 	settingsini.SetInt("TEXTCOLOR", "SELECTED", Config::selectedText);
 	settingsini.SetInt("TEXTCOLOR", "UNSELECTED", Config::unselectedText);
+	
+	// [SCREEN]
+	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
 
-	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
+	settingsini.SaveIniFile("sdmc:/Universal-Player/Settings.ini");
 }
 

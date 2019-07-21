@@ -35,6 +35,7 @@ namespace Config {
 	extern int animation, animationColor; // [ANIMATED]
 	extern int Citra; // [CITRA]
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
+	extern int Screen; // [SCREEN]
 
 	void loadConfig();
 	void saveConfig();
