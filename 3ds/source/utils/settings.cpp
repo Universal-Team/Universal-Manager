@@ -41,7 +41,8 @@ int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay
 int Config::animation, Config::animationColor; // [ANIMATED]
 int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
-int Config::Screen; // [SCREEN] 
+int Config::Screen; // [SCREEN]
+int Config::Welcome; // [WELCOME]
 
 void Config::loadConfig() {
 	// [UI]
@@ -61,6 +62,8 @@ void Config::loadConfig() {
 	Config::unselectedText = settingsini.GetInt("TEXTCOLOR", "UNSELECTED", BLACK);
 	// [SCREEN]
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
+	// [WELCOME]
+	Config::Welcome = settingsini.GetInt("WELCOME", "ENABLE", 1);
 }
 
 void Config::saveConfig() {
@@ -85,6 +88,12 @@ void Config::saveConfig() {
 	// [SCREEN]
 	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
 
+	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
+}
+
+void Config::setWelcome() {
+	// [WELCOME]
+	settingsini.SetInt("WELCOME", "ENABLE", Config::Welcome);
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 

@@ -68,12 +68,12 @@ sound *sfx_scroll = NULL;
 sound *sfx_pong = NULL;
 sound *sfx_score = NULL;
 
+int screenMode;
 bool dspfirmfound = false;
 
 static touchPosition touch;
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
-int screenMode = 0;
 
 ButtonPos uisettingsScreenButtonPos[] = {
     {293, 213, 27, 27, mainScreen},
@@ -133,6 +133,12 @@ int main()
 	cfguInit();
     gfxInitDefault();
 	Gui::init();
+
+	if (Config::Welcome == 0) { // Welcome if 1 and mainScreen if 0.
+		screenMode = 0;
+	} else if (Config::Welcome == 1) {
+		screenMode = 30;
+	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -278,6 +284,10 @@ int main()
 			case calculatorScreen:
 				drawCalculatorScreen();
 				break;
+//#########################################################################################################
+			case welcomeScreen:
+				drawWelcomeScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -395,6 +405,10 @@ int main()
 //#########################################################################################################
 			case calculatorScreen:
 				calculatorLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case welcomeScreen:
+				welcomeLogic(hDown, touch);
 				break;
 		}
 //#########################################################################################################
