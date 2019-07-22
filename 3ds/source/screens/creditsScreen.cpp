@@ -34,6 +34,8 @@
 
 static int dialog = 5; 
 static int dialog2 = 0; // For the Names. ;P
+extern int fadealpha;
+extern bool fadein;
 
 // Color Stuff.
 #define VOLTZCOLORBAR RGBA8(0, 108, 255, 255)
@@ -211,6 +213,7 @@ static void drawTotallyNotGuy(void) {
 static void drawCredits(void) {
 	set_screen(top);
 	Gui::Credits(credits_universal_credits_idx, 0, 0);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, GRAY);
@@ -220,6 +223,7 @@ static void drawCredits(void) {
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, BLUE);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 	Draw_Text(20, 0, 0.7f, WHITE, "Welcome to Universal-Manager!");
+	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
 static void drawCreditsDialogs(void) {

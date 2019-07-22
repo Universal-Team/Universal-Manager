@@ -53,6 +53,8 @@ ButtonPos mainScreenButtonPos[] = {
 int mainMenuPage = 0;
 static int mainSelection1 = 0;
 static int mainSelection2 = 0;
+extern int fadealpha;
+extern bool fadein;
 
 // Version numbers.
 char universal_manager_vertext[13];
@@ -98,6 +100,7 @@ void drawMainMenu(void) {
 	drawBatteryTop();
 	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
 	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -134,6 +137,7 @@ void drawMainMenu(void) {
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	drawMainMenuSelection1();
+	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 
 	// Second Page.

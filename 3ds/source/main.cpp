@@ -112,6 +112,9 @@ bool touching(touchPosition touch, ButtonPos button) {
 		return false;
 }
 
+int fadealpha = 255;
+bool fadein = true;
+
 
 int main()
 {
@@ -410,9 +413,16 @@ int main()
 		{
 			break;
 		}
-		
         C3D_FrameEnd(0);
         Gui::clearTextBufs();
+
+		if (fadein == true) {
+			fadealpha -= 15;
+			if (fadealpha < 0) {
+				fadealpha = 0;
+				fadein = false;
+			}
+		}
     }
 
 	Config::saveConfig();
