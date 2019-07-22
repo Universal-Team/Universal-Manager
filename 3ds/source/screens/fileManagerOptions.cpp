@@ -117,7 +117,7 @@ bool displayActionBox(void) {
 
 	// Buttons.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::sprite(sprites_FileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
+		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
 		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 

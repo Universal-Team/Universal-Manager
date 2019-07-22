@@ -73,13 +73,13 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 		} else {
 			currentEditFile = dirContents[selectedFile].name;
 			readFile(dirContents[selectedFile].name.c_str());
-			screenMode = TextEditorScreen;
+			screenTransition(TextEditorScreen);
 		}
 		} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
  		} else {
 		chdir("..");
 		selectedFile = 0;
@@ -124,17 +124,17 @@ void drawTextEditorScreen(void) {
 		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
 
 		if(i+textEditorScrnPos == textEditorCurPos ) {
-			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, BLACK, std::to_string(i+textEditorScrnPos+1).c_str());
+			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, Config::selectedText, std::to_string(i+textEditorScrnPos+1).c_str());
 
 			for(uint l=0;l<lines.size();l++) {
-				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, BLUE, lines[l].c_str());
+				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, Config::selectedText, lines[l].c_str());
 				ii++;
 			}
 		} else {
-			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, GRAY, std::to_string(i+textEditorScrnPos+1).c_str());
+			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, Config::unselectedText, std::to_string(i+textEditorScrnPos+1).c_str());
 			
 			for(uint l=0;l<lines.size();l++) {
-				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, BLACK, lines[l].c_str());
+				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, Config::unselectedText, lines[l].c_str());
 				ii++;
 			}
 		}
@@ -168,7 +168,7 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if(hDown & KEY_B) {
 		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
-			screenMode = textFileBrowse;
+			screenTransition(textFileBrowse);
 		}
 	} else if(hDown & KEY_X) {
 		textEditorText.erase(textEditorText.begin()+textEditorCurPos);

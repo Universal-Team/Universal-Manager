@@ -1,10 +1,10 @@
-#include "SDL_helper.h"
-#include "textures.h"
+#include "gui.hpp"
+#include "textures.hpp"
 
 SDL_Texture *MainMenuButton;
 
 void Textures_Load(void) {
-	SDL_LoadImage(&MainMenuButton, "romfs:/Buttons/MainMenuButton.png");
+	Gui::LoadImage(&MainMenuButton, "romfs:/Buttons/MainMenuButton.png");
 }
 
 void Textures_Free(void) {

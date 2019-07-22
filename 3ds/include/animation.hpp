@@ -35,5 +35,7 @@
 void animatedBGTop(void);
 void animatedBGBot(void);
 
+// Animated Screen transitions. [To-Do!]
+void screenTransition(int screen);
 
 #endif // ANIMATION_HPP

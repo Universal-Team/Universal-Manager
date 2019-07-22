@@ -48,7 +48,8 @@ struct ButtonPos {
 	int link;
 };
 
-bool imageLoaded = false;
+bool themeImageLoaded = false;
+bool coverImageLoaded = false;
 
 uint selectedFile = 0;
 int keyRepeatDelay = 3;
@@ -70,15 +71,21 @@ bool decForRepeat2 = false;
 uint selectedPlstItem = 0;
 int movingPlstItem = -1;
 std::vector<std::string> plstContents;
+static int selection = 0;
 
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
-static C2D_Image musicImage;
+static C2D_Image musicImage, coverImage;
 
-static bool Draw_Image(void)
+static bool Draw_ThemeImage(void)
 {
 	return C2D_DrawImageAt(musicImage, 0, 25, 0.5);
+}
+
+static bool Draw_CoverImage(void)
+{
+	return C2D_DrawImageAt(coverImage, 230, 25, 0.5);
 }
 
 ButtonPos mainButtonPos[] = {
@@ -138,11 +145,41 @@ void drawMusicMain() {
 	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
 	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
 	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
+
+	if (selection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
+	} else if (selection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
+	} else if (selection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 148, Config::barColor);
+	} else if (selection == 3) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 148, Config::barColor);
+	}
 }
 
 void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(hDown & KEY_B) {
-		screenMode = mainScreen;
+	if(keysDown() & KEY_UP) {
+		if(selection > 0)	selection--;
+	} else if(keysDown() & KEY_DOWN) {
+		if(selection < 3)	selection++;
+		} else if(keysDown() & KEY_A) {
+			switch(selection) {
+				case 0: {
+					screenTransition(musicListScreen);
+					break;
+				} case 1:
+					screenTransition(musicPlayerScreen);
+					break;
+				  case 2: {
+					screenTransition(musicPlaylistPlayScreen);
+					break;
+				} case 3: {
+					screenTransition(themeSelectorScreen);
+					break;
+				}
+			}
+	} else if(hDown & KEY_B) {
+		screenTransition(mainScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press Songs to open the Song File Browse. \n \n Press Now Playing to open the Music Player. \n \n Press Playlists to open the Playlist Menu. \n \n Press Themes to Select an Image for the Music Player. \n \n (You need the BG Mode in the Settings!)");
 	} else if(hDown & KEY_TOUCH) {
@@ -200,7 +237,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = musicMainScreen;
+			screenTransition(musicMainScreen);
 		} else {
 		chdir("..");
 		selectedFile = 0;
@@ -208,9 +245,9 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hDown & KEY_Y) {
 		dirChanged = true;
-		screenMode = musicPlaylistAddScreen;
+		screenTransition(musicPlaylistAddScreen);
 	} else if (hDown & KEY_X) {
-		screenMode = musicMainScreen;
+		screenTransition(musicMainScreen);
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -224,7 +261,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 			keyRepeatDelay = 3;
 		}
 	} else if (hDown & KEY_START) {
-	screenMode = musicPlayerScreen;
+		screenTransition(musicPlayerScreen);
 } else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Song. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu. \n \n Press \uE003 to open the Playlist Menu. \n \n Press Start to open the Music Player.");
 	}
@@ -239,6 +276,7 @@ void drawMusicPlayer(void) {
 		// Placeholder for Metadata Stuff..
 	 	if (Config::musicMode == 0) {
 	} else if (Config::musicMode == 1) {
+
 			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
 			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
 			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
@@ -247,22 +285,39 @@ void drawMusicPlayer(void) {
 		} else {
 			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
 		}
+
+		if (coverImageLoaded == true) {
+			Draw_CoverImage(); 
+		} else if (coverImageLoaded == false) {
+			Gui::sprite(sprites_cover_glow_idx, 250, 30);
+			Gui::sprite(sprites_cover_normal_idx, 250, 30);
+		}
+
 	} else if (Config::musicMode == 2) {
-		if (imageLoaded == true) {
-		Draw_Image(); 
-	} else if (imageLoaded == false) {
+		if (themeImageLoaded == true) {
+		Draw_ThemeImage(); 
+	} else if (themeImageLoaded == false) {
 			Draw_Text(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
 	}
 	}
 	
 	if(isPlaying()) {
+
+		// Current Song.
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		Draw_Text(0, 0, 0.50f, WHITE, nowPlayingText.c_str());
-		Draw_Rect(155, 164, 85, 10, GRAY);
-		Draw_Text(160, 162, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + " / " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
-		if (Audio_GetPosition() != -1) {
-		Draw_Rect(100, 179, 207, 16, GRAY);
-		Draw_Rect(100, 179, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 207.0), 16, Config::barColor);
+		Draw_Text(0, 0, 0.45f, WHITE, nowPlayingText.c_str());
+
+
+		// If Filetype is MP3, display the Progressbar, else not.
+		if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0)) {
+		// Progressbar - Time.
+		Draw_Rect(100, 179, 207, 10, GRAY);
+		Draw_Text(110, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + "                            " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		// Progressbar - Display.
+		Draw_Rect(120, 194, 150, 12, GRAY);
+		Draw_Rect(120, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 150.0), 12, Config::barColor);
+		} else {
+			Draw_Text(40, 177, 0.45f, WHITE, "Progressbar not available for this Music Format yet.");
 		}
 
 	
@@ -311,7 +366,7 @@ void musicPlayerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hDown & KEY_X) {
 		stopPlayback();
 	} else if (hDown & KEY_B) {
-		screenMode = musicPlayerReturn;
+		screenTransition(musicPlayerReturn);
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, playerButtonPos[0])) {
 			togglePlayback();
@@ -435,9 +490,9 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 				fclose(plst);
 			}
 		}
-		screenMode = musicListScreen;
+		screenTransition(musicListScreen);
 	} else if (hDown & KEY_B) {
-		screenMode = musicListScreen;
+		screenTransition(musicListScreen);
 	} else if (hDown & KEY_Y) {
 		std::string newPlaylist = Input::getLine();
 		if(newPlaylist != "") {
@@ -526,7 +581,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 			}
 		}
 	} else if (hDown & KEY_B) {
-		screenMode = musicMainScreen;
+		screenTransition(musicMainScreen);
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Are you sure you want to delete this playlist?")) {
 			remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
@@ -540,7 +595,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 			plstContents.push_back(temp);
 		}
 		selectedPlstItem = 0;
-		screenMode = musicPlaylistEditScreen;
+		screenTransition(musicPlaylistEditScreen);
 	} else if (hHeld & KEY_UP) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
@@ -594,9 +649,9 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 			fputs((plstContents[i]+"\n").c_str(), plst);
 		}
 		fclose(plst);
-		screenMode = musicPlaylistPlayScreen;
+		screenTransition(musicPlaylistPlayScreen);
 	} else if(hDown & KEY_B) {
-		screenMode = musicPlaylistPlayScreen;
+		screenTransition(musicPlaylistPlayScreen);
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Are you sure you want to remove this song?")) {
 			plstContents.erase(plstContents.begin()+selectedPlstItem);
@@ -645,19 +700,19 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentSong) {
 			}
 			if (Config::musicMode == 0) {
-			DisplayMsg("Put the Music Mode to `BG`.");
+			DisplayMsg("Put the Music Mode to\n `BG` or `COVER`.");
 			for (int i = 0; i < 60*4; i++) {
 			gspWaitForVBlank();
 			}
 		} else if (Config::musicMode == 1) {
-			DisplayMsg("Put the Music Mode to `BG`.");
-			for (int i = 0; i < 60*4; i++) {
-			gspWaitForVBlank();
+			if(confirmPopup("Do you want, to use this Image\nAs the Cover Image?")) {
+			Draw_LoadImageFile(&coverImage, dirContents[selectedFile].name.c_str());
+			coverImageLoaded = true;
 			}
 		} else if (Config::musicMode == 2) {
-			if(confirmPopup("Do you want, to use this Image?")) {
+			if(confirmPopup("Do you want, to use this Image\nAs the Theme Image?")) {
 			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
-			imageLoaded = true;
+			themeImageLoaded = true;
 			}
 		}
 		}
@@ -665,14 +720,14 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = musicMainScreen;
+			screenTransition(musicMainScreen);
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if(hDown & KEY_X) {
-		screenMode = musicMainScreen;
+		screenTransition(musicMainScreen);
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;

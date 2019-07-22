@@ -37,6 +37,8 @@ C3D_RenderTarget* bottom;
 
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
+static C2D_SpriteSheet welcome;
+
 C2D_TextBuf dynamicBuf, sizeBuf;
 C2D_Font systemFont, editorFont;
 
@@ -77,6 +79,8 @@ Result Gui::init(void)
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
+    welcome   = C2D_SpriteSheetLoad("romfs:/gfx/welcome.t3x");
+    
     systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
     return 0;
@@ -91,6 +95,10 @@ void Gui::exit(void)
     if (animation)
     {
         C2D_SpriteSheetFree(animation);
+    }
+    if (welcome)
+    {
+        C2D_SpriteSheetFree(welcome);
     }
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
@@ -127,6 +135,19 @@ void Gui::AnimationSprite(int key, int x, int y)
     else
     {
         C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
+    }
+}
+
+void Gui::WelcomeSprite(int key, int x, int y)
+{
+    if (key == sprites_res_null_idx)
+    {
+        return;
+    }
+    // standard case
+    else
+    {
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(welcome, key), x, y, 0.5f);
     }
 }
 
@@ -273,9 +294,9 @@ void drawBatteryTop(void) {
 	Gui::sprite(sprites_battery25_idx, 361, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
 	Gui::sprite(sprites_battery50_idx, 361, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 99) {
+	} else if(batteryPercent > 50 && batteryPercent <= 75) {
     Gui::sprite(sprites_battery75_idx, 361, 0);
-	} else if(batteryPercent == 100) {
+	} else if(batteryPercent > 75 || batteryPercent == 100) {
 	Gui::sprite(sprites_battery100_idx, 361, 0);
 	}
 
@@ -309,9 +330,9 @@ void drawBatteryBot(void) {
 	Gui::sprite(sprites_battery25_idx, 281, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
 	Gui::sprite(sprites_battery50_idx, 281, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 99) {
+	} else if(batteryPercent > 50 && batteryPercent <= 75) {
     Gui::sprite(sprites_battery75_idx, 281, 0);
-	} else if(batteryPercent == 100) {
+	} else if(batteryPercent > 75 || batteryPercent == 100) {
 	Gui::sprite(sprites_battery100_idx, 281, 0);
 	}
 

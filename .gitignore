@@ -6,8 +6,7 @@
 *.elf
 *.cia
 *.3dsx
-build/vshader_shbin.h
-build/vshader.shbin
+*/build
 *.map
 *.lst
 .vscode/ipch

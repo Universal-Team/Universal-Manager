@@ -25,6 +25,7 @@
 */
 
 #include "animation.hpp"
+#include "screenCommon.hpp"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,4 +99,20 @@ void animatedBGBot(void) {
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
+}
+
+// To-Do : -> animated Stuff.
+void screenTransition(int screen) {
+	if (Config::Screen == 0) {
+		screenMode = screen;
+	} else if (Config::Screen == 1) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		C3D_FrameRate(1);
+    	C2D_TargetClear(top, TRANSPARENT);
+    	C2D_TargetClear(bottom, TRANSPARENT);
+		C3D_FrameEnd(0);
+		gspWaitForVBlank();
+		screenMode = screen;
+		C3D_FrameRate(60);
+	}
 }

@@ -28,8 +28,8 @@
 #include <stdlib.h>
 #include "screens/screenCommon.hpp"
 
+
 extern "C" {
-	#include "textures.h"
 	#include "touch_helper.h"
 }
 
@@ -42,16 +42,16 @@ void drawMainMenu(void) {
 	// Initialize the Version Number.
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
-	SDL_DrawRect(0, 0, 1280, 720, GRAY);
-	SDL_DrawRect(0, 0, 1280, 100, BARCOLOR);
-	SDL_DrawRect(0, 620, 1280, 100, BARCOLOR);
-	SDL_DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	SDL_DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
+	Gui::DrawRect(0, 0, 1280, 720, GRAY);
+	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
+	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
+	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
+	Gui::DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
 
 	// Buttons.
-	SDL_DrawImage(MainMenuButton, 40, 150);
-	SDL_DrawImage(MainMenuButton, 40, 300);
-	SDL_DrawImage(MainMenuButton, 40, 450);
+	Gui::DrawImage(MainMenuButton, 40, 150);
+	Gui::DrawImage(MainMenuButton, 40, 300);
+	Gui::DrawImage(MainMenuButton, 40, 450);
 }
 
 void MainMenuLogic(u64 hDown, TouchInfo touchInfo) {

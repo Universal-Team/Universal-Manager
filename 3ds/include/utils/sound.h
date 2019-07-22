@@ -18,3 +18,5 @@ private:
 };
 
 void playScrollSfx(void);
+void playPongSfx(void);
+void playScoreSfx(void);

@@ -24,25 +24,29 @@
 *         reasonable ways as different from the original version.
 */
 
+#ifndef COLORS_HPP
+#define COLORS_HPP
 
 #include "SDL_FontCache.h"
 
-#define WHITE 	FC_MakeColor(255, 255, 255, 255)
+#define WHITE 			FC_MakeColor(255, 255, 255, 255)
 
-#define BLACK 	FC_MakeColor(0, 0, 0, 255)
+#define BLACK 			FC_MakeColor(0, 0, 0, 255)
 
-#define GRAY 	FC_MakeColor(127, 127, 127, 255)
+#define GRAY 			FC_MakeColor(127, 127, 127, 255)
 
-#define GREYISH 	FC_MakeColor(200, 200, 200, 255)
+#define GREYISH 		FC_MakeColor(200, 200, 200, 255)
 
-#define BLUE 	FC_MakeColor(0, 0, 128, 255)
+#define BLUE 			FC_MakeColor(0, 0, 128, 255)
 
-#define TRANSPARENT 	FC_MakeColor(0, 0, 0, 0)
+#define TRANSPARENT 	FC_MakeColor(0, 0, 0, 255)
 
-#define RED 	FC_MakeColor(255, 0, 0, 255)
+#define RED 			FC_MakeColor(255, 0, 0, 255)
 
-#define GREEN 	FC_MakeColor(0, 255, 0, 255)
+#define GREEN 			FC_MakeColor(0, 255, 0, 255)
 
-#define BLUE2 	FC_MakeColor(0, 0, 255, 255)
+#define BLUE2 			FC_MakeColor(0, 0, 255, 255)
 
-#define BARCOLOR 	FC_MakeColor(0, 108, 255, 255)
+#define BARCOLOR 		FC_MakeColor(0, 108, 255, 255)
+
+#endif

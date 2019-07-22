@@ -65,13 +65,15 @@ extern bool firstSong;
 
 //Music and sound effects.
 sound *sfx_scroll = NULL;
+sound *sfx_pong = NULL;
+sound *sfx_score = NULL;
 
+int screenMode;
 bool dspfirmfound = false;
 
 static touchPosition touch;
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
-int screenMode = 0;
 
 ButtonPos uisettingsScreenButtonPos[] = {
     {293, 213, 27, 27, mainScreen},
@@ -103,6 +105,8 @@ void screenon()
 
 static void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
+	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
+	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
 }
 
 bool touching(touchPosition touch, ButtonPos button) {
@@ -115,22 +119,25 @@ bool touching(touchPosition touch, ButtonPos button) {
 
 int main()
 {
-	aptInit();
-	amInit();
-	sdmcInit();
-	romfsInit();
-	srvInit();
-	hidInit();
 	acInit();
-	Config::loadConfig();
-    gfxInitDefault();
-	cfguInit();
-	Gui::init();
+	amInit();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
+	sdmcInit();
+	Config::loadConfig();
 	if (Config::Citra == 0) {
 	mcuInit();
 	} else if (Config::Citra == 1) {
+	}
+	romfsInit();
+	cfguInit();
+    gfxInitDefault();
+	Gui::init();
+
+	if (Config::Welcome == 0) { // Welcome if 1 and mainScreen if 0.
+		screenMode = 0;
+	} else if (Config::Welcome == 1) {
+		screenMode = 30;
 	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
@@ -257,6 +264,30 @@ int main()
 			case calendarScreen:
 				drawCalendarScreen();
 				break;
+//#########################################################################################################
+			case gameSubMenuScreen:
+				drawGamesSubMenuScreen();
+				break;
+//#########################################################################################################
+			case pongScreen:
+				drawPongScreen();
+				break;
+//#########################################################################################################
+			case tictactoeScreen:
+				drawTicTacToeScreen();
+				break;
+//#########################################################################################################
+			case utilsScreen:
+				drawUtilsScreen();
+				break;
+//#########################################################################################################
+			case calculatorScreen:
+				drawCalculatorScreen();
+				break;
+//#########################################################################################################
+			case welcomeScreen:
+				drawWelcomeScreen();
+				break;
 		}
 
 		// Scans inputs for the current screen
@@ -355,6 +386,30 @@ int main()
 			case calendarScreen:
 				calendarLogic(hDown, hHeld, touch);
 				break;
+//#########################################################################################################
+			case gameSubMenuScreen:
+				gamesSubMenuLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case pongScreen:
+				pongLogic(hDown, hHeld);
+				break;
+//#########################################################################################################
+			case tictactoeScreen:
+				ticTacToeLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case utilsScreen:
+				utilsLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case calculatorScreen:
+				calculatorLogic(hDown, hHeld, touch);
+				break;
+//#########################################################################################################
+			case welcomeScreen:
+				welcomeLogic(hDown, touch);
+				break;
 		}
 //#########################################################################################################
 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
@@ -373,7 +428,6 @@ int main()
 		}
 		if (hDown & KEY_START && screenMode == mainScreen) 
 		{
-			stopPlayback();
 			break;
 		}
 		
@@ -382,15 +436,22 @@ int main()
     }
 
 	Config::saveConfig();
-	stopPlayback();
 	delete sfx_scroll;
-	cfguExit();
+	delete sfx_pong;
+	delete sfx_score;
+	if (isPlaying()) {
+	stopPlayback(); // This seems to do `ndspExit();` already. I hope the Crash is finally fixed?
+	} else if (!isPlaying()) {
+		ndspExit();
+	}
+	
 	Gui::exit();
-	hidExit();
-	srvExit();
+	gfxExit();
+	cfguExit();
 	romfsExit();
 	sdmcExit();
-	aptExit();
+	acExit();
+	amExit();
 
     return 0;
 }

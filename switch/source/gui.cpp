@@ -1,8 +1,13 @@
-#include "SDL_helper.h"
+#include "gui.hpp"
+#include "screenCommon.hpp"
+#include <assert.h>
+#include <stdarg.h>
+#include <unistd.h>
 
-static SDL_Window *Window;
-static SDL_Renderer *Rendering;
-static FC_Font *Roboto, *Roboto_large, *Roboto_small, *Roboto_title;
+
+SDL_Window *Window;
+SDL_Renderer *Rendering;
+FC_Font *Roboto, *Roboto_large, *Roboto_small, *Roboto_title;
 
 SDL_Renderer *SDL_GetMainRenderer(void) {
 	return Rendering;
@@ -25,11 +30,11 @@ static FC_Font *SDL_GetFont(int size) {
 	return Roboto;
 }
 
-int SDL_Initialize(void) {
+Result Gui::Init(void) {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
 		return -1;
 
-	Window = SDL_CreateWindow("NX-Shell", 0, 0, 1280, 720, SDL_WINDOW_FULLSCREEN);
+	Window = SDL_CreateWindow("Universal-Manager-NX", 0, 0, 1280, 720, SDL_WINDOW_FULLSCREEN);
 	if (Window == NULL)
 		return -1;
 
@@ -54,7 +59,8 @@ int SDL_Initialize(void) {
 	return 0;
 }
 
-void SDL_Terminate(void) {
+
+void Gui::Exit(void) {
 	FC_FreeFont(Roboto_large);
 	FC_FreeFont(Roboto);
 	FC_FreeFont(Roboto_title);
@@ -68,12 +74,12 @@ void SDL_Terminate(void) {
 	SDL_Quit();
 }
 
-void SDL_ClearScreen(SDL_Color colour) {
+void Gui::ClearScreen(SDL_Color colour) {
 	SDL_SetRenderDrawColor(Rendering, colour.r, colour.g, colour.b, colour.a);
 	SDL_RenderClear(Rendering);
 }
 
-void SDL_DrawRect(int x, int y, int w, int h, SDL_Color colour) {
+void Gui::DrawRect(int x, int y, int w, int h, SDL_Color colour) {
 	SDL_Rect rect;
 	rect.x = x; rect.y = y; rect.w = w; rect.h = h;
 	SDL_SetRenderDrawBlendMode(Rendering, SDL_BLENDMODE_BLEND);
@@ -81,11 +87,11 @@ void SDL_DrawRect(int x, int y, int w, int h, SDL_Color colour) {
 	SDL_RenderFillRect(Rendering, &rect);
 }
 
-void SDL_DrawText(int x, int y, int size, SDL_Color colour, const char *text) {
+void Gui::DrawText(int x, int y, int size, SDL_Color colour, const char *text) {
 	FC_DrawColor(SDL_GetFont(size), Rendering, x, y, colour, text);
 }
 
-void SDL_GetTextDimensions(int size, const char *text, u32 *width, u32 *height) {
+void Gui::GetTextDimensions(int size, const char *text, u32 *width, u32 *height) {
 	FC_Font *font = SDL_GetFont(size);
 
 	if (width != NULL) 
@@ -94,7 +100,7 @@ void SDL_GetTextDimensions(int size, const char *text, u32 *width, u32 *height) 
 		*height = FC_GetHeight(font, text);
 }
 
-void SDL_LoadImage(SDL_Texture **texture, char *path) {
+void Gui::LoadImage(SDL_Texture **texture, char *path) {
 	SDL_Surface *loaded_surface = NULL;
 	loaded_surface = IMG_Load(path);
 
@@ -106,13 +112,13 @@ void SDL_LoadImage(SDL_Texture **texture, char *path) {
 	SDL_FreeSurface(loaded_surface);
 }
 
-void SDL_DrawImage(SDL_Texture *texture, int x, int y) {
+void Gui::DrawImage(SDL_Texture *texture, int x, int y) {
 	SDL_Rect position;
 	position.x = x; position.y = y;
 	SDL_QueryTexture(texture, NULL, NULL, &position.w, &position.h);
 	SDL_RenderCopy(Rendering, texture, NULL, &position);
 }
 
-void SDL_RenderScreen(void) {
+void Gui::RenderScreen(void) {
 	SDL_RenderPresent(Rendering);
 }

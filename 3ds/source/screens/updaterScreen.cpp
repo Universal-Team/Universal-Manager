@@ -30,6 +30,12 @@
 #include <unistd.h>
 #include "settings.hpp"
 
+static int subSelection = 0;
+static int cfwSelection = 0;
+static int twlSelection = 0;
+static int othSelection = 0;
+static int univSelection = 0;
+
 bool updatingSelf = false;
 
 struct ButtonPos {
@@ -158,7 +164,7 @@ size_t UNIVButtonsTex[] = {
 };
 
 ButtonPos UNIVFunction[] = {
-	{129, 48, 87, 33, -1}, // Univ Manager Release
+	{129, 48, 87, 33, -1}, // Univ Manager Release 
 	{220, 48, 87, 33, -1}, // Univ Manager Nightly
 	{129, 88, 87, 33, -1}, // Pokemon Chest Release
 	{220, 88, 87, 33, -1}, // Pokemon Chest Nightly
@@ -189,6 +195,65 @@ bool updateAvailable[] = {
 
 extern bool touching(touchPosition touch, ButtonPos button);
 
+static void drawSubSelection(void) {
+	if (subSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 38, Config::barColor);
+	} else if (subSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+	} else if (subSelection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+	} else if (subSelection == 3) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 78, Config::barColor);
+	}
+}
+
+static void drawCFWSelection(void) {
+	if (cfwSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+	} else if (cfwSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+	} else if (cfwSelection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+	}
+}
+
+static void drawTWLSelection(void) {
+	if (twlSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+	} else if (twlSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+	} else if (twlSelection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+	} else if (twlSelection == 3) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
+	} else if (twlSelection == 4) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
+	}
+}
+
+static void drawOTHERSelection(void) {
+	if (othSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+	} else if (othSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+	}
+}
+
+static void drawUNIVSelection(void) {
+	if (univSelection == 0) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+	} else if (univSelection == 1) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+	} else if (univSelection == 2) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+	} else if (univSelection == 3) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
+	} else if (univSelection == 4) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
+	} else if (univSelection == 5) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 118, Config::barColor);
+	}
+}
 
 void drawUpdaterSubMenu(void) {
 	Gui::DrawBGTop();
@@ -209,29 +274,51 @@ void drawUpdaterSubMenu(void) {
 	Draw_Text(140, 58, 0.7f, WHITE, "TWL");
 	Draw_Text(229, 58, 0.7f, WHITE, "Other");
 	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
+	drawSubSelection();
 }
 
 void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hDown & KEY_B) {
-		screenMode = mainScreen;
+	if(hDown & KEY_UP) {
+		if(subSelection > 0)	subSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(subSelection < 3)	subSelection++;
+		} else if(hDown & KEY_A) {
+			switch(subSelection) {
+				case 0: {
+					screenTransition(CFWScreen);
+					break;
+				} case 1:
+					screenTransition(TWLScreen);
+					break;
+				  case 2: {
+					screenTransition(OtherScreen);
+					break;
+				} case 3: {
+					screenTransition(UniversalScreen);
+					break;
+				}
+			}
+	} else if (hDown & KEY_B) {
+		screenTransition(mainScreen);
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Do you want to check for Updates?")) {
 		DisplayMsg("Checking for Updates...\nPlease wait...");
 		checkForUpdates();
 		}
+
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE002 to check for Updates.");
 	} else if(hDown & KEY_TOUCH) {
 				if (touching(touch, mainFunction[0])) {
-			screenMode = CFWScreen;
+			screenTransition(CFWScreen);
 		} else if (touching(touch, mainFunction[1])) {
-			screenMode = TWLScreen;
+			screenTransition(TWLScreen);
 		} else if (touching(touch, mainFunction[2])) {
-			screenMode = OtherScreen;
+			screenTransition(OtherScreen);
 		} else if (touching(touch, mainFunction[3])) {
-			screenMode = UniversalScreen;
+			screenTransition(UniversalScreen);
 		} else if(touching(touch, mainFunction[4])) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		}
 	}
 }
@@ -252,18 +339,18 @@ void drawUpdaterTWL(void) {
 	for (int i = (int)(sizeof(TWLButtons)/sizeof(TWLButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(TWLButtonsTex[i], TWLButtons[i].x, TWLButtons[i].y);
 	}
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "TWLMENU++");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	// NDS-Bootstrap Buttons.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.60f, WHITE, "NDS-Bootstrap");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 128);
+	Gui::sprite(sprites_titleButton_idx, 0, 128);
 	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
@@ -279,15 +366,55 @@ void drawUpdaterTWL(void) {
         Gui::sprite(sprites_dot_idx, TWLButtons[i].x+75, TWLButtons[i].y-6);
     }
 }
+	drawTWLSelection();
 }
 
+static void twlSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(twlSelection > 0)	twlSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(twlSelection < 4)	twlSelection++;
+		} else if(hDown & KEY_A) {
+			switch(twlSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Release?")) {
+					updateTWiLight(false);
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update TWiLightMenu\nTo Nightly?")) {
+					updateTWiLight(true);
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Release?")) {
+					updateBootstrap(false);
+					}
+					break;
+				} case 3: {
+					if(confirmPopup("Are you sure you want to update NDS-Bootstrap\nTo Nightly?")) {
+					updateBootstrap(true);
+					}
+					break;
+				} case 4: {
+					if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
+					updateCheats();
+					}
+					break;
+			}
+		}
+		}
+}
+
+
 void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	twlSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = CFWScreen;
+		screenTransition(CFWScreen);
 	} else if (hDown & KEY_R) {
-		screenMode = OtherScreen;
+		screenTransition(OtherScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -312,7 +439,7 @@ void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			updateCheats();
 			}
 		} else if (touching(touch, TWLFunction[5])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 	}
 }
@@ -329,12 +456,11 @@ void drawUpdaterOther(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();
 
-	// Themes Download Button.
 	for (int i = (int)(sizeof(OTHERButtons)/sizeof(OTHERButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(OTHERButtonsTex[i], OTHERButtons[i].x, OTHERButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "Extras");
 	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
 	Draw_Text(229, 58, 0.7f, WHITE, "Scripts");
@@ -347,15 +473,35 @@ void drawUpdaterOther(void) {
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+
+	drawOTHERSelection();
+}
+
+static void otherSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(othSelection > 0)	othSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(othSelection < 1)	othSelection++;
+		} else if(hDown & KEY_A) {
+			switch(othSelection) {
+				case 0: {
+					downloadThemes();
+					break;
+				} case 1:
+					downloadScripts();
+					break;
+			}
+		}
 }
 
 void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	otherSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = TWLScreen;
+		screenTransition(TWLScreen);
 	} else if (hDown & KEY_R) {
-		screenMode = UniversalScreen;
+		screenTransition(UniversalScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -364,7 +510,7 @@ void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, OTHERFunction[1])) {
 			downloadScripts();
 		} else if(touching(touch, OTHERFunction[2])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 }
 }
@@ -386,13 +532,13 @@ void drawUpdaterCFW(void) {
 		Gui::sprite(CFWButtonsTex[i], CFWButtons[i].x, CFWButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "Luma3DS");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	 // GodMode9 Buttons.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.65f, WHITE, "GodMode9");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
@@ -409,13 +555,42 @@ void drawUpdaterCFW(void) {
         Gui::sprite(sprites_dot_idx, CFWButtons[i].x+75, CFWButtons[i].y-6);
     }
 }
+	drawCFWSelection();
+}
+
+static void cfwSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(cfwSelection > 0)	cfwSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(cfwSelection < 2)	cfwSelection++;
+		} else if(hDown & KEY_A) {
+			switch(cfwSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update Luma3DS\nTo Release?")) {
+					updateLuma(false);
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update Luma3DS\nTo Nightly?")) {
+					updateLuma(true);
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update GodMode9\nTo Release?")) {
+					downloadGodMode9();
+					}
+					break;
+			}
+		}
+		}
 }
 
 void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	cfwSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_R) {
-		screenMode = TWLScreen;
+		screenTransition(TWLScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (touching(touch, CFWFunction[0])) {
@@ -431,7 +606,7 @@ void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			downloadGodMode9();
 			}
 		} else if (touching(touch, CFWFunction[3])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		}
 		}
 
@@ -453,18 +628,18 @@ void drawUniversalScreen(void) {
 		Gui::sprite(UNIVButtonsTex[i], UNIVButtons[i].x, UNIVButtons[i].y);
 	}
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 48);
+	Gui::sprite(sprites_titleButton_idx, 0, 48);
 	Draw_Text(0, 58, 0.65f, WHITE, "UNIV-Manager");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
 	// PKMN-Chest.
-	Gui::sprite(sprites_TitleButton_idx, 0, 88);
+	Gui::sprite(sprites_titleButton_idx, 0, 88);
 	Draw_Text(0, 98, 0.65f, WHITE, "PKMN-Chest");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Gui::sprite(sprites_TitleButton_idx, 0, 128);
+	Gui::sprite(sprites_titleButton_idx, 0, 128);
 	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
 	Draw_Text(140, 138, 0.7f, WHITE, "Release");
 	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
@@ -482,13 +657,60 @@ void drawUniversalScreen(void) {
         Gui::sprite(sprites_dot_idx, UNIVButtons[i].x+75, UNIVButtons[i].y-6);
     }
 }
+	drawUNIVSelection();
+}
+
+static void univSelectionLogic(u32 hDown) {
+	if(hDown & KEY_UP) {
+		if(univSelection > 0)	univSelection--;
+	} else if(hDown & KEY_DOWN) {
+		if(univSelection < 5)	univSelection++;
+		} else if(hDown & KEY_A) {
+			switch(univSelection) {
+				case 0: {
+					if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Release?")) {
+					updatingSelf = true;
+					updateUniversalManager(false);
+					updatingSelf = false;
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Are you sure you want to update Universal-Manager\nTo Nightly?")) {
+					updatingSelf = true;
+					updateUniversalManager(true);
+					updatingSelf = false;
+					}
+					break;
+				  case 2: {
+					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
+					updatePKMNChestRelease(); 
+					}
+					break;
+				} case 3: {
+					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Nightly?")) {
+					updatePKMNChestNightly(); 
+					}
+					break;
+				} case 4: {
+					if(confirmPopup("Are you sure you want to update Relaunch\nTo Release?")) {
+					updateRelaunchRelease(); 
+					}
+					break;
+				} case 5:
+					if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
+					updateRelaunchNightly(); 
+					}
+					break;
+			}
+		}
 }
 
 void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	univSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = updaterSubMenu;
+		screenTransition(updaterSubMenu);
 	} else if (hDown & KEY_L) {
-		screenMode = OtherScreen;
+		screenTransition(OtherScreen);
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_TOUCH) {
@@ -505,7 +727,7 @@ void UniversalLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			updatingSelf = false;
 			}
 		} else if (touching(touch, UNIVFunction[6])) {
-			screenMode = updaterSubMenu;
+			screenTransition(updaterSubMenu);
 		} else if (touching(touch, UNIVFunction[2])) {
 			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
 			updatePKMNChestRelease(); 

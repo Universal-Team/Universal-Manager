@@ -7,14 +7,14 @@ sprites/battery/battery75.png
 sprites/battery/battery100.png
 sprites/battery/batteryCharge.png
 
-sprites/buttons/BlueButton.png
-sprites/buttons/FileManagerSelected.png
-sprites/buttons/FileManagerUnselected.png
-sprites/buttons/GreenButton.png
+sprites/buttons/blueButton.png
+sprites/buttons/fileManagerSelected.png
+sprites/buttons/fileManagerUnselected.png
+sprites/buttons/greenButton.png
 sprites/buttons/mainMenuButton.png
-sprites/buttons/RedButton.png
+sprites/buttons/redButton.png
 sprites/buttons/rgbButton.png
-sprites/buttons/TitleButton.png
+sprites/buttons/titleButton.png
 sprites/buttons/updaterButton.png
 
 sprites/gui/bottom_screen_bot.png

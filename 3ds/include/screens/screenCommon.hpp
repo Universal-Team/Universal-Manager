@@ -64,6 +64,12 @@ extern C3D_RenderTarget* bottom;
 #define scriptCreatorFunctions	22
 #define calendarScreen			23
 #define textFileBrowse			24
+#define gameSubMenuScreen		25
+#define pongScreen				26
+#define tictactoeScreen			27
+#define utilsScreen				28
+#define calculatorScreen		29
+#define welcomeScreen			30
 
 struct Playlist {
 	std::string name;
@@ -153,3 +159,29 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Calendar Stuff.
 void drawCalendarScreen(void);
 void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Game Sub Menu.
+void drawGamesSubMenuScreen(void);
+void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Pong Screen.
+void drawPongScreen(void);
+void pongLogic(u32 hDown, u32 hHeld);
+
+// Tic-Tac-Toe Screen.
+void drawTicTacToeScreen(void);
+void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Utils Stuff.
+
+void drawUtilsScreen(void);
+void utilsLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Calculator Stuff.
+void drawCalculatorScreen(void);
+void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Welcome Stuff.
+
+void drawWelcomeScreen(void);
+void welcomeLogic(u32 hDown, touchPosition touch);

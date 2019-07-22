@@ -7,7 +7,7 @@
 #include <string>
 using std::string;
 
-extern sound *sfx_scroll;
+extern sound *sfx_scroll, *sfx_pong, *sfx_score;
 extern bool dspfirmfound;
 
 // Reference: http://yannesposito.com/Scratch/en/blog/2010-10-14-Fun-with-wav/
@@ -139,5 +139,19 @@ void playScrollSfx(void) {
 	if (dspfirmfound) {
 	sfx_scroll->stop();
 	sfx_scroll->play();
+	}
+}
+
+void playPongSfx(void) {
+	if (dspfirmfound) {
+	sfx_pong->stop();
+	sfx_pong->play();
+	}
+}
+
+void playScoreSfx(void) {
+	if (dspfirmfound) {
+	sfx_score->stop();
+	sfx_score->play();
 	}
 }

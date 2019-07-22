@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Manager-DSi
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,63 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
 
-void drawFileManagerSubMenu(void) {
-	drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
+struct Key {
+	std::string character;
+	int x;
+	int y;
+};
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //	Top Screen.
-	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), true);
-	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), true);
+// To-Do -> Make the positions correctly.
+Key calculatorKeys[] = {
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //	Bottom Screen.
-	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), false);
-	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), false);
+	// Numbers.
+	{"1", 0, 0},
+	{"2", 0, 0},
+	{"3", 0, 0},
+	{"4", 0, 40},
+	{"5", 0, 40},
+	{"6", 0, 40},
+	{"7", 0, 80},
+	{"8", 0, 80},
+	{"9", 0, 80},
+	{"0", 0, 120},
+	{".", 0, 120},
 
-	printTextTinted("FileManager Sub Menu", DARK_BLUE, 60, 5, true);
+	// Operations.
+	{"+", 0, 40},
+	{"-", 0, 40},
+	{"÷", 0, 40},
+	{"*", 0, 40},
+	{"=", 0, 40},
+};
 
-	// Battery Icon.
-	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+// To-Do.
+static void drawCalculatorKeyboard(void) {
+}
+
+
+void drawCalculatorScreen(void) {
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::chooseLayoutTop();
+	Draw_Text(125, 0, 0.72f, WHITE, "Calculator");
+	C2D_SceneBegin(bottom);
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::chooseLayoutBot();
+	drawCalculatorKeyboard();
+}
+
+// To-Do -> Calculator Logic.
+void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_B) {
+		screenTransition(utilsScreen);
+	}
 }

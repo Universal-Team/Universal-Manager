@@ -47,7 +47,7 @@ void drawFileBrowse(void) {
 }
 
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (keyRepeatDelay)	keyRepeatDelay--; 
+	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
@@ -59,7 +59,7 @@ void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		} else {
 		chdir("..");
 		selectedFile = 0;

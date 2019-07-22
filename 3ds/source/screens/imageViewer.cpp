@@ -87,21 +87,21 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
 			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			screenMode = showImageScreen;
+			screenTransition(showImageScreen);
 			}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenMode = mainScreen;
+			screenTransition(mainScreen);
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_X) {
-		screenMode = mainScreen;
+		screenTransition(mainScreen);
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -149,7 +149,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if(hHeld & KEY_DOWN) {
 		if(imageScale > 0)	imageScale -= 0.1;
 	} else if (hDown & KEY_B) {
-		screenMode = ImageSelectorScreen;
+		screenTransition(ImageSelectorScreen);
 		FreeImage(&image);
 	} else if(hDown & KEY_SELECT) {
 		imageScale = 1.0f;

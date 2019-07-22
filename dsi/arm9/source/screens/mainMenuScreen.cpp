@@ -27,29 +27,20 @@
 #include "screens/screenCommon.hpp"
 
 void drawMainMenu(void) {
-	//drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
+	drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
 
-	// Top
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //BG.
+	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //	Top Screen.
+	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), true);
 	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), true);
 
-	// Bottom
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //BG.
+	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //	Bottom Screen.
 	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), false);
 	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), false);
 
-       {
-        for (int x = 0; x < 256; x += 14)
-        {
-            for (int y = 20; y < 162; y += 14)
-            {
-                drawImage(x, y, stripesData.width, stripesData.height, stripes, true);
-            }
-        }
-    }
-
 	printTextTinted("Universal-Manager", DARK_BLUE, 60, 5, true);
 
-	
+	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 }
