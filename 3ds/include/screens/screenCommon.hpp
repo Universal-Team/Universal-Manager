@@ -69,7 +69,6 @@ extern C3D_RenderTarget* bottom;
 #define tictactoeScreen			27
 #define utilsScreen				28
 #define calculatorScreen		29
-#define welcomeScreen			30
 
 struct Playlist {
 	std::string name;
@@ -81,6 +80,10 @@ extern int screenMode;
 // Main Menu Screen.
 void drawMainMenu(void);
 void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+// Credits Stuff.
+void drawCreditsScreen(void);
+void creditsLogic(u32 hDown, touchPosition touch);
 
 // Settings Screen.
 void drawSettingsScreen(void);
@@ -130,7 +133,6 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch);
 bool confirmPopup(std::string msg);
 bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
 void helperBox(std::string msg1);
-void drawCredits(void);
 
 // FTP Stuff.
 void drawFTPScreen(void);
@@ -180,8 +182,3 @@ void utilsLogic(u32 hDown, u32 hHeld, touchPosition touch);
 // Calculator Stuff.
 void drawCalculatorScreen(void);
 void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch);
-
-// Welcome Stuff.
-
-void drawWelcomeScreen(void);
-void welcomeLogic(u32 hDown, touchPosition touch);

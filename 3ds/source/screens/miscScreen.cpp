@@ -82,17 +82,6 @@ ButtonPos utilsButtonPos[] = {
 int gameSelection = 0;
 int utilsSelection = 0;
 
-void drawCredits(void) {
-	C2D_SceneBegin(top);
-	Gui::sprite(sprites_universal_credits_idx, 0, 0);
-	
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::chooseLayoutBotBack();
-	DisplayTime();
-	drawBatteryBot();
-}
-
 void drawFTPScreen(void) {
 	ftp_init();
 

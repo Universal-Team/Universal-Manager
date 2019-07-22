@@ -83,10 +83,6 @@ ButtonPos updaterScreenButtonPos[] = {
     {293, 213, 27, 27, mainScreen},
 };
 
-ButtonPos creditsScreenButtonPos[] = {
-    {293, 213, 27, 27, mainScreen},
-};
-
 
 void screenoff()
 {
@@ -134,10 +130,10 @@ int main()
     gfxInitDefault();
 	Gui::init();
 
-	if (Config::Welcome == 0) { // Welcome if 1 and mainScreen if 0.
+	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
 		screenMode = 0;
-	} else if (Config::Welcome == 1) {
-		screenMode = 30;
+	} else if (Config::Credits == 1) {
+		screenMode = 1;
 	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
@@ -183,7 +179,7 @@ int main()
 				break;
 //#########################################################################################################
 			case creditsScreen:
-				drawCredits();
+				drawCreditsScreen();
 				break;
 //#########################################################################################################
 			case musicMainScreen:
@@ -284,10 +280,6 @@ int main()
 			case calculatorScreen:
 				drawCalculatorScreen();
 				break;
-//#########################################################################################################
-			case welcomeScreen:
-				drawWelcomeScreen();
-				break;
 		}
 
 		// Scans inputs for the current screen
@@ -298,15 +290,7 @@ int main()
 				break;
 //#########################################################################################################
 			case creditsScreen:
-				if (hDown & KEY_B) {
-					screenMode = mainScreen;
-				} else if (hDown & KEY_TOUCH) {
-					for(uint i=0;i<(sizeof(creditsScreenButtonPos)/sizeof(creditsScreenButtonPos[0]));i++) {
-						if (touching(touch, creditsScreenButtonPos[i])) {
-							screenMode = creditsScreenButtonPos[i].link;
-						}
-					}
-				}
+				creditsLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case musicMainScreen:
@@ -405,10 +389,6 @@ int main()
 //#########################################################################################################
 			case calculatorScreen:
 				calculatorLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case welcomeScreen:
-				welcomeLogic(hDown, touch);
 				break;
 		}
 //#########################################################################################################

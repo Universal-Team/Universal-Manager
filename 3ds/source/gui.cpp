@@ -37,7 +37,7 @@ C3D_RenderTarget* bottom;
 
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
-static C2D_SpriteSheet welcome;
+static C2D_SpriteSheet credits;
 
 C2D_TextBuf dynamicBuf, sizeBuf;
 C2D_Font systemFont, editorFont;
@@ -79,7 +79,7 @@ Result Gui::init(void)
     sizeBuf = C2D_TextBufNew(4096);
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
-    welcome   = C2D_SpriteSheetLoad("romfs:/gfx/welcome.t3x");
+    credits   = C2D_SpriteSheetLoad("romfs:/gfx/credits.t3x");
     
     systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
@@ -96,9 +96,9 @@ void Gui::exit(void)
     {
         C2D_SpriteSheetFree(animation);
     }
-    if (welcome)
+    if (credits)
     {
-        C2D_SpriteSheetFree(welcome);
+        C2D_SpriteSheetFree(credits);
     }
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
@@ -138,7 +138,7 @@ void Gui::AnimationSprite(int key, int x, int y)
     }
 }
 
-void Gui::WelcomeSprite(int key, int x, int y)
+void Gui::Credits(int key, int x, int y)
 {
     if (key == sprites_res_null_idx)
     {
@@ -147,7 +147,7 @@ void Gui::WelcomeSprite(int key, int x, int y)
     // standard case
     else
     {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(welcome, key), x, y, 0.5f);
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
     }
 }
 

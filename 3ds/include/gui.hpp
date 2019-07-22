@@ -40,7 +40,7 @@
 // Spritesheets.
 #include "sprites.h"
 #include "animation.h"
-#include "welcome.h"
+#include "credits.h"
 
 #include "colors.hpp"
 
@@ -73,7 +73,7 @@ namespace Gui
     
     void sprite(int key, int x, int y);
     void AnimationSprite(int key, int x, int y);
-    void WelcomeSprite(int key, int x, int y);
+    void Credits(int key, int x, int y);
     bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
 
     // Layouts!

@@ -42,7 +42,7 @@ int Config::animation, Config::animationColor; // [ANIMATED]
 int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Screen; // [SCREEN]
-int Config::Welcome; // [WELCOME]
+int Config::Credits; // [CREDITS]
 
 void Config::loadConfig() {
 	// [UI]
@@ -62,8 +62,8 @@ void Config::loadConfig() {
 	Config::unselectedText = settingsini.GetInt("TEXTCOLOR", "UNSELECTED", BLACK);
 	// [SCREEN]
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
-	// [WELCOME]
-	Config::Welcome = settingsini.GetInt("WELCOME", "ENABLE", 1);
+	// [CREDITS]
+	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
 }
 
 void Config::saveConfig() {
@@ -91,9 +91,9 @@ void Config::saveConfig() {
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 
-void Config::setWelcome() {
-	// [WELCOME]
-	settingsini.SetInt("WELCOME", "ENABLE", Config::Welcome);
+void Config::setCredits() {
+	// [CREDITS]
+	settingsini.SetInt("CREDITS", "ENABLE", Config::Credits);
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 

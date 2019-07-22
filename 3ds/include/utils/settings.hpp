@@ -36,11 +36,11 @@ namespace Config {
 	extern int Citra; // [CITRA]
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
 	extern int Screen; // [SCREEN]
-	extern int Welcome; // [WELCOME]
+	extern int Credits; // [CREDITS]
 
 	void loadConfig();
 	void saveConfig();
-	void setWelcome();
+	void setCredits();
 }
 
 #endif /* SETTINGS_HPP */
