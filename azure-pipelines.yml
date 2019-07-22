@@ -195,7 +195,7 @@ jobs:
     displayName: "Send Webhook"
     dependsOn: publish
     variables:
-      CURRENT_DATE: $[ dependencies.publish_build_twlbot.outputs['commit.CURRENT_DATE'] ]
+      CURRENT_DATE: $[ dependencies.publish.outputs['commit.CURRENT_DATE'] ]
     steps:
 ########################################
       - script: |
