@@ -84,20 +84,6 @@ ButtonPos updaterScreenButtonPos[] = {
 };
 
 
-void screenoff()
-{
-    gspLcdInit();\
-    GSPLCD_PowerOffBacklight(GSPLCD_SCREEN_BOTH);\
-    gspLcdExit();
-}
-
-void screenon()
-{
-    gspLcdInit();\
-    GSPLCD_PowerOnBacklight(GSPLCD_SCREEN_BOTH);\
-    gspLcdExit();
-}
-
 
 static void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
@@ -417,7 +403,7 @@ int main()
         Gui::clearTextBufs();
 
 		if (fadein == true) {
-			fadealpha -= 15;
+			fadealpha -= 5;
 			if (fadealpha < 0) {
 				fadealpha = 0;
 				fadein = false;
