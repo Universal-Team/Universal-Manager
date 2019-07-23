@@ -118,6 +118,7 @@ int main()
 	cfguInit();
     gfxInitDefault();
 	Gui::init();
+	srand(time(NULL));
 
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
 		screenMode = 0;

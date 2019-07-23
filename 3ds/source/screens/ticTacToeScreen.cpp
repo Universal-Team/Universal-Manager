@@ -39,7 +39,7 @@
 #define COLOR2 C2D_Color32(3, 192, 60, 255) // Color Player 2.
 
 // Modes.
-inline int multiPlayerMode = 0;
+inline bool multiPlayerMode = 0;
 
 // Sub Menu.
 inline int subMenu = 1;
@@ -49,81 +49,79 @@ inline int selection = 0;
 inline int scoreP1 = 0;
 inline int scoreP2 = 0;
 
+bool currentPlayer = 0;
+
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+};
+
+ButtonPos gameBoardPos[] = {
+	{80,  40, 50, 50}, {135,  40, 50, 50}, {190,  40, 50, 50},
+	{80,  95, 50, 50}, {135,  95, 50, 50}, {190,  95, 50, 50},
+	{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50},
+};
+
+int gameBoard[] = {
+	0, 0, 0,
+	0, 0, 0,
+	0, 0, 0,
+};
+
+struct tri {
+	int one;
+	int two;
+	int three;
+} winIndexes[] = {
+	{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+	{0, 3, 6}, {1, 4, 7}, {2, 5, 8},
+	{0, 4, 8}, {2, 4, 6},
+};
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
+void resetBoard() {
+	for(uint i=0;i<(sizeof(gameBoard)/sizeof(gameBoard[0]));i++) {
+		gameBoard[i] = 0;
+		currentPlayer = 0;
+	}
+}
+
 // Score stuff for Player 1.
 static void drawScoreP1(void) {
-	if (scoreP1 == 0) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 0");
-	} else if (scoreP1 == 1) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 1");
-	} else if (scoreP1 == 2) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 2");
-	} else if (scoreP1 == 3) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 3");
-	} else if (scoreP1 == 4) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 4");
-	} else if (scoreP1 == 5) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 5");
-	} else if (scoreP1 == 6) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 6");
-	} else if (scoreP1 == 7) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 7");
-	} else if (scoreP1 == 8) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 8");
-	} else if (scoreP1 == 9) {
-		Draw_Text(0, 0, 0.72f, WHITE, "Score : 9");
-	}
+	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
 }
 
 // Score stuff for Player 2.
 static void drawScoreP2(void) {
-	if (scoreP2 == 0) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 0");
-	} else if (scoreP2 == 1) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 1");
-	} else if (scoreP2 == 2) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 2");
-	} else if (scoreP2 == 3) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 3");
-	} else if (scoreP2 == 4) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 4");
-	} else if (scoreP2 == 5) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 5");
-	} else if (scoreP2 == 6) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 6");
-	} else if (scoreP2 == 7) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 7");
-	} else if (scoreP2 == 8) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 8");
-	} else if (scoreP2 == 9) {
-		Draw_Text(320, 0, 0.72f, WHITE, "Score : 9");
-	}
+	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
 }
 
 // Draws the Circles for Player 1.
-static void drawPlayer1(int x, int y) {
-	C2D_DrawCircle(x, y, 1.0f, 15, COLOR1, COLOR1, COLOR1, COLOR1);
+static void drawPlayer1() {
+	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
+		if(gameBoard[i] == 1) {
+			C2D_DrawCircle(gameBoardPos[i].x+25, gameBoardPos[i].y+25, 1.0f, 15, COLOR1, COLOR1, COLOR1, COLOR1);
+		}
+	}
 }
 
-
 // Draws the Circles for Player 2.
-static void drawPlayer2(int x, int y) {
-	C2D_DrawCircle(x, y, 1.0f, 15, COLOR2, COLOR2, COLOR2, COLOR2);
+static void drawPlayer2() {
+	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
+		if(gameBoard[i] == 2) {
+			C2D_DrawCircle(gameBoardPos[i].x+25, gameBoardPos[i].y+25, 1.0f, 15, COLOR2, COLOR2, COLOR2, COLOR2);
+		}
+	}
 }
 
 // Draw the Field for it.
 static void drawField(void) {
-	// Row 1.
-	C2D_DrawRectSolid(80, 40, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(135, 40, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(190, 40, 1.0f, 50, 50, BLACK);
-	// Row 2.
-	C2D_DrawRectSolid(80, 95, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(135, 95, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(190, 95, 1.0f, 50, 50, BLACK);
-	// Row 3.
-	C2D_DrawRectSolid(80, 150, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(135, 150, 1.0f, 50, 50, BLACK);
-	C2D_DrawRectSolid(190, 150, 1.0f, 50, 50, BLACK);
+	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
+		C2D_DrawRectSolid(gameBoardPos[i].x, gameBoardPos[i].y, 1.0f, 50, 50, BLACK);
+	}
 }
 
 // The actual Screen.
@@ -136,20 +134,20 @@ void drawScreen(void) {
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	drawField();
-	drawPlayer1(105, 65);
-	drawPlayer2(105, 120);
+	drawPlayer1();
+	drawPlayer2();
 }
 
 // Sub Menu Stuff.
 //##############################################################################
 static void drawSelection(void) {
-if (selection == 0) {
-	C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
-} else if (selection == 1) {
-	C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
-} else if (selection == 2) {
-	C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
-}
+	if (selection == 0) {
+		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
+	} else if (selection == 1) {
+		C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
+	} else if (selection == 2) {
+		C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
+	}
 }
 
 
@@ -177,42 +175,42 @@ static void drawSubMenu(void) {
 }
 
 static void selectionLogic(u32 hDown, u32 hHeld) {
-		if (hDown & KEY_UP) {
-			playPongSfx();
-			if(selection > 0)	selection--;
-		} else if (hDown & KEY_DOWN) {
-			playPongSfx();
-			if(selection < 2)	selection++;
-		} else if (hDown & KEY_A) {
-			playScoreSfx();
-			switch(selection) {
-				case 0: {
-					multiPlayerMode = 0;
-					subMenu = 0;
-					selection = 0;
-					break;
-				} case 1:
-					multiPlayerMode = 1;
-					subMenu = 0;
-					selection = 0;
-					break;
-				  case 2: {
-					screenTransition(gameSubMenuScreen);
-					selection = 0;
-					break;
-				  }
+	if (hDown & KEY_UP) {
+		playPongSfx();
+		if(selection > 0)	selection--;
+	} else if (hDown & KEY_DOWN) {
+		playPongSfx();
+		if(selection < 2)	selection++;
+	} else if (hDown & KEY_A) {
+		playScoreSfx();
+		switch(selection) {
+			case 0: {
+				multiPlayerMode = 0;
+				subMenu = 0;
+				selection = 0;
+				break;
+			} case 1:
+				multiPlayerMode = 1;
+				subMenu = 0;
+				selection = 0;
+				break;
+			case 2: {
+				screenTransition(gameSubMenuScreen);
+				selection = 0;
+				break;
 			}
 		}
+	}
 }
 //##############################################################################
 
 // Screen Selection stuff.
 void drawTicTacToeScreen(void) {
-if (subMenu == 0) {
-	drawScreen();
-} else if (subMenu == 1) {
-	drawSubMenu();
-}
+	if (subMenu == 0) {
+		drawScreen();
+	} else if (subMenu == 1) {
+		drawSubMenu();
+	}
 }
 
 void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch) {
@@ -220,9 +218,56 @@ void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		selectionLogic(hDown, hHeld);
 	}
 
-	if (subMenu == 0 && hDown & KEY_START) {
-		if(confirmPopup("Do you want to return to the Sub Menu?")) {
-		subMenu = 1;
+	if(subMenu == 0) {
+		for(uint i=0;i<(sizeof(winIndexes)/sizeof(winIndexes[0]));i++) {
+			if(gameBoard[winIndexes[i].one] != 0 && gameBoard[winIndexes[i].one] == gameBoard[winIndexes[i].two] && gameBoard[winIndexes[i].two] == gameBoard[winIndexes[i].three]) {
+				confirmPopup("Player "+std::to_string(gameBoard[winIndexes[i].one])+" wins!");
+				resetBoard();
+				subMenu = 1;
+				return;
+			}
+		}
+
+		bool canContinue = false;
+		for(uint i=0;i<(sizeof(gameBoard)/sizeof(gameBoard[0]));i++) {
+			if(gameBoard[i] == 0) {
+				canContinue = true;
+			}
+		}
+		if(!canContinue) {
+			confirmPopup("Game over...");
+			resetBoard();
+			subMenu = 1;
+			return;
+		}
+
+		if(hDown & KEY_TOUCH) {
+			for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
+				if(touching(touch, gameBoardPos[i]) && gameBoard[i] == 0) {
+					gameBoard[i] = currentPlayer+1;
+					if(multiPlayerMode)	currentPlayer = !currentPlayer;
+					else {
+						for(uint i=0;i<(sizeof(gameBoard)/sizeof(gameBoard[0]));i++) {
+							if(gameBoard[i] == 0) { // Make sure there's an empty spot
+								while(1) {
+									int pos = rand() % (sizeof(gameBoard)/sizeof(gameBoard[0]));
+									if(gameBoard[pos] == 0) {
+										gameBoard[pos] = 2;
+										break;
+									}
+								}
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if(hDown & KEY_START) {
+			if(confirmPopup("Do you want to return to the Sub Menu?")) {
+				subMenu = 1;
+			}
 		}
 	}
 }
