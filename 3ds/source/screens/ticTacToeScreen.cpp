@@ -45,10 +45,6 @@ inline bool multiPlayerMode = 0;
 inline int subMenu = 1;
 inline int selection = 0;
 
-// Scores.
-inline int scoreP1 = 0;
-inline int scoreP2 = 0;
-
 bool currentPlayer = 0;
 
 struct ButtonPos {
@@ -89,16 +85,6 @@ void resetBoard() {
 	}
 }
 
-// Score stuff for Player 1.
-static void drawScoreP1(void) {
-	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
-}
-
-// Score stuff for Player 2.
-static void drawScoreP2(void) {
-	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
-}
-
 // Draws the Circles for Player 1.
 static void drawPlayer1() {
 	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
@@ -128,8 +114,13 @@ static void drawField(void) {
 void drawScreen(void) {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	drawScoreP1();
-	drawScoreP2();
+	if (currentPlayer == 0) {
+		Draw_Text((400-Draw_GetTextWidth(0.7f, "Current Player : Player 1"))/2, 0, 0.65f, WHITE, "Current Player : Player 1");
+		C2D_DrawCircle(350, 10, 1.0f, 10, COLOR1, COLOR1, COLOR1, COLOR1);
+	} else if (currentPlayer == 1) {
+		Draw_Text((400-Draw_GetTextWidth(0.7f, "Current Player : Player 2"))/2, 0, 0.65f, WHITE, "Current Player : Player 2");
+		C2D_DrawCircle(350, 10, 1.0f, 10, COLOR2, COLOR2, COLOR2, COLOR2);
+	}
 
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
@@ -221,7 +212,7 @@ void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(subMenu == 0) {
 		for(uint i=0;i<(sizeof(winIndexes)/sizeof(winIndexes[0]));i++) {
 			if(gameBoard[winIndexes[i].one] != 0 && gameBoard[winIndexes[i].one] == gameBoard[winIndexes[i].two] && gameBoard[winIndexes[i].two] == gameBoard[winIndexes[i].three]) {
-				confirmPopup("Player "+std::to_string(gameBoard[winIndexes[i].one])+" wins!");
+				confirmPopup("Player "+std::to_string(gameBoard[winIndexes[i].one])+" wins!\n\nPress A or B to continue to the subMenu.");
 				resetBoard();
 				subMenu = 1;
 				return;
@@ -235,7 +226,7 @@ void ticTacToeLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 		}
 		if(!canContinue) {
-			confirmPopup("Game over...");
+			confirmPopup("Game over...\n\nPress A or B to continue to the subMenu.");
 			resetBoard();
 			subMenu = 1;
 			return;
