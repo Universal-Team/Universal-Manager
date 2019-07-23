@@ -193,6 +193,8 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if(hDown & KEY_B) {
 		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
+			stringPos = 0;
+			textEditorCurPos = 0;
 			screenTransition(textFileBrowse);
 		}
 	} else if(hDown & KEY_X) {
