@@ -142,18 +142,6 @@ static void selectionLogic(u32 hDown, u32 hHeld) {
 }
 //#######################################################################################
 
-
-static void drawEndScreen(void) {
-	set_screen(top);
-	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
-	set_screen(bottom);
-	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
-	Gui::DrawBarsBot();
-	drawScoreP1();
-	drawScoreP2();
-	Draw_Text(80, 140, 0.72f, WHITE, "Select : Restart");
-}
-
 // This is the actual Screen.
 //#######################################################################################
 static void drawScreen(void) {
@@ -185,8 +173,6 @@ void drawPongScreen(void) {
 		drawScreen();
 	} else if (subMenu == 1) {
 		drawSubMenu();
-	} else if (subMenu == 2) {
-		drawEndScreen();
 	}
 }
 
@@ -232,10 +218,10 @@ static void ballLogic(void) {
 
 		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
 			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
-			playPongSfx();
-			ballXSpd = ballXSpd * -1.1;
-			ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
-		}
+				playPongSfx();
+				if(ballXSpd < 9)    ballXSpd = ballXSpd * -1.1;
+				ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
+			}
 
 		if (ballY < 0 || ballY > 230) {
 			playPongSfx();
@@ -274,20 +260,23 @@ void pongLogic(u32 hDown, u32 hHeld) {
 	}
 
 	if (subMenu == 0) {
-	if (scoreP1 == 10 || scoreP2 == 10) {
+	if (scoreP1 == 10) {
 		stopLogic();
-		subMenu = 2;
+		confirmPopup("Player 1 wins!\n\nPress A or B to continue to the subMenu.");
+		subMenu = 1;
+		scoreP1 = 0;
+		scoreP2 = 0;
+		return;
+	} else if (scoreP2 == 10) {
+		stopLogic();
+		confirmPopup("Player 2 wins!\n\nPress A or B to continue to the subMenu.");
+		subMenu = 1;
+		scoreP1 = 0;
+		scoreP2 = 0;
+		return;
 	} else if (scoreP1 < 10 || scoreP2 < 10) {
 		ballLogic();
 	}
-	}
-
-	if (subMenu == 2 && hDown & KEY_SELECT) {
-		subMenu = 0;
-		paddle1 = 90;
-		paddle2 = 90;
-		scoreP1 = 0;
-		scoreP2 =0;
 	}
 
 	if (subMenu == 0) {
