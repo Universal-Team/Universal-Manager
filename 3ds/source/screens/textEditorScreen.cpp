@@ -44,6 +44,8 @@ inline uint selectedFile = 0;
 extern int keyRepeatDelay;
 extern bool dirChanged;
 std::string currentEditFile = "";
+uint stringPos = 0;
+int showCursor = 30;
 
 void readFile(std::string path) {
 	textEditorText.clear();
@@ -54,6 +56,7 @@ void readFile(std::string path) {
 			textEditorText.push_back(line);
 		}
 	}
+	if(textEditorText.size() == 0)	textEditorText.push_back("");
 	in.close();
 	textRead = true;
 }
@@ -119,12 +122,14 @@ void drawTextEditorScreen(void) {
 		std::vector<std::string> lines;
 		uint sizeDone = 0;
 		do {
-			lines.push_back(textEditorText[i+textEditorScrnPos].substr(sizeDone, 61));
-			sizeDone += 61;
+			lines.push_back(textEditorText[i+textEditorScrnPos].substr(sizeDone, 60));
+			sizeDone += 60;
 		} while(sizeDone < textEditorText[i+textEditorScrnPos].size());
 
-		if(i+textEditorScrnPos == textEditorCurPos ) {
+		if(i+textEditorScrnPos == textEditorCurPos) {
 			Draw_Text_Editor(0, 28+(ii*12), FONT_SIZE_14, Config::selectedText, std::to_string(i+textEditorScrnPos+1).c_str());
+
+			if(showCursor > 0)	C2D_DrawRectSolid(textX+(6.15*(stringPos-(int)((stringPos/60)*60))), 28+((ii+(stringPos/60))*12), 0.5f, 1, 8, Config::selectedText);
 
 			for(uint l=0;l<lines.size();l++) {
 				Draw_Text_Editor(textX, 28+(ii*12), FONT_SIZE_14, Config::selectedText, lines[l].c_str());
@@ -154,10 +159,30 @@ void drawTextEditorScreen(void) {
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {
+	if(showCursor > -30) {
+		showCursor--;
+	} else {
+		showCursor = 30;
+	}
+
 	if(hHeld & KEY_CPAD_UP || hDown & KEY_UP) {
 		if(textEditorCurPos > 0) textEditorCurPos--;
+		if(stringPos > textEditorText[textEditorCurPos].length())	stringPos = textEditorText[textEditorCurPos].length();
+		showCursor = 30;
 	} else if(hHeld & KEY_CPAD_DOWN || hDown & KEY_DOWN) {
 		if(textEditorCurPos < textEditorText.size()-1) textEditorCurPos++;
+		if(stringPos > textEditorText[textEditorCurPos].length())	stringPos = textEditorText[textEditorCurPos].length();
+		showCursor = 30;
+	} else if(hHeld & KEY_CPAD_LEFT || hDown & KEY_LEFT) {
+		if(stringPos > 0)	stringPos--;
+		showCursor = 30;
+	} else if(hHeld & KEY_CPAD_RIGHT || hDown & KEY_RIGHT) {
+		if(stringPos < textEditorText[textEditorCurPos].length())	stringPos++;
+		showCursor = 30;
+	} else if(hDown & KEY_L) {
+		stringPos = 0;
+	} else if(hDown & KEY_R) {
+		stringPos = textEditorText[textEditorCurPos].length();
 	} else if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save your changes?")) {
 			std::ofstream out(currentEditFile);
@@ -171,9 +196,11 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 			screenTransition(textFileBrowse);
 		}
 	} else if(hDown & KEY_X) {
-		textEditorText.erase(textEditorText.begin()+textEditorCurPos);
-		if(textEditorCurPos != 0) {
-			textEditorCurPos--;
+		if(textEditorText.size() > 1) {
+			textEditorText.erase(textEditorText.begin()+textEditorCurPos);
+			if(textEditorCurPos != 0) {
+				textEditorCurPos--;
+			}
 		}
 	}
 
@@ -187,13 +214,23 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 
 	char c = Input::checkKeyboard(hDown, hHeld);
 	if(c == '\b') {
-		if(textEditorText[textEditorCurPos].size() > 0)	textEditorText[textEditorCurPos].resize(textEditorText[textEditorCurPos].size()-1);
-		else {
+		if(textEditorText[textEditorCurPos].size() > 0) {
+			if(stringPos > 0) {
+				textEditorText[textEditorCurPos].erase(stringPos-1, 1);
+				stringPos--;
+			}
+		} else if(textEditorText.size() > 1) {
 			textEditorText.erase(textEditorText.begin()+textEditorCurPos);
 			if(textEditorCurPos != 0)	textEditorCurPos--;
+			stringPos = textEditorText[textEditorCurPos].length();
 		}
+		if(stringPos > textEditorText[textEditorCurPos].length())	stringPos = textEditorText[textEditorCurPos].length();
 	} else if(c == '\n') {
 		textEditorCurPos++;
 		textEditorText.insert(textEditorText.begin()+textEditorCurPos, "");
-	} else if(c != '\0')	textEditorText[textEditorCurPos] += c;
+		stringPos = 0;
+	} else if(c != '\0') {
+		textEditorText[textEditorCurPos].insert(stringPos, 1, c);
+		stringPos++;
+	}
 }
