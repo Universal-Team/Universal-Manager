@@ -103,7 +103,7 @@ static void drawVoltZ(void) {
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, VOLTZCOLORBAR);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(100, 0, 0.7f, WHITE, "VoltZ");
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "VoltZ"))/2, 0, 0.7f, WHITE, "VoltZ");
 }
 
 static void drawFlame(void) {
@@ -129,7 +129,7 @@ static void drawFlame(void) {
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, FLAMECOLORBAR);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(100, 0, 0.7f, WHITE, "Flame");
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "Flame"))/2, 0, 0.7f, WHITE, "Flame");
 }
 
 static void drawPk11(void) {
@@ -155,7 +155,7 @@ static void drawPk11(void) {
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, PK11COLORBAR);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(100, 0, 0.7f, WHITE, "Pk11");
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "Pk11"))/2, 0, 0.7f, WHITE, "Pk11");
 }
 
 static void drawRocketRobz(void) {
@@ -181,7 +181,7 @@ static void drawRocketRobz(void) {
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, ROCKETROBZCOLORBAR);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(100, 0, 0.7f, WHITE, "RocketRobz");
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "RocketRobz"))/2, 0, 0.7f, WHITE, "RocketRobz");
 }
 
 static void drawTotallyNotGuy(void) {
@@ -207,7 +207,7 @@ static void drawTotallyNotGuy(void) {
 	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, TNGCOLORBAR);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(100, 0, 0.7f, WHITE, "TotallyNotGuy");
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
 }
 
 static void drawCredits(void) {
