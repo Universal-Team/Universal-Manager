@@ -108,6 +108,16 @@ off_t getFileSize(const char *fileName)
 	return fsize;
 }
 
+bool dirEntryPredicate(const DirEntry& lhs, const DirEntry& rhs) {
+	if(!lhs.isDirectory && rhs.isDirectory) {
+		return false;
+	}
+	if(lhs.isDirectory && !rhs.isDirectory) {
+		return true;
+	}
+	return strcasecmp(lhs.name.c_str(), rhs.name.c_str()) < 0;
+}
+
 void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 	struct stat st;
 
@@ -143,7 +153,8 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 		}
 		
 		closedir(pdir);
-	}	
+	}
+	sort(dirContents.begin(), dirContents.end(), dirEntryPredicate);
 }
 
 static void drawUnselectedBoxes(void) {
