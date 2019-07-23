@@ -33,7 +33,6 @@
 #include <vector>
 
 static int dialog = 5; 
-static int dialog2 = 0; // For the Names. ;P
 extern int fadealpha;
 extern bool fadein;
 
@@ -244,22 +243,12 @@ static void drawCreditsDialogs(void) {
 
 static void drawButtons(void) {
 	// Buttons.
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
-	Draw_Text(50, 42, 0.65f, WHITE, names[dialog2].c_str());
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
-	Draw_Text(200, 42, 0.7f, WHITE, names[dialog2+1].c_str());
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
-	Draw_Text(50, 107, 0.65f, WHITE, names[dialog2+2].c_str());
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
-	Draw_Text(200, 107, 0.7f, WHITE, names[dialog2+3].c_str());
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
-	Draw_Text(20, 177, 0.7f, WHITE, names[dialog2+4].c_str());
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
-	Draw_Text(200, 177, 0.7f, WHITE, names[dialog2+5].c_str());
-
+	for(int i=0;i<3;i++) {
+		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));
+		Draw_Text(((320-Draw_GetTextWidth(0.65f, names[(2*i)].c_str()))/2)-85, 46+(i*65), 0.65f, WHITE, names[(2*i)].c_str());
+		Gui::sprite(sprites_mainMenuButton_idx, 170, 29+(i*65));
+		Draw_Text(((320-Draw_GetTextWidth(0.65f, names[(2*i)+1].c_str()))/2)+85, 46+(i*65), 0.65f, WHITE, names[(2*i)+1].c_str());
+	}
 }
 
 void drawCreditsScreen(void) {
