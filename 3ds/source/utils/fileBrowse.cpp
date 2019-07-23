@@ -157,15 +157,6 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 	sort(dirContents.begin(), dirContents.end(), dirEntryPredicate);
 }
 
-static void drawUnselectedBoxes(void) {
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 25, GRAY);
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 55, GRAY);
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 90, GRAY);
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 125, GRAY);
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 160, GRAY);
-	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 195, GRAY);
-}
-
 void drawFileBrowser() {
 	// Theme Stuff.
 	Gui::DrawBGTop();
@@ -220,7 +211,7 @@ void drawFileBrowser() {
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 27, 0.56f, WHITE, dirs.c_str());
+	Draw_Text_FB(26, 27, 0.53f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

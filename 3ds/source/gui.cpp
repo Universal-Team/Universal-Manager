@@ -40,7 +40,7 @@ static C2D_SpriteSheet animation;
 static C2D_SpriteSheet credits;
 
 C2D_TextBuf dynamicBuf, sizeBuf;
-C2D_Font systemFont, editorFont;
+C2D_Font systemFont, editorFont, fileBrowseFont;
 
 void Gui::clearTextBufs(void)
 {
@@ -83,6 +83,7 @@ Result Gui::init(void)
     
     systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
+    fileBrowseFont = C2D_FontLoad("romfs:/gfx/fileBrowse.bcfnt");
     return 0;
 }
 
@@ -103,6 +104,7 @@ void Gui::exit(void)
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(editorFont);
+    C2D_FontFree(fileBrowseFont);
     C2D_Fini();
     C3D_Fini();
 }
@@ -429,4 +431,25 @@ std::string DateTime::timeStr(void)
     time_t unixTime       = time(NULL);
     struct tm* timeStruct = gmtime((const time_t*)&unixTime);
     return StringUtils::format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
+}
+
+// File Browse stuff. ;)
+
+void Draw_GetTextSizeFB(float size, float *width, float *height, const char *text) {
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, fileBrowseFont, sizeBuf, text);
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
+float Draw_GetTextWidthFB(float size, const char *text) {
+	float width = 0;
+	Draw_GetTextSizeFB(size, &width, NULL, text);
+	return width;
+}
+
+void Draw_Text_FB(float x, float y, float size, u32 color, const char *text) {
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, fileBrowseFont, sizeBuf, text);
+	C2D_TextOptimize(&c2d_text);
+	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
 }

@@ -118,4 +118,8 @@ namespace Gui
     void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
     float Draw_GetTextWidthEditor(float size, const char *text);
 
+    void Draw_Text_FB(float x, float y, float size, u32 color, const char *text);
+    void Draw_GetTextSizeFB(float size, float *width, float *height, const char *text);
+    float Draw_GetTextWidthFB(float size, const char *text);
+
 #endif

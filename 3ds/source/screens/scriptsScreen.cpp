@@ -122,7 +122,7 @@ void drawScriptMainScreen(void) {
 	for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
-	Draw_Text(26, 27, 0.56f, WHITE, scptList.c_str());
+	Draw_Text_FB(26, 27, 0.53f, WHITE, scptList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
