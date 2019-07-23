@@ -23,6 +23,6 @@ void findNdsFiles(std::vector<DirEntry>& dirContents);
 
 void getDirectoryContents(std::vector<DirEntry>& dirContents);
 
-void drawFileBrowser(const char *text);
+void drawFileBrowser();
 
 #endif //FILE_BROWSE_H

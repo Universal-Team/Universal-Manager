@@ -198,7 +198,7 @@ void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 }
 
 void drawMusicList(void) {
-	drawFileBrowser("Music Player Menu");
+	drawFileBrowser();
 }
 
 void musicListLogic(u32 hDown, u32 hHeld) {
@@ -685,7 +685,7 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 
 
  void drawThemeSelector(void) {
-	drawFileBrowser("Theme Selector");
+	drawFileBrowser();
 }
 
 void themeSelectorLogic(u32 hDown, u32 hHeld) {

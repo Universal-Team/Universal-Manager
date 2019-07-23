@@ -43,7 +43,7 @@ std::string currentFile = "";
 std::string currentFiles;
 
 void drawFileBrowse(void) {
-	drawFileBrowser("File Manager");
+	drawFileBrowser();
 }
 
 void fileManagerLogic(u32 hDown, u32 hHeld, touchPosition touch) {

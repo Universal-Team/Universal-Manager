@@ -62,7 +62,7 @@ void readFile(std::string path) {
 }
 
 void drawTextFileBrowse(void) {
-	drawFileBrowser("Text File Browse");
+	drawFileBrowser();
 }
 
 void textFileBrowseLogic(u32 hDown, u32 hHeld) {

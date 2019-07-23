@@ -166,14 +166,16 @@ static void drawUnselectedBoxes(void) {
 	Gui::Draw_ImageBlend(sprites_selected_idx, 0, 195, GRAY);
 }
 
-void drawFileBrowser(const char *text) {
+void drawFileBrowser() {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(120, 0, 0.68f, WHITE, text);
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
 		if (dirChanged) {
             dirContents.clear();
             std::vector<DirEntry> dirContentsTemp;
