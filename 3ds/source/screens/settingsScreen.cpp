@@ -164,11 +164,11 @@ void drawSettingsScreen(void) {
 	Draw_Text(229, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
 	Draw_Text(110, 38, 0.65f, WHITE, "Music Mode:");
 
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 3, RED);
 
 	// Second Settings Page.
 
@@ -196,11 +196,11 @@ void drawSettingsScreen(void) {
 	Gui::sprite(sprites_updaterButton_idx, 10, 28);
 	Draw_Text(19, 38, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
 
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
 
 	// Third Settings Page. (Text)
 	} else if (settingsPage == 2) {
@@ -225,11 +225,11 @@ void drawSettingsScreen(void) {
 	Draw_Text(229, 38, 0.65f, WHITE, screenshot[Config::SS].c_str());
 	Draw_Text(110, 38, 0.65f, WHITE, "Screenshot:");
 
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
 }
 }
 

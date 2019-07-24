@@ -132,9 +132,9 @@ void drawMainMenu(void) {
 	Gui::sprite(sprites_settingsIcon_idx, 175, 170);
 	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
 
-	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	drawMainMenuSelection1();
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
@@ -159,10 +159,10 @@ void drawMainMenu(void) {
 	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
 	Draw_Text(50, 177, 0.7f, WHITE, "Games");
 
-	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
 	drawMainMenuSelection2();
 }
 }

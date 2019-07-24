@@ -354,12 +354,12 @@ void drawUpdaterTWL(void) {
 	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
 
 	for(int i=0;i<(sizeof(TWLButtons)/sizeof(TWLButtons[0]));i++) {
     if(updateAvailable[i]) {
@@ -467,12 +467,12 @@ void drawUpdaterOther(void) {
 
 	
 
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
 
 	drawOTHERSelection();
 }
@@ -543,12 +543,12 @@ void drawUpdaterCFW(void) {
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
 	// Draw The Pages and Back Icon.
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 3, RED);
 
 	for(int i=0;i<(sizeof(CFWButtons)/sizeof(CFWButtons[0]));i++) {
     if(updateAvailable[i+4]) {
@@ -645,12 +645,12 @@ void drawUniversalScreen(void) {
 	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
 
 	// Draw The Pages and Back Icon.
-	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
 	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	Draw_Text(300, 4, 0.50, WHITE, "4"); //Draw Fourth Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 2, RED);
+	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 3, RED);
 
 	for(int i=0;i<(sizeof(UNIVButtons)/sizeof(UNIVButtons[0]));i++) {
     if(updateAvailable[i]) {
