@@ -52,6 +52,7 @@ std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
 std::string layoutModes[] = {"Bars", "Bars v2"}; 
 std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
+std::string screenshot[] = {"Off", "On"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
@@ -100,6 +101,8 @@ ButtonPos uiSettingsButtonPos[] = {
 	{129, 168, 87, 33, -1},
 	{220, 168, 87, 33, -1},
 
+	// Screenshot Mode.
+	{220, 28, 87, 33, -1},
 	
 };
 
@@ -217,6 +220,10 @@ void drawSettingsScreen(void) {
 	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
 	Gui::sprite(sprites_blueButton_idx, 220, 168);
 	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
+
+	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	Draw_Text(229, 38, 0.65f, WHITE, screenshot[Config::SS].c_str());
+	Draw_Text(110, 38, 0.65f, WHITE, "Screenshot:");
 
 	Draw_Text(140, 0, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -364,6 +371,9 @@ void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				blue = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);
 			}
+	} else if (touching(touch, uiSettingsButtonPos[21])) {
+			Config::SS++;
+			if (Config::SS > 1) Config::SS = 0;
 	} else if (touching(touch, uiSettingsButtonPos[6])) {
 			screenTransition(mainScreen);
 			Config::saveConfig();

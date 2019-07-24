@@ -37,6 +37,7 @@ namespace Config {
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
 	extern int Screen; // [SCREEN]
 	extern int Credits; // [CREDITS]
+	extern int SS; // [SCREENSHOT]
 
 	void loadConfig();
 	void saveConfig();

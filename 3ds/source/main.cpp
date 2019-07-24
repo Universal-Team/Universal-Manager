@@ -154,11 +154,14 @@ int main()
 		Gui::clearTextBufs();
 
 	if (((hHeld & KEY_L) && (hDown & KEY_R)) || ((hHeld & KEY_R) && (hDown & KEY_L))) {
-		captureScreenshot();
-		DisplayMsg("Screenshot Successfully Created!");
-		for (int i = 0; i < 60*2; i++) {
-		gspWaitForVBlank();
-	}
+		if (Config::SS == 0) {
+		} else if (Config::SS == 1) {
+			captureScreenshot();
+			DisplayMsg("Screenshot Successfully Created!");
+			for (int i = 0; i < 60*2; i++) {
+				gspWaitForVBlank();
+			}
+		}
 }		
 
 		// Draws a screen based on screenMode
