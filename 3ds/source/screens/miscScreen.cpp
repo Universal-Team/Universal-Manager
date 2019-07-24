@@ -292,9 +292,9 @@ void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 static void drawGameSelection(void) {
 	if (gameSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 20, Config::barColor);
 	} else if (gameSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 20, Config::barColor);
 	}
 }
 
@@ -357,11 +357,11 @@ void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 static void drawUtilsSelection(void) {
 	if (utilsSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 20, Config::barColor);
 	} else if (utilsSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 181, 20, Config::barColor);
 	} else if (utilsSelection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 148, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 130, Config::barColor);
 	}
 }
 

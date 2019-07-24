@@ -51,10 +51,10 @@ void Gui::clearTextBufs(void)
 void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
 {
     C2D_ImageTint tint;
-    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
+    C2D_SetImageTint(&tint, C2D_TopLeft, color, 0.5);
+    C2D_SetImageTint(&tint, C2D_TopRight, color, 0.5);
+    C2D_SetImageTint(&tint, C2D_BotLeft, color, 0.5);
+    C2D_SetImageTint(&tint, C2D_BotRight, color, 0.5);
     C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
 }
 

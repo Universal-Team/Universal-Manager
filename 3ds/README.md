@@ -28,10 +28,10 @@ Universal-Team : For the Project.
 
 [devkitPro](https://github.com/devkitPro), [Wintermute](https://github.com/WinterMute), [Fincs](https://github.com/fincs), [Smealum](https://github.com/smealum) : For devkitARM, Citro2D, Citro3D and Libctru.
 
-[FlagBrew](https://github.com/FlagBrew) : [PKSM](https://github.com/FlagBrew/PKSM) : for the i18n, the Citro2D Basic GUI and the Arrow, which I modified a bit. [Arrow Graphic](https://github.com/FlagBrew/PKSM/blob/master/assets/gfx/ui/pointer_arrow.png)
+[FlagBrew](https://github.com/FlagBrew) : [PKSM](https://github.com/FlagBrew/PKSM) : For the Citro2D Basic GUI, so I was able to get Sprites and stuff to work.
 
-[Joel16](https://github.com/joel16) : [3DShell](https://github.com/joel16/3DShell) : For the FTP, external Image and Audio Code.
+[Joel16](https://github.com/joel16) : [3DShell](https://github.com/joel16/3DShell) : For the FTP, external Image, some GUI Functions like Text Drawing and Audio Code.
 
-[RocketRobz](https://github.com/RocketRobz) : [PDSX-3D](https://github.com/RocketRobz/PDSX-3D) : For the Animated Background Stuff.
+[RocketRobz](https://github.com/RocketRobz) : [PDSX-3D](https://github.com/RocketRobz/PDSX-3D) : For the Animated Background Stuff from PDSX-3D.
 
 ****

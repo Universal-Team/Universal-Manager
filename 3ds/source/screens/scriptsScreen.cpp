@@ -184,23 +184,23 @@ int screenPage = 0;
 
 static void drawSelection1(void) {
 	if (scriptSelection1 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 10, Config::barColor);
 	} else if (scriptSelection1 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 10, Config::barColor);
 	} else if (scriptSelection1 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 75, Config::barColor);
 	} else if (scriptSelection1 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 75, Config::barColor);
 	} else if (scriptSelection1 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 158, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 145, Config::barColor);
 	} else if (scriptSelection1 == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 158, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 250, 145, Config::barColor);
 	}
 }
 
 static void drawSelection2(void) {
 	if (scriptSelection2 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 10, Config::barColor);
 	}
 }
 

@@ -61,31 +61,31 @@ char universal_manager_vertext[13];
 
 static void drawMainMenuSelection1(void) {
 	if (mainSelection1 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
 	} else if (mainSelection1 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
 	} else if (mainSelection1 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
 	} else if (mainSelection1 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
 	} else if (mainSelection1 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 158, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
 	} else if (mainSelection1 == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 158, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 145, Config::barColor);
 	}
 }
 
 static void drawMainMenuSelection2(void) {
 	if (mainSelection2 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
 	} else if (mainSelection2 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 23, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
 	} else if (mainSelection2 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
 	} else if (mainSelection2 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 200, 88, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
 	} else if (mainSelection2 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 30, 158, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
 	}
 }
 

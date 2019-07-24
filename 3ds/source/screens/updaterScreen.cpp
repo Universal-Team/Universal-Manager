@@ -209,49 +209,49 @@ static void drawSubSelection(void) {
 
 static void drawCFWSelection(void) {
 	if (cfwSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
 	} else if (cfwSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
 	} else if (cfwSelection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
 	}
 }
 
 static void drawTWLSelection(void) {
 	if (twlSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
 	} else if (twlSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
 	} else if (twlSelection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
 	} else if (twlSelection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 70, Config::barColor);
 	} else if (twlSelection == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 110, Config::barColor);
 	}
 }
 
 static void drawOTHERSelection(void) {
 	if (othSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
 	} else if (othSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
 	}
 }
 
 static void drawUNIVSelection(void) {
 	if (univSelection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
 	} else if (univSelection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
 	} else if (univSelection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 78, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
 	} else if (univSelection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 78, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 70, Config::barColor);
 	} else if (univSelection == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 118, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 110, Config::barColor);
 	} else if (univSelection == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 118, Config::barColor);
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 110, Config::barColor);
 	}
 }
 
