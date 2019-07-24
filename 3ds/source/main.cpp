@@ -68,7 +68,7 @@ sound *sfx_scroll = NULL;
 sound *sfx_pong = NULL;
 sound *sfx_score = NULL;
 
-int screenMode;
+int SCREEN_MODE;
 bool dspfirmfound = false;
 
 static touchPosition touch;
@@ -121,9 +121,9 @@ int main()
 	srand(time(NULL));
 
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
-		screenMode = 0;
+		SCREEN_MODE = 0;
 	} else if (Config::Credits == 1) {
-		screenMode = 1;
+		SCREEN_MODE = 1;
 	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
@@ -162,7 +162,7 @@ int main()
 }		
 
 		// Draws a screen based on screenMode
-		switch(screenMode) {
+		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
 				drawMainMenu();
@@ -273,7 +273,7 @@ int main()
 		}
 
 		// Scans inputs for the current screen
-		switch(screenMode) {
+		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
 				MainMenuLogic(hDown, hHeld, touch);
@@ -396,7 +396,7 @@ int main()
 		} else if (!isPlaying() && currentSong != "") {
 			currentSong = "";
 		}
-		if (hDown & KEY_START && screenMode == mainScreen) 
+		if (hDown & KEY_START && SCREEN_MODE == mainScreen) 
 		{
 			break;
 		}

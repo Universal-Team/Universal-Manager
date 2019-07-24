@@ -104,7 +104,7 @@ void animatedBGBot(void) {
 // To-Do : -> animated Stuff.
 void screenTransition(int screen) {
 	if (Config::Screen == 0) {
-		screenMode = screen;
+		SCREEN_MODE = screen;
 	} else if (Config::Screen == 1) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C3D_FrameRate(1);
@@ -112,7 +112,7 @@ void screenTransition(int screen) {
     	C2D_TargetClear(bottom, TRANSPARENT);
 		C3D_FrameEnd(0);
 		gspWaitForVBlank();
-		screenMode = screen;
+		SCREEN_MODE = screen;
 		C3D_FrameRate(60);
 	}
 }

@@ -31,51 +31,69 @@
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
 
-#define mainScreen				0
-//###############################
-#define creditsScreen			1
-//###############################
-#define musicMainScreen			2
-//###############################
-#define musicListScreen			3
-#define musicPlayerScreen		4
-#define musicPlaylistAddScreen	5
-#define musicPlaylistPlayScreen	6
-#define musicPlaylistEditScreen	7
-#define themeSelectorScreen 	8
-//###############################
-#define SettingsScreen			9
-//###############################
-#define ImageSelectorScreen		10
-#define showImageScreen			11
-//###############################
-#define ftpScreen				12
-//###############################
-#define updaterSubMenu			13
-#define OtherScreen				14
-#define TWLScreen				15
-#define CFWScreen				16
-#define UniversalScreen			17
-//###############################
-#define fileManager				18
-#define scriptMainScreen		19
-#define TextEditorScreen		20
-#define buttonTesterScreen		21
-#define scriptCreatorFunctions	22
-#define calendarScreen			23
-#define textFileBrowse			24
-#define gameSubMenuScreen		25
-#define pongScreen				26
-#define tictactoeScreen			27
-#define utilsScreen				28
-#define calculatorScreen		29
+// Better Screen Modes. ;P
+enum SCREEN_MODE {
+	// MainScreen.
+    mainScreen = 0,
+
+	// Credits.
+	creditsScreen = 1,
+
+	// Music.
+	musicMainScreen = 2,
+	musicListScreen = 3,
+	musicPlayerScreen = 4,
+	musicPlaylistAddScreen = 5,
+	musicPlaylistPlayScreen = 6,
+	musicPlaylistEditScreen = 7,
+	themeSelectorScreen = 8,
+
+	// Settings.
+	SettingsScreen = 9,
+
+	// Image.
+	ImageSelectorScreen = 10,
+	showImageScreen = 11,
+
+	// FTP.
+	ftpScreen = 12,
+
+	// Updater.
+	updaterSubMenu = 13,
+	TWLScreen = 14,
+	OtherScreen = 15,
+	CFWScreen = 16,
+	UniversalScreen = 17,
+
+	// FileManager.
+	fileManager = 18,
+
+	// Scripts.
+	scriptMainScreen = 19,
+	scriptCreatorFunctions = 20,
+
+	// Text.
+	TextEditorScreen = 21,
+	textFileBrowse = 22,
+
+	// Utils.
+	utilsScreen = 23,
+	buttonTesterScreen = 24,
+	calendarScreen = 25,
+	calculatorScreen = 26,
+
+	// Games.
+	gameSubMenuScreen = 27,
+	pongScreen = 28,
+	tictactoeScreen = 29
+};
 
 struct Playlist {
 	std::string name;
 	int position;
 };
 
-extern int screenMode;
+extern int SCREEN_MODE;
 
 // Main Menu Screen.
 void drawMainMenu(void);

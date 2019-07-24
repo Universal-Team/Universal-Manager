@@ -185,7 +185,7 @@ void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if(hDown & KEY_TOUCH) {
 		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
 			if (touching(touch, mainButtonPos[i])) {
-				screenMode = mainButtonPos[i].link;
+				SCREEN_MODE = mainButtonPos[i].link;
 				if(mainButtonPos[i].link == musicPlayerScreen) {
 					musicPlayerReturn = musicMainScreen;
 				} else if(mainButtonPos[i].link == musicPlaylistPlayScreen) {

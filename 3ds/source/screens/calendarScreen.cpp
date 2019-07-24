@@ -536,35 +536,35 @@ static void drawCurrentDay(void) {
 	Draw_Text(352, 98, 0.72f, WHITE, "21");
 
 	} else if (day == 22) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(10, 130, 50, 30, Config::barColor);
 	Draw_Text(22, 133, 0.72f, WHITE, "22");
 	} else if (day == 23) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(65, 130, 50, 30, Config::barColor);
 	Draw_Text(77, 133, 0.72f, WHITE, "23");
 	} else if (day == 24) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(120, 130, 50, 30, Config::barColor);
 	Draw_Text(132, 133, 0.72f, WHITE, "24");
 	} else if (day == 25) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(175, 130, 50, 30, Config::barColor);
 	Draw_Text(187, 133, 0.72f, WHITE, "25");
 	} else if (day == 26) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(230, 130, 50, 30, Config::barColor);
 	Draw_Text(242, 133, 0.72f, WHITE, "26");
 	} else if (day == 27) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
+	Draw_Rect(285, 130, 50, 30, Config::barColor);
 	Draw_Text(297, 133, 0.72f, WHITE, "27");
 	} else if (day == 28) {
 	Draw_Rect(340, 130, 50, 30, Config::barColor);
 	Draw_Text(352, 133, 0.72f, WHITE, "28");
 
 	} else if (day == 29) {
-	Draw_Rect(340, 165, 50, 30, Config::barColor);
+	Draw_Rect(10, 165, 50, 30, Config::barColor);
 	Draw_Text(22, 168, 0.72f, WHITE, "29");
 	} else if (day == 30) {
-	Draw_Rect(340, 165, 50, 30, Config::barColor);
+	Draw_Rect(65, 165, 50, 30, Config::barColor);
 	Draw_Text(77, 168, 0.72f, WHITE, "30");
 	} else if (day == 31) {
-	Draw_Rect(340, 165, 50, 30, Config::barColor);
+	Draw_Rect(120, 165, 50, 30, Config::barColor);
 	Draw_Text(132, 168, 0.72f, WHITE, "31");
 	}
 }

@@ -93,7 +93,7 @@ void drawFTPScreen(void) {
 
 	ret = gethostname(hostname, sizeof(hostname));
 
-	while(screenMode == ftpScreen) {
+	while(SCREEN_MODE == ftpScreen) {
 		ftp_loop();
 		Gui::clearTextBufs();
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -342,7 +342,7 @@ static void gameSelectionLogic(u32 hDown) {
 void gamesSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	gameSelectionLogic(hDown);
 	if (hDown & KEY_B) {
-		screenMode = mainScreen;
+		SCREEN_MODE = mainScreen;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, gamesSubMenuButtonPos[0])) {
 			screenTransition(pongScreen);
