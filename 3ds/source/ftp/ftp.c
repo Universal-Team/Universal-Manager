@@ -134,7 +134,7 @@ typedef enum
 /*! ftp session */
 struct ftp_session_t
 {
-  char                 cwd[4096];  /*!< current working directory */
+  char                 cwd[32768];  /*!< current working directory */
   char                 lwd[4096];  /*!< list working directory */
   struct sockaddr_in   peer_addr;  /*!< peer address for data connection */
   struct sockaddr_in   pasv_addr;  /*!< listen address for PASV connection */
