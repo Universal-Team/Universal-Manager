@@ -124,7 +124,7 @@ void drawMusicMain() {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(110, 0, FONT_SIZE_18, WHITE, "Music Player Menu");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Player Menu"))/2, 0, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();
@@ -421,7 +421,7 @@ void drawMusicPlaylistAdd(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -531,7 +531,7 @@ void drawMusicPlaylistPlay(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 	if(dirChanged) {
@@ -619,7 +619,7 @@ void drawMusicPlaylistEdit() {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Music Playlist Menu");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {

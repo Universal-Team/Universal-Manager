@@ -78,7 +78,7 @@ void drawScriptMainScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(90, 0, FONT_SIZE_18, WHITE, "Script Main Screen");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
 	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 	
 	if(dirChanged) {
@@ -210,7 +210,7 @@ void drawScriptsCreatorFunctions(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(125, 0, 0.72f, WHITE, "Script Creator");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Creator"))/2, 0, 0.72f, WHITE, "Script Creator");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBot();

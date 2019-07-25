@@ -261,7 +261,7 @@ void drawUpdaterSubMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Updater Sub Menu");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Updater Sub Menu"))/2, 0, 0.72f, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -329,7 +329,7 @@ void drawUpdaterTWL(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "TWL Updater Screen");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "TWL Updater Screen"))/2, 0, 0.72f, WHITE, "TWL Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -450,7 +450,7 @@ void drawUpdaterOther(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "Other Updater Screen");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Other Updater Screen"))/2, 0, 0.72f, WHITE, "Other Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -521,7 +521,7 @@ void drawUpdaterCFW(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, FONT_SIZE_18, WHITE, "CFW Updater Screen");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "CFW Updater Screen"))/2, 0, 0.72f, WHITE, "CFW Updater Screen");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -616,7 +616,7 @@ void drawUniversalScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(84, 0, FONT_SIZE_18, WHITE, "Universal Updater Screen");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal Updater Screen"))/2, 0, 0.72f, WHITE, "Universal Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();

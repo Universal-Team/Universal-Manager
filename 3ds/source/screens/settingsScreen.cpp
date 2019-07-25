@@ -130,7 +130,7 @@ void drawSettingsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(120, 0, FONT_SIZE_18, WHITE, "UI-Settings");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Settings"))/2, 0, 0.72f, WHITE, "Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::chooseLayoutBotBack();

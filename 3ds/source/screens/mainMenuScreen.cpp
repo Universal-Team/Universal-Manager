@@ -98,7 +98,7 @@ void drawMainMenu(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
 	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 

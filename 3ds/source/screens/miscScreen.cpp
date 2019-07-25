@@ -101,7 +101,7 @@ void drawFTPScreen(void) {
 		Gui::chooseLayoutTop();
 		DisplayTime();
 		drawBatteryTop();
-		Draw_Text(135, 0, 0.72f, WHITE, "FTP Mode");
+		Draw_Text((400-Draw_GetTextWidth(0.72f, "FTP Mode"))/2, 0, 0.72f, WHITE, "FTP Mode");
 		Gui::DrawBGBot();
 		Gui::chooseLayoutBot();
 		ret = ACU_GetWifiStatus(&wifiStatus);
@@ -203,7 +203,7 @@ void drawButtonTesterScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(130, 0, 0.72f, WHITE, "Button Tester");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
 	Draw_Text(80, 218, 0.72f, WHITE, "Currently Pressed Button : ");
 
 	Gui::DrawBGBot();
@@ -305,8 +305,8 @@ void drawGamesSubMenuScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(130, 218, 0.72f, WHITE, "Games Tab");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Games Tab"))/2, 220, 0.72f, WHITE, "Games Tab");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -372,8 +372,8 @@ void drawUtilsScreen(void) {
 	Gui::chooseLayoutTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(130, 218, 0.72f, WHITE, "Utils Tab");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Utils Tab"))/2, 220, 0.72f, WHITE, "Utils Tab");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
