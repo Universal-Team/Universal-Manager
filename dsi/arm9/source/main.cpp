@@ -14,7 +14,7 @@
 #include "nitrofs.h"
 #include "screens/screenCommon.hpp"
 
-int screenMode = 0;
+int SCREEN_MODE = 0;
 
 int main(int argc, char **argv) {
 	initGraphics();
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 				hDown = keysDown();
 			} while(!hDown);
 				// Draws a screen based on screenMode
-		switch(screenMode) {
+		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
 				drawMainMenu();				// Draws the Main Menu screen
@@ -57,17 +57,17 @@ int main(int argc, char **argv) {
 				break;
 		}
 				// Scans inputs for the current screen
-		switch(screenMode) {
+		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
 				if (hDown & KEY_A) {
-					screenMode = fileScreen;
+					SCREEN_MODE = fileScreen;
 				}
 				break;
 //#########################################################################################################
 			case fileScreen:
 				if (hDown & KEY_B) {
-					screenMode = mainScreen;
+					SCREEN_MODE = mainScreen;
 				}
 				break;
 //##########################################################################################################

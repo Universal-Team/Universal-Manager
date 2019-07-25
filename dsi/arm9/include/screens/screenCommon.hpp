@@ -26,12 +26,12 @@
 
 #include "../graphics/graphics.h"
 
-#define mainScreen				0
-//###############################
-#define fileScreen				1
-//###############################
+enum SCREEN_MODE {
+		mainScreen = 0,
+		fileScreen = 1
+};
 
-extern int screenMode;
+extern int SCREEN_MODE;
 
 // Main Menu Screen.
 void drawMainMenu(void);

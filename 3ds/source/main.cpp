@@ -132,7 +132,6 @@ int main()
 	// make folders if they don't exist
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
-	mkdir("sdmc:/Universal-Manager/Screenshots", 0777); // Create the Screenshot Path.
 
  	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 		ndspInit();
