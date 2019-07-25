@@ -61,31 +61,31 @@ char universal_manager_vertext[13];
 
 static void drawMainMenuSelection1(void) {
 	if (mainSelection1 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
+		Gui::Button(button_tl_selector_idx, 0, 26);
 	} else if (mainSelection1 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
+		Gui::Button(button_selector_idx, 166, 26);
 	} else if (mainSelection1 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
+		Gui::Button(button_selector_idx, 3, 95);
 	} else if (mainSelection1 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
+		Gui::Button(button_selector_idx, 166, 95);
 	} else if (mainSelection1 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
+		Gui::Button(button_selector_idx, 3, 153);
 	} else if (mainSelection1 == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 145, Config::barColor);
+		Gui::Button(button_br_selector_idx, 161, 153);
 	}
 }
 
 static void drawMainMenuSelection2(void) {
 	if (mainSelection2 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
+		Gui::Button(button_tl_selector_idx, 0, 26);
 	} else if (mainSelection2 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
+		Gui::Button(button_selector_idx, 166, 26);
 	} else if (mainSelection2 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
+		Gui::Button(button_selector_idx, 3, 95);
 	} else if (mainSelection2 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
+		Gui::Button(button_selector_idx, 166, 95);
 	} else if (mainSelection2 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
+		Gui::Button(button_selector_idx, 3, 153);
 	}
 }
 
@@ -108,27 +108,27 @@ void drawMainMenu(void) {
 
 	// First Page.
 	if (mainMenuPage == 0) {
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 26);
 	Gui::sprite(sprites_fileManagerIcon_idx, 5, 35);
 	Draw_Text(40, 42, 0.65f, WHITE, "Filemanager");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 26);
 	Gui::sprite(sprites_ftpIcon_idx, 175, 35);
 	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 95);
 	Gui::sprite(sprites_scriptIcon_idx, 5, 100);
 	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 95);
 	Gui::sprite(sprites_music_icon_idx, 175, 100);
 	Draw_Text(230, 107, 0.7f, WHITE, "Music");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 153);
 	Gui::sprite(sprites_updaterIcon_idx, 5, 170);
 	Draw_Text(50, 177, 0.7f, WHITE, "Updater");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 153);
 	Gui::sprite(sprites_settingsIcon_idx, 175, 170);
 	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
 
@@ -142,21 +142,21 @@ void drawMainMenu(void) {
 
 	// Second Page.
 	} else if (mainMenuPage == 1) {
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 26);
 	Gui::sprite(sprites_image_icon_idx, 5, 35);
 	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 26);
 	Draw_Text(230, 42, 0.7f, WHITE, "Credits");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 95);
 	Gui::sprite(sprites_textEditorIcon_idx, 5, 100);
 	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
+	Gui::sprite(sprites_mainMenuButton_idx, 170, 95);
 	Draw_Text(215, 107, 0.7f, WHITE, "Utils");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
+	Gui::sprite(sprites_mainMenuButton_idx, 3, 153);
 	Draw_Text(50, 177, 0.7f, WHITE, "Games");
 
 	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");

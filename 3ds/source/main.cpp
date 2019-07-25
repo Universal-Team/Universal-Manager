@@ -102,6 +102,7 @@ int fadealpha = 255;
 bool fadein = true;
 
 
+
 int main()
 {
 	acInit();
@@ -407,7 +408,7 @@ int main()
         Gui::clearTextBufs();
 
 		if (fadein == true) {
-			fadealpha -= 5;
+			fadealpha -= 3;
 			if (fadealpha < 0) {
 				fadealpha = 0;
 				fadein = false;
