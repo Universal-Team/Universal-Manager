@@ -123,7 +123,6 @@ int initMp3(const char* file)
 {
 	int err = 0;
 	int encoding = 0;
-	int meta = 0;
 
 	if((err = mpg123_init()) != MPG123_OK)
 		return err;

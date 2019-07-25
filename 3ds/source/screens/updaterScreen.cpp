@@ -361,7 +361,7 @@ void drawUpdaterTWL(void) {
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
 
-	for(int i=0;i<(sizeof(TWLButtons)/sizeof(TWLButtons[0]));i++) {
+	for(uint i=0;i<(sizeof(TWLButtons)/sizeof(TWLButtons[0]));i++) {
     if(updateAvailable[i]) {
         Gui::sprite(sprites_dot_idx, TWLButtons[i].x+75, TWLButtons[i].y-6);
     }
@@ -550,7 +550,7 @@ void drawUpdaterCFW(void) {
 	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 3, RED);
 
-	for(int i=0;i<(sizeof(CFWButtons)/sizeof(CFWButtons[0]));i++) {
+	for(uint i=0;i<(sizeof(CFWButtons)/sizeof(CFWButtons[0]));i++) {
     if(updateAvailable[i+4]) {
         Gui::sprite(sprites_dot_idx, CFWButtons[i].x+75, CFWButtons[i].y-6);
     }
@@ -652,7 +652,7 @@ void drawUniversalScreen(void) {
 	Draw_Text(300, 4, 0.50, WHITE, "4"); //Draw Fourth Page Number.
 	Gui::Draw_ImageBlend(sprites_frame_idx, 296, 3, RED);
 
-	for(int i=0;i<(sizeof(UNIVButtons)/sizeof(UNIVButtons[0]));i++) {
+	for(uint i=0;i<(sizeof(UNIVButtons)/sizeof(UNIVButtons[0]));i++) {
     if(updateAvailable[i]) {
         Gui::sprite(sprites_dot_idx, UNIVButtons[i].x+75, UNIVButtons[i].y-6);
     }

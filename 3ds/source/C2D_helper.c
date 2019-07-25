@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdarg.h>
 #include "C2D_helper.h"
+#include "fs.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -18,6 +19,18 @@
 #define TRANSPARENT_COLOR 0xFFFFFFFF
 
 FS_Archive archive, sdmc_archive, nand_archive;
+
+static u64 FSFILE_FRead(void *dst, u32 size, Handle file) {
+	Result ret = 0;
+	u32 bytes_read = 0;
+	u64 offset = 0;
+
+	if (R_FAILED(ret = FSFILE_Read(file, &bytes_read, offset, (u32 *)dst, size)))
+		return ret;
+
+	offset += bytes_read;
+	return offset;
+}
 
 static u8 *Draw_LoadExternalImageFile(const char *path, u32 *data_size) {
 	Result ret = 0;
@@ -133,7 +146,7 @@ struct ImageSize Draw_LoadImageFile(C2D_Image *texture, const char *path) {
 }
 
 void GetImageSizeFile(const char *path, int *width, int *height) {
-	stbi_load(path, &width, &height, NULL, STBI_rgb_alpha);
+	stbi_load(path, width, height, NULL, STBI_rgb_alpha);
 }
 
 bool Draw_LoadImageMemory(C2D_Image *texture, void *data, size_t size) {
