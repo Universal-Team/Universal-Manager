@@ -43,7 +43,6 @@ int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
-int Config::SS; // [SCREENSHOT]
 
 void Config::loadConfig() {
 	// [UI]
@@ -65,8 +64,6 @@ void Config::loadConfig() {
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
 	// [CREDITS]
 	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
-	// [SCREENSHOT]
-	Config::SS = settingsini.GetInt("SCREENSHOT", "ENABLE", 1); // 1-> Screenshots can be made ; 0 -> Screenshot disabled.
 }
 
 void Config::saveConfig() {
@@ -90,9 +87,6 @@ void Config::saveConfig() {
 	
 	// [SCREEN]
 	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
-
-	// [SCREENSHOT]
-	settingsini.SetInt("SCREENSHOT", "ENABLE", Config::SS);
 
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }

@@ -45,7 +45,6 @@
 extern "C" {
 	#include "music/error.h"
 	#include "music/playback.h"
-	#include "screenshot.h"
 }
 
 struct ButtonPos {
@@ -152,18 +151,7 @@ int main()
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         C2D_TargetClear(top, BLUE2);
         C2D_TargetClear(bottom, BLUE2);
-		Gui::clearTextBufs();
-
-	if (((hHeld & KEY_L) && (hDown & KEY_R)) || ((hHeld & KEY_R) && (hDown & KEY_L))) {
-		if (Config::SS == 0) {
-		} else if (Config::SS == 1) {
-			captureScreenshot();
-			DisplayMsg("Screenshot Successfully Created!");
-			for (int i = 0; i < 60*2; i++) {
-				gspWaitForVBlank();
-			}
-		}
-}		
+		Gui::clearTextBufs();	
 
 		// Draws a screen based on screenMode
 		switch(SCREEN_MODE) {
