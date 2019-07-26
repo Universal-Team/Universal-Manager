@@ -87,9 +87,11 @@ void settingScreen(void) {
 		if (touching(touch, SettingsButtonPos[0])) {
 		Config::Barcolor = DARK_BLUE;
 		Config::saveConfig();
+		screenDrawn = false;
 		} else if (touching(touch, SettingsButtonPos[1])) {
 		Config::Bg = 0xFFF;
 		Config::saveConfig();
+		screenDrawn = false;
 		}
 	} else if (hDown & KEY_B) {
 		screenDrawn = false;
