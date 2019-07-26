@@ -84,7 +84,6 @@ void settingScreen(void) {
 	} while(!hDown);
 
 	if (hDown & KEY_TOUCH) {
-		screenDrawn = false;
 		if (touching(touch, SettingsButtonPos[0])) {
 		Config::Barcolor = DARK_BLUE;
 		Config::saveConfig();

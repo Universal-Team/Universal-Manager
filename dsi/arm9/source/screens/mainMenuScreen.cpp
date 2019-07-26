@@ -82,10 +82,11 @@ void mainMenuScreen(void) {
 	} while(!hDown);
 
 	if (hDown & KEY_TOUCH) {
-		screenDrawn = false;
 		if (touching(touch, mainButtonPos[0])) {
+			screenDrawn = false;
 			SCREEN_MODE = fileScreen;
 		} else if (touching(touch, mainButtonPos[1])) {
+			screenDrawn = false;
 			SCREEN_MODE = settingsScreen;
 		}
 	} else if (hDown & KEY_A) {
