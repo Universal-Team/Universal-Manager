@@ -112,6 +112,6 @@ void printTextTinted(std::u16string text, u16 color, int xPos, int yPos, bool to
 #define DARK_GRAY 0x98C6
 #define WHITE 0xFFFF
 #define GRAY 0xBDEF
-#define BARCOLOR BGR15(0xff, 0x6f, 0)
+#define BARCOLOR 0xA0FD
 
 #endif //GRAPHICS_H

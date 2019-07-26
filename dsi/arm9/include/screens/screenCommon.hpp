@@ -35,9 +35,11 @@ extern int SCREEN_MODE;
 
 // Main Menu Screen.
 void drawMainMenu(void);
+void mainMenuLogic(u16 hDown);
 
 // File Manager Sub Menu Screen.
 void drawFileManagerSubMenu(void);
+void fileManagerSubMenuLogic(u16 hDown);
 
 // Graphic loading.
 void loadGraphics(void);

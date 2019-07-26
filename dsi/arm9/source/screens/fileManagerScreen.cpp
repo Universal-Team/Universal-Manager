@@ -25,18 +25,25 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "config.h"
 
 void drawFileManagerSubMenu(void) {
-	drawRectangle(0, 20, 256, 152, GRAY, true); //	Top Screen.
-	drawRectangle(0, 0, 256, 20, BARCOLOR, true);
-	drawRectangle(0, 172, 256, 20, BARCOLOR, true);
+	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
 
-	drawRectangle(0, 20, 256, 152, GRAY, false); //	Bottom Screen.
-	drawRectangle(0, 0, 256, 20, BARCOLOR, false);
-	drawRectangle(0, 172, 256, 20, BARCOLOR, false);
+	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
 	printTextTinted("FileManager Sub Menu", BLACK, 60, 5, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+}
+
+void fileManagerSubMenuLogic(u16 hDown) {
+	if (hDown & KEY_B) {
+		SCREEN_MODE = mainScreen;
+	}
 }

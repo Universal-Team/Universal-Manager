@@ -13,6 +13,7 @@
 #include "graphics/graphics.h"
 #include "nitrofs.h"
 #include "screens/screenCommon.hpp"
+#include "config.h"
 
 int SCREEN_MODE = 0;
 
@@ -32,7 +33,12 @@ int main(int argc, char **argv) {
 		while(1) swiWaitForVBlank();
 	}
 
+	// Make directories
+	mkdir("sd:/_nds", 0777);
+	mkdir("sd:/_nds/Universal-Manager", 0777);
+
 	loadFont();
+	Config::loadConfig();
 	loadGraphics();
 	drawRectangle(0, 0, 256, 192, DARK_BLUE, true);
 	drawRectangle(0, 0, 256, 192, DARK_BLUE, false);
@@ -41,8 +47,8 @@ int main(int argc, char **argv) {
 	u16 hDown = 0;
 		while(1) {
 			do {
-				swiWaitForVBlank();
 				scanKeys();
+				swiWaitForVBlank();
 				hDown = keysDown();
 			} while(!hDown);
 				// Draws a screen based on screenMode
@@ -60,20 +66,16 @@ int main(int argc, char **argv) {
 		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
-				if (hDown & KEY_A) {
-					SCREEN_MODE = fileScreen;
-				}
+				mainMenuLogic(hDown);
 				break;
 //#########################################################################################################
 			case fileScreen:
-				if (hDown & KEY_B) {
-					SCREEN_MODE = mainScreen;
-				}
+				fileManagerSubMenuLogic(hDown);
 				break;
 //##########################################################################################################
 				}
 
 	}
-
+	Config::saveConfig();
 	return 0;
 }
