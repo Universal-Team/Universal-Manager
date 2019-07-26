@@ -47,5 +47,8 @@ void drawMainMenu(void) {
 void mainMenuLogic(u16 hDown) {
 	if (hDown & KEY_A) {
 		SCREEN_MODE = fileScreen;
+	} else if (hDown & KEY_X) {
+		Config::Barcolor = DARK_BLUE;
+		Config::saveConfig();
 	}
 }

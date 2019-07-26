@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
 
 	loadFont();
 	Config::loadConfig();
+	Config::saveConfig();
 	loadGraphics();
 	drawRectangle(0, 0, 256, 192, DARK_BLUE, true);
 	drawRectangle(0, 0, 256, 192, DARK_BLUE, false);
@@ -76,6 +77,5 @@ int main(int argc, char **argv) {
 				}
 
 	}
-	Config::saveConfig();
 	return 0;
 }
