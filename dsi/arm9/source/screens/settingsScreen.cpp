@@ -73,7 +73,7 @@ void drawSettingsScreen(void) {
 	screenDrawn = true;
 }
 
-void settingsScreen(void) {
+void settingScreen(void) {
 	drawSettingsScreen();
 
 	do {

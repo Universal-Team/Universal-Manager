@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
 				break;
 //#########################################################################################################
 			case settingsScreen:
-				settingsScreen();				// Settings screen
+				settingScreen();				// Settings screen
 				break;
 		}
 

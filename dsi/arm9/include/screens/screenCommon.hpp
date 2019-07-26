@@ -41,7 +41,7 @@ void mainMenuScreen(void);
 void fileManagerSubMenuScreen(void);
 
 // Settings Screen.
-void settingsScreen(void);
+void settingScreen(void);
 
 // Graphic loading.
 void loadGraphics(void);
