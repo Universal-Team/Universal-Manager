@@ -70,47 +70,28 @@ int main(int argc, char **argv) {
 	printTextTinted("Press A to start. :)", BLACK, 60, 0, false);
 
 	u16 hDown = 0;
-		while(1) {
-				// Draws a screen based on screenMode
+	do {
+		scanKeys();
+		swiWaitForVBlank();
+		hDown = keysDown();
+	} while(!(hDown & KEY_A));
+
+	while(1) {
+		// Run a screenMode
 		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
-				drawMainMenu();				// Draws the Main Menu screen
+				mainMenuScreen();				// Main Menu screen
 				break;
 //#########################################################################################################
 			case fileScreen:
-				drawFileManagerSubMenu();	// Draws the File Manager screen
+				fileManagerSubMenuScreen();		// File Manager screen
 				break;
 //#########################################################################################################
 			case settingsScreen:
-				drawSettingsScreen();	// Draws the File Manager screen
+				settingsScreen();				// Settings screen
 				break;
 		}
-
-			do {
-				scanKeys();
-				swiWaitForVBlank();
-				hDown = keysDown();
-				touchRead(&touch);
-			} while(!hDown);
-
-
-				// Scans inputs for the current screen
-		switch(SCREEN_MODE) {
-//#########################################################################################################
-			case mainScreen:
-				mainMenuLogic(hDown, touch);
-				break;
-//#########################################################################################################
-			case fileScreen:
-				fileManagerSubMenuLogic(hDown);
-				break;
-//#########################################################################################################
-			case settingsScreen:
-				settingsLogic(hDown, touch);
-				break;
-//##########################################################################################################
-				}
 
 	}
 	return 0;

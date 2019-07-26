@@ -43,7 +43,14 @@ ButtonPos mainButtonPos[] = {
 	{130, 25, 125, 41, -1},
 };
 
+static bool screenDrawn = false;
+
+static u16 hDown;
+static touchPosition touch;
+
 void drawMainMenu(void) {
+	if (screenDrawn) return;
+
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
@@ -60,18 +67,32 @@ void drawMainMenu(void) {
 	printTextTinted("FileManager", WHITE, 5, 30, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 	printTextTinted("Settings", WHITE, 135, 30, false);
+
+	screenDrawn = true;
 }
 
-void mainMenuLogic(u16 hDown, touchPosition touch) {
+void mainMenuScreen(void) {
+	drawMainMenu();
+
+	do {
+		scanKeys();
+		swiWaitForVBlank();
+		hDown = keysDown();
+		touchRead(&touch);
+	} while(!hDown);
+
 	if (hDown & KEY_TOUCH) {
+		screenDrawn = false;
 		if (touching(touch, mainButtonPos[0])) {
 			SCREEN_MODE = fileScreen;
-	} else if (touching(touch, mainButtonPos[1])) {
-		SCREEN_MODE = settingsScreen;
-	}
+		} else if (touching(touch, mainButtonPos[1])) {
+			SCREEN_MODE = settingsScreen;
+		}
 	} else if (hDown & KEY_A) {
+		screenDrawn = false;
 		SCREEN_MODE = fileScreen;
 	} else if (hDown & KEY_Y) {
+		screenDrawn = false;
 		SCREEN_MODE = settingsScreen;
 	}
 }

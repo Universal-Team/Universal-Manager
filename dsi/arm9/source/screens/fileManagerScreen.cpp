@@ -27,7 +27,14 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 
+static bool screenDrawn = false;
+
+static u16 hDown;
+//static touchPosition touch;
+
 void drawFileManagerSubMenu(void) {
+	if (screenDrawn) return;
+
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
@@ -40,10 +47,22 @@ void drawFileManagerSubMenu(void) {
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+
+	screenDrawn = true;
 }
 
-void fileManagerSubMenuLogic(u16 hDown) {
+void fileManagerSubMenuScreen(void) {
+	drawFileManagerSubMenu();
+
+	do {
+		scanKeys();
+		swiWaitForVBlank();
+		hDown = keysDown();
+		//touchRead(&touch);
+	} while(!hDown);
+
 	if (hDown & KEY_B) {
+		screenDrawn = false;
 		SCREEN_MODE = mainScreen;
 	}
 }

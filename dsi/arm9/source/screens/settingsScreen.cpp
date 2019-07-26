@@ -44,7 +44,14 @@ ButtonPos SettingsButtonPos[] = {
 };
 
 
+static bool screenDrawn = false;
+
+static u16 hDown;
+static touchPosition touch;
+
 void drawSettingsScreen(void) {
+	if (screenDrawn) return;
+
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
@@ -62,10 +69,22 @@ void drawSettingsScreen(void) {
 	printTextTinted("Bar Color", WHITE, 5, 30, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 	printTextTinted("BG Color", WHITE, 135, 30, false);
+
+	screenDrawn = true;
 }
 
-void settingsLogic(u16 hDown, touchPosition touch) {
+void settingsScreen(void) {
+	drawSettingsScreen();
+
+	do {
+		scanKeys();
+		swiWaitForVBlank();
+		hDown = keysDown();
+		touchRead(&touch);
+	} while(!hDown);
+
 	if (hDown & KEY_TOUCH) {
+		screenDrawn = false;
 		if (touching(touch, SettingsButtonPos[0])) {
 		Config::Barcolor = DARK_BLUE;
 		Config::saveConfig();
@@ -74,6 +93,7 @@ void settingsLogic(u16 hDown, touchPosition touch) {
 		Config::saveConfig();
 		}
 	} else if (hDown & KEY_B) {
+		screenDrawn = false;
 		SCREEN_MODE = mainScreen;
 	}
 }

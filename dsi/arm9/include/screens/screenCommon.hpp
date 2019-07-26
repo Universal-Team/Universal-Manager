@@ -35,16 +35,13 @@ enum SCREEN_MODE {
 extern int SCREEN_MODE;
 
 // Main Menu Screen.
-void drawMainMenu(void);
-void mainMenuLogic(u16 hDown, touchPosition touch);
+void mainMenuScreen(void);
 
 // File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-void fileManagerSubMenuLogic(u16 hDown);
+void fileManagerSubMenuScreen(void);
 
 // Settings Screen.
-void drawSettingsScreen(void);
-void settingsLogic(u16 hDown, touchPosition touch);
+void settingsScreen(void);
 
 // Graphic loading.
 void loadGraphics(void);
