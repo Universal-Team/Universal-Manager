@@ -40,11 +40,6 @@ int main(int argc, char **argv) {
 
 	u16 hDown = 0;
 		while(1) {
-			do {
-				swiWaitForVBlank();
-				scanKeys();
-				hDown = keysDown();
-			} while(!hDown);
 				// Draws a screen based on screenMode
 		switch(screenMode) {
 //#########################################################################################################
@@ -56,6 +51,13 @@ int main(int argc, char **argv) {
 				drawFileManagerSubMenu();	// Draws the File Manager screen
 				break;
 		}
+
+			do {
+				swiWaitForVBlank();
+				scanKeys();
+				hDown = keysDown();
+			} while(!hDown);
+
 				// Scans inputs for the current screen
 		switch(screenMode) {
 //#########################################################################################################
