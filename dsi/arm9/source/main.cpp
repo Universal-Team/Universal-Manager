@@ -17,6 +17,23 @@
 
 int SCREEN_MODE = 0;
 
+struct ButtonPos {
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+
+static touchPosition touch;
+
+bool touching(touchPosition touch, ButtonPos button) {
+	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
+		return true;
+	else
+		return false;
+}
+
 int main(int argc, char **argv) {
 	initGraphics();
 	keysSetRepeat(25,5);
@@ -51,6 +68,7 @@ int main(int argc, char **argv) {
 				scanKeys();
 				swiWaitForVBlank();
 				hDown = keysDown();
+				touchRead(&touch);
 			} while(!hDown);
 				// Draws a screen based on screenMode
 		switch(SCREEN_MODE) {
@@ -62,6 +80,10 @@ int main(int argc, char **argv) {
 			case fileScreen:
 				drawFileManagerSubMenu();	// Draws the File Manager screen
 				break;
+//#########################################################################################################
+			case settingsScreen:
+				drawSettingsScreen();	// Draws the File Manager screen
+				break;
 		}
 				// Scans inputs for the current screen
 		switch(SCREEN_MODE) {
@@ -72,6 +94,10 @@ int main(int argc, char **argv) {
 //#########################################################################################################
 			case fileScreen:
 				fileManagerSubMenuLogic(hDown);
+				break;
+//#########################################################################################################
+			case settingsScreen:
+				settingsLogic(hDown, touch);
 				break;
 //##########################################################################################################
 				}

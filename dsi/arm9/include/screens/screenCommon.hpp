@@ -28,7 +28,8 @@
 
 enum SCREEN_MODE {
 		mainScreen = 0,
-		fileScreen = 1
+		fileScreen = 1,
+		settingsScreen = 2
 };
 
 extern int SCREEN_MODE;
@@ -40,6 +41,10 @@ void mainMenuLogic(u16 hDown);
 // File Manager Sub Menu Screen.
 void drawFileManagerSubMenu(void);
 void fileManagerSubMenuLogic(u16 hDown);
+
+// Settings Screen.
+void drawSettingsScreen(void);
+void settingsLogic(u16 hDown, touchPosition touch);
 
 // Graphic loading.
 void loadGraphics(void);

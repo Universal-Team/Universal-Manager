@@ -27,7 +27,24 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 
-void drawMainMenu(void) {
+struct ButtonPos {
+	int x;
+	int y;
+	int w;
+	int h;
+	int link;
+};
+
+extern bool touching(touchPosition touch, ButtonPos button);
+
+ButtonPos SettingsButtonPos[] = {
+	
+	{0, 25, 125, 41, -1},
+	{130, 25, 125, 41, -1},
+};
+
+
+void drawSettingsScreen(void) {
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
@@ -36,18 +53,22 @@ void drawMainMenu(void) {
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
-	printTextTinted("Universal-Manager", BLACK, 60, 5, true);
+	printTextTinted("Settings Screen", BLACK, 60, 5, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+	// Buttons.
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
 }
 
-void mainMenuLogic(u16 hDown) {
-	if (hDown & KEY_A) {
-		SCREEN_MODE = fileScreen;
-	} else if (hDown & KEY_Y) {
-		SCREEN_MODE = settingsScreen;
+void settingsLogic(u16 hDown, touchPosition touch) {
+	if (hDown & KEY_TOUCH) {
+		if (touching(touch, SettingsButtonPos[0])) {
+		Config::Barcolor = DARK_BLUE;
+		Config::saveConfig();
+		}
+	} else if (hDown & KEY_B) {
+		SCREEN_MODE = mainScreen;
 	}
 }
