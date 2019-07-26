@@ -41,12 +41,14 @@ int main(int argc, char **argv) {
 	if(!fatInitDefault()) {
 		// Draws the bottom screen red if fatInitDefault() fails
 		drawRectangle(0, 0, 256, 192, BGR15(0, 0, 0xff), false);
+		printTextTinted("fatInit Failed.", BLACK, 60, 0, false);
 		while(1) swiWaitForVBlank();
 	}
 
 	if(!nitroFSInit(argv[0])) {
 		// Draws the bottom screen blue if nitroFSInit() fails
 		drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
+		printTextTinted("NitroFS Failed.", BLACK, 60, 0, false);
 		while(1) swiWaitForVBlank();
 	}
 
@@ -58,9 +60,14 @@ int main(int argc, char **argv) {
 	Config::loadConfig();
 	Config::saveConfig();
 	loadGraphics();
-	drawRectangle(0, 0, 256, 192, DARK_BLUE, true);
-	drawRectangle(0, 0, 256, 192, DARK_BLUE, false);
-	printTextTinted("Press A to start.", DARK_GRAY, 32, 0, false);
+	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
+
+	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
+	printTextTinted("Press A to start. :)", BLACK, 60, 0, false);
 
 	u16 hDown = 0;
 		while(1) {
@@ -89,7 +96,7 @@ int main(int argc, char **argv) {
 		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
-				mainMenuLogic(hDown);
+				mainMenuLogic(hDown, touch);
 				break;
 //#########################################################################################################
 			case fileScreen:

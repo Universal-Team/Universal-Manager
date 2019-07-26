@@ -59,13 +59,18 @@ void drawSettingsScreen(void) {
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	// Buttons.
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	printTextTinted("Bar Color", WHITE, 5, 30, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	printTextTinted("BG Color", WHITE, 135, 30, false);
 }
 
 void settingsLogic(u16 hDown, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, SettingsButtonPos[0])) {
 		Config::Barcolor = DARK_BLUE;
+		Config::saveConfig();
+		} else if (touching(touch, SettingsButtonPos[1])) {
+		Config::Bg = 0xFFF;
 		Config::saveConfig();
 		}
 	} else if (hDown & KEY_B) {
