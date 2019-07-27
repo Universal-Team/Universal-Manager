@@ -1,5 +1,13 @@
 --atlas -f rgba -z auto
-button/br-selector.png
-button/fileButtonSelector.png
-button/selector.png
-button/tl-selector.png
+
+button/button-tl.png
+button/button-2.png
+button/button-3.png
+button/button-4.png
+button/button-5.png
+button/button-br.png
+
+button/selector/br-selector.png
+button/selector/fileButtonSelector.png
+button/selector/selector.png
+button/selector/tl-selector.png

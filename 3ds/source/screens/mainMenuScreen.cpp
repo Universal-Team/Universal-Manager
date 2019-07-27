@@ -63,13 +63,13 @@ static void drawMainMenuSelection1(void) {
 	if (mainSelection1 == 0) {
 		Gui::Button(button_tl_selector_idx, 0, 26);
 	} else if (mainSelection1 == 1) {
-		Gui::Button(button_selector_idx, 166, 26);
+		Gui::Button(button_selector_idx, 166, 31);
 	} else if (mainSelection1 == 2) {
 		Gui::Button(button_selector_idx, 3, 95);
 	} else if (mainSelection1 == 3) {
 		Gui::Button(button_selector_idx, 166, 95);
 	} else if (mainSelection1 == 4) {
-		Gui::Button(button_selector_idx, 3, 153);
+		Gui::Button(button_selector_idx, 3, 158);
 	} else if (mainSelection1 == 5) {
 		Gui::Button(button_br_selector_idx, 161, 153);
 	}
@@ -79,13 +79,13 @@ static void drawMainMenuSelection2(void) {
 	if (mainSelection2 == 0) {
 		Gui::Button(button_tl_selector_idx, 0, 26);
 	} else if (mainSelection2 == 1) {
-		Gui::Button(button_selector_idx, 166, 26);
+		Gui::Button(button_selector_idx, 166, 31);
 	} else if (mainSelection2 == 2) {
 		Gui::Button(button_selector_idx, 3, 95);
 	} else if (mainSelection2 == 3) {
 		Gui::Button(button_selector_idx, 166, 95);
 	} else if (mainSelection2 == 4) {
-		Gui::Button(button_selector_idx, 3, 153);
+		Gui::Button(button_selector_idx, 3, 158);
 	}
 }
 
@@ -106,30 +106,31 @@ void drawMainMenu(void) {
 	animatedBGBot();
 	Gui::chooseLayoutBot();
 
+
 	// First Page.
 	if (mainMenuPage == 0) {
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 26);
-	Gui::sprite(sprites_fileManagerIcon_idx, 5, 35);
-	Draw_Text(40, 42, 0.65f, WHITE, "Filemanager");
+	Gui::Button(button_button_tl_idx, 1, 27);
+	Gui::sprite(sprites_fileManagerIcon_idx, 9, 41);
+	Draw_Text(40, 48, 0.65f, WHITE, "Filemanager");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 26);
-	Gui::sprite(sprites_ftpIcon_idx, 175, 35);
+	Gui::Button(button_button_2_idx, 162, 27);
+	Gui::sprite(sprites_ftpIcon_idx, 172, 40);
 	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 95);
-	Gui::sprite(sprites_scriptIcon_idx, 5, 100);
+	Gui::Button(button_button_3_idx, 1, 91);
+	Gui::sprite(sprites_scriptIcon_idx, 4, 102);
 	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 95);
-	Gui::sprite(sprites_music_icon_idx, 175, 100);
+	Gui::Button(button_button_4_idx, 162, 91);
+	Gui::sprite(sprites_music_icon_idx, 175, 106);
 	Draw_Text(230, 107, 0.7f, WHITE, "Music");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 153);
-	Gui::sprite(sprites_updaterIcon_idx, 5, 170);
+	Gui::Button(button_button_5_idx, 1, 154);
+	Gui::sprite(sprites_updaterIcon_idx, 9, 167);
 	Draw_Text(50, 177, 0.7f, WHITE, "Updater");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 153);
-	Gui::sprite(sprites_settingsIcon_idx, 175, 170);
+	Gui::Button(button_button_br_idx, 162, 151);
+	Gui::sprite(sprites_settingsIcon_idx, 172, 165);
 	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
 
 	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
@@ -142,21 +143,22 @@ void drawMainMenu(void) {
 
 	// Second Page.
 	} else if (mainMenuPage == 1) {
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 26);
-	Gui::sprite(sprites_image_icon_idx, 5, 35);
+	Gui::Button(button_button_tl_idx, 1, 27);
+	Gui::sprite(sprites_image_icon_idx, 6, 37);
 	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 26);
+	Gui::Button(button_button_2_idx, 162, 27);
 	Draw_Text(230, 42, 0.7f, WHITE, "Credits");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 95);
-	Gui::sprite(sprites_textEditorIcon_idx, 5, 100);
+	Gui::Button(button_button_3_idx, 1, 91);
+	Gui::sprite(sprites_textEditorIcon_idx, 9, 103);
 	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 95);
+	Gui::Button(button_button_4_idx, 162, 91);
+	Gui::sprite(sprites_utilsIcon_idx, 175, 102);
 	Draw_Text(215, 107, 0.7f, WHITE, "Utils");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 3, 153);
+	Gui::Button(button_button_5_idx, 1, 154);
 	Draw_Text(50, 177, 0.7f, WHITE, "Games");
 
 	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
