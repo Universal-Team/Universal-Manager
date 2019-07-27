@@ -41,6 +41,7 @@
 #include "settings.hpp"
 #include "ptmu_x.h"
 #include "sound.h"
+#include "fileBrowse.h"
 
 extern "C" {
 	#include "music/error.h"
@@ -61,6 +62,8 @@ extern int locInPlaylist;
 extern int musicRepeat;
 extern bool musicShuffle;
 extern bool firstSong;
+
+extern std::vector<DirEntry> dirContents;
 
 //Music and sound effects.
 sound *sfx_scroll = NULL;
@@ -412,7 +415,7 @@ int main()
 	} else if (!isPlaying()) {
 		ndspExit();
 	}
-	
+	dirContents.clear();
 	Gui::exit();
 	gfxExit();
 	cfguExit();

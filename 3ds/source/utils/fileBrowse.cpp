@@ -16,24 +16,8 @@ extern uint selectedFile;
 extern int keyRepeatDelay;
 extern bool dirChanged;
 extern std::vector<DirEntry> dirContents;
-//extern std::string currentFile = "";
-//extern std::string currentFiles;
 
-
-/**
- * Get the title ID.
- * @param ndsFile DS ROM image.
- * @param buf Output buffer for title ID. (Must be at least 4 characters.)
- * @return 0 on success; non-zero on error.
- */
-int grabTID(FILE *ndsFile, char *buf)
-{
-	fseek(ndsFile, offsetof(sNDSHeadertitlecodeonly, gameCode), SEEK_SET);
-	size_t read = fread(buf, 1, 4, ndsFile);
-	return !(read == 4);
-}
-
-void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> fileTypes)
+/* void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> fileTypes)
 {	
 	struct stat st;
 	DIR *pdir = opendir(".");
@@ -92,7 +76,7 @@ void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> file
 		}
 		closedir(pdir);
 	}
-}
+}*/
 
 off_t getFileSize(const char *fileName)
 {
@@ -172,8 +156,8 @@ void drawFileBrowser() {
             std::vector<DirEntry> dirContentsTemp;
             getDirectoryContents(dirContentsTemp);
             for(uint i=0;i<dirContentsTemp.size();i++) {
-                    dirContents.push_back(dirContentsTemp[i]);
-            }
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
 		dirChanged = false;
 	}
 	std::string dirs;
