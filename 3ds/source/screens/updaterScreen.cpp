@@ -258,14 +258,14 @@ static void drawUNIVSelection(void) {
 void drawUpdaterSubMenu(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Updater Sub Menu"))/2, 0, 0.72f, WHITE, "Updater Sub Menu");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	for (int i = (int)(sizeof(mainButtons)/sizeof(mainButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(mainButtonsTex[i], mainButtons[i].x, mainButtons[i].y);
@@ -326,14 +326,14 @@ void updaterSubMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 void drawUpdaterTWL(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "TWL Updater Screen"))/2, 0, 0.72f, WHITE, "TWL Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// TWL Menu Buttons.
 	for (int i = (int)(sizeof(TWLButtons)/sizeof(TWLButtons[0]))-1; i >= 0; i--) {
@@ -447,14 +447,14 @@ void updaterTWLLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 void drawUpdaterOther(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Other Updater Screen"))/2, 0, 0.72f, WHITE, "Other Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	for (int i = (int)(sizeof(OTHERButtons)/sizeof(OTHERButtons[0]))-1; i >= 0; i--) {
 		Gui::sprite(OTHERButtonsTex[i], OTHERButtons[i].x, OTHERButtons[i].y);
@@ -518,14 +518,14 @@ void updaterOtherLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 void drawUpdaterCFW(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "CFW Updater Screen"))/2, 0, 0.72f, WHITE, "CFW Updater Screen");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// Luma 3DS Buttons.
 	for (int i = (int)(sizeof(CFWButtons)/sizeof(CFWButtons[0]))-1; i >= 0; i--) {
@@ -613,14 +613,14 @@ void updaterCFWLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 void drawUniversalScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal Updater Screen"))/2, 0, 0.72f, WHITE, "Universal Updater Screen");
 	
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// Universal-Manager Buttons.
 

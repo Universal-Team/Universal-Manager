@@ -112,7 +112,7 @@ void drawTextEditorScreen(void) {
 	textRead = false;
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text(200-((Draw_GetTextWidth(FONT_SIZE_18, currentEditFile.c_str())/2)), 0, FONT_SIZE_18, WHITE, currentEditFile.c_str());
@@ -155,7 +155,7 @@ void drawTextEditorScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }
 
 void TextEditorLogic(u32 hDown, u32 hHeld) {

@@ -75,7 +75,7 @@ void drawScriptMainScreen(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
@@ -126,7 +126,7 @@ void drawScriptMainScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }
 
 
@@ -207,13 +207,13 @@ static void drawSelection2(void) {
 void drawScriptsCreatorFunctions(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Creator"))/2, 0, 0.72f, WHITE, "Script Creator");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 
 	// Functions.
 	if (screenPage == 0) {

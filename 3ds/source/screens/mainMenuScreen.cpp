@@ -95,7 +95,7 @@ void drawMainMenu(void) {
 
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
@@ -104,7 +104,7 @@ void drawMainMenu(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 
 
 	// First Page.

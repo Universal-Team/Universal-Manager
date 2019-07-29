@@ -121,13 +121,13 @@ void drawMusicMain() {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Player Menu"))/2, 0, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
 	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
@@ -271,7 +271,7 @@ void drawMusicPlayer(void) {
 
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 
 		// Placeholder for Metadata Stuff..
 	 	if (Config::musicMode == 0) {
@@ -333,7 +333,7 @@ void drawMusicPlayer(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 	DisplayTime();
 	drawBatteryBot();
 
@@ -418,7 +418,7 @@ void drawMusicPlaylistAdd(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
@@ -455,7 +455,7 @@ void drawMusicPlaylistAdd(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
@@ -528,7 +528,7 @@ void drawMusicPlaylistPlay(void) {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
@@ -557,7 +557,7 @@ void drawMusicPlaylistPlay(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
@@ -616,7 +616,7 @@ void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
 void drawMusicPlaylistEdit() {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
@@ -637,7 +637,7 @@ void drawMusicPlaylistEdit() {
 	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }
 
 void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {

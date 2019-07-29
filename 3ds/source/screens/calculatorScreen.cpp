@@ -70,12 +70,12 @@ void drawCalculatorScreen(void) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
 	C2D_SceneBegin(bottom);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBottomBack();
 	drawCalculatorKeyboard();
 }
 

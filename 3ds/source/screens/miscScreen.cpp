@@ -98,12 +98,12 @@ void drawFTPScreen(void) {
 		Gui::clearTextBufs();
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		Gui::DrawBGTop();
-		Gui::chooseLayoutTop();
+		Gui::DrawBarsTop();
 		DisplayTime();
 		drawBatteryTop();
 		Draw_Text((400-Draw_GetTextWidth(0.72f, "FTP Mode"))/2, 0, 0.72f, WHITE, "FTP Mode");
 		Gui::DrawBGBot();
-		Gui::chooseLayoutBot();
+		Gui::DrawBarsBot();
 		ret = ACU_GetWifiStatus(&wifiStatus);
 
 		if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
@@ -164,14 +164,14 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	C2D_TargetClear(top, BLUE2);
 	C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
 	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 90, 0.45f, BLACK, msg1.c_str());
 	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 110, 0.45f, BLACK, msg2.c_str());
 	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
 	Gui::DrawBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
 	while(1) {
 		gspWaitForVBlank();
@@ -200,7 +200,7 @@ bool confirmPopup(std::string msg) {
 void drawButtonTesterScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
@@ -208,7 +208,7 @@ void drawButtonTesterScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBot();
 }
 
 void buttonTesterLogic(u32 hDown, u32 hHeld, touchPosition touch) {
@@ -302,7 +302,7 @@ static void drawGameSelection(void) {
 void drawGamesSubMenuScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
@@ -310,7 +310,7 @@ void drawGamesSubMenuScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
@@ -369,7 +369,7 @@ static void drawUtilsSelection(void) {
 void drawUtilsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
@@ -377,7 +377,7 @@ void drawUtilsScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[0].x, utilsButtonPos[0].y);

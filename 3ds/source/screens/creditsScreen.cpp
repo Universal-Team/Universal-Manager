@@ -255,9 +255,7 @@ void drawCreditsScreen(void) {
     C2D_TargetClear(top, GRAY);
     C2D_TargetClear(bottom, GRAY);
 	set_screen(top);
-	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, ROCKETROBZCOLORBG);
 	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, ROCKETROBZCOLORBAR);
     Gui::sprite(sprites_top_screen_top_idx, 0, 0);
 	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 	drawCreditsDialogs();

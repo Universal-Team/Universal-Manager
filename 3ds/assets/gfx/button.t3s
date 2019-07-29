@@ -1,13 +1,26 @@
 --atlas -f rgba -z auto
 
-button/button-tl.png
-button/button-2.png
-button/button-3.png
-button/button-4.png
-button/button-5.png
-button/button-br.png
+button/colored-buttons/blue.png
+button/colored-buttons/green.png
+button/colored-buttons/red.png
+
+button/main-buttons/button-tl.png
+button/main-buttons/button-2.png
+button/main-buttons/button-3.png
+button/main-buttons/button-4.png
+button/main-buttons/button-5.png
+button/main-buttons/button-br.png
 
 button/selector/br-selector.png
 button/selector/fileButtonSelector.png
 button/selector/selector.png
 button/selector/tl-selector.png
+button/selector/updater-selector.png
+button/selector/updater-selector-br.png
+button/selector/updater-selector-tl.png
+
+button/updater-buttons/updater.png
+button/updater-buttons/updater-br.png
+button/updater-buttons/updater-tl.png
+
+button/long-button.png

@@ -73,11 +73,11 @@ std::string Input::getLine(uint maxLength) {
 			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			Gui::DrawBGTop();
 			animatedBGTop();
-			Gui::chooseLayoutTop();
+			Gui::DrawBarsTop();
 			C2D_SceneBegin(bottom);
 			Gui::DrawBGBot();
 			animatedBGBot();
-			Gui::chooseLayoutBot();
+			Gui::DrawBarsBot();
 			drawKeyboard();
 			C2D_DrawRectSolid(0, 81, 0.5f, 320, 20, Config::barColor & C2D_Color32(200, 200, 200, 200));
 			Draw_Text(5, 82, 0.6, WHITE, (string+(cursorBlink-- > 0 ? "_" : "")).c_str());

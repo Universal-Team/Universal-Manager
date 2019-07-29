@@ -145,7 +145,7 @@ void drawFileBrowser() {
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	char path[PATH_MAX];
@@ -199,5 +199,5 @@ void drawFileBrowser() {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 }

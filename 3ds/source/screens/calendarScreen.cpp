@@ -604,7 +604,7 @@ static void getTheDays(void) {
 void drawCalendarScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	DisplayMonth();
@@ -615,7 +615,7 @@ void drawCalendarScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 }
 
 void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch) {

@@ -177,8 +177,10 @@ void Gui::Button(int key, int x, int y)
 void Gui::DrawBarsBottomBack(void) {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
-    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
+    if (Config::layout == 0 || Config::layout == 1) {
+        Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
+    }
 }
 
 void Gui::DrawBGTop(void) 
@@ -203,8 +205,11 @@ void Gui::DrawBarsTop(void)
 {
     C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, Config::barColor);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+    if (Config::layout == 0) {
+        Gui::sprite(sprites_top_screen_top_idx, 0, 0);
+        Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+    } else if (Config::layout == 1) {
+    }
 }
 
 void Gui::DrawBGBot(void)
@@ -231,50 +236,10 @@ void Gui::DrawBarsBot(void)
 {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
-    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-}
-
-void Gui::DrawOverlayTop(void)
-{
-    Gui::Draw_ImageBlend(sprites_overlay_top_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_top_2_idx, 0, 0);
-}
-
-void Gui::DrawOverlayBot(void)
-{
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
-}
-
-void Gui::DrawOverlayBotBack(void)
-{
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
-    Gui::sprite(sprites_back_idx, 293, 213);
-}
-
-void Gui::chooseLayoutTop(void) {
     if (Config::layout == 0) {
-        Gui::DrawBarsTop();
+        Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
     } else if (Config::layout == 1) {
-        Gui::DrawOverlayTop();
-    }
-}
-
-void Gui::chooseLayoutBot(void) {
-    if (Config::layout == 0) {
-        Gui::DrawBarsBot();
-    } else if (Config::layout == 1) {
-        Gui::DrawOverlayBot();
-    }
-}
-
-void Gui::chooseLayoutBotBack(void) {
-    if (Config::layout == 0) {
-        Gui::DrawBarsBottomBack();
-    } else if (Config::layout == 1) {
-        Gui::DrawOverlayBotBack();
     }
 }
 
@@ -286,11 +251,11 @@ void DisplayMsg(const char* text) {
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
     Gui::sprite(sprites_textbox_idx, 10, 25);
 	Draw_Text(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
 }
 

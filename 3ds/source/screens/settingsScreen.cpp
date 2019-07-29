@@ -50,55 +50,54 @@ extern bool touching(touchPosition touch, ButtonPos button);
 std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
 std::string percentModes[] = {"Hidden", "Shown"}; 
-std::string layoutModes[] = {"Bars", "Bars v2"}; 
+std::string layoutModes[] = {"Bars", "Bars2"}; 
 std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
 
 
 ButtonPos uiSettingsButtonPos[] = {
 	// Bars
-	
-	{46, 98, 87, 33, -1},
-	{129, 98, 87, 33, -1},
-	{220, 98, 87, 33, -1},
+	{17, 85, 95, 41, -1},
+	{112, 85, 95, 41, -1},
+	{207, 85, 95, 41, -1},
 	// Background
 
-	{46, 168, 87, 33, -1},
-	{129, 168, 87, 33, -1},
-	{220, 168, 87, 33, -1},
+	{17, 165, 95, 41, -1},
+	{112, 165, 95, 41, -1},
+	{207, 165, 95, 41, -1},
 
 	{293, 213, 27, 27, -1},
 
 	// Music BG
-	{220, 28, 87, 33, -1},
+	{207, 31, 95, 41, -1},
 
 	// Bubble Color.
-	{46, 98, 87, 33, -1},
-	{129, 98, 87, 33, -1},
-	{220, 98, 87, 33, -1},
+	{17, 100, 95, 41, -1},
+	{112, 100, 95, 41, -1},
+	{207, 100, 95, 41, -1},
 
 	// Animation enable.
-	{220, 28, 87, 33, -1},
+	{207, 31, 95, 41, -1},
 
 	// Battery percent.
-	{220, 168, 87, 33, -1},
+	{207, 165, 87, 33, -1},
 
 		// Bars Layout.
-	{10, 168, 87, 33, -1},
+	{17, 165, 95, 41, -1},
 
 		// BG Layout.
-	{10, 28, 87, 33, -1},
+	{17, 31, 95, 41, -1},
 
 	// Selected Text Color.
 	
-	{46, 98, 87, 33, -1},
-	{129, 98, 87, 33, -1},
-	{220, 98, 87, 33, -1},
+	{17, 85, 95, 41, -1},
+	{112, 85, 95, 41, -1},
+	{207, 85, 95, 41, -1},
 
 	// Unselected Text Color.
 
-	{46, 168, 87, 33, -1},
-	{129, 168, 87, 33, -1},
-	{220, 168, 87, 33, -1},
+	{17, 165, 95, 41, -1},
+	{112, 165, 95, 41, -1},
+	{207, 165, 95, 41, -1},
 	
 };
 
@@ -127,38 +126,38 @@ int settingsPage = 0;
 void drawSettingsScreen(void) {
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Settings"))/2, 0, 0.72f, WHITE, "Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 
 	// First Settings Page.
 
 	if (settingsPage == 0) {
 	// Bars.
-	Draw_Text(100, 58, 0.7f, WHITE, "Bars");
-	Gui::sprite(sprites_redButton_idx, 35, 88);
+	Draw_Text((320-Draw_GetTextWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
+	Gui::Button(button_red_idx, 17, 85);
 	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
-	Gui::sprite(sprites_greenButton_idx, 129, 88);
+	Gui::Button(button_green_idx, 112, 85);
 	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
-	Gui::sprite(sprites_blueButton_idx, 220, 88);
+	Gui::Button(button_blue_idx, 207, 85);
 	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
 
 	// Background.
 	Draw_Text(100, 138, 0.7f, WHITE, "Background");
-	Gui::sprite(sprites_redButton_idx, 35, 168);
+	Gui::Button(button_red_idx, 17, 168);
 	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
-	Gui::sprite(sprites_greenButton_idx, 129, 168);
+	Gui::Button(button_green_idx, 112, 168);
 	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
-	Gui::sprite(sprites_blueButton_idx, 220, 168);
+	Gui::Button(button_blue_idx, 207, 168);
 	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
 
-	Gui::sprite(sprites_updaterButton_idx, 220, 28);
+	Gui::Button(button_updater_idx, 207, 31);
 	Draw_Text(229, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
-	Draw_Text(110, 38, 0.65f, WHITE, "Music Mode:");
+	Draw_Text(100, 38, 0.65f, WHITE, "Music Mode:");
 
 	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
@@ -170,27 +169,27 @@ void drawSettingsScreen(void) {
 
 	} else if (settingsPage == 1) {
 	// Bars.
-	Draw_Text(70, 58, 0.7f, WHITE, "Animation Color");
-	Gui::sprite(sprites_redButton_idx, 35, 88);
-	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
-	Gui::sprite(sprites_greenButton_idx, 129, 88);
-	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
-	Gui::sprite(sprites_blueButton_idx, 220, 88);
-	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
+	Draw_Text(70, 73, 0.7f, WHITE, "Animation Color");
+	Gui::Button(button_red_idx, 17, 100);
+	Draw_Text(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
+	Gui::Button(button_green_idx, 112, 100);
+	Draw_Text(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
+	Gui::Button(button_blue_idx, 207, 100);
+	Draw_Text(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
 
-	Gui::sprite(sprites_updaterButton_idx, 220, 28);
-	Draw_Text(229, 38, 0.65f, WHITE, animationModes[Config::animation].c_str());
-	Draw_Text(110, 38, 0.7f, WHITE, "Animation:");
+	Gui::Button(button_updater_idx, 207, 31);
+	Draw_Text(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
+	Draw_Text(115, 38, 0.7f, WHITE, "Animation:");
 
-	Gui::sprite(sprites_updaterButton_idx, 220, 168);
+	Gui::Button(button_updater_idx, 207, 165);
 	Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
 	Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
 	// Bars Layouts.
-	Gui::sprite(sprites_updaterButton_idx, 10, 168);
-	Draw_Text(19, 178, 0.7f, WHITE, layoutModes[Config::layout].c_str());
+	Gui::Button(button_updater_idx, 17, 165);
+	Draw_Text(28, 174, 0.7f, WHITE, layoutModes[Config::layout].c_str());
 	// BG Layouts.
-	Gui::sprite(sprites_updaterButton_idx, 10, 28);
-	Draw_Text(19, 38, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
+	Gui::Button(button_updater_idx, 17, 31);
+	Draw_Text(28, 40, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
 
 	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
 	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
@@ -202,19 +201,19 @@ void drawSettingsScreen(void) {
 	} else if (settingsPage == 2) {
 
 	Draw_Text(100, 58, 0.7f, WHITE, "Selected Text");
-	Gui::sprite(sprites_redButton_idx, 35, 88);
+	Gui::Button(button_red_idx, 17, 85);
 	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
-	Gui::sprite(sprites_greenButton_idx, 129, 88);
+	Gui::Button(button_green_idx, 112, 85);
 	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
-	Gui::sprite(sprites_blueButton_idx, 220, 88);
+	Gui::Button(button_blue_idx, 207, 85);
 	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
 
 	Draw_Text(100, 138, 0.7f, WHITE, "Unselected Text");
-	Gui::sprite(sprites_redButton_idx, 35, 168);
+	Gui::Button(button_red_idx, 17, 168);
 	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
-	Gui::sprite(sprites_greenButton_idx, 129, 168);
+	Gui::Button(button_green_idx, 112, 168);
 	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
-	Gui::sprite(sprites_blueButton_idx, 220, 168);
+	Gui::Button(button_blue_idx, 207, 168);
 	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
 
 	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
