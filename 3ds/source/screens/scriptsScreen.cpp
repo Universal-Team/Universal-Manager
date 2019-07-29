@@ -96,11 +96,11 @@ void drawScriptMainScreen(void) {
 			scptList += scpts[i].name + "\n\n";
 
 		} else if (selectedScpt == 1) {
-			Gui::sprite(sprites_selected_idx, 0, 55);
+			Gui::sprite(sprites_selected_idx, 0, 56);
 			scptList += scpts[i].name + "\n\n";
 
 		} else if (selectedScpt == 2) {
-			Gui::sprite(sprites_selected_idx, 0, 90);
+			Gui::sprite(sprites_selected_idx, 0, 91);
 			scptList += scpts[i].name + "\n\n";
 
 		} else if (selectedScpt == 3) {
@@ -112,17 +112,17 @@ void drawScriptMainScreen(void) {
 			scptList += scpts[i].name + "\n\n";
 
 		} else if (selectedScpt == 5) {
-			Gui::sprite(sprites_selected_idx, 0, 195);
+			Gui::sprite(sprites_selected_idx, 0, 190);
 			scptList += scpts[i].name + "\n\n";
 		} else {
-			Gui::sprite(sprites_selected_idx, 0, 195);
+			Gui::sprite(sprites_selected_idx, 0, 190);
 			scptList += scpts[i].name + "\n\n";
 		}
 	}
 	for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
 		scptList += "\n";
 	}
-	Draw_Text_FB(26, 27, 0.53f, WHITE, scptList.c_str());
+	Draw_Text(26, 32, 0.53f, WHITE, scptList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

@@ -137,7 +137,8 @@ void drawFTPScreen(void) {
 		Draw_Text(((320 - Draw_GetTextWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
 		Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Press B to Return to the Main Menu.")) / 2), 220, 0.48f, WHITE, "Press B to Return to the Main Menu.");
 
-		Draw_EndFrame();
+		Gui::clearTextBufs();
+		C3D_FrameEnd(0);
 
 		hidScanInput();
 		u32 hDown = hidKeysDown();

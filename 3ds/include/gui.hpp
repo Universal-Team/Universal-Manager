@@ -98,10 +98,7 @@ namespace Gui
 
     void set_screen(C3D_RenderTarget * screen);
 
-    void start_frame(void);
-
     // 3DShell -> Most likely for FTP.
-    void Draw_EndFrame(void);
     void Draw_Text(float x, float y, float size, u32 color, const char *text);
     void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...);
     void Draw_GetTextSize(float size, float *width, float *height, const char *text);
@@ -112,9 +109,5 @@ namespace Gui
     void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);
     void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
     float Draw_GetTextWidthEditor(float size, const char *text);
-
-    void Draw_Text_FB(float x, float y, float size, u32 color, const char *text);
-    void Draw_GetTextSizeFB(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidthFB(float size, const char *text);
 
 #endif

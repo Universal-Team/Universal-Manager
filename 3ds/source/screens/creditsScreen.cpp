@@ -79,7 +79,7 @@ ButtonPos creditsButtonPos[] = {
     {170, 150, 149, 52, -1},
 };
 
-static void drawVoltZ(void) {
+void drawVoltZ(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, VOLTZCOLORBG);
@@ -91,8 +91,8 @@ static void drawVoltZ(void) {
 
 	Gui::Credits(credits_textbox_idx, 180, 30);
 	Gui::Credits(credits_voltZ_idx, -10, 40);
-	Draw_Text_FB(250, 50, 0.43, BLACK, "Hello There!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
+	Draw_Text(250, 50, 0.40, BLACK, "Hello There!");
+	Draw_Text(190, 65, 0.40, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -105,7 +105,7 @@ static void drawVoltZ(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "VoltZ"))/2, 0, 0.7f, WHITE, "VoltZ");
 }
 
-static void drawFlame(void) {
+void drawFlame(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, FLAMECOLORBG);
@@ -117,8 +117,8 @@ static void drawFlame(void) {
 
 	Gui::Credits(credits_textbox_idx, 180, 30);
 	Gui::Credits(credits_flame_idx, 0, 40);
-	Draw_Text_FB(240, 50, 0.43, BLACK, "Hey, I’m Flame!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
+	Draw_Text(240, 50, 0.40, BLACK, "Hey, I’m Flame!");
+	Draw_Text(190, 65, 0.40, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -131,7 +131,7 @@ static void drawFlame(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "Flame"))/2, 0, 0.7f, WHITE, "Flame");
 }
 
-static void drawPk11(void) {
+void drawPk11(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, PK11COLORBG);
@@ -143,8 +143,8 @@ static void drawPk11(void) {
 
 	Gui::Credits(credits_textbox_idx, 180, 30);
 	Gui::Credits(credits_pk11_idx, -20, 40);
-	Draw_Text_FB(270, 50, 0.43, BLACK, "Hi .o/");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
+	Draw_Text(270, 50, 0.40, BLACK, "Hi .o/");
+	Draw_Text(190, 65, 0.40, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -157,7 +157,7 @@ static void drawPk11(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "Pk11"))/2, 0, 0.7f, WHITE, "Pk11");
 }
 
-static void drawRocketRobz(void) {
+void drawRocketRobz(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, ROCKETROBZCOLORBG);
@@ -169,8 +169,8 @@ static void drawRocketRobz(void) {
 
 	Gui::Credits(credits_textbox_idx, 180, 30);
 	Gui::Credits(credits_rocketRobz_idx, 0, 40);
-	Draw_Text_FB(270, 50, 0.43, BLACK, "Hi!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
+	Draw_Text(270, 50, 0.40, BLACK, "Hi!");
+	Draw_Text(190, 65, 0.40, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -183,7 +183,7 @@ static void drawRocketRobz(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "RocketRobz"))/2, 0, 0.7f, WHITE, "RocketRobz");
 }
 
-static void drawTotallyNotGuy(void) {
+void drawTotallyNotGuy(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, TNGCOLORBG);
@@ -195,8 +195,8 @@ static void drawTotallyNotGuy(void) {
 
 	Gui::Credits(credits_textbox_idx, 180, 30);
 	Gui::Credits(credits_totallyNotGuy_idx, 0, 40);
-	Draw_Text_FB(250, 50, 0.43, BLACK, "Hello!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
+	Draw_Text(250, 50, 0.40, BLACK, "Hello!");
+	Draw_Text(190, 65, 0.40, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -209,7 +209,7 @@ static void drawTotallyNotGuy(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
 }
 
-static void drawCredits(void) {
+void drawCredits(void) {
 	set_screen(top);
 	Gui::Credits(credits_universal_credits_idx, 0, 0);
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
@@ -225,7 +225,7 @@ static void drawCredits(void) {
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
-static void drawCreditsDialogs(void) {
+void drawCreditsDialogs(void) {
 	if (dialog == 0) {
 		drawVoltZ();
 	} else if (dialog == 1) {
@@ -241,7 +241,7 @@ static void drawCreditsDialogs(void) {
 	}
 }
 
-static void drawButtons(void) {
+void drawButtons(void) {
 	// Buttons.
 	for(int i=0;i<3;i++) {
 		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));

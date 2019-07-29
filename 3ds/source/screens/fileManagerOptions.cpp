@@ -121,7 +121,8 @@ bool displayActionBox(void) {
 		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 
-	Draw_EndFrame();
+	Gui::clearTextBufs();
+	C3D_FrameEnd(0);
 	int selection = 0;
 	while(1) {
 		gspWaitForVBlank();

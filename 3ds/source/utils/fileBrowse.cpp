@@ -195,7 +195,7 @@ void drawFileBrowser() {
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text_FB(26, 27, 0.53f, WHITE, dirs.c_str());
+	Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

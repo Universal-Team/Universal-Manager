@@ -450,7 +450,7 @@ void drawMusicPlaylistAdd(void) {
 		plstList += "\n";
 	}
 	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"";
-	Draw_Text_FB(26, 27, 0.53f, WHITE, plstList.c_str());
+	Draw_Text(26, 32, 0.53f, WHITE, plstList.c_str());
 	Draw_Text(26, 210, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();

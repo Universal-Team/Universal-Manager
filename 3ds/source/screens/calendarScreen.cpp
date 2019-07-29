@@ -63,7 +63,7 @@ ButtonPos calendarButtonPos[] = {
 	{293, 213, 27, 27, -1},
 };
 
-static void DisplayMonth(void) {
+void DisplayMonth(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
@@ -78,7 +78,7 @@ std::string GetYear(void) {
 	return StringUtils::format("%04i", year);
 }
 
-static void DisplayYear(void) {
+void DisplayYear(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
@@ -86,7 +86,7 @@ static void DisplayYear(void) {
 	Draw_Text(130+Draw_GetTextWidth(0.72f, (months[month].c_str())), 0, 0.72f, WHITE, (GetYear().c_str()));
 }
 
-static void draw31Days(void) {
+void draw31Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
 	Draw_Text(30, 28, 0.72f, WHITE, "1");
 
@@ -185,7 +185,7 @@ static void draw31Days(void) {
 	Draw_Text(132, 168, 0.72f, WHITE, "31");
 }
 
-static void draw30Days(void) {
+void draw30Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
 	Draw_Text(30, 28, 0.72f, WHITE, "1");
 
@@ -281,7 +281,7 @@ static void draw30Days(void) {
 	Draw_Text(77, 168, 0.72f, WHITE, "30");
 }
 
-static void draw29Days(void) {
+void draw29Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
 	Draw_Text(30, 28, 0.72f, WHITE, "1");
 
@@ -374,7 +374,7 @@ static void draw29Days(void) {
 	Draw_Text(22, 168, 0.72f, WHITE, "29");
 }
 
-static void draw28Days(void) {
+void draw28Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
 	Draw_Text(30, 28, 0.72f, WHITE, "1");
 
@@ -464,7 +464,7 @@ static void draw28Days(void) {
 }
 
 
-static void drawCurrentDay(void) {
+void drawCurrentDay(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int day = timeStruct->tm_mday;
@@ -569,7 +569,7 @@ static void drawCurrentDay(void) {
 	}
 }
 
-static void getTheDays(void) {
+void getTheDays(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon + 1;
