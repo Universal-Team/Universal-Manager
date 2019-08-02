@@ -38,7 +38,6 @@ struct ButtonPos {
 	int link;
 };
 
-extern bool screenDrawn;
 bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos SettingsButtonPos[] = {
@@ -92,6 +91,7 @@ void SETTINGS::Logic(void) {
 		}
 	} else if (hDown & KEY_B) {
 		screenDrawn = false;
-		Gui::setScreen(std::make_unique<MAINMENU>());
+		Gui::screenBack();
+		return;
 	}
 }

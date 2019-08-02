@@ -30,7 +30,6 @@
 #include "gui.hpp"
 #include "mainMenuScreen.hpp"
 
-extern bool screenDrawn;
 
 void FILEMANAGER::Draw(void) const
 {
@@ -63,6 +62,7 @@ void FILEMANAGER::Logic(void) {
 
 	if (hDown & KEY_B) {
 		screenDrawn = false;
-		Gui::setScreen(std::make_unique<MAINMENU>());
+		Gui::screenBack();
+		return;
 	}
 }

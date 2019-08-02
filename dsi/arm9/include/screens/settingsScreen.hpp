@@ -37,6 +37,7 @@ public:
 
 private:
 	u16 hDown;
+	mutable bool screenDrawn;
 	touchPosition touch;
 };
 
