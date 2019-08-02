@@ -27,6 +27,8 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 #include "settingsScreen.hpp"
+#include "gui.hpp"
+#include "mainMenuScreen.hpp"
 
 struct ButtonPos {
 	int x;
@@ -36,6 +38,7 @@ struct ButtonPos {
 	int link;
 };
 
+extern bool screenDrawn;
 bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos SettingsButtonPos[] = {
@@ -44,7 +47,8 @@ ButtonPos SettingsButtonPos[] = {
 	{130, 25, 125, 41, -1},
 };
 
-void SETTINGS::Draw(void) {
+void SETTINGS::Draw(void) const
+{
 	if (screenDrawn) return;
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
@@ -68,9 +72,7 @@ void SETTINGS::Draw(void) {
 	screenDrawn = true;
 }
 
-void SETTINGS::Screen(void) {
-	SETTINGS::Draw();
-
+void SETTINGS::Logic(void) {
 	do {
 		scanKeys();
 		swiWaitForVBlank();
@@ -90,6 +92,6 @@ void SETTINGS::Screen(void) {
 		}
 	} else if (hDown & KEY_B) {
 		screenDrawn = false;
-		SCREEN_MODE = mainScreen;
+		Gui::setScreen(std::make_unique<MAINMENU>());
 	}
 }

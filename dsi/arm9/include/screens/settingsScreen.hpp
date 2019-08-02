@@ -24,13 +24,20 @@
 *         reasonable ways as different from the original version.
 */
 
-class SETTINGS {
+#ifndef SETTINGSSCREEN_HPP
+#define SETTINGSSCREEN_HPP
+
+#include "screens/screen.hpp"
+
+class SETTINGS : public SCREEN 
+{
 public:
-	void Draw(void);
-	void Screen(void);
+	void Draw(void) const override;
+	void Logic(void) override;
 
 private:
-	bool screenDrawn = false;
 	u16 hDown;
 	touchPosition touch;
 };
+
+#endif

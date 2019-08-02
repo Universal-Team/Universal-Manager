@@ -26,14 +26,6 @@
 
 #include "../graphics/graphics.h"
 
-enum SCREEN_MODE {
-		mainScreen = 0,
-		fileScreen = 1,
-		settingsScreen = 2
-};
-
-extern int SCREEN_MODE;
-
 // Graphic loading.
 void loadGraphics(void);
 extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard;

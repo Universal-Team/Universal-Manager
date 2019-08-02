@@ -27,8 +27,13 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 #include "fileManagerScreen.hpp"
+#include "gui.hpp"
+#include "mainMenuScreen.hpp"
 
-void FILEMANAGER::Draw(void) {
+extern bool screenDrawn;
+
+void FILEMANAGER::Draw(void) const
+{
 	if (screenDrawn) return;
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
@@ -47,8 +52,7 @@ void FILEMANAGER::Draw(void) {
 	screenDrawn = true;
 }
 
-void FILEMANAGER::Screen(void) {
-	FILEMANAGER::Draw();
+void FILEMANAGER::Logic(void) {
 
 	do {
 		scanKeys();
@@ -59,6 +63,6 @@ void FILEMANAGER::Screen(void) {
 
 	if (hDown & KEY_B) {
 		screenDrawn = false;
-		SCREEN_MODE = mainScreen;
+		Gui::setScreen(std::make_unique<MAINMENU>());
 	}
 }

@@ -14,16 +14,8 @@
 #include "nitrofs.h"
 #include "screens/screenCommon.hpp"
 #include "config.h"
-
-#include "fileManagerScreen.hpp"
+#include "gui.hpp"
 #include "mainMenuScreen.hpp"
-#include "settingsScreen.hpp"
-
-int SCREEN_MODE = 0;
-
-FILEMANAGER FM; // FileManager.
-MAINMENU MM; // Main Menu.
-SETTINGS SETTINGS; // Settings.
 
 
 struct ButtonPos {
@@ -77,6 +69,7 @@ int main(int argc, char **argv) {
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 	printTextTinted("Press A to start. :)", BLACK, 60, 0, false);
+	Gui::setScreen(std::make_unique<MAINMENU>());
 
 	u16 hDown = 0;
 	do {
@@ -86,22 +79,7 @@ int main(int argc, char **argv) {
 	} while(!(hDown & KEY_A));
 
 	while(1) {
-		// Run a screenMode
-		switch(SCREEN_MODE) {
-//#########################################################################################################
-			case mainScreen:
-				MM.Screen();				// Main Menu screen
-				break;
-//#########################################################################################################
-			case fileScreen:
-				FM.Screen();		// File Manager screen
-				break;
-//#########################################################################################################
-			case settingsScreen:
-				SETTINGS.Screen();				// Settings screen
-				break;
-		}
-
+		Gui::mainLoop();
 	}
 	return 0;
 }

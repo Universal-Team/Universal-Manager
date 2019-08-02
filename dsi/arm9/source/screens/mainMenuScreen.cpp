@@ -27,6 +27,9 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 #include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
+#include "settingsScreen.hpp"
+#include "gui.hpp"
 
 
 struct ButtonPos {
@@ -37,7 +40,7 @@ struct ButtonPos {
 	int link;
 };
 
-//extern bool touching(touchPosition touch, ButtonPos button);
+bool screenDrawn = false;
 bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos mainButtonPos[] = {
@@ -46,7 +49,8 @@ ButtonPos mainButtonPos[] = {
 	{130, 25, 125, 41, -1},
 };
 
-void MAINMENU::Draw(void) {
+void MAINMENU::Draw(void) const
+{
 	if (screenDrawn) return;
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
@@ -69,9 +73,8 @@ void MAINMENU::Draw(void) {
 	screenDrawn = true;
 }
 
-void MAINMENU::Screen(void) {
-	MAINMENU::Draw();
-
+void MAINMENU::Logic(void) 
+{
 	do {
 		scanKeys();
 		swiWaitForVBlank();
@@ -82,16 +85,16 @@ void MAINMENU::Screen(void) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, mainButtonPos[0])) {
 			screenDrawn = false;
-			SCREEN_MODE = fileScreen;
+			Gui::setScreen(std::make_unique<FILEMANAGER>());
 		} else if (touching(touch, mainButtonPos[1])) {
 			screenDrawn = false;
-			SCREEN_MODE = settingsScreen;
+			Gui::setScreen(std::make_unique<SETTINGS>());
 		}
 	} else if (hDown & KEY_A) {
 		screenDrawn = false;
-		SCREEN_MODE = fileScreen;
+		Gui::setScreen(std::make_unique<FILEMANAGER>());
 	} else if (hDown & KEY_Y) {
 		screenDrawn = false;
-		SCREEN_MODE = settingsScreen;
+		Gui::setScreen(std::make_unique<SETTINGS>());
 	}
 }

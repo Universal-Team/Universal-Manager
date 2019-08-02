@@ -23,14 +23,20 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
+#ifndef MAINMENU_HPP
+#define MAINMENU_HPP
 
-class MAINMENU {
+#include "screens/screen.hpp"
+
+class MAINMENU : public SCREEN 
+{
 public:
-	void Draw(void);
-	void Screen(void);
+	void Draw(void) const override;
+	void Logic(void) override;
 
 private:
-	bool screenDrawn = false;
 	u16 hDown;
 	touchPosition touch;
 };
+
+#endif
