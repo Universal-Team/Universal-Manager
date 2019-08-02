@@ -24,22 +24,11 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
-#include <algorithm>
-#include <fstream>
-#include <unistd.h>
-#include <vector>
+class FILEMANAGER {
+public:
+	void Draw(void);
+	void Screen(void);
 
-extern TouchInfo touchInfo;
-
-void drawFileManagerSubMenu(void) {
-	Gui::DrawRect(0, 0, 1280, 720, BLUE);
-	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
-	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
-	Gui::DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
-}
-void FileManagerSubMenuLogic(u64 hDown, TouchInfo touchInfo) {
-	if (hDown & KEY_A) {
-		screenMode = mainScreen;
-	}
-}
+private:
+	u64 hDown;
+};

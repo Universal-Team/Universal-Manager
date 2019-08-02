@@ -27,18 +27,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "screens/screenCommon.hpp"
+#include "mainMenuScreen.hpp"
 
 
 extern "C" {
 	#include "touch_helper.h"
 }
 
-
-extern SDL_Texture *MainMenuButton;
-// Version numbers.
-char universal_manager_vertext[13];
-
-void drawMainMenu(void) {
+void MAINMENU::Draw(void) {
 	// Initialize the Version Number.
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
@@ -54,14 +50,11 @@ void drawMainMenu(void) {
 	Gui::DrawImage(MainMenuButton, 40, 450);
 }
 
-void MainMenuLogic(u64 hDown, TouchInfo touchInfo) {
-	//Touch_Init(&touchInfo);
-	//hidScanInput();
-	//Touch_Process(&touchInfo);
+void MAINMENU::Screen(void) {
+	MAINMENU::Draw();
+	hidScanInput();
+	hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
 	if (hDown & KEY_A)
 		screenMode = FileManagerSubMenuScreen;
-
-	//if (tapped_inside(touchInfo, 40, 150, 300, 105))
-	//	screenMode = FileManagerSubMenuScreen;
 }

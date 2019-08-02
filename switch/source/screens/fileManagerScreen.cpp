@@ -24,17 +24,26 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "gui.hpp"
+#include "screens/screenCommon.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
+#include "fileManagerScreen.hpp"
 
-extern "C" {
-	#include "touch_helper.h"
+void FILEMANAGER::Draw(void) {
+	Gui::DrawRect(0, 0, 1280, 720, BLUE);
+	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
+	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
+	Gui::DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
 }
 
-extern TouchInfo touchInfo;
-extern SDL_Renderer *Rendering;
-extern SDL_Window *Window;
+void FILEMANAGER::Screen(void) {
+	FILEMANAGER::Draw();
+	hidScanInput();
+	hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-#define mainScreen						0
-#define FileManagerSubMenuScreen		1
-
-extern int screenMode;
+	if (hDown & KEY_A) {
+		screenMode = mainScreen;
+	}
+}

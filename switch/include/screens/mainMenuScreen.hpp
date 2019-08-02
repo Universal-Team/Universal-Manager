@@ -24,17 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "gui.hpp"
+#include "textures.hpp"
 
-extern "C" {
-	#include "touch_helper.h"
-}
+class MAINMENU {
+public:
+	void Draw(void);
+	void Screen(void);
 
-extern TouchInfo touchInfo;
-extern SDL_Renderer *Rendering;
-extern SDL_Window *Window;
-
-#define mainScreen						0
-#define FileManagerSubMenuScreen		1
-
-extern int screenMode;
+private:
+	SDL_Texture *MainMenuButton; // To-Do : Figure out, why it doesn't draw the Buttons.
+	char universal_manager_vertext[13];
+	u64 hDown;
+};

@@ -39,11 +39,16 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
+
 extern "C" {
     #include "touch_helper.h"
 }
 
 int screenMode = 0;
+MAINMENU MM; // Main Menu.
+FILEMANAGER FM; // FileManager.
 
 static Result servicesInit(void)
 {
@@ -77,33 +82,21 @@ int main(void)
 	    Touch_Init(&touchInfo);
 
         while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
-        hidScanInput();
-        Touch_Process(&touchInfo);
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-        Gui::ClearScreen(BLUE);
+        Gui::ClearScreen(BLACK);
 
-		// Draws a screen based on screenMode
+		// Draws and does the Logic from the Screen.
 		switch(screenMode) {
 //#########################################################################################################
 			case mainScreen:
-				drawMainMenu();
+				MM.Screen();
 				break;
             case FileManagerSubMenuScreen:
-                drawFileManagerSubMenu();
+                FM.Screen();
                 break;
         }
 
-		// Scans inputs for the current screen
-		switch(screenMode) {
-//#########################################################################################################
-			case mainScreen:
-				MainMenuLogic(hDown, touchInfo);
-				break;
-            case FileManagerSubMenuScreen:
-                FileManagerSubMenuLogic(hDown, touchInfo);
-                break;
-        }
         Gui::RenderScreen();
         }
 
