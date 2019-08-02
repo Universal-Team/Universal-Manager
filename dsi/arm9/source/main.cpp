@@ -15,7 +15,16 @@
 #include "screens/screenCommon.hpp"
 #include "config.h"
 
+#include "fileManagerScreen.hpp"
+#include "mainMenuScreen.hpp"
+#include "settingsScreen.hpp"
+
 int SCREEN_MODE = 0;
+
+FILEMANAGER FM; // FileManager.
+MAINMENU MM; // Main Menu.
+SETTINGS SETTINGS; // Settings.
+
 
 struct ButtonPos {
     int x;
@@ -25,7 +34,7 @@ struct ButtonPos {
 	int link;
 };
 
-static touchPosition touch;
+touchPosition touch;
 
 bool touching(touchPosition touch, ButtonPos button) {
 	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
@@ -81,15 +90,15 @@ int main(int argc, char **argv) {
 		switch(SCREEN_MODE) {
 //#########################################################################################################
 			case mainScreen:
-				mainMenuScreen();				// Main Menu screen
+				MM.Screen();				// Main Menu screen
 				break;
 //#########################################################################################################
 			case fileScreen:
-				fileManagerSubMenuScreen();		// File Manager screen
+				FM.Screen();		// File Manager screen
 				break;
 //#########################################################################################################
 			case settingsScreen:
-				settingScreen();				// Settings screen
+				SETTINGS.Screen();				// Settings screen
 				break;
 		}
 

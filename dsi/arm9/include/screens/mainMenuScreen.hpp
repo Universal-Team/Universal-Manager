@@ -24,17 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "../graphics/graphics.h"
+class MAINMENU {
+public:
+	void Draw(void);
+	void Screen(void);
 
-enum SCREEN_MODE {
-		mainScreen = 0,
-		fileScreen = 1,
-		settingsScreen = 2
+private:
+	bool screenDrawn = false;
+	u16 hDown;
+	touchPosition touch;
 };
-
-extern int SCREEN_MODE;
-
-// Graphic loading.
-void loadGraphics(void);
-extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard;
-extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData;

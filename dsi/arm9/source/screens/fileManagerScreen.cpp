@@ -26,13 +26,9 @@
 
 #include "screens/screenCommon.hpp"
 #include "config.h"
+#include "fileManagerScreen.hpp"
 
-static bool screenDrawn = false;
-
-static u16 hDown;
-//static touchPosition touch;
-
-void drawFileManagerSubMenu(void) {
+void FILEMANAGER::Draw(void) {
 	if (screenDrawn) return;
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
@@ -51,8 +47,8 @@ void drawFileManagerSubMenu(void) {
 	screenDrawn = true;
 }
 
-void fileManagerSubMenuScreen(void) {
-	drawFileManagerSubMenu();
+void FILEMANAGER::Screen(void) {
+	FILEMANAGER::Draw();
 
 	do {
 		scanKeys();

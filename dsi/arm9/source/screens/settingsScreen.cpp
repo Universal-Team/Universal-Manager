@@ -26,6 +26,7 @@
 
 #include "screens/screenCommon.hpp"
 #include "config.h"
+#include "settingsScreen.hpp"
 
 struct ButtonPos {
 	int x;
@@ -35,7 +36,7 @@ struct ButtonPos {
 	int link;
 };
 
-extern bool touching(touchPosition touch, ButtonPos button);
+bool touching(touchPosition touch, ButtonPos button);
 
 ButtonPos SettingsButtonPos[] = {
 	
@@ -43,13 +44,7 @@ ButtonPos SettingsButtonPos[] = {
 	{130, 25, 125, 41, -1},
 };
 
-
-static bool screenDrawn = false;
-
-static u16 hDown;
-static touchPosition touch;
-
-void drawSettingsScreen(void) {
+void SETTINGS::Draw(void) {
 	if (screenDrawn) return;
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
@@ -73,8 +68,8 @@ void drawSettingsScreen(void) {
 	screenDrawn = true;
 }
 
-void settingScreen(void) {
-	drawSettingsScreen();
+void SETTINGS::Screen(void) {
+	SETTINGS::Draw();
 
 	do {
 		scanKeys();
