@@ -28,21 +28,23 @@
 #include <stdlib.h>
 #include "screens/screenCommon.hpp"
 #include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
 
 
 extern "C" {
 	#include "touch_helper.h"
 }
 
-void MAINMENU::Draw(void) {
+void MAINMENU::Draw(void) const
+{
 	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+	//snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 
 	Gui::DrawRect(0, 0, 1280, 720, GRAY);
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
 	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
 	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	Gui::DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
+	//Gui::DrawText(1020, 630, 72, WHITE, universal_manager_vertext); // For the first Version of the Switch Version planned.
 
 	// Buttons.
 	Gui::DrawImage(MainMenuButton, 40, 150);
@@ -50,11 +52,10 @@ void MAINMENU::Draw(void) {
 	Gui::DrawImage(MainMenuButton, 40, 450);
 }
 
-void MAINMENU::Screen(void) {
-	MAINMENU::Draw();
+void MAINMENU::Logic(void) {
 	hidScanInput();
 	hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
 	if (hDown & KEY_A)
-		screenMode = FileManagerSubMenuScreen;
+		Gui::setScreen(std::make_unique<FILEMANAGER>());
 }

@@ -24,15 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
+#ifndef MAINMENU_HPP
+#define MAINMENU_HPP
+
+#include "screens/screen.hpp"
 #include "textures.hpp"
 
-class MAINMENU {
+class MAINMENU : public SCREEN 
+{
 public:
-	void Draw(void);
-	void Screen(void);
+	void Draw(void) const override;
+	void Logic(void) override;
 
 private:
 	SDL_Texture *MainMenuButton; // To-Do : Figure out, why it doesn't draw the Buttons.
-	char universal_manager_vertext[13];
+	//char universal_manager_vertext[13]; // Not needed for now.
 	u64 hDown;
 };
+
+#endif

@@ -33,8 +33,3 @@ extern "C" {
 extern TouchInfo touchInfo;
 extern SDL_Renderer *Rendering;
 extern SDL_Window *Window;
-
-#define mainScreen						0
-#define FileManagerSubMenuScreen		1
-
-extern int screenMode;

@@ -46,10 +46,6 @@ extern "C" {
     #include "touch_helper.h"
 }
 
-int screenMode = 0;
-MAINMENU MM; // Main Menu.
-FILEMANAGER FM; // FileManager.
-
 static Result servicesInit(void)
 {
     Result res = 0;
@@ -80,22 +76,14 @@ int main(void)
     
 	    TouchInfo touchInfo;
 	    Touch_Init(&touchInfo);
+        Gui::setScreen(std::make_unique<MAINMENU>());
 
         while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
         Gui::ClearScreen(BLACK);
 
-		// Draws and does the Logic from the Screen.
-		switch(screenMode) {
-//#########################################################################################################
-			case mainScreen:
-				MM.Screen();
-				break;
-            case FileManagerSubMenuScreen:
-                FM.Screen();
-                break;
-        }
+		Gui::mainLoop();
 
         Gui::RenderScreen();
         }

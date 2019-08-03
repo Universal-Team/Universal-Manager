@@ -30,20 +30,21 @@
 #include <unistd.h>
 #include <vector>
 #include "fileManagerScreen.hpp"
+#include "mainMenuScreen.hpp"
 
-void FILEMANAGER::Draw(void) {
+void FILEMANAGER::Draw(void) const
+{
 	Gui::DrawRect(0, 0, 1280, 720, BLUE);
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
 	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
 	Gui::DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
 }
 
-void FILEMANAGER::Screen(void) {
-	FILEMANAGER::Draw();
+void FILEMANAGER::Logic(void) {
 	hidScanInput();
 	hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
 	if (hDown & KEY_A) {
-		screenMode = mainScreen;
+		Gui::setScreen(std::make_unique<MAINMENU>());
 	}
 }
