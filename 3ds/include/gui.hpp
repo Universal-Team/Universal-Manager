@@ -36,6 +36,7 @@
 #include <unordered_map>
 #include <wchar.h>
 #include "common.hpp"
+#include "screen.hpp"
 
 // Spritesheets.
 #include "sprites.h"
@@ -67,6 +68,10 @@ namespace Gui
 {
     Result init(void);
     void exit(void);
+
+	void mainLoop(u32 hDown, u32 hHeld, touchPosition touch);
+	void setScreen(std::unique_ptr<SCREEN> screen);
+	void screenBack(void);
 
     C3D_RenderTarget* target(gfxScreen_t t);
 

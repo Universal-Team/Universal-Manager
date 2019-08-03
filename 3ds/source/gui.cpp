@@ -24,13 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
+#include <3ds.h>
 #include "gui.hpp"
 #include "screenCommon.hpp"
 #include "settings.hpp"
 #include <assert.h>
 #include <stdarg.h>
 #include <unistd.h>
-
+#include <stack>
 
 C3D_RenderTarget* top;
 C3D_RenderTarget* bottom;
@@ -42,6 +43,7 @@ static C2D_SpriteSheet button;
 
 C2D_TextBuf dynamicBuf, sizeBuf;
 C2D_Font systemFont, editorFont;
+std::stack<std::unique_ptr<SCREEN>> screens;
 
 void Gui::clearTextBufs(void)
 {
@@ -400,4 +402,19 @@ std::string DateTime::timeStr(void)
     time_t unixTime       = time(NULL);
     struct tm* timeStruct = gmtime((const time_t*)&unixTime);
     return StringUtils::format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
+}
+
+void Gui::mainLoop(u32 hDown, u32 hHeld, touchPosition touch) {
+	screens.top()->Draw();
+	screens.top()->Logic(hDown, hHeld, touch);
+}
+
+void Gui::setScreen(std::unique_ptr<SCREEN> screen)
+{
+    screens.push(std::move(screen));
+}
+
+void Gui::screenBack()
+{
+    screens.pop();
 }
