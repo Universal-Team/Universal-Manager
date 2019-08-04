@@ -37,7 +37,7 @@ extern "C" {
 #include <string.h>
 #include <stdarg.h>
 
-#include "files.h"
+//#include "files.h"
 
 #ifdef __cplusplus
 }
@@ -50,24 +50,12 @@ extern "C" {
 #include <curl/curl.h>
 
 #include "stringutils.hpp"
-#include "json.hpp"
+//#include "json.hpp"
 
-using json = nlohmann::json;
+//using json = nlohmann::json;
 
 #endif
 
 extern char * arg0;
 
 #define WORKING_DIR       "/3ds/"
-
-// Battery.
-extern size_t Battery0;
-extern size_t Battery15;
-extern size_t Battery28;
-extern size_t Battery43;
-extern size_t Battery57;
-extern size_t Battery71;
-extern size_t Battery85;
-extern size_t Battery100;
-extern size_t BatteryCharge;
-

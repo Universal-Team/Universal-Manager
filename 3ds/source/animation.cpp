@@ -26,14 +26,15 @@
 
 #include "animation.hpp"
 #include "screenCommon.hpp"
+#include "settings.hpp"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <3ds.h>
 
-static int animated_bubblesYPos[2] = {0};
-static bool animated_bubbleMoveDelay = false;
+int animated_bubblesYPos[2] = {0};
+bool animated_bubbleMoveDelay = false;
 
 void animatedBGTop(void) {
 	if (Config::animation == 0) {
@@ -99,20 +100,4 @@ void animatedBGBot(void) {
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
 	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
-}
-
-// To-Do : -> animated Stuff.
-void screenTransition(int screen) {
-	if (Config::Screen == 0) {
-		SCREEN_MODE = screen;
-	} else if (Config::Screen == 1) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C3D_FrameRate(1);
-    	C2D_TargetClear(top, TRANSPARENT);
-    	C2D_TargetClear(bottom, TRANSPARENT);
-		C3D_FrameEnd(0);
-		gspWaitForVBlank();
-		SCREEN_MODE = screen;
-		C3D_FrameRate(60);
-	}
 }

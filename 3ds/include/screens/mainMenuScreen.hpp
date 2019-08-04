@@ -23,19 +23,27 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
+#ifndef MAINMENU_HPP
+#define MAINMENU_HPP
 
-#pragma once
+#include "screens/screen.hpp"
 
-#include "common.hpp"
+class MainMenu : public SCREEN 
+{
+public:
+	void Draw(void) const override;
+	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
-enum ExtractError {
-	EXTRACT_ERROR_NONE = 0,
-	EXTRACT_ERROR_ARCHIVE,
-	EXTRACT_ERROR_ALLOC,
-	EXTRACT_ERROR_FIND,
-	EXTRACT_ERROR_READFILE,
-	EXTRACT_ERROR_OPENFILE,
-	EXTRACT_ERROR_WRITEFILE,
+private:
+
+	mutable int currentPage = 0;
+	mutable int Selection1 = 0;
+	mutable int Selection2 = 0;
+	// Functions.
+	void drawSelection1(void) const;
+	void drawSelection2(void) const;
+	void SelectionLogic1(u32 hDown);
+	void SelectionLogic2(u32 hDown);
 };
 
-Result extractArchive(std::string archivePath, std::string wantedFile, std::string outputPath);
+#endif

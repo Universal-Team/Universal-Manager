@@ -406,6 +406,7 @@ std::string DateTime::timeStr(void)
 
 void Gui::mainLoop(u32 hDown, u32 hHeld, touchPosition touch) {
 	screens.top()->Draw();
+    C3D_FrameEnd(0);
 	screens.top()->Logic(hDown, hHeld, touch);
 }
 

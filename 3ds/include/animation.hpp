@@ -29,13 +29,9 @@
 
 #include <3ds.h>
 #include "gui.hpp"
-#include "settings.hpp"
 
 // Animated BG Functions.
 void animatedBGTop(void);
 void animatedBGBot(void);
-
-// Animated Screen transitions. [To-Do!]
-void screenTransition(int screen);
 
 #endif // ANIMATION_HPP
