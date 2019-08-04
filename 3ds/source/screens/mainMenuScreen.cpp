@@ -27,33 +27,12 @@
 #include "screens/screenCommon.hpp"
 #include "mainMenuScreen.hpp"
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
 
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos mainScreenButtonPos[] = {
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-
-    {0, 25, 149, 52, -1},
-	{170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-};
-
-// Version numbers.
-char universal_manager_vertext[13];
+MainMenu::MainMenu()
+{
+	// Initialize the Version Number.
+	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+}
 
 void MainMenu::drawSelection1(void) const
 {
@@ -89,9 +68,6 @@ void MainMenu::drawSelection2(void) const
 
 void MainMenu::Draw(void) const
 {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -171,25 +147,25 @@ void MainMenu::SelectionLogic1(u32 hDown) {
 			if(Selection1 > 0)	Selection1--;
 		} else if (currentPage == 0 && hDown & KEY_DOWN) {
 			if(Selection1 < 5)	Selection1++;
-		} /* else if (mainMenuPage == 0 && hDown & KEY_A) {
-			switch(mainSelection1) {
+		} /* else if (currentPage == 0 && hDown & KEY_A) {
+			switch(Selection1) {
 				case 0: {
-					screenTransition(fileManager);
+					Gui::setScreen(std::make_unique<FileManager>());
 					break;
 				} case 1:
-					screenTransition(ftpScreen);
+					Gui::setScreen(std::make_unique<FTP>());
 					break;
 				  case 2: {
-					screenTransition(scriptMainScreen);
+					Gui::setScreen(std::make_unique<ScriptMain>());
 					break;
 				} case 3: {
-					screenTransition(musicMainScreen);
+					Gui::setScreen(std::make_unique<MusicMain>());
 					break;
 				} case 4: {
-					screenTransition(updaterSubMenu);
+					Gui::setScreen(std::make_unique<UpdaterSub>());
 					break;
 				} case 5:
-					screenTransition(SettingsScreen);
+					Gui::setScreen(std::make_unique<Settings>());
 					break;
 			}
 		}*/
@@ -200,22 +176,22 @@ void MainMenu::SelectionLogic2(u32 hDown) {
 			if(Selection2 > 0)	Selection2--;
 		} else if (currentPage == 1 && hDown & KEY_DOWN) {
 			if(Selection2 < 4)	Selection2++;
-		} /* else if (mainMenuPage == 1 && hDown & KEY_A) {
-			switch(mainSelection2) {
+		} /* else if (currentPage == 1 && hDown & KEY_A) {
+			switch(Selection2) {
 				case 0: {
-					screenTransition(ImageSelectorScreen);
+					Gui::setScreen(std::make_unique<ImageSelector>());
 					break;
 				} case 1:
-					screenTransition(creditsScreen);
+					Gui::setScreen(std::make_unique<Credits>());
 					break;
 				  case 2: {
-					screenTransition(textFileBrowse);
+					Gui::setScreen(std::make_unique<TextBrowse>());
 					break;
 				} case 3: {
-					screenTransition(utilsScreen);
+					Gui::setScreen(std::make_unique<Utils>());
 					break;
 				} case 4: {
-					screenTransition(gameSubMenuScreen);
+					Gui::setScreen(std::make_unique<GameSub>());
 					break;
 				}
 			}
@@ -232,33 +208,33 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		currentPage = 0;
 
 		// First Page.
-		}/* else if (mainMenuPage == 0 && hDown & KEY_TOUCH) {
+		}/* else if (currentPage == 0 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[0])) {
-				screenTransition(fileManager);
+				Gui::setScreen(std::make_unique<FileManager>());
 			} else if (touching(touch, mainScreenButtonPos[1])) {
-				screenTransition(ftpScreen);
+				Gui::setScreen(std::make_unique<FTP>());
 			} else if (touching(touch, mainScreenButtonPos[2])) {
-				screenTransition(scriptMainScreen);
+				Gui::setScreen(std::make_unique<ScriptMain>());
 			} else if (touching(touch, mainScreenButtonPos[3])) {
-				screenTransition(musicMainScreen);
+				Gui::setScreen(std::make_unique<MusicMain>());
 			} else if (touching(touch, mainScreenButtonPos[4])) {
-				screenTransition(updaterSubMenu);
+				Gui::setScreen(std::make_unique<UpdaterSub>());
 			} else if (touching(touch, mainScreenButtonPos[5])) {
-				screenTransition(SettingsScreen);
+				Gui::setScreen(std::make_unique<Settings>());
 			}
 
 			// Second Page.
-		} else if (mainMenuPage == 1 && hDown & KEY_TOUCH) {
+		} else if (currentPage == 1 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[6])) {
-				screenTransition(ImageSelectorScreen);
+				Gui::setScreen(std::make_unique<ImageSelector>());
 			} else if (touching(touch, mainScreenButtonPos[7])) {
-				screenTransition(creditsScreen);
+				Gui::setScreen(std::make_unique<Credits>());
 			} else if (touching(touch, mainScreenButtonPos[8])) {
-				screenTransition(textFileBrowse);
+				Gui::setScreen(std::make_unique<TextBrowse>());
 			} else if (touching(touch, mainScreenButtonPos[9])) {
-				screenTransition(utilsScreen);
+				Gui::setScreen(std::make_unique<Utils>());
 			} else if (touching(touch, mainScreenButtonPos[10])) {
-				screenTransition(gameSubMenuScreen);
+				Gui::setScreen(std::make_unique<GameSub>());
 		}
 	}*/
 }

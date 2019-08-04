@@ -42,13 +42,6 @@
 #include "mainMenuScreen.hpp"
 #include "settings.hpp"
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
 
 bool dspfirmfound = false;
 
