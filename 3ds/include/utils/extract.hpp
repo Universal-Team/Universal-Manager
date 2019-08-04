@@ -26,36 +26,16 @@
 
 #pragma once
 
-#include <3ds.h>
+#include "common.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
+enum ExtractError {
+	EXTRACT_ERROR_NONE = 0,
+	EXTRACT_ERROR_ARCHIVE,
+	EXTRACT_ERROR_ALLOC,
+	EXTRACT_ERROR_FIND,
+	EXTRACT_ERROR_READFILE,
+	EXTRACT_ERROR_OPENFILE,
+	EXTRACT_ERROR_WRITEFILE,
+};
 
-#include "files.h"
-
-#ifdef __cplusplus
-}
-
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <curl/curl.h>
-
-#include "stringutils.hpp"
-#include "json.hpp"
-
-using json = nlohmann::json;
-
-#endif
-
-extern char * arg0;
-
-#define WORKING_DIR       "/3ds/"
+Result extractArchive(std::string archivePath, std::string wantedFile, std::string outputPath);

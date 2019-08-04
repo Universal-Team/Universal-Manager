@@ -24,38 +24,67 @@
 *         reasonable ways as different from the original version.
 */
 
-#pragma once
+#include "screens/screenCommon.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
+#include <vector>
 
-#include <3ds.h>
+struct Key {
+	std::string character;
+	int x;
+	int y;
+};
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
+// To-Do -> Make the positions correctly.
+Key calculatorKeys[] = {
 
-#include "files.h"
+	// Numbers.
+	{"1", 0, 0},
+	{"2", 0, 0},
+	{"3", 0, 0},
+	{"4", 0, 40},
+	{"5", 0, 40},
+	{"6", 0, 40},
+	{"7", 0, 80},
+	{"8", 0, 80},
+	{"9", 0, 80},
+	{"0", 0, 120},
+	{".", 0, 120},
 
-#ifdef __cplusplus
+	// Operations.
+	{"+", 0, 40},
+	{"-", 0, 40},
+	{"÷", 0, 40},
+	{"*", 0, 40},
+	{"=", 0, 40},
+};
+
+// To-Do.
+void CALCULATOR::drawCalculatorKeyboard(void) const
+{
 }
 
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <curl/curl.h>
 
-#include "stringutils.hpp"
-#include "json.hpp"
+void CALCULATOR::Draw(void) const
+{
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
+	C2D_SceneBegin(bottom);
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBottomBack();
+	drawCalculatorKeyboard();
+}
 
-using json = nlohmann::json;
-
-#endif
-
-extern char * arg0;
-
-#define WORKING_DIR       "/3ds/"
+// To-Do -> Calculator Logic.
+void CALCULATOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_B) {
+		Gui::screenBack();
+		return;
+	}
+}

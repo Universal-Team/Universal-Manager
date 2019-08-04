@@ -23,39 +23,26 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
+#ifndef FILEMANAGER_HPP
+#define FILEMANAGER_HPP
 
-#pragma once
-
-#include <3ds.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
-#include "files.h"
-
-#ifdef __cplusplus
-}
-
-#include <cstdio>
-#include <iostream>
-#include <string>
+#include "screens/screen.hpp"
 #include <vector>
-#include <regex>
-#include <curl/curl.h>
+#include "fileBrowse.h"
 
-#include "stringutils.hpp"
-#include "json.hpp"
+class FileManager : public SCREEN 
+{
+public:
+	void Draw(void) const override;
+	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
-using json = nlohmann::json;
+private:
+	uint selectedFile = 0;
+	int keyRepeatDelay = 3;
+	mutable bool dirChanged = true;
+	std::vector<DirEntry> dirContents;
+	std::string currentFile = "";
+	std::string currentFiles;
+};
 
 #endif
-
-extern char * arg0;
-
-#define WORKING_DIR       "/3ds/"
