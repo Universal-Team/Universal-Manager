@@ -33,52 +33,20 @@
 #include <unistd.h>
 #include <vector>
 #include "sound.h"
-//#include "keyboard.hpp" // Maybe for the Future?
+#include "settings.hpp"
+#include "ticTacToeScreen.hpp"
 
 #define COLOR1 C2D_Color32(137, 207, 240, 255) // Color Player 1.
 #define COLOR2 C2D_Color32(3, 192, 60, 255) // Color Player 2.
 
-// Modes.
-inline bool multiPlayerMode = 0;
+bool TicTacToe::touching(touchPosition touch, Structs::TTTPos button) {
+	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
+		return true;
+	else
+		return false;
+}
 
-// Sub Menu.
-inline int subMenu = 1;
-inline int selection = 0;
-
-bool currentPlayer = 0;
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-};
-
-ButtonPos gameBoardPos[] = {
-	{80,  40, 50, 50}, {135,  40, 50, 50}, {190,  40, 50, 50},
-	{80,  95, 50, 50}, {135,  95, 50, 50}, {190,  95, 50, 50},
-	{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50},
-};
-
-int gameBoard[] = {
-	0, 0, 0,
-	0, 0, 0,
-	0, 0, 0,
-};
-
-struct tri {
-	int one;
-	int two;
-	int three;
-} winIndexes[] = {
-	{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
-	{0, 3, 6}, {1, 4, 7}, {2, 5, 8},
-	{0, 4, 8}, {2, 4, 6},
-};
-
-extern bool touching(touchPosition touch, ButtonPos button);
-
-void resetBoard() {
+void TicTacToe::resetBoard() {
 	for(uint i=0;i<(sizeof(gameBoard)/sizeof(gameBoard[0]));i++) {
 		gameBoard[i] = 0;
 		currentPlayer = 0;
@@ -86,7 +54,8 @@ void resetBoard() {
 }
 
 // Draws the Circles for Player 1.
-void drawPlayer1() {
+void TicTacToe::drawPlayer1() const
+{
 	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
 		if(gameBoard[i] == 1) {
 			C2D_DrawCircle(gameBoardPos[i].x+25, gameBoardPos[i].y+25, 1.0f, 15, COLOR1, COLOR1, COLOR1, COLOR1);
@@ -95,7 +64,8 @@ void drawPlayer1() {
 }
 
 // Draws the Circles for Player 2.
-void drawPlayer2() {
+void TicTacToe::drawPlayer2() const
+{
 	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
 		if(gameBoard[i] == 2) {
 			C2D_DrawCircle(gameBoardPos[i].x+25, gameBoardPos[i].y+25, 1.0f, 15, COLOR2, COLOR2, COLOR2, COLOR2);
@@ -104,14 +74,15 @@ void drawPlayer2() {
 }
 
 // Draw the Field for it.
-void drawField(void) {
+void TicTacToe::drawField(void) const
+{
 	for(uint i=0;i<(sizeof(gameBoardPos)/sizeof(gameBoardPos[0]));i++) {
 		C2D_DrawRectSolid(gameBoardPos[i].x, gameBoardPos[i].y, 1.0f, 50, 50, BLACK);
 	}
 }
 
 // The actual Screen.
-void TICTACTOE::drawScreen(void) const
+void TicTacToe::drawScreen(void) const
 {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
@@ -132,7 +103,7 @@ void TICTACTOE::drawScreen(void) const
 
 // Sub Menu Stuff.
 //##############################################################################
-void TICTACTOE::drawSelection(void) const
+void TicTacToe::drawSelection(void) const
 {
 	if (selection == 0) {
 		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
@@ -144,7 +115,7 @@ void TICTACTOE::drawSelection(void) const
 }
 
 
-void TICTACTOE::drawSubMenu(void) const
+void TicTacToe::drawSubMenu(void) const
 {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
@@ -168,7 +139,7 @@ void TICTACTOE::drawSubMenu(void) const
 	drawSelection();
 }
 
-void selectionLogic(u32 hDown, u32 hHeld) {
+void TicTacToe::selectionLogic(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_UP) {
 		playPongSfx();
 		if(selection > 0)	selection--;
@@ -200,7 +171,7 @@ void selectionLogic(u32 hDown, u32 hHeld) {
 //##############################################################################
 
 // Screen Selection stuff.
-void TICTACTOE::Draw(void) const
+void TicTacToe::Draw(void) const
 {
 	if (subMenu == 0) {
 		drawScreen();
@@ -209,7 +180,7 @@ void TICTACTOE::Draw(void) const
 	}
 }
 
-void TICTACTOE::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void TicTacToe::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (subMenu == 1) {
 		selectionLogic(hDown, hHeld);
 	}

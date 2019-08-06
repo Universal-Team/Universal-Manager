@@ -23,48 +23,28 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-#include "button.hpp"
+#include "screen.hpp"
+#include <string>
 #include <vector>
+#include "button.hpp"
 
-class MainMenu : public SCREEN 
+// Music Main.
+class MusicMain : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
-
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
-
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
-
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
+	int selection = 0;
+	bool dirChanged = true;
+	uint selectedPlst = 0;
+	
+	std::vector<Structs::ButtonPos> mainButtonPos = {
+    	{0, 40, 149, 52, -1},
+    	{170, 40, 149, 52, -1},
+    	{0, 150, 149, 52, -1},
+		{170, 150, 149, 52, -1},
 	};
 };
-
-#endif

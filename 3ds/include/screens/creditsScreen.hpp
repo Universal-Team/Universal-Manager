@@ -23,48 +23,41 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
+#include "screen.hpp"
 #include "button.hpp"
+#include <string>
 #include <vector>
 
-class MainMenu : public SCREEN 
+
+class Credits : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	int dialog = 5; 
 
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
+	std::vector<std::string> names = {
+		"VoltZ",
+		"FlameKat53",
+		"Pk11",
+		"RocketRobz",
+		"TotallyNotGuy",
+		"MainMenu"
+	};
 
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
-
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
+	std::vector<Structs::ButtonPos> creditsButtonPos = {
     	{0, 25, 149, 52, -1},
     	{170, 25, 149, 52, -1},
 		{0, 90, 149, 52, -1},
 		{170, 90, 149, 52, -1},
 		{0, 150, 149, 52, -1},
     	{170, 150, 149, 52, -1},
-
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
 	};
-};
 
-#endif
+	void drawCreditsDialogs(void) const;
+	void drawCredits(void) const;
+	void drawButtons(void) const;
+};

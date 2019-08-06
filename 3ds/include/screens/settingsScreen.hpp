@@ -23,48 +23,66 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
 #include "screens/screen.hpp"
 #include "button.hpp"
 #include <vector>
 
-class MainMenu : public SCREEN 
+class Settings : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
-
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
+	int settingsPage = 0;
+	int getColorValue(int color, int bgr) const;
+	std::string getColorName(int color, int bgr) const;
 
 	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
+	std::vector<Structs::ButtonPos> uiSettingsButtonPos = {
+		// Bars
+		{17, 85, 95, 41, -1},
+		{112, 85, 95, 41, -1},
+		{207, 85, 95, 41, -1},
+		// Background
 
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
+		{17, 165, 95, 41, -1},
+		{112, 165, 95, 41, -1},
+		{207, 165, 95, 41, -1},
+
+		{293, 213, 27, 27, -1},
+
+		// Music BG
+		{207, 31, 95, 41, -1},
+
+		// Bubble Color.
+		{17, 100, 95, 41, -1},
+		{112, 100, 95, 41, -1},
+		{207, 100, 95, 41, -1},
+
+		// Animation enable.
+		{207, 31, 95, 41, -1},
+
+		// Battery percent.
+		{207, 165, 87, 33, -1},
+
+		// Bars Layout.
+		{17, 165, 95, 41, -1},
+
+		// BG Layout.
+		{17, 31, 95, 41, -1},
+
+		// Selected Text Color.
+	
+		{17, 85, 95, 41, -1},
+		{112, 85, 95, 41, -1},
+		{207, 85, 95, 41, -1},
+
+		// Unselected Text Color.
+
+		{17, 165, 95, 41, -1},
+		{112, 165, 95, 41, -1},
+		{207, 165, 95, 41, -1},
 	};
 };
-
-#endif

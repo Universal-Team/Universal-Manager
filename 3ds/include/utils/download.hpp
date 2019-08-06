@@ -99,11 +99,6 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 std::vector<ThemeEntry> getThemeList(std::string repo, std::string path);
 
 /**
- * Check for updates.
- */
-void checkForUpdates(void);
-
-/**
  * Update nds-bootstrap to the latest build.
  */
 void updateBootstrap(bool nightly);

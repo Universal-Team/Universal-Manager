@@ -23,48 +23,44 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-#include "button.hpp"
-#include <vector>
+#include "screen.hpp"
 
-class MainMenu : public SCREEN 
+class Pong : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	void drawPaddle(void) const;
+	void drawBall(void) const;
 
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
+	void drawSubMenu(void) const;
+	void drawScreen(void) const;
+	void drawSelection(void) const;
+	void selectionLogicPong(u32 hDown, u32 hHeld);
+	void drawScoreP1(void) const;
+	void drawScoreP2(void) const;
 
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
+	void player1Control(u32 hDown, u32 hHeld);
+	void player2Control(u32 hDown, u32 hHeld);
+	void ballLogic(void);
+	void stopLogic(void);
 
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
+	// Paddle and Ball Positions.
+	int paddle1 = 90, paddle2 = 90;
+	double	ballX = 200, ballY = 100,
+		ballXSpd = -3, ballYSpd = 0;
 
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-	};
+	// Modes.
+	int multiPlayerMode = 0;
+
+	// Sub Menu.
+	int subMenu = 1;
+	int Selection = 0;
+
+	// Scores.
+	int scoreP1 = 0;
+	int scoreP2 = 0;
 };
-
-#endif

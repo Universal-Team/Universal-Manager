@@ -28,153 +28,18 @@
 #include "scripts.hpp"
 #include "fileBrowse.h"
 #include "keyboard.hpp"
-#include <vector>
-#include <string>
-#include <fstream>
+#include "scriptMainScreen.hpp"
 #include <algorithm>
+#include <fstream>
 #include <unistd.h>
-using std::string;
+#include "sound.h"
+#include "scriptCreatorScreen.hpp"
+#include "settings.hpp"
 
-static int scriptSelection1 = 0;
-static int scriptSelection2 = 0;
-extern uint selectedFile;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-extern std::vector<DirEntry> dirContents;
-uint selectedScpt = 0;
-std::vector<DirEntry> scpts;
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-std::ofstream scpt;
-
-uint selectedScptItem = 0;
-int movingScptItem = -1;
-std::vector<std::string> scptContents;
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos scriptCreatorFunctionButtonPos[] = {
-	// First Page.
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-	// Second Page.
-	{0, 25, 149, 52, -1},
-};
-
-void SCRIPTMAIN::Draw(void) const
+void ScriptCreator::drawSelection1(void) const
 {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::DrawBarsTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
-	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
-	
-	if(dirChanged) {
-		char startPath[PATH_MAX];
-		getcwd(startPath, PATH_MAX);
-		chdir("sdmc:/Universal-Manager/scripts/");
-		getDirectoryContents(scpts);
-		chdir(startPath);
-	}
-
-	std::string scptList;
-	for (uint i=(selectedScpt<5) ? 0 : selectedScpt-5;i<scpts.size()&&i<((selectedScpt<5) ? 6 : selectedScpt+1);i++) {
-		if (selectedScpt == 0) {
-			Gui::sprite(sprites_selected_idx, 0, 25);
-			scptList += scpts[i].name + "\n\n";
-
-		} else if (selectedScpt == 1) {
-			Gui::sprite(sprites_selected_idx, 0, 56);
-			scptList += scpts[i].name + "\n\n";
-
-		} else if (selectedScpt == 2) {
-			Gui::sprite(sprites_selected_idx, 0, 91);
-			scptList += scpts[i].name + "\n\n";
-
-		} else if (selectedScpt == 3) {
-			Gui::sprite(sprites_selected_idx, 0, 125);
-			scptList += scpts[i].name + "\n\n";
-
-		} else if (selectedScpt == 4) {
-			Gui::sprite(sprites_selected_idx, 0, 160);
-			scptList += scpts[i].name + "\n\n";
-
-		} else if (selectedScpt == 5) {
-			Gui::sprite(sprites_selected_idx, 0, 190);
-			scptList += scpts[i].name + "\n\n";
-		} else {
-			Gui::sprite(sprites_selected_idx, 0, 190);
-			scptList += scpts[i].name + "\n\n";
-		}
-	}
-	for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
-		scptList += "\n";
-	}
-	Draw_Text(26, 32, 0.53f, WHITE, scptList.c_str());
-
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::DrawBarsBot();
-}
-
-void SCRIPTMAIN::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
-	if(hDown & KEY_A) {
-		if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
-			runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
-		} 
-	} else if (hDown & KEY_B) {
-		Gui::screenBack();
-		return;
-	} else if (hDown & KEY_Y) {
-		std::string newScript = Input::getLine();
-		if(newScript != "") {
-			FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
-			fclose(scpt);
-	}
-	} else if (hDown & KEY_X) {
-		if (selectedScpt != 0) {
-			if(confirmPopup("Are you sure you want to delete this Script?")) {
-				remove(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str());
-			}
-		}
-	} else if (hHeld & KEY_UP) {
-		if (selectedScpt > 0 && !keyRepeatDelay) {
-			selectedScpt--;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedScpt < scpts.size()-1) {
-			selectedScpt++;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hDown & KEY_START) {
-		if(confirmPopup("Do you want to edit this Script : \n\n "+scpts[selectedScpt].name+"")) {
-		scpt.open(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), std::ofstream::app);
-		Gui::setScreen(std::make_unique<SCRIPTCREATOR>());
-	}
-	}
-}
-
-int screenPage = 0;
-
-void drawSelection1(void) {
 	if (scriptSelection1 == 0) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 10, Config::barColor);
 	} else if (scriptSelection1 == 1) {
@@ -190,13 +55,14 @@ void drawSelection1(void) {
 	}
 }
 
-void drawSelection2(void) {
+void ScriptCreator::drawSelection2(void) const
+{
 	if (scriptSelection2 == 0) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 80, 10, Config::barColor);
 	}
 }
 
-void SCRIPTCREATOR::Draw(void) const
+void ScriptCreator::Draw(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -247,7 +113,7 @@ void SCRIPTCREATOR::Draw(void) const
 }
 }
 
-void scriptSelectionLogic1(u32 hDown) {
+void ScriptCreator::scriptSelectionLogic1(u32 hDown) {
 		if (screenPage == 0 && hDown & KEY_UP) {
 			if(scriptSelection1 > 0)	scriptSelection1--;
 		} else if (screenPage == 0 && hDown & KEY_DOWN) {
@@ -294,7 +160,7 @@ void scriptSelectionLogic1(u32 hDown) {
 		}
 }
 
-void scriptSelectionLogic2(u32 hDown) {
+void ScriptCreator::scriptSelectionLogic2(u32 hDown) {
 		if (screenPage == 1 && hDown & KEY_UP) {
 			if(scriptSelection2 > 0)	scriptSelection2--;
 		} else if (screenPage == 1 && hDown & KEY_DOWN) {
@@ -311,7 +177,7 @@ void scriptSelectionLogic2(u32 hDown) {
 		}
 }
 
-void SCRIPTCREATOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void ScriptCreator::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	scriptSelectionLogic1(hDown);
 	scriptSelectionLogic2(hDown);
 	if (hDown & KEY_START) {
@@ -376,4 +242,3 @@ void SCRIPTCREATOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		scpt << Function << param1 << std::endl;
 	}
 }
-

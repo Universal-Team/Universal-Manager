@@ -30,9 +30,8 @@
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
-
-int dialog = 5; 
+#include "creditsScreen.hpp"
+#include "mainMenuScreen.hpp"
 
 // Color Stuff.
 #define VOLTZCOLORBAR RGBA8(0, 108, 255, 255)
@@ -50,32 +49,7 @@ int dialog = 5;
 #define TNGCOLORBAR RGBA8(127, 127, 127, 255)
 #define TNGCOLORBG RGBA8(0, 0, 31, 255)
 
-std::vector<std::string> names = {
-	"VoltZ",
-	"FlameKat53",
-	"Pk11",
-	"RocketRobz",
-	"TotallyNotGuy",
-	"MainMenu"
-};
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos creditsButtonPos[] = {
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 void drawVoltZ(void) {
 	// Top BG Stuff.
@@ -207,7 +181,7 @@ void drawTotallyNotGuy(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
 }
 
-void CREDITS::drawCredits(void) const
+void Credits::drawCredits(void) const
 {
 	set_screen(top);
 	Gui::Credits(credits_universal_credits_idx, 0, 0);
@@ -222,7 +196,7 @@ void CREDITS::drawCredits(void) const
 	Draw_Text(20, 0, 0.7f, WHITE, "Welcome to Universal-Manager!");
 }
 
-void CREDITS::drawCreditsDialogs(void) const
+void Credits::drawCreditsDialogs(void) const
 {
 	if (dialog == 0) {
 		drawVoltZ();
@@ -239,7 +213,8 @@ void CREDITS::drawCreditsDialogs(void) const
 	}
 }
 
-void drawButtons(void) {
+void Credits::drawButtons(void) const
+{
 	// Buttons.
 	for(int i=0;i<3;i++) {
 		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));
@@ -249,7 +224,7 @@ void drawButtons(void) {
 	}
 }
 
-void CREDITS::Draw(void) const
+void Credits::Draw(void) const
 {
     C2D_TargetClear(top, GRAY);
     C2D_TargetClear(bottom, GRAY);
@@ -261,7 +236,7 @@ void CREDITS::Draw(void) const
 	drawButtons();
 }
 
-void CREDITS::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, creditsButtonPos[0])) {
 			dialog = 0;
@@ -279,8 +254,7 @@ void CREDITS::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Config::Credits = 0;
 				Config::setCredits();
 			}
-				Gui::screenBack();
-				return;
+				Gui::setScreen(std::make_unique<MainMenu>());
 		}
 	}
 }

@@ -34,12 +34,14 @@
 #include "fileBrowse.h"
 #include "fileOperations.h"
 #include "keyboard.hpp"
+#include "settings.hpp"
 
 extern "C" {
 #include "C2D_helper.h"
 #include "cia.h"
 }
 
+bool updatingSelf = false;
 
 struct ButtonPos {
 	int x;
@@ -49,8 +51,8 @@ struct ButtonPos {
 	std::string text;
 };
 
-extern uint selectedFile;
-extern std::vector<DirEntry> dirContents;
+uint selectedFile;
+std::vector<DirEntry> dirContents;
 
 DirEntry clipboard;
 
@@ -63,17 +65,17 @@ ButtonPos functionPos[] = {
 	{165, 150, 93, 35, "Install"},
 };
 
-static void renameFile(void) {
+void renameFile(void) {
 	std::string newName = Input::getLine();
 	if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
 }
 
-static void deleteFile(void) {
+void deleteFile(void) {
 	DisplayMsg("Delete is in progress...\nPlease wait...");
 	remove(dirContents[selectedFile].name.c_str());
 }
 
-static void copyPaste(void) {
+void copyPaste(void) {
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
 	if(clipboard.name == "") {
@@ -90,12 +92,12 @@ static void copyPaste(void) {
 	}
 }
 
-static void createFolder(void) {
+void createFolder(void) {
 	std::string newName = Input::getLine();
 	mkdir(newName.c_str(), 0777);
 }
 
-static void extractArchive(void) {
+void extractArchive(void) {
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
 	std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
@@ -104,7 +106,7 @@ static void extractArchive(void) {
 	extractArchive(dirContents[selectedFile].name, "/", outPath);
 }
 
-static void install(void) {
+void install(void) {
 	DisplayMsg("Install is in progress...\nPlease wait...");
 	installCia(dirContents[selectedFile].name.c_str());
 }

@@ -1,31 +1,5 @@
-/*
-*   This file is part of Universal-Manager
-*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
-*
-*   This program is free software: you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation, either version 3 of the License, or
-*   (at your option) any later version.
-*
-*   This program is distributed in the hope that it will be useful,
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*   GNU General Public License for more details.
-*
-*   You should have received a copy of the GNU General Public License
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*
-*   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
-*       * Requiring preservation of specified reasonable legal notices or
-*         author attributions in that material or in the Appropriate Legal
-*         Notices displayed by works containing it.
-*       * Prohibiting misrepresentation of the origin of that material,
-*         or requiring that modified versions of such material be marked in
-*         reasonable ways as different from the original version.
-*/
 
 #include "screens/screenCommon.hpp"
-#include "fileBrowse.h"
 #include "keyboard.hpp"
 #include "settings.hpp"
 #include <vector>
@@ -33,80 +7,9 @@
 #include <fstream>
 #include <algorithm>
 #include <unistd.h>
+#include "textEditorScreen.hpp"
 
-bool textRead = false;
-uint textEditorCurPos = 0;
-uint textEditorScrnPos = 0;
-std::vector<std::string> textEditorText;
-inline std::vector<DirEntry> dirContents;
-uint rowsDisplayed = 0;
-inline uint selectedFile = 0;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-std::string currentEditFile = "";
-uint stringPos = 0;
-int showCursor = 30;
-
-void readFile(std::string path) {
-	textEditorText.clear();
-	std::string line;
-	std::ifstream in(path);
-	if(in.good()) {
-		while(std::getline(in, line)) {
-			textEditorText.push_back(line);
-		}
-	}
-	if(textEditorText.size() == 0)	textEditorText.push_back("");
-	in.close();
-	textRead = true;
-}
-
-void TEXTBROWSE::Draw(void) const
-{
-	drawFileBrowser();
-}
-
-void TEXTBROWSE::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
-	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
-		} else {
-			currentEditFile = dirContents[selectedFile].name;
-			readFile(dirContents[selectedFile].name.c_str());
-			Gui::setScreen(std::make_unique<TEXTEDITOR>());
-		}
-		} else if (hDown & KEY_B) {
-		char path[PATH_MAX];
-		getcwd(path, PATH_MAX);
-		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			Gui::screenBack();
-			return;
- 		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
-		}
-		} else if (hHeld & KEY_UP) {
-		if (selectedFile > 0 && !keyRepeatDelay) {
-			selectedFile--;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedFile < dirContents.size()-1) {
-			selectedFile++;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	}
-}
-
-
-void TEXTEDITOR::Draw(void) const
+void TextEditor::Draw(void) const
 {
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -161,7 +64,7 @@ void TEXTEDITOR::Draw(void) const
 	Gui::DrawBarsBot();
 }
 
-void TEXTEDITOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void TextEditor::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(showCursor > -30) {
 		showCursor--;
 	} else {

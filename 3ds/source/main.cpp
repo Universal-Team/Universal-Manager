@@ -40,9 +40,21 @@
 #include "screenCommon.hpp"
 #include "ptmu_x.h"
 #include "mainMenuScreen.hpp"
+#include "creditsScreen.hpp"
 #include "settings.hpp"
+#include "sound.h"
 
+extern "C" {
+	#include "music/error.h"
+	#include "music/playback.h"
+}
 
+std::string currentSong;
+std::vector<Playlist> nowPlayingList;
+int locInPlaylist;
+int musicRepeat;
+bool musicShuffle;
+bool firstSong;
 bool dspfirmfound = false;
 
 touchPosition touch;
@@ -50,8 +62,19 @@ touchPosition touch;
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
 
+//Music and sound effects.
+sound *sfx_scroll = NULL;
+sound *sfx_pong = NULL;
+sound *sfx_score = NULL;
 
-bool touching(touchPosition touch, ButtonPos button) {
+void loadSoundEffects(void) {
+	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
+	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
+	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
+}
+
+
+bool touching(touchPosition touch, Structs::ButtonPos button) {
 	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
 		return true;
 	else
@@ -78,13 +101,11 @@ int main()
 	Gui::init();
 	srand(time(NULL));
 
-//	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
-//		SCREEN_MODE = 0;
-//	} else if (Config::Credits == 1) {
-//		SCREEN_MODE = 1;
-//	}
-
-	Gui::setScreen(std::make_unique<MainMenu>());
+	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
+		Gui::setScreen(std::make_unique<MainMenu>());
+	} else if (Config::Credits == 1) {
+		Gui::setScreen(std::make_unique<Credits>());
+	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
 
@@ -97,6 +118,8 @@ int main()
 		ndspInit();
 		dspfirmfound = true;
 	 }
+
+	 loadSoundEffects();
 
 	// Loop as long as the status is not exit
     while (aptMainLoop())
@@ -111,10 +134,27 @@ int main()
 		Gui::clearTextBufs();
 		Gui::mainLoop(hDown, hHeld, touch);
 
+ 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+			if (musicRepeat != 2 && !firstSong) {
+				locInPlaylist++;
+			}
+			firstSong = false;
+			currentSong = nowPlayingList[locInPlaylist].name;
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
+		} else if (isPlaying() && currentSong == "") {
+			stopPlayback();
+		} else if (!isPlaying() && currentSong != "") {
+			currentSong = "";
+		}
 	}
-
-	if (dspfirmfound == true)
-	{
+	delete sfx_scroll;
+	delete sfx_pong;
+	delete sfx_score;
+	if (isPlaying()) {
+	stopPlayback(); // This seems to do `ndspExit();` already. I hope the Crash is finally fixed?
+	} else if (!isPlaying()) {
 		ndspExit();
 	}
 	Gui::exit();

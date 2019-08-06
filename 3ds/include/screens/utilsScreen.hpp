@@ -23,48 +23,31 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-#include "button.hpp"
+#include "screen.hpp"
 #include <vector>
+#include "button.hpp"
 
-class MainMenu : public SCREEN 
+class Utils : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
-
+	int Selection = 0;
 	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
+	void drawSelection(void) const;
+	void SelectionLogic(u32 hDown);
 
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
+	std::vector<Structs::ButtonPos> utilsButtonPos = {
+			// Calendar.
+    	{0, 40, 149, 52, -1},
+			// Button Tester. ;P
+		{170, 40, 149, 52, -1},
+			// Calculator.
 		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
-
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
+			// Back Icon.
+		{293, 213, 27, 27, -1},
 	};
 };
-
-#endif

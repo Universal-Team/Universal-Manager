@@ -23,48 +23,61 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-#include "button.hpp"
+#include "screen.hpp"
 #include <vector>
+#include "button.hpp"
 
-class MainMenu : public SCREEN 
+
+class TicTacToe : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	bool touching(touchPosition touch, Structs::TTTPos button);
+	void drawField(void) const;
 
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
+	void drawSubMenu(void) const;
+	void drawScreen(void) const;
+	void drawSelection(void) const;
+	void resetBoard();
 
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
+	void selectionLogic(u32 hDown, u32 hHeld);
+	void drawPlayer1() const;
+	void drawPlayer2() const;
 
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
+	// Modes.
+	mutable bool multiPlayerMode = 0;
 
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
+	// Sub Menu.
+	int subMenu = 1;
+	int selection = 0;
+
+	mutable bool currentPlayer = 0;
+
+	std::vector<Structs::TTTPos> gameBoardPos = {
+		{80,  40, 50, 50}, {135,  40, 50, 50}, {190,  40, 50, 50},
+		{80,  95, 50, 50}, {135,  95, 50, 50}, {190,  95, 50, 50},
+		{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50},
 	};
-};
 
-#endif
+	std::vector<int> gameBoard = {
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+	};
+
+	struct tri {
+		int one;
+		int two;
+		int three;
+	};
+
+	std::vector<tri> winIndexes = {
+		{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+		{0, 3, 6}, {1, 4, 7}, {2, 5, 8},
+		{0, 4, 8}, {2, 4, 6},
+	}; 
+};

@@ -23,48 +23,39 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#ifndef MAINMENU_HPP
-#define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-#include "button.hpp"
+#include "screens/screenCommon.hpp"
+#include "calculatorScreen.hpp"
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
 #include <vector>
 
-class MainMenu : public SCREEN 
+// To-Do.
+void Calculator::drawCalculatorKeyboard(void) const
 {
-public:
-	MainMenu();
-	void Draw(void) const override;
-	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
+}
 
-private:
 
-	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
+void Calculator::Draw(void) const
+{
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
+	C2D_SceneBegin(bottom);
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBottomBack();
+	drawCalculatorKeyboard();
+}
 
-	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
-
-	// Structs.
-	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
-
-    	{0, 25, 149, 52, -1},
-		{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-	};
-};
-
-#endif
+// To-Do -> Calculator Logic.
+void Calculator::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (hDown & KEY_B) {
+		Gui::screenBack();
+		return;
+	}
+}

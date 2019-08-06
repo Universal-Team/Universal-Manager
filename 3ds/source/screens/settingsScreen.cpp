@@ -26,6 +26,7 @@
 
 #include "screens/screenCommon.hpp"
 #include "colors.hpp"
+#include "settingsScreen.hpp"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
@@ -38,70 +39,16 @@
 #include "keyboard.hpp"
 #include "utils/settings.hpp"
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
-std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
-std::string percentModes[] = {"Hidden", "Shown"}; 
-std::string layoutModes[] = {"Bars", "Bars2"}; 
-std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
-
-
-ButtonPos uiSettingsButtonPos[] = {
-	// Bars
-	{17, 85, 95, 41, -1},
-	{112, 85, 95, 41, -1},
-	{207, 85, 95, 41, -1},
-	// Background
-
-	{17, 165, 95, 41, -1},
-	{112, 165, 95, 41, -1},
-	{207, 165, 95, 41, -1},
-
-	{293, 213, 27, 27, -1},
-
-	// Music BG
-	{207, 31, 95, 41, -1},
-
-	// Bubble Color.
-	{17, 100, 95, 41, -1},
-	{112, 100, 95, 41, -1},
-	{207, 100, 95, 41, -1},
-
-	// Animation enable.
-	{207, 31, 95, 41, -1},
-
-	// Battery percent.
-	{207, 165, 87, 33, -1},
-
-		// Bars Layout.
-	{17, 165, 95, 41, -1},
-
-		// BG Layout.
-	{17, 31, 95, 41, -1},
-
-	// Selected Text Color.
+	std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
+	std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
+	std::string percentModes[] = {"Hidden", "Shown"}; 
+	std::string layoutModes[] = {"Bars", "Bars2"}; 
+	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
 	
-	{17, 85, 95, 41, -1},
-	{112, 85, 95, 41, -1},
-	{207, 85, 95, 41, -1},
-
-	// Unselected Text Color.
-
-	{17, 165, 95, 41, -1},
-	{112, 165, 95, 41, -1},
-	{207, 165, 95, 41, -1},
-	
-};
-
-int getColorValue(int color, int bgr) {
+int Settings::getColorValue(int color, int bgr) const
+{
 	char colorName[10];
 	int i;
 	std::stringstream ss;
@@ -114,16 +61,15 @@ int getColorValue(int color, int bgr) {
 	return i;
 }
 
-std::string getColorName(int color, int bgr) {
+std::string Settings::getColorName(int color, int bgr) const
+{
 	char colorName[10];
 	int i = getColorValue(color, bgr);
 	itoa(i, colorName, 10);
 	return colorName;
 }
 
-int settingsPage = 0;
-
-void SETTINGS::Draw(void) const
+void Settings::Draw(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -225,7 +171,7 @@ void SETTINGS::Draw(void) const
 }
 }
 
-void SETTINGS::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Settings::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	int red;
 	int green;
 	int blue;

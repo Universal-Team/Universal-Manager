@@ -24,15 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#include "screenCommon.hpp"
+#include "musicListScreen.hpp"
+#include "settings.hpp"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "fileManagerScreen.hpp"
+#include "sound.h"
 
+#include "playlistAddScreen.hpp"
 
+extern "C" {
+	#include "music/error.h"
+	#include "music/playback.h"
+}
 
-void FileManager::Draw(void) const
+void MusicList::Draw(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -84,7 +91,7 @@ void FileManager::Draw(void) const
 	Gui::DrawBarsBot();
 }
 
-void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void MusicList::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
 
@@ -98,13 +105,37 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = false;
 	}
 
-		if (hDown & KEY_A) {
+
+	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
 			selectedFile = 0;
 			dirChanged = true;
+		} else {
+			if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0) ||
+			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "wav") == 0) ||
+			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "ogg") == 0)) {
+			if(dirContents[selectedFile].name != currentSong) {
+				nowPlayingList.clear();
+				char path[PATH_MAX];
+				getcwd(path, PATH_MAX);
+				currentSong = path + dirContents[selectedFile].name;
+				Playlist song;
+				song.name = currentSong;
+				song.position = nowPlayingList.size() + 1;
+				nowPlayingList.push_back(song);
+				playbackInfo_t playbackInfo;
+				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
+			}
+			togglePlayback(); // Since it would otherwise pause it in main.cpp
+		} else {
+			DisplayMsg("This is not a valid Music File!\nThe supported Formats are :\nMP3, WAV and OGG.");
+			for (int i = 0; i < 60*2; i++) {
+				gspWaitForVBlank();
+			}
 		}
-		} else if (hDown & KEY_B) {
+		}
+	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
@@ -115,17 +146,25 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
+	} else if (hDown & KEY_Y) {
+		dirChanged = true;
+		Gui::setScreen(std::make_unique<PlaylistAdd>());
 	} else if (hDown & KEY_X) {
-		displayActionBox();
+			Gui::screenBack();
+			return;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
+//	} else if (hDown & KEY_START) {
+//		Gui::setScreen(std::make_unique<MUSICPLAYER>());
 	}
 }

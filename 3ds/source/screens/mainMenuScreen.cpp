@@ -27,8 +27,18 @@
 #include "screens/screenCommon.hpp"
 #include "mainMenuScreen.hpp"
 #include "fileManagerScreen.hpp"
+#include "utilsScreen.hpp"
+#include "gameSubMenu.hpp"
+#include "musicMainScreen.hpp"
+#include "scriptMainScreen.hpp"
+#include "creditsScreen.hpp"
+#include "textBrowseScreen.hpp"
+#include "imageScreen.hpp"
+#include "settingsScreen.hpp"
+#include "updaterSubScreen.hpp"
+#include "ftpScreen.hpp"
 
-extern bool touching(touchPosition touch, ButtonPos button);
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 MainMenu::MainMenu()
 {
@@ -154,7 +164,7 @@ void MainMenu::SelectionLogic1(u32 hDown) {
 				case 0: {
 					Gui::setScreen(std::make_unique<FileManager>());
 					break;
-				} /*case 1:
+				}   case 1:
 					Gui::setScreen(std::make_unique<FTP>());
 					break;
 				  case 2: {
@@ -169,8 +179,7 @@ void MainMenu::SelectionLogic1(u32 hDown) {
 				} case 5:
 					Gui::setScreen(std::make_unique<Settings>());
 					break;
-			}*/
-		}
+			}
 		}
 }
 
@@ -179,7 +188,7 @@ void MainMenu::SelectionLogic2(u32 hDown) {
 			if(Selection2 > 0)	Selection2--;
 		} else if (currentPage == 1 && hDown & KEY_DOWN) {
 			if(Selection2 < 4)	Selection2++;
-		} /* else if (currentPage == 1 && hDown & KEY_A) {
+		}  else if (currentPage == 1 && hDown & KEY_A) {
 			switch(Selection2) {
 				case 0: {
 					Gui::setScreen(std::make_unique<ImageSelector>());
@@ -198,7 +207,7 @@ void MainMenu::SelectionLogic2(u32 hDown) {
 					break;
 				}
 			}
-		} */
+		} 
 }
 
 void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
@@ -214,7 +223,7 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (currentPage == 0 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[0])) {
 				Gui::setScreen(std::make_unique<FileManager>());
-			}/* else if (touching(touch, mainScreenButtonPos[1])) {
+			} else if (touching(touch, mainScreenButtonPos[1])) {
 				Gui::setScreen(std::make_unique<FTP>());
 			} else if (touching(touch, mainScreenButtonPos[2])) {
 				Gui::setScreen(std::make_unique<ScriptMain>());
@@ -234,11 +243,10 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Gui::setScreen(std::make_unique<Credits>());
 			} else if (touching(touch, mainScreenButtonPos[8])) {
 				Gui::setScreen(std::make_unique<TextBrowse>());
-			} else if (touching(touch, mainScreenButtonPos[9])) {
+ 			} else if (touching(touch, mainScreenButtonPos[9])) {
 				Gui::setScreen(std::make_unique<Utils>());
 			} else if (touching(touch, mainScreenButtonPos[10])) {
 				Gui::setScreen(std::make_unique<GameSub>());
 		}
-	}*/
-		}
+	}
 }

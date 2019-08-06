@@ -24,15 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
+#include "screenCommon.hpp"
+#include "themeSelectorScreen.hpp"
+#include "settings.hpp"
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "fileManagerScreen.hpp"
+#include "sound.h"
 
+extern "C" {
+	#include "C2D_helper.h"
+}
 
-
-void FileManager::Draw(void) const
+void ThemeSelector::Draw(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -84,7 +88,7 @@ void FileManager::Draw(void) const
 	Gui::DrawBarsBot();
 }
 
-void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void ThemeSelector::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
 
@@ -98,13 +102,33 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = false;
 	}
 
-		if (hDown & KEY_A) {
+
+	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
 			selectedFile = 0;
 			dirChanged = true;
+		} else {
+			if(dirContents[selectedFile].name != currentSong) {
+			}
+			if (Config::musicMode == 0) {
+			DisplayMsg("Put the Music Mode to\n `BG` or `COVER`.");
+			for (int i = 0; i < 60*4; i++) {
+			gspWaitForVBlank();
+			}
+		} else if (Config::musicMode == 1) {
+			if(confirmPopup("Do you want, to use this Image\nAs the Cover Image?")) {
+			Draw_LoadImageFile(&coverImage, dirContents[selectedFile].name.c_str());
+			coverImageLoaded = true;
+			}
+		} else if (Config::musicMode == 2) {
+			if(confirmPopup("Do you want, to use this Image\nAs the Theme Image?")) {
+			Draw_LoadImageFile(&musicImage, dirContents[selectedFile].name.c_str());
+			themeImageLoaded = true;
+			}
 		}
-		} else if (hDown & KEY_B) {
+		}
+	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
@@ -115,16 +139,19 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		selectedFile = 0;
 		dirChanged = true;
 		}
-	} else if (hDown & KEY_X) {
-		displayActionBox();
+	} else if(hDown & KEY_X) {
+			Gui::screenBack();
+			return;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	}

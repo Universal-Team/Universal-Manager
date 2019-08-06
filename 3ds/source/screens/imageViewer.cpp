@@ -30,42 +30,81 @@
 #include <unistd.h>
 #include <vector>
 #include "fileBrowse.h"
+#include "imageScreen.hpp"
 
 extern "C" {
 #include "C2D_helper.h"
 }
 
-extern uint selectedFile;
-extern int keyRepeatDelay;
-extern bool dirChanged;
 ImageSize imageSize;
-C2D_Image image;
-double imageScale = 1.0f;
-int positionX = 0, positionY = 0;
-std::string currentImage = "";
-std::string filename;
-extern std::vector<DirEntry> dirContents;
 
-void IMAGEVIEWER::FreeImage(C2D_Image *image) {
+void ImageViewer::FreeImage(C2D_Image *image) {
 	C3D_TexDelete(image->tex);
 	linearFree((Tex3DS_SubTexture *)image->subtex);
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
 }
 
-bool IMAGEVIEWER::Draw_Image(void) const
+bool ImageViewer::Draw_Image(void) const
 {
 	return C2D_DrawImageAt(image, positionX, positionY, 0.5, nullptr, imageScale, imageScale);
 }
 
 
-void IMAGESELECTOR::Draw(void) const
+void ImageSelector::Draw(void) const
 {
-	drawFileBrowser();
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::sprite(sprites_selected_idx, 0, 25);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::sprite(sprites_selected_idx, 0, 56);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::sprite(sprites_selected_idx, 0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::sprite(sprites_selected_idx, 0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::sprite(sprites_selected_idx, 0, 160);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::sprite(sprites_selected_idx, 0, 190);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::sprite(sprites_selected_idx, 0, 190);
+			dirs +=  dirContents[i].name + "\n\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+	Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
 }
 
 
-void IMAGEVIEWER::Draw(void) const
+void ImageViewer::Draw(void) const
 {
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
@@ -75,9 +114,21 @@ void IMAGEVIEWER::Draw(void) const
 	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
 }
 
-void IMAGESELECTOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) { 
+void ImageSelector::Logic(u32 hDown, u32 hHeld, touchPosition touch) { 
 	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
+
+			if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		dirChanged = false;
+	}
+
+	
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -88,7 +139,7 @@ void IMAGESELECTOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
 			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			Gui::setScreen(std::make_unique<IMAGEVIEWER>());
+			Gui::setScreen(std::make_unique<ImageViewer>());
 			}
 		}
 	} else if (hDown & KEY_B) {
@@ -108,19 +159,17 @@ void IMAGESELECTOR::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
-			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
-			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	}
 }
 
-void IMAGEVIEWER::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void ImageViewer::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hHeld & KEY_CPAD_UP) {
 		if(imageSize.height*imageScale < 240) {
 			if(positionY > 0)	positionY -= imageScale*2;

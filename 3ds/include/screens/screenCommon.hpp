@@ -29,3 +29,13 @@
 
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
+
+struct Playlist {
+	std::string name;
+	int position;
+};
+
+bool confirmPopup(std::string msg);
+bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos);
+void helperBox(std::string msg1);
+bool displayActionBox(void);

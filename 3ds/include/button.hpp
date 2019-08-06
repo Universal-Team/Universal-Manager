@@ -24,6 +24,11 @@
 *         reasonable ways as different from the original version.
 */
 
+#ifndef BUTTON_HPP
+#define BUTTON_HPP
+class Structs 
+{
+public:
 struct ButtonPos
 {
     int x;
@@ -32,3 +37,21 @@ struct ButtonPos
     int h;
 	int link;
 };
+
+struct Key {
+	std::string character;
+	int x;
+	int y;
+};
+
+struct TTTPos {
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
+private:
+};
+
+#endif

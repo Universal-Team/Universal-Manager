@@ -33,65 +33,54 @@
 #include <unistd.h>
 #include <vector>
 #include "sound.h"
-//#include "keyboard.hpp" // Maybe for the Future?
+#include "settings.hpp"
 
-// Paddle and Ball Positions.
-int paddle1 = 90, paddle2 = 90;
-double	ballX = 200, ballY = 100,
-		ballXSpd = -3, ballYSpd = 0;
-
-// Modes.
-int multiPlayerMode = 0;
-
-// Sub Menu.
-int subMenu = 1;
-int selectionPong = 0;
-
-// Scores.
-int scoreP1 = 0;
-int scoreP2 = 0;
-
+#include "pongScreen.hpp"
 
 // Score stuff for Player 1.
-void drawScoreP1(void) {
+void Pong::drawScoreP1(void) const
+{
 	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
 }
 
 
 // Score stuff for Player 2.
-void drawScoreP2(void) {
+void Pong::drawScoreP2(void) const
+{
 	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
 }
 
 
 // Draws the Paddles for both Players.
-void drawPaddle(void) {
+void Pong::drawPaddle(void) const
+{
 	C2D_DrawRectSolid(10, paddle1, 1.0f, 10, 60, Config::barColor);
 	C2D_DrawRectSolid(380, paddle2, 1.0f, 10, 60, Config::barColor);
 }
 
 
 // Draws the ball.
-void drawBall(void) {
+void Pong::drawBall(void) const
+{
 	C2D_DrawCircleSolid(ballX, ballY, 1.0f, 5, Config::barColor);
 }
 
 
 // This is for the Sub Menu.
 //#######################################################################################
-void PONG::drawSelection(void) const
+void Pong::drawSelection(void) const
 {
-	if (selectionPong == 0) {
+	if (Selection == 0) {
 		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
-	} else if (selectionPong == 1) {
+	} else if (Selection == 1) {
 		C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
-	} else if (selectionPong == 2) {
+	} else if (Selection == 2) {
 		C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
 	}
 }
 
 
-void PONG::drawSubMenu(void) const
+void Pong::drawSubMenu(void) const
 {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
@@ -114,30 +103,30 @@ void PONG::drawSubMenu(void) const
 	drawSelection();
 }
 
-void selectionLogicPong(u32 hDown, u32 hHeld) {
+void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_UP) {
 		playPongSfx();
-		if(selectionPong > 0)	selectionPong--;
+		if(Selection > 0)	Selection--;
 	} else if (hDown & KEY_DOWN) {
 		playPongSfx();
-		if(selectionPong < 2)	selectionPong++;
+		if(Selection < 2)	Selection++;
 	} else if (hDown & KEY_A) {
 		playScoreSfx();
-		switch(selectionPong) {
+		switch(Selection) {
 			case 0: {
 				multiPlayerMode = 0;
 				subMenu = 0;
-				selectionPong = 0;
+				Selection = 0;
 				break;
 			} case 1:
 				multiPlayerMode = 1;
 				subMenu = 0;
-				selectionPong = 0;
+				Selection = 0;
 				break;
 			case 2: {
 				Gui::screenBack();
 				return;
-				selectionPong = 0;
+				Selection = 0;
 				break;
 			}
 		}
@@ -147,7 +136,7 @@ void selectionLogicPong(u32 hDown, u32 hHeld) {
 
 // This is the actual Screen.
 //#######################################################################################
-void PONG::drawScreen(void) const
+void Pong::drawScreen(void) const
 {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
@@ -172,7 +161,7 @@ void PONG::drawScreen(void) const
 
 
 // Screen Selection.
-void PONG::Draw(void) const
+void Pong::Draw(void) const
 {
 	if (subMenu == 0) {
 		drawScreen();
@@ -183,7 +172,7 @@ void PONG::Draw(void) const
 
 
 // Player 1 Control.
-void player1Control(u32 hDown, u32 hHeld) {
+void Pong::player1Control(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_DOWN) {
 		if(paddle1 < 181)	paddle1 += 6.0;
 		if (paddle1 == 180)	paddle1 += 0.0;
@@ -201,7 +190,7 @@ void player1Control(u32 hDown, u32 hHeld) {
 
 
 // Player 2 Control.
-void player2Control(u32 hDown, u32 hHeld) {
+void Pong::player2Control(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_B) {
 		if(paddle2 < 181)	paddle2 += 6.0;
 		if (paddle2 == 180)	paddle2 += 0.0;
@@ -217,7 +206,7 @@ void player2Control(u32 hDown, u32 hHeld) {
 	}
 }
 
-void ballLogic(void) {
+void Pong::ballLogic(void) {
 		ballX += ballXSpd;
 		ballY += ballYSpd;
 
@@ -254,12 +243,12 @@ void ballLogic(void) {
 		}
 }
 
-void stopLogic(void) {
+void Pong::stopLogic(void) {
 			paddle1 = 90;
 			paddle2 = 90;
 }
 
-void PONG::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (subMenu == 1) {
 		selectionLogicPong(hDown, hHeld);
 	}

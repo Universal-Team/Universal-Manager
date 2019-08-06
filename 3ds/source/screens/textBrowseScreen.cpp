@@ -25,14 +25,35 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include <algorithm>
+#include "textBrowseScreen.hpp"
+#include "fileBrowse.h"
+#include "keyboard.hpp"
+#include "settings.hpp"
+#include <vector>
+#include <string>
 #include <fstream>
+#include <algorithm>
 #include <unistd.h>
-#include "fileManagerScreen.hpp"
+#include "sound.h"
 
+#include "textEditorScreen.hpp"
 
+void TextBrowse::readFile(std::string path)
+{
+	textEditorText.clear();
+	std::string line;
+	std::ifstream in(path);
+	if(in.good()) {
+		while(std::getline(in, line)) {
+			textEditorText.push_back(line);
+		}
+	}
+	if(textEditorText.size() == 0)	textEditorText.push_back("");
+	in.close();
+	textRead = true;
+}
 
-void FileManager::Draw(void) const
+void TextBrowse::Draw(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -84,10 +105,9 @@ void FileManager::Draw(void) const
 	Gui::DrawBarsBot();
 }
 
-void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void TextBrowse::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
-
 			if (dirChanged) {
             dirContents.clear();
             std::vector<DirEntry> dirContentsTemp;
@@ -98,11 +118,16 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = false;
 	}
 
-		if (hDown & KEY_A) {
+
+	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
 			selectedFile = 0;
 			dirChanged = true;
+		} else {
+			currentEditFile = dirContents[selectedFile].name;
+			readFile(dirContents[selectedFile].name.c_str());
+			Gui::setScreen(std::make_unique<TextEditor>());
 		}
 		} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
@@ -110,21 +135,21 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
 			Gui::screenBack();
 			return;
-		} else {
+ 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
-	} else if (hDown & KEY_X) {
-		displayActionBox();
-	} else if (hHeld & KEY_UP) {
+		} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
+			playScrollSfx();
 			keyRepeatDelay = 3;
 		}
 	}
