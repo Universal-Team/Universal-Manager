@@ -36,15 +36,9 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	uint selectedFile = 0;
 	int keyRepeatDelay = 3;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
-	std::string currentImage = "";
-	std::string filename;
-	C2D_Image image;
-	double imageScale = 1.0f;
-	int positionX = 0, positionY = 0;
 };
 
 
@@ -58,9 +52,6 @@ private:
 	void FreeImage(C2D_Image *image);
 	bool Draw_Image(void) const;
 	std::vector<DirEntry> dirContents;
-	std::string currentImage = "";
-	std::string filename;
-	C2D_Image image;
 	double imageScale = 1.0f;
 	int positionX = 0, positionY = 0;
 };

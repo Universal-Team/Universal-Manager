@@ -37,6 +37,10 @@ extern "C" {
 }
 
 ImageSize imageSize;
+std::string currentImage = "";
+extern uint selectedFile;
+std::string filename;
+C2D_Image image;
 
 void ImageViewer::FreeImage(C2D_Image *image) {
 	C3D_TexDelete(image->tex);
