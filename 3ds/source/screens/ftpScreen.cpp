@@ -46,7 +46,7 @@ void FTP::Draw(void) const
 
 	ret = gethostname(hostname, sizeof(hostname));
 
-	//while(SCREEN_MODE == ftpScreen) {
+	while(ftpEnabled == 1) {
 		ftp_loop();
 		Gui::clearTextBufs();
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -92,14 +92,21 @@ void FTP::Draw(void) const
 
 		Gui::clearTextBufs();
 		C3D_FrameEnd(0);
+
+		hidScanInput();
+		u32 hDown = hidKeysDown();
+
+		if (hDown & KEY_B)
+			break;
+	}
+	memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
+	memset(ftp_file_transfer, 0, 50); // Empty transfer status
+	ftp_exit();
+
+	Gui::screenBack();
+	return;
 }
 
-void FTP::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-		if (hDown & KEY_B) {
-			memset(ftp_accepted_connection, 0, 20); // Empty accepted connection address
-			memset(ftp_file_transfer, 0, 50); // Empty transfer status
-			ftp_exit();
-			Gui::screenBack();
-			return;
-		}
+void FTP::Logic(u32 hDown, u32 hHeld, touchPosition touch)
+{
 }

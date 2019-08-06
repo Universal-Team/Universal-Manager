@@ -33,4 +33,5 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	int ftpEnabled = 1;
 };
