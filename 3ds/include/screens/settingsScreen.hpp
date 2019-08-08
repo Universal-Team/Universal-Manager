@@ -35,11 +35,17 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int settingsPage = 0;
+	int SettingsPage = 1;
 	int getColorValue(int color, int bgr) const;
 	std::string getColorName(int color, int bgr) const;
 
-	// Structs.
+	void DrawBottom(void) const;
+	void DrawCurrentPage(void) const;
+
+	void ButtonLogic(u32 hDown);
+	void TouchLogic(u32 hDown, touchPosition touch);
+
+	// Struct.
 	std::vector<Structs::ButtonPos> uiSettingsButtonPos = {
 		// Bars
 		{17, 85, 95, 41, -1},
