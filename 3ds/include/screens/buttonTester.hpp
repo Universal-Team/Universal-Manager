@@ -26,7 +26,7 @@
 
 #include "screen.hpp"
 #include <vector>
-#include "button.hpp"
+#include "structs.hpp"
 
 class ButtonTester : public SCREEN 
 {

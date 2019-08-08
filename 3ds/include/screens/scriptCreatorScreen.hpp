@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 #include "fileBrowse.h"
-#include "button.hpp"
+#include "structs.hpp"
 
 class ScriptCreator : public SCREEN 
 {

@@ -27,7 +27,7 @@
 #define MAINMENU_HPP
 
 #include "screens/screen.hpp"
-#include "button.hpp"
+#include "structs.hpp"
 #include <vector>
 
 class MainMenu : public SCREEN 

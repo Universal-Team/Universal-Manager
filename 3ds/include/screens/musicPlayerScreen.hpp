@@ -27,7 +27,7 @@
 #include "screen.hpp"
 #include <string>
 #include <vector>
-#include "button.hpp"
+#include "structs.hpp"
 #include "fileBrowse.h"
 
 // Music Main.

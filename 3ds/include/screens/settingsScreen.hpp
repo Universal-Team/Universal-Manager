@@ -25,7 +25,7 @@
 */
 
 #include "screens/screen.hpp"
-#include "button.hpp"
+#include "structs.hpp"
 #include <vector>
 
 class Settings : public SCREEN 

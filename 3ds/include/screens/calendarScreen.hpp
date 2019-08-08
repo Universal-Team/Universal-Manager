@@ -27,7 +27,7 @@
 #include "screen.hpp"
 #include <string>
 #include <vector>
-#include "button.hpp"
+#include "structs.hpp"
 
 // CALENDAR
 class Calendar : public SCREEN 

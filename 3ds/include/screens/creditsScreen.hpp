@@ -25,7 +25,7 @@
 */
 
 #include "screen.hpp"
-#include "button.hpp"
+#include "structs.hpp"
 #include <string>
 #include <vector>
 

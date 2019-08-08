@@ -24,28 +24,34 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screen.hpp"
-#include <vector>
-
-
-class TextViewer : public SCREEN 
+#ifndef STRUCTS_HPP
+#define STRUCTS_HPP
+class Structs 
 {
 public:
-	void Draw(void) const override;
-	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
+struct ButtonPos
+{
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
+
+struct Key {
+	std::string character;
+	int x;
+	int y;
+};
+
+struct TTTPos {
+	int x;
+	int y;
+	int w;
+	int h;
+};
 
 private:
-
-	bool textRead = false;
-	uint textEditorCurPos = 0;
-	uint textEditorScrnPos = 0;
-	std::vector<std::string> textEditorText;
-	std::vector<DirEntry> dirContents;
-	uint rowsDisplayed = 0;
-	uint selectedFile = 0;
-	int keyRepeatDelay;
-	bool dirChanged;
-	std::string currentEditFile = "";
-	uint stringPos = 0;
-	int showCursor = 30;
 };
+
+#endif
