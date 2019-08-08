@@ -28,13 +28,43 @@
 #include "button.hpp"
 #include <vector>
 
-class UpdaterSub : public SCREEN 
+extern "C" {
+	#include "cia.h"
+}
+
+class Updater : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	void drawSubSelection(void) const;
-	int subSelection = 0;
+	int Selection = 0;
+	int updaterMode = 0;
+	int buttonsAmount = 4;
+	int titleButtons = 0;
+	mutable bool updatingSelf = false;
+
+	void DrawButtons(void) const;
+	void DrawTitleButtons(void) const;
+	void DrawText(void) const;
+	void ButtonLogic(u32 hDown);
+	void TouchLogic(u32 hDown, touchPosition touch);
+	void DrawTitle(void) const;
+	void DrawCurrentPage(void) const;
+	void DrawSelection(void) const;
+
+	std::vector<Structs::ButtonPos> Functions = {
+		{129, 48, 87, 33, -1}, // 0
+		{220, 48, 87, 33, -1}, // 1
+		{129, 88, 87, 33, -1}, // 2
+		{220, 88, 87, 33, -1}, // 3
+		{129, 128, 87, 33, -1}, // 4
+		{220, 128, 87, 33, -1}, // 5
+		{38, 48, 87, 33, -1}, // 6
+		{129, 48, 87, 33, -1}, // 7
+		{220, 48, 87, 33, -1}, // 8
+		{38, 88, 87, 33, -1}, // 9
+		{293, 213, 27, 27, -1}, // 10
+	};
 };

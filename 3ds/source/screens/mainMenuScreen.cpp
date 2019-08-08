@@ -35,7 +35,7 @@
 #include "textBrowseScreen.hpp"
 #include "imageScreen.hpp"
 #include "settingsScreen.hpp"
-#include "updaterSubScreen.hpp"
+#include "updaterScreen.hpp"
 #include "ftpScreen.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
@@ -174,7 +174,7 @@ void MainMenu::SelectionLogic1(u32 hDown) {
 					Gui::setScreen(std::make_unique<MusicMain>());
 					break;
 				} case 4: {
-					Gui::setScreen(std::make_unique<UpdaterSub>());
+					Gui::setScreen(std::make_unique<Updater>());
 					break;
 				} case 5:
 					Gui::setScreen(std::make_unique<Settings>());
@@ -230,7 +230,7 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[3])) {
 				Gui::setScreen(std::make_unique<MusicMain>());
 			} else if (touching(touch, mainScreenButtonPos[4])) {
-				Gui::setScreen(std::make_unique<UpdaterSub>());
+				Gui::setScreen(std::make_unique<Updater>());
 			} else if (touching(touch, mainScreenButtonPos[5])) {
 				Gui::setScreen(std::make_unique<Settings>());
 			}
