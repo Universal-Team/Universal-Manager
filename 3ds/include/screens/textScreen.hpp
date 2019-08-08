@@ -27,28 +27,36 @@
 #include "screens/screen.hpp"
 #include <vector>
 #include "fileBrowse.h"
+#include <string>
 
-
-class TextBrowse : public SCREEN 
+class Text : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	int TextMode = 0;
 
-	bool textRead = false;
+	void readFile(std::string path);
+	void DrawBrowse(void) const;
+	void DrawTextEditor(void) const;
+
+	void BrowseLogic(u32 hDown, u32 hHeld);
+	void EditorLogic(u32 hDown, u32 hHeld);
+
+	mutable bool textRead = false;
 	uint textEditorCurPos = 0;
 	uint textEditorScrnPos = 0;
 	std::vector<std::string> textEditorText;
+
 	std::vector<DirEntry> dirContents;
-	uint rowsDisplayed = 0;
+	
+	mutable uint rowsDisplayed = 0;
 	uint selectedFile = 0;
-	int keyRepeatDelay;
-	bool dirChanged;
+	int keyRepeatDelay = 3;
+	bool dirChanged = true;
 	std::string currentEditFile = "";
 	uint stringPos = 0;
 	int showCursor = 30;
-
-	void readFile(std::string path);
 };

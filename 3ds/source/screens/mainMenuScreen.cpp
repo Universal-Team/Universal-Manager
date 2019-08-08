@@ -32,7 +32,7 @@
 #include "musicMainScreen.hpp"
 #include "scriptScreen.hpp"
 #include "creditsScreen.hpp"
-#include "textBrowseScreen.hpp"
+#include "textScreen.hpp"
 #include "imageScreen.hpp"
 #include "settingsScreen.hpp"
 #include "updaterScreen.hpp"
@@ -204,7 +204,7 @@ void MainMenu::SelectionLogic(u32 hDown) {
 						Gui::setScreen(std::make_unique<Credits>());
 						break;
 				 	 case 2: {
-						Gui::setScreen(std::make_unique<TextBrowse>());
+						Gui::setScreen(std::make_unique<Text>());
 						break;
 					} case 3: {
 						Gui::setScreen(std::make_unique<Utils>());
@@ -254,7 +254,7 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[7])) {
 				Gui::setScreen(std::make_unique<Credits>());
 			} else if (touching(touch, mainScreenButtonPos[8])) {
-				Gui::setScreen(std::make_unique<TextBrowse>());
+				Gui::setScreen(std::make_unique<Text>());
  			} else if (touching(touch, mainScreenButtonPos[9])) {
 				Gui::setScreen(std::make_unique<Utils>());
 			} else if (touching(touch, mainScreenButtonPos[10])) {
