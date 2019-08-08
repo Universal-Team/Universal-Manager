@@ -30,7 +30,7 @@
 #include "utilsScreen.hpp"
 #include "gameSubMenu.hpp"
 #include "musicMainScreen.hpp"
-#include "scriptMainScreen.hpp"
+#include "scriptScreen.hpp"
 #include "creditsScreen.hpp"
 #include "textBrowseScreen.hpp"
 #include "imageScreen.hpp"
@@ -169,7 +169,7 @@ void MainMenu::SelectionLogic1(u32 hDown) {
 					Gui::setScreen(std::make_unique<FTP>());
 					break;
 				  case 2: {
-					Gui::setScreen(std::make_unique<ScriptMain>());
+					Gui::setScreen(std::make_unique<Script>());
 					break;
 				} case 3: {
 					Gui::setScreen(std::make_unique<MusicMain>());
@@ -230,7 +230,7 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			} else if (touching(touch, mainScreenButtonPos[1])) {
 				Gui::setScreen(std::make_unique<FTP>());
 			} else if (touching(touch, mainScreenButtonPos[2])) {
-				Gui::setScreen(std::make_unique<ScriptMain>());
+				Gui::setScreen(std::make_unique<Script>());
 			} else if (touching(touch, mainScreenButtonPos[3])) {
 				Gui::setScreen(std::make_unique<MusicMain>());
 			} else if (touching(touch, mainScreenButtonPos[4])) {

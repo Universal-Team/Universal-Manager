@@ -29,46 +29,52 @@
 #include <vector>
 #include "fileBrowse.h"
 #include "structs.hpp"
+#include <fstream>
+#include <algorithm>
+#include <unistd.h>
 
-class ScriptCreator : public SCREEN 
+class Script : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int scriptSelection1 = 0;
-	int scriptSelection2 = 0;
-	uint selectedFile;
-	int screenPage = 0;
-	int keyRepeatDelay;
-	bool dirChanged;
+	int ScriptMode = 0;
+	int Selection = 0;
+//	uint selectedFile = 0;
+	int ScriptPage = 1;
+	int keyRepeatDelay = 3;
+	bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	uint selectedScpt = 0;
 	std::vector<DirEntry> scpts;
 
 	std::ofstream scpt;
-
-	uint selectedScptItem = 0;
-	int movingScptItem = -1;
-	std::vector<std::string> scptContents;
+//	std::vector<std::string> scptContents;
 
 		// Structs.
-	std::vector<Structs::ButtonPos> scriptCreatorFunctionButtonPos = {
+	std::vector<Structs::ButtonPos> Functions = {
 		// First Page.
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
-		{0, 90, 149, 52, -1},
-		{170, 90, 149, 52, -1},
-		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
+    	{0, 25, 149, 52, -1}, // 0
+    	{170, 25, 149, 52, -1}, // 1
+		{0, 90, 149, 52, -1}, // 2
+		{170, 90, 149, 52, -1}, // 3
+		{0, 150, 149, 52, -1}, // 4
+    	{170, 150, 149, 52, -1}, // 5
 		// Second Page.
-		{0, 25, 149, 52, -1},
+		{0, 25, 149, 52, -1}, // 6
 	};
 
+	void DrawScriptBrowse(void) const;
+	void ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void scriptSelectionLogic1(u32 hDown);
-	void scriptSelectionLogic2(u32 hDown);
+
+	void DrawScriptCreator(void) const;
+	void DrawBottom(void) const;
+	void DrawSelection(void) const;
+	void DrawCurrentPage(void) const;
+
+	void ScriptCreatorSelectionLogic(u32 hDown);
+	void ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch);
 };
