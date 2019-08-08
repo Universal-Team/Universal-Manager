@@ -49,14 +49,9 @@ extern "C" {
 	#include "music/playback.h"
 }
 
-std::string currentSong;
-std::vector<Playlist> nowPlayingList;
-int locInPlaylist;
-int musicRepeat;
-bool musicShuffle;
-bool firstSong;
 bool dspfirmfound = false;
 bool exiting = false;
+
 
 touchPosition touch;
 
@@ -134,22 +129,8 @@ int main()
         C2D_TargetClear(bottom, BLACK);
 		Gui::clearTextBufs();
 		Gui::mainLoop(hDown, hHeld, touch);
-
- 		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
-			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
-			if (musicRepeat != 2 && !firstSong) {
-				locInPlaylist++;
-			}
-			firstSong = false;
-			currentSong = nowPlayingList[locInPlaylist].name;
-			playbackInfo_t playbackInfo;
-			changeFile(currentSong.c_str(), &playbackInfo);
-		} else if (isPlaying() && currentSong == "") {
-			stopPlayback();
-		} else if (!isPlaying() && currentSong != "") {
-			currentSong = "";
-		}
 	}
+
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;

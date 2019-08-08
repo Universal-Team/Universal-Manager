@@ -27,38 +27,79 @@
 #include "screen.hpp"
 #include <string>
 #include <vector>
+#include "structs.hpp"
 #include "fileBrowse.h"
 
 // Music Main.
-class PlaylistPlay : public SCREEN 
+class Music : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
+	Music();
 
 private:
-	bool themeImageLoaded = false;
-	bool coverImageLoaded = false;
+	int MusicMode = 0;
+
+	void DrawMusicMain(void) const;
+	void MusicMainLogic(u32 hDown, touchPosition touch);
+
+	void DrawMusicList(void) const;
+	void MusicListLogic(u32 hDown, u32 hHeld);
+
+	bool Draw_ThemeImage(void) const;
+	bool Draw_CoverImage(void) const;
+	std::string secondsToString(u64 seconds) const;
+	void DrawPlayer(void) const;
+	void PlayerLogic(u32 hDown, touchPosition touch);
+
+	void DrawPlaylistAdd(void) const;
+	void PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+	void DrawPlaylistEdit(void) const;
+	void PlaylistEditLogic(u32 hDown, u32 hHeld);
+
+	void DrawPlaylistPlay(void) const;
+	void PlaylistPlayLogic(u32 hDown, u32 hHeld);
+
+	void DrawThemeSelector(void) const;
+	void ThemeSelectorLogic(u32 hDown, u32 hHeld);
+
+	int selection = 0;
+	bool dirChanged = true;
+	mutable bool themeImageLoaded = false;
+	mutable bool coverImageLoaded = false;
 
 	uint selectedFile = 0;
 	int keyRepeatDelay = 3;
-	bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
-	std::string scanDir;
-	std::string currentSong = "";
-	int musicRepeat = 0;
-	bool musicShuffle = 0;
-
-	bool firstSong = true;
-	int locInPlaylist = 0;
 	uint selectedPlst = 0;
-	std::vector<DirEntry> plsts;
-	std::vector<Playlist> nowPlayingList;
-	bool decForRepeat2 = false;
 
+	std::vector<DirEntry> plsts;
+	mutable bool decForRepeat2 = false;
 	uint selectedPlstItem = 0;
 	int movingPlstItem = -1;
+
 	std::vector<std::string> plstContents;
-	int selection = 0;
 	C2D_Image musicImage, coverImage;
+
+	mutable bool firstSong = true;
+	int locInPlaylist = 0;
+	int musicRepeat = 0;
+	mutable bool musicShuffle = 0;
+	std::vector<Playlist> nowPlayingList;
+	std::string currentSong = "";
+	
+	std::vector<Structs::ButtonPos> Functions = {
+    	{0, 40, 149, 52, -1}, // 0
+    	{170, 40, 149, 52, -1}, // 1
+    	{0, 150, 149, 52, -1}, // 2
+		{170, 150, 149, 52, -1}, // 3
+
+		{130, 90, 60, 60, -1}, // 4
+		{80, 100, 40, 40, -1}, // 5
+		{200, 100, 40, 40, -1}, // 6
+		{240, 170, 30, 30, -1}, // 7
+		{280, 170, 30, 30, -1}, // 8
+	};
 };
