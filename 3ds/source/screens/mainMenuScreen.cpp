@@ -47,35 +47,36 @@ MainMenu::MainMenu()
 	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
 }
 
-void MainMenu::drawSelection1(void) const
+void MainMenu::DrawSelection(void) const
 {
-	if (Selection1 == 0) {
+	if (currentPage == 1) {
+	if (Selection == 0) {
 		Gui::Button(button_tl_selector_idx, 0, 26);
-	} else if (Selection1 == 1) {
+	} else if (Selection == 1) {
 		Gui::Button(button_selector_idx, 166, 31);
-	} else if (Selection1 == 2) {
+	} else if (Selection == 2) {
 		Gui::Button(button_selector_idx, 3, 95);
-	} else if (Selection1 == 3) {
+	} else if (Selection == 3) {
 		Gui::Button(button_selector_idx, 166, 95);
-	} else if (Selection1 == 4) {
+	} else if (Selection == 4) {
 		Gui::Button(button_selector_idx, 3, 158);
-	} else if (Selection1 == 5) {
+	} else if (Selection == 5) {
 		Gui::Button(button_br_selector_idx, 161, 153);
 	}
-}
 
-void MainMenu::drawSelection2(void) const
-{
-	if (Selection2 == 0) {
+
+	} else if (currentPage == 2) {
+	if (Selection == 0) {
 		Gui::Button(button_tl_selector_idx, 0, 26);
-	} else if (Selection2 == 1) {
+	} else if (Selection == 1) {
 		Gui::Button(button_selector_idx, 166, 31);
-	} else if (Selection2 == 2) {
+	} else if (Selection == 2) {
 		Gui::Button(button_selector_idx, 3, 95);
-	} else if (Selection2 == 3) {
+	} else if (Selection == 3) {
 		Gui::Button(button_selector_idx, 166, 95);
-	} else if (Selection2 == 4) {
+	} else if (Selection == 4) {
 		Gui::Button(button_selector_idx, 3, 158);
+	}
 	}
 }
 
@@ -93,9 +94,17 @@ void MainMenu::Draw(void) const
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
+	DrawBottom();
+	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
+	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	DrawSelection();
+	DrawCurrentPage();
+}
 
-	// First Page.
-	if (currentPage == 0) {
+void MainMenu::DrawBottom(void) const
+{
+	if (currentPage == 1) {
 	Gui::Button(button_button_tl_idx, 1, 27);
 	Gui::sprite(sprites_fileManagerIcon_idx, 9, 41);
 	Draw_Text(40, 48, 0.65f, WHITE, "Filemanager");
@@ -120,15 +129,8 @@ void MainMenu::Draw(void) const
 	Gui::sprite(sprites_settingsIcon_idx, 172, 165);
 	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
 
-	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
-	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	drawSelection1();
 
-
-	// Second Page.
-	} else if (currentPage == 1) {
+	} else if (currentPage == 2) {
 	Gui::Button(button_button_tl_idx, 1, 27);
 	Gui::sprite(sprites_image_icon_idx, 6, 37);
 	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
@@ -146,85 +148,91 @@ void MainMenu::Draw(void) const
 
 	Gui::Button(button_button_5_idx, 1, 154);
 	Draw_Text(50, 177, 0.7f, WHITE, "Games");
-
-	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
-	drawSelection2();
-}
+	}
 }
 
-void MainMenu::SelectionLogic1(u32 hDown) {
-		if (currentPage == 0 && hDown & KEY_UP) {
-			if(Selection1 > 0)	Selection1--;
-		} else if (currentPage == 0 && hDown & KEY_DOWN) {
-			if(Selection1 < 5)	Selection1++;
-		}  else if (currentPage == 0 && hDown & KEY_A) {
-			switch(Selection1) {
-				case 0: {
-					Gui::setScreen(std::make_unique<FileManager>());
-					break;
-				}   case 1:
-					Gui::setScreen(std::make_unique<FTP>());
-					break;
-				  case 2: {
-					Gui::setScreen(std::make_unique<Script>());
-					break;
-				} case 3: {
-					Gui::setScreen(std::make_unique<MusicMain>());
-					break;
-				} case 4: {
-					Gui::setScreen(std::make_unique<Updater>());
-					break;
-				} case 5:
-					Gui::setScreen(std::make_unique<Settings>());
-					break;
+void MainMenu::DrawCurrentPage(void) const
+{
+	if (currentPage == 1) {
+		Draw_Text(260, 4, 0.50, WHITE, "1");
+	} else if (currentPage == 2) {
+		Draw_Text(280, 4, 0.50, WHITE, "2");
+	}
+}
+
+void MainMenu::SelectionLogic(u32 hDown) {
+		if (hDown & KEY_UP) {
+			if(Selection > 0)	Selection--;
+
+		} else if (hDown & KEY_DOWN) {
+			if (currentPage == 1) {
+				if(Selection < 5)	Selection++;
+
+			} else if (currentPage == 2) {
+				if(Selection < 4)	Selection++;
+			}
+
+
+		}  else if (hDown & KEY_A) {
+			if (currentPage == 1) {
+				switch(Selection) {
+					case 0: {
+						Gui::setScreen(std::make_unique<FileManager>());
+						break;
+					}   case 1:
+						Gui::setScreen(std::make_unique<FTP>());
+						break;
+				 	 case 2: {
+						Gui::setScreen(std::make_unique<Script>());
+						break;
+					} case 3: {
+						Gui::setScreen(std::make_unique<MusicMain>());
+						break;
+					} case 4: {
+						Gui::setScreen(std::make_unique<Updater>());
+						break;
+					} case 5:
+						Gui::setScreen(std::make_unique<Settings>());
+						break;
+				}
+			} else if (currentPage == 2) {
+				switch(Selection) {
+					case 0: {
+						Gui::setScreen(std::make_unique<Image>());
+						break;
+					} case 1:
+						Gui::setScreen(std::make_unique<Credits>());
+						break;
+				 	 case 2: {
+						Gui::setScreen(std::make_unique<TextBrowse>());
+						break;
+					} case 3: {
+						Gui::setScreen(std::make_unique<Utils>());
+						break;
+					} case 4: {
+						Gui::setScreen(std::make_unique<GameSub>());
+						break;
+					}
+				}
 			}
 		}
 }
 
-void MainMenu::SelectionLogic2(u32 hDown) {
-		if (currentPage == 1 && hDown & KEY_UP) {
-			if(Selection2 > 0)	Selection2--;
-		} else if (currentPage == 1 && hDown & KEY_DOWN) {
-			if(Selection2 < 4)	Selection2++;
-		}  else if (currentPage == 1 && hDown & KEY_A) {
-			switch(Selection2) {
-				case 0: {
-					Gui::setScreen(std::make_unique<ImageSelector>());
-					break;
-				} case 1:
-					Gui::setScreen(std::make_unique<Credits>());
-					break;
-				  case 2: {
-					Gui::setScreen(std::make_unique<TextBrowse>());
-					break;
-				} case 3: {
-					Gui::setScreen(std::make_unique<Utils>());
-					break;
-				} case 4: {
-					Gui::setScreen(std::make_unique<GameSub>());
-					break;
-				}
-			}
-		} 
-}
-
 void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	SelectionLogic1(hDown);
-	SelectionLogic2(hDown);
+	SelectionLogic(hDown);
 		// Page Switching.
-	if (currentPage == 0 && hDown & KEY_R) {
-		currentPage = 1;
-		} else if (currentPage == 1 && hDown & KEY_L) {
-		currentPage = 0;
+	if (currentPage == 1 && hDown & KEY_R) {
+			Selection = 0;
+			currentPage = 2;
+		} else if (currentPage == 2 && hDown & KEY_L) {
+			Selection = 0;
+			currentPage = 1;
 
 		} else if (hDown & KEY_START) {
 			exiting = true;
 
 		// First Page.
-		} else if (currentPage == 0 && hDown & KEY_TOUCH) {
+		} else if (currentPage == 1 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[0])) {
 				Gui::setScreen(std::make_unique<FileManager>());
 			} else if (touching(touch, mainScreenButtonPos[1])) {
@@ -240,9 +248,9 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 
 			// Second Page.
-		} else if (currentPage == 1 && hDown & KEY_TOUCH) {
+		} else if (currentPage == 2 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[6])) {
-				Gui::setScreen(std::make_unique<ImageSelector>());
+				Gui::setScreen(std::make_unique<Image>());
 			} else if (touching(touch, mainScreenButtonPos[7])) {
 				Gui::setScreen(std::make_unique<Credits>());
 			} else if (touching(touch, mainScreenButtonPos[8])) {

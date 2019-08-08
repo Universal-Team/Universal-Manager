@@ -40,15 +40,15 @@ public:
 private:
 
 	mutable char universal_manager_vertext[13];
-	int currentPage = 0;
-	int Selection1 = 0;
-	int Selection2 = 0;
+	int currentPage = 1;
+	int Selection = 0;
 
 	// Functions.
-	void drawSelection1(void) const;
-	void drawSelection2(void) const;
-	void SelectionLogic1(u32 hDown);
-	void SelectionLogic2(u32 hDown);
+	void SelectionLogic(u32 hDown);
+
+	void DrawBottom(void) const;
+	void DrawSelection(void) const;
+	void DrawCurrentPage(void) const;
 
 	// Structs.
 	std::vector<Structs::ButtonPos> mainScreenButtonPos = {

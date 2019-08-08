@@ -28,30 +28,38 @@
 #include <vector>
 #include "fileBrowse.h"
 
+extern "C" {
+#include "C2D_helper.h"
+}
 
-class ImageSelector : public SCREEN 
+
+class Image : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	int ImageMode = 0;
+
+	void DrawBrowse(void) const;
+	void DrawViewer(void) const;
+
+	void BrowseLogic(u32 hDown, u32 hHeld);
+	void ViewerLogic(u32 hDown, u32 hHeld);
+
+	void FreeImage(C2D_Image *image);
+	bool Draw_Image(void) const;
+
+	
+	std::string currentImage = "";
+	uint selectedFile = 0;
 	int keyRepeatDelay = 3;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
-};
-
-
-class ImageViewer : public SCREEN 
-{
-public:
-	void Draw(void) const override;
-	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
-
-private:
-	void FreeImage(C2D_Image *image);
-	bool Draw_Image(void) const;
-	std::vector<DirEntry> dirContents;
 	double imageScale = 1.0f;
 	int positionX = 0, positionY = 0;
+	ImageSize imageSize;
+	std::string filename;
+	C2D_Image image;
 };

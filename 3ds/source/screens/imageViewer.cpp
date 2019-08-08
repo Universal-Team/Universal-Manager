@@ -32,30 +32,38 @@
 #include "fileBrowse.h"
 #include "imageScreen.hpp"
 
-extern "C" {
-#include "C2D_helper.h"
-}
-
-ImageSize imageSize;
-std::string currentImage = "";
-extern uint selectedFile;
-std::string filename;
-C2D_Image image;
-
-void ImageViewer::FreeImage(C2D_Image *image) {
+void Image::FreeImage(C2D_Image *image) {
 	C3D_TexDelete(image->tex);
 	linearFree((Tex3DS_SubTexture *)image->subtex);
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
 }
 
-bool ImageViewer::Draw_Image(void) const
+bool Image::Draw_Image(void) const
 {
 	return C2D_DrawImageAt(image, positionX, positionY, 0.5, nullptr, imageScale, imageScale);
 }
 
+void Image::Draw(void) const
+{
+	if (ImageMode == 0) {
+		DrawBrowse();
+	} else if (ImageMode == 1) {
+		DrawViewer();
+	}
+}
 
-void ImageSelector::Draw(void) const
+void Image::Logic(u32 hDown, u32 hHeld, touchPosition touch)
+{
+	if (ImageMode == 0) {
+		BrowseLogic(hDown, hHeld);
+	} else if (ImageMode == 1) {
+		ViewerLogic(hDown, hHeld);
+	}
+}
+
+
+void Image::DrawBrowse(void) const
 {
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -108,7 +116,7 @@ void ImageSelector::Draw(void) const
 }
 
 
-void ImageViewer::Draw(void) const
+void Image::DrawViewer(void) const
 {
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
@@ -118,7 +126,8 @@ void ImageViewer::Draw(void) const
 	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
 }
 
-void ImageSelector::Logic(u32 hDown, u32 hHeld, touchPosition touch) { 
+
+void Image::BrowseLogic(u32 hDown, u32 hHeld) { 
 	if (keyRepeatDelay)	keyRepeatDelay--;
 	gspWaitForVBlank();
 
@@ -143,7 +152,7 @@ void ImageSelector::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
 			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			Gui::setScreen(std::make_unique<ImageViewer>());
+			ImageMode = 1;
 			}
 		}
 	} else if (hDown & KEY_B) {
@@ -173,7 +182,7 @@ void ImageSelector::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	}
 }
 
-void ImageViewer::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Image::ViewerLogic(u32 hDown, u32 hHeld) {
 	if (hHeld & KEY_CPAD_UP) {
 		if(imageSize.height*imageScale < 240) {
 			if(positionY > 0)	positionY -= imageScale*2;
@@ -203,8 +212,7 @@ void ImageViewer::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if(hHeld & KEY_DOWN) {
 		if(imageScale > 0)	imageScale -= 0.1;
 	} else if (hDown & KEY_B) {
-			Gui::screenBack();
-			return;
+		ImageMode = 0;
 		FreeImage(&image);
 	} else if(hDown & KEY_SELECT) {
 		imageScale = 1.0f;

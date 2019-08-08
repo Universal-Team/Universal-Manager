@@ -42,16 +42,13 @@ public:
 private:
 	int ScriptMode = 0;
 	int Selection = 0;
-//	uint selectedFile = 0;
 	int ScriptPage = 1;
 	int keyRepeatDelay = 3;
 	bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	uint selectedScpt = 0;
 	std::vector<DirEntry> scpts;
-
 	std::ofstream scpt;
-//	std::vector<std::string> scptContents;
 
 		// Structs.
 	std::vector<Structs::ButtonPos> Functions = {
