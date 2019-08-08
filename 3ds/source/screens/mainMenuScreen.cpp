@@ -39,6 +39,7 @@
 #include "ftpScreen.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
+extern bool exiting;
 
 MainMenu::MainMenu()
 {
@@ -218,6 +219,9 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		currentPage = 1;
 		} else if (currentPage == 1 && hDown & KEY_L) {
 		currentPage = 0;
+
+		} else if (hDown & KEY_START) {
+			exiting = true;
 
 		// First Page.
 		} else if (currentPage == 0 && hDown & KEY_TOUCH) {

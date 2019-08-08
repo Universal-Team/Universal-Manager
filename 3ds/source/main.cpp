@@ -56,6 +56,7 @@ int musicRepeat;
 bool musicShuffle;
 bool firstSong;
 bool dspfirmfound = false;
+bool exiting = false;
 
 touchPosition touch;
 
@@ -122,7 +123,7 @@ int main()
 	 loadSoundEffects();
 
 	// Loop as long as the status is not exit
-    while (aptMainLoop())
+    while (aptMainLoop() && !exiting)
     {
         hidScanInput();
         u32 hHeld = hidKeysHeld();

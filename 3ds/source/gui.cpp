@@ -293,13 +293,13 @@ void drawBatteryTop(void) {
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
 	    if(batteryPercent == 100) {
-		Draw_Text(310, 0, 0.65f, WHITE, "100%");
+		Draw_Text(315, 2, 0.65f, WHITE, "100%");
 	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
 		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
+        C2D_DrawText(&percentText, C2D_WithColor, 315.0f, 2.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 }
 }
