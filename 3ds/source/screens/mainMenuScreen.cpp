@@ -40,6 +40,8 @@
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 extern bool exiting;
+extern int fadealpha;
+extern bool fadein;
 
 MainMenu::MainMenu()
 {
@@ -89,6 +91,7 @@ void MainMenu::Draw(void) const
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
 	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -100,6 +103,7 @@ void MainMenu::Draw(void) const
 	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	DrawSelection();
 	DrawCurrentPage();
+	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
 void MainMenu::DrawBottom(void) const
@@ -160,7 +164,7 @@ void MainMenu::DrawCurrentPage(void) const
 	}
 }
 
-void MainMenu::SelectionLogic(u32 hDown) {
+void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_UP) {
 			if(Selection > 0)	Selection--;
 
@@ -171,6 +175,9 @@ void MainMenu::SelectionLogic(u32 hDown) {
 			} else if (currentPage == 2) {
 				if(Selection < 4)	Selection++;
 			}
+
+		} else if (hHeld & KEY_SELECT) {
+			helperBox("Press L/R to switch the Pages.\n\nPress D-Pad Up/Down to switch Selection.\n\nPress A to select.\n\nTouch a Button to select.");
 
 
 		}  else if (hDown & KEY_A) {
@@ -219,7 +226,7 @@ void MainMenu::SelectionLogic(u32 hDown) {
 }
 
 void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	SelectionLogic(hDown);
+	SelectionLogic(hDown, hHeld);
 		// Page Switching.
 	if (currentPage == 1 && hDown & KEY_R) {
 			Selection = 0;

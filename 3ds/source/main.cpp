@@ -51,12 +51,11 @@ extern "C" {
 
 bool dspfirmfound = false;
 bool exiting = false;
+int fadealpha = 255;
+bool fadein = true;
 
 
 touchPosition touch;
-
-extern C3D_RenderTarget* top;
-extern C3D_RenderTarget* bottom;
 
 //Music and sound effects.
 sound *sfx_scroll = NULL;
@@ -129,14 +128,21 @@ int main()
         C2D_TargetClear(bottom, BLACK);
 		Gui::clearTextBufs();
 		Gui::mainLoop(hDown, hHeld, touch);
+		C3D_FrameEnd(0);
+
+		if (fadein == true) {
+			fadealpha -= 3;
+			if (fadealpha < 0) {
+				fadealpha = 0;
+				fadein = false;
+			}
+		}
 	}
 
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
-	if (isPlaying()) {
-	stopPlayback(); // This seems to do `ndspExit();` already. I hope the Crash is finally fixed?
-	} else if (!isPlaying()) {
+	if (dspfirmfound == true) {
 		ndspExit();
 	}
 	Gui::exit();

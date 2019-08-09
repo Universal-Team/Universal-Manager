@@ -30,7 +30,6 @@
 #include "colors.hpp"
 #include "screens/screenCommon.hpp"
 #include "gui.hpp"
-#include "textures.hpp"
 #include <algorithm>
 #include <dirent.h>
 #include <malloc.h>
@@ -45,6 +44,9 @@
 extern "C" {
     #include "touch_helper.h"
 }
+
+int fadealpha = 255;
+bool fadein = true;
 
 static Result servicesInit(void)
 {
@@ -76,16 +78,25 @@ int main(void)
     
 	    TouchInfo touchInfo;
 	    Touch_Init(&touchInfo);
-        Gui::setScreen(std::make_unique<MAINMENU>());
+        Gui::setScreen(std::make_unique<MainMenu>());
 
         while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
+        hidScanInput();
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
         Gui::ClearScreen(BLACK);
 
-		Gui::mainLoop();
+		Gui::mainLoop(hDown);
 
         Gui::RenderScreen();
+
+		if (fadein == true) {
+			fadealpha -= 3;
+			if (fadealpha < 0) {
+				fadealpha = 0;
+				fadein = false;
+			}
+		}
         }
 
     servicesExit();

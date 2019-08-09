@@ -29,14 +29,13 @@
 
 #include "screens/screen.hpp"
 
-class FILEMANAGER : public SCREEN 
+class FileManager : public SCREEN 
 {
 public:
 	void Draw(void) const override;
-	void Logic(void) override;
+	void Logic(u64 hDown) override;
 
 private:
-	u64 hDown;
 };
 
 #endif

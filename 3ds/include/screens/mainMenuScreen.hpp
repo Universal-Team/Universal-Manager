@@ -44,7 +44,7 @@ private:
 	int Selection = 0;
 
 	// Functions.
-	void SelectionLogic(u32 hDown);
+	void SelectionLogic(u32 hDown, u32 hHeld);
 
 	void DrawBottom(void) const;
 	void DrawSelection(void) const;

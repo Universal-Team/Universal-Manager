@@ -50,6 +50,8 @@
 #define TNGCOLORBG RGBA8(0, 0, 31, 255)
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
+extern int fadealpha;
+extern bool fadein;
 
 void drawVoltZ(void) {
 	// Top BG Stuff.
@@ -185,6 +187,7 @@ void Credits::drawCredits(void) const
 {
 	set_screen(top);
 	Gui::Credits(credits_universal_credits_idx, 0, 0);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, GRAY);
@@ -194,6 +197,7 @@ void Credits::drawCredits(void) const
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, BLUE);
 	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
 	Draw_Text(20, 0, 0.7f, WHITE, "Welcome to Universal-Manager!");
+	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
 void Credits::drawCreditsDialogs(void) const

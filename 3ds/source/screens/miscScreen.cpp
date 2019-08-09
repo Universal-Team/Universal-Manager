@@ -63,8 +63,11 @@ void helperBox(std::string msg1) {
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(top);
+	Draw_Rect(0, 0, 400, 240, DIM);
 	Gui::sprite(sprites_textbox_idx, 10, 25);
 	Draw_Text(35, 42, 0.45f, BLACK, msg1.c_str());
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 240, DIM);
 	C3D_FrameEnd(0);
 }
 
