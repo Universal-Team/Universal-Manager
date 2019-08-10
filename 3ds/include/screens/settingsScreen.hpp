@@ -42,7 +42,7 @@ private:
 	void DrawBottom(void) const;
 	void DrawCurrentPage(void) const;
 
-	void ButtonLogic(u32 hDown);
+	void ButtonLogic(u32 hDown, u32 hHeld);
 	void TouchLogic(u32 hDown, touchPosition touch);
 
 	// Struct.

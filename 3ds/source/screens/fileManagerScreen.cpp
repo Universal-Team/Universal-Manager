@@ -127,5 +127,7 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
+	} else if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE001 to go back a Folder \n \n Press \uE002 to open the Action Menu.");
 	}
 }

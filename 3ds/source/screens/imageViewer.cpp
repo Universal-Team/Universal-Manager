@@ -179,6 +179,8 @@ void Image::BrowseLogic(u32 hDown, u32 hHeld) {
 			selectedFile++;
 			keyRepeatDelay = 3;
 		}
+	} else if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE000 to open an Image. \n \n Press \uE001 to go back a Folder. \n\n Press \uE002 to exit to the Main Menu.");
 	}
 }
 

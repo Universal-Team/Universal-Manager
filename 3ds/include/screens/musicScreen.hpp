@@ -42,7 +42,7 @@ private:
 	int MusicMode = 0;
 
 	void DrawMusicMain(void) const;
-	void MusicMainLogic(u32 hDown, touchPosition touch);
+	void MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch);
 
 	void DrawMusicList(void) const;
 	void MusicListLogic(u32 hDown, u32 hHeld);

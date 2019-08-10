@@ -63,7 +63,7 @@ void Updater::Draw(void) const
 
 void Updater::Logic(u32 hDown, u32 hHeld, touchPosition touch) 
 {
-	ButtonLogic(hDown);
+	ButtonLogic(hDown, hHeld);
 	TouchLogic(hDown, touch);
 }
 
@@ -112,9 +112,14 @@ void Updater::DrawTitleButtons(void) const
 	}
 }
 
-void Updater::ButtonLogic(u32 hDown)
+void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 {
-	if (hDown & KEY_UP) {
+	if (hHeld & KEY_SELECT) {
+		if (updaterMode == 0) {
+		} else {
+			helperBox(" Press \uE052 / \uE053 to switch Pages.");
+		}
+	} else if (hDown & KEY_UP) {
 		if(Selection > 0)	Selection--;
 		} else if (hDown & KEY_DOWN) {
 			if (updaterMode == 0) {

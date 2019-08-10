@@ -72,6 +72,6 @@ private:
 	void DrawSelection(void) const;
 	void DrawCurrentPage(void) const;
 
-	void ScriptCreatorSelectionLogic(u32 hDown);
+	void ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld);
 	void ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch);
 };

@@ -151,7 +151,9 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			ScriptPage = 1;
 			ScriptMode = 1;
 			}
-		}
+	} else if (hHeld & KEY_SELECT) {
+		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
+	}
 }
 
 void Script::DrawScriptCreator(void) const
@@ -233,8 +235,14 @@ void Script::DrawCurrentPage(void) const
 	}
 }
 
-void Script::ScriptCreatorSelectionLogic(u32 hDown) {
-		if (hDown & KEY_UP) {
+void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
+		if (hHeld & KEY_SELECT) {
+			if (ScriptPage == 1) {
+				helperBox("downloadRelease : Download a File from Github's Release.\n\ndownloadFile : Download a File from a URL.\n\nextract : Extract an Archive.\n\ninstall : Install a CIA File from the SD Card.\n\ndelete : Delete a FILE from the SD Card.\n\nmsg : Displays a Message on the Top Screen.");
+			} else if (ScriptPage == 2) {
+				helperBox("mkdir : Creates a Folder.");
+			}
+		} else if (hDown & KEY_UP) {
 			if(Selection > 0)	Selection--;
 		} else if (hDown & KEY_DOWN) {
 			if (ScriptPage == 1) {
@@ -296,7 +304,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown) {
 }
 
 void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	ScriptCreatorSelectionLogic(hDown);
+	ScriptCreatorSelectionLogic(hDown, hHeld);
 	if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save this Script?")) {
 			scpt.close();

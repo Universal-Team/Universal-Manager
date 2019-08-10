@@ -89,7 +89,7 @@ void Settings::Draw(void) const
 }
 
 void Settings::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	ButtonLogic(hDown);
+	ButtonLogic(hDown, hHeld);
 	TouchLogic(hDown, touch);
 }
 
@@ -175,9 +175,11 @@ void Settings::DrawCurrentPage(void) const
 }
 
 
-void Settings::ButtonLogic(u32 hDown)
+void Settings::ButtonLogic(u32 hDown, u32 hHeld)
 {
-	if (hDown & KEY_B) {
+	if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE052 / \uE053 to switch Pages."); 
+	} else if (hDown & KEY_B) {
 		Config::saveConfig();
 		Gui::screenBack();
 		return;

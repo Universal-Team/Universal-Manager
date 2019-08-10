@@ -48,7 +48,7 @@ private:
 	void DrawButtons(void) const;
 	void DrawTitleButtons(void) const;
 	void DrawText(void) const;
-	void ButtonLogic(u32 hDown);
+	void ButtonLogic(u32 hDown, u32 hHeld);
 	void TouchLogic(u32 hDown, touchPosition touch);
 	void DrawTitle(void) const;
 	void DrawCurrentPage(void) const;
