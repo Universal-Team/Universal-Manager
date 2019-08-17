@@ -159,3 +159,9 @@ void updateRelaunchNightly(void);
 void updateRelaunchRelease(void);
 
 void downloadFailed(void);
+
+
+/**
+ * Update LeafEdit to the latest Nightly.
+ */
+void updateLeafEdit(void);

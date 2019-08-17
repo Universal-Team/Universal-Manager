@@ -1016,3 +1016,22 @@ void updateRelaunchRelease(void) {
 		deleteFile("sdmc:/Relaunch.cia");
 		doneMsg();
 }
+
+
+void updateLeafEdit(void) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		 Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/LeafEdit/LeafEdit.cia?raw=true", "/LeafEdit-Nightly.cia") != 0) {
+		showProgressBar = false;
+		downloadFailed();
+		return;
+	}
+		showProgressBar = false;
+		DisplayMsg("Now Installing the CIAs..");
+		installCia("/LeafEdit-Nightly.cia");
+
+		deleteFile("sdmc:/LeafEdit-Nightly.cia");
+doneMsg();
+}

@@ -94,6 +94,14 @@ void Updater::DrawButtons(void) const
 			Gui::sprite(sprites_updaterButton_idx, Functions[3].x, Functions[3].y);
 			Gui::sprite(sprites_updaterButton_idx, Functions[4].x, Functions[4].y);
 			Gui::sprite(sprites_updaterButton_idx, Functions[5].x, Functions[5].y);
+	} else if (buttonsAmount == 7) {
+			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[3].x, Functions[3].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[4].x, Functions[4].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[5].x, Functions[5].y);
+			Gui::sprite(sprites_updaterButton_idx, Functions[11].x, Functions[11].y);
 	}
 }
 
@@ -109,6 +117,11 @@ void Updater::DrawTitleButtons(void) const
 			Gui::sprite(sprites_titleButton_idx, 0, 48);
 			Gui::sprite(sprites_titleButton_idx, 0, 88);
 			Gui::sprite(sprites_titleButton_idx, 0, 128);
+	} else if (titleButtons == 4) {
+			Gui::sprite(sprites_titleButton_idx, 0, 48);
+			Gui::sprite(sprites_titleButton_idx, 0, 88);
+			Gui::sprite(sprites_titleButton_idx, 0, 128);
+			Gui::sprite(sprites_titleButton_idx, 0, 168);
 	}
 }
 
@@ -135,7 +148,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				if(Selection < 1)	Selection++;
 
 			} else if (updaterMode == 4) {
-				if(Selection < 5)	Selection++;
+				if(Selection < 6)	Selection++;
 			}
 
 	} else if (hDown & KEY_A) {
@@ -161,8 +174,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				} case 3: {
 					Selection = 0;
-					buttonsAmount = 6;
-					titleButtons = 3;
+					buttonsAmount = 7;
+					titleButtons = 4;
 					updaterMode = 4;
 					break;
 				}
@@ -263,6 +276,12 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					updateRelaunchNightly(); 
 					}
 					break;
+				case 6: {
+					if(confirmPopup("Are you sure you want to update LeafEdit\nTo Nightly?")) {
+					updateLeafEdit(); 
+					}
+					break;
+			}
 			}
 		}
 	} else if (hDown & KEY_B) {
@@ -331,8 +350,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 
 		} else if (updaterMode == 3) {
 			Selection = 0;
-			buttonsAmount = 6;
-			titleButtons = 3;
+			buttonsAmount = 7;
+			titleButtons = 4;
 			updaterMode = 4;
 		}
 	}
@@ -362,8 +381,8 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[9])) {
 			Selection = 0;
-			buttonsAmount = 6;
-			titleButtons = 3;
+			buttonsAmount = 7;
+			titleButtons = 4;
 			updaterMode = 4;
 
 		} else if(touching(touch, Functions[10])) {
@@ -485,6 +504,10 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
 			updateRelaunchNightly(); 
 			}
+		} else if (touching(touch, Functions[11])) {
+			if(confirmPopup("Are you sure you want to update LeafEdit\nTo Nightly?")) {
+			updateLeafEdit(); 
+			}
 		}
 		}
 	}
@@ -535,6 +558,9 @@ void Updater::DrawText(void) const
 	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
 	Draw_Text(140, 138, 0.7f, WHITE, "Release");
 	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
+
+	Draw_Text(0, 178, 0.65f, WHITE, "LeafEdit");
+	Draw_Text(140, 178, 0.7f, WHITE, "Nightly");
 	}
 }
 
@@ -625,6 +651,8 @@ void Updater::DrawSelection(void) const
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 110, Config::barColor);
 	} else if (Selection == 5) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 110, Config::barColor);
+	} else if (Selection == 6) {
+		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 140, Config::barColor);
 	}
 	}
 }
