@@ -32,6 +32,8 @@ Universal-Team : For the Project.
 
 [Joel16](https://github.com/joel16) : [3DShell](https://github.com/joel16/3DShell) : For the FTP, external Image, some GUI Functions like Text Drawing and Audio Code.
 
+- [Kodtiz3D](https://github.com/Kodtiz3D): For fixing the Icon.
+
 [RocketRobz](https://github.com/RocketRobz) : [PDSX-3D](https://github.com/RocketRobz/PDSX-3D) : For the Animated Background Stuff from PDSX-3D.
 
 ****
