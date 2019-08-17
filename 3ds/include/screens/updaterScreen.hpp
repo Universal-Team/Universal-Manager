@@ -28,10 +28,6 @@
 #include "structs.hpp"
 #include <vector>
 
-extern "C" {
-	#include "cia.h"
-}
-
 class Updater : public SCREEN 
 {
 public:
@@ -43,7 +39,6 @@ private:
 	int updaterMode = 0;
 	int buttonsAmount = 4;
 	int titleButtons = 0;
-	mutable bool updatingSelf = false;
 
 	void DrawButtons(void) const;
 	void DrawTitleButtons(void) const;

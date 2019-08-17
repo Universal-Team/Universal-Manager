@@ -32,6 +32,12 @@
 #include "mainMenuScreen.hpp"
 #include "download.hpp"
 
+extern "C" {
+	#include "cia.h"
+}
+
+extern bool updatingSelf;
+
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 void Updater::Draw(void) const
