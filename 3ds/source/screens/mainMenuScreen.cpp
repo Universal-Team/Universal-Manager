@@ -43,12 +43,6 @@ extern bool exiting;
 extern int fadealpha;
 extern bool fadein;
 
-MainMenu::MainMenu()
-{
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-}
-
 void MainMenu::DrawSelection(void) const
 {
 	if (currentPage == 1) {
@@ -90,8 +84,8 @@ void MainMenu::Draw(void) const
 	DisplayTime();
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
-	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
+	Draw_Text(395-Draw_GetTextWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in out effect
 
 	Gui::DrawBGBot();
 	animatedBGBot();

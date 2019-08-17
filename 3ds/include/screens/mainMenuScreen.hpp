@@ -33,13 +33,10 @@
 class MainMenu : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-
-	mutable char universal_manager_vertext[13];
 	int currentPage = 1;
 	int Selection = 0;
 
