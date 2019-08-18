@@ -62,6 +62,7 @@ void MAINMENU::Draw(void) const
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
 	printTextTinted("Universal-Manager", BLACK, 60, 5, true);
+	printTextTinted(APP_VERSION, BLACK, 180, 175, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);

@@ -5,6 +5,13 @@ ifeq ($(strip $(DEVKITARM)),)
 $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
 endif
 
+# If on a tagged commit, use the tag instead of the commit
+ifneq ($(shell echo $(shell git describe --contains) | head -c 1),)
+GIT_VER := $(shell git describe --contains)
+else
+GIT_VER := $(shell git rev-parse --short HEAD)
+endif
+
 include $(DEVKITARM)/ds_rules
 
 #---------------------------------------------------------------------------------
@@ -28,6 +35,7 @@ ARCH	:=	-mthumb -mthumb-interwork
 CFLAGS	:=	-g -Wall -O2\
  			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
 			-ffast-math \
+			-DAPP_VERSION=\"\$(GIT_VER)\" \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9

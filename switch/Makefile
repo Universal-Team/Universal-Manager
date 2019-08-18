@@ -38,9 +38,33 @@ INCLUDES      := include include/screens
 EXEFS_SRC     := exefs_src
 ROMFS         := romfs
 
-VERSION_MAJOR := 1
+# If on a tagged commit, use the tag instead of the commit
+ifneq ($(shell echo $(shell git describe --contains) | head -c 1),)
+GIT_VER := $(shell git describe --contains)
+else
+GIT_VER := $(shell git rev-parse --short HEAD)
+endif
+
+#---------------------------------------------------------------------------------
+# Version number
+#---------------------------------------------------------------------------------
+ifneq ($(shell echo $(shell git describe --tags) | head -c 2 | tail -c 1),)
+VERSION_MAJOR := $(shell echo $(shell git describe --tags) | head -c 2 | tail -c 1)
+else
+VERSION_MAJOR := 0
+endif
+
+ifneq ($(shell echo $(shell git describe --tags) | head -c 4 | tail -c 1),)
+VERSION_MINOR := $(shell echo $(shell git describe --tags) | head -c 4 | tail -c 1)
+else
 VERSION_MINOR := 0
+endif
+
+ifneq ($(shell echo $(shell git describe --tags) | head -c 6 | tail -c 1),)
+VERSION_MICRO := $(shell echo $(shell git describe --tags) | head -c 6 | tail -c 1)
+else
 VERSION_MICRO := 0
+endif
 
 APP_TITLE     := Universal-Manager
 APP_AUTHOR    := Universal-Team
@@ -53,6 +77,7 @@ ARCH	 := -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS	 := -g -Wall -O3 -ffunction-sections \
             -DVERSION_MAJOR=$(VERSION_MAJOR) -DVERSION_MINOR=$(VERSION_MINOR) -DVERSION_MICRO=$(VERSION_MICRO) \
+			-DVERSION_STRING=\"$(GIT_VER)\" \
             -DAPP_TITLE="\"$(APP_TITLE)\"" \
             $(ARCH) $(DEFINES)
 

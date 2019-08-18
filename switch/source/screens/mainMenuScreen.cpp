@@ -38,11 +38,6 @@ extern "C" {
 extern int fadealpha;
 extern bool fadein;
 
-MainMenu::MainMenu()
-{
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-}
-
 
 void MainMenu::Draw(void) const
 {
@@ -50,7 +45,7 @@ void MainMenu::Draw(void) const
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
 	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
 	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	Gui::DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
+	Gui::DrawText(1000, 630, 72, WHITE, VERSION_STRING);
 
 	// Buttons.
 	Gui::DrawImage(MainMenuButton, 40, 150);

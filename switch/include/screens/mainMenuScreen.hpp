@@ -33,12 +33,10 @@
 class MainMenu : public SCREEN 
 {
 public:
-	MainMenu();
 	void Draw(void) const override;
 	void Logic(u64 hDown) override;
 
 private:
-	mutable char universal_manager_vertext[13];
 };
 
 #endif
