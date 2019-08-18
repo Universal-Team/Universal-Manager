@@ -539,44 +539,44 @@ void Updater::DrawText(void) const
 	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
 
 	} else if (updaterMode == 1) {
-	Draw_Text(0, 58, 0.65f, WHITE, "Luma3DS");
+	Draw_Text(18, 58, 0.65f, WHITE, "Luma3DS");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 98, 0.65f, WHITE, "GodMode9");
+	Draw_Text(15, 98, 0.65f, WHITE, "GodMode9");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 
 	} else if (updaterMode == 2) {
-	Draw_Text(0, 58, 0.65f, WHITE, "TWLMENU++");
+	Draw_Text(8, 58, 0.65f, WHITE, "TWLMENU++");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 98, 0.60f, WHITE, "NDS-Bootstrap");
+	Draw_Text(8, 98, 0.60f, WHITE, "NDS-Bootstrap");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 138, 0.7f, WHITE, "Extras");
+	Draw_Text(30, 138, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
 
 	} else if (updaterMode == 3) {
-	Draw_Text(0, 58, 0.65f, WHITE, "Extras");
+	Draw_Text(30, 58, 0.7f, WHITE, "Extras");
 	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
 	Draw_Text(229, 58, 0.7f, WHITE, "Scripts");
 
 	} else if (updaterMode == 4) {
-	Draw_Text(0, 58, 0.65f, WHITE, "UNIV-Manager");
+	Draw_Text(5, 58, 0.65f, WHITE, "Univ-Manager");
 	Draw_Text(140, 58, 0.7f, WHITE, "Release");
 	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 98, 0.65f, WHITE, "PKMN-Chest");
+	Draw_Text(13, 98, 0.65f, WHITE, "pkmn-chest");
 	Draw_Text(140, 98, 0.7f, WHITE, "Release");
 	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 138, 0.65f, WHITE, "RELAUNCH");
+	Draw_Text(18, 138, 0.65f, WHITE, "Relaunch");
 	Draw_Text(140, 138, 0.7f, WHITE, "Release");
 	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(0, 178, 0.65f, WHITE, "LeafEdit");
+	Draw_Text(18, 178, 0.65f, WHITE, "LeafEdit");
 	Draw_Text(140, 178, 0.7f, WHITE, "Release");
 	Draw_Text(229, 178, 0.7f, WHITE, "Nightly");
 	}
