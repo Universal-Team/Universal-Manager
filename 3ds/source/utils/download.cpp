@@ -690,7 +690,7 @@ void updateTWiLight(bool nightly) {
 		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIAs..");
-		// installCia("/TWiLight Menu.cia");
+		installCia("/TWiLight Menu.cia");
 		installCia("/TWiLight Menu - Game booter.cia");
 
 		deleteFile("sdmc:/TWiLightMenu-nightly.7z");
