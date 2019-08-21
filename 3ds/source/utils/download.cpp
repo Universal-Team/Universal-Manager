@@ -42,7 +42,7 @@ extern "C" {
 	#include "cia.h"
 }
 
-#define  USER_AGENT   APP_TITLE "-" VERSION_STRING
+#define  USER_AGENT   APP_TITLE "-" V_STRING
 
 static char* result_buf = NULL;
 static size_t result_sz = 0;
@@ -742,7 +742,7 @@ void updateUniversalManager(bool nightly) {
 		return;
 	}
 		showProgressBar = false;
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/Universal-Manager-Nightly.cia");
 
 		deleteFile("sdmc:/Universal-Manager-Nightly.cia");
@@ -758,7 +758,7 @@ void updateUniversalManager(bool nightly) {
 		return;
 	}
 		showProgressBar = false;
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/Universal-Manager-Release.cia");
 
 		deleteFile("sdmc:/Universal-Manager-Release.cia");
@@ -824,6 +824,7 @@ void downloadGodMode9(void) {
 		deleteFile("sdmc:/GodMode9.zip");
 	doneMsg(); 
 }
+
 void downloadThemes(void) {
 	int keyRepeatDelay = 0;
 
@@ -881,7 +882,7 @@ void downloadThemes(void) {
 		for(uint i=0;i<((themeList.size()<10) ? 11-themeList.size() : 0);i++) {
 			themeText += "\n";
 		}
-		themeText += "				B: Back   A: Choose";
+		themeText += "                B: Back   A: Choose";
 		DisplayMsg(themeText.c_str());
 	}
 }
@@ -937,7 +938,7 @@ void updatePKMNChestRelease(void) {
 	}
 		showProgressBar = false;
 
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/PKMN-Chest-Release.cia");
 
 		deleteFile("sdmc:/PKMN-Chest-Release.cia");
@@ -963,7 +964,7 @@ void updatePKMNChestNightly(void) {
 	}
 		showProgressBar = false;
 
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/PKMN-Chest-Nightly.cia");
 
 		deleteFile("sdmc:/PKMN-Chest-Nightly.cia");
@@ -985,7 +986,7 @@ void updateRelaunchNightly(void) {
 		progressBarType = 1;
 		extractArchive("/Relaunch-Nightly.7z", "Relaunch/3DS/", "/");
 		showProgressBar = false;
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/Relaunch.cia");
 
 		deleteFile("sdmc:/Relaunch-Nightly.7z");
@@ -1009,7 +1010,7 @@ void updateRelaunchRelease(void) {
 		progressBarType = 1;
 		extractArchive("/Relaunch-Release.7z", "Relaunch/3DS/", "/");
 		showProgressBar = false;
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/Relaunch.cia");
 
 		deleteFile("sdmc:/Relaunch-Release.7z");
@@ -1029,9 +1030,27 @@ void updateLeafEdit(void) {
 		return;
 	}
 		showProgressBar = false;
-		DisplayMsg("Now Installing the CIAs..");
+		DisplayMsg("Now Installing the CIA..");
 		installCia("/LeafEdit-Nightly.cia");
 
 		deleteFile("sdmc:/LeafEdit-Nightly.cia");
-doneMsg();
+	doneMsg();
+}
+
+void updateLeafEditRelease(void) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadFromRelease("https://github.com/Universal-Team/LeafEdit", "LeafEdit\\.cia", "/LeafEdit-Release.cia") != 0) {
+		showProgressBar = false;
+		downloadFailed();
+		return;
+	}
+		showProgressBar = false;
+		DisplayMsg("Now Installing the CIA..");
+		installCia("/LeafEdit-Release.cia");
+
+		deleteFile("sdmc:/LeafEdit-Release.cia");
+	doneMsg();
 }

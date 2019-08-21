@@ -29,7 +29,7 @@
 #include "common.hpp"
 
 #define APP_TITLE "Universal-Manager"
-#define VERSION_STRING "3.1.0"
+#define V_STRING "3.1.0"
 
 enum DownloadError {
 	DL_ERROR_NONE = 0,
@@ -165,3 +165,8 @@ void downloadFailed(void);
  * Update LeafEdit to the latest Nightly.
  */
 void updateLeafEdit(void);
+
+/**
+ * Update LeafEdit to the latest Release.
+ */
+void updateLeafEditRelease(void);

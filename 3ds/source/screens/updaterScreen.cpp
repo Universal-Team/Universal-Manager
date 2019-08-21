@@ -285,8 +285,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				case 6: {
 					if(confirmPopup("Are you sure you want to update LeafEdit\nTo Release?")) {
-					//updateLeafEditRelease();
-					notImplemented();
+					updateLeafEditRelease();
 					}
 					break;
 				} case 7:
@@ -518,8 +517,7 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			}
 		} else if (touching(touch, Functions[11])) {
 			if(confirmPopup("Are you sure you want to update LeafEdit\nTo Release?")) {
-			//updateLeafEditRelease();
-			notImplemented();
+			updateLeafEditRelease();
 			}
 		} else if (touching(touch, Functions[12])) {
 			if(confirmPopup("Are you sure you want to update LeafEdit\nTo Nightly?")) {
