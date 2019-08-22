@@ -91,7 +91,6 @@ void FileManager::Draw(void) const
 
 void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 			if (dirChanged) {
             dirContents.clear();
@@ -125,12 +124,12 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE001 to go back a Folder \n \n Press \uE002 to open the Action Menu.");

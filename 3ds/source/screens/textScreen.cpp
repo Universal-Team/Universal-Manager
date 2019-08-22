@@ -131,7 +131,6 @@ void Text::DrawBrowse(void) const
 
 void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 			if (dirChanged) {
             dirContents.clear();
@@ -169,13 +168,13 @@ void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	}
 }

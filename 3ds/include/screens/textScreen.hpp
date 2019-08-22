@@ -55,7 +55,7 @@ private:
 	
 	mutable uint rowsDisplayed = 0;
 	uint selectedFile = 0;
-	int keyRepeatDelay = 3;
+	int keyRepeatDelay = 0;
 	bool dirChanged = true;
 	std::string currentEditFile = "";
 	uint stringPos = 0;

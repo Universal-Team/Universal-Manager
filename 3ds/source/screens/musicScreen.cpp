@@ -248,7 +248,6 @@ void Music::DrawMusicList(void) const
 
 void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 			if (dirChanged) {
             dirContents.clear();
@@ -301,21 +300,21 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_Y) {
-		//dirChanged = true; // caused a Crash. ;P
 		MusicMode = 5;
+		dirChanged = true; // Not anymore!
 	} else if (hDown & KEY_X) {
 			MusicMode = 0;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hDown & KEY_START) {
 		MusicMode = 2;
@@ -536,9 +535,9 @@ void Music::DrawPlaylistAdd(void) const
 
 void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 	if(dirChanged) {
+		dirChanged = false;
 		char startPath[PATH_MAX];
 		getcwd(startPath, PATH_MAX);
 		chdir("sdmc:/Universal-Manager/playlists/");
@@ -548,7 +547,6 @@ void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirEntry.name = "Now Playing";
 		dirEntry.isDirectory = false;
 		plsts.insert(plsts.begin(), dirEntry);
-		dirChanged = false;
 	}
 
 
@@ -602,13 +600,13 @@ void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Add this Song to the Selected Playlist. \n \n Press \uE001 to return to the Song List. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to create a Playlist.");
@@ -649,7 +647,7 @@ void Music::DrawPlaylistEdit(void) const
 
 void Music::PlaylistEditLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
 	if(hDown & KEY_A) {
 		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "w");
 		for(uint i=0;i<plstContents.size();i++) {
@@ -677,13 +675,13 @@ void Music::PlaylistEditLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlstItem > 0 && !keyRepeatDelay) {
 			selectedPlstItem--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
 			selectedPlstItem++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Save The Playlist. \n \n Press \uE001 to return to the Playlist Screen. \n \n Press \uE002 to Delete a Song from the Playlist. \n \n Press \uE003 to move Songs.");
@@ -725,9 +723,9 @@ void Music::DrawPlaylistPlay(void) const
 
 void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 	if(dirChanged) {
+		dirChanged = false;
 		char startPath[PATH_MAX];
 		getcwd(startPath, PATH_MAX);
 		chdir("sdmc:/Universal-Manager/playlists/");
@@ -755,6 +753,8 @@ void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		}
 	} else if (hDown & KEY_B) {
 		MusicMode = 0;
+		selection = 0;
+		dirChanged = true;
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Are you sure you want to delete this playlist?")) {
 			remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
@@ -773,13 +773,13 @@ void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
@@ -849,7 +849,6 @@ void Music::DrawThemeSelector(void) const
 
 void Music::ThemeSelectorLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
 
 			if (dirChanged) {
             dirContents.clear();
@@ -903,13 +902,13 @@ void Music::ThemeSelectorLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Select an Image. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu.");

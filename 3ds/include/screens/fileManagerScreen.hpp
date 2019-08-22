@@ -39,7 +39,7 @@ public:
 
 private:
 	uint selectedFile = 0;
-	int keyRepeatDelay = 3;
+	int keyRepeatDelay = 0;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	std::string currentFile = "";

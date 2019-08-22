@@ -73,7 +73,7 @@ private:
 	mutable bool coverImageLoaded = false;
 
 	uint selectedFile = 0;
-	int keyRepeatDelay = 3;
+	int keyRepeatDelay = 0;
 	std::vector<DirEntry> dirContents;
 	uint selectedPlst = 0;
 

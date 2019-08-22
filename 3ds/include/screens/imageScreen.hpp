@@ -54,7 +54,7 @@ private:
 	
 	std::string currentImage = "";
 	uint selectedFile = 0;
-	int keyRepeatDelay = 3;
+	int keyRepeatDelay = 0;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	double imageScale = 1.0f;
