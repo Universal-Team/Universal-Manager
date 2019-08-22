@@ -62,40 +62,42 @@ void Script::DrawScriptBrowse(void) const
 		Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
 		mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 
-		std::string scptList;
-		for (uint i=(selectedScpt<5) ? 0 : selectedScpt-5;i<scpts.size()&&i<((selectedScpt<5) ? 6 : selectedScpt+1);i++) {
-			if (selectedScpt == 0) {
-				Gui::drawFileSelector(0, 28);
-				scptList += scpts[i].name + "\n\n";
+		std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
 
-			} else if (selectedScpt == 1) {
-				Gui::drawFileSelector(0, 58);
-				scptList += scpts[i].name + "\n\n";
+		if (selectedFile == 0) {
+			Gui::drawFileSelector(0, 28);
+			dirs +=  dirContents[i].name + "\n\n";
 
-			} else if (selectedScpt == 2) {
-				Gui::drawFileSelector(0, 91);
-				scptList += scpts[i].name + "\n\n";
+		} else if (selectedFile == 1) {
+			Gui::drawFileSelector(0, 58);
+			dirs +=  dirContents[i].name + "\n\n";
 
-			} else if (selectedScpt == 3) {
-				Gui::drawFileSelector(0, 125);
-				scptList += scpts[i].name + "\n\n";
+		} else if (selectedFile == 2) {
+			Gui::drawFileSelector(0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
 
-			} else if (selectedScpt == 4) {
-				Gui::drawFileSelector(0, 156);
-				scptList += scpts[i].name + "\n\n";
+		} else if (selectedFile == 3) {
+			Gui::drawFileSelector(0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
 
-			} else if (selectedScpt == 5) {
-				Gui::drawFileSelector(0, 188);
-				scptList += scpts[i].name + "\n\n";
-			} else {
-				Gui::drawFileSelector(0, 188);
-				scptList += scpts[i].name + "\n\n";
-			}
+		} else if (selectedFile == 4) {
+			Gui::drawFileSelector(0, 156);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
 		}
-		for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
-			scptList += "\n";
-		}
-		Draw_Text(26, 32, 0.53f, BLACK, scptList.c_str());
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
 
 		Gui::DrawBGBot();
 		animatedBGBot();
@@ -103,19 +105,26 @@ void Script::DrawScriptBrowse(void) const
 }
 
 void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-		if(keyRepeatDelay)	keyRepeatDelay--;
-		gspWaitForVBlank();
-		if(dirChanged) {
+	if (keyRepeatDelay)	keyRepeatDelay--;
+	gspWaitForVBlank();
+
+			if (refresh) {
+            dirContents.clear();
 			char startPath[PATH_MAX];
 			getcwd(startPath, PATH_MAX);
 			chdir("sdmc:/Universal-Manager/scripts/");
-			getDirectoryContents(scpts);
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
 			chdir(startPath);
-		}
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		refresh = false;
+	}
 
 		if(hDown & KEY_A) {
-			if(confirmPopup("Do you want to run this Script : \n\n "+scpts[selectedScpt].name+"")) {
-				runScript("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name);
+			if(confirmPopup("Do you want to run this Script : \n\n "+dirContents[selectedFile].name+"")) {
+				runScript("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name);
 			} 
 		} else if (hDown & KEY_B) {
 			Gui::screenBack();
@@ -127,33 +136,33 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				fclose(scpt);
 		}
 		} else if (hDown & KEY_X) {
-			if (selectedScpt != 0) {
+			if (selectedFile != 0) {
 				if(confirmPopup("Are you sure you want to delete this Script?")) {
-					remove(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str());
+					remove(("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name).c_str());
 				}
 			}
 		} else if (hHeld & KEY_UP) {
-			if (selectedScpt > 0 && !keyRepeatDelay) {
-				selectedScpt--;
-				playScrollSfx();
+			if (selectedFile > 0 && !keyRepeatDelay) {
+				selectedFile--;
 				keyRepeatDelay = 3;
 			}
 		} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-			if (selectedScpt < scpts.size()-1) {
-				selectedScpt++;
-				playScrollSfx();
+			if (selectedFile < dirContents.size()-1) {
+				selectedFile++;
 				keyRepeatDelay = 3;
 			}
 		} else if (hDown & KEY_START) {
-			if(confirmPopup("Do you want to edit this Script : \n\n "+scpts[selectedScpt].name+"")) {
-			scpt.open(("sdmc:/Universal-Manager/scripts/"+scpts[selectedScpt].name).c_str(), std::ofstream::app);
-			Selection = 0;
-			ScriptPage = 1;
-			ScriptMode = 1;
-			}
-	} else if (hHeld & KEY_SELECT) {
-		helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
-	}
+			if(confirmPopup("Do you want to edit this Script : \n\n "+dirContents[selectedFile].name+"")) {
+				scpt.open(("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name).c_str(), std::ofstream::app);
+				Selection = 0;
+				ScriptPage = 1;
+				ScriptMode = 1;
+				}
+		} else if (hHeld & KEY_SELECT) {
+			helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
+		} else if (hDown & KEY_R) {
+			refresh = true;
+		}
 }
 
 void Script::DrawScriptCreator(void) const
@@ -307,6 +316,13 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	ScriptCreatorSelectionLogic(hDown, hHeld);
 	if (hDown & KEY_START) {
 		if(confirmPopup("Do you want to save this Script?")) {
+			scpt.close();
+			Selection = 0;
+			ScriptPage = 1;
+			ScriptMode = 0;
+		}
+	} else if (hDown & KEY_B) {
+		if(confirmPopup("Do you want to exit without saving?")) {
 			scpt.close();
 			Selection = 0;
 			ScriptPage = 1;

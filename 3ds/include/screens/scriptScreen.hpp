@@ -43,11 +43,10 @@ private:
 	int ScriptMode = 0;
 	int Selection = 0;
 	int ScriptPage = 1;
+	uint selectedFile = 0;
 	int keyRepeatDelay = 3;
-	bool dirChanged = true;
+	mutable bool refresh = true;
 	std::vector<DirEntry> dirContents;
-	uint selectedScpt = 0;
-	std::vector<DirEntry> scpts;
 	std::ofstream scpt;
 
 		// Structs.
