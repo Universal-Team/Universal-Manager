@@ -405,3 +405,21 @@ void Gui::drawFileSelector(float x, float y)
 
     timer += .010f;
 }
+
+void Gui::drawGUISelector(int key, float x, float y)
+{
+    static float timer         = 0.0f;
+    float highlight_multiplier = fmax(0.0, fabs(fmod(timer, 1.0) - 0.5) / 0.5);
+    u8 r                       = Config::barColor & 0xFF;
+    u8 g                       = (Config::barColor >> 8) & 0xFF;
+    u8 b                       = (Config::barColor >> 16) & 0xFF;
+    u32 color = C2D_Color32(r + (255 - r) * highlight_multiplier, g + (255 - g) * highlight_multiplier, b + (255 - b) * highlight_multiplier, 255);
+    C2D_ImageTint tint;
+    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f, &tint);
+
+    timer += .020f;
+}
