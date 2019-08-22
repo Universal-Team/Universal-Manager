@@ -203,37 +203,37 @@ void Music::DrawMusicList(void) const
 		(i == selectedFile);
 
 		if (selectedFile == 0) {
-			Gui::sprite(sprites_selected_idx, 0, 25);
+			Gui::drawFileSelector(0, 28);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 1) {
-			Gui::sprite(sprites_selected_idx, 0, 56);
+			Gui::drawFileSelector(0, 58);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 2) {
-			Gui::sprite(sprites_selected_idx, 0, 91);
+			Gui::drawFileSelector(0, 91);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 3) {
-			Gui::sprite(sprites_selected_idx, 0, 125);
+			Gui::drawFileSelector(0, 125);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 4) {
-			Gui::sprite(sprites_selected_idx, 0, 160);
+			Gui::drawFileSelector(0, 156);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 5) {
-			Gui::sprite(sprites_selected_idx, 0, 190);
+			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		} else {
-			Gui::sprite(sprites_selected_idx, 0, 190);
+			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -799,37 +799,37 @@ void Music::DrawThemeSelector(void) const
 		(i == selectedFile);
 
 		if (selectedFile == 0) {
-			Gui::sprite(sprites_selected_idx, 0, 25);
+			Gui::drawFileSelector(0, 28);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 1) {
-			Gui::sprite(sprites_selected_idx, 0, 56);
+			Gui::drawFileSelector(0, 58);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 2) {
-			Gui::sprite(sprites_selected_idx, 0, 91);
+			Gui::drawFileSelector(0, 91);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 3) {
-			Gui::sprite(sprites_selected_idx, 0, 125);
+			Gui::drawFileSelector(0, 125);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 4) {
-			Gui::sprite(sprites_selected_idx, 0, 160);
+			Gui::drawFileSelector(0, 156);
 			dirs +=  dirContents[i].name + "\n\n";
 
 		} else if (selectedFile == 5) {
-			Gui::sprite(sprites_selected_idx, 0, 190);
+			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		} else {
-			Gui::sprite(sprites_selected_idx, 0, 190);
+			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();

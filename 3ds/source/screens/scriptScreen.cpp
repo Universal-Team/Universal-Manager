@@ -65,37 +65,37 @@ void Script::DrawScriptBrowse(void) const
 		std::string scptList;
 		for (uint i=(selectedScpt<5) ? 0 : selectedScpt-5;i<scpts.size()&&i<((selectedScpt<5) ? 6 : selectedScpt+1);i++) {
 			if (selectedScpt == 0) {
-				Gui::sprite(sprites_selected_idx, 0, 25);
+				Gui::drawFileSelector(0, 28);
 				scptList += scpts[i].name + "\n\n";
 
 			} else if (selectedScpt == 1) {
-				Gui::sprite(sprites_selected_idx, 0, 56);
+				Gui::drawFileSelector(0, 58);
 				scptList += scpts[i].name + "\n\n";
 
 			} else if (selectedScpt == 2) {
-				Gui::sprite(sprites_selected_idx, 0, 91);
+				Gui::drawFileSelector(0, 91);
 				scptList += scpts[i].name + "\n\n";
 
 			} else if (selectedScpt == 3) {
-				Gui::sprite(sprites_selected_idx, 0, 125);
+				Gui::drawFileSelector(0, 125);
 				scptList += scpts[i].name + "\n\n";
 
 			} else if (selectedScpt == 4) {
-				Gui::sprite(sprites_selected_idx, 0, 160);
+				Gui::drawFileSelector(0, 156);
 				scptList += scpts[i].name + "\n\n";
 
 			} else if (selectedScpt == 5) {
-				Gui::sprite(sprites_selected_idx, 0, 190);
+				Gui::drawFileSelector(0, 188);
 				scptList += scpts[i].name + "\n\n";
 			} else {
-				Gui::sprite(sprites_selected_idx, 0, 190);
+				Gui::drawFileSelector(0, 188);
 				scptList += scpts[i].name + "\n\n";
 			}
 		}
 		for (uint i=0;i<((scpts.size()<6) ? 6-scpts.size() : 0);i++) {
 			scptList += "\n";
 		}
-		Draw_Text(26, 32, 0.53f, WHITE, scptList.c_str());
+		Draw_Text(26, 32, 0.53f, BLACK, scptList.c_str());
 
 		Gui::DrawBGBot();
 		animatedBGBot();

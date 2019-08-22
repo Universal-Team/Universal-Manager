@@ -122,54 +122,22 @@ void set_screen(C3D_RenderTarget * screen)
 
 void Gui::sprite(int key, int x, int y)
 {
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
-    }
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
 }
 
 void Gui::AnimationSprite(int key, int x, int y)
 {
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
-    }
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
 }
 
 void Gui::Credits(int key, int x, int y)
 {
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
-    }
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
 }
 
 void Gui::Button(int key, int x, int y)
 {
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f);
-    }
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f);
 }
 
 // Basic GUI Stuff.
@@ -417,4 +385,23 @@ void Gui::setScreen(std::unique_ptr<SCREEN> screen)
 void Gui::screenBack()
 {
     screens.pop();
+}
+
+void Gui::drawFileSelector(float x, float y)
+{
+    static constexpr int w     = 2;
+    static float timer         = 0.0f;
+    float highlight_multiplier = fmax(0.0, fabs(fmod(timer, 1.0) - 0.5) / 0.5);
+    u8 r                       = Config::barColor & 0xFF;
+    u8 g                       = (Config::barColor >> 8) & 0xFF;
+    u8 b                       = (Config::barColor >> 16) & 0xFF;
+    u32 color = C2D_Color32(r + (255 - r) * highlight_multiplier, g + (255 - g) * highlight_multiplier, b + (255 - b) * highlight_multiplier, 255);
+
+    Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 20));
+    Draw_Rect(x, y, 400, w, color);                      // top
+    Draw_Rect(x, y + w, w, 25 - 2 * w, color);          // left
+    Draw_Rect(x + 400 - w, y + w, w, 25 - 2 * w, color); // right
+    Draw_Rect(x, y + 25 - w, 400, w, color);             // bottom
+
+    timer += .010f;
 }

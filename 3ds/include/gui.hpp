@@ -49,9 +49,6 @@
 // Battery Stuff.
 #include "ptmu_x.h"
 
-// emulated
-#define sprites_res_null_idx 500
-
 #define FONT_SIZE_18 0.72f
 #define FONT_SIZE_17 0.7f
 #define FONT_SIZE_15 0.6f
@@ -92,6 +89,8 @@ namespace Gui
 
     void Draw_ImageBlend(int key, int x, int y, u32 color);
     void Draw_ImageBlend2(int key, int x, int y, u32 color);
+
+    void drawFileSelector(float x, float y);
 }
 
    // Text.
