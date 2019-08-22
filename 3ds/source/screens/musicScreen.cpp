@@ -235,11 +235,9 @@ void Music::DrawMusicList(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
+    if (Config::selector == 1) {
         Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
-    } else if (Config::selector == 2) {
+    } else if (Config::selector == 0 || Config::selector == 2) {
         Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
@@ -838,11 +836,9 @@ void Music::DrawThemeSelector(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
+    if (Config::selector == 1) {
         Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
-    } else if (Config::selector == 2) {
+    } else if (Config::selector == 0 || Config::selector == 2) {
         Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
