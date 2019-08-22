@@ -23,26 +23,19 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#include <citro3d.h>
-#include <citro2d.h>
+
+#include "gui.hpp"
+#include "ptmu_x.h"
+#include "screens/creditsScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <3ds.h>
 #include <algorithm>
 #include <dirent.h>
-#include <malloc.h>
-#include <sstream>
-#include <stdio.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <time.h>
 #include <unistd.h>
-
-#include "gui.hpp"
-#include "screenCommon.hpp"
-#include "ptmu_x.h"
-#include "mainMenuScreen.hpp"
-#include "creditsScreen.hpp"
-#include "settings.hpp"
-#include "sound.h"
 
 extern "C" {
 	#include "music/error.h"

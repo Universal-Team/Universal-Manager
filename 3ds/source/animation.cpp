@@ -25,13 +25,14 @@
 */
 
 #include "animation.hpp"
-#include "screenCommon.hpp"
-#include "settings.hpp"
-#include <unistd.h>
+#include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+
+#include <3ds.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <3ds.h>
+#include <unistd.h>
 
 int animated_bubblesYPos[2] = {0};
 bool animated_bubbleMoveDelay = false;

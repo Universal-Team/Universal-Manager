@@ -24,10 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
+#include "structs.hpp"
+#include "screens/screen.hpp"
+
+#include <citro2d.h>
 #include <string>
 #include <vector>
-#include "structs.hpp"
 
 // CALENDAR
 class Calendar : public SCREEN 

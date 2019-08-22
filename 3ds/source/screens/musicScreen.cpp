@@ -24,19 +24,20 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screenCommon.hpp"
-#include "musicScreen.hpp"
-#include "settings.hpp"
-#include "keyboard.hpp"
+#include "screens/musicScreen.hpp"
+#include "screens/screenCommon.hpp"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "sound.h"
 
 extern "C" {
+	#include "C2D_helper.h"
 	#include "music/error.h"
 	#include "music/playback.h"
-	#include "C2D_helper.h"
 }
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
@@ -233,7 +234,14 @@ void Music::DrawMusicList(void) const
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    } else if (Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -829,7 +837,14 @@ void Music::DrawThemeSelector(void) const
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    } else if (Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
 
 	Gui::DrawBGBot();
 	animatedBGBot();

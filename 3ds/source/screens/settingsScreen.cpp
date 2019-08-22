@@ -24,20 +24,21 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
 #include "colors.hpp"
-#include "settingsScreen.hpp"
+#include "screens/screenCommon.hpp"
+#include "screens/settingsScreen.hpp"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
-#include <fstream>
-#include <unistd.h>
-#include <vector>
-#include <string.h>
 #include <dirent.h>
+#include <fstream>
 #include <malloc.h>
 #include <sstream>
+#include <string.h>
+#include <unistd.h>
+#include <vector>
 
-#include "keyboard.hpp"
-#include "utils/settings.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
@@ -46,6 +47,7 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 	std::string percentModes[] = {"Hidden", "Shown"}; 
 	std::string layoutModes[] = {"Bars", "Bars2"}; 
 	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
+	std::string Selectors[] = {"Selector1", "Selector2", "Selector3"};
 	
 int Settings::getColorValue(int color, int bgr) const
 {
@@ -145,21 +147,26 @@ void Settings::DrawBottom(void) const
 
 
 	} else if (SettingsPage == 3) {
-		Draw_Text(100, 58, 0.7f, WHITE, "Selected Text");
-		Gui::Button(button_red_idx, 17, 85);
-		Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
-		Gui::Button(button_green_idx, 112, 85);
-		Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
-		Gui::Button(button_blue_idx, 207, 85);
-		Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
+		Draw_Text(100, 78, 0.7f, WHITE, "Selected Text");
+		Gui::Button(button_red_idx, 17, 105);
+		Draw_Text(56, 118, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
+		Gui::Button(button_green_idx, 112, 105);
+		Draw_Text(150, 118, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 105);
+		Draw_Text(239, 118, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
 
-		Draw_Text(100, 138, 0.7f, WHITE, "Unselected Text");
+		Draw_Text(100, 148, 0.7f, WHITE, "Unselected Text");
 		Gui::Button(button_red_idx, 17, 168);
 		Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
 		Gui::Button(button_green_idx, 112, 168);
 		Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 168);
 		Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
+
+		// Selectors.
+		Draw_Text(30, 40, 0.7f, WHITE, "FileBrowse Selector");
+		Gui::Button(button_updater_idx, 207, 31);
+		Draw_Text(213, 40, 0.7f, WHITE, Selectors[Config::selector].c_str());
 	}
 }
 
@@ -376,6 +383,11 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 				blue = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);
 			}
+
+
+	} else if (touching(touch, uiSettingsButtonPos[21])) {
+		Config::selector++;
+		if (Config::selector > 2) Config::selector = 0;
 
 
 	} else if (touching(touch, uiSettingsButtonPos[6])) {

@@ -27,8 +27,9 @@
 #define FILEMANAGER_HPP
 
 #include "screens/screen.hpp"
+#include "utils/fileBrowse.h"
+
 #include <vector>
-#include "fileBrowse.h"
 
 class FileManager : public SCREEN 
 {

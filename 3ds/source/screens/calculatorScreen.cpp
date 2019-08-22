@@ -24,8 +24,9 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calculatorScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include "calculatorScreen.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>

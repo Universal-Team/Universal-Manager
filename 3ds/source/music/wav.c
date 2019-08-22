@@ -1,9 +1,9 @@
+#include "music/playback.h"
+#include "music/wav.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "wav.h"
-#include "music/playback.h"
 
 static const size_t	buffSize	= 16 * 1024;
 static FILE*		pWav		= NULL;

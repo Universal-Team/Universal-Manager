@@ -25,13 +25,13 @@
 */
 
 #include "screens/screen.hpp"
+#include "utils/fileBrowse.h"
+
 #include <vector>
-#include "fileBrowse.h"
 
 extern "C" {
 #include "C2D_helper.h"
 }
-
 
 class Image : public SCREEN 
 {

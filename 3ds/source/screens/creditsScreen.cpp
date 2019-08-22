@@ -24,14 +24,16 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/creditsScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include <citro2d.h>
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <unistd.h>
-#include "creditsScreen.hpp"
-#include "mainMenuScreen.hpp"
+
 
 // Color Stuff.
 #define VOLTZCOLORBAR RGBA8(0, 108, 255, 255)

@@ -1,7 +1,8 @@
-#include <assert.h>
-#include <stdarg.h>
 #include "C2D_helper.h"
 #include "fs.h"
+
+#include <assert.h>
+#include <stdarg.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"

@@ -1,6 +1,8 @@
+#include "utils/inifile.h"
+
 #include <cstdio>
 #include <cstdlib>
-#include "inifile.h"
+
 
 static bool freadLine(FILE* f,std::string& str)
 {

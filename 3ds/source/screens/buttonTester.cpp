@@ -24,12 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/buttonTester.hpp"
 #include "screens/screenCommon.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "buttonTester.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 

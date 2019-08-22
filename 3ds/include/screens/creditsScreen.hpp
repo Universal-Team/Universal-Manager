@@ -24,11 +24,11 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
 #include "structs.hpp"
+#include "screens/screen.hpp"
+
 #include <string>
 #include <vector>
-
 
 class Credits : public SCREEN 
 {

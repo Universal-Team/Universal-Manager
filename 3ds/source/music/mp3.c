@@ -1,10 +1,10 @@
+#include "music/mp3.h"
+#include "music/playback.h"
+
 #include <mpg123.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "mp3.h"
-#include "music/playback.h"
 
 static size_t*			buffSize;
 static mpg123_handle	*mh = NULL;

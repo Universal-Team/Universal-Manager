@@ -1,9 +1,9 @@
 #ifndef _INIFILE_H_
 #define _INIFILE_H_
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
 class CIniFile
 {

@@ -24,11 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/ftpScreen.hpp"
 #include "screens/screenCommon.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "ftpScreen.hpp"
 
 extern "C" {
 	#include "ftp.h"

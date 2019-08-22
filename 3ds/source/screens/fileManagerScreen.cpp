@@ -24,13 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/fileManagerScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "fileManagerScreen.hpp"
-
-
 
 void FileManager::Draw(void) const
 {
@@ -77,7 +77,14 @@ void FileManager::Draw(void) const
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    } else if (Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
 
 	Gui::DrawBGBot();
 	animatedBGBot();

@@ -24,8 +24,9 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screen.hpp"
 #include "structs.hpp"
+#include "screens/screen.hpp"
+
 #include <vector>
 
 class Settings : public SCREEN 
@@ -81,14 +82,17 @@ private:
 
 		// Selected Text Color.
 	
-		{17, 85, 95, 41, -1},
-		{112, 85, 95, 41, -1},
-		{207, 85, 95, 41, -1},
+		{17, 105, 95, 41, -1},
+		{112, 105, 95, 41, -1},
+		{207, 105, 95, 41, -1},
 
 		// Unselected Text Color.
 
 		{17, 165, 95, 41, -1},
 		{112, 165, 95, 41, -1},
 		{207, 165, 95, 41, -1},
+
+		// Selector.
+		{207, 31, 95, 41, -1},
 	};
 };

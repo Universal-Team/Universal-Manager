@@ -24,9 +24,10 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
-#include <vector>
 #include "structs.hpp"
+#include "screens/screen.hpp"
+
+#include <vector>
 
 class Utils : public SCREEN 
 {

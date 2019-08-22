@@ -24,22 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "download.hpp"
-#include <sys/stat.h>
-#include <vector>
-#include <unistd.h>
-
-#include "extract.hpp"
-#include "inifile.h"
-#include "gui.hpp"
-#include "fileBrowse.h"
-#include "utils/settings.hpp"
 #include "colors.hpp"
-#include "thread.hpp"
+#include "gui.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/download.hpp"
+#include "utils/extract.hpp"
+#include "utils/fileBrowse.h"
+#include "utils/inifile.h"
+#include "utils/settings.hpp"
+#include "utils/thread.hpp"
+
+#include <sys/stat.h>
+#include <unistd.h>
+#include <vector>
 
 extern "C" {
-	#include "cia.h"
+	#include "utils/cia.h"
 }
 
 #define  USER_AGENT   APP_TITLE "-" V_STRING

@@ -31,16 +31,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "files.h"
+
 #include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
-#include "files.h"
-
 #ifdef __cplusplus
 }
+
+#include "utils/json.hpp"
+#include "utils/stringutils.hpp"
 
 #include <cstdio>
 #include <iostream>
@@ -48,9 +51,6 @@ extern "C" {
 #include <vector>
 #include <regex>
 #include <curl/curl.h>
-
-#include "stringutils.hpp"
-#include "json.hpp"
 
 using json = nlohmann::json;
 

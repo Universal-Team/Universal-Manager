@@ -25,16 +25,17 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "utils/extract.hpp"
+#include "utils/fileBrowse.h"
+#include "utils/fileOperations.h"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include "extract.hpp"
-#include "fileBrowse.h"
-#include "fileOperations.h"
-#include "keyboard.hpp"
-#include "settings.hpp"
 
 extern "C" {
 #include "C2D_helper.h"

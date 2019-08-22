@@ -25,9 +25,10 @@
 */
 
 #include "screens/screen.hpp"
-#include <vector>
-#include "fileBrowse.h"
+#include "utils/fileBrowse.h"
+
 #include <string>
+#include <vector>
 
 class Text : public SCREEN 
 {

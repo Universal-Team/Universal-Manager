@@ -24,13 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "screens/updaterScreen.hpp"
+#include "utils/download.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <unistd.h>
-#include "settings.hpp"
-#include "updaterScreen.hpp"
-#include "mainMenuScreen.hpp"
-#include "download.hpp"
 
 extern "C" {
 	#include "cia.h"

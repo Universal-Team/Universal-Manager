@@ -24,17 +24,17 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/buttonTester.hpp"
+#include "screens/calculatorScreen.hpp"
+#include "screens/calendarScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "screens/utilsScreen.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "utilsScreen.hpp"
-#include "settings.hpp"
-
-#include "buttonTester.hpp"
-#include "calculatorScreen.hpp"
-#include "calendarScreen.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 

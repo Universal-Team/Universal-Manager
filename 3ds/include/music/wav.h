@@ -1,5 +1,6 @@
-#include <stdint.h>
 #include "music/playback.h"
+
+#include <stdint.h>
 
 /**
  * Set decoder parameters for WAV.

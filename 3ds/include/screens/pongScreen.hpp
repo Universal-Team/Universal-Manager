@@ -24,7 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
+#include "screens/screen.hpp"
 
 class Pong : public SCREEN 
 {

@@ -1,5 +1,6 @@
-// #include <opus/opusfile.h>
 #include "music/playback.h"
+
+// #include <opus/opusfile.h>
 
 void setOpus(struct decoder_fn* decoder);
 

@@ -24,18 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/pongScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <3ds.h>
-#include <citro2d.h>
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include "sound.h"
-#include "settings.hpp"
 
-#include "pongScreen.hpp"
 
 // Score stuff for Player 1.
 void Pong::drawScoreP1(void) const

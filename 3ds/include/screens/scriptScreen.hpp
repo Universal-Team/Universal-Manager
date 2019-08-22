@@ -24,14 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
-#include <string>
-#include <vector>
-#include "fileBrowse.h"
 #include "structs.hpp"
-#include <fstream>
+#include "screens/screen.hpp"
+#include "utils/fileBrowse.h"
+
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include <unistd.h>
+#include <vector>
 
 class Script : public SCREEN 
 {

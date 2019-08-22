@@ -27,8 +27,9 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
 
-#include <3ds.h>
 #include "gui.hpp"
+
+#include <3ds.h>
 
 // Animated BG Functions.
 void animatedBGTop(void);

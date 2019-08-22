@@ -1,6 +1,7 @@
+#include "music/playback.h"
+
 #include <tremor/ivorbiscodec.h>
 #include <tremor/ivorbisfile.h>
-#include "music/playback.h"
 
 void setVorbis(struct decoder_fn* decoder);
 

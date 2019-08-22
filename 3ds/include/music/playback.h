@@ -13,9 +13,6 @@ typedef struct {
     char album[31];
     char artist[31];
     char year[5];
-    //char comment[31];
-    //char genre[31];
-    //C2D_Image cover_image;
 } Audio_Metadata;
 
 extern Audio_Metadata metadata;

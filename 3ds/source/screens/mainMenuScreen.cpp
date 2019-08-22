@@ -24,19 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/creditsScreen.hpp"
+#include "screens/fileManagerScreen.hpp"
+#include "screens/ftpScreen.hpp"
+#include "screens/gameSubMenu.hpp"
+#include "screens/imageScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/musicScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include "mainMenuScreen.hpp"
-#include "fileManagerScreen.hpp"
-#include "utilsScreen.hpp"
-#include "gameSubMenu.hpp"
-#include "musicScreen.hpp"
-#include "scriptScreen.hpp"
-#include "creditsScreen.hpp"
-#include "textScreen.hpp"
-#include "imageScreen.hpp"
-#include "settingsScreen.hpp"
-#include "updaterScreen.hpp"
-#include "ftpScreen.hpp"
+#include "screens/scriptScreen.hpp"
+#include "screens/settingsScreen.hpp"
+#include "screens/textScreen.hpp"
+#include "screens/updaterScreen.hpp"
+#include "screens/utilsScreen.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 extern bool exiting;

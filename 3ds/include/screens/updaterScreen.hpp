@@ -24,8 +24,9 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screen.hpp"
 #include "structs.hpp"
+#include "screens/screen.hpp"
+
 #include <vector>
 
 class Updater : public SCREEN 

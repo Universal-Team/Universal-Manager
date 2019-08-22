@@ -24,12 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calendarScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include "calendarScreen.hpp"
+
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 

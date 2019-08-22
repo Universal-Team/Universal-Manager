@@ -24,16 +24,17 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/gameSubMenu.hpp"
+#include "screens/pongScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "screens/ticTacToeScreen.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "gameSubMenu.hpp"
-#include "settings.hpp"
 
-#include "ticTacToeScreen.hpp"
-#include "pongScreen.hpp"
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 

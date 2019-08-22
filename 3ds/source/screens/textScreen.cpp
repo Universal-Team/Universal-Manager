@@ -25,16 +25,17 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "textScreen.hpp"
-#include "fileBrowse.h"
-#include "keyboard.hpp"
-#include "settings.hpp"
-#include <vector>
-#include <string>
-#include <fstream>
+#include "screens/textScreen.hpp"
+#include "utils/fileBrowse.h"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include <unistd.h>
-#include "sound.h"
+#include <vector>
 
 void Text::Draw(void) const
 {
@@ -116,7 +117,14 @@ void Text::DrawBrowse(void) const
 	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
 		dirs += "\n\n";
 	}
-	Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    } else if (Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
 
 	Gui::DrawBGBot();
 	animatedBGBot();

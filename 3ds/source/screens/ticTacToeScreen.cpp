@@ -25,16 +25,18 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "screens/ticTacToeScreen.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <3ds.h>
-#include <citro2d.h>
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include "sound.h"
-#include "settings.hpp"
-#include "ticTacToeScreen.hpp"
+
 
 #define COLOR1 C2D_Color32(137, 207, 240, 255) // Color Player 1.
 #define COLOR2 C2D_Color32(3, 192, 60, 255) // Color Player 2.

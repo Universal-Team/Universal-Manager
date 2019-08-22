@@ -24,18 +24,18 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <3ds.h>
-#include <citro2d.h>
-#include "download.hpp"
-#include "extract.hpp"
 #include "gui.hpp"
-#include "screenCommon.hpp"
-#include <fstream>
+#include "screens/screenCommon.hpp"
+#include "utils/download.hpp"
+#include "utils/extract.hpp"
+#include "utils/fileBrowse.h"
+
+#include <3ds.h>
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "fileBrowse.h"
 
 extern "C" {
 #include "cia.h"

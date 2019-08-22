@@ -24,11 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screen.hpp"
+#include "structs.hpp"
+#include "screens/screen.hpp"
+#include "screens/screenCommon.hpp"
+#include "utils/fileBrowse.h"
+
 #include <string>
 #include <vector>
-#include "structs.hpp"
-#include "fileBrowse.h"
 
 // Music Main.
 class Music : public SCREEN 
