@@ -400,9 +400,9 @@ void Gui::drawFileSelector(float x, float y)
     u32 color = C2D_Color32(r + (255 - r) * highlight_multiplier, g + (255 - g) * highlight_multiplier, b + (255 - b) * highlight_multiplier, 255);
 
     if (Config::selector == 0) {
-        Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 20));
-    } else if (Config::selector == 1) {
         Draw_Rect(x, y, 400, 25, C2D_Color32(0, 0, 0, 255));
+    } else if (Config::selector == 1) {
+        Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 20));
     } else if (Config::selector == 2) {
         Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 255));
     }

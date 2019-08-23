@@ -235,9 +235,9 @@ void Music::DrawMusicList(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 1) {
+    if (Config::selector == 0) {
         Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 0 || Config::selector == 2) {
+    } else if (Config::selector == 1 || Config::selector == 2) {
         Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
@@ -404,6 +404,7 @@ void Music::DrawPlayer(void) const
 		} else {
 			Draw_Text(40, 177, 0.45f, WHITE, "Progressbar not available for this Music Format yet.");
 		}
+	}
 
 	
 	if(!isPaused() && isPlaying()) {
@@ -434,7 +435,6 @@ void Music::DrawPlayer(void) const
 	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, Functions[7].x, Functions[7].y, (musicShuffle ? WHITE : Config::barColor));
 	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, Functions[8].x, Functions[8].y, (musicRepeat ? WHITE : Config::barColor));
 	if (musicRepeat)	Draw_Text(Functions[8].x+11, Functions[8].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
-}
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -836,9 +836,9 @@ void Music::DrawThemeSelector(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 1) {
+    if (Config::selector == 0) {
         Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 0 || Config::selector == 2) {
+    } else if (Config::selector == 1 || Config::selector == 2) {
         Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
