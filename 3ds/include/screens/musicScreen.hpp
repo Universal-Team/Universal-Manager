@@ -38,8 +38,6 @@ class Music : public SCREEN
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
-	Music();
-
 private:
 	int MusicMode = 0;
 
