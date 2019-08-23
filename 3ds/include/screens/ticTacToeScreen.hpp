@@ -24,9 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "structs.hpp"
 #include "screens/screen.hpp"
-#include <vector>
 
 class TicTacToe : public SCREEN 
 {
@@ -55,28 +53,4 @@ private:
 	int selection = 0;
 
 	mutable bool currentPlayer = 0;
-
-	std::vector<Structs::TTTPos> gameBoardPos = {
-		{80,  40, 50, 50}, {135,  40, 50, 50}, {190,  40, 50, 50},
-		{80,  95, 50, 50}, {135,  95, 50, 50}, {190,  95, 50, 50},
-		{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50},
-	};
-
-	std::vector<int> gameBoard = {
-		0, 0, 0,
-		0, 0, 0,
-		0, 0, 0,
-	};
-
-	struct tri {
-		int one;
-		int two;
-		int three;
-	};
-
-	std::vector<tri> winIndexes = {
-		{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
-		{0, 3, 6}, {1, 4, 7}, {2, 5, 8},
-		{0, 4, 8}, {2, 4, 6},
-	}; 
 };
