@@ -47,11 +47,10 @@ struct Key {
 	int y;
 };
 
-struct TTTPos {
-	int x;
-	int y;
-	int w;
-	int h;
+struct tri {
+	int one;
+	int two;
+	int three;
 };
 
 private:

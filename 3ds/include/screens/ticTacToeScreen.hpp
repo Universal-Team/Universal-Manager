@@ -26,6 +26,8 @@
 
 #include "screens/screen.hpp"
 
+#include <array>
+
 class TicTacToe : public SCREEN 
 {
 public:
@@ -33,7 +35,6 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	bool touching(touchPosition touch, Structs::TTTPos button);
 	void drawField(void) const;
 
 	void drawSubMenu(void) const;
@@ -53,4 +54,10 @@ private:
 	int selection = 0;
 
 	mutable bool currentPlayer = 0;
+
+	std::array<int, 9> gameBoard = {
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0
+	};
 };

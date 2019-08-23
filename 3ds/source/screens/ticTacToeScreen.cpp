@@ -36,40 +36,27 @@
 #include <fstream>
 #include <string>
 #include <unistd.h>
-#include <vector>
 
 
 #define COLOR1 C2D_Color32(137, 207, 240, 255) // Color Player 1.
 #define COLOR2 C2D_Color32(3, 192, 60, 255) // Color Player 2.
 
-Structs::TTTPos gameBoardPos[] = {
-	{80,  40, 50, 50}, {135,  40, 50, 50}, {190,  40, 50, 50},
-	{80,  95, 50, 50}, {135,  95, 50, 50}, {190,  95, 50, 50},
-	{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50},
+static constexpr std::array<Structs::ButtonPos, 9> gameBoardPos = {{
+	{80, 40, 50, 50}, {135, 40, 50, 50}, {190, 40, 50, 50},
+	{80, 95, 50, 50}, {135, 95, 50, 50}, {190, 95, 50, 50},
+	{80, 150, 50, 50}, {135, 150, 50, 50}, {190, 150, 50, 50}
+}
 };
 
-int gameBoard[] = {
-	0, 0, 0,
-	0, 0, 0,
-	0, 0, 0,
-};
 
-struct tri {
-	int one;
-	int two;
-	int three;
-} winIndexes[] = {
+static constexpr std::array<Structs::tri, 8> winIndexes = {{
 	{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
 	{0, 3, 6}, {1, 4, 7}, {2, 5, 8},
-	{0, 4, 8}, {2, 4, 6},
+	{0, 4, 8}, {2, 4, 6}
+}
 };
 
-bool TicTacToe::touching(touchPosition touch, Structs::TTTPos button) {
-	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
-		return true;
-	else
-		return false;
-}
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 void TicTacToe::resetBoard() {
 	for(uint i=0;i<(sizeof(gameBoard)/sizeof(gameBoard[0]));i++) {
