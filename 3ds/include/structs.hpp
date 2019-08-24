@@ -41,6 +41,15 @@ struct ButtonPos
 	int link;
 };
 
+struct TextBtn
+{
+	int x;
+	int y;
+	int w;
+	int h;
+	std::string text;
+};
+
 struct Key {
 	std::string character;
 	int x;

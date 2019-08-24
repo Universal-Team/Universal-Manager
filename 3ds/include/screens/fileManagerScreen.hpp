@@ -27,9 +27,23 @@
 #define FILEMANAGER_HPP
 
 #include "screens/screen.hpp"
+#include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
+#include "utils/fileOperations.h"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+#include "structs.hpp"
 
-#include <vector>
+#include <array>
+#include <algorithm>
+#include <fstream>
+#include <string>
+#include <unistd.h>
+
+extern "C" {
+#include "C2D_helper.h"
+#include "cia.h"
+}
 
 class FileManager : public SCREEN 
 {
@@ -38,12 +52,34 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	bool refresh = false;
+	bool updatingSelf = false;
 	uint selectedFile = 0;
 	int keyRepeatDelay = 0;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	std::string currentFile = "";
 	std::string currentFiles;
+
+	// Operations.
+	DirEntry clipboard;
+	void renameFile(void);
+	void deleteFile(void);
+	void copyPaste(void);
+	void createFolder(void);
+	void extractarchive(void);
+	void install(void);
+	bool displayActionBox(void);
+
+	std::array<Structs::TextBtn, 6> functionPos = {{
+		{59, 70, 93, 35, "Rename"},
+		{165, 70, 93, 35, "Delete"},
+		{59, 110, 93, 35, "Copy/Paste"},
+		{165, 110, 93, 35, "Create"},
+		{59, 150, 93, 35, "Extract"},
+		{165, 150, 93, 35, "Install"}
+	}
+	};
 };
 
 #endif

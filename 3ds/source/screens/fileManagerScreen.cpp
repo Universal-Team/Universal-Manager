@@ -102,6 +102,16 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = false;
 	}
 
+			if (refresh) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		refresh = false;
+	}
+
 		if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -133,5 +143,118 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE001 to go back a Folder \n \n Press \uE002 to open the Action Menu.");
+	}
+}
+
+// FileManager Operations!
+
+void FileManager::renameFile(void) {
+	std::string newName = Input::getLine();
+	if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
+}
+
+void FileManager::deleteFile(void) {
+	DisplayMsg("Delete is in progress...\nPlease wait...");
+	remove(dirContents[selectedFile].name.c_str());
+}
+
+void FileManager::copyPaste(void) {
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	if(clipboard.name == "") {
+	clipboard = dirContents[selectedFile];
+	clipboard.path = path;
+	} else {
+	if(strcmp(path, clipboard.path.c_str()) != 0) {
+	if(clipboard.isDirectory)
+	mkdir(clipboard.name.c_str(), 0777);
+	DisplayMsg("Paste is in progress...\nPlease wait...");
+	fcopy((clipboard.path+clipboard.name).c_str(), (path+clipboard.name).c_str());
+	clipboard.name = "";
+		}
+	}
+}
+
+void FileManager::createFolder(void) {
+	std::string newName = Input::getLine();
+	mkdir(newName.c_str(), 0777);
+}
+
+void FileManager::extractarchive(void) {
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	std::string outPath = path + dirContents[selectedFile].name.substr(0, dirContents[selectedFile].name.find_last_of(".")) + "/";
+	mkdir(outPath.c_str(), 0777);
+	DisplayMsg("Extract is in progress...\nPlease wait...");
+	extractArchive(dirContents[selectedFile].name, "/", outPath);
+}
+
+void FileManager::install(void) {
+	DisplayMsg("Install is in progress...\nPlease wait...");
+	installCia(dirContents[selectedFile].name.c_str());
+}
+
+
+bool FileManager::displayActionBox(void)
+{
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	set_screen(bottom);
+	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, Config::barColor);
+	Gui::sprite(sprites_actionBox_idx, 54, 30);
+
+	// Buttons.
+	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
+		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
+		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
+	}
+
+	Gui::clearTextBufs();
+	C3D_FrameEnd(0);
+	int selection = 0;
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		if(keysDown() & KEY_UP) {
+			if(selection > 0)	selection--;
+		} else if(keysDown() & KEY_DOWN) {
+			if(selection < 5)	selection++;
+		} else if(keysDown() & KEY_A) {
+			switch(selection) {
+				case 0: {
+					if(confirmPopup("Do you want to rename this File?")) { 
+					renameFile();
+					refresh = true;
+					}
+					break;
+				} case 1:
+					if(confirmPopup("Do you want to delete this File?")) {
+					deleteFile();
+					refresh = true;
+					}
+					break;
+				case 2: { 
+					copyPaste();
+					refresh = true;
+					break;
+				} case 3: { 
+					createFolder();
+					refresh = true;
+					break;
+				} case 4: {
+					if(confirmPopup("Do you want to extract this Archive?")) {
+					extractarchive();
+					refresh = true;
+					}
+					break;
+				} case 5:
+					if(confirmPopup("Do you want to install this CIA?")) {
+					install();
+					}
+					break;
+			}
+		return true;
+		} else if(keysDown() & KEY_B) {
+			return false;
+		}
 	}
 }

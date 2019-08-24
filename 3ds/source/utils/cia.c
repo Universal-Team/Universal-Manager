@@ -1,6 +1,6 @@
 #include "utils/cia.h"
 
-extern bool updatingSelf;
+bool updatingSelf;
 
 
 static Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
