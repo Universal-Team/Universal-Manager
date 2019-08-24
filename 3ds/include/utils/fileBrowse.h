@@ -1,9 +1,9 @@
 #ifndef FILE_BROWSE_H
 #define FILE_BROWSE_H
 
-#include <sys/stat.h>
 #include <dirent.h>
 #include <string>
+#include <sys/stat.h>
 #include <vector>
 
 struct DirEntry {

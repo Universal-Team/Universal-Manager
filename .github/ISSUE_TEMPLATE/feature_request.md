@@ -7,6 +7,11 @@ assignees: ''
 
 ---
 
+**For which version of Universal-Manager?**
+- [ ] 3DS
+- [ ] DS(i)
+- [ ] Switch
+
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 

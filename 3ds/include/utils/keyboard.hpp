@@ -11,4 +11,5 @@ namespace Input {
 	char checkKeyboard(int hDown, int hHeld);
 }
 
+	void drawKeyboard();
 #endif

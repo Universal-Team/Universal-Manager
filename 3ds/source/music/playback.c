@@ -1,7 +1,3 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "music/all.h"
 #include "music/error.h"
 #include "music/file.h"
@@ -11,6 +7,10 @@
 #include "music/playback.h"
 #include "music/vorbis.h"
 #include "music/wav.h"
+
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 static volatile bool stop = true;
 static enum file_types file_type = FILE_TYPE_ERROR;

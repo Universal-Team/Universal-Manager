@@ -31,7 +31,7 @@ namespace Gui
     void DrawImage(SDL_Texture *texture, int x, int y);
     void RenderScreen(void);
 
-	void mainLoop(void);
+	void mainLoop(u64 hDown);
 	void setScreen(std::unique_ptr<SCREEN> screen);
 	void screenBack(void);
 }

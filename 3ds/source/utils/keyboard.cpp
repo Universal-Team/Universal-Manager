@@ -1,11 +1,11 @@
 #include "animation.hpp"
 #include "gui.hpp"
-#include "settings.hpp"
-#include "keyboard.hpp"
-#include "settings.hpp"
-#include <string>
-#include <stdio.h>
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+
 #include <ctype.h>
+#include <stdio.h>
+#include <string>
 
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;

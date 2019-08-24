@@ -126,9 +126,9 @@ void Gui::RenderScreen(void) {
 
 // Screen Stuff.
 
-void Gui::mainLoop(void) {
+void Gui::mainLoop(u64 hDown) {
 	screens.top()->Draw();
-	screens.top()->Logic();
+	screens.top()->Logic(hDown);
 }
 
 void Gui::setScreen(std::unique_ptr<SCREEN> screen)

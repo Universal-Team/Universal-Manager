@@ -24,10 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef UNIVERSAL_MANAGER_NX_TEXTURES_H
-#define UNIVERSAL_MANAGER_NX_TEXTURES_H
+#ifndef TEXTURES_HPP
+#define TEXTURES_HPP
 
 #include <SDL2/SDL.h>
+
+extern SDL_Texture *MainMenuButton;
 
 void Textures_Load(void);
 void Textures_Free(void);

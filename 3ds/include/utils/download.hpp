@@ -29,7 +29,7 @@
 #include "common.hpp"
 
 #define APP_TITLE "Universal-Manager"
-#define VERSION_STRING "3.1.0"
+#define V_STRING "3.1.0"
 
 enum DownloadError {
 	DL_ERROR_NONE = 0,
@@ -99,11 +99,6 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 std::vector<ThemeEntry> getThemeList(std::string repo, std::string path);
 
 /**
- * Check for updates.
- */
-void checkForUpdates(void);
-
-/**
  * Update nds-bootstrap to the latest build.
  */
 void updateBootstrap(bool nightly);
@@ -164,3 +159,14 @@ void updateRelaunchNightly(void);
 void updateRelaunchRelease(void);
 
 void downloadFailed(void);
+
+
+/**
+ * Update LeafEdit to the latest Nightly.
+ */
+void updateLeafEdit(void);
+
+/**
+ * Update LeafEdit to the latest Release.
+ */
+void updateLeafEditRelease(void);

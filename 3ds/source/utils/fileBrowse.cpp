@@ -1,4 +1,8 @@
-#include "fileBrowse.h"
+
+#include "animation.hpp"
+#include "gui.hpp"
+#include "utils/fileBrowse.h"
+
 #include <3ds.h>
 #include <cstring>
 #include <dirent.h>
@@ -6,8 +10,6 @@
 #include <unistd.h>
 #include <vector>
 
-#include "gui.hpp"
-#include "animation.hpp"
 
 int file_count = 0;
 
@@ -16,67 +18,6 @@ extern uint selectedFile;
 extern int keyRepeatDelay;
 extern bool dirChanged;
 extern std::vector<DirEntry> dirContents;
-
-/* void findFiles(std::vector<DirEntry>& dirContents, std::vector<std::string> fileTypes)
-{	
-	struct stat st;
-	DIR *pdir = opendir(".");
-
-	if (pdir == NULL)
-	{
-		DisplayMsg("Unable to open the directory.");
-		for(int i=0;i<120;i++)
-			gspWaitForVBlank();
-	}
-	else
-	{
-		while (continueFileScan)
-		{
-			DirEntry dirEntry;
-
-			struct dirent* pent = readdir(pdir);
-			if (pent == NULL) break;
-
-			stat(pent->d_name, &st);
-			dirEntry.name = pent->d_name;
-			char scanningMessage[512];
-			snprintf(scanningMessage, sizeof(scanningMessage), "Scanning SD card for files...\n\n(Press B to cancel)\n\n\n\n\n\n\n\n\n%s", dirEntry.name.c_str());
-			DisplayMsg(scanningMessage);
-			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
-				if(!(dirEntry.isDirectory) && dirEntry.name.length() >= 3) {
-					for(uint i=0;i<fileTypes.size();i++) {
-						if (strcasecmp(dirEntry.name.substr(dirEntry.name.length()-3, 3).c_str(), fileTypes[i].c_str()) == 0) {
-							if(strcasecmp(fileTypes[i].c_str(), "nds") == 0) {
-								// Get game's TID
-								FILE *f_nds_file = fopen(dirEntry.name.c_str(), "rb");
-								// char game_TID[5];
-								grabTID(f_nds_file, dirEntry.tid);
-								dirEntry.tid[4] = 0;
-								fclose(f_nds_file);
-							}
-
-							dirContents.push_back(dirEntry);
-							file_count++;
-						}
-					}
-				} else if (dirEntry.isDirectory
-				&& dirEntry.name.compare(".") != 0
-				&& dirEntry.name.compare("_nds") != 0
-				&& dirEntry.name.compare("3ds") != 0
-				&& dirEntry.name.compare("DCIM") != 0
-				&& dirEntry.name.compare("gm9") != 0
-				&& dirEntry.name.compare("luma") != 0
-				&& dirEntry.name.compare("Nintendo 3DS") != 0
-				&& dirEntry.name.compare("private") != 0
-				&& dirEntry.name.compare("retroarch") != 0) {
-					chdir(dirEntry.name.c_str());
-					findNdsFiles(dirContents);
-					chdir("..");
-				}
-		}
-		closedir(pdir);
-	}
-}*/
 
 off_t getFileSize(const char *fileName)
 {

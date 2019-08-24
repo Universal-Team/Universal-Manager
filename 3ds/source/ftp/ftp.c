@@ -3,7 +3,10 @@
  * (https://tools.ietf.org/html/rfc3659) and suggested implementation details
  * from https://cr.yp.to/ftp/filesystem.html
  */
-#include "ftp.h"
+
+#include "ftp/console.h"
+#include "ftp/ftp.h"
+
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <dirent.h>
@@ -29,7 +32,6 @@
 #include <stdbool.h>
 #define BIT(x) (1<<(x))
 #endif
-#include "console.h"
 
 #define POLL_UNKNOWN    (~(POLLIN|POLLPRI|POLLOUT))
 

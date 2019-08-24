@@ -1,4 +1,4 @@
-#include "files.h"
+#include "utils/files.h"
 
 FS_Path getPathInfo(const char * path, FS_ArchiveID * archive)
 {

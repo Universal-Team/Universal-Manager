@@ -24,73 +24,65 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/pongScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <3ds.h>
-#include <citro2d.h>
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include "sound.h"
-//#include "keyboard.hpp" // Maybe for the Future?
-
-// Paddle and Ball Positions.
-int paddle1 = 90, paddle2 = 90;
-double	ballX = 200, ballY = 100,
-		ballXSpd = -3, ballYSpd = 0;
-
-// Modes.
-int multiPlayerMode = 0;
-
-// Sub Menu.
-int subMenu = 1;
-int selection = 0;
-
-// Scores.
-int scoreP1 = 0;
-int scoreP2 = 0;
 
 
 // Score stuff for Player 1.
-static void drawScoreP1(void) {
+void Pong::drawScoreP1(void) const
+{
 	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
 }
 
 
 // Score stuff for Player 2.
-static void drawScoreP2(void) {
+void Pong::drawScoreP2(void) const
+{
 	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
 }
 
 
 // Draws the Paddles for both Players.
-static void drawPaddle(void) {
+void Pong::drawPaddle(void) const
+{
 	C2D_DrawRectSolid(10, paddle1, 1.0f, 10, 60, Config::barColor);
 	C2D_DrawRectSolid(380, paddle2, 1.0f, 10, 60, Config::barColor);
 }
 
 
 // Draws the ball.
-static void drawBall(void) {
+void Pong::drawBall(void) const
+{
 	C2D_DrawCircleSolid(ballX, ballY, 1.0f, 5, Config::barColor);
 }
 
 
 // This is for the Sub Menu.
 //#######################################################################################
-static void drawSelection(void) {
-	if (selection == 0) {
+void Pong::drawSelection(void) const
+{
+	if (Selection == 0) {
 		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
-	} else if (selection == 1) {
+	} else if (Selection == 1) {
 		C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
-	} else if (selection == 2) {
+	} else if (Selection == 2) {
 		C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
 	}
 }
 
 
-static void drawSubMenu(void) {
+void Pong::drawSubMenu(void) const
+{
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
 	Draw_Text(180, 0, 0.72f, WHITE, "Pong");
@@ -112,29 +104,30 @@ static void drawSubMenu(void) {
 	drawSelection();
 }
 
-static void selectionLogic(u32 hDown, u32 hHeld) {
+void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_UP) {
 		playPongSfx();
-		if(selection > 0)	selection--;
+		if(Selection > 0)	Selection--;
 	} else if (hDown & KEY_DOWN) {
 		playPongSfx();
-		if(selection < 2)	selection++;
+		if(Selection < 2)	Selection++;
 	} else if (hDown & KEY_A) {
 		playScoreSfx();
-		switch(selection) {
+		switch(Selection) {
 			case 0: {
 				multiPlayerMode = 0;
 				subMenu = 0;
-				selection = 0;
+				Selection = 0;
 				break;
 			} case 1:
 				multiPlayerMode = 1;
 				subMenu = 0;
-				selection = 0;
+				Selection = 0;
 				break;
 			case 2: {
-				screenTransition(gameSubMenuScreen);
-				selection = 0;
+				Gui::screenBack();
+				return;
+				Selection = 0;
 				break;
 			}
 		}
@@ -144,7 +137,8 @@ static void selectionLogic(u32 hDown, u32 hHeld) {
 
 // This is the actual Screen.
 //#######################################################################################
-static void drawScreen(void) {
+void Pong::drawScreen(void) const
+{
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
 
@@ -168,7 +162,8 @@ static void drawScreen(void) {
 
 
 // Screen Selection.
-void drawPongScreen(void) {
+void Pong::Draw(void) const
+{
 	if (subMenu == 0) {
 		drawScreen();
 	} else if (subMenu == 1) {
@@ -178,7 +173,7 @@ void drawPongScreen(void) {
 
 
 // Player 1 Control.
-static void player1Control(u32 hDown, u32 hHeld) {
+void Pong::player1Control(u32 hDown, u32 hHeld) {
 	if (hDown & KEY_DOWN) {
 		if(paddle1 < 181)	paddle1 += 6.0;
 		if (paddle1 == 180)	paddle1 += 0.0;
@@ -196,7 +191,7 @@ static void player1Control(u32 hDown, u32 hHeld) {
 
 
 // Player 2 Control.
-static void player2Control(u32 hDown, u32 hHeld) {
+void Pong::player2Control(u32 hDown, u32 hHeld) {
 		if (hDown & KEY_B) {
 		if(paddle2 < 181)	paddle2 += 6.0;
 		if (paddle2 == 180)	paddle2 += 0.0;
@@ -212,7 +207,7 @@ static void player2Control(u32 hDown, u32 hHeld) {
 	}
 }
 
-static void ballLogic(void) {
+void Pong::ballLogic(void) {
 		ballX += ballXSpd;
 		ballY += ballYSpd;
 
@@ -249,14 +244,14 @@ static void ballLogic(void) {
 		}
 }
 
-static void stopLogic(void) {
+void Pong::stopLogic(void) {
 			paddle1 = 90;
 			paddle2 = 90;
 }
 
-void pongLogic(u32 hDown, u32 hHeld) {
+void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (subMenu == 1) {
-		selectionLogic(hDown, hHeld);
+		selectionLogicPong(hDown, hHeld);
 	}
 
 	if (subMenu == 0) {

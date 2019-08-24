@@ -24,46 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calendarScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
 
-std::vector<std::string> months = {
-	"January",
-	"Febuary",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December"
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-extern bool touching(touchPosition touch, ButtonPos button);
-inline C2D_Font systemFont;
-inline C2D_TextBuf dynamicBuf, sizeBuf;
-
-ButtonPos calendarButtonPos[] = {
-		// Back Icon.
-	{293, 213, 27, 27, -1},
-};
-
-void DisplayMonth(void) {
+void Calendar::DisplayMonth(void) const
+{
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
@@ -78,7 +51,8 @@ std::string GetYear(void) {
 	return StringUtils::format("%04i", year);
 }
 
-void DisplayYear(void) {
+void Calendar::DisplayYear(void) const
+{
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
@@ -601,7 +575,8 @@ void getTheDays(void) {
 	}
 }
 
-void drawCalendarScreen(void) {
+void Calendar::Draw(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -618,12 +593,14 @@ void drawCalendarScreen(void) {
 	Gui::DrawBarsBottomBack();
 }
 
-void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Calendar::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenTransition(utilsScreen);
+		Gui::screenBack();
+		return;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, calendarButtonPos[0])) {
-			screenTransition(utilsScreen);
+			Gui::screenBack();
+			return;
 		}
 	}
 }

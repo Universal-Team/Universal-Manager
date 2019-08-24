@@ -32,7 +32,7 @@
 #include "fileManagerScreen.hpp"
 #include "mainMenuScreen.hpp"
 
-void FILEMANAGER::Draw(void) const
+void FileManager::Draw(void) const
 {
 	Gui::DrawRect(0, 0, 1280, 720, BLUE);
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
@@ -40,11 +40,8 @@ void FILEMANAGER::Draw(void) const
 	Gui::DrawText(250, 0, 72, WHITE, "FileManager Sub Menu");
 }
 
-void FILEMANAGER::Logic(void) {
-	hidScanInput();
-	hDown = hidKeysDown(CONTROLLER_P1_AUTO);
-
+void FileManager::Logic(u64 hDown) {
 	if (hDown & KEY_A) {
-		Gui::setScreen(std::make_unique<MAINMENU>());
+		Gui::setScreen(std::make_unique<MainMenu>());
 	}
 }

@@ -30,16 +30,13 @@
 #include "screens/screen.hpp"
 #include "textures.hpp"
 
-class MAINMENU : public SCREEN 
+class MainMenu : public SCREEN 
 {
 public:
 	void Draw(void) const override;
-	void Logic(void) override;
+	void Logic(u64 hDown) override;
 
 private:
-	SDL_Texture *MainMenuButton; // To-Do : Figure out, why it doesn't draw the Buttons.
-	//char universal_manager_vertext[13]; // Not needed for now.
-	u64 hDown;
 };
 
 #endif

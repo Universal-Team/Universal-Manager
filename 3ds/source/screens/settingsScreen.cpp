@@ -24,84 +24,33 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
 #include "colors.hpp"
-#include <algorithm>
-#include <fstream>
-#include <unistd.h>
-#include <vector>
-#include <string.h>
-#include <dirent.h>
-#include <malloc.h>
-#include <sstream>
-
-#include "keyboard.hpp"
+#include "screens/screenCommon.hpp"
+#include "screens/settingsScreen.hpp"
+#include "utils/keyboard.hpp"
 #include "utils/settings.hpp"
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
-
-extern bool touching(touchPosition touch, ButtonPos button);
-std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
-std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
-std::string percentModes[] = {"Hidden", "Shown"}; 
-std::string layoutModes[] = {"Bars", "Bars2"}; 
-std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
+#include <algorithm>
+#include <dirent.h>
+#include <fstream>
+#include <malloc.h>
+#include <sstream>
+#include <string.h>
+#include <unistd.h>
+#include <vector>
 
 
-ButtonPos uiSettingsButtonPos[] = {
-	// Bars
-	{17, 85, 95, 41, -1},
-	{112, 85, 95, 41, -1},
-	{207, 85, 95, 41, -1},
-	// Background
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-	{17, 165, 95, 41, -1},
-	{112, 165, 95, 41, -1},
-	{207, 165, 95, 41, -1},
-
-	{293, 213, 27, 27, -1},
-
-	// Music BG
-	{207, 31, 95, 41, -1},
-
-	// Bubble Color.
-	{17, 100, 95, 41, -1},
-	{112, 100, 95, 41, -1},
-	{207, 100, 95, 41, -1},
-
-	// Animation enable.
-	{207, 31, 95, 41, -1},
-
-	// Battery percent.
-	{207, 165, 87, 33, -1},
-
-		// Bars Layout.
-	{17, 165, 95, 41, -1},
-
-		// BG Layout.
-	{17, 31, 95, 41, -1},
-
-	// Selected Text Color.
+	std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
+	std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
+	std::string percentModes[] = {"Hidden", "Shown"}; 
+	std::string layoutModes[] = {"Bars", "Bars2"}; 
+	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
+	std::string Selectors[] = {"Selector1", "Selector2", "Selector3"};
 	
-	{17, 85, 95, 41, -1},
-	{112, 85, 95, 41, -1},
-	{207, 85, 95, 41, -1},
-
-	// Unselected Text Color.
-
-	{17, 165, 95, 41, -1},
-	{112, 165, 95, 41, -1},
-	{207, 165, 95, 41, -1},
-	
-};
-
-int getColorValue(int color, int bgr) {
+int Settings::getColorValue(int color, int bgr) const
+{
 	char colorName[10];
 	int i;
 	std::stringstream ss;
@@ -114,16 +63,16 @@ int getColorValue(int color, int bgr) {
 	return i;
 }
 
-std::string getColorName(int color, int bgr) {
+std::string Settings::getColorName(int color, int bgr) const
+{
 	char colorName[10];
 	int i = getColorValue(color, bgr);
 	itoa(i, colorName, 10);
 	return colorName;
 }
 
-int settingsPage = 0;
-
-void drawSettingsScreen(void) {
+void Settings::Draw(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -133,238 +82,319 @@ void drawSettingsScreen(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
+	DrawBottom();
+	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
+	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	DrawCurrentPage();
+}
 
-	// First Settings Page.
+void Settings::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	ButtonLogic(hDown, hHeld);
+	TouchLogic(hDown, touch);
+}
 
-	if (settingsPage == 0) {
-	// Bars.
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
-	Gui::Button(button_red_idx, 17, 85);
-	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
-	Gui::Button(button_green_idx, 112, 85);
-	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
-	Gui::Button(button_blue_idx, 207, 85);
-	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
+void Settings::DrawBottom(void) const
+{
+	if (SettingsPage == 1) {
+		Draw_Text((320-Draw_GetTextWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
+		Gui::Button(button_red_idx, 17, 85);
+		Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
+		Gui::Button(button_green_idx, 112, 85);
+		Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 85);
+		Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
 
 	// Background.
-	Draw_Text(100, 138, 0.7f, WHITE, "Background");
-	Gui::Button(button_red_idx, 17, 168);
-	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
-	Gui::Button(button_green_idx, 112, 168);
-	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
-	Gui::Button(button_blue_idx, 207, 168);
-	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
+		Draw_Text(100, 138, 0.7f, WHITE, "Background");
+		Gui::Button(button_red_idx, 17, 168);
+		Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
+		Gui::Button(button_green_idx, 112, 168);
+		Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 168);
+		Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
 
-	Gui::Button(button_updater_idx, 207, 31);
-	Draw_Text(229, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
-	Draw_Text(100, 38, 0.65f, WHITE, "Music Mode:");
+		Gui::Button(button_updater_idx, 207, 31);
+		Draw_Text(225, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
+		Draw_Text(100, 38, 0.65f, WHITE, "Music Mode:");
 
-	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(240, 4, 0.50, WHITE, "1"); //Draw First Page Number.
-	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 236, 3, RED);
 
-	// Second Settings Page.
+	} else if (SettingsPage == 2) {
+		Draw_Text(70, 73, 0.7f, WHITE, "Animation Color");
+		Gui::Button(button_red_idx, 17, 100);
+		Draw_Text(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
+		Gui::Button(button_green_idx, 112, 100);
+		Draw_Text(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 100);
+		Draw_Text(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
 
-	} else if (settingsPage == 1) {
-	// Bars.
-	Draw_Text(70, 73, 0.7f, WHITE, "Animation Color");
-	Gui::Button(button_red_idx, 17, 100);
-	Draw_Text(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
-	Gui::Button(button_green_idx, 112, 100);
-	Draw_Text(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
-	Gui::Button(button_blue_idx, 207, 100);
-	Draw_Text(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
+		Gui::Button(button_updater_idx, 207, 31);
+		Draw_Text(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
+		Draw_Text(115, 38, 0.7f, WHITE, "Animation:");
 
-	Gui::Button(button_updater_idx, 207, 31);
-	Draw_Text(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
-	Draw_Text(115, 38, 0.7f, WHITE, "Animation:");
+		Gui::Button(button_updater_idx, 207, 165);
+		Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
+		Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
 
-	Gui::Button(button_updater_idx, 207, 165);
-	Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
-	Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
 	// Bars Layouts.
-	Gui::Button(button_updater_idx, 17, 165);
-	Draw_Text(28, 174, 0.7f, WHITE, layoutModes[Config::layout].c_str());
+		Gui::Button(button_updater_idx, 17, 165);
+		Draw_Text(28, 174, 0.7f, WHITE, layoutModes[Config::layout].c_str());
+
 	// BG Layouts.
-	Gui::Button(button_updater_idx, 17, 31);
-	Draw_Text(28, 40, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
+		Gui::Button(button_updater_idx, 17, 31);
+		Draw_Text(28, 40, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
 
-	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(260, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
 
-	// Third Settings Page. (Text)
-	} else if (settingsPage == 2) {
+	} else if (SettingsPage == 3) {
+		Draw_Text(100, 78, 0.7f, WHITE, "Selected Text");
+		Gui::Button(button_red_idx, 17, 105);
+		Draw_Text(56, 118, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
+		Gui::Button(button_green_idx, 112, 105);
+		Draw_Text(150, 118, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 105);
+		Draw_Text(239, 118, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
 
-	Draw_Text(100, 58, 0.7f, WHITE, "Selected Text");
-	Gui::Button(button_red_idx, 17, 85);
-	Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
-	Gui::Button(button_green_idx, 112, 85);
-	Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
-	Gui::Button(button_blue_idx, 207, 85);
-	Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
+		Draw_Text(100, 148, 0.7f, WHITE, "Unselected Text");
+		Gui::Button(button_red_idx, 17, 168);
+		Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
+		Gui::Button(button_green_idx, 112, 168);
+		Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
+		Gui::Button(button_blue_idx, 207, 168);
+		Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
 
-	Draw_Text(100, 138, 0.7f, WHITE, "Unselected Text");
-	Gui::Button(button_red_idx, 17, 168);
-	Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
-	Gui::Button(button_green_idx, 112, 168);
-	Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
-	Gui::Button(button_blue_idx, 207, 168);
-	Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
-
-	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	Draw_Text(280, 4, 0.50, WHITE, "3"); //Draw Third Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
-}
+		// Selectors.
+		Draw_Text(30, 40, 0.7f, WHITE, "FileBrowse Selector");
+		Gui::Button(button_updater_idx, 207, 31);
+		Draw_Text(213, 40, 0.7f, WHITE, Selectors[Config::selector].c_str());
+	}
 }
 
-void SettingsLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Settings::DrawCurrentPage(void) const
+{
+	if (SettingsPage == 1) {
+		Draw_Text(240, 4, 0.50, WHITE, "1");
+	} else if (SettingsPage == 2) {
+		Draw_Text(260, 4, 0.50, WHITE, "2");
+	} else if (SettingsPage == 3) {
+		Draw_Text(280, 4, 0.50, WHITE, "3");
+	}
+}
+
+
+void Settings::ButtonLogic(u32 hDown, u32 hHeld)
+{
+	if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE052 / \uE053 to switch Pages."); 
+	} else if (hDown & KEY_B) {
+		Config::saveConfig();
+		Gui::screenBack();
+		return;
+
+
+	} else if (hDown & KEY_L) {
+		if (SettingsPage == 2) {
+			SettingsPage = 1;
+		} else if (SettingsPage == 3) {
+			SettingsPage = 2;
+		}
+
+
+	} else if (hDown & KEY_R) {
+		if (SettingsPage == 1) {
+			SettingsPage = 2;
+		} else if (SettingsPage == 2) {
+			SettingsPage = 3;
+		}
+	}
+}
+
+
+void Settings::TouchLogic(u32 hDown, touchPosition touch)
+{
 	int red;
 	int green;
 	int blue;
-		if (hHeld & KEY_SELECT) {
-			helperBox(" Press \uE052 / \uE053 to switch Pages.");
-		} else if (hDown & KEY_B) {
-		screenTransition(mainScreen);
-		Config::saveConfig();
-		} else if (settingsPage == 0 && hDown & KEY_R) {
-			settingsPage = 1;
-		} else if (settingsPage == 1 && hDown & KEY_L) {
-			settingsPage = 0;
-		} else if (settingsPage == 1 && hDown & KEY_R) {
-			settingsPage = 2;
-		} else if (settingsPage == 2 && hDown & KEY_L) {
-			settingsPage = 1;
 
-		// First Settings Page.
-		} else if (settingsPage == 0 && hDown & KEY_TOUCH) {
-		if (touching(touch, uiSettingsButtonPos[0])) {
+	if (hDown & KEY_TOUCH) {
+		if (SettingsPage == 1) {
+	if (touching(touch, uiSettingsButtonPos[0])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				red = temp;
 				Config::barColor = RGBA8(red, getColorValue(Config::barColor, 1), getColorValue(Config::barColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[1])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				green = temp;
 				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), green, getColorValue(Config::barColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[2])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				blue = temp;
 				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), getColorValue(Config::barColor, 1), blue, 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[3])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				red = temp;
 				Config::bgColor = RGBA8(red, getColorValue(Config::bgColor, 1), getColorValue(Config::bgColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[4])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				green = temp;
 				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), green, getColorValue(Config::bgColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				blue = temp;
 				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), getColorValue(Config::bgColor, 1), blue, 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenTransition(mainScreen);
 			Config::saveConfig();
+			Gui::screenBack();
+			return;
+
+
 		} else if (touching(touch, uiSettingsButtonPos[7])) {
 			Config::musicMode++;
 			if (Config::musicMode > 2) Config::musicMode = 0;
-}
+			}
 
-		// Second Settings Page.
-	} else if (settingsPage == 1 && hDown & KEY_TOUCH) {
+
+
+
+
+		} else if (SettingsPage == 2) {
 		if (touching(touch, uiSettingsButtonPos[8])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				red = temp;
 				Config::animationColor = RGBA8(red, getColorValue(Config::animationColor, 1), getColorValue(Config::animationColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[9])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				green = temp;
 				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), green, getColorValue(Config::animationColor, 0), 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[10])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				blue = temp;
 				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), getColorValue(Config::animationColor, 1), blue, 255);
 			}
+
+
 		} else if (touching(touch, uiSettingsButtonPos[11])) {
 			Config::animation++;
 			if (Config::animation > 2) Config::animation = 0;
+
+
 			} else if (touching(touch, uiSettingsButtonPos[12])) {
 			Config::percentDisplay++;
 			if (Config::percentDisplay > 1) Config::percentDisplay = 0;
+
+
 			} else if (touching(touch, uiSettingsButtonPos[13])) {
 			Config::layout++;
 			if (Config::layout > 1) Config::layout = 0;
+
+
 			} else if (touching(touch, uiSettingsButtonPos[14])) {
 			Config::layoutBG++;
 			if (Config::layoutBG > 2) Config::layoutBG = 0;
+
+
 			} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenTransition(mainScreen);
 			Config::saveConfig();
-}
-		// Third Settings Page.
-	} else if (settingsPage == 2 && hDown & KEY_TOUCH) {
+			Gui::screenBack();
+			return;
+		}
+
+
+
+
+
+	} else if (SettingsPage == 3) {
 	if (touching(touch, uiSettingsButtonPos[15])) {
 		int temp = Input::getUint(255);
 			if(temp != -1) {
 				red = temp;
 				Config::selectedText = RGBA8(red, getColorValue(Config::selectedText, 1), getColorValue(Config::selectedText, 0), 255);
 			}
+
+
 	} else if (touching(touch, uiSettingsButtonPos[16])) {
 		int temp = Input::getUint(255);
 			if(temp != -1) {
 				green = temp;
 				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), green, getColorValue(Config::selectedText, 0), 255);
 			}
+
+
 	} else if (touching(touch, uiSettingsButtonPos[17])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				blue = temp;
 				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), getColorValue(Config::selectedText, 1), blue, 255);
 			}
+
+
 	} else if (touching(touch, uiSettingsButtonPos[18])) {
 		int temp = Input::getUint(255);
 			if(temp != -1) {
 				red = temp;
 				Config::unselectedText = RGBA8(red, getColorValue(Config::unselectedText, 1), getColorValue(Config::unselectedText, 0), 255);
 			}
+
+
 	} else if (touching(touch, uiSettingsButtonPos[19])) {
 		int temp = Input::getUint(255);
 			if(temp != -1) {
 				green = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), green, getColorValue(Config::unselectedText, 0), 255);
 			}
+
+
 	} else if (touching(touch, uiSettingsButtonPos[20])) {
 			int temp = Input::getUint(255);
 			if(temp != -1) {
 				blue = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);
 			}
+
+
+	} else if (touching(touch, uiSettingsButtonPos[21])) {
+		Config::selector++;
+		if (Config::selector > 2) Config::selector = 0;
+
+
 	} else if (touching(touch, uiSettingsButtonPos[6])) {
-			screenTransition(mainScreen);
 			Config::saveConfig();
-}
-}
+			Gui::screenBack();
+			return;
+			}
+		}
+	}
 }

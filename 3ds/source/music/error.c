@@ -1,4 +1,5 @@
-#include "error.h"
+#include "music/error.h"
+
 #include <errno.h>
 #include <string.h>
 

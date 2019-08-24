@@ -24,17 +24,16 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/creditsScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include <citro2d.h>
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
 
-static int dialog = 5; 
-extern int fadealpha;
-extern bool fadein;
 
 // Color Stuff.
 #define VOLTZCOLORBAR RGBA8(0, 108, 255, 255)
@@ -52,32 +51,9 @@ extern bool fadein;
 #define TNGCOLORBAR RGBA8(127, 127, 127, 255)
 #define TNGCOLORBG RGBA8(0, 0, 31, 255)
 
-std::vector<std::string> names = {
-	"VoltZ",
-	"FlameKat53",
-	"Pk11",
-	"RocketRobz",
-	"TotallyNotGuy",
-	"MainMenu"
-};
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos creditsButtonPos[] = {
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
+extern int fadealpha;
+extern bool fadein;
 
 void drawVoltZ(void) {
 	// Top BG Stuff.
@@ -209,7 +185,8 @@ void drawTotallyNotGuy(void) {
 	Draw_Text((320-Draw_GetTextWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
 }
 
-void drawCredits(void) {
+void Credits::drawCredits(void) const
+{
 	set_screen(top);
 	Gui::Credits(credits_universal_credits_idx, 0, 0);
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
@@ -225,7 +202,8 @@ void drawCredits(void) {
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
-void drawCreditsDialogs(void) {
+void Credits::drawCreditsDialogs(void) const
+{
 	if (dialog == 0) {
 		drawVoltZ();
 	} else if (dialog == 1) {
@@ -241,7 +219,8 @@ void drawCreditsDialogs(void) {
 	}
 }
 
-void drawButtons(void) {
+void Credits::drawButtons(void) const
+{
 	// Buttons.
 	for(int i=0;i<3;i++) {
 		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));
@@ -251,7 +230,8 @@ void drawButtons(void) {
 	}
 }
 
-void drawCreditsScreen(void) {
+void Credits::Draw(void) const
+{
     C2D_TargetClear(top, GRAY);
     C2D_TargetClear(bottom, GRAY);
 	set_screen(top);
@@ -262,7 +242,7 @@ void drawCreditsScreen(void) {
 	drawButtons();
 }
 
-void creditsLogic(u32 hDown, touchPosition touch) {
+void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, creditsButtonPos[0])) {
 			dialog = 0;
@@ -280,8 +260,7 @@ void creditsLogic(u32 hDown, touchPosition touch) {
 				Config::Credits = 0;
 				Config::setCredits();
 			}
-			screenTransition(mainScreen);
-			dialog = 5;
+				Gui::setScreen(std::make_unique<MainMenu>());
 		}
 	}
 }

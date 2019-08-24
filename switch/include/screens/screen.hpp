@@ -8,7 +8,7 @@ class SCREEN
 {
 public:
     virtual ~SCREEN() {}
-    virtual void Logic() = 0;
+    virtual void Logic(u64 hDown) = 0;
     virtual void Draw() const = 0;
 private:
 };

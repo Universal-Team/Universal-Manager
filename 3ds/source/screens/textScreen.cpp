@@ -25,29 +25,39 @@
 */
 
 #include "screens/screenCommon.hpp"
-#include "fileBrowse.h"
-#include "keyboard.hpp"
-#include "settings.hpp"
-#include <vector>
-#include <string>
-#include <fstream>
+#include "screens/textScreen.hpp"
+#include "utils/fileBrowse.h"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include <unistd.h>
+#include <vector>
 
-bool textRead = false;
-uint textEditorCurPos = 0;
-uint textEditorScrnPos = 0;
-std::vector<std::string> textEditorText;
-inline std::vector<DirEntry> dirContents;
-uint rowsDisplayed = 0;
-inline uint selectedFile = 0;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-std::string currentEditFile = "";
-uint stringPos = 0;
-int showCursor = 30;
+void Text::Draw(void) const
+{
+	if (TextMode == 0) {
+		DrawBrowse();
+	} else if (TextMode == 1) {
+		DrawTextEditor();
+	}
+}
 
-void readFile(std::string path) {
+void Text::Logic(u32 hDown, u32 hHeld, touchPosition touch)
+{
+	if (TextMode == 0) {
+		BrowseLogic(hDown, hHeld);
+	} else if (TextMode == 1) {
+		EditorLogic(hDown, hHeld);
+	}
+}
+
+
+void Text::readFile(std::string path)
+{
 	textEditorText.clear();
 	std::string line;
 	std::ifstream in(path);
@@ -61,13 +71,78 @@ void readFile(std::string path) {
 	textRead = true;
 }
 
-void drawTextFileBrowse(void) {
-	drawFileBrowser();
+
+void Text::DrawBrowse(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::drawFileSelector(0, 28);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::drawFileSelector(0, 58);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::drawFileSelector(0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::drawFileSelector(0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::drawFileSelector(0, 156);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1 || Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
 }
 
-void textFileBrowseLogic(u32 hDown, u32 hHeld) {
+void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
+			if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		dirChanged = false;
+	}
+
+
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -76,13 +151,14 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 		} else {
 			currentEditFile = dirContents[selectedFile].name;
 			readFile(dirContents[selectedFile].name.c_str());
-			screenTransition(TextEditorScreen);
+			TextMode = 1;
 		}
 		} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenTransition(mainScreen);
+			Gui::screenBack();
+			return;
  		} else {
 		chdir("..");
 		selectedFile = 0;
@@ -92,19 +168,20 @@ void textFileBrowseLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	}
 }
 
 
-void drawTextEditorScreen(void) {
+void Text::DrawTextEditor(void) const
+{
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	C2D_TargetClear(top, BLUE2);
@@ -156,9 +233,10 @@ void drawTextEditorScreen(void) {
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
+	drawKeyboard();
 }
 
-void TextEditorLogic(u32 hDown, u32 hHeld) {
+void Text::EditorLogic(u32 hDown, u32 hHeld) {
 	if(showCursor > -30) {
 		showCursor--;
 	} else {
@@ -195,7 +273,7 @@ void TextEditorLogic(u32 hDown, u32 hHeld) {
 		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
 			stringPos = 0;
 			textEditorCurPos = 0;
-			screenTransition(textFileBrowse);
+			TextMode = 0;
 		}
 	} else if(hDown & KEY_X) {
 		if(textEditorText.size() > 1) {

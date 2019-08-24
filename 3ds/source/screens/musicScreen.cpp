@@ -1,6 +1,6 @@
 /*
 *   This file is part of Universal-Manager
-*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz
+*   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -24,100 +24,82 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/musicScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/keyboard.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
-//#include "common.hpp"
-#include "fileBrowse.h"
-#include "keyboard.hpp"
-#include "settings.hpp"
 
 extern "C" {
-	#include "music/playback.h"
-	#include "music/mp3.h"
 	#include "C2D_helper.h"
+	#include "music/error.h"
+	#include "music/playback.h"
 }
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-bool themeImageLoaded = false;
-bool coverImageLoaded = false;
-
-uint selectedFile = 0;
-int keyRepeatDelay = 3;
-bool dirChanged = true;
-std::vector<DirEntry> dirContents;
-std::string scanDir;
-std::string currentSong = "";
-int musicRepeat = 0;
-bool musicShuffle = 0;
-
-int musicPlayerReturn = musicMainScreen;
-bool firstSong = true;
-int locInPlaylist = 0;
-uint selectedPlst = 0;
-std::vector<DirEntry> plsts;
-std::vector<Playlist> nowPlayingList;
-bool decForRepeat2 = false;
-
-uint selectedPlstItem = 0;
-int movingPlstItem = -1;
-std::vector<std::string> plstContents;
-static int selection = 0;
-
-
-extern bool touching(touchPosition touch, ButtonPos button);
-
-static C2D_Image musicImage, coverImage;
-
-static bool Draw_ThemeImage(void)
+void Music::Draw(void) const
 {
-	return C2D_DrawImageAt(musicImage, 0, 25, 0.5);
+	if (MusicMode == 0) {
+		DrawMusicMain();
+	} else if (MusicMode == 1) {
+		DrawMusicList();
+	} else if (MusicMode == 2) {
+		DrawPlayer();
+	} else if (MusicMode == 3) {
+		DrawPlaylistPlay();
+	} else if (MusicMode == 4) {
+		DrawThemeSelector();
+	} else if (MusicMode == 5) {
+		DrawPlaylistAdd();
+	} else if (MusicMode == 6) {
+		DrawPlaylistEdit();
+	}
 }
 
-static bool Draw_CoverImage(void)
+void Music::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 {
-	return C2D_DrawImageAt(coverImage, 230, 25, 0.5);
+ 	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+		if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+		if (musicRepeat != 2 && !firstSong) {
+			locInPlaylist++;
+		}
+		firstSong = false;
+		currentSong = nowPlayingList[locInPlaylist].name;
+		playbackInfo_t playbackInfo;
+		changeFile(currentSong.c_str(), &playbackInfo);
+	} else if (isPlaying() && currentSong == "") {
+		stopPlayback();
+	} else if (!isPlaying() && currentSong != "") {
+		currentSong = "";
+	}
+
+
+	if (MusicMode == 0) {
+		MusicMainLogic(hDown, hHeld, touch);
+	} else if (MusicMode == 1) {
+		MusicListLogic(hDown, hHeld);
+	} else if (MusicMode == 2) {
+		PlayerLogic(hDown, touch);
+	} else if (MusicMode == 3) {
+		PlaylistPlayLogic(hDown, hHeld);
+	} else if (MusicMode == 4) {
+		ThemeSelectorLogic(hDown, hHeld);
+	} else if (MusicMode == 5) {
+		PlaylistAddLogic(hDown, hHeld, touch);
+	} else if (MusicMode == 6) {
+		PlaylistEditLogic(hDown, hHeld);
+	}
 }
 
-ButtonPos mainButtonPos[] = {
-    {0, 40, 149, 52, musicListScreen},
-    {170, 40, 149, 52, musicPlayerScreen},
-    {0, 150, 149, 52, musicPlaylistPlayScreen},
-	{170, 150, 149, 52, themeSelectorScreen},
-};
 
-ButtonPos playerButtonPos[] = {
-	{130, 90, 60, 60, -1},
-	{80, 100, 40, 40, -1},
-	{200, 100, 40, 40, -1},
-	{240, 170, 30, 30, -1},
-	{280, 170, 30, 30, -1},
-};
 
-std::string secondsToString(u64 seconds) {
-    int h = 0, m = 0, s = 0;
-    h = (seconds / 3600);
-    m = (seconds - (3600 * h)) / 60;
-    s = (seconds - (3600 * h) - (m * 60));
-
-	char string[35];
-
-    if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
-    else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
-	
-	return string;
-}
-
-void drawMusicMain() {
+void Music::DrawMusicMain(void) const
+{
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -129,21 +111,21 @@ void drawMusicMain() {
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
-	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[0].x, mainButtonPos[0].y);
-	Gui::sprite(sprites_music_icon_idx, mainButtonPos[0].x+5, mainButtonPos[0].y+10);
+	Gui::sprite(sprites_mainMenuButton_idx, Functions[0].x, Functions[0].y);
+	Gui::sprite(sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+10);
 	Draw_Text(40, 57, 0.7f, WHITE, "Songs");
 
-	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[1].x, mainButtonPos[1].y);
-	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10, Config::barColor);
-	Gui::sprite(sprites_play_icon_small_normal_idx, mainButtonPos[1].x+5, mainButtonPos[1].y+10);
+	Gui::sprite(sprites_mainMenuButton_idx, Functions[1].x, Functions[1].y);
+	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+10, Config::barColor);
+	Gui::sprite(sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+10);
 	Draw_Text(210, 57, 0.65f, WHITE, "Now Playing");
 
-	Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[2].x, mainButtonPos[2].y);
-	Gui::sprite(sprites_playlist_icon_idx, mainButtonPos[2].x+1, mainButtonPos[2].y+6);
+	Gui::sprite(sprites_mainMenuButton_idx, Functions[2].x, Functions[2].y);
+	Gui::sprite(sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+6);
 	Draw_Text(37, 167, 0.65f, WHITE, "Playlists");
 
-	 Gui::sprite(sprites_mainMenuButton_idx, mainButtonPos[3].x, mainButtonPos[3].y);
-	 Gui::sprite(sprites_themes_idx, mainButtonPos[3].x+5, mainButtonPos[3].y+10);
+	 Gui::sprite(sprites_mainMenuButton_idx, Functions[3].x, Functions[3].y);
+	 Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+10);
 	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
 
 	if (selection == 0) {
@@ -157,7 +139,7 @@ void drawMusicMain() {
 	}
 }
 
-void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(keysDown() & KEY_UP) {
 		if(selection > 0)	selection--;
 	} else if(keysDown() & KEY_DOWN) {
@@ -165,45 +147,116 @@ void musicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if(keysDown() & KEY_A) {
 			switch(selection) {
 				case 0: {
-					screenTransition(musicListScreen);
+					MusicMode = 1;
 					break;
 				} case 1:
-					screenTransition(musicPlayerScreen);
+					MusicMode = 2;
 					break;
 				  case 2: {
-					screenTransition(musicPlaylistPlayScreen);
+					MusicMode = 3;
+					selectedPlst = 0;
+					dirChanged = true;
 					break;
 				} case 3: {
-					screenTransition(themeSelectorScreen);
+					MusicMode = 4;
 					break;
 				}
 			}
 	} else if(hDown & KEY_B) {
-		screenTransition(mainScreen);
+		stopPlayback();
+		Gui::screenBack();
+		return;
+	} else if(hDown & KEY_TOUCH) {
+			if (touching(touch, Functions[0])) {
+				MusicMode = 1;
+			} else if (touching(touch, Functions[1])) {
+				MusicMode = 2;
+			} else if (touching(touch, Functions[2])) {
+				MusicMode = 3;
+				selectedPlst = 0;
+				dirChanged = true;
+			} else if (touching(touch, Functions[3])) {
+				MusicMode = 4;
+			}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press Songs to open the Song File Browse. \n \n Press Now Playing to open the Music Player. \n \n Press Playlists to open the Playlist Menu. \n \n Press Themes to Select an Image for the Music Player. \n \n (You need the BG Mode in the Settings!)");
-	} else if(hDown & KEY_TOUCH) {
-		for(uint i=0;i<(sizeof(mainButtonPos)/sizeof(mainButtonPos[0]));i++) {
-			if (touching(touch, mainButtonPos[i])) {
-				SCREEN_MODE = mainButtonPos[i].link;
-				if(mainButtonPos[i].link == musicPlayerScreen) {
-					musicPlayerReturn = musicMainScreen;
-				} else if(mainButtonPos[i].link == musicPlaylistPlayScreen) {
-					selectedPlst = 0;
-					dirChanged = true;
-				}
-			}
-		}
 	}
 }
 
-void drawMusicList(void) {
-	drawFileBrowser();
+
+// List.
+
+void Music::DrawMusicList(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::drawFileSelector(0, 28);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::drawFileSelector(0, 58);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::drawFileSelector(0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::drawFileSelector(0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::drawFileSelector(0, 156);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1 || Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
 }
 
-void musicListLogic(u32 hDown, u32 hHeld) {
+void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
+			if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		dirChanged = false;
+	}
+
+
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -225,7 +278,7 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 				playbackInfo_t playbackInfo;
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
-			togglePlayback(); // Since it would otherwise pause it in main.cpp
+			togglePlayback(); // Since it would otherwise pause it.
 		} else {
 			DisplayMsg("This is not a valid Music File!\nThe supported Formats are :\nMP3, WAV and OGG.");
 			for (int i = 0; i < 60*2; i++) {
@@ -237,37 +290,66 @@ void musicListLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenTransition(musicMainScreen);
+			MusicMode = 0;
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_Y) {
-		dirChanged = true;
-		screenTransition(musicPlaylistAddScreen);
+		MusicMode = 5;
+		dirChanged = true; // Not anymore!
 	} else if (hDown & KEY_X) {
-		screenTransition(musicMainScreen);
+			MusicMode = 0;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hDown & KEY_START) {
-		screenTransition(musicPlayerScreen);
-} else if (hHeld & KEY_SELECT) {
+		MusicMode = 2;
+	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Song. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu. \n \n Press \uE003 to open the Playlist Menu. \n \n Press Start to open the Music Player.");
 	}
-} 
+}
 
-void drawMusicPlayer(void) {
+
+// Player.
+
+bool Music::Draw_ThemeImage(void) const
+{
+	return C2D_DrawImageAt(musicImage, 0, 25, 0.5);
+}
+
+bool Music::Draw_CoverImage(void) const
+{
+	return C2D_DrawImageAt(coverImage, 230, 25, 0.5);
+}
+
+std::string Music::secondsToString(u64 seconds) const
+{
+    int h = 0, m = 0, s = 0;
+    h = (seconds / 3600);
+    m = (seconds - (3600 * h)) / 60;
+    s = (seconds - (3600 * h) - (m * 60));
+
+	char string[35];
+
+    if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
+    else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
+	
+	return string;
+}
+
+void Music::DrawPlayer(void) const
+{
 
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -307,18 +389,13 @@ void drawMusicPlayer(void) {
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
 		Draw_Text(0, 0, 0.45f, WHITE, nowPlayingText.c_str());
 
-
-		// If Filetype is MP3, display the Progressbar, else not.
-		if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0)) {
 		// Progressbar - Time.
 		Draw_Rect(100, 179, 207, 10, GRAY);
 		Draw_Text(110, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + "                            " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		// Progressbar - Display.
 		Draw_Rect(120, 194, 150, 12, GRAY);
 		Draw_Rect(120, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 150.0), 12, Config::barColor);
-		} else {
-			Draw_Text(40, 177, 0.45f, WHITE, "Progressbar not available for this Music Format yet.");
-		}
+	}
 
 	
 	if(!isPaused() && isPlaying()) {
@@ -337,19 +414,18 @@ void drawMusicPlayer(void) {
 	DisplayTime();
 	drawBatteryBot();
 
-	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, playerButtonPos[0].x, playerButtonPos[0].y, Config::barColor);
-	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, playerButtonPos[0].x, playerButtonPos[0].y);
+	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, Functions[4].x, Functions[4].y, Config::barColor);
+	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, Functions[4].x, Functions[4].y);
 
-	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, playerButtonPos[1].x, playerButtonPos[1].y, Config::barColor);
-	Gui::sprite(sprites_left_arrow_normal_idx, playerButtonPos[1].x, playerButtonPos[1].y);
+	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, Functions[5].x, Functions[5].y, Config::barColor);
+	Gui::sprite(sprites_left_arrow_normal_idx, Functions[5].x, Functions[5].y);
 
-	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, playerButtonPos[2].x, playerButtonPos[2].y, Config::barColor);
-	Gui::sprite(sprites_right_icon_normal_idx, playerButtonPos[2].x, playerButtonPos[2].y);
+	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, Functions[6].x, Functions[6].y, Config::barColor);
+	Gui::sprite(sprites_right_icon_normal_idx, Functions[6].x, Functions[6].y);
 
-	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, playerButtonPos[3].x, playerButtonPos[3].y, (musicShuffle ? WHITE : Config::barColor));
-	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, playerButtonPos[4].x, playerButtonPos[4].y, (musicRepeat ? WHITE : Config::barColor));
-	if (musicRepeat)	Draw_Text(playerButtonPos[4].x+11, playerButtonPos[4].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
-}
+	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, Functions[7].x, Functions[7].y, (musicShuffle ? WHITE : Config::barColor));
+	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, Functions[8].x, Functions[8].y, (musicRepeat ? WHITE : Config::barColor));
+	if (musicRepeat)	Draw_Text(Functions[8].x+11, Functions[8].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -360,23 +436,24 @@ bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
 bool playlistShufflePredicate(const Playlist &lhs, const Playlist &rhs) {
 	return rand() % 2;
 }
-void musicPlayerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+
+void Music::PlayerLogic(u32 hDown, touchPosition touch) {
 	if (hDown & KEY_A) {
 		togglePlayback();
 	} else if (hDown & KEY_X) {
 		stopPlayback();
 	} else if (hDown & KEY_B) {
-		screenTransition(musicPlayerReturn);
+		MusicMode = 0;
 	} else if (hDown & KEY_TOUCH) {
-		if (touching(touch, playerButtonPos[0])) {
+		if (touching(touch, Functions[4])) {
 			togglePlayback();
-		} else if (touching(touch, playerButtonPos[1])) {
+		} else if (touching(touch, Functions[5])) {
 			goto prevSong;
-		} else if (touching(touch, playerButtonPos[2])) {
+		} else if (touching(touch, Functions[6])) {
 			goto nextSong;
-		} else if (touching(touch, playerButtonPos[3])) {
+		} else if (touching(touch, Functions[7])) {
 			goto toggleShuffle;
-		} else if (touching(touch, playerButtonPos[4])) {
+		} else if (touching(touch, Functions[8])) {
 			goto toggleRepeat;
 		}
 	} else if (hDown & KEY_LEFT) {
@@ -414,7 +491,11 @@ void musicPlayerLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	aptSetSleepAllowed(false);
 }
 
-void drawMusicPlaylistAdd(void) {
+
+// Playlist Add.
+
+void Music::DrawPlaylistAdd(void) const
+{
 	// Theme Stuff.
 	Gui::DrawBGTop();
 	animatedBGTop();
@@ -423,22 +504,9 @@ void drawMusicPlaylistAdd(void) {
 	drawBatteryTop();
 	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
-	
-	if(dirChanged) {
-		char startPath[PATH_MAX];
-		getcwd(startPath, PATH_MAX);
-		chdir("sdmc:/Universal-Manager/playlists/");
-		getDirectoryContents(plsts);
-		chdir(startPath);
-		DirEntry dirEntry;
-		dirEntry.name = "Now Playing";
-		dirEntry.isDirectory = false;
-		plsts.insert(plsts.begin(), dirEntry);
-		dirChanged = false;
-	}
+
 
 	std::string plstList;
-	std::string plstList2;
 	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
 			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
@@ -449,18 +517,30 @@ void drawMusicPlaylistAdd(void) {
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	plstList2 += "\n\uE000 : Add to "+plsts[selectedPlst].name+"";
 	Draw_Text(26, 32, 0.53f, WHITE, plstList.c_str());
-	Draw_Text(26, 210, 0.45f, WHITE, plstList2.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
 }
 
-void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
+void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
+	if(dirChanged) {
+		dirChanged = false;
+		char startPath[PATH_MAX];
+		getcwd(startPath, PATH_MAX);
+		chdir("sdmc:/Universal-Manager/playlists/");
+		getDirectoryContents(plsts);
+		chdir(startPath);
+		DirEntry dirEntry;
+		dirEntry.name = "Now Playing";
+		dirEntry.isDirectory = false;
+		plsts.insert(plsts.begin(), dirEntry);
+	}
+
+
 	if(hDown & KEY_A) {
 		std::vector<DirEntry> selectedFiles;
 		if(dirContents[selectedFile].isDirectory) {
@@ -490,9 +570,9 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 				fclose(plst);
 			}
 		}
-		screenTransition(musicListScreen);
+			MusicMode = 1;
 	} else if (hDown & KEY_B) {
-		screenTransition(musicListScreen);
+			MusicMode = 1;
 	} else if (hDown & KEY_Y) {
 		std::string newPlaylist = Input::getLine();
 		if(newPlaylist != "") {
@@ -511,109 +591,25 @@ void musicPlaylistAddLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Add this Song to the Selected Playlist. \n \n Press \uE001 to return to the Song List. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to create a Playlist.");
 	}
 }
 
-void drawMusicPlaylistPlay(void) {
-	// Theme Stuff.
-	Gui::DrawBGTop();
-	animatedBGTop();
-	Gui::DrawBarsTop();
-	DisplayTime();
-	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
-	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
-	
-	if(dirChanged) {
-		char startPath[PATH_MAX];
-		getcwd(startPath, PATH_MAX);
-		chdir("sdmc:/Universal-Manager/playlists/");
-		getDirectoryContents(plsts);
-		chdir(startPath);
-	}
 
-	std::string plstList;
-	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
-		if (i == selectedPlst) {
-			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
-		} else {
-			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
-		}
-	}
-	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
-		plstList += "\n";
-	}
-	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
 
-	Gui::DrawBGBot();
-	animatedBGBot();
-	Gui::DrawBarsBot();
-}
 
-void musicPlaylistPlayLogic(u32 hDown, u32 hHeld) {
-	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
-	if(hDown & KEY_A) {
-		if(confirmPopup("Would you like to add to these songs to",
-						 "Now Playing or play them now?",
-						 "Play Now",
-						 "Add to Now Playing",
-						 100)) {
-			nowPlayingList.clear();
-		}
-		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
-		if(plst) {
-			Playlist song;
-			int i = nowPlayingList.size() + 1;
-			while(std::getline(plst, song.name)) {
-				song.position = i++;
-				nowPlayingList.push_back(song);
-			}
-		}
-	} else if (hDown & KEY_B) {
-		screenTransition(musicMainScreen);
-	} else if (hDown & KEY_X) {
-		if(confirmPopup("Are you sure you want to delete this playlist?")) {
-			remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
-			dirChanged = true;
-		}
-	} else if (hDown & KEY_Y) {
-		std::string temp;
-		std::ifstream file("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
-		plstContents.clear();
-		while(std::getline(file, temp)) {
-			plstContents.push_back(temp);
-		}
-		selectedPlstItem = 0;
-		screenTransition(musicPlaylistEditScreen);
-	} else if (hHeld & KEY_UP) {
-		if (selectedPlst > 0 && !keyRepeatDelay) {
-			selectedPlst--;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
-		if (selectedPlst < plsts.size()-1) {
-			selectedPlst++;
-			playScrollSfx();
-			keyRepeatDelay = 3;
-		}
-	} else if (hHeld & KEY_SELECT) {
-		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
-	}
-}
 
-void drawMusicPlaylistEdit() {
+void Music::DrawPlaylistEdit(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -640,18 +636,18 @@ void drawMusicPlaylistEdit() {
 	Gui::DrawBarsBot();
 }
 
-void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
+void Music::PlaylistEditLogic(u32 hDown, u32 hHeld) {
 	if(keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
 	if(hDown & KEY_A) {
 		FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str(), "w");
 		for(uint i=0;i<plstContents.size();i++) {
 			fputs((plstContents[i]+"\n").c_str(), plst);
 		}
 		fclose(plst);
-		screenTransition(musicPlaylistPlayScreen);
+		MusicMode = 3;
 	} else if(hDown & KEY_B) {
-		screenTransition(musicPlaylistPlayScreen);
+			MusicMode = 3;
 	} else if (hDown & KEY_X) {
 		if(confirmPopup("Are you sure you want to remove this song?")) {
 			plstContents.erase(plstContents.begin()+selectedPlstItem);
@@ -670,13 +666,13 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlstItem > 0 && !keyRepeatDelay) {
 			selectedPlstItem--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
 			selectedPlstItem++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Save The Playlist. \n \n Press \uE001 to return to the Playlist Screen. \n \n Press \uE002 to Delete a Song from the Playlist. \n \n Press \uE003 to move Songs.");
@@ -684,13 +680,178 @@ void musicPlaylistEditLogic(u32 hDown, u32 hHeld) {
 }
 
 
- void drawThemeSelector(void) {
-	drawFileBrowser();
+
+void Music::DrawPlaylistPlay(void) const
+{
+	// Theme Stuff.
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
+	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
+	
+
+
+	std::string plstList;
+	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
+		if (i == selectedPlst) {
+			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+		} else {
+			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+		}
+	}
+	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
+		plstList += "\n";
+	}
+	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
 }
 
-void themeSelectorLogic(u32 hDown, u32 hHeld) {
+void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
+	if(keyRepeatDelay)	keyRepeatDelay--;
+
+	if(dirChanged) {
+		dirChanged = false;
+		char startPath[PATH_MAX];
+		getcwd(startPath, PATH_MAX);
+		chdir("sdmc:/Universal-Manager/playlists/");
+		getDirectoryContents(plsts);
+		chdir(startPath);
+	}
+
+
+	if(hDown & KEY_A) {
+		if(confirmPopup("Would you like to add to these songs to",
+						 "Now Playing or play them now?",
+						 "Play Now",
+						 "Add to Now Playing",
+						 100)) {
+			nowPlayingList.clear();
+		}
+		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
+		if(plst) {
+			Playlist song;
+			int i = nowPlayingList.size() + 1;
+			while(std::getline(plst, song.name)) {
+				song.position = i++;
+				nowPlayingList.push_back(song);
+			}
+		}
+	} else if (hDown & KEY_B) {
+		MusicMode = 0;
+		selection = 0;
+		dirChanged = true;
+	} else if (hDown & KEY_X) {
+		if(confirmPopup("Are you sure you want to delete this playlist?")) {
+			remove(("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name).c_str());
+			dirChanged = true;
+		}
+	} else if (hDown & KEY_Y) {
+		std::string temp;
+		std::ifstream file("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
+		plstContents.clear();
+		while(std::getline(file, temp)) {
+			plstContents.push_back(temp);
+		}
+		selectedPlstItem = 0;
+		MusicMode = 6;
+	} else if (hHeld & KEY_UP) {
+		if (selectedPlst > 0 && !keyRepeatDelay) {
+			selectedPlst--;
+			playScrollSfx();
+			keyRepeatDelay = 6;
+		}
+	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
+		if (selectedPlst < plsts.size()-1) {
+			selectedPlst++;
+			playScrollSfx();
+			keyRepeatDelay = 6;
+		}
+	} else if (hHeld & KEY_SELECT) {
+		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
+	}
+}
+
+
+
+
+
+void Music::DrawThemeSelector(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::drawFileSelector(0, 28);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::drawFileSelector(0, 58);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::drawFileSelector(0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::drawFileSelector(0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::drawFileSelector(0, 156);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+
+    if (Config::selector == 0) {
+        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1 || Config::selector == 2) {
+        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
+}
+
+void Music::ThemeSelectorLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
+			if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		dirChanged = false;
+	}
+
+
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -720,25 +881,25 @@ void themeSelectorLogic(u32 hDown, u32 hHeld) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenTransition(musicMainScreen);
+			MusicMode = 0;
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if(hDown & KEY_X) {
-		screenTransition(musicMainScreen);
+			MusicMode = 0;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			keyRepeatDelay = 6;
 		}
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Select an Image. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu.");

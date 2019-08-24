@@ -31,16 +31,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "files.h"
+
 #include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
-#include "files.h"
-
 #ifdef __cplusplus
 }
+
+#include "utils/json.hpp"
+#include "utils/stringutils.hpp"
 
 #include <cstdio>
 #include <iostream>
@@ -49,9 +52,6 @@ extern "C" {
 #include <regex>
 #include <curl/curl.h>
 
-#include "stringutils.hpp"
-#include "json.hpp"
-
 using json = nlohmann::json;
 
 #endif
@@ -59,15 +59,3 @@ using json = nlohmann::json;
 extern char * arg0;
 
 #define WORKING_DIR       "/3ds/"
-
-// Battery.
-extern size_t Battery0;
-extern size_t Battery15;
-extern size_t Battery28;
-extern size_t Battery43;
-extern size_t Battery57;
-extern size_t Battery71;
-extern size_t Battery85;
-extern size_t Battery100;
-extern size_t BatteryCharge;
-

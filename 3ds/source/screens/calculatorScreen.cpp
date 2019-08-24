@@ -24,48 +24,22 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calculatorScreen.hpp"
 #include "screens/screenCommon.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
 
-struct Key {
-	std::string character;
-	int x;
-	int y;
-};
-
-// To-Do -> Make the positions correctly.
-Key calculatorKeys[] = {
-
-	// Numbers.
-	{"1", 0, 0},
-	{"2", 0, 0},
-	{"3", 0, 0},
-	{"4", 0, 40},
-	{"5", 0, 40},
-	{"6", 0, 40},
-	{"7", 0, 80},
-	{"8", 0, 80},
-	{"9", 0, 80},
-	{"0", 0, 120},
-	{".", 0, 120},
-
-	// Operations.
-	{"+", 0, 40},
-	{"-", 0, 40},
-	{"÷", 0, 40},
-	{"*", 0, 40},
-	{"=", 0, 40},
-};
-
 // To-Do.
-static void drawCalculatorKeyboard(void) {
+void Calculator::drawCalculatorKeyboard(void) const
+{
 }
 
 
-void drawCalculatorScreen(void) {
+void Calculator::Draw(void) const
+{
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	Gui::DrawBGTop();
@@ -80,8 +54,9 @@ void drawCalculatorScreen(void) {
 }
 
 // To-Do -> Calculator Logic.
-void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Calculator::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenTransition(utilsScreen);
+		Gui::screenBack();
+		return;
 	}
 }

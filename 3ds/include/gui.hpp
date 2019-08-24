@@ -27,6 +27,15 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
+#include "animation.h"
+#include "button.h"
+#include "colors.hpp"
+#include "common.hpp"
+#include "credits.h"
+#include "ptmu_x.h"
+#include "sprites.h"
+#include "screens/screen.hpp"
+
 #include <3ds.h>
 #include <citro2d.h>
 #include <citro3d.h>
@@ -35,22 +44,6 @@
 #include <string.h>
 #include <unordered_map>
 #include <wchar.h>
-#include "common.hpp"
-#include "screen.hpp"
-
-// Spritesheets.
-#include "sprites.h"
-#include "animation.h"
-#include "credits.h"
-#include "button.h"
-
-#include "colors.hpp"
-
-// Battery Stuff.
-#include "ptmu_x.h"
-
-// emulated
-#define sprites_res_null_idx 500
 
 #define FONT_SIZE_18 0.72f
 #define FONT_SIZE_17 0.7f
@@ -92,6 +85,9 @@ namespace Gui
 
     void Draw_ImageBlend(int key, int x, int y, u32 color);
     void Draw_ImageBlend2(int key, int x, int y, u32 color);
+
+    void drawFileSelector(float x, float y);
+    void drawGUISelector(int key, float x, float y);
 }
 
    // Text.
