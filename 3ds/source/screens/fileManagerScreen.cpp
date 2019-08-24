@@ -191,7 +191,11 @@ void FileManager::extractarchive(void) {
 
 void FileManager::install(void) {
 	DisplayMsg("Install is in progress...\nPlease wait...");
-	installCia(dirContents[selectedFile].name.c_str());
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	std::string installPath = path;
+	installPath += dirContents[selectedFile].name.c_str();
+	installCia(installPath.c_str());
 }
 
 
