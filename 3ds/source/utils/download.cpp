@@ -686,7 +686,8 @@ void updateTWiLight(bool nightly) {
 		filesExtracted = 0;
 		progressBarType = 1;
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
-		extractArchive("/TWiLightMenu-nightly.7z", "3DS - CFW users/", "/");
+		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/3DS - CFW users/", "/");
+		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/DSi&3DS - SD card users/", "/");
 		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIAs..");
