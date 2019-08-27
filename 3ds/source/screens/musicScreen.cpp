@@ -111,31 +111,31 @@ void Music::DrawMusicMain(void) const
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
-	Gui::sprite(sprites_mainMenuButton_idx, Functions[0].x, Functions[0].y);
-	Gui::sprite(sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+10);
-	Gui::DrawString(40, 57, 0.7f, WHITE, "Songs");
+	Gui::Button(button_button_tl_idx, Functions[0].x, Functions[0].y);
+	Gui::sprite(sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+15);
+	Gui::DrawString(40, 60, 0.65f, WHITE, "Songs");
 
-	Gui::sprite(sprites_mainMenuButton_idx, Functions[1].x, Functions[1].y);
-	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+10, Config::barColor);
-	Gui::sprite(sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+10);
-	Gui::DrawString(210, 57, 0.65f, WHITE, "Now Playing");
+	Gui::Button(button_button_2_idx, Functions[1].x, Functions[1].y);
+	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+15, Config::barColor);
+	Gui::sprite(sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+15);
+	Gui::DrawString(210, 60, 0.65f, WHITE, "Now Playing");
 
-	Gui::sprite(sprites_mainMenuButton_idx, Functions[2].x, Functions[2].y);
-	Gui::sprite(sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+6);
-	Gui::DrawString(37, 167, 0.65f, WHITE, "Playlists");
+	Gui::Button(button_button_3_idx, Functions[2].x, Functions[2].y);
+	Gui::sprite(sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+12);
+	Gui::DrawString(37, 173, 0.65f, WHITE, "Playlists");
 
-	Gui::sprite(sprites_mainMenuButton_idx, Functions[3].x, Functions[3].y);
-	Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+10);
-	Gui::DrawString(220, 167, 0.7f, WHITE, "Themes");
+	Gui::Button(button_button_br_idx, Functions[3].x, Functions[3].y);
+	Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+15);
+	Gui::DrawString(220, 173, 0.65f, WHITE, "Themes");
 
 	if (selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 20, Config::barColor);
+		Gui::drawGUISelector(button_tl_selector_idx, 0, 39, .020f);
 	} else if (selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 20, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 166, 44, .020f);
 	} else if (selection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 130, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 3, 154, .020f);
 	} else if (selection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 130, Config::barColor);
+		Gui::drawGUISelector(button_br_selector_idx, 161, 149, .020f);
 	}
 }
 
