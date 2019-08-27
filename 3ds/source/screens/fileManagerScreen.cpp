@@ -34,6 +34,15 @@
 
 void FileManager::Draw(void) const
 {
+	if (fileMode == 0) {
+		DrawBrowse();
+	} else if (fileMode == 1) {
+		DisplayActionBox();
+	}
+}
+
+void FileManager::DrawBrowse(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
@@ -89,7 +98,41 @@ void FileManager::Draw(void) const
 	Gui::DrawBarsBot();
 }
 
+
+void FileManager::DisplayActionBox(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	Draw_Text((400-(Draw_GetTextWidth(0.68f, currentSelectedFile.c_str())))/2, 218, 0.65f, WHITE, currentSelectedFile.c_str());
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
+	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, Config::barColor);
+	Gui::sprite(sprites_actionBox_idx, 54, 30);
+
+	// Buttons.
+	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
+		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
+		Gui::drawGUISelector(button_fileButtonSelector_idx, functionPos[currentSelection].x, functionPos[currentSelection].y, 0.01f);
+		Draw_Text(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
+	}
+}
+
+
+
 void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	if (fileMode == 0) {
+		FileBrowseLogic(hDown, hHeld, touch);
+	} else if (fileMode == 1) {
+		ActionBoxLogic();
+	}
+}
+
+void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
@@ -130,7 +173,9 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_X) {
-		displayActionBox();
+		currentSelectedFile = "Current File: ";
+		currentSelectedFile += dirContents[selectedFile].name.c_str();
+		fileMode = 1;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
@@ -210,32 +255,14 @@ void FileManager::install(void) {
 	installCia(installPath.c_str());
 }
 
-
-bool FileManager::displayActionBox(void)
-{
-	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-	set_screen(bottom);
-	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, Config::barColor);
-	Gui::sprite(sprites_actionBox_idx, 54, 30);
-
-	// Buttons.
-	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
-		Draw_Text(functionPos[i].x+12, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
-	}
-
-	Gui::clearTextBufs();
-	C3D_FrameEnd(0);
-	int selection = 0;
-	while(1) {
-		gspWaitForVBlank();
+void FileManager::ActionBoxLogic(void) {
 		hidScanInput();
 		if(keysDown() & KEY_UP) {
-			if(selection > 0)	selection--;
+			if(currentSelection > 0)	currentSelection--;
 		} else if(keysDown() & KEY_DOWN) {
-			if(selection < 5)	selection++;
+			if(currentSelection < 5)	currentSelection++;
 		} else if(keysDown() & KEY_A) {
-			switch(selection) {
+			switch(currentSelection) {
 				case 0: {
 					if(confirmPopup("Do you want to rename this File?")) { 
 					renameFile();
@@ -253,8 +280,10 @@ bool FileManager::displayActionBox(void)
 					refresh = true;
 					break;
 				} case 3: { 
+					if(confirmPopup("Do you want to create a Folder?")) {
 					createFolder();
 					refresh = true;
+					}
 					break;
 				} case 4: {
 					if(confirmPopup("Do you want to extract this Archive?")) {
@@ -268,9 +297,10 @@ bool FileManager::displayActionBox(void)
 					}
 					break;
 			}
-		return true;
+			fileMode = 0;
+			currentSelection = 0;
 		} else if(keysDown() & KEY_B) {
-			return false;
+			fileMode = 0;
+			currentSelection = 0;
 		}
-	}
 }

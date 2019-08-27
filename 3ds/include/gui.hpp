@@ -87,7 +87,7 @@ namespace Gui
     void Draw_ImageBlend2(int key, int x, int y, u32 color);
 
     void drawFileSelector(float x, float y);
-    void drawGUISelector(int key, float x, float y);
+    void drawGUISelector(int key, float x, float y, float speed);
 }
 
    // Text.

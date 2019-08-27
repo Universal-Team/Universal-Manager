@@ -52,6 +52,14 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+	void DrawBrowse(void) const;
+	void FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch);
+
+	void ActionBoxLogic(void);
+	void DisplayActionBox(void) const;
+
+	std::string currentSelectedFile = "";
+	int fileMode = 0;
 	bool refresh = false;
 	bool updatingSelf = false;
 	uint selectedFile = 0;
@@ -64,13 +72,13 @@ private:
 
 	// Operations.
 	DirEntry clipboard;
+	int currentSelection;
 	void renameFile(void);
 	void deleteFile(void);
 	void copyPaste(void);
 	void createFolder(void);
 	void extractarchive(void);
 	void install(void);
-	bool displayActionBox(void);
 
 	std::array<Structs::TextBtn, 6> functionPos = {{
 		{59, 70, 93, 35, "Rename"},

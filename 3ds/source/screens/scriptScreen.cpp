@@ -233,21 +233,21 @@ void Script::DrawSelection(void) const
 {
 		if (ScriptPage == 1) {
 			if (Selection == 0) {
-				Gui::drawGUISelector(button_tl_selector_idx, 0, 26);
+				Gui::drawGUISelector(button_tl_selector_idx, 0, 26, .020f);
 			} else if (Selection == 1) {
-				Gui::drawGUISelector(button_selector_idx, 166, 31);
+				Gui::drawGUISelector(button_selector_idx, 166, 31, .020f);
 			} else if (Selection == 2) {
-				Gui::drawGUISelector(button_selector_idx, 3, 95);
+				Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
 			} else if (Selection == 3) {
-				Gui::drawGUISelector(button_selector_idx, 166, 95);
+				Gui::drawGUISelector(button_selector_idx, 166, 95, .020f);
 			} else if (Selection == 4) {
-				Gui::drawGUISelector(button_selector_idx, 3, 158);
+				Gui::drawGUISelector(button_selector_idx, 3, 158, .020f);
 			} else if (Selection == 5) {
-				Gui::drawGUISelector(button_br_selector_idx, 161, 153);
+				Gui::drawGUISelector(button_br_selector_idx, 161, 153, .020f);
 			}
 		} else if (ScriptPage == 2) {
 			if (Selection == 0) {
-				Gui::drawGUISelector(button_tl_selector_idx, 0, 26);
+				Gui::drawGUISelector(button_tl_selector_idx, 0, 26, .020f);
 			}
 		}
 }

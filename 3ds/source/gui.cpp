@@ -415,7 +415,7 @@ void Gui::drawFileSelector(float x, float y)
     timer += .005f;
 }
 
-void Gui::drawGUISelector(int key, float x, float y)
+void Gui::drawGUISelector(int key, float x, float y, float speed)
 {
     static float timer         = 0.0f;
     float highlight_multiplier = fmax(0.0, fabs(fmod(timer, 1.0) - 0.5) / 0.5);
@@ -430,5 +430,5 @@ void Gui::drawGUISelector(int key, float x, float y)
     C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
     C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f, &tint);
 
-    timer += .020f;
+    timer += speed;
 }
