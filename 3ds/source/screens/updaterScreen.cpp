@@ -77,39 +77,39 @@ void Updater::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 void Updater::DrawButtons(void) const
 {
 	if (buttonsAmount == 2) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
+			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::Button(button_updater_br_idx, Functions[1].x, Functions[1].y);
 	} else if (buttonsAmount == 3) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[2].x, Functions[2].y);
+			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
 	} else if (buttonsAmount == 4) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[6].x, Functions[6].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[7].x, Functions[7].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[8].x, Functions[8].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[9].x, Functions[9].y);
+			Gui::Button(button_updater_tl_idx, Functions[6].x, Functions[6].y);
+			Gui::Button(button_updater_idx, Functions[7].x, Functions[7].y);
+			Gui::Button(button_updater_idx, Functions[8].x, Functions[8].y);
+			Gui::Button(button_updater_idx, Functions[9].x, Functions[9].y);
 	} else if (buttonsAmount == 5) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[2].x, Functions[2].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[3].x, Functions[3].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[4].x, Functions[4].y);
+			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
 	} else if (buttonsAmount == 6) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[2].x, Functions[2].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[3].x, Functions[3].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[4].x, Functions[4].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[5].x, Functions[5].y);
+			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::Button(button_updater_br_idx, Functions[5].x, Functions[5].y);
 	} else if (buttonsAmount == 8) {
-			Gui::sprite(sprites_updaterButton_idx, Functions[0].x, Functions[0].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[1].x, Functions[1].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[2].x, Functions[2].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[3].x, Functions[3].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[4].x, Functions[4].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[5].x, Functions[5].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[11].x, Functions[11].y);
-			Gui::sprite(sprites_updaterButton_idx, Functions[12].x, Functions[12].y);
+			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::Button(button_updater_idx, Functions[5].x, Functions[5].y);
+			Gui::Button(button_updater_idx, Functions[11].x, Functions[11].y);
+			Gui::Button(button_updater_br_idx, Functions[12].x, Functions[12].y);
 	}
 }
 
@@ -117,19 +117,19 @@ void Updater::DrawTitleButtons(void) const
 {
 	if (titleButtons == 0) {
 	} else if (titleButtons == 1) {
-			Gui::sprite(sprites_titleButton_idx, 0, 48);
+			Gui::Button(button_long_button_idx, 0, 48);
 	} else if (titleButtons == 2) {
-			Gui::sprite(sprites_titleButton_idx, 0, 48);
-			Gui::sprite(sprites_titleButton_idx, 0, 88);
+			Gui::Button(button_long_button_idx, 0, 48);
+			Gui::Button(button_long_button_idx, 0, 88);
 	} else if (titleButtons == 3) {
-			Gui::sprite(sprites_titleButton_idx, 0, 48);
-			Gui::sprite(sprites_titleButton_idx, 0, 88);
-			Gui::sprite(sprites_titleButton_idx, 0, 128);
+			Gui::Button(button_long_button_idx, 0, 48);
+			Gui::Button(button_long_button_idx, 0, 88);
+			Gui::Button(button_long_button_idx, 0, 128);
 	} else if (titleButtons == 4) {
-			Gui::sprite(sprites_titleButton_idx, 0, 48);
-			Gui::sprite(sprites_titleButton_idx, 0, 88);
-			Gui::sprite(sprites_titleButton_idx, 0, 128);
-			Gui::sprite(sprites_titleButton_idx, 0, 168);
+			Gui::Button(button_long_button_idx, 0, 48);
+			Gui::Button(button_long_button_idx, 0, 88);
+			Gui::Button(button_long_button_idx, 0, 128);
+			Gui::Button(button_long_button_idx, 0, 168);
 	}
 }
 
@@ -613,65 +613,65 @@ void Updater::DrawSelection(void) const
 {
 	if (updaterMode == 0) {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 38, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[6].x, Functions[6].y, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 38, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[7].x, Functions[7].y, .020f);
 	} else if (Selection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 38, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[8].x, Functions[8].y, .020f);
 	} else if (Selection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 100, 78, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[9].x, Functions[9].y, .020f);
 	}
 
 
 	} else if (updaterMode == 1) {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[0].x, Functions[0].y, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[1].x, Functions[1].y, .020f);
 	} else if (Selection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[2].x, Functions[2].y, .020f);
 	}
 
 
 	} else if (updaterMode == 2) {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[0].x, Functions[0].y, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[1].x, Functions[1].y, .020f);
 	} else if (Selection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[2].x, Functions[2].y, .020f);
 	} else if (Selection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 70, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[3].x, Functions[3].y, .020f);
 	} else if (Selection == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 110, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[4].x, Functions[4].y, .020f);
 	}
 
 
 	} else if (updaterMode == 3) {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[0].x, Functions[0].y, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[1].x, Functions[1].y, .020f);
 	}
 
 
 	} else if (updaterMode == 4) {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[0].x, Functions[0].y, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 30, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[1].x, Functions[1].y, .020f);
 	} else if (Selection == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 70, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[2].x, Functions[2].y, .020f);
 	} else if (Selection == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 70, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[3].x, Functions[3].y, .020f);
 	} else if (Selection == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 110, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[4].x, Functions[4].y, .020f);
 	} else if (Selection == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 110, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[5].x, Functions[5].y, .020f);
 	} else if (Selection == 6) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 191, 140, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[11].x, Functions[11].y, .020f);
 	} else if (Selection == 7) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 282, 140, Config::barColor);
+		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[12].x, Functions[12].y, .020f);
 	}
 	}
 }
