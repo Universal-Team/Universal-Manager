@@ -219,7 +219,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 	if (hDown & KEY_TOUCH) {
 		if (SettingsPage == 1) {
 	if (touching(touch, uiSettingsButtonPos[0])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
 				Config::barColor = RGBA8(red, getColorValue(Config::barColor, 1), getColorValue(Config::barColor, 0), 255);
@@ -227,7 +227,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[1])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
 				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), green, getColorValue(Config::barColor, 0), 255);
@@ -235,7 +235,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[2])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
 				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), getColorValue(Config::barColor, 1), blue, 255);
@@ -243,7 +243,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[3])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
 				Config::bgColor = RGBA8(red, getColorValue(Config::bgColor, 1), getColorValue(Config::bgColor, 0), 255);
@@ -251,7 +251,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[4])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
 				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), green, getColorValue(Config::bgColor, 0), 255);
@@ -259,7 +259,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[5])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
 				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), getColorValue(Config::bgColor, 1), blue, 255);
@@ -283,7 +283,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (SettingsPage == 2) {
 		if (touching(touch, uiSettingsButtonPos[8])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
 				Config::animationColor = RGBA8(red, getColorValue(Config::animationColor, 1), getColorValue(Config::animationColor, 0), 255);
@@ -291,7 +291,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[9])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
 				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), green, getColorValue(Config::animationColor, 0), 255);
@@ -299,7 +299,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 		} else if (touching(touch, uiSettingsButtonPos[10])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
 				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), getColorValue(Config::animationColor, 1), blue, 255);
@@ -338,7 +338,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 	} else if (SettingsPage == 3) {
 	if (touching(touch, uiSettingsButtonPos[15])) {
-		int temp = Input::getUint(255);
+		int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
 				Config::selectedText = RGBA8(red, getColorValue(Config::selectedText, 1), getColorValue(Config::selectedText, 0), 255);
@@ -346,7 +346,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 	} else if (touching(touch, uiSettingsButtonPos[16])) {
-		int temp = Input::getUint(255);
+		int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
 				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), green, getColorValue(Config::selectedText, 0), 255);
@@ -354,7 +354,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 	} else if (touching(touch, uiSettingsButtonPos[17])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
 				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), getColorValue(Config::selectedText, 1), blue, 255);
@@ -362,7 +362,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 	} else if (touching(touch, uiSettingsButtonPos[18])) {
-		int temp = Input::getUint(255);
+		int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
 				Config::unselectedText = RGBA8(red, getColorValue(Config::unselectedText, 1), getColorValue(Config::unselectedText, 0), 255);
@@ -370,7 +370,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 	} else if (touching(touch, uiSettingsButtonPos[19])) {
-		int temp = Input::getUint(255);
+		int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), green, getColorValue(Config::unselectedText, 0), 255);
@@ -378,7 +378,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 
 
 	} else if (touching(touch, uiSettingsButtonPos[20])) {
-			int temp = Input::getUint(255);
+			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
 				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);

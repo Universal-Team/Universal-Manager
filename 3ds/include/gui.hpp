@@ -88,6 +88,12 @@ namespace Gui
 
     void drawFileSelector(float x, float y);
     void drawGUISelector(int key, float x, float y, float speed);
+
+    // New Text / String Functions.
+    void DrawString(float x, float y, float size, u32 color, std::string Text);
+    void GetStringSize(float size, float *width, float *height, std::string Text);
+    float GetStringWidth(float size, std::string Text);
+    float GetStringHeight(float size, std::string Text);
 }
 
    // Text.

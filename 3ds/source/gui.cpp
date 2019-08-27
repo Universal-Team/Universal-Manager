@@ -310,6 +310,41 @@ void drawBatteryBot(void) {
 }
 }
 
+// The new Text Functions.
+
+// Draw String or Text.
+void Gui::DrawString(float x, float y, float size, u32 color, std::string Text)
+{
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, Text.c_str());
+	C2D_TextOptimize(&c2d_text);
+	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+}
+
+
+// Get String or Text Width.
+float Gui::GetStringWidth(float size, std::string Text) {
+	float width = 0;
+	GetStringSize(size, &width, NULL, Text);
+	return width;
+}
+
+// Get String or Text Size.
+void Gui::GetStringSize(float size, float *width, float *height, std::string Text) {
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, Text.c_str());
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
+
+// Get String or Text Height.
+float Gui::GetStringHeight(float size, std::string Text) {
+	float height = 0;
+	GetStringSize(size, NULL, &height, Text.c_str());
+	return height;
+}
+
+// To-Do : Get rid of the old one.
 void Draw_Text(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
     C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
