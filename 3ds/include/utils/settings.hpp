@@ -37,7 +37,9 @@ namespace Config {
 	extern int Screen; // [SCREEN]
 	extern int Credits; // [CREDITS]
 	extern int selector;
+	extern int lang; // The current Language.
 
+	
 	void loadConfig();
 	void saveConfig();
 	void setCredits();

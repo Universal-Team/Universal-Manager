@@ -75,9 +75,9 @@ endif
 #---------------------------------------------------------------------------------
 TARGET		:=	Universal-Manager
 BUILD		:=	build
-SOURCES		:=	source source/screens source/music source/download source/utils source/ftp
+SOURCES		:=	source source/download source/ftp source/lang source/music source/screens source/utils
 DATA		:=	data
-INCLUDES	:=	include include/screens include/music include/download include/utils include/ftp
+INCLUDES	:=	include include/download include/ftp include/lang include/music include/screens include/utils
 GRAPHICS	:=	assets/gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
