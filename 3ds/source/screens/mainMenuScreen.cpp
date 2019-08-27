@@ -83,8 +83,8 @@ void MainMenu::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(395-Draw_GetTextWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Gui::DrawString(395-Gui::GetStringWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in out effect
 
 	Gui::DrawBGBot();
@@ -92,9 +92,9 @@ void MainMenu::Draw(void) const
 	Gui::DrawBarsBot();
 
 	DrawBottom();
-	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Gui::DrawString(150, 4, 0.50f, WHITE, "Current Page:");
+	Gui::DrawString(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Gui::DrawString(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
 	DrawSelection();
 	DrawCurrentPage();
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
@@ -105,56 +105,56 @@ void MainMenu::DrawBottom(void) const
 	if (currentPage == 1) {
 	Gui::Button(button_button_tl_idx, 1, 27);
 	Gui::sprite(sprites_fileManagerIcon_idx, 9, 41);
-	Draw_Text(40, 48, 0.65f, WHITE, "Filemanager");
+	Gui::DrawString(40, 48, 0.65f, WHITE, "Filemanager");
 
 	Gui::Button(button_button_2_idx, 162, 27);
 	Gui::sprite(sprites_ftpIcon_idx, 172, 40);
-	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
+	Gui::DrawString(230, 42, 0.7f, WHITE, "FTP");
 
 	Gui::Button(button_button_3_idx, 1, 91);
 	Gui::sprite(sprites_scriptIcon_idx, 4, 102);
-	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
+	Gui::DrawString(40, 107, 0.65f, WHITE, "Scripts");
 
 	Gui::Button(button_button_4_idx, 162, 91);
 	Gui::sprite(sprites_music_icon_idx, 175, 106);
-	Draw_Text(230, 107, 0.7f, WHITE, "Music");
+	Gui::DrawString(230, 107, 0.7f, WHITE, "Music");
 
 	Gui::Button(button_button_5_idx, 1, 154);
 	Gui::sprite(sprites_updaterIcon_idx, 9, 167);
-	Draw_Text(50, 177, 0.7f, WHITE, "Updater");
+	Gui::DrawString(50, 177, 0.7f, WHITE, "Updater");
 
 	Gui::Button(button_button_br_idx, 162, 151);
 	Gui::sprite(sprites_settingsIcon_idx, 172, 165);
-	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
+	Gui::DrawString(220, 177, 0.7f, WHITE, "Settings");
 
 
 	} else if (currentPage == 2) {
 	Gui::Button(button_button_tl_idx, 1, 27);
 	Gui::sprite(sprites_image_icon_idx, 6, 37);
-	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
+	Gui::DrawString(40, 42, 0.65f, WHITE, "Image Viewer");
 
 	Gui::Button(button_button_2_idx, 162, 27);
-	Draw_Text(230, 42, 0.7f, WHITE, "Credits");
+	Gui::DrawString(230, 42, 0.7f, WHITE, "Credits");
 
 	Gui::Button(button_button_3_idx, 1, 91);
 	Gui::sprite(sprites_textEditorIcon_idx, 9, 103);
-	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
+	Gui::DrawString(40, 107, 0.65f, WHITE, "Text Editor");
 
 	Gui::Button(button_button_4_idx, 162, 91);
 	Gui::sprite(sprites_utilsIcon_idx, 175, 102);
-	Draw_Text(215, 107, 0.7f, WHITE, "Utils");
+	Gui::DrawString(215, 107, 0.7f, WHITE, "Utils");
 
 	Gui::Button(button_button_5_idx, 1, 154);
-	Draw_Text(50, 177, 0.7f, WHITE, "Games");
+	Gui::DrawString(50, 177, 0.7f, WHITE, "Games");
 	}
 }
 
 void MainMenu::DrawCurrentPage(void) const
 {
 	if (currentPage == 1) {
-		Draw_Text(260, 4, 0.50, WHITE, "1");
+		Gui::DrawString(260, 4, 0.50, WHITE, "1");
 	} else if (currentPage == 2) {
-		Draw_Text(280, 4, 0.50, WHITE, "2");
+		Gui::DrawString(280, 4, 0.50, WHITE, "2");
 	}
 }
 

@@ -57,8 +57,8 @@ void Utils::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Utils Tab"))/2, 220, 0.72f, WHITE, "Utils Tab");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Utils Tab"))/2, 220, 0.72f, WHITE, "Utils Tab");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -67,14 +67,14 @@ void Utils::Draw(void) const
 	// Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[0].x, utilsButtonPos[0].y);
 	Gui::sprite(sprites_calendarIcon_idx, utilsButtonPos[0].x+5, utilsButtonPos[0].y+10);
-	Draw_Text(40, 57, 0.7f, WHITE, "Calendar");
+	Gui::DrawString(40, 57, 0.7f, WHITE, "Calendar");
 
 	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[1].x, utilsButtonPos[1].y);
 	Gui::sprite(sprites_buttonIcon_idx, utilsButtonPos[1].x+5, utilsButtonPos[1].y+10);
-	Draw_Text(210, 57, 0.65f, WHITE, "Btn Tester");
+	Gui::DrawString(210, 57, 0.65f, WHITE, "Btn Tester");
 
 	Gui::sprite(sprites_mainMenuButton_idx, utilsButtonPos[2].x, utilsButtonPos[2].y);
-	Draw_Text(37, 167, 0.65f, WHITE, "Calculator");
+	Gui::DrawString(37, 167, 0.65f, WHITE, "Calculator");
 
 	drawSelection();
 }

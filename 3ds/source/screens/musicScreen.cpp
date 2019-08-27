@@ -106,27 +106,27 @@ void Music::DrawMusicMain(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Player Menu"))/2, 0, 0.72f, WHITE, "Music Player Menu");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Player Menu"))/2, 0, 0.72f, WHITE, "Music Player Menu");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
 	Gui::sprite(sprites_mainMenuButton_idx, Functions[0].x, Functions[0].y);
 	Gui::sprite(sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+10);
-	Draw_Text(40, 57, 0.7f, WHITE, "Songs");
+	Gui::DrawString(40, 57, 0.7f, WHITE, "Songs");
 
 	Gui::sprite(sprites_mainMenuButton_idx, Functions[1].x, Functions[1].y);
 	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+10, Config::barColor);
 	Gui::sprite(sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+10);
-	Draw_Text(210, 57, 0.65f, WHITE, "Now Playing");
+	Gui::DrawString(210, 57, 0.65f, WHITE, "Now Playing");
 
 	Gui::sprite(sprites_mainMenuButton_idx, Functions[2].x, Functions[2].y);
 	Gui::sprite(sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+6);
-	Draw_Text(37, 167, 0.65f, WHITE, "Playlists");
+	Gui::DrawString(37, 167, 0.65f, WHITE, "Playlists");
 
-	 Gui::sprite(sprites_mainMenuButton_idx, Functions[3].x, Functions[3].y);
-	 Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+10);
-	 Draw_Text(220, 167, 0.7f, WHITE, "Themes");
+	Gui::sprite(sprites_mainMenuButton_idx, Functions[3].x, Functions[3].y);
+	Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+10);
+	Gui::DrawString(220, 167, 0.7f, WHITE, "Themes");
 
 	if (selection == 0) {
 		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 20, Config::barColor);
@@ -195,7 +195,7 @@ void Music::DrawMusicList(void) const
 	drawBatteryTop();
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
-	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
 		(i == selectedFile);
@@ -233,9 +233,9 @@ void Music::DrawMusicList(void) const
 	}
 
     if (Config::selector == 0) {
-        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
     } else if (Config::selector == 1 || Config::selector == 2) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
 	Gui::DrawBGBot();
@@ -372,12 +372,12 @@ void Music::DrawPlayer(void) const
 	} else if (Config::musicMode == 1) {
 
 			if ((metadata.has_meta) && (metadata.title[0] != '\0') && (metadata.artist[0] != '\0') && (metadata.album[0] != '\0') && (metadata.year[0] != '\0')) {
-			Draw_Text(15, 40, 0.5f, WHITE, strupr(metadata.title));
-			Draw_Text(15, 60, 0.45f, WHITE, strupr(metadata.artist));
-			Draw_Text(15, 80, 0.45f, WHITE, strupr(metadata.album));
-			Draw_Text(15, 100, 0.45f, WHITE, strupr(metadata.year));
+			Gui::DrawString(15, 40, 0.5f, WHITE, strupr(metadata.title));
+			Gui::DrawString(15, 60, 0.45f, WHITE, strupr(metadata.artist));
+			Gui::DrawString(15, 80, 0.45f, WHITE, strupr(metadata.album));
+			Gui::DrawString(15, 100, 0.45f, WHITE, strupr(metadata.year));
 		} else {
-			Draw_Text(15, 40, 0.5f, WHITE, "No Metadata Found.");
+			Gui::DrawString(15, 40, 0.5f, WHITE, "No Metadata Found.");
 		}
 
 		if (coverImageLoaded == true) {
@@ -391,7 +391,7 @@ void Music::DrawPlayer(void) const
 		if (themeImageLoaded == true) {
 		Draw_ThemeImage(); 
 	} else if (themeImageLoaded == false) {
-			Draw_Text(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
+			Gui::DrawString(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
 	}
 	}
 	
@@ -399,11 +399,11 @@ void Music::DrawPlayer(void) const
 
 		// Current Song.
 		std::string nowPlayingText = "Current Song: " + currentSong.substr(currentSong.find_last_of("/")+1);
-		Draw_Text(0, 0, 0.45f, WHITE, nowPlayingText.c_str());
+		Gui::DrawString(0, 0, 0.45f, WHITE, nowPlayingText.c_str());
 
 		// Progressbar - Time.
 		Draw_Rect(100, 179, 207, 10, GRAY);
-		Draw_Text(110, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + "                            " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
+		Gui::DrawString(110, 177, 0.45f, WHITE, (secondsToString(Audio_GetPosition()/Audio_GetRate()) + "                            " + secondsToString(Audio_GetLength()/Audio_GetRate())).c_str());
 		// Progressbar - Display.
 		Draw_Rect(120, 194, 150, 12, GRAY);
 		Draw_Rect(120, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 150.0), 12, Config::barColor);
@@ -411,12 +411,12 @@ void Music::DrawPlayer(void) const
 
 	
 	if(!isPaused() && isPlaying()) {
-		Draw_Text(80, 220, 0.45f, WHITE, "A : Pause   B : Back   X : Stop song");
+		Gui::DrawString(80, 220, 0.45f, WHITE, "A : Pause   B : Back   X : Stop song");
 	} else if(isPaused() && isPlaying()) {
-		Draw_Text(80, 220, 0.45f, WHITE, "A : Play   B : Back   X : Stop song");
+		Gui::DrawString(80, 220, 0.45f, WHITE, "A : Play   B : Back   X : Stop song");
 	} else {
-		Draw_Text(0, 0, 0.72f, WHITE, "No Song Selected.");
-		Draw_Text(80, 220, 0.45f, WHITE, "B : Back");
+		Gui::DrawString(0, 0, 0.72f, WHITE, "No Song Selected.");
+		Gui::DrawString(80, 220, 0.45f, WHITE, "B : Back");
 	}
 
 
@@ -437,7 +437,7 @@ void Music::DrawPlayer(void) const
 
 	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, Functions[7].x, Functions[7].y, (musicShuffle ? WHITE : Config::barColor));
 	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, Functions[8].x, Functions[8].y, (musicRepeat ? WHITE : Config::barColor));
-	if (musicRepeat)	Draw_Text(Functions[8].x+11, Functions[8].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
+	if (musicRepeat)	Gui::DrawString(Functions[8].x+11, Functions[8].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
 }
 
 bool playlistSortPredicate(const Playlist &lhs, const Playlist &rhs) {
@@ -514,7 +514,7 @@ void Music::DrawPlaylistAdd(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 
 
@@ -529,7 +529,7 @@ void Music::DrawPlaylistAdd(void) const
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	Draw_Text(26, 32, 0.53f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.53f, WHITE, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -639,7 +639,7 @@ void Music::DrawPlaylistEdit(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
 	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
@@ -654,7 +654,7 @@ void Music::DrawPlaylistEdit(void) const
 	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
 		plstList += "\n";
 	}
-	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.45f, WHITE, plstList.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
@@ -725,7 +725,7 @@ void Music::DrawPlaylistPlay(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
 	
 
@@ -741,7 +741,7 @@ void Music::DrawPlaylistPlay(void) const
 	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
 		plstList += "\n";
 	}
-	Draw_Text(26, 32, 0.45f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.45f, WHITE, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -838,7 +838,7 @@ void Music::DrawThemeSelector(void) const
 	drawBatteryTop();
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
-	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
 		(i == selectedFile);
@@ -876,9 +876,9 @@ void Music::DrawThemeSelector(void) const
 	}
 
     if (Config::selector == 0) {
-        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
     } else if (Config::selector == 1 || Config::selector == 2) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
 	Gui::DrawBGBot();

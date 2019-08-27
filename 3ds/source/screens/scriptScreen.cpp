@@ -60,7 +60,7 @@ void Script::DrawScriptBrowse(void) const
 		Gui::DrawBarsTop();
 		DisplayTime();
 		drawBatteryTop();
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
 		mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 
 		std::string dirs;
@@ -100,9 +100,9 @@ void Script::DrawScriptBrowse(void) const
 	}
 
     if (Config::selector == 0) {
-        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
     } else if (Config::selector == 1 || Config::selector == 2) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
 		Gui::DrawBGBot();
@@ -189,14 +189,14 @@ void Script::DrawScriptCreator(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Script Creator"))/2, 0, 0.72f, WHITE, "Script Creator");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Script Creator"))/2, 0, 0.72f, WHITE, "Script Creator");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
 	DrawBottom();
-	Draw_Text(150, 0, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, BLACK, "1");
-	Draw_Text(280, 4, 0.50, BLACK, "2"); 
+	Gui::DrawString(150, 0, 0.50f, WHITE, "Current Page:");
+	Gui::DrawString(260, 4, 0.50, BLACK, "1");
+	Gui::DrawString(280, 4, 0.50, BLACK, "2"); 
 	DrawSelection();
 	DrawCurrentPage();
 }
@@ -205,27 +205,27 @@ void Script::DrawBottom(void) const
 {
 	if (ScriptPage == 1) {
 		Gui::Button(button_button_tl_idx, 1, 27);
-		Draw_Text(8, 42, 0.65f, WHITE, "downloadRelease");
+		Gui::DrawString(8, 42, 0.65f, WHITE, "downloadRelease");
 
 		Gui::Button(button_button_2_idx, 162, 27);
-		Draw_Text(190, 42, 0.7f, WHITE, "downloadFile");
+		Gui::DrawString(190, 42, 0.7f, WHITE, "downloadFile");
 
 		Gui::Button(button_button_3_idx, 1, 91);
-		Draw_Text(45, 107, 0.65f, WHITE, "extract");
+		Gui::DrawString(45, 107, 0.65f, WHITE, "extract");
 
 		Gui::Button(button_button_4_idx, 162, 91);
-		Draw_Text(222, 104, 0.7f, WHITE, "install");
+		Gui::DrawString(222, 104, 0.7f, WHITE, "install");
 
 		Gui::Button(button_button_5_idx, 1, 154);
-		Draw_Text(45, 177, 0.7f, WHITE, "delete");
+		Gui::DrawString(45, 177, 0.7f, WHITE, "delete");
 
 		Gui::Button(button_button_br_idx, 162, 151);
-		Draw_Text(225, 177, 0.7f, WHITE, "msg");
+		Gui::DrawString(225, 177, 0.7f, WHITE, "msg");
 
 
 	} else if (ScriptPage == 2) {
 		Gui::Button(button_button_tl_idx, 1, 27);
-		Draw_Text(50, 42, 0.65f, WHITE, "mkdir");
+		Gui::DrawString(50, 42, 0.65f, WHITE, "mkdir");
 	}
 }
 
@@ -255,9 +255,9 @@ void Script::DrawSelection(void) const
 void Script::DrawCurrentPage(void) const
 {
 	if (ScriptPage == 1) {
-		Draw_Text(260, 4, 0.50, WHITE, "1");
+		Gui::DrawString(260, 4, 0.50, WHITE, "1");
 	} else if (ScriptPage == 2) {
-		Draw_Text(280, 4, 0.50, WHITE, "2");
+		Gui::DrawString(280, 4, 0.50, WHITE, "2");
 	}
 }
 

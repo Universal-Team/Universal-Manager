@@ -97,7 +97,7 @@ namespace Gui
 }
 
    // Text.
-    void DisplayMsg(const char* text);
+    void DisplayMsg(std::string text);
     void DisplayTime(void);
 
     void drawBatteryTop(void);
@@ -105,12 +105,6 @@ namespace Gui
 
     void set_screen(C3D_RenderTarget * screen);
 
-    // 3DShell -> Most likely for FTP.
-    void Draw_Text(float x, float y, float size, u32 color, const char *text);
-    void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...);
-    void Draw_GetTextSize(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidth(float size, const char *text);
-    float Draw_GetTextHeight(float size, const char *text);
     bool Draw_Rect(float x, float y, float w, float h, u32 color);
 
     void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);

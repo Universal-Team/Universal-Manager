@@ -99,10 +99,10 @@ void TicTacToe::drawScreen(void) const
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
 	if (currentPlayer == 0) {
-		Draw_Text((400-Draw_GetTextWidth(0.7f, "Current Player : Player 1"))/2, 0, 0.65f, WHITE, "Current Player : Player 1");
+		Gui::DrawString((400-Gui::GetStringWidth(0.7f, "Current Player : Player 1"))/2, 0, 0.65f, WHITE, "Current Player : Player 1");
 		C2D_DrawCircle(350, 10, 1.0f, 10, COLOR1, COLOR1, COLOR1, COLOR1);
 	} else if (currentPlayer == 1) {
-		Draw_Text((400-Draw_GetTextWidth(0.7f, "Current Player : Player 2"))/2, 0, 0.65f, WHITE, "Current Player : Player 2");
+		Gui::DrawString((400-Gui::GetStringWidth(0.7f, "Current Player : Player 2"))/2, 0, 0.65f, WHITE, "Current Player : Player 2");
 		C2D_DrawCircle(350, 10, 1.0f, 10, COLOR2, COLOR2, COLOR2, COLOR2);
 	}
 
@@ -131,8 +131,8 @@ void TicTacToe::drawSubMenu(void) const
 {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Draw_Text(120, 0, 0.72f, WHITE, "Tic-Tac-Toe");
-	Draw_Text(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
+	Gui::DrawString(120, 0, 0.72f, WHITE, "Tic-Tac-Toe");
+	Gui::DrawString(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
 	
 
 	set_screen(bottom);
@@ -141,13 +141,13 @@ void TicTacToe::drawSubMenu(void) const
 
 	// Draw all of the 3 Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 25);
-	Draw_Text(110, 42, 0.65f, WHITE, "1 Player Mode");
+	Gui::DrawString(110, 42, 0.65f, WHITE, "1 Player Mode");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 90);
-	Draw_Text(110, 107, 0.65f, WHITE, "2 Player Mode");
+	Gui::DrawString(110, 107, 0.65f, WHITE, "2 Player Mode");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 160);
-	Draw_Text(100, 177, 0.7f, WHITE, "Exit Tic-Tac-Toe");
+	Gui::DrawString(100, 177, 0.7f, WHITE, "Exit Tic-Tac-Toe");
 	drawSelection();
 }
 

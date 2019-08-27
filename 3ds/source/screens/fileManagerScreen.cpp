@@ -50,7 +50,7 @@ void FileManager::DrawBrowse(void) const
 	drawBatteryTop();
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
-	Draw_Text((400-(Draw_GetTextWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
 		(i == selectedFile);
@@ -88,9 +88,9 @@ void FileManager::DrawBrowse(void) const
 	}
 
     if (Config::selector == 0) {
-        Draw_Text(26, 32, 0.53f, WHITE, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
     } else if (Config::selector == 1 || Config::selector == 2) {
-        Draw_Text(26, 32, 0.53f, BLACK, dirs.c_str());
+        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
     }
 
 	Gui::DrawBGBot();
@@ -106,7 +106,7 @@ void FileManager::DisplayActionBox(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-(Draw_GetTextWidth(0.68f, currentSelectedFile.c_str())))/2, 218, 0.65f, WHITE, currentSelectedFile.c_str());
+	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, currentSelectedFile.c_str())))/2, 218, 0.65f, WHITE, currentSelectedFile.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -118,7 +118,7 @@ void FileManager::DisplayActionBox(void) const
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
 		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
 		Gui::drawGUISelector(button_fileButtonSelector_idx, functionPos[currentSelection].x, functionPos[currentSelection].y, 0.01f);
-		Draw_Text(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
+		Gui::DrawString(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 }
 

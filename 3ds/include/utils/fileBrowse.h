@@ -15,6 +15,4 @@ struct DirEntry {
 
 void getDirectoryContents(std::vector<DirEntry>& dirContents);
 
-void drawFileBrowser();
-
 #endif //FILE_BROWSE_H

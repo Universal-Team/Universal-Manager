@@ -60,11 +60,11 @@ void Updater::Draw(void) const
 	DrawText();
 
 	DrawSelection();
-	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
-	Draw_Text(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
+	Gui::DrawString(140, 4, 0.50f, WHITE, "Current Page:");
+	Gui::DrawString(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Gui::DrawString(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Gui::DrawString(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Gui::DrawString(300, 4, 0.50, BLACK, "4"); //Draw Fourth Page Number.
 	DrawCurrentPage();
 }
 
@@ -532,80 +532,80 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 void Updater::DrawText(void) const
 {
 	if (updaterMode == 0) {
-	Draw_Text(49, 58, 0.7f, WHITE, "CFW");
-	Draw_Text(140, 58, 0.7f, WHITE, "TWL");
-	Draw_Text(229, 58, 0.7f, WHITE, "Other");
-	Draw_Text(49, 98, 0.7f, WHITE, "UNIV");
+	Gui::DrawString(49, 58, 0.7f, WHITE, "CFW");
+	Gui::DrawString(140, 58, 0.7f, WHITE, "TWL");
+	Gui::DrawString(229, 58, 0.7f, WHITE, "Other");
+	Gui::DrawString(49, 98, 0.7f, WHITE, "UNIV");
 
 	} else if (updaterMode == 1) {
-	Draw_Text(18, 58, 0.65f, WHITE, "Luma3DS");
-	Draw_Text(140, 58, 0.7f, WHITE, "Release");
-	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(18, 58, 0.65f, WHITE, "Luma3DS");
+	Gui::DrawString(140, 58, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(15, 98, 0.65f, WHITE, "GodMode9");
-	Draw_Text(140, 98, 0.7f, WHITE, "Release");
+	Gui::DrawString(15, 98, 0.65f, WHITE, "GodMode9");
+	Gui::DrawString(140, 98, 0.7f, WHITE, "Release");
 
 	} else if (updaterMode == 2) {
-	Draw_Text(8, 58, 0.65f, WHITE, "TWLMENU++");
-	Draw_Text(140, 58, 0.7f, WHITE, "Release");
-	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(8, 58, 0.65f, WHITE, "TWLMENU++");
+	Gui::DrawString(140, 58, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(8, 98, 0.60f, WHITE, "NDS-Bootstrap");
-	Draw_Text(140, 98, 0.7f, WHITE, "Release");
-	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(8, 98, 0.60f, WHITE, "NDS-Bootstrap");
+	Gui::DrawString(140, 98, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 98, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(30, 138, 0.7f, WHITE, "Extras");
-	Draw_Text(140, 138, 0.7f, WHITE, "Cheats");
+	Gui::DrawString(30, 138, 0.7f, WHITE, "Extras");
+	Gui::DrawString(140, 138, 0.7f, WHITE, "Cheats");
 
 	} else if (updaterMode == 3) {
-	Draw_Text(30, 58, 0.7f, WHITE, "Extras");
-	Draw_Text(140, 58, 0.7f, WHITE, "Themes");
-	Draw_Text(229, 58, 0.7f, WHITE, "Scripts");
+	Gui::DrawString(30, 58, 0.7f, WHITE, "Extras");
+	Gui::DrawString(140, 58, 0.7f, WHITE, "Themes");
+	Gui::DrawString(229, 58, 0.7f, WHITE, "Scripts");
 
 	} else if (updaterMode == 4) {
-	Draw_Text(5, 58, 0.65f, WHITE, "Univ-Manager");
-	Draw_Text(140, 58, 0.7f, WHITE, "Release");
-	Draw_Text(229, 58, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(5, 58, 0.65f, WHITE, "Univ-Manager");
+	Gui::DrawString(140, 58, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 58, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(13, 98, 0.65f, WHITE, "pkmn-chest");
-	Draw_Text(140, 98, 0.7f, WHITE, "Release");
-	Draw_Text(229, 98, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(13, 98, 0.65f, WHITE, "pkmn-chest");
+	Gui::DrawString(140, 98, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 98, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(18, 138, 0.65f, WHITE, "Relaunch");
-	Draw_Text(140, 138, 0.7f, WHITE, "Release");
-	Draw_Text(229, 138, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(18, 138, 0.65f, WHITE, "Relaunch");
+	Gui::DrawString(140, 138, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 138, 0.7f, WHITE, "Nightly");
 
-	Draw_Text(18, 178, 0.65f, WHITE, "LeafEdit");
-	Draw_Text(140, 178, 0.7f, WHITE, "Release");
-	Draw_Text(229, 178, 0.7f, WHITE, "Nightly");
+	Gui::DrawString(18, 178, 0.65f, WHITE, "LeafEdit");
+	Gui::DrawString(140, 178, 0.7f, WHITE, "Release");
+	Gui::DrawString(229, 178, 0.7f, WHITE, "Nightly");
 	}
 }
 
 void Updater::DrawTitle(void) const
 {
 	if (updaterMode == 0) {
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "Updater Sub Menu"))/2, 0, 0.72f, WHITE, "Updater Sub Menu");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Updater Sub Menu"))/2, 0, 0.72f, WHITE, "Updater Sub Menu");
 	} else if (updaterMode == 1) {
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "CFW Updater Screen"))/2, 0, 0.72f, WHITE, "CFW Updater Screen");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "CFW Updater Screen"))/2, 0, 0.72f, WHITE, "CFW Updater Screen");
 	} else if (updaterMode == 2) {
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "TWL Updater Screen"))/2, 0, 0.72f, WHITE, "TWL Updater Screen");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "TWL Updater Screen"))/2, 0, 0.72f, WHITE, "TWL Updater Screen");
 	} else if (updaterMode == 3) {
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "Other Updater Screen"))/2, 0, 0.72f, WHITE, "Other Updater Screen");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Other Updater Screen"))/2, 0, 0.72f, WHITE, "Other Updater Screen");
 	} else if (updaterMode == 4) {
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal Updater Screen"))/2, 0, 0.72f, WHITE, "Universal Updater Screen");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal Updater Screen"))/2, 0, 0.72f, WHITE, "Universal Updater Screen");
 	}
 }
 
 void Updater::DrawCurrentPage(void) const
 {
 	if (updaterMode == 1) {
-		Draw_Text(240, 4, 0.50, WHITE, "1");
+		Gui::DrawString(240, 4, 0.50, WHITE, "1");
 	} else if (updaterMode == 2) {
-		Draw_Text(260, 4, 0.50, WHITE, "2");
+		Gui::DrawString(260, 4, 0.50, WHITE, "2");
 	} else if (updaterMode == 3) {
-		Draw_Text(280, 4, 0.50, WHITE, "3");
+		Gui::DrawString(280, 4, 0.50, WHITE, "3");
 	} else if (updaterMode == 4) {
-		Draw_Text(300, 4, 0.50, WHITE, "4");
+		Gui::DrawString(300, 4, 0.50, WHITE, "4");
 	}
 }
 

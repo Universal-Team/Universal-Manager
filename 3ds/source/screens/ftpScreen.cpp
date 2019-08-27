@@ -55,20 +55,20 @@ void FTP::Draw(void) const
 		Gui::DrawBarsTop();
 		DisplayTime();
 		drawBatteryTop();
-		Draw_Text((400-Draw_GetTextWidth(0.72f, "FTP Mode"))/2, 0, 0.72f, WHITE, "FTP Mode");
+		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "FTP Mode"))/2, 0, 0.72f, WHITE, "FTP Mode");
 		Gui::DrawBGBot();
 		Gui::DrawBarsBot();
 		ret = ACU_GetWifiStatus(&wifiStatus);
 
 		if ((wifiStatus != 0) && R_SUCCEEDED(ret)) {
-			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "FTP initialized")) / 2), 40, 0.48f, WHITE, "FTP initialized");
+			Gui::DrawString(((320 - Gui::GetStringWidth(0.48f, "FTP initialized")) / 2), 40, 0.48f, WHITE, "FTP initialized");
 			snprintf(buf, 137, "IP: %s:5000", R_FAILED(ret)? "Failed to get IP" : hostname);
 
 			if (strlen(ftp_accepted_connection) != 0)
-				Draw_Text(((320 - Draw_GetTextWidth(0.48f, ftp_accepted_connection)) / 2), 80, 0.48f, WHITE, ftp_accepted_connection);
+				Gui::DrawString(((320 - Gui::GetStringWidth(0.48f, ftp_accepted_connection)) / 2), 80, 0.48f, WHITE, ftp_accepted_connection);
 
 			if (strlen(ftp_file_transfer) != 0)
-				Draw_Text(((320 - Draw_GetTextWidth(0.45f, ftp_file_transfer)) / 2), 150, 0.45f, WHITE, ftp_file_transfer);
+				Gui::DrawString(((320 - Gui::GetStringWidth(0.45f, ftp_file_transfer)) / 2), 150, 0.45f, WHITE, ftp_file_transfer);
 
 			if (isTransfering) {
 				C2D_DrawRectSolid(50, 140, 0.5f, 220, 3, BLACK);
@@ -84,12 +84,12 @@ void FTP::Draw(void) const
 			}
 		}
 		else {
-			Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Failed to initialize FTP.")) / 2), 40, 0.48f, WHITE, "Failed to initialize FTP.");
+			Gui::DrawString(((320 - Gui::GetStringWidth(0.48f, "Failed to initialize FTP.")) / 2), 40, 0.48f, WHITE, "Failed to initialize FTP.");
 			snprintf(buf, 18, "WiFi not enabled.");
 		}
 
-		Draw_Text(((320 - Draw_GetTextWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
-		Draw_Text(((320 - Draw_GetTextWidth(0.48f, "Press B to Return to the Main Menu.")) / 2), 220, 0.48f, WHITE, "Press B to Return to the Main Menu.");
+		Gui::DrawString(((320 - Gui::GetStringWidth(0.48f, buf)) / 2), 60, 0.48f, WHITE, buf);
+		Gui::DrawString(((320 - Gui::GetStringWidth(0.48f, "Press B to Return to the Main Menu.")) / 2), 220, 0.48f, WHITE, "Press B to Return to the Main Menu.");
 
 		Gui::clearTextBufs();
 		C3D_FrameEnd(0);

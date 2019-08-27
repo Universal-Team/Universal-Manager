@@ -43,9 +43,9 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	Gui::DrawBarsTop();
 	DisplayTime();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 90, 0.45f, BLACK, msg1.c_str());
-	Draw_Text(200-(Draw_GetTextWidth(0.45f, msg1.c_str())/2), 110, 0.45f, BLACK, msg2.c_str());
-	Draw_Text(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
+	Gui::DrawString(200-(Gui::GetStringWidth(0.45f, msg1.c_str())/2), 90, 0.45f, BLACK, msg1.c_str());
+	Gui::DrawString(200-(Gui::GetStringWidth(0.45f, msg1.c_str())/2), 110, 0.45f, BLACK, msg2.c_str());
+	Gui::DrawString(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -66,7 +66,7 @@ void helperBox(std::string msg1) {
 	set_screen(top);
 	Draw_Rect(0, 0, 400, 240, DIM);
 	Gui::sprite(sprites_textbox_idx, 10, 25);
-	Draw_Text(35, 42, 0.45f, BLACK, msg1.c_str());
+	Gui::DrawString(35, 42, 0.45f, BLACK, msg1.c_str());
 	set_screen(bottom);
 	Draw_Rect(0, 0, 320, 240, DIM);
 	C3D_FrameEnd(0);

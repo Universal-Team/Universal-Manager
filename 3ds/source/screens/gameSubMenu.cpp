@@ -55,8 +55,8 @@ void GameSub::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Games Tab"))/2, 220, 0.72f, WHITE, "Games Tab");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Games Tab"))/2, 220, 0.72f, WHITE, "Games Tab");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -64,10 +64,10 @@ void GameSub::Draw(void) const
 
 	// Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
-	Draw_Text(40, 57, 0.7f, WHITE, "Pong");
+	Gui::DrawString(40, 57, 0.7f, WHITE, "Pong");
 
 	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
-	Draw_Text(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
+	Gui::DrawString(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
 
 	drawSelection();
 }

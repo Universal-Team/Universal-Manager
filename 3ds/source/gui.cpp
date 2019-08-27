@@ -215,7 +215,7 @@ void Gui::DrawBarsBot(void)
 
 // Text.
 
-void DisplayMsg(const char* text) {
+void DisplayMsg(std::string text) {
     Gui::clearTextBufs();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
@@ -223,7 +223,7 @@ void DisplayMsg(const char* text) {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
     Gui::sprite(sprites_textbox_idx, 10, 25);
-	Draw_Text(35, 42, 0.45f, BLACK, text);
+	Gui::DrawString(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -263,7 +263,7 @@ void drawBatteryTop(void) {
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
 	    if(batteryPercent == 100) {
-		Draw_Text(315, 2, 0.65f, WHITE, "100%");
+		Gui::DrawString(315, 2, 0.65f, WHITE, "100%");
 	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
@@ -299,7 +299,7 @@ void drawBatteryBot(void) {
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
     	if(batteryPercent == 100) {
-		Draw_Text(230, 0, 0.65f, WHITE, "100%");
+		Gui::DrawString(230, 0, 0.65f, WHITE, "100%");
 	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
@@ -344,34 +344,11 @@ float Gui::GetStringHeight(float size, std::string Text) {
 	return height;
 }
 
-// To-Do : Get rid of the old one.
-void Draw_Text(float x, float y, float size, u32 color, const char *text) {
-	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
-	C2D_TextOptimize(&c2d_text);
-	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
-}
-
 void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text) {
 	C2D_Text c2d_text;
     C2D_TextFontParse(&c2d_text, editorFont, sizeBuf, text);
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
-}
-
-void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) {
-	char buffer[256];
-	va_list args;
-	va_start(args, text);
-	vsnprintf(buffer, 256, text, args);
-	Draw_Text(x, y, size, color, buffer);
-	va_end(args);
-}
-
-void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
-	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
-	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 
 void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text) {
@@ -380,22 +357,10 @@ void Draw_GetTextSizeEditor(float size, float *width, float *height, const char 
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 
-float Draw_GetTextWidth(float size, const char *text) {
-	float width = 0;
-	Draw_GetTextSize(size, &width, NULL, text);
-	return width;
-}
-
 float Draw_GetTextWidthEditor(float size, const char *text) {
 	float width = 0;
 	Draw_GetTextSizeEditor(size, &width, NULL, text);
 	return width;
-}
-
-float Draw_GetTextHeight(float size, const char *text) {
-	float height = 0;
-	Draw_GetTextSize(size, NULL, &height, text);
-	return height;
 }
 
 bool Draw_Rect(float x, float y, float w, float h, u32 color) {

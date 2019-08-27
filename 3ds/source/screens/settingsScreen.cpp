@@ -78,15 +78,15 @@ void Settings::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Settings"))/2, 0, 0.72f, WHITE, "Settings");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Settings"))/2, 0, 0.72f, WHITE, "Settings");
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBottomBack();
 	DrawBottom();
-	Draw_Text(140, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	Draw_Text(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
+	Gui::DrawString(140, 4, 0.50f, WHITE, "Current Page:");
+	Gui::DrawString(240, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Gui::DrawString(260, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	Gui::DrawString(280, 4, 0.50, BLACK, "3"); //Draw Third Page Number.
 	DrawCurrentPage();
 }
 
@@ -98,86 +98,86 @@ void Settings::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 void Settings::DrawBottom(void) const
 {
 	if (SettingsPage == 1) {
-		Draw_Text((320-Draw_GetTextWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
+		Gui::DrawString((320-Gui::GetStringWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
 		Gui::Button(button_red_idx, 17, 85);
-		Draw_Text(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
+		Gui::DrawString(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
 		Gui::Button(button_green_idx, 112, 85);
-		Draw_Text(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
+		Gui::DrawString(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 85);
-		Draw_Text(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
+		Gui::DrawString(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
 
 	// Background.
-		Draw_Text(100, 138, 0.7f, WHITE, "Background");
+		Gui::DrawString(100, 138, 0.7f, WHITE, "Background");
 		Gui::Button(button_red_idx, 17, 168);
-		Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
+		Gui::DrawString(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
 		Gui::Button(button_green_idx, 112, 168);
-		Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
+		Gui::DrawString(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 168);
-		Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
+		Gui::DrawString(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
 
 		Gui::Button(button_updater_idx, 207, 31);
-		Draw_Text(225, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
-		Draw_Text(100, 38, 0.65f, WHITE, "Music Mode:");
+		Gui::DrawString(225, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
+		Gui::DrawString(100, 38, 0.65f, WHITE, "Music Mode:");
 
 
 	} else if (SettingsPage == 2) {
-		Draw_Text(70, 73, 0.7f, WHITE, "Animation Color");
+		Gui::DrawString(70, 73, 0.7f, WHITE, "Animation Color");
 		Gui::Button(button_red_idx, 17, 100);
-		Draw_Text(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
+		Gui::DrawString(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
 		Gui::Button(button_green_idx, 112, 100);
-		Draw_Text(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
+		Gui::DrawString(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 100);
-		Draw_Text(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
+		Gui::DrawString(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
 
 		Gui::Button(button_updater_idx, 207, 31);
-		Draw_Text(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
-		Draw_Text(115, 38, 0.7f, WHITE, "Animation:");
+		Gui::DrawString(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
+		Gui::DrawString(115, 38, 0.7f, WHITE, "Animation:");
 
 		Gui::Button(button_updater_idx, 207, 165);
-		Draw_Text(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
-		Draw_Text(129, 178, 0.7f, WHITE, "Percent :");
+		Gui::DrawString(229, 178, 0.7f, WHITE, percentModes[Config::percentDisplay].c_str());
+		Gui::DrawString(129, 178, 0.7f, WHITE, "Percent :");
 
 	// Bars Layouts.
 		Gui::Button(button_updater_idx, 17, 165);
-		Draw_Text(28, 174, 0.7f, WHITE, layoutModes[Config::layout].c_str());
+		Gui::DrawString(28, 174, 0.7f, WHITE, layoutModes[Config::layout].c_str());
 
 	// BG Layouts.
 		Gui::Button(button_updater_idx, 17, 31);
-		Draw_Text(28, 40, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
+		Gui::DrawString(28, 40, 0.7f, WHITE, layout2Modes[Config::layoutBG].c_str());
 
 
 	} else if (SettingsPage == 3) {
-		Draw_Text(100, 78, 0.7f, WHITE, "Selected Text");
+		Gui::DrawString(100, 78, 0.7f, WHITE, "Selected Text");
 		Gui::Button(button_red_idx, 17, 105);
-		Draw_Text(56, 118, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
+		Gui::DrawString(56, 118, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
 		Gui::Button(button_green_idx, 112, 105);
-		Draw_Text(150, 118, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
+		Gui::DrawString(150, 118, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 105);
-		Draw_Text(239, 118, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
+		Gui::DrawString(239, 118, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
 
-		Draw_Text(100, 148, 0.7f, WHITE, "Unselected Text");
+		Gui::DrawString(100, 148, 0.7f, WHITE, "Unselected Text");
 		Gui::Button(button_red_idx, 17, 168);
-		Draw_Text(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
+		Gui::DrawString(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
 		Gui::Button(button_green_idx, 112, 168);
-		Draw_Text(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
+		Gui::DrawString(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
 		Gui::Button(button_blue_idx, 207, 168);
-		Draw_Text(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
+		Gui::DrawString(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
 
 		// Selectors.
-		Draw_Text(30, 40, 0.7f, WHITE, "FileBrowse Selector");
+		Gui::DrawString(30, 40, 0.7f, WHITE, "FileBrowse Selector");
 		Gui::Button(button_updater_idx, 207, 31);
-		Draw_Text(213, 40, 0.7f, WHITE, Selectors[Config::selector].c_str());
+		Gui::DrawString(213, 40, 0.7f, WHITE, Selectors[Config::selector].c_str());
 	}
 }
 
 void Settings::DrawCurrentPage(void) const
 {
 	if (SettingsPage == 1) {
-		Draw_Text(240, 4, 0.50, WHITE, "1");
+		Gui::DrawString(240, 4, 0.50, WHITE, "1");
 	} else if (SettingsPage == 2) {
-		Draw_Text(260, 4, 0.50, WHITE, "2");
+		Gui::DrawString(260, 4, 0.50, WHITE, "2");
 	} else if (SettingsPage == 3) {
-		Draw_Text(280, 4, 0.50, WHITE, "3");
+		Gui::DrawString(280, 4, 0.50, WHITE, "3");
 	}
 }
 

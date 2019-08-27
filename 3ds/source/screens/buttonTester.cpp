@@ -41,8 +41,8 @@ void ButtonTester::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
-	Draw_Text(80, 218, 0.72f, WHITE, "Currently Pressed Button : ");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
+	Gui::DrawString(80, 218, 0.72f, WHITE, "Currently Pressed Button: ");
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -53,72 +53,72 @@ void ButtonTester::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_A) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE000");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE000");
 
 	} else if (hDown & KEY_B) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE001");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE001");
 
 	} else if (hDown & KEY_X) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE002");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE002");
 
 	} else if (hDown & KEY_Y) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE003");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE003");
 
 	} else if (hDown & KEY_UP) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE079");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE079");
 
 		} else if (hDown & KEY_DOWN) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE07A");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07A");
 
 		} else if (hDown & KEY_LEFT) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE07B");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07B");
 
 		} else if (hDown & KEY_RIGHT) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE07C");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07C");
 
 		} else if (hDown & KEY_L) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE052");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE052");
 
 		} else if (hDown & KEY_R) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE053");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE053");
 
 		} else if (hDown & KEY_ZL) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE054");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE054");
 
 		} else if (hDown & KEY_ZR) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE055");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE055");
 
 		} else if (hDown & KEY_START) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE045");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE045");
 
 		} else if (hDown & KEY_SELECT) {
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		set_screen(top);
-		Draw_Text(330, 218, 0.72f, WHITE, "\uE046");
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE046");
 
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, buttonTesterButtonPos[0])) {

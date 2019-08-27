@@ -45,7 +45,7 @@ void Calculator::Draw(void) const
 	Gui::DrawBGTop();
 	animatedBGTop();
 	Gui::DrawBarsTop();
-	Draw_Text((400-Draw_GetTextWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
 	C2D_SceneBegin(bottom);
 	Gui::DrawBGBot();
 	animatedBGBot();

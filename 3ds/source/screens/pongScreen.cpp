@@ -41,14 +41,14 @@
 // Score stuff for Player 1.
 void Pong::drawScoreP1(void) const
 {
-	Draw_Text(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
+	Gui::DrawString(0, 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP1)).c_str());
 }
 
 
 // Score stuff for Player 2.
 void Pong::drawScoreP2(void) const
 {
-	Draw_Text(320-Draw_GetTextWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
+	Gui::DrawString(320-Gui::GetStringWidth(0.72f, ("Score : "+std::to_string(scoreP2)).c_str()), 0, 0.72f, WHITE, ("Score : "+std::to_string(scoreP2)).c_str());
 }
 
 
@@ -85,8 +85,8 @@ void Pong::drawSubMenu(void) const
 {
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Draw_Text(180, 0, 0.72f, WHITE, "Pong");
-	Draw_Text(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
+	Gui::DrawString(180, 0, 0.72f, WHITE, "Pong");
+	Gui::DrawString(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
 
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
@@ -94,13 +94,13 @@ void Pong::drawSubMenu(void) const
 
 	// Draw all of the 3 Buttons.
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 25);
-	Draw_Text(110, 42, 0.65f, WHITE, "1 Player Mode");
+	Gui::DrawString(110, 42, 0.65f, WHITE, "1 Player Mode");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 90);
-	Draw_Text(110, 107, 0.65f, WHITE, "2 Player Mode");
+	Gui::DrawString(110, 107, 0.65f, WHITE, "2 Player Mode");
 
 	Gui::sprite(sprites_mainMenuButton_idx, 90, 160);
-	Draw_Text(130, 177, 0.7f, WHITE, "Exit Pong");
+	Gui::DrawString(130, 177, 0.7f, WHITE, "Exit Pong");
 	drawSelection();
 }
 
@@ -152,10 +152,10 @@ void Pong::drawScreen(void) const
 	drawScoreP1();
 	drawScoreP2();
 
-	Draw_Text(80, 80, 0.72f, WHITE, "How to Play :");
-	Draw_Text(80, 100, 0.72f, WHITE, "Player 1 : Up / Down");
-	Draw_Text(80, 120, 0.72f, WHITE, "Player 2 : X / B");
-	Draw_Text(80, 140, 0.72f, WHITE, "Start : Quit");
+	Gui::DrawString(80, 80, 0.72f, WHITE, "How to Play :");
+	Gui::DrawString(80, 100, 0.72f, WHITE, "Player 1 : Up / Down");
+	Gui::DrawString(80, 120, 0.72f, WHITE, "Player 2 : X / B");
+	Gui::DrawString(80, 140, 0.72f, WHITE, "Start : Quit");
 }
 
 //#######################################################################################
