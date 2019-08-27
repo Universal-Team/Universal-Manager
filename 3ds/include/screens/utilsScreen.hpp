@@ -43,11 +43,11 @@ private:
 
 	std::vector<Structs::ButtonPos> utilsButtonPos = {
 			// Calendar.
-    	{0, 40, 149, 52, -1},
+    	{1, 40, 149, 52, -1},
 			// Button Tester. ;P
-		{170, 40, 149, 52, -1},
+		{162, 40, 149, 52, -1},
 			// Calculator.
-		{0, 150, 149, 52, -1},
+		{1, 150, 149, 52, -1},
 			// Back Icon.
 		{293, 213, 27, 27, -1},
 	};

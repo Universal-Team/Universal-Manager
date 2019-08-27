@@ -223,9 +223,9 @@ void Credits::drawButtons(void) const
 {
 	// Buttons.
 	for(int i=0;i<3;i++) {
-		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));
+		Gui::Button(button_button_2_idx, 0, 29+(i*65));
 		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)].c_str()))/2)-85, 46+(i*65), 0.65f, WHITE, names[(2*i)].c_str());
-		Gui::sprite(sprites_mainMenuButton_idx, 170, 29+(i*65));
+		Gui::Button(button_button_2_idx, 160, 29+(i*65));
 		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)+1].c_str()))/2)+85, 46+(i*65), 0.65f, WHITE, names[(2*i)+1].c_str());
 	}
 }

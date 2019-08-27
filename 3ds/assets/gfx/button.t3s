@@ -1,5 +1,8 @@
 --atlas -f rgba -z auto
 
+button/fileManager-button.png
+button/long-button.png
+
 button/colored-buttons/blue.png
 button/colored-buttons/green.png
 button/colored-buttons/red.png
@@ -22,5 +25,3 @@ button/selector/updater-selector-tl.png
 button/updater-buttons/updater.png
 button/updater-buttons/updater-br.png
 button/updater-buttons/updater-tl.png
-
-button/long-button.png

@@ -41,9 +41,9 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 void GameSub::drawSelection(void) const
 {
 	if (Selection == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 20, Config::barColor);
+		Gui::drawGUISelector(button_tl_selector_idx, 0, 39, .020f);
 	} else if (Selection == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 20, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 166, 44, .020f);
 	}
 }
 
@@ -63,10 +63,10 @@ void GameSub::Draw(void) const
 	Gui::DrawBarsBottomBack();
 
 	// Buttons.
-	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
+	Gui::Button(button_button_tl_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
 	Gui::DrawString(40, 57, 0.7f, WHITE, "Pong");
 
-	Gui::sprite(sprites_mainMenuButton_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
+	Gui::Button(button_button_2_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
 	Gui::DrawString(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
 
 	drawSelection();

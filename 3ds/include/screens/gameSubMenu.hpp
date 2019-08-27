@@ -43,9 +43,9 @@ private:
 
 	std::vector<Structs::ButtonPos> gamesSubMenuButtonPos = {
 			// Pong. :P
-    	{0, 40, 149, 52, -1},
+    	{1, 40, 149, 52, -1},
 		// Tic-Tac-Toe. ;P
-		{170, 40, 149, 52, -1},
+		{162, 40, 149, 52, -1},
 		// Back Icon.
 		{293, 213, 27, 27, -1},
 	};

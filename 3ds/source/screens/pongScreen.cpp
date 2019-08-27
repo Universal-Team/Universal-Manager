@@ -72,11 +72,11 @@ void Pong::drawBall(void) const
 void Pong::drawSelection(void) const
 {
 	if (Selection == 0) {
-		C2D_DrawCircleSolid(60, 50, 1.0f, 10, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 94, 29, .020f);
 	} else if (Selection == 1) {
-		C2D_DrawCircleSolid(60, 115, 1.0f, 10, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 94, 94, .020f);
 	} else if (Selection == 2) {
-		C2D_DrawCircleSolid(60, 185, 1.0f, 10, Config::barColor);
+		Gui::drawGUISelector(button_selector_idx, 94, 164, .020f);
 	}
 }
 
@@ -93,13 +93,13 @@ void Pong::drawSubMenu(void) const
 	Gui::DrawBarsBot();
 
 	// Draw all of the 3 Buttons.
-	Gui::sprite(sprites_mainMenuButton_idx, 90, 25);
+	Gui::Button(button_button_2_idx, 90, 25); 
 	Gui::DrawString(110, 42, 0.65f, WHITE, "1 Player Mode");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 90, 90);
+	Gui::Button(button_button_2_idx, 90, 90); 
 	Gui::DrawString(110, 107, 0.65f, WHITE, "2 Player Mode");
 
-	Gui::sprite(sprites_mainMenuButton_idx, 90, 160);
+	Gui::Button(button_button_2_idx, 90, 160); 
 	Gui::DrawString(130, 177, 0.7f, WHITE, "Exit Pong");
 	drawSelection();
 }

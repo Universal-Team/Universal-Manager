@@ -7,12 +7,6 @@ sprites/battery/battery75.png
 sprites/battery/battery100.png
 sprites/battery/batteryCharge.png
 
-sprites/buttons/fileManagerSelected.png
-sprites/buttons/fileManagerUnselected.png
-sprites/buttons/mainMenuButton.png
-sprites/buttons/titleButton.png
-sprites/buttons/updaterButton.png
-
 sprites/gui/bottom_screen_bot.png
 sprites/gui/bottom_screen_bot_back.png
 sprites/gui/bottom_screen_top.png
@@ -51,11 +45,8 @@ sprites/icons/utilsIcon.png
 
 sprites/misc/actionBox.png
 sprites/misc/actionBox2.png
-sprites/misc/arrow.png
 sprites/misc/back.png
 sprites/misc/cover_glow.png
 sprites/misc/cover_normal.png
-sprites/misc/dot.png
 sprites/misc/frame.png
-sprites/misc/selected.png
 sprites/misc/textbox.png

@@ -116,7 +116,7 @@ void FileManager::DisplayActionBox(void) const
 
 	// Buttons.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::sprite(sprites_fileManagerUnselected_idx, functionPos[i].x, functionPos[i].y);
+		Gui::Button(button_fileManager_button_idx, functionPos[i].x, functionPos[i].y);
 		Gui::drawGUISelector(button_fileButtonSelector_idx, functionPos[currentSelection].x, functionPos[currentSelection].y, 0.01f);
 		Gui::DrawString(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
