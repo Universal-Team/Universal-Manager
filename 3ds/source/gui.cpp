@@ -412,7 +412,7 @@ void Gui::drawFileSelector(float x, float y)
     Draw_Rect(x + 400 - w, y + w, w, 25 - 2 * w, color); // right
     Draw_Rect(x, y + 25 - w, 400, w, color);             // bottom
 
-    timer += .010f;
+    timer += .005f;
 }
 
 void Gui::drawGUISelector(int key, float x, float y)
