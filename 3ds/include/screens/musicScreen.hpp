@@ -72,6 +72,7 @@ private:
 
 	uint selectedFile = 0;
 	int keyRepeatDelay = 0;
+	int fastMode = false;
 	std::vector<DirEntry> dirContents;
 	uint selectedPlst = 0;
 

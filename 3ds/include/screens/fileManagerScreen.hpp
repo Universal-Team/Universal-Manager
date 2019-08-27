@@ -56,6 +56,7 @@ private:
 	bool updatingSelf = false;
 	uint selectedFile = 0;
 	int keyRepeatDelay = 0;
+	int fastMode = false;
 	mutable bool dirChanged = true;
 	std::vector<DirEntry> dirContents;
 	std::string currentFile = "";

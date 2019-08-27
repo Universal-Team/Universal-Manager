@@ -134,13 +134,25 @@ void FileManager::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE001 to go back a Folder \n \n Press \uE002 to open the Action Menu.");
 	}

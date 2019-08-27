@@ -168,14 +168,26 @@ void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	}
 }
 

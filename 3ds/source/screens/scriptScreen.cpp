@@ -151,12 +151,20 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (hHeld & KEY_UP) {
 			if (selectedFile > 0 && !keyRepeatDelay) {
 				selectedFile--;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
 				keyRepeatDelay = 6;
+			}
 			}
 		} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 			if (selectedFile < dirContents.size()-1) {
 				selectedFile++;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
 				keyRepeatDelay = 6;
+			}
 			}
 		} else if (hDown & KEY_START) {
 			if(confirmPopup("Do you want to edit this Script : \n\n "+dirContents[selectedFile].name+"")) {
@@ -165,6 +173,10 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				ScriptPage = 1;
 				ScriptMode = 1;
 				}
+		} else if (hDown & KEY_R) {
+			fastMode = true;
+		} else if (hDown & KEY_L) {
+			fastMode = false;
 		} else if (hHeld & KEY_SELECT) {
 			helperBox(" Press A to start the selected Script. \n \n Press B to return to the Main Menu Screen. \n \n Press X to Delete the selected scpt File. \n \n Press Y to create scpt Files.");
 		}

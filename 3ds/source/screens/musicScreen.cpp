@@ -305,16 +305,28 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hDown & KEY_START) {
 		MusicMode = 2;
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Song. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu. \n \n Press \uE003 to open the Playlist Menu. \n \n Press Start to open the Music Player.");
 	}
@@ -591,14 +603,26 @@ void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Add this Song to the Selected Playlist. \n \n Press \uE001 to return to the Song List. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to create a Playlist.");
 	}
@@ -666,14 +690,26 @@ void Music::PlaylistEditLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlstItem > 0 && !keyRepeatDelay) {
 			selectedPlstItem--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlstItem < plstContents.size()-1) {
 			selectedPlstItem++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Save The Playlist. \n \n Press \uE001 to return to the Playlist Screen. \n \n Press \uE002 to Delete a Song from the Playlist. \n \n Press \uE003 to move Songs.");
 	}
@@ -764,14 +800,26 @@ void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		if (selectedPlst > 0 && !keyRepeatDelay) {
 			selectedPlst--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedPlst < plsts.size()-1) {
 			selectedPlst++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Play the selected Playlist. \n \n Press \uE001 to return to the Music Player Menu. \n \n Press \uE002 to delete a Playlist. \n \n Press \uE003 to edit a Playlist.");
 	}
@@ -893,14 +941,26 @@ void Music::ThemeSelectorLogic(u32 hDown, u32 hHeld) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 6;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to Select an Image. \n \n Press \uE001 to go back a Folder. \n \n Press \uE002 to exit to the Music Player Menu.");
 	}
