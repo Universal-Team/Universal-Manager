@@ -32,8 +32,6 @@
 #include "utils/settings.hpp"
 #include "utils/sound.h"
 
-#include "lang/lang.h"
-
 #include <3ds.h>
 #include <algorithm>
 #include <dirent.h>
@@ -80,19 +78,16 @@ int main()
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
 	sdmcInit();
-	romfsInit();
 	Config::loadConfig();
 	if (Config::Citra == 0) {
 	mcuInit();
 	} else if (Config::Citra == 1) {
 	}
+	romfsInit();
 	cfguInit();
     gfxInitDefault();
 	Gui::init();
 	srand(time(NULL));
-
-	// Load The Strings from the Romfs.
-	Lang::loadLangStrings(Config::lang);
 
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
 		Gui::setScreen(std::make_unique<MainMenu>());

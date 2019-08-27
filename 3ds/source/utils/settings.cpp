@@ -45,7 +45,6 @@ int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
 int Config::selector;
-int Config::lang; // Current Language.
 
 void Config::loadConfig() {
 	// [UI]
@@ -56,7 +55,6 @@ void Config::loadConfig() {
 	Config::layout = settingsini.GetInt("UI", "LAYOUT", 0);
 	Config::layoutBG = settingsini.GetInt("UI", "LAYOUTBG", 0);
 	Config::selector = settingsini.GetInt("UI", "SELECTOR", 0);
-	Config::lang = settingsini.GetInt("UI", "LANGUAGE", 1);
 
 	// [ANIMATED]
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
@@ -81,7 +79,6 @@ void Config::saveConfig() {
 	settingsini.SetInt("UI", "LAYOUT", Config::layout);
 	settingsini.SetInt("UI", "LAYOUTBG", Config::layoutBG);
 	settingsini.SetInt("UI", "SELECTOR", Config::selector);
-	settingsini.SetInt("UI", "LANGUAGE", Config::lang);
 
 	// [ANIMATED]
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
