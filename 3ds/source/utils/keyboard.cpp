@@ -233,7 +233,7 @@ char Input::checkKeyboard(int hDown, int hHeld) {
 		touchRead(&touch);
 		// Check if a regular key was pressed
 		for(uint i=0;i<(sizeof(keysQWERTY)/sizeof(keysQWERTY[0]));i++) {
-			if((touch.px > keysQWERTY[i].x-2 && touch.px < keysQWERTY[i].x+22) && (touch.py > keysQWERTY[i].y+(103)-2 && touch.py < keysQWERTY[i].y+22+(103))) {
+			if((touch.px > keysQWERTY[i].x-2 && touch.px < keysQWERTY[i].x+22) && (touch.py > keysQWERTY[i].y+(100)-2 && touch.py < keysQWERTY[i].y+22+(100))) {
 				char c = (shift ? keysQWERTYShift[i] : keysQWERTY[i]).character[0];
 				c = caps ? toupper(c) : c;
 				shift = 0;
@@ -243,7 +243,7 @@ char Input::checkKeyboard(int hDown, int hHeld) {
 
 		// Check if a modifier key was pressed
 		for(uint i=0;i<(sizeof(modifierKeys)/sizeof(modifierKeys[0]));i++) {
-			if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+modifierKeys[i].w+2) && (touch.py > modifierKeys[i].y+(103)-2 && touch.py < modifierKeys[i].y+22+(103))) {
+			if((touch.px > modifierKeys[i].x-2 && touch.px < modifierKeys[i].x+modifierKeys[i].w+2) && (touch.py > modifierKeys[i].y+(103)-2 && touch.py < modifierKeys[i].y+18+(103))) {
 				if(modifierKeys[i].character == "bksp") {
 					return '\b';
 				} else if(modifierKeys[i].character == "caps") {
