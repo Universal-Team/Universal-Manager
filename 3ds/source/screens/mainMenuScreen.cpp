@@ -103,49 +103,49 @@ void MainMenu::Draw(void) const
 void MainMenu::DrawBottom(void) const
 {
 	if (currentPage == 1) {
-	Gui::Button(button_button_tl_idx, 1, 27);
-	Gui::sprite(sprites_fileManagerIcon_idx, 9, 41);
-	Gui::DrawString(40, 48, 0.65f, WHITE, "Filemanager");
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
+		Gui::sprite(0, sprites_fileManagerIcon_idx, 9, 41);
+		Gui::DrawString(40, 48, 0.65f, WHITE, "Filemanager");
 
-	Gui::Button(button_button_2_idx, 162, 27);
-	Gui::sprite(sprites_ftpIcon_idx, 172, 40);
-	Gui::DrawString(230, 42, 0.7f, WHITE, "FTP");
+		Gui::sprite(3, button_button_2_idx, 162, 27); 
+		Gui::sprite(0, sprites_ftpIcon_idx, 172, 40);
+		Gui::DrawString(230, 42, 0.7f, WHITE, "FTP");
 
-	Gui::Button(button_button_3_idx, 1, 91);
-	Gui::sprite(sprites_scriptIcon_idx, 4, 102);
-	Gui::DrawString(40, 107, 0.65f, WHITE, "Scripts");
+		Gui::sprite(3, button_button_3_idx, 1, 91);
+		Gui::sprite(0, sprites_scriptIcon_idx, 4, 102);
+		Gui::DrawString(40, 107, 0.65f, WHITE, "Scripts");
 
-	Gui::Button(button_button_4_idx, 162, 91);
-	Gui::sprite(sprites_music_icon_idx, 175, 106);
-	Gui::DrawString(230, 107, 0.7f, WHITE, "Music");
+		Gui::sprite(3, button_button_4_idx, 162, 91);
+		Gui::sprite(0, sprites_music_icon_idx, 175, 106);
+		Gui::DrawString(230, 107, 0.7f, WHITE, "Music");
 
-	Gui::Button(button_button_5_idx, 1, 154);
-	Gui::sprite(sprites_updaterIcon_idx, 9, 167);
-	Gui::DrawString(50, 177, 0.7f, WHITE, "Updater");
+		Gui::sprite(3, button_button_5_idx, 1, 154);
+		Gui::sprite(0, sprites_updaterIcon_idx, 9, 167);
+		Gui::DrawString(50, 177, 0.7f, WHITE, "Updater");
 
-	Gui::Button(button_button_br_idx, 162, 151);
-	Gui::sprite(sprites_settingsIcon_idx, 172, 165);
-	Gui::DrawString(220, 177, 0.7f, WHITE, "Settings");
+		Gui::sprite(3, button_button_br_idx, 162, 151);
+		Gui::sprite(0, sprites_settingsIcon_idx, 172, 165);
+		Gui::DrawString(220, 177, 0.7f, WHITE, "Settings");
 
 
 	} else if (currentPage == 2) {
-	Gui::Button(button_button_tl_idx, 1, 27);
-	Gui::sprite(sprites_image_icon_idx, 6, 37);
-	Gui::DrawString(40, 42, 0.65f, WHITE, "Image Viewer");
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
+		Gui::sprite(0, sprites_image_icon_idx, 6, 37);
+		Gui::DrawString(40, 42, 0.65f, WHITE, "Image Viewer");
 
-	Gui::Button(button_button_2_idx, 162, 27);
-	Gui::DrawString(230, 42, 0.7f, WHITE, "Credits");
+		Gui::sprite(3, button_button_2_idx, 162, 27);
+		Gui::DrawString(230, 42, 0.7f, WHITE, "Credits");
 
-	Gui::Button(button_button_3_idx, 1, 91);
-	Gui::sprite(sprites_textEditorIcon_idx, 9, 103);
-	Gui::DrawString(40, 107, 0.65f, WHITE, "Text Editor");
+		Gui::sprite(3, button_button_3_idx, 1, 91);
+		Gui::sprite(0, sprites_textEditorIcon_idx, 9, 103);
+		Gui::DrawString(40, 107, 0.65f, WHITE, "Text Editor");
 
-	Gui::Button(button_button_4_idx, 162, 91);
-	Gui::sprite(sprites_utilsIcon_idx, 175, 102);
-	Gui::DrawString(215, 107, 0.7f, WHITE, "Utils");
+		Gui::sprite(3, button_button_4_idx, 162, 91);
+		Gui::sprite(0, sprites_utilsIcon_idx, 175, 102);
+		Gui::DrawString(215, 107, 0.7f, WHITE, "Utils");
 
-	Gui::Button(button_button_5_idx, 1, 154);
-	Gui::DrawString(50, 177, 0.7f, WHITE, "Games");
+		Gui::sprite(3, button_button_5_idx, 1, 154);
+		Gui::DrawString(50, 177, 0.7f, WHITE, "Games");
 	}
 }
 

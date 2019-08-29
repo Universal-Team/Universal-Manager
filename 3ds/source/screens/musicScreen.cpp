@@ -111,21 +111,21 @@ void Music::DrawMusicMain(void) const
 	animatedBGBot();
 	Gui::DrawBarsBot();
 
-	Gui::Button(button_button_tl_idx, Functions[0].x, Functions[0].y);
-	Gui::sprite(sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+15);
+	Gui::sprite(3, button_button_tl_idx, Functions[0].x, Functions[0].y);
+	Gui::sprite(0, sprites_music_icon_idx, Functions[0].x+5, Functions[0].y+15);
 	Gui::DrawString(40, 60, 0.65f, WHITE, "Songs");
 
-	Gui::Button(button_button_2_idx, Functions[1].x, Functions[1].y);
-	Gui::Draw_ImageBlend(sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+15, Config::barColor);
-	Gui::sprite(sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+15);
+	Gui::sprite(3, button_button_2_idx, Functions[1].x, Functions[1].y);
+	Gui::Draw_ImageBlend(0, sprites_play_icon_small_glow_idx, Functions[1].x+5, Functions[1].y+15, Config::barColor);
+	Gui::sprite(0, sprites_play_icon_small_normal_idx, Functions[1].x+5, Functions[1].y+15);
 	Gui::DrawString(210, 60, 0.65f, WHITE, "Now Playing");
 
-	Gui::Button(button_button_3_idx, Functions[2].x, Functions[2].y);
-	Gui::sprite(sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+12);
+	Gui::sprite(3, button_button_3_idx, Functions[2].x, Functions[2].y);
+	Gui::sprite(0, sprites_playlist_icon_idx, Functions[2].x+1, Functions[2].y+12);
 	Gui::DrawString(37, 173, 0.65f, WHITE, "Playlists");
 
-	Gui::Button(button_button_br_idx, Functions[3].x, Functions[3].y);
-	Gui::sprite(sprites_themes_idx, Functions[3].x+5, Functions[3].y+15);
+	Gui::sprite(3, button_button_br_idx, Functions[3].x, Functions[3].y);
+	Gui::sprite(0, sprites_themes_idx, Functions[3].x+5, Functions[3].y+15);
 	Gui::DrawString(220, 173, 0.65f, WHITE, "Themes");
 
 	if (selection == 0) {
@@ -383,8 +383,8 @@ void Music::DrawPlayer(void) const
 		if (coverImageLoaded == true) {
 			Draw_CoverImage(); 
 		} else if (coverImageLoaded == false) {
-			Gui::sprite(sprites_cover_glow_idx, 250, 30);
-			Gui::sprite(sprites_cover_normal_idx, 250, 30);
+			Gui::sprite(0, sprites_cover_glow_idx, 250, 30);
+			Gui::sprite(0, sprites_cover_normal_idx, 250, 30);
 		}
 
 	} else if (Config::musicMode == 2) {
@@ -426,17 +426,17 @@ void Music::DrawPlayer(void) const
 	DisplayTime();
 	drawBatteryBot();
 
-	Gui::Draw_ImageBlend(!isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, Functions[4].x, Functions[4].y, Config::barColor);
-	Gui::sprite(!isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, Functions[4].x, Functions[4].y);
+	Gui::Draw_ImageBlend(0, !isPaused() ? sprites_pause_icon_glow_idx : sprites_play_icon_glow_idx, Functions[4].x, Functions[4].y, Config::barColor);
+	Gui::sprite(0, !isPaused() ? sprites_pause_icon_normal_idx : sprites_play_icon_normal_idx, Functions[4].x, Functions[4].y);
 
-	Gui::Draw_ImageBlend(sprites_left_arrow_glow_idx, Functions[5].x, Functions[5].y, Config::barColor);
-	Gui::sprite(sprites_left_arrow_normal_idx, Functions[5].x, Functions[5].y);
+	Gui::Draw_ImageBlend(0, sprites_left_arrow_glow_idx, Functions[5].x, Functions[5].y, Config::barColor);
+	Gui::sprite(0, sprites_left_arrow_normal_idx, Functions[5].x, Functions[5].y);
 
-	Gui::Draw_ImageBlend(sprites_right_icon_glow_idx, Functions[6].x, Functions[6].y, Config::barColor);
-	Gui::sprite(sprites_right_icon_normal_idx, Functions[6].x, Functions[6].y);
+	Gui::Draw_ImageBlend(0, sprites_right_icon_glow_idx, Functions[6].x, Functions[6].y, Config::barColor);
+	Gui::sprite(0, sprites_right_icon_normal_idx, Functions[6].x, Functions[6].y);
 
-	Gui::Draw_ImageBlend(sprites_shuffle_icon_idx, Functions[7].x, Functions[7].y, (musicShuffle ? WHITE : Config::barColor));
-	Gui::Draw_ImageBlend(sprites_repeat_icon_idx, Functions[8].x, Functions[8].y, (musicRepeat ? WHITE : Config::barColor));
+	Gui::Draw_ImageBlend(0, sprites_shuffle_icon_idx, Functions[7].x, Functions[7].y, (musicShuffle ? WHITE : Config::barColor));
+	Gui::Draw_ImageBlend(0, sprites_repeat_icon_idx, Functions[8].x, Functions[8].y, (musicRepeat ? WHITE : Config::barColor));
 	if (musicRepeat)	Gui::DrawString(Functions[8].x+11, Functions[8].y+9, 0.5f, BLACK, (musicRepeat == 1 ? "A" : "S"));
 }
 

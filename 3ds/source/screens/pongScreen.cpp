@@ -93,13 +93,13 @@ void Pong::drawSubMenu(void) const
 	Gui::DrawBarsBot();
 
 	// Draw all of the 3 Buttons.
-	Gui::Button(button_button_2_idx, 90, 25); 
+	Gui::sprite(3, button_button_2_idx, 90, 25); 
 	Gui::DrawString(110, 42, 0.65f, WHITE, "1 Player Mode");
 
-	Gui::Button(button_button_2_idx, 90, 90); 
+	Gui::sprite(3, button_button_2_idx, 90, 90); 
 	Gui::DrawString(110, 107, 0.65f, WHITE, "2 Player Mode");
 
-	Gui::Button(button_button_2_idx, 90, 160); 
+	Gui::sprite(3, button_button_2_idx, 90, 160); 
 	Gui::DrawString(130, 177, 0.7f, WHITE, "Exit Pong");
 	drawSelection();
 }

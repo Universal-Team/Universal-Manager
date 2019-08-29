@@ -77,39 +77,39 @@ void Updater::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 void Updater::DrawButtons(void) const
 {
 	if (buttonsAmount == 2) {
-			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
-			Gui::Button(button_updater_br_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_br_idx, Functions[1].x, Functions[1].y);
 	} else if (buttonsAmount == 3) {
-			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
-			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
-			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_idx, Functions[2].x, Functions[2].y);
 	} else if (buttonsAmount == 4) {
-			Gui::Button(button_updater_tl_idx, Functions[6].x, Functions[6].y);
-			Gui::Button(button_updater_idx, Functions[7].x, Functions[7].y);
-			Gui::Button(button_updater_idx, Functions[8].x, Functions[8].y);
-			Gui::Button(button_updater_idx, Functions[9].x, Functions[9].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[6].x, Functions[6].y);
+			Gui::sprite(3, button_updater_idx, Functions[7].x, Functions[7].y);
+			Gui::sprite(3, button_updater_idx, Functions[8].x, Functions[8].y);
+			Gui::sprite(3, button_updater_idx, Functions[9].x, Functions[9].y);
 	} else if (buttonsAmount == 5) {
-			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
-			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
-			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
-			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
-			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(3, button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::sprite(3, button_updater_idx, Functions[4].x, Functions[4].y);
 	} else if (buttonsAmount == 6) {
-			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
-			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
-			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
-			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
-			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
-			Gui::Button(button_updater_br_idx, Functions[5].x, Functions[5].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(3, button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::sprite(3, button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::sprite(3, button_updater_br_idx, Functions[5].x, Functions[5].y);
 	} else if (buttonsAmount == 8) {
-			Gui::Button(button_updater_tl_idx, Functions[0].x, Functions[0].y);
-			Gui::Button(button_updater_idx, Functions[1].x, Functions[1].y);
-			Gui::Button(button_updater_idx, Functions[2].x, Functions[2].y);
-			Gui::Button(button_updater_idx, Functions[3].x, Functions[3].y);
-			Gui::Button(button_updater_idx, Functions[4].x, Functions[4].y);
-			Gui::Button(button_updater_idx, Functions[5].x, Functions[5].y);
-			Gui::Button(button_updater_idx, Functions[11].x, Functions[11].y);
-			Gui::Button(button_updater_br_idx, Functions[12].x, Functions[12].y);
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(3, button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::sprite(3, button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::sprite(3, button_updater_idx, Functions[5].x, Functions[5].y);
+			Gui::sprite(3, button_updater_idx, Functions[11].x, Functions[11].y);
+			Gui::sprite(3, button_updater_br_idx, Functions[12].x, Functions[12].y);
 	}
 }
 
@@ -117,19 +117,19 @@ void Updater::DrawTitleButtons(void) const
 {
 	if (titleButtons == 0) {
 	} else if (titleButtons == 1) {
-			Gui::Button(button_long_button_idx, 0, 48);
+			Gui::sprite(3, button_long_button_idx, 0, 48);
 	} else if (titleButtons == 2) {
-			Gui::Button(button_long_button_idx, 0, 48);
-			Gui::Button(button_long_button_idx, 0, 88);
+			Gui::sprite(3, button_long_button_idx, 0, 48);
+			Gui::sprite(3, button_long_button_idx, 0, 88);
 	} else if (titleButtons == 3) {
-			Gui::Button(button_long_button_idx, 0, 48);
-			Gui::Button(button_long_button_idx, 0, 88);
-			Gui::Button(button_long_button_idx, 0, 128);
+			Gui::sprite(3, button_long_button_idx, 0, 48);
+			Gui::sprite(3, button_long_button_idx, 0, 88);
+			Gui::sprite(3, button_long_button_idx, 0, 128);
 	} else if (titleButtons == 4) {
-			Gui::Button(button_long_button_idx, 0, 48);
-			Gui::Button(button_long_button_idx, 0, 88);
-			Gui::Button(button_long_button_idx, 0, 128);
-			Gui::Button(button_long_button_idx, 0, 168);
+			Gui::sprite(3, button_long_button_idx, 0, 48);
+			Gui::sprite(3, button_long_button_idx, 0, 88);
+			Gui::sprite(3, button_long_button_idx, 0, 128);
+			Gui::sprite(3, button_long_button_idx, 0, 168);
 	}
 }
 

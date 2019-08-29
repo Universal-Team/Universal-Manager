@@ -65,15 +65,15 @@ void Utils::Draw(void) const
 	Gui::DrawBarsBottomBack();
 
 	// Buttons.
-	Gui::Button(button_button_tl_idx, utilsButtonPos[0].x, utilsButtonPos[0].y);
-	Gui::sprite(sprites_calendarIcon_idx, utilsButtonPos[0].x+5, utilsButtonPos[0].y+10);
+	Gui::sprite(3, button_button_tl_idx, utilsButtonPos[0].x, utilsButtonPos[0].y);
+	Gui::sprite(0, sprites_calendarIcon_idx, utilsButtonPos[0].x+5, utilsButtonPos[0].y+10);
 	Gui::DrawString(40, 57, 0.7f, WHITE, "Calendar");
 
-	Gui::Button(button_button_2_idx, utilsButtonPos[1].x, utilsButtonPos[1].y);
-	Gui::sprite(sprites_buttonIcon_idx, utilsButtonPos[1].x+5, utilsButtonPos[1].y+10);
+	Gui::sprite(3, button_button_2_idx, utilsButtonPos[1].x, utilsButtonPos[1].y);
+	Gui::sprite(0, sprites_buttonIcon_idx, utilsButtonPos[1].x+5, utilsButtonPos[1].y+10);
 	Gui::DrawString(210, 57, 0.65f, WHITE, "Btn Tester");
 
-	Gui::Button(button_button_3_idx, utilsButtonPos[2].x, utilsButtonPos[2].y);
+	Gui::sprite(3, button_button_3_idx, utilsButtonPos[2].x, utilsButtonPos[2].y);
 	Gui::DrawString(37, 167, 0.65f, WHITE, "Calculator");
 
 	drawSelection();

@@ -53,24 +53,24 @@ void Gui::clearTextBufs(void)
     C2D_TextBufClear(sizeBuf);
 }
 
-void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
+// Draw a Sprite from the Sheet, but blended.
+void Gui::Draw_ImageBlend(int sheet, int key, int x, int y, u32 color)
 {
     C2D_ImageTint tint;
     C2D_SetImageTint(&tint, C2D_TopLeft, color, 0.5);
     C2D_SetImageTint(&tint, C2D_TopRight, color, 0.5);
     C2D_SetImageTint(&tint, C2D_BotLeft, color, 0.5);
     C2D_SetImageTint(&tint, C2D_BotRight, color, 0.5);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
-}
 
-void Gui::Draw_ImageBlend2(int key, int x, int y, u32 color)
-{
-    C2D_ImageTint tint;
-    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f, &tint);
+    if (sheet == 0) { // Sprites.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
+    } else if (sheet == 1) { // credits.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f, &tint);
+    } else if (sheet == 2) { // animation.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f, &tint);
+    } else if (sheet == 3) { // button.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f, &tint);
+    }
 }
 
 Result Gui::init(void)
@@ -94,22 +94,10 @@ Result Gui::init(void)
 
 void Gui::exit(void)
 {
-    if (sprites)
-    {
-        C2D_SpriteSheetFree(sprites);
-    }
-    if (animation)
-    {
-        C2D_SpriteSheetFree(animation);
-    }
-    if (credits)
-    {
-        C2D_SpriteSheetFree(credits);
-    }
-    if (button)
-    {
-        C2D_SpriteSheetFree(button);
-    }
+    C2D_SpriteSheetFree(sprites);
+    C2D_SpriteSheetFree(animation);
+    C2D_SpriteSheetFree(credits);
+    C2D_SpriteSheetFree(button);
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(editorFont);
@@ -122,24 +110,18 @@ void set_screen(C3D_RenderTarget * screen)
     C2D_SceneBegin(screen);
 }
 
-void Gui::sprite(int key, int x, int y)
+// Draw a Sprite from the Sheet.
+void Gui::sprite(int sheet, int key, int x, int y)
 {
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
-}
-
-void Gui::AnimationSprite(int key, int x, int y)
-{
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
-}
-
-void Gui::Credits(int key, int x, int y)
-{
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
-}
-
-void Gui::Button(int key, int x, int y)
-{
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f);
+    if (sheet == 0) { // Sprites.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
+    } else if (sheet == 1) { // credits.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
+    } else if (sheet == 2) { // animation.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
+    } else if (sheet == 3) { // button.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f);
+    }
 }
 
 // Basic GUI Stuff.
@@ -148,8 +130,8 @@ void Gui::DrawBarsBottomBack(void) {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
     if (Config::layout == 0 || Config::layout == 1) {
-        Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-        Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
+        Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_bottom_screen_bot_back_idx, 0, 210);
     }
 }
 
@@ -158,13 +140,13 @@ void Gui::DrawBGTop(void)
     set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
             for (int x = 0; x < 400; x += 14)
         {
             for (int y = 0; y < 240; y += 14)
             {
-                Gui::sprite(sprites_stripes_idx, x, y);
+                Gui::sprite(0, sprites_stripes_idx, x, y);
             }
 }
 } else if (Config::layoutBG == 2) {
@@ -176,8 +158,8 @@ void Gui::DrawBarsTop(void)
     C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, Config::barColor);
     if (Config::layout == 0) {
-        Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-        Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+        Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_top_screen_bot_idx, 0, 215);
     } else if (Config::layout == 1) {
     }
 }
@@ -187,14 +169,14 @@ void Gui::DrawBGBot(void)
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
        {
         for (int x = 0; x < 320; x += 14)
         {
             for (int y = 0; y < 240; y += 14)
             {
-                Gui::sprite(sprites_stripes2_idx, x, y);
+                Gui::sprite(0, sprites_stripes2_idx, x, y);
             }
         }
     }
@@ -207,8 +189,8 @@ void Gui::DrawBarsBot(void)
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
     if (Config::layout == 0) {
-        Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-        Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
+        Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
     } else if (Config::layout == 1) {
     }
 }
@@ -222,7 +204,7 @@ void DisplayMsg(std::string text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-    Gui::sprite(sprites_textbox_idx, 10, 25);
+    Gui::sprite(0, sprites_textbox_idx, 10, 25);
 	Gui::DrawString(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
@@ -245,19 +227,19 @@ void drawBatteryTop(void) {
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(sprites_battery0_idx, 361, 0);
+	Gui::sprite(0, sprites_battery0_idx, 361, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(sprites_battery25_idx, 361, 0);
+	Gui::sprite(0, sprites_battery25_idx, 361, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(sprites_battery50_idx, 361, 0);
+	Gui::sprite(0, sprites_battery50_idx, 361, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(sprites_battery75_idx, 361, 0);
+    Gui::sprite(0, sprites_battery75_idx, 361, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(sprites_battery100_idx, 361, 0);
+	Gui::sprite(0, sprites_battery100_idx, 361, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
-		Gui::sprite(sprites_batteryCharge_idx, 361, 0);
+		Gui::sprite(0, sprites_batteryCharge_idx, 361, 0);
     }
 
         if (Config::percentDisplay == 0) {
@@ -281,19 +263,19 @@ void drawBatteryBot(void) {
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(sprites_battery0_idx, 281, 0);
+	Gui::sprite(0, sprites_battery0_idx, 281, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(sprites_battery25_idx, 281, 0);
+	Gui::sprite(0, sprites_battery25_idx, 281, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(sprites_battery50_idx, 281, 0);
+	Gui::sprite(0, sprites_battery50_idx, 281, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(sprites_battery75_idx, 281, 0);
+    Gui::sprite(0, sprites_battery75_idx, 281, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(sprites_battery100_idx, 281, 0);
+	Gui::sprite(0, sprites_battery100_idx, 281, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
-		Gui::sprite(sprites_batteryCharge_idx, 281, 0);
+		Gui::sprite(0, sprites_batteryCharge_idx, 281, 0);
 	}
 
         if (Config::percentDisplay == 0) {

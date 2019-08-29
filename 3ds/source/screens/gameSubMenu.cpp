@@ -63,10 +63,10 @@ void GameSub::Draw(void) const
 	Gui::DrawBarsBottomBack();
 
 	// Buttons.
-	Gui::Button(button_button_tl_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
+	Gui::sprite(3, button_button_tl_idx, gamesSubMenuButtonPos[0].x, gamesSubMenuButtonPos[0].y);
 	Gui::DrawString(40, 57, 0.7f, WHITE, "Pong");
 
-	Gui::Button(button_button_2_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
+	Gui::sprite(3, button_button_2_idx, gamesSubMenuButtonPos[1].x, gamesSubMenuButtonPos[1].y);
 	Gui::DrawString(210, 57, 0.65f, WHITE, "Tic-Tac-Toe");
 
 	drawSelection();

@@ -204,27 +204,27 @@ void Script::DrawScriptCreator(void) const
 void Script::DrawBottom(void) const
 {
 	if (ScriptPage == 1) {
-		Gui::Button(button_button_tl_idx, 1, 27);
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
 		Gui::DrawString(8, 42, 0.65f, WHITE, "downloadRelease");
 
-		Gui::Button(button_button_2_idx, 162, 27);
+		Gui::sprite(3, button_button_2_idx, 162, 27);
 		Gui::DrawString(190, 42, 0.7f, WHITE, "downloadFile");
 
-		Gui::Button(button_button_3_idx, 1, 91);
+		Gui::sprite(3, button_button_3_idx, 1, 91);
 		Gui::DrawString(45, 107, 0.65f, WHITE, "extract");
 
-		Gui::Button(button_button_4_idx, 162, 91);
+		Gui::sprite(3, button_button_4_idx, 162, 91);
 		Gui::DrawString(222, 104, 0.7f, WHITE, "install");
 
-		Gui::Button(button_button_5_idx, 1, 154);
+		Gui::sprite(3, button_button_5_idx, 1, 154);
 		Gui::DrawString(45, 177, 0.7f, WHITE, "delete");
 
-		Gui::Button(button_button_br_idx, 162, 151);
+		Gui::sprite(3, button_button_br_idx, 162, 151);
 		Gui::DrawString(225, 177, 0.7f, WHITE, "msg");
 
 
 	} else if (ScriptPage == 2) {
-		Gui::Button(button_button_tl_idx, 1, 27);
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
 		Gui::DrawString(50, 42, 0.65f, WHITE, "mkdir");
 	}
 }

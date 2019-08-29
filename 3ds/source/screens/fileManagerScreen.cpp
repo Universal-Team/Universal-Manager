@@ -112,11 +112,11 @@ void FileManager::DisplayActionBox(void) const
 	animatedBGBot();
 	Gui::DrawBarsBot();
 	C2D_DrawRectSolid(54, 30, 0.5f, 211, 180, Config::barColor);
-	Gui::sprite(sprites_actionBox_idx, 54, 30);
+	Gui::sprite(0, sprites_actionBox_idx, 54, 30);
 
 	// Buttons.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::Button(button_fileManager_button_idx, functionPos[i].x, functionPos[i].y);
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[i].x, functionPos[i].y);
 		Gui::drawGUISelector(button_fileButtonSelector_idx, functionPos[currentSelection].x, functionPos[currentSelection].y, 0.005f);
 		Gui::DrawString(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}

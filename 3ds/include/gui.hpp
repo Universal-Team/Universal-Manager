@@ -27,13 +27,11 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
-#include "animation.h"
-#include "button.h"
 #include "colors.hpp"
 #include "common.hpp"
-#include "credits.h"
 #include "ptmu_x.h"
-#include "sprites.h"
+#include "spriteID.h"
+
 #include "screens/screen.hpp"
 
 #include <3ds.h>
@@ -68,13 +66,12 @@ namespace Gui
 
     C3D_RenderTarget* target(gfxScreen_t t);
 
+    // Clear Text.
     void clearTextBufs(void);
     
-    void sprite(int key, int x, int y);
-    void AnimationSprite(int key, int x, int y);
-    void Credits(int key, int x, int y);
-    void Button(int key, int x, int y);
-    bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
+    // Draw Sprites from the Sheets.
+    void sprite(int sheet, int key, int x, int y);
+    void Draw_ImageBlend(int sheet, int key, int x, int y, u32 color);
 
     // Layouts!
     void DrawBGTop(void);
@@ -83,9 +80,7 @@ namespace Gui
     void DrawBarsBot(void);
     void DrawBarsBottomBack(void);
 
-    void Draw_ImageBlend(int key, int x, int y, u32 color);
-    void Draw_ImageBlend2(int key, int x, int y, u32 color);
-
+    // The animated Selectors.
     void drawFileSelector(float x, float y);
     void drawGUISelector(int key, float x, float y, float speed);
 
@@ -96,17 +91,20 @@ namespace Gui
     float GetStringHeight(float size, std::string Text);
 }
 
-   // Text.
+   // Other Display stuff.
     void DisplayMsg(std::string text);
     void DisplayTime(void);
 
+    // Battery Draw (Top/Bottom Screen.)
     void drawBatteryTop(void);
     void drawBatteryBot(void);
 
     void set_screen(C3D_RenderTarget * screen);
 
+    // Misc.
     bool Draw_Rect(float x, float y, float w, float h, u32 color);
 
+    // Editor Draw.
     void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);
     void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
     float Draw_GetTextWidthEditor(float size, const char *text);
