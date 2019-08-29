@@ -76,17 +76,21 @@ private:
 	void renameFile(void);
 	void deleteFile(void);
 	void copyPaste(void);
+	void createFile(void);
 	void createFolder(void);
 	void extractarchive(void);
 	void install(void);
 
-	std::array<Structs::TextBtn, 6> functionPos = {{
+	int currentPage = 1;
+
+	std::array<Structs::TextBtn, 7> functionPos = {{
 		{59, 70, 93, 35, "Rename"},
 		{165, 70, 93, 35, "Delete"},
-		{59, 110, 93, 35, "Copy/Paste"},
-		{165, 110, 93, 35, "Create"},
+		{59, 110, 93, 35, "Create File"},
+		{165, 110, 93, 35, "CreateFolder"},
 		{59, 150, 93, 35, "Extract"},
-		{165, 150, 93, 35, "Install"}
+		{165, 150, 93, 35, "Copy/Paste"},
+		{59, 70, 93, 35, "Install"}
 	}
 	};
 };

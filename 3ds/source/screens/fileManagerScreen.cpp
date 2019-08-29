@@ -115,10 +115,27 @@ void FileManager::DisplayActionBox(void) const
 	Gui::sprite(0, sprites_actionBox_idx, 54, 30);
 
 	// Buttons.
+	if (currentPage == 1) {
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[0].x, functionPos[0].y);
+		Gui::DrawString(functionPos[0].x+6, functionPos[0].y+10, 0.6f, WHITE, functionPos[0].text.c_str());
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[1].x, functionPos[1].y);
+		Gui::DrawString(functionPos[1].x+6, functionPos[1].y+10, 0.6f, WHITE, functionPos[1].text.c_str());
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[2].x, functionPos[2].y);
+		Gui::DrawString(functionPos[2].x+6, functionPos[2].y+10, 0.6f, WHITE, functionPos[2].text.c_str());
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[3].x, functionPos[3].y);
+		Gui::DrawString(functionPos[3].x+6, functionPos[3].y+10, 0.6f, WHITE, functionPos[3].text.c_str());
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[4].x, functionPos[4].y);
+		Gui::DrawString(functionPos[4].x+6, functionPos[4].y+10, 0.6f, WHITE, functionPos[4].text.c_str());
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[5].x, functionPos[5].y);
+		Gui::DrawString(functionPos[5].x+6, functionPos[5].y+10, 0.6f, WHITE, functionPos[5].text.c_str());
+	} else if (currentPage == 2) {
+		Gui::sprite(3, button_fileManager_button_idx, functionPos[6].x, functionPos[6].y);
+		Gui::DrawString(functionPos[6].x+6, functionPos[6].y+10, 0.6f, WHITE, functionPos[6].text.c_str());
+	}
+
+	// Selector.
 	for(uint i=0; i<(sizeof(functionPos)/sizeof(functionPos[0]));i++) {
-		Gui::sprite(3, button_fileManager_button_idx, functionPos[i].x, functionPos[i].y);
 		Gui::drawGUISelector(button_fileButtonSelector_idx, functionPos[currentSelection].x, functionPos[currentSelection].y, 0.005f);
-		Gui::DrawString(functionPos[i].x+6, functionPos[i].y+10, 0.6f, WHITE, functionPos[i].text.c_str());
 	}
 }
 
@@ -232,6 +249,15 @@ void FileManager::copyPaste(void) {
 	}
 }
 
+void FileManager::createFile(void) {
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	std::string currentPath = path;
+	currentPath += Input::getLine();
+	std::ofstream file { currentPath.c_str() };
+}
+
+
 void FileManager::createFolder(void) {
 	std::string newName = Input::getLine();
 	mkdir(newName.c_str(), 0777);
@@ -259,48 +285,82 @@ void FileManager::ActionBoxLogic(void) {
 		hidScanInput();
 		if(keysDown() & KEY_UP) {
 			if(currentSelection > 0)	currentSelection--;
+
+
 		} else if(keysDown() & KEY_DOWN) {
-			if(currentSelection < 5)	currentSelection++;
+			if (currentPage == 1) {
+				if(currentSelection < 5)	currentSelection++;
+			} else if (currentPage == 2) {
+			}
+
+		} else if (keysDown() & KEY_L) {
+			if (currentPage == 2) {
+				currentSelection = 0;
+				currentPage = 1;
+			}
+		} else if (keysDown() & KEY_R) {
+			if (currentPage == 1) {
+				currentSelection = 0;
+				currentPage = 2;
+			}
+
+
 		} else if(keysDown() & KEY_A) {
-			switch(currentSelection) {
-				case 0: {
-					if(confirmPopup("Do you want to rename this File?")) { 
-					renameFile();
-					refresh = true;
+			if (currentPage == 1) {
+				switch(currentSelection) {
+					case 0: {
+						if(confirmPopup("Do you want to rename this File?")) { 
+							renameFile();
+							refresh = true;
+						}
+						break;
+					} case 1:
+						if(confirmPopup("Do you want to delete this File?")) {
+							deleteFile();
+							refresh = true;
+						}
+						break;
+					case 2: {
+						if(confirmPopup("Do you want to create a File?")) {
+							createFile();
+							refresh = true;
+						}
+						break;
+					} case 3: { 
+						if(confirmPopup("Do you want to create a Folder?")) {
+							createFolder();
+							refresh = true;
+						}
+						break;
+					} case 4: {
+						if(confirmPopup("Do you want to extract this Archive?")) {
+							extractarchive();
+							refresh = true;
+						}
+						break;
+					} case 5:
+						if(confirmPopup("Do you want to Copy/Paste this?")) {
+							copyPaste();
+							refresh = true;
+						}
+						break;
+			}
+			} else if (currentPage == 2) {
+				switch(currentSelection) {
+					case 0: {
+						if(confirmPopup("Do you want to Install this File?")) { 
+							install();
+						}
+						break;
 					}
-					break;
-				} case 1:
-					if(confirmPopup("Do you want to delete this File?")) {
-					deleteFile();
-					refresh = true;
-					}
-					break;
-				case 2: { 
-					copyPaste();
-					refresh = true;
-					break;
-				} case 3: { 
-					if(confirmPopup("Do you want to create a Folder?")) {
-					createFolder();
-					refresh = true;
-					}
-					break;
-				} case 4: {
-					if(confirmPopup("Do you want to extract this Archive?")) {
-					extractarchive();
-					refresh = true;
-					}
-					break;
-				} case 5:
-					if(confirmPopup("Do you want to install this CIA?")) {
-					install();
-					}
-					break;
+				}
 			}
 			fileMode = 0;
 			currentSelection = 0;
+			currentPage = 1;
 		} else if(keysDown() & KEY_B) {
 			fileMode = 0;
 			currentSelection = 0;
+			currentPage = 1;
 		}
 }
