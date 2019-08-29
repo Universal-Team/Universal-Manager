@@ -32,6 +32,16 @@
 #include <fstream>
 #include <unistd.h>
 
+extern touchPosition touch;
+
+bool touching(touchPosition touch, Structs::TextBtn button) {
+	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
+		return true;
+	else
+		return false;
+}
+
+
 void FileManager::Draw(void) const
 {
 	if (fileMode == 0) {
@@ -283,6 +293,8 @@ void FileManager::install(void) {
 
 void FileManager::ActionBoxLogic(void) {
 		hidScanInput();
+		hidTouchRead(&touch);
+
 		if(keysDown() & KEY_UP) {
 			if(currentSelection > 0)	currentSelection--;
 
@@ -304,6 +316,78 @@ void FileManager::ActionBoxLogic(void) {
 				currentPage = 2;
 			}
 
+		} else if (keysDown() & KEY_TOUCH) {
+			if (currentPage == 1) {
+				if (touching(touch, functionPos[0])) {
+						if(confirmPopup("Do you want to rename this File?")) { 
+							renameFile();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+
+
+				} else if (touching(touch, functionPos[1])) {
+						if(confirmPopup("Do you want to delete this File?")) {
+							deleteFile();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+
+
+				} else if (touching(touch, functionPos[2])) {
+						if(confirmPopup("Do you want to create a File?")) {
+							createFile();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+
+						
+				} else if (touching(touch, functionPos[3])) {
+						if(confirmPopup("Do you want to create a Folder?")) {
+							createFolder();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+
+
+				} else if (touching(touch, functionPos[4])) {
+						if(confirmPopup("Do you want to extract this Archive?")) {
+							extractarchive();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+
+
+				} else if (touching(touch, functionPos[5])) {
+						if(confirmPopup("Do you want to Copy/Paste this?")) {
+							copyPaste();
+							refresh = true;
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+			}
+			} else if (currentPage == 2) {
+
+				if (touching(touch, functionPos[6])) {
+						if(confirmPopup("Do you want to Install this File?")) { 
+							install();
+							fileMode = 0;
+							currentSelection = 0;
+							currentPage = 1;
+						}
+			}
+			}
 
 		} else if(keysDown() & KEY_A) {
 			if (currentPage == 1) {
