@@ -77,19 +77,9 @@ private:
 	uint selectedPlst = 0;
 
 	std::vector<DirEntry> plsts;
-	mutable bool decForRepeat2 = false;
-	uint selectedPlstItem = 0;
-	int movingPlstItem = -1;
 
 	std::vector<std::string> plstContents;
 	C2D_Image musicImage, coverImage;
-
-	mutable bool firstSong = true;
-	int locInPlaylist = 0;
-	int musicRepeat = 0;
-	mutable bool musicShuffle = 0;
-	std::vector<Playlist> nowPlayingList;
-	std::string currentSong = "";
 	
 	std::vector<Structs::ButtonPos> Functions = {
     	{1, 40, 149, 52, -1}, // 0

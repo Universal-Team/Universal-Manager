@@ -40,6 +40,17 @@ extern "C" {
 	#include "music/playback.h"
 }
 
+bool decForRepeat2 = false;
+uint selectedPlstItem = 0;
+int movingPlstItem = -1;
+
+bool firstSong = true;
+int locInPlaylist = 0;
+int musicRepeat = 0;
+bool musicShuffle = 0;
+std::vector<Playlist> nowPlayingList;
+std::string currentSong = "";
+
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 void Music::Draw(void) const
@@ -63,22 +74,6 @@ void Music::Draw(void) const
 
 void Music::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 {
- 	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
-		if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
-		if (musicRepeat != 2 && !firstSong) {
-			locInPlaylist++;
-		}
-		firstSong = false;
-		currentSong = nowPlayingList[locInPlaylist].name;
-		playbackInfo_t playbackInfo;
-		changeFile(currentSong.c_str(), &playbackInfo);
-	} else if (isPlaying() && currentSong == "") {
-		stopPlayback();
-	} else if (!isPlaying() && currentSong != "") {
-		currentSong = "";
-	}
-
-
 	if (MusicMode == 0) {
 		MusicMainLogic(hDown, hHeld, touch);
 	} else if (MusicMode == 1) {
@@ -163,7 +158,6 @@ void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				}
 			}
 	} else if(hDown & KEY_B) {
-		stopPlayback();
 		Gui::screenBack();
 		return;
 	} else if(hDown & KEY_TOUCH) {
