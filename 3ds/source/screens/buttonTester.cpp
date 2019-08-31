@@ -42,7 +42,9 @@ void ButtonTester::Draw(void) const
 	DisplayTime();
 	drawBatteryTop();
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
-	Gui::DrawString(80, 218, 0.72f, WHITE, "Currently Pressed Button: ");
+	std::string pressedBtn = "Currently Pressed Button: ";
+	pressedBtn += currentButton;
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, pressedBtn.c_str()))/2, 218, 0.72f, WHITE, pressedBtn.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -51,74 +53,46 @@ void ButtonTester::Draw(void) const
 
 void ButtonTester::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_A) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE000");
+		currentButton = "\uE000";
 
 	} else if (hDown & KEY_B) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE001");
+		currentButton = "\uE001";
 
 	} else if (hDown & KEY_X) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE002");
+		currentButton = "\uE002";
 
 	} else if (hDown & KEY_Y) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE003");
+		currentButton = "\uE003";
 
 	} else if (hDown & KEY_UP) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE079");
+			currentButton = "\uE079";
 
 		} else if (hDown & KEY_DOWN) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07A");
+			currentButton = "\uE07A";
 
 		} else if (hDown & KEY_LEFT) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07B");
+			currentButton = "\uE07B";
 
 		} else if (hDown & KEY_RIGHT) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07C");
+			currentButton = "\uE07C";
 
 		} else if (hDown & KEY_L) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE052");
+			currentButton = "\uE052";
 
 		} else if (hDown & KEY_R) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE053");
+			currentButton = "\uE053";
 
 		} else if (hDown & KEY_ZL) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE054");
+			currentButton = "\uE054";
 
 		} else if (hDown & KEY_ZR) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE055");
+			currentButton = "\uE055";
 
 		} else if (hDown & KEY_START) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE045");
+			currentButton = "\uE045";
 
 		} else if (hDown & KEY_SELECT) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		set_screen(top);
-		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE046");
+			currentButton = "\uE046";
 
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, buttonTesterButtonPos[0])) {
