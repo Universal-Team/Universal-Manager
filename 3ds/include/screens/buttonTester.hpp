@@ -36,7 +36,6 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	std::string currentButton = "";
 
 	std::vector<Structs::ButtonPos> buttonTesterButtonPos = {
 			// Back Icon.

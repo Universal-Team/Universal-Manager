@@ -43,56 +43,112 @@ void ButtonTester::Draw(void) const
 	drawBatteryTop();
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
 	std::string pressedBtn = "Currently Pressed Button: ";
-	pressedBtn += currentButton;
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, pressedBtn.c_str()))/2, 218, 0.72f, WHITE, pressedBtn.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::DrawBarsBot();
+	Gui::DrawBarsBottomBack();
 }
 
+
 void ButtonTester::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if (hDown & KEY_A) {
-		currentButton = "\uE000";
+	if (hHeld & KEY_A) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE000");
+		C3D_FrameEnd(0);
 
-	} else if (hDown & KEY_B) {
-		currentButton = "\uE001";
+	} else if (hHeld & KEY_B) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE001");
+		C3D_FrameEnd(0);
 
-	} else if (hDown & KEY_X) {
-		currentButton = "\uE002";
+	} else if (hHeld & KEY_X) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE002");
+		C3D_FrameEnd(0);
 
-	} else if (hDown & KEY_Y) {
-		currentButton = "\uE003";
+	} else if (hHeld & KEY_Y) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE003");
+		C3D_FrameEnd(0);
 
-	} else if (hDown & KEY_UP) {
-			currentButton = "\uE079";
+	} else if (hHeld & KEY_UP) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE079");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_DOWN) {
-			currentButton = "\uE07A";
+	} else if (hHeld & KEY_DOWN) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07A");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_LEFT) {
-			currentButton = "\uE07B";
+	} else if (hHeld & KEY_LEFT) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07B");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_RIGHT) {
-			currentButton = "\uE07C";
+	} else if (hHeld & KEY_RIGHT) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE07C");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_L) {
-			currentButton = "\uE052";
+	} else if (hHeld & KEY_L) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE052");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_R) {
-			currentButton = "\uE053";
+	} else if (hHeld & KEY_R) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE053");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_ZL) {
-			currentButton = "\uE054";
+	} else if (hHeld & KEY_ZL) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE054");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_ZR) {
-			currentButton = "\uE055";
+	} else if (hHeld & KEY_ZR) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE055");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_START) {
-			currentButton = "\uE045";
+	} else if (hHeld & KEY_START) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE045");
+		C3D_FrameEnd(0);
 
-		} else if (hDown & KEY_SELECT) {
-			currentButton = "\uE046";
+	} else if (hHeld & KEY_SELECT) {
+		Gui::clearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		Gui::DrawString(330, 218, 0.72f, WHITE, "\uE046");
+		C3D_FrameEnd(0);
 
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, buttonTesterButtonPos[0])) {
