@@ -151,6 +151,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (hHeld & KEY_UP) {
 			if (selectedFile > 0 && !keyRepeatDelay) {
 				selectedFile--;
+				playScrollSfx();
 			if (fastMode == true) {
 				keyRepeatDelay = 3;
 			} else if (fastMode == false){
@@ -160,6 +161,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 			if (selectedFile < dirContents.size()-1) {
 				selectedFile++;
+				playScrollSfx();
 			if (fastMode == true) {
 				keyRepeatDelay = 3;
 			} else if (fastMode == false){

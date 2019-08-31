@@ -27,6 +27,7 @@
 #include "screens/fileManagerScreen.hpp"
 #include "screens/screenCommon.hpp"
 #include "utils/settings.hpp"
+#include "utils/sound.h"
 
 #include <algorithm>
 #include <fstream>
@@ -206,6 +207,7 @@ void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
+			playScrollSfx();
 			if (fastMode == true) {
 				keyRepeatDelay = 3;
 			} else if (fastMode == false){
@@ -215,6 +217,7 @@ void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
+			playScrollSfx();
 			if (fastMode == true) {
 				keyRepeatDelay = 3;
 			} else if (fastMode == false){
