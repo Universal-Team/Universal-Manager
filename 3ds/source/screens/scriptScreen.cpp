@@ -286,35 +286,35 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				std::string param1 = Input::getLine();
 				std::string param2 = Input::getLine();
 				std::string param3 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 					break;
 				} case 1: {
 				std::string Function = "downloadFile	";
 				std::string param1 = Input::getLine();
 				std::string param2 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << std::endl;
+				scpt << Function << param1 << "	" << param2 << " " << std::endl;
 					break;
 				  } case 2: {
 				std::string Function = "extract	";
 				std::string param1 = Input::getLine();
 				std::string param2 = Input::getLine();
 				std::string param3 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 					break;
 				} case 3: {
 				std::string Function = "install	";
 				std::string param1 = Input::getLine();
-				scpt << Function << param1 << std::endl;
+				scpt << Function << param1 << " " << std::endl;
 					break;
 				} case 4: {
 				std::string Function = "delete	";
 				std::string param1 = Input::getLine();
-				scpt << Function << param1 << std::endl;
+				scpt << Function << param1 << " " << std::endl;
 					break;
 				} case 5: {
 				std::string Function = "msg	";
 				std::string param1 = Input::getLine();
-				scpt << Function << param1 << std::endl;
+				scpt << Function << param1 << " " << std::endl;
 					break;
 			}
 		}
@@ -323,7 +323,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				case 0: {
 				std::string Function = "mkdir	";
 				std::string param1 = Input::getLine();
-				scpt << Function << param1 << std::endl;
+				scpt << Function << param1 << " " << std::endl;
 					break;
 				}
 			}
@@ -360,7 +360,7 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		std::string param1 = Input::getLine();
 		std::string param2 = Input::getLine();
 		std::string param3 = Input::getLine();
-		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+		scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[1])) {
@@ -368,7 +368,7 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		std::string Function = "downloadFile	";
 		std::string param1 = Input::getLine();
 		std::string param2 = Input::getLine();
-		scpt << Function << param1 << "	" << param2 << std::endl;
+		scpt << Function << param1 << "	" << param2 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[2])) {
@@ -377,25 +377,25 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		std::string param1 = Input::getLine();
 		std::string param2 = Input::getLine();
 		std::string param3 = Input::getLine();
-		scpt << Function << param1 << "	" << param2 << "	" << param3 << std::endl;
+		scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[3])) {
 		std::string Function = "install	";
 		std::string param1 = Input::getLine();
-		scpt << Function << param1 << std::endl;
+		scpt << Function << param1 << " " << std::endl;
 
 
 	} 	else if (touching(touch, Functions[4])) {
 		std::string Function = "delete	";
 		std::string param1 = Input::getLine();
-		scpt << Function << param1 << std::endl;
+		scpt << Function << param1 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[5])) {
 		std::string Function = "msg	";
 		std::string param1 = Input::getLine();
-		scpt << Function << param1 << std::endl;
+		scpt << Function << param1 << " " << std::endl;
 	}
 
 		// Page 2.
@@ -403,7 +403,7 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (touching(touch, Functions[6])) {
 		std::string Function = "mkdir	";
 		std::string param1 = Input::getLine();
-		scpt << Function << param1 << std::endl;
+		scpt << Function << param1 << " " << std::endl;
 		}
 	}
 }
