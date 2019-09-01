@@ -24,36 +24,24 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
-#include "config.h"
-#include "fileManagerScreen.hpp"
-#include "gui.hpp"
+#ifndef STRUCTS_HPP
+#define STRUCTS_HPP
 
+#include <string>
 
-void FileManager::Draw(void) const
+class Structs 
 {
-	if (screenDrawn) return;
+public:
+struct ButtonPos
+{
+    int x;
+    int y;
+    int w;
+    int h;
+	int link;
+};
 
-	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
-	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
-	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
+private:
+};
 
-	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
-	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
-	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
-
-	printTextTinted("FileManager Sub Menu", BLACK, 60, 5, true);
-
-	// Battery Icon.
-	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
-
-	screenDrawn = true;
-}
-
-void FileManager::Logic(u16 hDown, touchPosition touch) {
-	if (hDown & KEY_B) {
-		screenDrawn = false;
-		Gui::screenBack();
-		return;
-	}
-}
+#endif

@@ -4,9 +4,9 @@
 
 std::stack<std::unique_ptr<SCREEN>> screens;
 
-void Gui::mainLoop(void) {
+void Gui::mainLoop(u16 hDown, touchPosition touch) {
 	screens.top()->Draw();
-	screens.top()->Logic();
+	screens.top()->Logic(hDown, touch);
 }
 
 void Gui::setScreen(std::unique_ptr<SCREEN> screen)

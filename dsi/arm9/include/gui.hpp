@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 namespace Gui {
-	void mainLoop(void);
+	void mainLoop(u16 hDown, touchPosition touch);
 	void setScreen(std::unique_ptr<SCREEN> screen);
 	void screenBack(void);
 };

@@ -28,17 +28,22 @@
 #define SETTINGSSCREEN_HPP
 
 #include "screens/screen.hpp"
+#include "structs.hpp"
 
-class SETTINGS : public SCREEN 
+class Settings : public SCREEN 
 {
 public:
 	void Draw(void) const override;
-	void Logic(void) override;
+	void Logic(u16 hDown, touchPosition touch) override;
 
 private:
-	u16 hDown;
 	mutable bool screenDrawn;
-	touchPosition touch;
+
+	std::array<Structs::ButtonPos, 2> SettingsButtonPos = {{
+		{0, 25, 125, 41, -1},
+		{130, 25, 125, 41, -1}
+	}
+	};
 };
 
 #endif

@@ -29,16 +29,14 @@
 
 #include "screens/screen.hpp"
 
-class FILEMANAGER : public SCREEN 
+class FileManager : public SCREEN 
 {
 public:
 	void Draw(void) const override;
-	void Logic(void) override;
+	void Logic(u16 hDown, touchPosition touch) override;
 
 private:
-	u16 hDown;
 	mutable bool screenDrawn;
-	//touchPosition touch; // Not used here yet.
 };
 
 #endif

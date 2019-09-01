@@ -28,25 +28,10 @@
 #include "config.h"
 #include "settingsScreen.hpp"
 #include "gui.hpp"
-#include "mainMenuScreen.hpp"
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
+bool touching(touchPosition touch, Structs::ButtonPos button);
 
-bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos SettingsButtonPos[] = {
-	
-	{0, 25, 125, 41, -1},
-	{130, 25, 125, 41, -1},
-};
-
-void SETTINGS::Draw(void) const
+void Settings::Draw(void) const
 {
 	if (screenDrawn) return;
 
@@ -71,14 +56,7 @@ void SETTINGS::Draw(void) const
 	screenDrawn = true;
 }
 
-void SETTINGS::Logic(void) {
-	do {
-		scanKeys();
-		swiWaitForVBlank();
-		hDown = keysDown();
-		touchRead(&touch);
-	} while(!hDown);
-
+void Settings::Logic(u16 hDown, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, SettingsButtonPos[0])) {
 		Config::Barcolor = DARK_BLUE;

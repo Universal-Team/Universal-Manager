@@ -28,15 +28,24 @@
 
 #include "screens/screen.hpp"
 
-class MAINMENU : public SCREEN 
+#include "structs.hpp"
+
+#include <array>
+
+class MainMenu : public SCREEN 
 {
 public:
 	void Draw(void) const override;
-	void Logic(void) override;
+	void Logic(u16 hDown, touchPosition touch) override;
 
 private:
-	u16 hDown;
-	touchPosition touch;
+	mutable bool screenDrawn;
+
+	std::array<Structs::ButtonPos, 2> mainButtonPos = {{
+		{0, 25, 125, 41, -1},
+		{130, 25, 125, 41, -1}
+	}
+	};
 };
 
 #endif

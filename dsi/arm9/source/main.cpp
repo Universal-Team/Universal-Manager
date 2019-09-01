@@ -16,19 +16,11 @@
 #include "config.h"
 #include "gui.hpp"
 #include "mainMenuScreen.hpp"
-
-
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
+#include "structs.hpp"
 
 touchPosition touch;
 
-bool touching(touchPosition touch, ButtonPos button) {
+bool touching(touchPosition touch, Structs::ButtonPos button) {
 	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
 		return true;
 	else
@@ -69,7 +61,8 @@ int main(int argc, char **argv) {
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 	printTextTinted("Press A to start. :)", BLACK, 60, 0, false);
-	Gui::setScreen(std::make_unique<MAINMENU>());
+
+	Gui::setScreen(std::make_unique<MainMenu>());
 
 	u16 hDown = 0;
 	do {
@@ -78,8 +71,13 @@ int main(int argc, char **argv) {
 		hDown = keysDown();
 	} while(!(hDown & KEY_A));
 
-	while(1) {
-		Gui::mainLoop();
-	}
+	do {
+		scanKeys();
+		swiWaitForVBlank();
+		hDown = keysDown();
+		touchRead(&touch);
+		Gui::mainLoop(hDown, touch);
+	} while(1);
+
 	return 0;
 }

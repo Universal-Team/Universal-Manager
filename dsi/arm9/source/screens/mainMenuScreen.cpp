@@ -32,24 +32,10 @@
 #include "gui.hpp"
 
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
 
-bool screenDrawn = false;
-bool touching(touchPosition touch, ButtonPos button);
+bool touching(touchPosition touch, Structs::ButtonPos button);
 
-ButtonPos mainButtonPos[] = {
-	
-	{0, 25, 125, 41, -1},
-	{130, 25, 125, 41, -1},
-};
-
-void MAINMENU::Draw(void) const
+void MainMenu::Draw(void) const
 {
 	if (screenDrawn) return;
 
@@ -74,28 +60,21 @@ void MAINMENU::Draw(void) const
 	screenDrawn = true;
 }
 
-void MAINMENU::Logic(void) 
+void MainMenu::Logic(u16 hDown, touchPosition touch) 
 {
-	do {
-		scanKeys();
-		swiWaitForVBlank();
-		hDown = keysDown();
-		touchRead(&touch);
-	} while(!hDown);
-
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, mainButtonPos[0])) {
 			screenDrawn = false;
-			Gui::setScreen(std::make_unique<FILEMANAGER>());
+			Gui::setScreen(std::make_unique<FileManager>());
 		} else if (touching(touch, mainButtonPos[1])) {
 			screenDrawn = false;
-			Gui::setScreen(std::make_unique<SETTINGS>());
+			Gui::setScreen(std::make_unique<Settings>());
 		}
 	} else if (hDown & KEY_A) {
 		screenDrawn = false;
-		Gui::setScreen(std::make_unique<FILEMANAGER>());
+		Gui::setScreen(std::make_unique<FileManager>());
 	} else if (hDown & KEY_Y) {
 		screenDrawn = false;
-		Gui::setScreen(std::make_unique<SETTINGS>());
+		Gui::setScreen(std::make_unique<Settings>());
 	}
 }
