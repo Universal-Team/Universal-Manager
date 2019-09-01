@@ -27,7 +27,7 @@
 #include "structs.hpp"
 #include "screens/screen.hpp"
 
-#include <vector>
+#include <array>
 
 class Calculator : public SCREEN 
 {
@@ -36,29 +36,39 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
+    char op; // The operation like '-' '+' '*' '/'.
+    float num1, num2; // The Numbers like '1' '5' or whatever.
+	std::string display = "Not Implemented yet."; // Display the Values and stuff.
+
 	// Functions.
 	void drawCalculatorKeyboard(void) const;
 
 // To-Do -> Make the positions correctly.
-	std::vector<Structs::Key> calculatorKeys = {
+	std::array<Structs::Key, 19> calculatorKeys = {{
 		// Numbers.
-		{"1", 0, 0},
-		{"2", 0, 0},
-		{"3", 0, 0},
-		{"4", 0, 40},
-		{"5", 0, 40},
-		{"6", 0, 40},
-		{"7", 0, 80},
-		{"8", 0, 80},
-		{"9", 0, 80},
-		{"0", 0, 120},
-		{".", 0, 120},
+		{"1", 10, 25},
+		{"2", 80, 25},
+		{"3", 150, 25},
+		{"4", 10, 75},
+		{"5", 80, 75},
+		{"6", 150, 75},
+		{"7", 10, 125},
+		{"8", 80, 125},
+		{"9", 150, 125},
+		{"0", 80, 175},
+		{".", 10, 175},
 
 		// Operations.
-		{"+", 0, 40},
-		{"-", 0, 40},
-		{"÷", 0, 40},
-		{"*", 0, 40},
-		{"=", 0, 40},
+		{"+", 220, 25},
+		{"-", 220, 75},
+		{"/", 220, 125},
+		{"*", 220, 175},
+		{"=", 150, 175},
+
+		// Backspace and such.
+		{"E", 290, 40},
+		{"B", 290, 90},
+		{"C", 290, 140}
+	}
 	};
 };
