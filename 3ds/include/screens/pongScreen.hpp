@@ -55,6 +55,8 @@ private:
 
 	// Modes.
 	int multiPlayerMode = 0;
+	int speed1 = 5;
+	int speed2 = -5;
 
 	// Sub Menu.
 	int subMenu = 1;

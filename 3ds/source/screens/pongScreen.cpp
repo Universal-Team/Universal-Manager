@@ -26,6 +26,8 @@
 
 #include "screens/pongScreen.hpp"
 #include "screens/screenCommon.hpp"
+
+#include "utils/keyboard.hpp"
 #include "utils/settings.hpp"
 #include "utils/sound.h"
 
@@ -115,11 +117,26 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 		playScoreSfx();
 		switch(Selection) {
 			case 0: {
+				if(confirmPopup("Would you like to set the speed?")) {
+					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
+					speed2 = - + speed1;
+				} else {
+					speed1 = 5;
+					speed2 = -5;
+				}
 				multiPlayerMode = 0;
 				subMenu = 0;
 				Selection = 0;
 				break;
 			} case 1:
+				if(confirmPopup("Would you like to set the speed?")) {
+					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
+					speed2 = - + speed1;
+				} else {
+					speed1 = 5;
+					speed2 = -5;
+				}
+
 				multiPlayerMode = 1;
 				subMenu = 0;
 				Selection = 0;
@@ -214,7 +231,11 @@ void Pong::ballLogic(void) {
 		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
 			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
 				playPongSfx();
-				if(ballXSpd < 9)    ballXSpd = ballXSpd * -1.1;
+
+				if(ballX < 20 && ballX > 10)	ballXSpd = speed1; // First speed to player 2.
+
+				if(ballX < 390 && ballX > 380)	ballXSpd = speed2; // The second speed to player 1.
+
 				ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
 			}
 
