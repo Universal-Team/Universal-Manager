@@ -24,48 +24,109 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/imageScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "utils/fileBrowse.h"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "fileBrowse.h"
 
-extern "C" {
-#include "C2D_helper.h"
-}
 
-extern uint selectedFile;
-extern int keyRepeatDelay;
-extern bool dirChanged;
-extern std::vector<DirEntry> dirContents;
-std::string currentImage = "";
-std::string filename;
-double imageScale = 1.0f;
-int positionX = 0, positionY = 0;
-ImageSize imageSize;
-
-static C2D_Image image;
-
-static void FreeImage(C2D_Image *image) {
+void Image::FreeImage(C2D_Image *image) {
 	C3D_TexDelete(image->tex);
 	linearFree((Tex3DS_SubTexture *)image->subtex);
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
 }
 
-static bool Draw_Image(void)
+bool Image::Draw_Image(void) const
 {
 	return C2D_DrawImageAt(image, positionX, positionY, 0.5, nullptr, imageScale, imageScale);
 }
 
+void Image::Draw(void) const
+{
+	if (ImageMode == 0) {
+		DrawBrowse();
+	} else if (ImageMode == 1) {
+		DrawViewer();
+	}
+}
 
-void drawImageSelectorScreen(void) {
-	drawFileBrowser();
+void Image::Logic(u32 hDown, u32 hHeld, touchPosition touch)
+{
+	if (ImageMode == 0) {
+		BrowseLogic(hDown, hHeld);
+	} else if (ImageMode == 1) {
+		ViewerLogic(hDown, hHeld);
+	}
 }
 
 
-void showImage(void) {
+void Image::DrawBrowse(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	std::string dirs;
+	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
+		(i == selectedFile);
+
+		if (selectedFile == 0) {
+			Gui::drawFileSelector(0, 28);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 1) {
+			Gui::drawFileSelector(0, 58);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 2) {
+			Gui::drawFileSelector(0, 91);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 3) {
+			Gui::drawFileSelector(0, 125);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 4) {
+			Gui::drawFileSelector(0, 156);
+			dirs +=  dirContents[i].name + "\n\n";
+
+		} else if (selectedFile == 5) {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		} else {
+			Gui::drawFileSelector(0, 188);
+			dirs +=  dirContents[i].name + "\n\n";
+		}
+	}
+	for (uint i=0;i<((dirContents.size()<6) ? 6-dirContents.size() : 0);i++) {
+		dirs += "\n\n";
+	}
+
+    if (Config::selector == 0) {
+        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
+    } else if (Config::selector == 1 || Config::selector == 2) {
+        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
+    }
+
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
+}
+
+
+void Image::DrawViewer(void) const
+{
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
 	set_screen(top);
@@ -74,9 +135,21 @@ void showImage(void) {
 	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
 }
 
-void ImageSelectorLogic(u32 hDown, u32 hHeld) { 
+
+void Image::BrowseLogic(u32 hDown, u32 hHeld) { 
 	if (keyRepeatDelay)	keyRepeatDelay--;
-	gspWaitForVBlank();
+
+			if (dirChanged) {
+            dirContents.clear();
+            std::vector<DirEntry> dirContentsTemp;
+            getDirectoryContents(dirContentsTemp);
+            for(uint i=0;i<dirContentsTemp.size();i++) {
+                  dirContents.push_back(dirContentsTemp[i]);
+        }
+		dirChanged = false;
+	}
+
+	
 	if (hDown & KEY_A) {
 		if (dirContents[selectedFile].isDirectory) {
 			chdir(dirContents[selectedFile].name.c_str());
@@ -87,39 +160,53 @@ void ImageSelectorLogic(u32 hDown, u32 hHeld) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
 			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			screenTransition(showImageScreen);
+			ImageMode = 1;
 			}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
-			screenTransition(mainScreen);
+			Gui::screenBack();
+			return;
 		} else {
 		chdir("..");
 		selectedFile = 0;
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_X) {
-		screenTransition(mainScreen);
+			Gui::screenBack();
+			return;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
 	} else if (hHeld & KEY_DOWN && !keyRepeatDelay) {
 		if (selectedFile < dirContents.size()-1) {
 			selectedFile++;
 			playScrollSfx();
-			keyRepeatDelay = 3;
+			if (fastMode == true) {
+				keyRepeatDelay = 3;
+			} else if (fastMode == false){
+				keyRepeatDelay = 6;
+			}
 		}
+	} else if (hDown & KEY_R) {
+		fastMode = true;
+	} else if (hDown & KEY_L) {
+		fastMode = false;
 	} else if (hHeld & KEY_SELECT) {
 		helperBox(" Press \uE000 to open an Image. \n \n Press \uE001 to go back a Folder. \n\n Press \uE002 to exit to the Main Menu.");
 	}
 }
 
-void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Image::ViewerLogic(u32 hDown, u32 hHeld) {
 	if (hHeld & KEY_CPAD_UP) {
 		if(imageSize.height*imageScale < 240) {
 			if(positionY > 0)	positionY -= imageScale*2;
@@ -149,7 +236,7 @@ void showImageLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if(hHeld & KEY_DOWN) {
 		if(imageScale > 0)	imageScale -= 0.1;
 	} else if (hDown & KEY_B) {
-		screenTransition(ImageSelectorScreen);
+		ImageMode = 0;
 		FreeImage(&image);
 	} else if(hDown & KEY_SELECT) {
 		imageScale = 1.0f;

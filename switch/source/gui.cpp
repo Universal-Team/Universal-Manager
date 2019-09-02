@@ -3,8 +3,9 @@
 #include <assert.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <stack>
 
-
+std::stack<std::unique_ptr<SCREEN>> screens;
 SDL_Window *Window;
 SDL_Renderer *Rendering;
 FC_Font *Roboto, *Roboto_large, *Roboto_small, *Roboto_title;
@@ -121,4 +122,21 @@ void Gui::DrawImage(SDL_Texture *texture, int x, int y) {
 
 void Gui::RenderScreen(void) {
 	SDL_RenderPresent(Rendering);
+}
+
+// Screen Stuff.
+
+void Gui::mainLoop(u64 hDown) {
+	screens.top()->Draw();
+	screens.top()->Logic(hDown);
+}
+
+void Gui::setScreen(std::unique_ptr<SCREEN> screen)
+{
+    screens.push(std::move(screen));
+}
+
+void Gui::screenBack()
+{
+    screens.pop();
 }

@@ -29,7 +29,6 @@
 
 #include <string>
 
-
 namespace Config {
 	extern int barColor, bgColor, musicMode, percentDisplay, layout, layoutBG; // [UI]
 	extern int animation, animationColor; // [ANIMATED]
@@ -37,11 +36,12 @@ namespace Config {
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
 	extern int Screen; // [SCREEN]
 	extern int Credits; // [CREDITS]
-	extern int SS; // [SCREENSHOT]
+	extern int selector;
 
 	void loadConfig();
 	void saveConfig();
 	void setCredits();
+	void setPongPoints(int points);
 }
 
 #endif /* SETTINGS_HPP */

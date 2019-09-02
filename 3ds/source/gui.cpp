@@ -24,13 +24,16 @@
 *         reasonable ways as different from the original version.
 */
 
+
 #include "gui.hpp"
-#include "screenCommon.hpp"
-#include "settings.hpp"
+#include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+
+#include <3ds.h>
 #include <assert.h>
+#include <stack>
 #include <stdarg.h>
 #include <unistd.h>
-
 
 C3D_RenderTarget* top;
 C3D_RenderTarget* bottom;
@@ -38,9 +41,11 @@ C3D_RenderTarget* bottom;
 static C2D_SpriteSheet sprites;
 static C2D_SpriteSheet animation;
 static C2D_SpriteSheet credits;
+static C2D_SpriteSheet button;
 
 C2D_TextBuf dynamicBuf, sizeBuf;
-C2D_Font systemFont, editorFont, fileBrowseFont;
+C2D_Font systemFont, editorFont;
+std::stack<std::unique_ptr<SCREEN>> screens;
 
 void Gui::clearTextBufs(void)
 {
@@ -48,24 +53,24 @@ void Gui::clearTextBufs(void)
     C2D_TextBufClear(sizeBuf);
 }
 
-void Gui::Draw_ImageBlend(int key, int x, int y, u32 color)
+// Draw a Sprite from the Sheet, but blended.
+void Gui::Draw_ImageBlend(int sheet, int key, int x, int y, u32 color)
 {
     C2D_ImageTint tint;
     C2D_SetImageTint(&tint, C2D_TopLeft, color, 0.5);
     C2D_SetImageTint(&tint, C2D_TopRight, color, 0.5);
     C2D_SetImageTint(&tint, C2D_BotLeft, color, 0.5);
     C2D_SetImageTint(&tint, C2D_BotRight, color, 0.5);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
-}
 
-void Gui::Draw_ImageBlend2(int key, int x, int y, u32 color)
-{
-    C2D_ImageTint tint;
-    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
-    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
-    C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f, &tint);
+    if (sheet == 0) { // Sprites.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f, &tint);
+    } else if (sheet == 1) { // credits.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f, &tint);
+    } else if (sheet == 2) { // animation.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f, &tint);
+    } else if (sheet == 3) { // button.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f, &tint);
+    }
 }
 
 Result Gui::init(void)
@@ -80,31 +85,22 @@ Result Gui::init(void)
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     credits   = C2D_SpriteSheetLoad("romfs:/gfx/credits.t3x");
+    button   = C2D_SpriteSheetLoad("romfs:/gfx/button.t3x");
     
     systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
-    fileBrowseFont = C2D_FontLoad("romfs:/gfx/fileBrowse.bcfnt");
     return 0;
 }
 
 void Gui::exit(void)
 {
-    if (sprites)
-    {
-        C2D_SpriteSheetFree(sprites);
-    }
-    if (animation)
-    {
-        C2D_SpriteSheetFree(animation);
-    }
-    if (credits)
-    {
-        C2D_SpriteSheetFree(credits);
-    }
+    C2D_SpriteSheetFree(sprites);
+    C2D_SpriteSheetFree(animation);
+    C2D_SpriteSheetFree(credits);
+    C2D_SpriteSheetFree(button);
     C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(editorFont);
-    C2D_FontFree(fileBrowseFont);
     C2D_Fini();
     C3D_Fini();
 }
@@ -114,42 +110,17 @@ void set_screen(C3D_RenderTarget * screen)
     C2D_SceneBegin(screen);
 }
 
-void Gui::sprite(int key, int x, int y)
+// Draw a Sprite from the Sheet.
+void Gui::sprite(int sheet, int key, int x, int y)
 {
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
+    if (sheet == 0) { // Sprites.
         C2D_DrawImageAt(C2D_SpriteSheetGetImage(sprites, key), x, y, 0.5f);
-    }
-}
-
-void Gui::AnimationSprite(int key, int x, int y)
-{
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
-        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
-    }
-}
-
-void Gui::Credits(int key, int x, int y)
-{
-    if (key == sprites_res_null_idx)
-    {
-        return;
-    }
-    // standard case
-    else
-    {
+    } else if (sheet == 1) { // credits.
         C2D_DrawImageAt(C2D_SpriteSheetGetImage(credits, key), x, y, 0.5f);
+    } else if (sheet == 2) { // animation.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(animation, key), x, y, 0.5f);
+    } else if (sheet == 3) { // button.
+        C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f);
     }
 }
 
@@ -158,8 +129,10 @@ void Gui::Credits(int key, int x, int y)
 void Gui::DrawBarsBottomBack(void) {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
-    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_bottom_screen_bot_back_idx, 0, 210);
+    if (Config::layout == 0 || Config::layout == 1) {
+        Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_bottom_screen_bot_back_idx, 0, 210);
+    }
 }
 
 void Gui::DrawBGTop(void) 
@@ -167,13 +140,13 @@ void Gui::DrawBGTop(void)
     set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
             for (int x = 0; x < 400; x += 14)
         {
             for (int y = 0; y < 240; y += 14)
             {
-                Gui::sprite(sprites_stripes_idx, x, y);
+                Gui::sprite(0, sprites_stripes_idx, x, y);
             }
 }
 } else if (Config::layoutBG == 2) {
@@ -184,8 +157,11 @@ void Gui::DrawBarsTop(void)
 {
     C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, Config::barColor);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_top_screen_bot_idx, 0, 215);
+    if (Config::layout == 0) {
+        Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_top_screen_bot_idx, 0, 215);
+    } else if (Config::layout == 1) {
+    }
 }
 
 void Gui::DrawBGBot(void)
@@ -193,14 +169,14 @@ void Gui::DrawBGBot(void)
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
        {
         for (int x = 0; x < 320; x += 14)
         {
             for (int y = 0; y < 240; y += 14)
             {
-                Gui::sprite(sprites_stripes2_idx, x, y);
+                Gui::sprite(0, sprites_stripes2_idx, x, y);
             }
         }
     }
@@ -212,66 +188,26 @@ void Gui::DrawBarsBot(void)
 {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
-    Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
-    Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-}
-
-void Gui::DrawOverlayTop(void)
-{
-    Gui::Draw_ImageBlend(sprites_overlay_top_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_top_2_idx, 0, 0);
-}
-
-void Gui::DrawOverlayBot(void)
-{
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
-}
-
-void Gui::DrawOverlayBotBack(void)
-{
-	Gui::Draw_ImageBlend(sprites_overlay_bot_idx, 0, 0, Config::barColor);
-	Gui::sprite(sprites_overlay_bot_2_idx, 0, 0);
-    Gui::sprite(sprites_back_idx, 293, 213);
-}
-
-void Gui::chooseLayoutTop(void) {
     if (Config::layout == 0) {
-        Gui::DrawBarsTop();
+        Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
+        Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
     } else if (Config::layout == 1) {
-        Gui::DrawOverlayTop();
-    }
-}
-
-void Gui::chooseLayoutBot(void) {
-    if (Config::layout == 0) {
-        Gui::DrawBarsBot();
-    } else if (Config::layout == 1) {
-        Gui::DrawOverlayBot();
-    }
-}
-
-void Gui::chooseLayoutBotBack(void) {
-    if (Config::layout == 0) {
-        Gui::DrawBarsBottomBack();
-    } else if (Config::layout == 1) {
-        Gui::DrawOverlayBotBack();
     }
 }
 
 // Text.
 
-void DisplayMsg(const char* text) {
+void DisplayMsg(std::string text) {
     Gui::clearTextBufs();
     C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
     C2D_TargetClear(top, BLUE2);
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
-	Gui::chooseLayoutTop();
-    Gui::sprite(sprites_textbox_idx, 10, 25);
-	Draw_Text(35, 42, 0.45f, BLACK, text);
+	Gui::DrawBarsTop();
+    Gui::sprite(0, sprites_textbox_idx, 10, 25);
+	Gui::DrawString(35, 42, 0.45f, BLACK, text);
 	Gui::DrawBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
 }
 
@@ -291,31 +227,31 @@ void drawBatteryTop(void) {
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(sprites_battery0_idx, 361, 0);
+	Gui::sprite(0, sprites_battery0_idx, 361, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(sprites_battery25_idx, 361, 0);
+	Gui::sprite(0, sprites_battery25_idx, 361, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(sprites_battery50_idx, 361, 0);
+	Gui::sprite(0, sprites_battery50_idx, 361, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(sprites_battery75_idx, 361, 0);
+    Gui::sprite(0, sprites_battery75_idx, 361, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(sprites_battery100_idx, 361, 0);
+	Gui::sprite(0, sprites_battery100_idx, 361, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
-		Gui::sprite(sprites_batteryCharge_idx, 361, 0);
+		Gui::sprite(0, sprites_batteryCharge_idx, 361, 0);
     }
 
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
 	    if(batteryPercent == 100) {
-		Draw_Text(310, 0, 0.65f, WHITE, "100%");
+		Gui::DrawString(315, 2, 0.65f, WHITE, "100%");
 	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
         C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
 		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 310.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
+        C2D_DrawText(&percentText, C2D_WithColor, 315.0f, 2.0f, 0.5f, 0.65f, 0.65f, WHITE);
 }
 }
 }
@@ -327,25 +263,25 @@ void drawBatteryBot(void) {
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(sprites_battery0_idx, 281, 0);
+	Gui::sprite(0, sprites_battery0_idx, 281, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(sprites_battery25_idx, 281, 0);
+	Gui::sprite(0, sprites_battery25_idx, 281, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(sprites_battery50_idx, 281, 0);
+	Gui::sprite(0, sprites_battery50_idx, 281, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(sprites_battery75_idx, 281, 0);
+    Gui::sprite(0, sprites_battery75_idx, 281, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(sprites_battery100_idx, 281, 0);
+	Gui::sprite(0, sprites_battery100_idx, 281, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
-		Gui::sprite(sprites_batteryCharge_idx, 281, 0);
+		Gui::sprite(0, sprites_batteryCharge_idx, 281, 0);
 	}
 
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
     	if(batteryPercent == 100) {
-		Draw_Text(230, 0, 0.65f, WHITE, "100%");
+		Gui::DrawString(230, 0, 0.65f, WHITE, "100%");
 	    } else {
 		snprintf(percent, 5, "%d%%", batteryPercent);
         C2D_Text percentText;
@@ -356,24 +292,57 @@ void drawBatteryBot(void) {
 }
 }
 
-void Draw_EndFrame(void) {
-	C2D_TextBufClear(dynamicBuf);
-	C2D_TextBufClear(sizeBuf);
-	C3D_FrameEnd(0);
-}
-
-void start_frame(void)
+// This is mainly, to replace `\\n` from the Ini file with `\n`.
+void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr)
 {
-    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-    C2D_TargetClear(top, BLUE2);
-    C2D_TargetClear(bottom, BLUE2);
+	// Get the first occurrence
+	size_t pos = data.find(toSearch);
+ 
+	// Repeat till end is reached
+	while( pos != std::string::npos)
+	{
+		// Replace this occurrence of Sub String
+		data.replace(pos, toSearch.size(), replaceStr);
+		// Get the next occurrence from the current position
+		pos =data.find(toSearch, pos + replaceStr.size());
+	}
 }
 
-void Draw_Text(float x, float y, float size, u32 color, const char *text) {
+
+// Draw String or Text.
+void Gui::DrawString(float x, float y, float size, u32 color, std::string Text)
+{
+    findAndReplaceAll(Text, "\\n", "\n");
 	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
+    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, Text.c_str());
 	C2D_TextOptimize(&c2d_text);
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+}
+
+
+// Get String or Text Width.
+float Gui::GetStringWidth(float size, std::string Text) {
+    findAndReplaceAll(Text, "\\n", "\n");
+	float width = 0;
+	GetStringSize(size, &width, NULL, Text);
+	return width;
+}
+
+// Get String or Text Size.
+void Gui::GetStringSize(float size, float *width, float *height, std::string Text) {
+    findAndReplaceAll(Text, "\\n", "\n");
+	C2D_Text c2d_text;
+    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, Text.c_str());
+	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+}
+
+
+// Get String or Text Height.
+float Gui::GetStringHeight(float size, std::string Text) {
+    findAndReplaceAll(Text, "\\n", "\n");
+	float height = 0;
+	GetStringSize(size, NULL, &height, Text.c_str());
+	return height;
 }
 
 void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text) {
@@ -383,43 +352,16 @@ void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text)
 	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
 }
 
-void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...) {
-	char buffer[256];
-	va_list args;
-	va_start(args, text);
-	vsnprintf(buffer, 256, text, args);
-	Draw_Text(x, y, size, color, buffer);
-	va_end(args);
-}
-
-void Draw_GetTextSize(float size, float *width, float *height, const char *text) {
-	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, text);
-	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
-}
-
 void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text) {
 	C2D_Text c2d_text;
     C2D_TextFontParse(&c2d_text, editorFont, sizeBuf, text);
 	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
 }
 
-float Draw_GetTextWidth(float size, const char *text) {
-	float width = 0;
-	Draw_GetTextSize(size, &width, NULL, text);
-	return width;
-}
-
 float Draw_GetTextWidthEditor(float size, const char *text) {
 	float width = 0;
 	Draw_GetTextSizeEditor(size, &width, NULL, text);
 	return width;
-}
-
-float Draw_GetTextHeight(float size, const char *text) {
-	float height = 0;
-	Draw_GetTextSize(size, NULL, &height, text);
-	return height;
 }
 
 bool Draw_Rect(float x, float y, float w, float h, u32 color) {
@@ -433,23 +375,61 @@ std::string DateTime::timeStr(void)
     return StringUtils::format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
 }
 
-// File Browse stuff. ;)
-
-void Draw_GetTextSizeFB(float size, float *width, float *height, const char *text) {
-	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, fileBrowseFont, sizeBuf, text);
-	C2D_TextGetDimensions(&c2d_text, size, size, width, height);
+void Gui::mainLoop(u32 hDown, u32 hHeld, touchPosition touch) {
+	screens.top()->Draw();
+	screens.top()->Logic(hDown, hHeld, touch);
 }
 
-float Draw_GetTextWidthFB(float size, const char *text) {
-	float width = 0;
-	Draw_GetTextSizeFB(size, &width, NULL, text);
-	return width;
+void Gui::setScreen(std::unique_ptr<SCREEN> screen)
+{
+    screens.push(std::move(screen));
 }
 
-void Draw_Text_FB(float x, float y, float size, u32 color, const char *text) {
-	C2D_Text c2d_text;
-    C2D_TextFontParse(&c2d_text, fileBrowseFont, sizeBuf, text);
-	C2D_TextOptimize(&c2d_text);
-	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+void Gui::screenBack()
+{
+    screens.pop();
+}
+
+void Gui::drawFileSelector(float x, float y)
+{
+    static constexpr int w     = 2;
+    static float timer         = 0.0f;
+    float highlight_multiplier = fmax(0.0, fabs(fmod(timer, 1.0) - 0.5) / 0.5);
+    u8 r                       = Config::barColor & 0xFF;
+    u8 g                       = (Config::barColor >> 8) & 0xFF;
+    u8 b                       = (Config::barColor >> 16) & 0xFF;
+    u32 color = C2D_Color32(r + (255 - r) * highlight_multiplier, g + (255 - g) * highlight_multiplier, b + (255 - b) * highlight_multiplier, 255);
+
+    if (Config::selector == 0) {
+        Draw_Rect(x, y, 400, 25, C2D_Color32(0, 0, 0, 255));
+    } else if (Config::selector == 1) {
+        Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 20));
+    } else if (Config::selector == 2) {
+        Draw_Rect(x, y, 400, 25, C2D_Color32(255, 255, 255, 255));
+    }
+    
+    Draw_Rect(x, y, 400, w, color);                      // top
+    Draw_Rect(x, y + w, w, 25 - 2 * w, color);          // left
+    Draw_Rect(x + 400 - w, y + w, w, 25 - 2 * w, color); // right
+    Draw_Rect(x, y + 25 - w, 400, w, color);             // bottom
+
+    timer += .005f;
+}
+
+void Gui::drawGUISelector(int key, float x, float y, float speed)
+{
+    static float timer         = 0.0f;
+    float highlight_multiplier = fmax(0.0, fabs(fmod(timer, 1.0) - 0.5) / 0.5);
+    u8 r                       = Config::barColor & 0xFF;
+    u8 g                       = (Config::barColor >> 8) & 0xFF;
+    u8 b                       = (Config::barColor >> 16) & 0xFF;
+    u32 color = C2D_Color32(r + (255 - r) * highlight_multiplier, g + (255 - g) * highlight_multiplier, b + (255 - b) * highlight_multiplier, 255);
+    C2D_ImageTint tint;
+    C2D_SetImageTint(&tint, C2D_TopLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_TopRight, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotLeft, color, 1);
+    C2D_SetImageTint(&tint, C2D_BotRight, color, 1);
+    C2D_DrawImageAt(C2D_SpriteSheetGetImage(button, key), x, y, 0.5f, &tint);
+
+    timer += speed;
 }

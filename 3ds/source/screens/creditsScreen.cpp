@@ -24,17 +24,16 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/creditsScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include <citro2d.h>
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
+#include <citro2d.h>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
 
-static int dialog = 5; 
-extern int fadealpha;
-extern bool fadein;
 
 // Color Stuff.
 #define VOLTZCOLORBAR RGBA8(0, 108, 255, 255)
@@ -52,180 +51,159 @@ extern bool fadein;
 #define TNGCOLORBAR RGBA8(127, 127, 127, 255)
 #define TNGCOLORBG RGBA8(0, 0, 31, 255)
 
-std::vector<std::string> names = {
-	"VoltZ",
-	"FlameKat53",
-	"Pk11",
-	"RocketRobz",
-	"TotallyNotGuy",
-	"MainMenu"
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
+extern int fadealpha;
+extern bool fadein;
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos creditsButtonPos[] = {
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-};
-
-static void drawVoltZ(void) {
+void drawVoltZ(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, VOLTZCOLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, VOLTZCOLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
-	Gui::Credits(credits_textbox_idx, 180, 30);
-	Gui::Credits(credits_voltZ_idx, -10, 40);
-	Draw_Text_FB(250, 50, 0.43, BLACK, "Hello There!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
+	Gui::sprite(1, credits_textbox_idx, 180, 30);
+	Gui::sprite(1, credits_voltZ_idx, -10, 40);
+	Gui::DrawString(250, 50, 0.40, BLACK, "Hello There!");
+	Gui::DrawString(190, 65, 0.40, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, VOLTZCOLORBG);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, VOLTZCOLORBAR);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, VOLTZCOLORBAR);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "VoltZ"))/2, 0, 0.7f, WHITE, "VoltZ");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString((320-Gui::GetStringWidth(0.7f, "VoltZ"))/2, 0, 0.7f, WHITE, "VoltZ");
 }
 
-static void drawFlame(void) {
+void drawFlame(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, FLAMECOLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, FLAMECOLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
-	Gui::Credits(credits_textbox_idx, 180, 30);
-	Gui::Credits(credits_flame_idx, 0, 40);
-	Draw_Text_FB(240, 50, 0.43, BLACK, "Hey, I’m Flame!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
+	Gui::sprite(1, credits_textbox_idx, 180, 30);
+	Gui::sprite(1, credits_flame_idx, 0, 40);
+	Gui::DrawString(240, 50, 0.40, BLACK, "Hey, I’m Flame!");
+	Gui::DrawString(190, 65, 0.40, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, FLAMECOLORBG);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, FLAMECOLORBAR);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, FLAMECOLORBAR);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "Flame"))/2, 0, 0.7f, WHITE, "Flame");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString((320-Gui::GetStringWidth(0.7f, "Flame"))/2, 0, 0.7f, WHITE, "Flame");
 }
 
-static void drawPk11(void) {
+void drawPk11(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, PK11COLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, PK11COLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
-	Gui::Credits(credits_textbox_idx, 180, 30);
-	Gui::Credits(credits_pk11_idx, -20, 40);
-	Draw_Text_FB(270, 50, 0.43, BLACK, "Hi .o/");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
+	Gui::sprite(1, credits_textbox_idx, 180, 30);
+	Gui::sprite(1, credits_pk11_idx, -20, 40);
+	Gui::DrawString(270, 50, 0.40, BLACK, "Hi .o/");
+	Gui::DrawString(190, 65, 0.40, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, PK11COLORBG);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, PK11COLORBAR);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, PK11COLORBAR);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "Pk11"))/2, 0, 0.7f, WHITE, "Pk11");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString((320-Gui::GetStringWidth(0.7f, "Pk11"))/2, 0, 0.7f, WHITE, "Pk11");
 }
 
-static void drawRocketRobz(void) {
+void drawRocketRobz(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, ROCKETROBZCOLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, ROCKETROBZCOLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
-	Gui::Credits(credits_textbox_idx, 180, 30);
-	Gui::Credits(credits_rocketRobz_idx, 0, 40);
-	Draw_Text_FB(270, 50, 0.43, BLACK, "Hi!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
+	Gui::sprite(1, credits_textbox_idx, 180, 30);
+	Gui::sprite(1, credits_rocketRobz_idx, 0, 40);
+	Gui::DrawString(270, 50, 0.40, BLACK, "Hi!");
+	Gui::DrawString(190, 65, 0.40, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, ROCKETROBZCOLORBG);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, ROCKETROBZCOLORBAR);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, ROCKETROBZCOLORBAR);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "RocketRobz"))/2, 0, 0.7f, WHITE, "RocketRobz");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString((320-Gui::GetStringWidth(0.7f, "RocketRobz"))/2, 0, 0.7f, WHITE, "RocketRobz");
 }
 
-static void drawTotallyNotGuy(void) {
+void drawTotallyNotGuy(void) {
 	// Top BG Stuff.
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, TNGCOLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, TNGCOLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
-	Gui::Credits(credits_textbox_idx, 180, 30);
-	Gui::Credits(credits_totallyNotGuy_idx, 0, 40);
-	Draw_Text_FB(250, 50, 0.43, BLACK, "Hello!");
-	Draw_Text_FB(190, 65, 0.43, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
+	Gui::sprite(1, credits_textbox_idx, 180, 30);
+	Gui::sprite(1, credits_totallyNotGuy_idx, 0, 40);
+	Gui::DrawString(250, 50, 0.40, BLACK, "Hello!");
+	Gui::DrawString(190, 65, 0.40, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, TNGCOLORBG);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, TNGCOLORBAR);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, TNGCOLORBAR);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text((320-Draw_GetTextWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString((320-Gui::GetStringWidth(0.7f, "TotallyNotGuy"))/2, 0, 0.7f, WHITE, "TotallyNotGuy");
 }
 
-static void drawCredits(void) {
+void Credits::drawCredits(void) const
+{
 	set_screen(top);
-	Gui::Credits(credits_universal_credits_idx, 0, 0);
+	Gui::sprite(1, credits_universal_credits_idx, 0, 0);
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 
 	set_screen(bottom);
 	Draw_Rect(0, 0, 400, 240, GRAY);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, BLUE);
-	Gui::sprite(sprites_universal_bg_bottom_idx, 0, 25);
-	Gui::sprite(sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, BLUE);
-	Gui::sprite(sprites_bottom_screen_bot_idx, 0, 215);
-	Draw_Text(20, 0, 0.7f, WHITE, "Welcome to Universal-Manager!");
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+	Gui::DrawString(20, 0, 0.7f, WHITE, "Welcome to Universal-Manager!");
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
-static void drawCreditsDialogs(void) {
+void Credits::drawCreditsDialogs(void) const
+{
 	if (dialog == 0) {
 		drawVoltZ();
 	} else if (dialog == 1) {
@@ -241,30 +219,30 @@ static void drawCreditsDialogs(void) {
 	}
 }
 
-static void drawButtons(void) {
+void Credits::drawButtons(void) const
+{
 	// Buttons.
 	for(int i=0;i<3;i++) {
-		Gui::sprite(sprites_mainMenuButton_idx, 0, 29+(i*65));
-		Draw_Text(((320-Draw_GetTextWidth(0.65f, names[(2*i)].c_str()))/2)-85, 46+(i*65), 0.65f, WHITE, names[(2*i)].c_str());
-		Gui::sprite(sprites_mainMenuButton_idx, 170, 29+(i*65));
-		Draw_Text(((320-Draw_GetTextWidth(0.65f, names[(2*i)+1].c_str()))/2)+85, 46+(i*65), 0.65f, WHITE, names[(2*i)+1].c_str());
+		Gui::sprite(3, button_button_2_idx, 0, 29+(i*65));
+		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)].c_str()))/2)-85, 46+(i*65), 0.65f, WHITE, names[(2*i)].c_str());
+		Gui::sprite(3, button_button_2_idx, 160, 29+(i*65));
+		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)+1].c_str()))/2)+85, 46+(i*65), 0.65f, WHITE, names[(2*i)+1].c_str());
 	}
 }
 
-void drawCreditsScreen(void) {
+void Credits::Draw(void) const
+{
     C2D_TargetClear(top, GRAY);
     C2D_TargetClear(bottom, GRAY);
 	set_screen(top);
-	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, ROCKETROBZCOLORBG);
-	Gui::sprite(sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, ROCKETROBZCOLORBAR);
-    Gui::sprite(sprites_top_screen_top_idx, 0, 0);
-	Draw_Text(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
+	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
+    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 	drawCreditsDialogs();
 	drawButtons();
 }
 
-void creditsLogic(u32 hDown, touchPosition touch) {
+void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, creditsButtonPos[0])) {
 			dialog = 0;
@@ -282,8 +260,7 @@ void creditsLogic(u32 hDown, touchPosition touch) {
 				Config::Credits = 0;
 				Config::setCredits();
 			}
-			screenTransition(mainScreen);
-			dialog = 5;
+				Gui::setScreen(std::make_unique<MainMenu>());
 		}
 	}
 }

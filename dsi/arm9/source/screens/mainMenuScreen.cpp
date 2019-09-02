@@ -25,22 +25,56 @@
 */
 
 #include "screens/screenCommon.hpp"
+#include "config.h"
+#include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
+#include "settingsScreen.hpp"
+#include "gui.hpp"
 
-void drawMainMenu(void) {
-	drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), true); //	Top Screen.
-	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), true);
-	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), true);
 
-	drawRectangle(0, 20, 256, 152, BGR15(0xff, 0, 0), false); //	Bottom Screen.
-	drawRectangle(0, 0, 256, 20, BGR15(0x00, 0, 0xff), false);
-	drawRectangle(0, 172, 256, 20, BGR15(0x00, 0, 0xff), false);
+bool touching(touchPosition touch, Structs::ButtonPos button);
 
-	printTextTinted("Universal-Manager", DARK_BLUE, 60, 5, true);
+void MainMenu::Draw(void) const
+{
+	if (screenDrawn) return;
+
+	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
+
+	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
+	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
+	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
+
+	printTextTinted("Universal-Manager", BLACK, 60, 5, true);
+	printTextTinted(APP_VERSION, BLACK, 180, 175, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	printTextTinted("FileManager", WHITE, 5, 30, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
+	printTextTinted("Settings", WHITE, 135, 30, false);
+
+	screenDrawn = true;
+}
+
+void MainMenu::Logic(u16 hDown, touchPosition touch) 
+{
+	if (hDown & KEY_TOUCH) {
+		if (touching(touch, mainButtonPos[0])) {
+			screenDrawn = false;
+			Gui::setScreen(std::make_unique<FileManager>());
+		} else if (touching(touch, mainButtonPos[1])) {
+			screenDrawn = false;
+			Gui::setScreen(std::make_unique<Settings>());
+		}
+	} else if (hDown & KEY_A) {
+		screenDrawn = false;
+		Gui::setScreen(std::make_unique<FileManager>());
+	} else if (hDown & KEY_Y) {
+		screenDrawn = false;
+		Gui::setScreen(std::make_unique<Settings>());
+	}
 }

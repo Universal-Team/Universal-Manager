@@ -25,15 +25,17 @@
 */
 
 #include "animation.hpp"
-#include "screenCommon.hpp"
-#include <unistd.h>
+#include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+
+#include <3ds.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <3ds.h>
+#include <unistd.h>
 
-static int animated_bubblesYPos[2] = {0};
-static bool animated_bubbleMoveDelay = false;
+int animated_bubblesYPos[2] = {0};
+bool animated_bubbleMoveDelay = false;
 
 void animatedBGTop(void) {
 	if (Config::animation == 0) {
@@ -47,10 +49,10 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 } else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
@@ -61,10 +63,10 @@ void animatedBGTop(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_topscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_topscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_topscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_topscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_topscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_topscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
 }
 
@@ -80,10 +82,10 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 } else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
 		animated_bubblesYPos[0]--;
@@ -94,25 +96,9 @@ void animatedBGBot(void) {
 	animated_bubblesYPos[1]--;
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
-	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
-	Gui::Draw_ImageBlend2(animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1], Config::animationColor);
+	Gui::Draw_ImageBlend(2, animation_bottomscreen2V1_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 }
-}
-
-// To-Do : -> animated Stuff.
-void screenTransition(int screen) {
-	if (Config::Screen == 0) {
-		SCREEN_MODE = screen;
-	} else if (Config::Screen == 1) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C3D_FrameRate(1);
-    	C2D_TargetClear(top, TRANSPARENT);
-    	C2D_TargetClear(bottom, TRANSPARENT);
-		C3D_FrameEnd(0);
-		gspWaitForVBlank();
-		SCREEN_MODE = screen;
-		C3D_FrameRate(60);
-	}
 }

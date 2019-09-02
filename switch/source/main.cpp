@@ -30,7 +30,6 @@
 #include "colors.hpp"
 #include "screens/screenCommon.hpp"
 #include "gui.hpp"
-#include "textures.hpp"
 #include <algorithm>
 #include <dirent.h>
 #include <malloc.h>
@@ -39,11 +38,15 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
+
 extern "C" {
     #include "touch_helper.h"
 }
 
-int screenMode = 0;
+int fadealpha = 255;
+bool fadein = true;
 
 static Result servicesInit(void)
 {
@@ -75,36 +78,25 @@ int main(void)
     
 	    TouchInfo touchInfo;
 	    Touch_Init(&touchInfo);
+        Gui::setScreen(std::make_unique<MainMenu>());
 
         while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
         hidScanInput();
-        Touch_Process(&touchInfo);
         u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-        Gui::ClearScreen(BLUE);
+        Gui::ClearScreen(BLACK);
 
-		// Draws a screen based on screenMode
-		switch(screenMode) {
-//#########################################################################################################
-			case mainScreen:
-				drawMainMenu();
-				break;
-            case FileManagerSubMenuScreen:
-                drawFileManagerSubMenu();
-                break;
-        }
+		Gui::mainLoop(hDown);
 
-		// Scans inputs for the current screen
-		switch(screenMode) {
-//#########################################################################################################
-			case mainScreen:
-				MainMenuLogic(hDown, touchInfo);
-				break;
-            case FileManagerSubMenuScreen:
-                FileManagerSubMenuLogic(hDown, touchInfo);
-                break;
-        }
         Gui::RenderScreen();
+
+		if (fadein == true) {
+			fadealpha -= 3;
+			if (fadealpha < 0) {
+				fadealpha = 0;
+				fadein = false;
+			}
+		}
         }
 
     servicesExit();

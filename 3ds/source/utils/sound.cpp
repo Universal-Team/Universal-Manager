@@ -1,13 +1,14 @@
-#include "sound.h"
+#include "utils/sound.h"
 
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <cstdio>
-
 #include <string>
+
 using std::string;
 
 extern sound *sfx_scroll, *sfx_pong, *sfx_score;
+
 extern bool dspfirmfound;
 
 // Reference: http://yannesposito.com/Scratch/en/blog/2010-10-14-Fun-with-wav/

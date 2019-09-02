@@ -1,9 +1,9 @@
+#include "music/vorbis.h"
+#include "music/playback.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "vorbis.h"
-#include "music/playback.h"
 
 static OggVorbis_File	vorbisFile;
 static vorbis_info		*vi;

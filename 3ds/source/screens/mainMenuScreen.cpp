@@ -24,245 +24,242 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/creditsScreen.hpp"
+#include "screens/fileManagerScreen.hpp"
+#include "screens/ftpScreen.hpp"
+#include "screens/gameSubMenu.hpp"
+#include "screens/imageScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/musicScreen.hpp"
 #include "screens/screenCommon.hpp"
+#include "screens/scriptScreen.hpp"
+#include "screens/settingsScreen.hpp"
+#include "screens/textScreen.hpp"
+#include "screens/updaterScreen.hpp"
+#include "screens/utilsScreen.hpp"
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
-extern bool touching(touchPosition touch, ButtonPos button);
-
-ButtonPos mainScreenButtonPos[] = {
-    {0, 25, 149, 52, -1},
-    {170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-    {170, 150, 149, 52, -1},
-
-    {0, 25, 149, 52, -1},
-	{170, 25, 149, 52, -1},
-	{0, 90, 149, 52, -1},
-	{170, 90, 149, 52, -1},
-	{0, 150, 149, 52, -1},
-};
-
-int mainMenuPage = 0;
-static int mainSelection1 = 0;
-static int mainSelection2 = 0;
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
+extern bool exiting;
 extern int fadealpha;
 extern bool fadein;
 
-// Version numbers.
-char universal_manager_vertext[13];
+void MainMenu::DrawSelection(void) const
+{
+	if (currentPage == 1) {
+	if (Selection == 0) {
+		Gui::drawGUISelector(button_tl_selector_idx, 0, 26, .020f);
+	} else if (Selection == 1) {
+		Gui::drawGUISelector(button_selector_idx, 166, 31, .020f);
+	} else if (Selection == 2) {
+		Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
+	} else if (Selection == 3) {
+		Gui::drawGUISelector(button_selector_idx, 166, 95, .020f);
+	} else if (Selection == 4) {
+		Gui::drawGUISelector(button_selector_idx, 3, 158, .020f);
+	} else if (Selection == 5) {
+		Gui::drawGUISelector(button_br_selector_idx, 161, 153, .020f);
+	}
 
-static void drawMainMenuSelection1(void) {
-	if (mainSelection1 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
-	} else if (mainSelection1 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
-	} else if (mainSelection1 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
-	} else if (mainSelection1 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
-	} else if (mainSelection1 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
-	} else if (mainSelection1 == 5) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 145, Config::barColor);
+
+	} else if (currentPage == 2) {
+	if (Selection == 0) {
+		Gui::drawGUISelector(button_tl_selector_idx, 0, 26, .020f);
+	} else if (Selection == 1) {
+		Gui::drawGUISelector(button_selector_idx, 166, 31, .020f);
+	} else if (Selection == 2) {
+		Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
+	} else if (Selection == 3) {
+		Gui::drawGUISelector(button_selector_idx, 166, 95, .020f);
+	} else if (Selection == 4) {
+		Gui::drawGUISelector(button_selector_idx, 3, 158, .020f);
+	}
 	}
 }
 
-static void drawMainMenuSelection2(void) {
-	if (mainSelection2 == 0) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 10, Config::barColor);
-	} else if (mainSelection2 == 1) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 10, Config::barColor);
-	} else if (mainSelection2 == 2) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 75, Config::barColor);
-	} else if (mainSelection2 == 3) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 182, 75, Config::barColor);
-	} else if (mainSelection2 == 4) {
-		Gui::Draw_ImageBlend(sprites_arrow_idx, 12, 145, Config::barColor);
-	}
-}
-
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
+void MainMenu::Draw(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Draw_Text(100, 0, 0.72f, WHITE, "Universal-Manager");
-	Draw_Text(340, 218, FONT_SIZE_18, WHITE, universal_manager_vertext);
-	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
+	Gui::DrawString(395-Gui::GetStringWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
+	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in out effect
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBot();
 
-	// First Page.
-	if (mainMenuPage == 0) {
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
-	Gui::sprite(sprites_fileManagerIcon_idx, 5, 35);
-	Draw_Text(40, 42, 0.65f, WHITE, "Filemanager");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
-	Gui::sprite(sprites_ftpIcon_idx, 175, 35);
-	Draw_Text(230, 42, 0.7f, WHITE, "FTP");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
-	Gui::sprite(sprites_scriptIcon_idx, 5, 100);
-	Draw_Text(40, 107, 0.65f, WHITE, "Scripts");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
-	Gui::sprite(sprites_music_icon_idx, 175, 100);
-	Draw_Text(230, 107, 0.7f, WHITE, "Music");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
-	Gui::sprite(sprites_updaterIcon_idx, 5, 170);
-	Draw_Text(50, 177, 0.7f, WHITE, "Updater");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 160);
-	Gui::sprite(sprites_settingsIcon_idx, 175, 170);
-	Draw_Text(220, 177, 0.7f, WHITE, "Settings");
-
-	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, WHITE, "1"); //Draw First Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 256, 3, RED);
-	Draw_Text(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
-	drawMainMenuSelection1();
+	DrawBottom();
+	Gui::DrawString(150, 4, 0.50f, WHITE, "Current Page:");
+	Gui::DrawString(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
+	Gui::DrawString(280, 4, 0.50, BLACK, "2"); //Draw Second Page Number.
+	DrawSelection();
+	DrawCurrentPage();
 	if (fadealpha > 0) Draw_Rect(0, 0, 320, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in/out effect
-
-
-	// Second Page.
-	} else if (mainMenuPage == 1) {
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 25);
-	Gui::sprite(sprites_image_icon_idx, 5, 35);
-	Draw_Text(40, 42, 0.65f, WHITE, "Image Viewer");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 25);
-	Draw_Text(230, 42, 0.7f, WHITE, "Credits");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 90);
-	Gui::sprite(sprites_textEditorIcon_idx, 5, 100);
-	Draw_Text(40, 107, 0.65f, WHITE, "Text Editor");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 170, 90);
-	Draw_Text(215, 107, 0.7f, WHITE, "Utils");
-
-	Gui::sprite(sprites_mainMenuButton_idx, 0, 160);
-	Draw_Text(50, 177, 0.7f, WHITE, "Games");
-
-	Draw_Text(150, 4, 0.50f, WHITE, "Current Page:");
-	Draw_Text(260, 4, 0.50, BLACK, "1"); //Draw First Page Number.
-	Draw_Text(280, 4, 0.50, WHITE, "2"); //Draw Second Page Number.
-	Gui::Draw_ImageBlend(sprites_frame_idx, 276, 3, RED);
-	drawMainMenuSelection2();
-}
 }
 
-static void mainMenuSelectionLogic1(u32 hDown) {
-		if (mainMenuPage == 0 && hDown & KEY_UP) {
-			if(mainSelection1 > 0)	mainSelection1--;
-		} else if (mainMenuPage == 0 && hDown & KEY_DOWN) {
-			if(mainSelection1 < 5)	mainSelection1++;
-		} else if (mainMenuPage == 0 && hDown & KEY_A) {
-			switch(mainSelection1) {
-				case 0: {
-					screenTransition(fileManager);
-					break;
-				} case 1:
-					screenTransition(ftpScreen);
-					break;
-				  case 2: {
-					screenTransition(scriptMainScreen);
-					break;
-				} case 3: {
-					screenTransition(musicMainScreen);
-					break;
-				} case 4: {
-					screenTransition(updaterSubMenu);
-					break;
-				} case 5:
-					screenTransition(SettingsScreen);
-					break;
+void MainMenu::DrawBottom(void) const
+{
+	if (currentPage == 1) {
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
+		Gui::sprite(0, sprites_fileManagerIcon_idx, 9, 41);
+		Gui::DrawString(40, 48, 0.65f, WHITE, "Filemanager");
+
+		Gui::sprite(3, button_button_2_idx, 162, 27); 
+		Gui::sprite(0, sprites_ftpIcon_idx, 172, 40);
+		Gui::DrawString(230, 42, 0.7f, WHITE, "FTP");
+
+		Gui::sprite(3, button_button_3_idx, 1, 91);
+		Gui::sprite(0, sprites_scriptIcon_idx, 4, 102);
+		Gui::DrawString(40, 107, 0.65f, WHITE, "Scripts");
+
+		Gui::sprite(3, button_button_4_idx, 162, 91);
+		Gui::sprite(0, sprites_music_icon_idx, 175, 106);
+		Gui::DrawString(230, 107, 0.7f, WHITE, "Music");
+
+		Gui::sprite(3, button_button_5_idx, 1, 154);
+		Gui::sprite(0, sprites_updaterIcon_idx, 9, 167);
+		Gui::DrawString(50, 177, 0.7f, WHITE, "Updater");
+
+		Gui::sprite(3, button_button_br_idx, 162, 151);
+		Gui::sprite(0, sprites_settingsIcon_idx, 172, 165);
+		Gui::DrawString(220, 177, 0.7f, WHITE, "Settings");
+
+
+	} else if (currentPage == 2) {
+		Gui::sprite(3, button_button_tl_idx, 1, 27);
+		Gui::sprite(0, sprites_image_icon_idx, 6, 37);
+		Gui::DrawString(40, 42, 0.65f, WHITE, "Image Viewer");
+
+		Gui::sprite(3, button_button_2_idx, 162, 27);
+		Gui::DrawString(230, 42, 0.7f, WHITE, "Credits");
+
+		Gui::sprite(3, button_button_3_idx, 1, 91);
+		Gui::sprite(0, sprites_textEditorIcon_idx, 9, 103);
+		Gui::DrawString(40, 107, 0.65f, WHITE, "Text Editor");
+
+		Gui::sprite(3, button_button_4_idx, 162, 91);
+		Gui::sprite(0, sprites_utilsIcon_idx, 175, 102);
+		Gui::DrawString(215, 107, 0.7f, WHITE, "Utils");
+
+		Gui::sprite(3, button_button_5_idx, 1, 154);
+		Gui::DrawString(50, 177, 0.7f, WHITE, "Games");
+	}
+}
+
+void MainMenu::DrawCurrentPage(void) const
+{
+	if (currentPage == 1) {
+		Gui::DrawString(260, 4, 0.50, WHITE, "1");
+	} else if (currentPage == 2) {
+		Gui::DrawString(280, 4, 0.50, WHITE, "2");
+	}
+}
+
+void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
+		if (hDown & KEY_UP) {
+			if(Selection > 0)	Selection--;
+
+		} else if (hDown & KEY_DOWN) {
+			if (currentPage == 1) {
+				if(Selection < 5)	Selection++;
+
+			} else if (currentPage == 2) {
+				if(Selection < 4)	Selection++;
 			}
-		}
-}
 
-static void mainMenuSelectionLogic2(u32 hDown) {
-		if (mainMenuPage == 1 && hDown & KEY_UP) {
-			if(mainSelection2 > 0)	mainSelection2--;
-		} else if (mainMenuPage == 1 && hDown & KEY_DOWN) {
-			if(mainSelection2 < 4)	mainSelection2++;
-		} else if (mainMenuPage == 1 && hDown & KEY_A) {
-			switch(mainSelection2) {
-				case 0: {
-					screenTransition(ImageSelectorScreen);
-					break;
-				} case 1:
-					screenTransition(creditsScreen);
-					break;
-				  case 2: {
-					screenTransition(textFileBrowse);
-					break;
-				} case 3: {
-					screenTransition(utilsScreen);
-					break;
-				} case 4: {
-					screenTransition(gameSubMenuScreen);
-					break;
+		} else if (hHeld & KEY_SELECT) {
+			helperBox("Press L/R to switch the Pages.\n\nPress D-Pad Up/Down to switch Selection.\n\nPress A to select.\n\nTouch a Button to select.");
+
+
+		}  else if (hDown & KEY_A) {
+			if (currentPage == 1) {
+				switch(Selection) {
+					case 0: {
+						Gui::setScreen(std::make_unique<FileManager>());
+						break;
+					}   case 1:
+						Gui::setScreen(std::make_unique<FTP>());
+						break;
+				 	 case 2: {
+						Gui::setScreen(std::make_unique<Script>());
+						break;
+					} case 3: {
+						Gui::setScreen(std::make_unique<Music>());
+						break;
+					} case 4: {
+						Gui::setScreen(std::make_unique<Updater>());
+						break;
+					} case 5:
+						Gui::setScreen(std::make_unique<Settings>());
+						break;
+				}
+			} else if (currentPage == 2) {
+				switch(Selection) {
+					case 0: {
+						Gui::setScreen(std::make_unique<Image>());
+						break;
+					} case 1:
+						Gui::setScreen(std::make_unique<Credits>());
+						break;
+				 	 case 2: {
+						Gui::setScreen(std::make_unique<Text>());
+						break;
+					} case 3: {
+						Gui::setScreen(std::make_unique<Utils>());
+						break;
+					} case 4: {
+						Gui::setScreen(std::make_unique<GameSub>());
+						break;
+					}
 				}
 			}
 		}
 }
 
-void MainMenuLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	mainMenuSelectionLogic1(hDown);
-	mainMenuSelectionLogic2(hDown);
-	if (hHeld & KEY_SELECT) {
-		helperBox(" Press \uE052 / \uE053 to switch Pages.");
-
+void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	SelectionLogic(hDown, hHeld);
 		// Page Switching.
-	} else if (mainMenuPage == 0 && hDown & KEY_R) {
-		mainMenuPage = 1;
-		} else if (mainMenuPage == 1 && hDown & KEY_L) {
-		mainMenuPage = 0;
+	if (currentPage == 1 && hDown & KEY_R) {
+			Selection = 0;
+			currentPage = 2;
+		} else if (currentPage == 2 && hDown & KEY_L) {
+			Selection = 0;
+			currentPage = 1;
+
+		} else if (hDown & KEY_START) {
+			exiting = true;
 
 		// First Page.
-		} else if (mainMenuPage == 0 && hDown & KEY_TOUCH) {
+		} else if (currentPage == 1 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[0])) {
-				screenTransition(fileManager);
+				Gui::setScreen(std::make_unique<FileManager>());
 			} else if (touching(touch, mainScreenButtonPos[1])) {
-				screenTransition(ftpScreen);
+				Gui::setScreen(std::make_unique<FTP>());
 			} else if (touching(touch, mainScreenButtonPos[2])) {
-				screenTransition(scriptMainScreen);
+				Gui::setScreen(std::make_unique<Script>());
 			} else if (touching(touch, mainScreenButtonPos[3])) {
-				screenTransition(musicMainScreen);
+				Gui::setScreen(std::make_unique<Music>());
 			} else if (touching(touch, mainScreenButtonPos[4])) {
-				screenTransition(updaterSubMenu);
+				Gui::setScreen(std::make_unique<Updater>());
 			} else if (touching(touch, mainScreenButtonPos[5])) {
-				screenTransition(SettingsScreen);
+				Gui::setScreen(std::make_unique<Settings>());
 			}
 
 			// Second Page.
-		} else if (mainMenuPage == 1 && hDown & KEY_TOUCH) {
+		} else if (currentPage == 2 && hDown & KEY_TOUCH) {
 			if (touching(touch, mainScreenButtonPos[6])) {
-				screenTransition(ImageSelectorScreen);
+				Gui::setScreen(std::make_unique<Image>());
 			} else if (touching(touch, mainScreenButtonPos[7])) {
-				screenTransition(creditsScreen);
+				Gui::setScreen(std::make_unique<Credits>());
 			} else if (touching(touch, mainScreenButtonPos[8])) {
-				screenTransition(textFileBrowse);
-			} else if (touching(touch, mainScreenButtonPos[9])) {
-				screenTransition(utilsScreen);
+				Gui::setScreen(std::make_unique<Text>());
+ 			} else if (touching(touch, mainScreenButtonPos[9])) {
+				Gui::setScreen(std::make_unique<Utils>());
 			} else if (touching(touch, mainScreenButtonPos[10])) {
-				screenTransition(gameSubMenuScreen);
+				Gui::setScreen(std::make_unique<GameSub>());
 		}
 	}
 }

@@ -11,6 +11,10 @@
 *.lst
 .vscode/ipch
 *.DS_Store
+3ds/romfs/gfx/*.t3x
 
 bannertool*
 makerom*
+*.pfs0
+*.nso
+*.nacp

@@ -27,41 +27,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "screens/screenCommon.hpp"
+#include "mainMenuScreen.hpp"
+#include "fileManagerScreen.hpp"
 
 
 extern "C" {
 	#include "touch_helper.h"
 }
 
+extern int fadealpha;
+extern bool fadein;
 
-extern SDL_Texture *MainMenuButton;
-// Version numbers.
-char universal_manager_vertext[13];
 
-void drawMainMenu(void) {
-	// Initialize the Version Number.
-	snprintf(universal_manager_vertext, 13, "v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-
+void MainMenu::Draw(void) const
+{
 	Gui::DrawRect(0, 0, 1280, 720, GRAY);
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
 	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
 	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	Gui::DrawText(1020, 630, 72, WHITE, universal_manager_vertext);
+	Gui::DrawText(1000, 630, 72, WHITE, VERSION_STRING);
 
 	// Buttons.
 	Gui::DrawImage(MainMenuButton, 40, 150);
 	Gui::DrawImage(MainMenuButton, 40, 300);
 	Gui::DrawImage(MainMenuButton, 40, 450);
+	if (fadealpha > 0) Gui::DrawRect(0, 0, 1280, 720, FC_MakeColor(0, 0, 0, fadealpha)); // Fade in/out effect
 }
 
-void MainMenuLogic(u64 hDown, TouchInfo touchInfo) {
-	//Touch_Init(&touchInfo);
-	//hidScanInput();
-	//Touch_Process(&touchInfo);
-
+void MainMenu::Logic(u64 hDown) {
 	if (hDown & KEY_A)
-		screenMode = FileManagerSubMenuScreen;
-
-	//if (tapped_inside(touchInfo, 40, 150, 300, 105))
-	//	screenMode = FileManagerSubMenuScreen;
+		Gui::setScreen(std::make_unique<FileManager>());
 }

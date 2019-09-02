@@ -24,51 +24,24 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calendarScreen.hpp"
 #include "screens/screenCommon.hpp"
-#include "settings.hpp"
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
-#include <vector>
 
-struct ButtonPos {
-	int x;
-	int y;
-	int w;
-	int h;
-	int link;
-};
 
-std::vector<std::string> months = {
-	"January",
-	"Febuary",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December"
-};
+extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
-extern bool touching(touchPosition touch, ButtonPos button);
-inline C2D_Font systemFont;
-inline C2D_TextBuf dynamicBuf, sizeBuf;
-
-ButtonPos calendarButtonPos[] = {
-		// Back Icon.
-	{293, 213, 27, 27, -1},
-};
-
-static void DisplayMonth(void) {
+void Calendar::DisplayMonth(void) const
+{
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
 
-	Draw_Text(120, 0, 0.72f, WHITE, months[month].c_str());
+	Gui::DrawString(120, 0, 0.72f, WHITE, months[month].c_str());
 }
 
 std::string GetYear(void) {
@@ -78,533 +51,535 @@ std::string GetYear(void) {
 	return StringUtils::format("%04i", year);
 }
 
-static void DisplayYear(void) {
+void Calendar::DisplayYear(void) const
+{
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon;
 
-	Draw_Text(130+Draw_GetTextWidth(0.72f, (months[month].c_str())), 0, 0.72f, WHITE, (GetYear().c_str()));
+	Gui::DrawString(130+Gui::GetStringWidth(0.72f, (months[month].c_str())), 0, 0.72f, WHITE, (GetYear().c_str()));
 }
 
-static void draw31Days(void) {
+void draw31Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
-	Draw_Text(30, 28, 0.72f, WHITE, "1");
+	Gui::DrawString(30, 28, 0.72f, WHITE, "1");
 
 	Draw_Rect(65, 25, 50, 30, GRAY);
-	Draw_Text(85, 28, 0.72f, WHITE, "2");
+	Gui::DrawString(85, 28, 0.72f, WHITE, "2");
 
 	Draw_Rect(120, 25, 50, 30, GRAY);
-	Draw_Text(140, 28, 0.72f, WHITE, "3");
+	Gui::DrawString(140, 28, 0.72f, WHITE, "3");
 
 	Draw_Rect(175, 25, 50, 30, GRAY);
-	Draw_Text(195, 28, 0.72f, WHITE, "4");
+	Gui::DrawString(195, 28, 0.72f, WHITE, "4");
 
 	Draw_Rect(230, 25, 50, 30, GRAY);
-	Draw_Text(250, 28, 0.72f, WHITE, "5");
+	Gui::DrawString(250, 28, 0.72f, WHITE, "5");
 
 	Draw_Rect(285, 25, 50, 30, GRAY);
-	Draw_Text(305, 28, 0.72f, WHITE, "6");
+	Gui::DrawString(305, 28, 0.72f, WHITE, "6");
 
 	Draw_Rect(340, 25, 50, 30, GRAY);
-	Draw_Text(360, 28, 0.72f, WHITE, "7");
+	Gui::DrawString(360, 28, 0.72f, WHITE, "7");
 
 
 	Draw_Rect(10, 60, 50, 30, GRAY);
-	Draw_Text(30, 63, 0.72f, WHITE, "8");
+	Gui::DrawString(30, 63, 0.72f, WHITE, "8");
 
 	Draw_Rect(65, 60, 50, 30, GRAY);
-	Draw_Text(85, 63, 0.72f, WHITE, "9");
+	Gui::DrawString(85, 63, 0.72f, WHITE, "9");
 
 	Draw_Rect(120, 60, 50, 30, GRAY);
-	Draw_Text(132, 63, 0.72f, WHITE, "10");
+	Gui::DrawString(132, 63, 0.72f, WHITE, "10");
 
 	Draw_Rect(175, 60, 50, 30, GRAY);
-	Draw_Text(187, 63, 0.72f, WHITE, "11");
+	Gui::DrawString(187, 63, 0.72f, WHITE, "11");
 
 	Draw_Rect(230, 60, 50, 30, GRAY);
-	Draw_Text(242, 63, 0.72f, WHITE, "12");
+	Gui::DrawString(242, 63, 0.72f, WHITE, "12");
 
 	Draw_Rect(285, 60, 50, 30, GRAY);
-	Draw_Text(297, 63, 0.72f, WHITE, "13");
+	Gui::DrawString(297, 63, 0.72f, WHITE, "13");
 
 	Draw_Rect(340, 60, 50, 30, GRAY);
-	Draw_Text(352, 63, 0.72f, WHITE, "14");
+	Gui::DrawString(352, 63, 0.72f, WHITE, "14");
 
 
 	Draw_Rect(10, 95, 50, 30, GRAY);
-	Draw_Text(22, 98, 0.72f, WHITE, "15");
+	Gui::DrawString(22, 98, 0.72f, WHITE, "15");
 
 	Draw_Rect(65, 95, 50, 30, GRAY);
-	Draw_Text(77, 98, 0.72f, WHITE, "16");
+	Gui::DrawString(77, 98, 0.72f, WHITE, "16");
 
 	Draw_Rect(120, 95, 50, 30, GRAY);
-	Draw_Text(132, 98, 0.72f, WHITE, "17");
+	Gui::DrawString(132, 98, 0.72f, WHITE, "17");
 
 	Draw_Rect(175, 95, 50, 30, GRAY);
-	Draw_Text(187, 98, 0.72f, WHITE, "18");
+	Gui::DrawString(187, 98, 0.72f, WHITE, "18");
 
 	Draw_Rect(230, 95, 50, 30, GRAY);
-	Draw_Text(242, 98, 0.72f, WHITE, "19");
+	Gui::DrawString(242, 98, 0.72f, WHITE, "19");
 
 	Draw_Rect(285, 95, 50, 30, GRAY);
-	Draw_Text(297, 98, 0.72f, WHITE, "20");
+	Gui::DrawString(297, 98, 0.72f, WHITE, "20");
 
 	Draw_Rect(340, 95, 50, 30, GRAY);
-	Draw_Text(352, 98, 0.72f, WHITE, "21");
+	Gui::DrawString(352, 98, 0.72f, WHITE, "21");
 
 
 	Draw_Rect(10, 130, 50, 30, GRAY);
-	Draw_Text(22, 133, 0.72f, WHITE, "22");
+	Gui::DrawString(22, 133, 0.72f, WHITE, "22");
 
 	Draw_Rect(65, 130, 50, 30, GRAY);
-	Draw_Text(77, 133, 0.72f, WHITE, "23");
+	Gui::DrawString(77, 133, 0.72f, WHITE, "23");
 
 	Draw_Rect(120, 130, 50, 30, GRAY);
-	Draw_Text(132, 133, 0.72f, WHITE, "24");
+	Gui::DrawString(132, 133, 0.72f, WHITE, "24");
 
 	Draw_Rect(175, 130, 50, 30, GRAY);
-	Draw_Text(187, 133, 0.72f, WHITE, "25");
+	Gui::DrawString(187, 133, 0.72f, WHITE, "25");
 
 	Draw_Rect(230, 130, 50, 30, GRAY);
-	Draw_Text(242, 133, 0.72f, WHITE, "26");
+	Gui::DrawString(242, 133, 0.72f, WHITE, "26");
 
 	Draw_Rect(285, 130, 50, 30, GRAY);
-	Draw_Text(297, 133, 0.72f, WHITE, "27");
+	Gui::DrawString(297, 133, 0.72f, WHITE, "27");
 
 	Draw_Rect(340, 130, 50, 30, GRAY);
-	Draw_Text(352, 133, 0.72f, WHITE, "28");
+	Gui::DrawString(352, 133, 0.72f, WHITE, "28");
 
 
 	Draw_Rect(10, 165, 50, 30, GRAY);
-	Draw_Text(22, 168, 0.72f, WHITE, "29");
+	Gui::DrawString(22, 168, 0.72f, WHITE, "29");
 
 	Draw_Rect(65, 165, 50, 30, GRAY);
-	Draw_Text(77, 168, 0.72f, WHITE, "30");
+	Gui::DrawString(77, 168, 0.72f, WHITE, "30");
 
 	Draw_Rect(120, 165, 50, 30, GRAY);
-	Draw_Text(132, 168, 0.72f, WHITE, "31");
+	Gui::DrawString(132, 168, 0.72f, WHITE, "31");
 }
 
-static void draw30Days(void) {
+void draw30Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
-	Draw_Text(30, 28, 0.72f, WHITE, "1");
+	Gui::DrawString(30, 28, 0.72f, WHITE, "1");
 
 	Draw_Rect(65, 25, 50, 30, GRAY);
-	Draw_Text(85, 28, 0.72f, WHITE, "2");
+	Gui::DrawString(85, 28, 0.72f, WHITE, "2");
 
 	Draw_Rect(120, 25, 50, 30, GRAY);
-	Draw_Text(140, 28, 0.72f, WHITE, "3");
+	Gui::DrawString(140, 28, 0.72f, WHITE, "3");
 
 	Draw_Rect(175, 25, 50, 30, GRAY);
-	Draw_Text(195, 28, 0.72f, WHITE, "4");
+	Gui::DrawString(195, 28, 0.72f, WHITE, "4");
 
 	Draw_Rect(230, 25, 50, 30, GRAY);
-	Draw_Text(250, 28, 0.72f, WHITE, "5");
+	Gui::DrawString(250, 28, 0.72f, WHITE, "5");
 
 	Draw_Rect(285, 25, 50, 30, GRAY);
-	Draw_Text(305, 28, 0.72f, WHITE, "6");
+	Gui::DrawString(305, 28, 0.72f, WHITE, "6");
 
 	Draw_Rect(340, 25, 50, 30, GRAY);
-	Draw_Text(360, 28, 0.72f, WHITE, "7");
+	Gui::DrawString(360, 28, 0.72f, WHITE, "7");
 
 
 	Draw_Rect(10, 60, 50, 30, GRAY);
-	Draw_Text(30, 63, 0.72f, WHITE, "8");
+	Gui::DrawString(30, 63, 0.72f, WHITE, "8");
 
 	Draw_Rect(65, 60, 50, 30, GRAY);
-	Draw_Text(85, 63, 0.72f, WHITE, "9");
+	Gui::DrawString(85, 63, 0.72f, WHITE, "9");
 
 	Draw_Rect(120, 60, 50, 30, GRAY);
-	Draw_Text(132, 63, 0.72f, WHITE, "10");
+	Gui::DrawString(132, 63, 0.72f, WHITE, "10");
 
 	Draw_Rect(175, 60, 50, 30, GRAY);
-	Draw_Text(187, 63, 0.72f, WHITE, "11");
+	Gui::DrawString(187, 63, 0.72f, WHITE, "11");
 
 	Draw_Rect(230, 60, 50, 30, GRAY);
-	Draw_Text(242, 63, 0.72f, WHITE, "12");
+	Gui::DrawString(242, 63, 0.72f, WHITE, "12");
 
 	Draw_Rect(285, 60, 50, 30, GRAY);
-	Draw_Text(297, 63, 0.72f, WHITE, "13");
+	Gui::DrawString(297, 63, 0.72f, WHITE, "13");
 
 	Draw_Rect(340, 60, 50, 30, GRAY);
-	Draw_Text(352, 63, 0.72f, WHITE, "14");
+	Gui::DrawString(352, 63, 0.72f, WHITE, "14");
 
 
 	Draw_Rect(10, 95, 50, 30, GRAY);
-	Draw_Text(22, 98, 0.72f, WHITE, "15");
+	Gui::DrawString(22, 98, 0.72f, WHITE, "15");
 
 	Draw_Rect(65, 95, 50, 30, GRAY);
-	Draw_Text(77, 98, 0.72f, WHITE, "16");
+	Gui::DrawString(77, 98, 0.72f, WHITE, "16");
 
 	Draw_Rect(120, 95, 50, 30, GRAY);
-	Draw_Text(132, 98, 0.72f, WHITE, "17");
+	Gui::DrawString(132, 98, 0.72f, WHITE, "17");
 
 	Draw_Rect(175, 95, 50, 30, GRAY);
-	Draw_Text(187, 98, 0.72f, WHITE, "18");
+	Gui::DrawString(187, 98, 0.72f, WHITE, "18");
 
 	Draw_Rect(230, 95, 50, 30, GRAY);
-	Draw_Text(242, 98, 0.72f, WHITE, "19");
+	Gui::DrawString(242, 98, 0.72f, WHITE, "19");
 
 	Draw_Rect(285, 95, 50, 30, GRAY);
-	Draw_Text(297, 98, 0.72f, WHITE, "20");
+	Gui::DrawString(297, 98, 0.72f, WHITE, "20");
 
 	Draw_Rect(340, 95, 50, 30, GRAY);
-	Draw_Text(352, 98, 0.72f, WHITE, "21");
+	Gui::DrawString(352, 98, 0.72f, WHITE, "21");
 
 
 	Draw_Rect(10, 130, 50, 30, GRAY);
-	Draw_Text(22, 133, 0.72f, WHITE, "22");
+	Gui::DrawString(22, 133, 0.72f, WHITE, "22");
 
 	Draw_Rect(65, 130, 50, 30, GRAY);
-	Draw_Text(77, 133, 0.72f, WHITE, "23");
+	Gui::DrawString(77, 133, 0.72f, WHITE, "23");
 
 	Draw_Rect(120, 130, 50, 30, GRAY);
-	Draw_Text(132, 133, 0.72f, WHITE, "24");
+	Gui::DrawString(132, 133, 0.72f, WHITE, "24");
 
 	Draw_Rect(175, 130, 50, 30, GRAY);
-	Draw_Text(187, 133, 0.72f, WHITE, "25");
+	Gui::DrawString(187, 133, 0.72f, WHITE, "25");
 
 	Draw_Rect(230, 130, 50, 30, GRAY);
-	Draw_Text(242, 133, 0.72f, WHITE, "26");
+	Gui::DrawString(242, 133, 0.72f, WHITE, "26");
 
 	Draw_Rect(285, 130, 50, 30, GRAY);
-	Draw_Text(297, 133, 0.72f, WHITE, "27");
+	Gui::DrawString(297, 133, 0.72f, WHITE, "27");
 
 	Draw_Rect(340, 130, 50, 30, GRAY);
-	Draw_Text(352, 133, 0.72f, WHITE, "28");
+	Gui::DrawString(352, 133, 0.72f, WHITE, "28");
 
 
 	Draw_Rect(10, 165, 50, 30, GRAY);
-	Draw_Text(22, 168, 0.72f, WHITE, "29");
+	Gui::DrawString(22, 168, 0.72f, WHITE, "29");
 
 	Draw_Rect(65, 165, 50, 30, GRAY);
-	Draw_Text(77, 168, 0.72f, WHITE, "30");
+	Gui::DrawString(77, 168, 0.72f, WHITE, "30");
 }
 
-static void draw29Days(void) {
+void draw29Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
-	Draw_Text(30, 28, 0.72f, WHITE, "1");
+	Gui::DrawString(30, 28, 0.72f, WHITE, "1");
 
 	Draw_Rect(65, 25, 50, 30, GRAY);
-	Draw_Text(85, 28, 0.72f, WHITE, "2");
+	Gui::DrawString(85, 28, 0.72f, WHITE, "2");
 
 	Draw_Rect(120, 25, 50, 30, GRAY);
-	Draw_Text(140, 28, 0.72f, WHITE, "3");
+	Gui::DrawString(140, 28, 0.72f, WHITE, "3");
 
 	Draw_Rect(175, 25, 50, 30, GRAY);
-	Draw_Text(195, 28, 0.72f, WHITE, "4");
+	Gui::DrawString(195, 28, 0.72f, WHITE, "4");
 
 	Draw_Rect(230, 25, 50, 30, GRAY);
-	Draw_Text(250, 28, 0.72f, WHITE, "5");
+	Gui::DrawString(250, 28, 0.72f, WHITE, "5");
 
 	Draw_Rect(285, 25, 50, 30, GRAY);
-	Draw_Text(305, 28, 0.72f, WHITE, "6");
+	Gui::DrawString(305, 28, 0.72f, WHITE, "6");
 
 	Draw_Rect(340, 25, 50, 30, GRAY);
-	Draw_Text(360, 28, 0.72f, WHITE, "7");
+	Gui::DrawString(360, 28, 0.72f, WHITE, "7");
 
 
 	Draw_Rect(10, 60, 50, 30, GRAY);
-	Draw_Text(30, 63, 0.72f, WHITE, "8");
+	Gui::DrawString(30, 63, 0.72f, WHITE, "8");
 
 	Draw_Rect(65, 60, 50, 30, GRAY);
-	Draw_Text(85, 63, 0.72f, WHITE, "9");
+	Gui::DrawString(85, 63, 0.72f, WHITE, "9");
 
 	Draw_Rect(120, 60, 50, 30, GRAY);
-	Draw_Text(132, 63, 0.72f, WHITE, "10");
+	Gui::DrawString(132, 63, 0.72f, WHITE, "10");
 
 	Draw_Rect(175, 60, 50, 30, GRAY);
-	Draw_Text(187, 63, 0.72f, WHITE, "11");
+	Gui::DrawString(187, 63, 0.72f, WHITE, "11");
 
 	Draw_Rect(230, 60, 50, 30, GRAY);
-	Draw_Text(242, 63, 0.72f, WHITE, "12");
+	Gui::DrawString(242, 63, 0.72f, WHITE, "12");
 
 	Draw_Rect(285, 60, 50, 30, GRAY);
-	Draw_Text(297, 63, 0.72f, WHITE, "13");
+	Gui::DrawString(297, 63, 0.72f, WHITE, "13");
 
 	Draw_Rect(340, 60, 50, 30, GRAY);
-	Draw_Text(352, 63, 0.72f, WHITE, "14");
+	Gui::DrawString(352, 63, 0.72f, WHITE, "14");
 
 
 	Draw_Rect(10, 95, 50, 30, GRAY);
-	Draw_Text(22, 98, 0.72f, WHITE, "15");
+	Gui::DrawString(22, 98, 0.72f, WHITE, "15");
 
 	Draw_Rect(65, 95, 50, 30, GRAY);
-	Draw_Text(77, 98, 0.72f, WHITE, "16");
+	Gui::DrawString(77, 98, 0.72f, WHITE, "16");
 
 	Draw_Rect(120, 95, 50, 30, GRAY);
-	Draw_Text(132, 98, 0.72f, WHITE, "17");
+	Gui::DrawString(132, 98, 0.72f, WHITE, "17");
 
 	Draw_Rect(175, 95, 50, 30, GRAY);
-	Draw_Text(187, 98, 0.72f, WHITE, "18");
+	Gui::DrawString(187, 98, 0.72f, WHITE, "18");
 
 	Draw_Rect(230, 95, 50, 30, GRAY);
-	Draw_Text(242, 98, 0.72f, WHITE, "19");
+	Gui::DrawString(242, 98, 0.72f, WHITE, "19");
 
 	Draw_Rect(285, 95, 50, 30, GRAY);
-	Draw_Text(297, 98, 0.72f, WHITE, "20");
+	Gui::DrawString(297, 98, 0.72f, WHITE, "20");
 
 	Draw_Rect(340, 95, 50, 30, GRAY);
-	Draw_Text(352, 98, 0.72f, WHITE, "21");
+	Gui::DrawString(352, 98, 0.72f, WHITE, "21");
 
 
 	Draw_Rect(10, 130, 50, 30, GRAY);
-	Draw_Text(22, 133, 0.72f, WHITE, "22");
+	Gui::DrawString(22, 133, 0.72f, WHITE, "22");
 
 	Draw_Rect(65, 130, 50, 30, GRAY);
-	Draw_Text(77, 133, 0.72f, WHITE, "23");
+	Gui::DrawString(77, 133, 0.72f, WHITE, "23");
 
 	Draw_Rect(120, 130, 50, 30, GRAY);
-	Draw_Text(132, 133, 0.72f, WHITE, "24");
+	Gui::DrawString(132, 133, 0.72f, WHITE, "24");
 
 	Draw_Rect(175, 130, 50, 30, GRAY);
-	Draw_Text(187, 133, 0.72f, WHITE, "25");
+	Gui::DrawString(187, 133, 0.72f, WHITE, "25");
 
 	Draw_Rect(230, 130, 50, 30, GRAY);
-	Draw_Text(242, 133, 0.72f, WHITE, "26");
+	Gui::DrawString(242, 133, 0.72f, WHITE, "26");
 
 	Draw_Rect(285, 130, 50, 30, GRAY);
-	Draw_Text(297, 133, 0.72f, WHITE, "27");
+	Gui::DrawString(297, 133, 0.72f, WHITE, "27");
 
 	Draw_Rect(340, 130, 50, 30, GRAY);
-	Draw_Text(352, 133, 0.72f, WHITE, "28");
+	Gui::DrawString(352, 133, 0.72f, WHITE, "28");
 
 
 	Draw_Rect(10, 165, 50, 30, GRAY);
-	Draw_Text(22, 168, 0.72f, WHITE, "29");
+	Gui::DrawString(22, 168, 0.72f, WHITE, "29");
 }
 
-static void draw28Days(void) {
+void draw28Days(void) {
 	Draw_Rect(10, 25, 50, 30, GRAY);
-	Draw_Text(30, 28, 0.72f, WHITE, "1");
+	Gui::DrawString(30, 28, 0.72f, WHITE, "1");
 
 	Draw_Rect(65, 25, 50, 30, GRAY);
-	Draw_Text(85, 28, 0.72f, WHITE, "2");
+	Gui::DrawString(85, 28, 0.72f, WHITE, "2");
 
 	Draw_Rect(120, 25, 50, 30, GRAY);
-	Draw_Text(140, 28, 0.72f, WHITE, "3");
+	Gui::DrawString(140, 28, 0.72f, WHITE, "3");
 
 	Draw_Rect(175, 25, 50, 30, GRAY);
-	Draw_Text(195, 28, 0.72f, WHITE, "4");
+	Gui::DrawString(195, 28, 0.72f, WHITE, "4");
 
 	Draw_Rect(230, 25, 50, 30, GRAY);
-	Draw_Text(250, 28, 0.72f, WHITE, "5");
+	Gui::DrawString(250, 28, 0.72f, WHITE, "5");
 
 	Draw_Rect(285, 25, 50, 30, GRAY);
-	Draw_Text(305, 28, 0.72f, WHITE, "6");
+	Gui::DrawString(305, 28, 0.72f, WHITE, "6");
 
 	Draw_Rect(340, 25, 50, 30, GRAY);
-	Draw_Text(360, 28, 0.72f, WHITE, "7");
+	Gui::DrawString(360, 28, 0.72f, WHITE, "7");
 
 
 	Draw_Rect(10, 60, 50, 30, GRAY);
-	Draw_Text(30, 63, 0.72f, WHITE, "8");
+	Gui::DrawString(30, 63, 0.72f, WHITE, "8");
 
 	Draw_Rect(65, 60, 50, 30, GRAY);
-	Draw_Text(85, 63, 0.72f, WHITE, "9");
+	Gui::DrawString(85, 63, 0.72f, WHITE, "9");
 
 	Draw_Rect(120, 60, 50, 30, GRAY);
-	Draw_Text(132, 63, 0.72f, WHITE, "10");
+	Gui::DrawString(132, 63, 0.72f, WHITE, "10");
 
 	Draw_Rect(175, 60, 50, 30, GRAY);
-	Draw_Text(187, 63, 0.72f, WHITE, "11");
+	Gui::DrawString(187, 63, 0.72f, WHITE, "11");
 
 	Draw_Rect(230, 60, 50, 30, GRAY);
-	Draw_Text(242, 63, 0.72f, WHITE, "12");
+	Gui::DrawString(242, 63, 0.72f, WHITE, "12");
 
 	Draw_Rect(285, 60, 50, 30, GRAY);
-	Draw_Text(297, 63, 0.72f, WHITE, "13");
+	Gui::DrawString(297, 63, 0.72f, WHITE, "13");
 
 	Draw_Rect(340, 60, 50, 30, GRAY);
-	Draw_Text(352, 63, 0.72f, WHITE, "14");
+	Gui::DrawString(352, 63, 0.72f, WHITE, "14");
 
 
 	Draw_Rect(10, 95, 50, 30, GRAY);
-	Draw_Text(22, 98, 0.72f, WHITE, "15");
+	Gui::DrawString(22, 98, 0.72f, WHITE, "15");
 
 	Draw_Rect(65, 95, 50, 30, GRAY);
-	Draw_Text(77, 98, 0.72f, WHITE, "16");
+	Gui::DrawString(77, 98, 0.72f, WHITE, "16");
 
 	Draw_Rect(120, 95, 50, 30, GRAY);
-	Draw_Text(132, 98, 0.72f, WHITE, "17");
+	Gui::DrawString(132, 98, 0.72f, WHITE, "17");
 
 	Draw_Rect(175, 95, 50, 30, GRAY);
-	Draw_Text(187, 98, 0.72f, WHITE, "18");
+	Gui::DrawString(187, 98, 0.72f, WHITE, "18");
 
 	Draw_Rect(230, 95, 50, 30, GRAY);
-	Draw_Text(242, 98, 0.72f, WHITE, "19");
+	Gui::DrawString(242, 98, 0.72f, WHITE, "19");
 
 	Draw_Rect(285, 95, 50, 30, GRAY);
-	Draw_Text(297, 98, 0.72f, WHITE, "20");
+	Gui::DrawString(297, 98, 0.72f, WHITE, "20");
 
 	Draw_Rect(340, 95, 50, 30, GRAY);
-	Draw_Text(352, 98, 0.72f, WHITE, "21");
+	Gui::DrawString(352, 98, 0.72f, WHITE, "21");
 
 
 	Draw_Rect(10, 130, 50, 30, GRAY);
-	Draw_Text(22, 133, 0.72f, WHITE, "22");
+	Gui::DrawString(22, 133, 0.72f, WHITE, "22");
 
 	Draw_Rect(65, 130, 50, 30, GRAY);
-	Draw_Text(77, 133, 0.72f, WHITE, "23");
+	Gui::DrawString(77, 133, 0.72f, WHITE, "23");
 
 	Draw_Rect(120, 130, 50, 30, GRAY);
-	Draw_Text(132, 133, 0.72f, WHITE, "24");
+	Gui::DrawString(132, 133, 0.72f, WHITE, "24");
 
 	Draw_Rect(175, 130, 50, 30, GRAY);
-	Draw_Text(187, 133, 0.72f, WHITE, "25");
+	Gui::DrawString(187, 133, 0.72f, WHITE, "25");
 
 	Draw_Rect(230, 130, 50, 30, GRAY);
-	Draw_Text(242, 133, 0.72f, WHITE, "26");
+	Gui::DrawString(242, 133, 0.72f, WHITE, "26");
 
 	Draw_Rect(285, 130, 50, 30, GRAY);
-	Draw_Text(297, 133, 0.72f, WHITE, "27");
+	Gui::DrawString(297, 133, 0.72f, WHITE, "27");
 
 	Draw_Rect(340, 130, 50, 30, GRAY);
-	Draw_Text(352, 133, 0.72f, WHITE, "28");
+	Gui::DrawString(352, 133, 0.72f, WHITE, "28");
 }
 
 
-static void drawCurrentDay(void) {
+void drawCurrentDay(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int day = timeStruct->tm_mday;
 
-			if (day == 1) {
-	Draw_Rect(10, 25, 50, 30, Config::barColor);
-	Draw_Text(30, 28, 0.72f, WHITE, "1");
+	if (day == 1) {
+		Draw_Rect(10, 25, 50, 30, Config::barColor);
+		Gui::DrawString(30, 28, 0.72f, WHITE, "1");
 	} else if (day == 2) {
-	Draw_Rect(65, 25, 50, 30, Config::barColor);
-	Draw_Text(85, 28, 0.72f, WHITE, "2");
+		Draw_Rect(65, 25, 50, 30, Config::barColor);
+		Gui::DrawString(85, 28, 0.72f, WHITE, "2");
 	} else if (day == 3) {
-	Draw_Rect(120, 25, 50, 30, Config::barColor);
-	Draw_Text(140, 28, 0.72f, WHITE, "3");
+		Draw_Rect(120, 25, 50, 30, Config::barColor);
+		Gui::DrawString(140, 28, 0.72f, WHITE, "3");
 	} else if (day == 4) {
-	Draw_Rect(175, 25, 50, 30, Config::barColor);
-	Draw_Text(195, 28, 0.72f, WHITE, "4");
+		Draw_Rect(175, 25, 50, 30, Config::barColor);
+		Gui::DrawString(195, 28, 0.72f, WHITE, "4");
 	} else if (day == 5) {
-	Draw_Rect(230, 25, 50, 30, Config::barColor);
-	Draw_Text(250, 28, 0.72f, WHITE, "5");
+		Draw_Rect(230, 25, 50, 30, Config::barColor);
+		Gui::DrawString(250, 28, 0.72f, WHITE, "5");
 	} else if (day == 6) {
-	Draw_Rect(285, 25, 50, 30, Config::barColor);
-	Draw_Text(305, 28, 0.72f, WHITE, "6");
+		Draw_Rect(285, 25, 50, 30, Config::barColor);
+		Gui::DrawString(305, 28, 0.72f, WHITE, "6");
 	} else if (day == 7) {
-	Draw_Rect(340, 25, 50, 30, Config::barColor);
-	Draw_Text(360, 28, 0.72f, WHITE, "7");
+		Draw_Rect(340, 25, 50, 30, Config::barColor);
+		Gui::DrawString(360, 28, 0.72f, WHITE, "7");
 
 	} else if (day == 8) {
-	Draw_Rect(10, 60, 50, 30, Config::barColor);
-	Draw_Text(30, 63, 0.72f, WHITE, "8");
+		Draw_Rect(10, 60, 50, 30, Config::barColor);
+		Gui::DrawString(30, 63, 0.72f, WHITE, "8");
 	} else if (day == 9) {
-	Draw_Rect(65, 60, 50, 30, Config::barColor);
-	Draw_Text(85, 63, 0.72f, WHITE, "9");
+		Draw_Rect(65, 60, 50, 30, Config::barColor);
+		Gui::DrawString(85, 63, 0.72f, WHITE, "9");
 	} else if (day == 10) {
-	Draw_Rect(120, 60, 50, 30, Config::barColor);
-	Draw_Text(132, 63, 0.72f, WHITE, "10");
+		Draw_Rect(120, 60, 50, 30, Config::barColor);
+		Gui::DrawString(132, 63, 0.72f, WHITE, "10");
 	} else if (day == 11) {
-	Draw_Rect(175, 60, 50, 30, Config::barColor);
-	Draw_Text(187, 63, 0.72f, WHITE, "11");
+		Draw_Rect(175, 60, 50, 30, Config::barColor);
+		Gui::DrawString(187, 63, 0.72f, WHITE, "11");
 	} else if (day == 12) {
-	Draw_Rect(230, 60, 50, 30, Config::barColor);
-	Draw_Text(242, 63, 0.72f, WHITE, "12");
+		Draw_Rect(230, 60, 50, 30, Config::barColor);
+		Gui::DrawString(242, 63, 0.72f, WHITE, "12");
 	} else if (day == 13) {
-	Draw_Rect(285, 60, 50, 30, Config::barColor);
-	Draw_Text(297, 63, 0.72f, WHITE, "13");
+		Draw_Rect(285, 60, 50, 30, Config::barColor);
+		Gui::DrawString(297, 63, 0.72f, WHITE, "13");
 	} else if (day == 14) {
-	Draw_Rect(340, 60, 50, 30, Config::barColor);
-	Draw_Text(352, 63, 0.72f, WHITE, "14");
+		Draw_Rect(340, 60, 50, 30, Config::barColor);
+		Gui::DrawString(352, 63, 0.72f, WHITE, "14");
 
 	} else if (day == 15) {
-	Draw_Rect(10, 95, 50, 30, Config::barColor);
-	Draw_Text(22, 98, 0.72f, WHITE, "15");
+		Draw_Rect(10, 95, 50, 30, Config::barColor);
+		Gui::DrawString(22, 98, 0.72f, WHITE, "15");
 	} else if (day == 16) {
-	Draw_Rect(65, 95, 50, 30, Config::barColor);
-	Draw_Text(77, 98, 0.72f, WHITE, "16");
+		Draw_Rect(65, 95, 50, 30, Config::barColor);
+		Gui::DrawString(77, 98, 0.72f, WHITE, "16");
 	} else if (day == 17) {
-	Draw_Rect(120, 95, 50, 30, Config::barColor);
-	Draw_Text(132, 98, 0.72f, WHITE, "17");
+		Draw_Rect(120, 95, 50, 30, Config::barColor);
+		Gui::DrawString(132, 98, 0.72f, WHITE, "17");
 	} else if (day == 18) {
-	Draw_Rect(175, 95, 50, 30, Config::barColor);
-	Draw_Text(187, 98, 0.72f, WHITE, "18");
+		Draw_Rect(175, 95, 50, 30, Config::barColor);
+		Gui::DrawString(187, 98, 0.72f, WHITE, "18");
 	} else if (day == 19) {
-	Draw_Rect(230, 95, 50, 30, Config::barColor);
-	Draw_Text(242, 98, 0.72f, WHITE, "19");
+		Draw_Rect(230, 95, 50, 30, Config::barColor);
+		Gui::DrawString(242, 98, 0.72f, WHITE, "19");
 	} else if (day == 20) {
-	Draw_Rect(285, 95, 50, 30, Config::barColor);
-	Draw_Text(297, 98, 0.72f, WHITE, "20");
+		Draw_Rect(285, 95, 50, 30, Config::barColor);
+		Gui::DrawString(297, 98, 0.72f, WHITE, "20");
 	} else if (day == 21) {
-	Draw_Rect(340, 95, 50, 30, Config::barColor);
-	Draw_Text(352, 98, 0.72f, WHITE, "21");
+		Draw_Rect(340, 95, 50, 30, Config::barColor);
+		Gui::DrawString(352, 98, 0.72f, WHITE, "21");
 
 	} else if (day == 22) {
-	Draw_Rect(10, 130, 50, 30, Config::barColor);
-	Draw_Text(22, 133, 0.72f, WHITE, "22");
+		Draw_Rect(10, 130, 50, 30, Config::barColor);
+		Gui::DrawString(22, 133, 0.72f, WHITE, "22");
 	} else if (day == 23) {
-	Draw_Rect(65, 130, 50, 30, Config::barColor);
-	Draw_Text(77, 133, 0.72f, WHITE, "23");
+		Draw_Rect(65, 130, 50, 30, Config::barColor);
+		Gui::DrawString(77, 133, 0.72f, WHITE, "23");
 	} else if (day == 24) {
-	Draw_Rect(120, 130, 50, 30, Config::barColor);
-	Draw_Text(132, 133, 0.72f, WHITE, "24");
+		Draw_Rect(120, 130, 50, 30, Config::barColor);
+		Gui::DrawString(132, 133, 0.72f, WHITE, "24");
 	} else if (day == 25) {
-	Draw_Rect(175, 130, 50, 30, Config::barColor);
-	Draw_Text(187, 133, 0.72f, WHITE, "25");
+		Draw_Rect(175, 130, 50, 30, Config::barColor);
+		Gui::DrawString(187, 133, 0.72f, WHITE, "25");
 	} else if (day == 26) {
-	Draw_Rect(230, 130, 50, 30, Config::barColor);
-	Draw_Text(242, 133, 0.72f, WHITE, "26");
+		Draw_Rect(230, 130, 50, 30, Config::barColor);
+		Gui::DrawString(242, 133, 0.72f, WHITE, "26");
 	} else if (day == 27) {
-	Draw_Rect(285, 130, 50, 30, Config::barColor);
-	Draw_Text(297, 133, 0.72f, WHITE, "27");
+		Draw_Rect(285, 130, 50, 30, Config::barColor);
+		Gui::DrawString(297, 133, 0.72f, WHITE, "27");
 	} else if (day == 28) {
-	Draw_Rect(340, 130, 50, 30, Config::barColor);
-	Draw_Text(352, 133, 0.72f, WHITE, "28");
+		Draw_Rect(340, 130, 50, 30, Config::barColor);
+		Gui::DrawString(352, 133, 0.72f, WHITE, "28");
 
 	} else if (day == 29) {
-	Draw_Rect(10, 165, 50, 30, Config::barColor);
-	Draw_Text(22, 168, 0.72f, WHITE, "29");
+		Draw_Rect(10, 165, 50, 30, Config::barColor);
+		Gui::DrawString(22, 168, 0.72f, WHITE, "29");
 	} else if (day == 30) {
-	Draw_Rect(65, 165, 50, 30, Config::barColor);
-	Draw_Text(77, 168, 0.72f, WHITE, "30");
+		Draw_Rect(65, 165, 50, 30, Config::barColor);
+		Gui::DrawString(77, 168, 0.72f, WHITE, "30");
 	} else if (day == 31) {
-	Draw_Rect(120, 165, 50, 30, Config::barColor);
-	Draw_Text(132, 168, 0.72f, WHITE, "31");
+		Draw_Rect(120, 165, 50, 30, Config::barColor);
+		Gui::DrawString(132, 168, 0.72f, WHITE, "31");
 	}
 }
 
-static void getTheDays(void) {
+void getTheDays(void) {
 	time_t unixTime       = time(NULL);
 	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
 	int month = timeStruct->tm_mon + 1;
 
 	if (month == 1) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 2) {
-	draw28Days();
+		draw28Days();
 	} else if (month == 3) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 4) {
-	draw30Days();
+		draw30Days();
 	} else if (month == 5) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 6) {
-	draw30Days();
+		draw30Days();
 	} else if (month == 7) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 8) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 9) {
-	draw30Days();
+		draw30Days();
 	} else if (month == 10) {
-	draw31Days();
+		draw31Days();
 	} else if (month == 11) {
-	draw30Days();
+		draw30Days();
 	} else if (month == 12) {
-	draw31Days();
+		draw31Days();
 	}
 }
 
-void drawCalendarScreen(void) {
+void Calendar::Draw(void) const
+{
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
+	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
 	DisplayMonth();
@@ -615,15 +590,17 @@ void drawCalendarScreen(void) {
 
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBotBack();
+	Gui::DrawBarsBottomBack();
 }
 
-void calendarLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Calendar::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenTransition(utilsScreen);
+		Gui::screenBack();
+		return;
 	} else if (hDown & KEY_TOUCH) {
 		if (touching(touch, calendarButtonPos[0])) {
-			screenTransition(utilsScreen);
+			Gui::screenBack();
+			return;
 		}
 	}
 }

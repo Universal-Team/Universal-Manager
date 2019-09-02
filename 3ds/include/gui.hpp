@@ -27,6 +27,13 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
+#include "colors.hpp"
+#include "common.hpp"
+#include "ptmu_x.h"
+#include "spriteID.h"
+
+#include "screens/screen.hpp"
+
 #include <3ds.h>
 #include <citro2d.h>
 #include <citro3d.h>
@@ -35,20 +42,6 @@
 #include <string.h>
 #include <unordered_map>
 #include <wchar.h>
-#include "common.hpp"
-
-// Spritesheets.
-#include "sprites.h"
-#include "animation.h"
-#include "credits.h"
-
-#include "colors.hpp"
-
-// Battery Stuff.
-#include "ptmu_x.h"
-
-// emulated
-#define sprites_res_null_idx 500
 
 #define FONT_SIZE_18 0.72f
 #define FONT_SIZE_17 0.7f
@@ -67,59 +60,53 @@ namespace Gui
     Result init(void);
     void exit(void);
 
+	void mainLoop(u32 hDown, u32 hHeld, touchPosition touch);
+	void setScreen(std::unique_ptr<SCREEN> screen);
+	void screenBack(void);
+
     C3D_RenderTarget* target(gfxScreen_t t);
 
+    // Clear Text.
     void clearTextBufs(void);
     
-    void sprite(int key, int x, int y);
-    void AnimationSprite(int key, int x, int y);
-    void Credits(int key, int x, int y);
-    bool Draw_ImageScale(C2D_Image image, float x, float y, float scaleX, float scaleY);
+    // Draw Sprites from the Sheets.
+    void sprite(int sheet, int key, int x, int y);
+    void Draw_ImageBlend(int sheet, int key, int x, int y, u32 color);
 
     // Layouts!
     void DrawBGTop(void);
     void DrawBarsTop(void);
     void DrawBGBot(void);
     void DrawBarsBot(void);
-    void DrawOverlayTop(void);
-    void DrawOverlayBot(void);
-    void DrawOverlayBotBack(void);
-    void chooseLayoutTop(void);
-    void chooseLayoutBot(void);
-    void chooseLayoutBotBack(void);
-
-    
-    void Draw_ImageBlend(int key, int x, int y, u32 color);
-    void Draw_ImageBlend2(int key, int x, int y, u32 color);
     void DrawBarsBottomBack(void);
+
+    // The animated Selectors.
+    void drawFileSelector(float x, float y);
+    void drawGUISelector(int key, float x, float y, float speed);
+
+    // New Text / String Functions.
+    void DrawString(float x, float y, float size, u32 color, std::string Text);
+    void GetStringSize(float size, float *width, float *height, std::string Text);
+    float GetStringWidth(float size, std::string Text);
+    float GetStringHeight(float size, std::string Text);
 }
 
-   // Text.
-    void DisplayMsg(const char* text);
+   // Other Display stuff.
+    void DisplayMsg(std::string text);
     void DisplayTime(void);
 
+    // Battery Draw (Top/Bottom Screen.)
     void drawBatteryTop(void);
     void drawBatteryBot(void);
 
     void set_screen(C3D_RenderTarget * screen);
 
-    void start_frame(void);
-
-    // 3DShell -> Most likely for FTP.
-    void Draw_EndFrame(void);
-    void Draw_Text(float x, float y, float size, u32 color, const char *text);
-    void Draw_Textf(float x, float y, float size, u32 color, const char* text, ...);
-    void Draw_GetTextSize(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidth(float size, const char *text);
-    float Draw_GetTextHeight(float size, const char *text);
+    // Misc.
     bool Draw_Rect(float x, float y, float w, float h, u32 color);
 
+    // Editor Draw.
     void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);
     void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
     float Draw_GetTextWidthEditor(float size, const char *text);
-
-    void Draw_Text_FB(float x, float y, float size, u32 color, const char *text);
-    void Draw_GetTextSizeFB(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidthFB(float size, const char *text);
 
 #endif

@@ -33,15 +33,3 @@ extern "C" {
 extern TouchInfo touchInfo;
 extern SDL_Renderer *Rendering;
 extern SDL_Window *Window;
-
-#define mainScreen						0
-#define FileManagerSubMenuScreen		1
-
-extern int screenMode;
-
-// Main Menu Screen.
-void drawMainMenu(void);
-void MainMenuLogic(u64 hDown, TouchInfo touchInfo);
-
-void drawFileManagerSubMenu(void);
-void FileManagerSubMenuLogic(u64 hDown, TouchInfo touchInfo);

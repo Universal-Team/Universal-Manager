@@ -4,11 +4,17 @@
 #include <string>
 
 namespace Input {
+	void DrawNumpad();
+
+	std::string Numpad(std::string Text);
+	std::string Numpad(uint maxLength, std::string Text);
+
 	std::string getLine();
 	std::string getLine(uint maxLength);
 	// -1 if invaild text entered
-	int getUint(int max);
+	int getUint(int max, std::string Text);
 	char checkKeyboard(int hDown, int hHeld);
 }
 
+	void drawKeyboard();
 #endif

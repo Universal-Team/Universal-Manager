@@ -24,64 +24,53 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/calculatorScreen.hpp"
 #include "screens/screenCommon.hpp"
+
+#include "utils/settings.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
 
-struct Key {
-	std::string character;
-	int x;
-	int y;
-};
-
-// To-Do -> Make the positions correctly.
-Key calculatorKeys[] = {
-
-	// Numbers.
-	{"1", 0, 0},
-	{"2", 0, 0},
-	{"3", 0, 0},
-	{"4", 0, 40},
-	{"5", 0, 40},
-	{"6", 0, 40},
-	{"7", 0, 80},
-	{"8", 0, 80},
-	{"9", 0, 80},
-	{"0", 0, 120},
-	{".", 0, 120},
-
-	// Operations.
-	{"+", 0, 40},
-	{"-", 0, 40},
-	{"÷", 0, 40},
-	{"*", 0, 40},
-	{"=", 0, 40},
-};
 
 // To-Do.
-static void drawCalculatorKeyboard(void) {
+void Calculator::drawCalculatorKeyboard(void) const
+{
+	for(uint i=0;i<(sizeof(calculatorKeys)/sizeof(calculatorKeys[0]));i++) {
+		C2D_DrawRectSolid(calculatorKeys[i].x, calculatorKeys[i].y, 0.5f, 45, 40, Config::barColor & C2D_Color32(255, 255, 255, 200));
+		char c[2] = {calculatorKeys[i].character[0]};
+		Gui::DrawString(calculatorKeys[i].x+18, calculatorKeys[i].y+10, 0.72f, WHITE, c);
+	}
 }
 
 
-void drawCalculatorScreen(void) {
+void Calculator::Draw(void) const
+{
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	Gui::DrawBGTop();
 	animatedBGTop();
-	Gui::chooseLayoutTop();
-	Draw_Text(125, 0, 0.72f, WHITE, "Calculator");
+	Gui::DrawBarsTop();
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Calculator"))/2, 0, 0.72f, WHITE, "Calculator");
+
+	// Display Box with input.
+	Draw_Rect(40, 60, 320, 80, Config::barColor);
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, display.c_str()))/2-160+140, 90, 0.72f, WHITE, display.c_str());
+
+
 	C2D_SceneBegin(bottom);
 	Gui::DrawBGBot();
 	animatedBGBot();
-	Gui::chooseLayoutBot();
+	Gui::DrawBarsBottomBack();
 	drawCalculatorKeyboard();
 }
 
 // To-Do -> Calculator Logic.
-void calculatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
+void Calculator::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (hDown & KEY_B) {
-		screenTransition(utilsScreen);
+		Gui::screenBack();
+		return;
 	}
 }

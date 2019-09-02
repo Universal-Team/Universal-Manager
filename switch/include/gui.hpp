@@ -8,6 +8,7 @@
 #include <SDL2/SDL_mixer.h>
 #include "SDL_FontCache.h"
 #include "colors.hpp"
+#include "screen.hpp"
 
 #define FONT_SIZE_18 0.72f
 #define FONT_SIZE_17 0.7f
@@ -29,6 +30,10 @@ namespace Gui
     void LoadImage(SDL_Texture **texture, char *path);
     void DrawImage(SDL_Texture *texture, int x, int y);
     void RenderScreen(void);
+
+	void mainLoop(u64 hDown);
+	void setScreen(std::unique_ptr<SCREEN> screen);
+	void screenBack(void);
 }
 
     SDL_Window *SDL_GetMainWindow(void);

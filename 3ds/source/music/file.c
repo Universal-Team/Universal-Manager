@@ -1,14 +1,14 @@
+#include "music/error.h"
+#include "music/file.h"
+#include "music/flac.h"
+#include "music/mp3.h"
+#include "music/opus.h"
+#include "music/vorbis.h"
+#include "music/wav.h"
+
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
-
-#include "error.h"
-#include "file.h"
-#include "flac.h"
-#include "mp3.h"
-#include "opus.h"
-#include "vorbis.h"
-#include "wav.h"
 
 /**
  * Obtain file type string from file_types enum.

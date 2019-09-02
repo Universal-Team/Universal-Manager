@@ -24,16 +24,17 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "utils/settings.hpp"
-#include "inifile.h"
 #include "colors.hpp"
+#include "utils/inifile.h"
+#include "utils/settings.hpp"
 
-#include <unistd.h>
+#include <3ds.h>
 #include <string>
+#include <unistd.h>
+
 using std::string;
 using std::wstring;
 
-#include <3ds.h>
 
 static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
@@ -43,7 +44,7 @@ int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
-int Config::SS; // [SCREENSHOT]
+int Config::selector;
 
 void Config::loadConfig() {
 	// [UI]
@@ -53,6 +54,8 @@ void Config::loadConfig() {
 	Config::percentDisplay = settingsini.GetInt("UI", "BATTERY", 0);
 	Config::layout = settingsini.GetInt("UI", "LAYOUT", 0);
 	Config::layoutBG = settingsini.GetInt("UI", "LAYOUTBG", 0);
+	Config::selector = settingsini.GetInt("UI", "SELECTOR", 0);
+
 	// [ANIMATED]
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
 	Config::animationColor = settingsini.GetInt("ANIMATED", "COLOR", BLUE);
@@ -65,8 +68,6 @@ void Config::loadConfig() {
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
 	// [CREDITS]
 	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
-	// [SCREENSHOT]
-	Config::SS = settingsini.GetInt("SCREENSHOT", "ENABLE", 1); // 1-> Screenshots can be made ; 0 -> Screenshot disabled.
 }
 
 void Config::saveConfig() {
@@ -77,6 +78,8 @@ void Config::saveConfig() {
 	settingsini.SetInt("UI", "BATTERY", Config::percentDisplay);
 	settingsini.SetInt("UI", "LAYOUT", Config::layout);
 	settingsini.SetInt("UI", "LAYOUTBG", Config::layoutBG);
+	settingsini.SetInt("UI", "SELECTOR", Config::selector);
+
 	// [ANIMATED]
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
 	settingsini.SetInt("ANIMATED", "COLOR", Config::animationColor);
@@ -91,15 +94,17 @@ void Config::saveConfig() {
 	// [SCREEN]
 	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
 
-	// [SCREENSHOT]
-	settingsini.SetInt("SCREENSHOT", "ENABLE", Config::SS);
-
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 
 void Config::setCredits() {
 	// [CREDITS]
 	settingsini.SetInt("CREDITS", "ENABLE", Config::Credits);
+	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
+}
+
+void Config::setPongPoints(int points) {
+	settingsini.SetInt("PONG", "POINTS", points);
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 

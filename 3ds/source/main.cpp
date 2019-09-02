@@ -23,83 +23,63 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#include <citro3d.h>
-#include <citro2d.h>
+
+#include "gui.hpp"
+#include "ptmu_x.h"
+#include "screens/creditsScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+#include "utils/settings.hpp"
+#include "utils/sound.h"
+
 #include <3ds.h>
 #include <algorithm>
 #include <dirent.h>
-#include <malloc.h>
-#include <sstream>
-#include <stdio.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <time.h>
 #include <unistd.h>
-
-#include "gui.hpp"
-#include "screenCommon.hpp"
-#include "settings.hpp"
-#include "ptmu_x.h"
-#include "sound.h"
 
 extern "C" {
 	#include "music/error.h"
 	#include "music/playback.h"
-	#include "screenshot.h"
 }
 
-struct ButtonPos {
-    int x;
-    int y;
-    int w;
-    int h;
-	int link;
-};
+bool dspfirmfound = false;
+bool exiting = false;
+int fadealpha = 255;
+bool fadein = true;
 
-extern std::string currentSong;
-extern std::vector<Playlist> nowPlayingList;
+extern bool decForRepeat2;
+extern uint selectedPlstItem;
+extern int movingPlstItem;
+
+extern bool firstSong;
 extern int locInPlaylist;
 extern int musicRepeat;
 extern bool musicShuffle;
-extern bool firstSong;
+extern std::vector<Playlist> nowPlayingList;
+extern std::string currentSong;
+
+
+touchPosition touch;
 
 //Music and sound effects.
 sound *sfx_scroll = NULL;
 sound *sfx_pong = NULL;
 sound *sfx_score = NULL;
 
-int SCREEN_MODE;
-bool dspfirmfound = false;
-
-static touchPosition touch;
-extern C3D_RenderTarget* top;
-extern C3D_RenderTarget* bottom;
-
-ButtonPos uisettingsScreenButtonPos[] = {
-    {293, 213, 27, 27, mainScreen},
-};
-
-ButtonPos updaterScreenButtonPos[] = {
-    {293, 213, 27, 27, mainScreen},
-};
-
-
-
-static void loadSoundEffects(void) {
+void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
 	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
 	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
 }
 
-bool touching(touchPosition touch, ButtonPos button) {
+
+bool touching(touchPosition touch, Structs::ButtonPos button) {
 	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
 		return true;
 	else
 		return false;
 }
 
-int fadealpha = 255;
-bool fadein = true;
 
 
 int main()
@@ -121,9 +101,9 @@ int main()
 	srand(time(NULL));
 
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
-		SCREEN_MODE = 0;
+		Gui::setScreen(std::make_unique<MainMenu>());
 	} else if (Config::Credits == 1) {
-		SCREEN_MODE = 1;
+		Gui::setScreen(std::make_unique<Credits>());
 	}
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
@@ -132,299 +112,59 @@ int main()
 	// make folders if they don't exist
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
-	mkdir("sdmc:/Universal-Manager/Screenshots", 0777); // Create the Screenshot Path.
 
  	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
 		ndspInit();
 		dspfirmfound = true;
 	 }
-	 
-	loadSoundEffects();
+
+	 loadSoundEffects();
 
 	// Loop as long as the status is not exit
-    while (aptMainLoop())
+    while (aptMainLoop() && !exiting)
     {
         hidScanInput();
         u32 hHeld = hidKeysHeld();
         u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(top, BLUE2);
-        C2D_TargetClear(bottom, BLUE2);
+        C2D_TargetClear(top, BLACK);
+        C2D_TargetClear(bottom, BLACK);
 		Gui::clearTextBufs();
-
-	if (((hHeld & KEY_L) && (hDown & KEY_R)) || ((hHeld & KEY_R) && (hDown & KEY_L))) {
-		if (Config::SS == 0) {
-		} else if (Config::SS == 1) {
-			captureScreenshot();
-			DisplayMsg("Screenshot Successfully Created!");
-			for (int i = 0; i < 60*2; i++) {
-				gspWaitForVBlank();
-			}
-		}
-}		
-
-		// Draws a screen based on screenMode
-		switch(SCREEN_MODE) {
-//#########################################################################################################
-			case mainScreen:
-				drawMainMenu();
-				break;
-//#########################################################################################################
-			case creditsScreen:
-				drawCreditsScreen();
-				break;
-//#########################################################################################################
-			case musicMainScreen:
-				drawMusicMain();
-				break;
-			case musicListScreen:
-				drawMusicList();
-				break;
-			case musicPlayerScreen:
-				drawMusicPlayer();
-				break;
-			case musicPlaylistAddScreen:
-				drawMusicPlaylistAdd();
-				break;
-			case musicPlaylistPlayScreen:
-				drawMusicPlaylistPlay();
-				break;
-			case musicPlaylistEditScreen:
-				drawMusicPlaylistEdit();
-				break;
-			case themeSelectorScreen:
-				drawThemeSelector();
-				break;
-//#########################################################################################################
-			case SettingsScreen:
-				drawSettingsScreen();
-				break;
-//#########################################################################################################
-			case ImageSelectorScreen:
-				drawImageSelectorScreen();
-				break;
-			case showImageScreen:
-				showImage();
-				break;
-//#########################################################################################################
-			case ftpScreen:
-				drawFTPScreen();
-				break;
-//#########################################################################################################
-			case updaterSubMenu:
-				drawUpdaterSubMenu();
-				break;
-			case TWLScreen:
-				drawUpdaterTWL();
-				break;
-			case OtherScreen:
-				drawUpdaterOther();
-				break;
-			case CFWScreen:
-				drawUpdaterCFW();
-				break;
-			case UniversalScreen:
-				drawUniversalScreen();
-				break;
-//#########################################################################################################
-			case fileManager:
-				drawFileBrowse();
-				break;
-//#########################################################################################################
-			case scriptMainScreen:
-				drawScriptMainScreen();
-				break;
-			case scriptCreatorFunctions:
-				drawScriptsCreatorFunctions();
-				break;
-//#########################################################################################################
-			case TextEditorScreen:
-				drawTextEditorScreen();
-				break;
-			case textFileBrowse:
-				drawTextFileBrowse();
-				break;
-//#########################################################################################################
-			case buttonTesterScreen:
-				drawButtonTesterScreen();
-				break;
-//#########################################################################################################
-			case calendarScreen:
-				drawCalendarScreen();
-				break;
-//#########################################################################################################
-			case gameSubMenuScreen:
-				drawGamesSubMenuScreen();
-				break;
-//#########################################################################################################
-			case pongScreen:
-				drawPongScreen();
-				break;
-//#########################################################################################################
-			case tictactoeScreen:
-				drawTicTacToeScreen();
-				break;
-//#########################################################################################################
-			case utilsScreen:
-				drawUtilsScreen();
-				break;
-//#########################################################################################################
-			case calculatorScreen:
-				drawCalculatorScreen();
-				break;
-		}
-
-		// Scans inputs for the current screen
-		switch(SCREEN_MODE) {
-//#########################################################################################################
-			case mainScreen:
-				MainMenuLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case creditsScreen:
-				creditsLogic(hDown, touch);
-				break;
-//#########################################################################################################
-			case musicMainScreen:
-				musicMainLogic(hDown, hHeld, touch);
-				break;
-			case musicListScreen:
-				musicListLogic(hDown, hHeld);
-				break;
-			case musicPlayerScreen:
-				musicPlayerLogic(hDown, hHeld, touch);
-				break;
-			case musicPlaylistAddScreen:
-				musicPlaylistAddLogic(hDown, hHeld);
-				break;
-			case musicPlaylistPlayScreen:
-				musicPlaylistPlayLogic(hDown, hHeld);
-				break;
-			case musicPlaylistEditScreen:
-				musicPlaylistEditLogic(hDown, hHeld);
-				break;
-			case themeSelectorScreen:
-				themeSelectorLogic(hDown, hHeld);
-				break;
-//#########################################################################################################
-			case SettingsScreen:
-				SettingsLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case ImageSelectorScreen:
-			ImageSelectorLogic(hDown, hHeld);
-				break;
-			case showImageScreen:
-			showImageLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case ftpScreen:
-				break;
-//#########################################################################################################
-			case updaterSubMenu:
-				updaterSubMenuLogic(hDown, hHeld, touch);
-				break;
-			case TWLScreen:
-				updaterTWLLogic(hDown, hHeld, touch);
-				break;
-			case OtherScreen:
-				updaterOtherLogic(hDown, hHeld, touch);
-				break;
-			case CFWScreen:
-				updaterCFWLogic(hDown, hHeld, touch);
-				break;
-			case UniversalScreen:
-				UniversalLogic(hDown, hHeld, touch);
-				break;
-//########################################################################################################
-			case fileManager:
-				fileManagerLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case scriptMainScreen:
-				scriptMainScreenLogic(hDown, hHeld);
-				break;
-			case scriptCreatorFunctions:
-				scriptCreatorFunctionsLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case TextEditorScreen:
-				TextEditorLogic(hDown, hHeld);
-				break;
-			case textFileBrowse:
-				textFileBrowseLogic(hDown, hHeld);
-				break;
-//#########################################################################################################
-			case buttonTesterScreen:
-				buttonTesterLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case calendarScreen:
-				calendarLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case gameSubMenuScreen:
-				gamesSubMenuLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case pongScreen:
-				pongLogic(hDown, hHeld);
-				break;
-//#########################################################################################################
-			case tictactoeScreen:
-				ticTacToeLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case utilsScreen:
-				utilsLogic(hDown, hHeld, touch);
-				break;
-//#########################################################################################################
-			case calculatorScreen:
-				calculatorLogic(hDown, hHeld, touch);
-				break;
-		}
-//#########################################################################################################
-		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
-			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
-			if (musicRepeat != 2 && !firstSong) {
-				locInPlaylist++;
-			}
-			firstSong = false;
-			currentSong = nowPlayingList[locInPlaylist].name;
-			playbackInfo_t playbackInfo;
-			changeFile(currentSong.c_str(), &playbackInfo);
-		} else if (isPlaying() && currentSong == "") {
-			stopPlayback();
-		} else if (!isPlaying() && currentSong != "") {
-			currentSong = "";
-		}
-		if (hDown & KEY_START && SCREEN_MODE == mainScreen) 
-		{
-			break;
-		}
-        C3D_FrameEnd(0);
-        Gui::clearTextBufs();
+		Gui::mainLoop(hDown, hHeld, touch);
+		C3D_FrameEnd(0);
 
 		if (fadein == true) {
-			fadealpha -= 5;
+			fadealpha -= 3;
 			if (fadealpha < 0) {
 				fadealpha = 0;
 				fadein = false;
 			}
 		}
-    }
 
-	Config::saveConfig();
+ 	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+		if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+		if (musicRepeat != 2 && !firstSong) {
+			locInPlaylist++;
+		}
+		firstSong = false;
+		currentSong = nowPlayingList[locInPlaylist].name;
+		playbackInfo_t playbackInfo;
+		changeFile(currentSong.c_str(), &playbackInfo);
+	} else if (isPlaying() && currentSong == "") {
+		stopPlayback();
+	} else if (!isPlaying() && currentSong != "") {
+		currentSong = "";
+	}
+	}
+
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
-	if (isPlaying()) {
-	stopPlayback(); // This seems to do `ndspExit();` already. I hope the Crash is finally fixed?
-	} else if (!isPlaying()) {
+	stopPlayback();
+	if (dspfirmfound == true) {
 		ndspExit();
 	}
-	
 	Gui::exit();
 	gfxExit();
 	cfguExit();

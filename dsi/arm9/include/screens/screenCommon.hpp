@@ -26,20 +26,7 @@
 
 #include "../graphics/graphics.h"
 
-#define mainScreen				0
-//###############################
-#define fileScreen				1
-//###############################
-
-extern int screenMode;
-
-// Main Menu Screen.
-void drawMainMenu(void);
-
-// File Manager Sub Menu Screen.
-void drawFileManagerSubMenu(void);
-
 // Graphic loading.
 void loadGraphics(void);
-extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton;
-extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData;
+extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard;
+extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData;
