@@ -129,9 +129,11 @@ void Gui::sprite(int sheet, int key, int x, int y)
 void Gui::DrawBarsBottomBack(void) {
     C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, Config::barColor);
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
-    if (Config::layout == 0 || Config::layout == 1) {
+    if (Config::layout == 0) {
         Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
         Gui::sprite(0, sprites_bottom_screen_bot_back_idx, 0, 210);
+    } else if (Config::layout == 1) {
+        Gui::sprite(0, sprites_back_idx, 291, 216);
     }
 }
 
