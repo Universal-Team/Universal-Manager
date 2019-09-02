@@ -48,6 +48,13 @@ private:
 	void ballLogic(void);
 	void stopLogic(void);
 
+	// New Mode Stuff.
+	int mode = 0;
+	int points = 0;
+	void drawNewMode(void) const;
+	void newModeLogic(void);
+
+
 	// Paddle and Ball Positions.
 	int paddle1 = 90, paddle2 = 90;
 	double	ballX = 200, ballY = 100,

@@ -103,3 +103,8 @@ void Config::setCredits() {
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 
+void Config::setPongPoints(int points) {
+	settingsini.SetInt("PONG", "POINTS", points);
+	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
+}
+

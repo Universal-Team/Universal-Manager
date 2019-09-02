@@ -39,7 +39,6 @@
 #include <unistd.h>
 #include <vector>
 
-
 // Score stuff for Player 1.
 void Pong::drawScoreP1(void) const
 {
@@ -113,6 +112,8 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 	} else if (hDown & KEY_DOWN) {
 		playPongSfx();
 		if(Selection < 2)	Selection++;
+	} else if (hDown & KEY_X) {
+		subMenu = 2;
 	} else if (hDown & KEY_A) {
 		playScoreSfx();
 		switch(Selection) {
@@ -178,6 +179,114 @@ void Pong::drawScreen(void) const
 //#######################################################################################
 
 
+//#######################################################################################
+
+// This is the new Mode Screen.
+//#######################################################################################
+void Pong::drawNewMode(void) const
+{
+	std::string point = "Current Points: ";
+	point += std::to_string(points);
+	set_screen(top);
+	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
+
+	drawBall();
+	drawPaddle();
+
+	set_screen(bottom);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
+	Gui::DrawBarsBot();
+
+	Gui::DrawString((320-Gui::GetStringWidth(0.72f, point.c_str()))/2, 0, 0.72f, WHITE, point.c_str());
+
+	Gui::DrawString(0, 60, 0.70f, WHITE, "How many Points can you reach? ;P");
+	Gui::DrawString(80, 80, 0.72f, WHITE, "How to Play:");
+	Gui::DrawString(80, 100, 0.72f, WHITE, "1. Paddle: Up / Down");
+	Gui::DrawString(80, 120, 0.72f, WHITE, "2. Paddle: X / B");
+	Gui::DrawString(80, 140, 0.72f, WHITE, "Start : Quit");
+}
+
+void Pong::newModeLogic(void) {
+	if (points == 0) {
+		speed1 = 3;
+		speed2 = -3;
+	}
+
+	if (points == 10) {
+		speed1 = 4;
+		speed2 = -4;
+	}
+
+	if (points == 20) {
+		speed1 = 5;
+		speed2 = -5;
+	}
+
+	if (points == 30) {
+		speed1 = 6;
+		speed2 = -6;
+	}
+
+	if (points == 40) {
+		speed1 = 7;
+		speed2 = -7;
+	}
+
+	if (points == 50) {
+		speed1 = 8;
+		speed2 = -8;
+	}
+
+	if (points == 60) {
+		speed1 = 9;
+		speed2 = -9;
+	}
+
+
+	// Message Prepare.
+std::string msg = "You reached ";
+			msg += std::to_string(points);
+			msg += " Points.";
+			msg += "\nDo you want to save your Points?"; // If the user wants to save the reached points.
+
+
+		ballX += ballXSpd;
+		ballY += ballYSpd;
+
+		if ((ballX <  20 && ballX >  10 && ballY > paddle1 && ballY < paddle1+60) ||
+			(ballX > 380 && ballX < 390 && ballY > paddle2 && ballY < paddle2+60)) {
+				playPongSfx();
+				points++;
+
+				if(ballX < 20 && ballX > 10)	ballXSpd = speed1; // First speed to player 2.
+
+				if(ballX < 390 && ballX > 380)	ballXSpd = speed2; // The second speed to player 1.
+
+				ballYSpd += -(((ballX < 200 ? paddle1 : paddle2)+30)-ballY)/20;
+			}
+
+		if (ballY < 0 || ballY > 230) {
+			playPongSfx();
+			ballYSpd = -ballYSpd;
+		}
+
+		if (ballX < 0 || ballX > 400) {
+			playScoreSfx();
+			if (confirmPopup(msg.c_str())) {
+				Config::setPongPoints(points);
+			}
+			ballX = 200;
+			ballY = 100;
+			speed1 = 5;
+			speed2 = -5
+			ballYSpd = 0;
+			points = 0;
+			subMenu = 1;
+		}
+}
+//#######################################################################################
+
+
 // Screen Selection.
 void Pong::Draw(void) const
 {
@@ -185,6 +294,8 @@ void Pong::Draw(void) const
 		drawScreen();
 	} else if (subMenu == 1) {
 		drawSubMenu();
+	} else if (subMenu == 2) {
+		drawNewMode();
 	}
 }
 
@@ -273,6 +384,10 @@ void Pong::stopLogic(void) {
 void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (subMenu == 1) {
 		selectionLogicPong(hDown, hHeld);
+	} else if (subMenu == 2) {
+		player1Control(hDown, hHeld);
+		player2Control(hDown, hHeld);
+		newModeLogic();
 	}
 
 	if (subMenu == 0) {
@@ -303,6 +418,7 @@ void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (multiPlayerMode == 1) {
 			player2Control(hDown, hHeld);
 		}
+	}
 
 	if (subMenu == 0 && hDown & KEY_START) {
 		if(confirmPopup("Do you want to return to the Sub Menu?")) {
@@ -310,8 +426,16 @@ void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			paddle1 = 90;
 			paddle2 = 90;
 			scoreP1 = 0;
-			scoreP2 =0;
+			scoreP2 = 0;
+		}
+	} else if (subMenu == 2 && hDown & KEY_START) {
+		if(confirmPopup("Do you want to return to the Sub Menu?")) {
+			ballX = 200;
+			ballY = 100;
+			ballXSpd = 3;
+			ballYSpd = 0;
+			points = 0;
+			subMenu = 1;
 		}
 	}
-}
 }

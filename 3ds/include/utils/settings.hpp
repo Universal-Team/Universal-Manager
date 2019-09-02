@@ -41,6 +41,7 @@ namespace Config {
 	void loadConfig();
 	void saveConfig();
 	void setCredits();
+	void setPongPoints(int points);
 }
 
 #endif /* SETTINGS_HPP */
