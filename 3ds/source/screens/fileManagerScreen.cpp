@@ -61,7 +61,7 @@ void FileManager::DrawBrowse(void) const
 	drawBatteryTop();
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
-	Gui::DrawString((400-(Gui::GetStringWidth(0.68f, path)))/2, 0, 0.68f, WHITE, path);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.60f, path)))/2, 218, 0.60f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
 		(i == selectedFile);
