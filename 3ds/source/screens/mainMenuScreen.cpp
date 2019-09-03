@@ -86,11 +86,17 @@ void MainMenu::Draw(void) const
 	drawBatteryTop();
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager"))/2, 0, 0.72f, WHITE, "Universal-Manager");
 	Gui::DrawString(395-Gui::GetStringWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
-	if (is3dsx == true) {
-		Gui::DrawString(0, 218, FONT_SIZE_18, WHITE, "Running through 3dsx.");
-	} else if (is3dsx == false) {
-		Gui::DrawString(0, 218, FONT_SIZE_18, WHITE, "Running through cia.");
+
+	if (Config::Citra == 1) {
+		Gui::DrawString(0, 218, FONT_SIZE_18, WHITE, "Running through Citra.");
+	} else if (Config::Citra == 0) {
+		if (is3dsx == true) {
+			Gui::DrawString(0, 218, FONT_SIZE_18, WHITE, "Running through 3dsx.");
+		} else if (is3dsx == false) {
+			Gui::DrawString(0, 218, FONT_SIZE_18, WHITE, "Running through cia.");
+		}
 	}
+
 	if (fadealpha > 0) Draw_Rect(0, 0, 400, 240, RGBA8(0, 0, 0, fadealpha)); // Fade in out effect
 
 	Gui::DrawBGBot();
