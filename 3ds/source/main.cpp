@@ -81,6 +81,7 @@ bool touching(touchPosition touch, Structs::ButtonPos button) {
 }
 
 bool is3dsx;
+bool Is3dsxUpdated = false;
 
 void getCurrentUsage(){
     u64 id;
@@ -153,6 +154,10 @@ int main()
 				fadealpha = 0;
 				fadein = false;
 			}
+		}
+
+		if (Is3dsxUpdated == true) {
+			break;
 		}
 
  	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {

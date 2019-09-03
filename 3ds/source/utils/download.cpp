@@ -50,6 +50,7 @@ static size_t result_written = 0;
 std::vector<std::string> _topText;
 std::string jsonName;
 extern bool is3dsx;
+extern bool Is3dsxUpdated;
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -733,6 +734,7 @@ void updateTWiLight(bool nightly) {
 }
 
 void updateUniversalManager(bool nightly) {
+	static bool success = false;
 	if(nightly) {
 		if (is3dsx == false) {
 			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager CIA...\nNightly");
@@ -748,6 +750,7 @@ void updateUniversalManager(bool nightly) {
 			DisplayMsg("Now Installing the CIA..");
 			installCia("/Universal-Manager-Nightly.cia");
 			deleteFile("sdmc:/Universal-Manager-Nightly.cia");
+
 		} else if (is3dsx == true) {
 			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager 3DSX...\nNightly");
 			showProgressBar = true;
@@ -759,6 +762,7 @@ void updateUniversalManager(bool nightly) {
 			return;
 		}
 			showProgressBar = false;
+			success = true;
 		}
 	} else {
 		if (is3dsx == false) {
@@ -788,9 +792,16 @@ void updateUniversalManager(bool nightly) {
 			return;
 		}
 			showProgressBar = false;
+			success = true;
+		}
 	}
+	doneMsg();
+	if (success == true) {
+		if (is3dsx == true) {
+			Is3dsxUpdated = true;
+		}
 	}
-doneMsg();
+	success = false;
 }
 
 void updateLuma(bool nightly) {
