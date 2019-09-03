@@ -49,6 +49,7 @@ static size_t result_sz = 0;
 static size_t result_written = 0;
 std::vector<std::string> _topText;
 std::string jsonName;
+extern bool is3dsx;
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -733,36 +734,61 @@ void updateTWiLight(bool nightly) {
 
 void updateUniversalManager(bool nightly) {
 	if(nightly) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager...\nNightly");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
-		showProgressBar = false;
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/Universal-Manager-Nightly.cia");
-
-		deleteFile("sdmc:/Universal-Manager-Nightly.cia");
+		if (is3dsx == false) {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager CIA...\nNightly");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.cia?raw=true", "/Universal-Manager-Nightly.cia") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+			showProgressBar = false;
+			DisplayMsg("Now Installing the CIA..");
+			installCia("/Universal-Manager-Nightly.cia");
+			deleteFile("sdmc:/Universal-Manager-Nightly.cia");
+		} else if (is3dsx == true) {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager 3DSX...\nNightly");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.3dsx?raw=true", "/3ds/Universal-Manager.3dsx") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+			showProgressBar = false;
+		}
 	} else {
-		DisplayMsg("Downloading Universal-Manager...\nRelease");
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager...\nRelease");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
+		if (is3dsx == false) {
+			DisplayMsg("Downloading Universal-Manager...\nRelease");
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager CIA...\nRelease");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.cia", "/Universal-Manager-Release.cia") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+			showProgressBar = false;
+			DisplayMsg("Now Installing the CIA..");
+			installCia("/Universal-Manager-Release.cia");
+			deleteFile("sdmc:/Universal-Manager-Release.cia");
+		} else if (is3dsx == true) {
+			DisplayMsg("Downloading Universal-Manager...\nRelease");
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Universal-Manager 3DSX...\nRelease");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.3dsx", "/3ds/Universal-Manager.3dsx") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+			showProgressBar = false;
 	}
-		showProgressBar = false;
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/Universal-Manager-Release.cia");
-
-		deleteFile("sdmc:/Universal-Manager-Release.cia");
 	}
 doneMsg();
 }

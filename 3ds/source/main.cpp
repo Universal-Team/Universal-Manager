@@ -80,7 +80,19 @@ bool touching(touchPosition touch, Structs::ButtonPos button) {
 		return false;
 }
 
+bool is3dsx;
 
+void getCurrentUsage(){
+    u64 id;
+    APT_GetProgramID(&id);
+
+    if(id == 0x0004000004394100){
+        is3dsx = false;
+        return;
+    }
+
+    is3dsx = true;
+}
 
 int main()
 {
@@ -99,7 +111,8 @@ int main()
     gfxInitDefault();
 	Gui::init();
 	srand(time(NULL));
-
+	getCurrentUsage();
+	
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
 		Gui::setScreen(std::make_unique<MainMenu>());
 	} else if (Config::Credits == 1) {
