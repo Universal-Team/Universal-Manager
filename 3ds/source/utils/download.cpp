@@ -51,6 +51,7 @@ std::vector<std::string> _topText;
 std::string jsonName;
 extern bool is3dsx;
 extern bool Is3dsxUpdated;
+extern std::string path3dsx;
 
 extern bool downloadNightlies;
 extern int filesExtracted;
@@ -756,7 +757,7 @@ void updateUniversalManager(bool nightly) {
 			showProgressBar = true;
 			progressBarType = 0;
 			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.3dsx?raw=true", "/3ds/Universal-Manager.3dsx") != 0) {
+			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Universal-Manager/Universal-Manager.3dsx?raw=true", path3dsx + "Universal-Manager.3dsx") != 0) {
 			showProgressBar = false;
 			downloadFailed();
 			return;
@@ -786,7 +787,7 @@ void updateUniversalManager(bool nightly) {
 			showProgressBar = true;
 			progressBarType = 0;
 			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.3dsx", "/3ds/Universal-Manager.3dsx") != 0) {
+			if (downloadFromRelease("https://github.com/Universal-Team/Universal-Manager", "Universal-Manager\\.3dsx", path3dsx + "Universal-Manager.3dsx") != 0) {
 			showProgressBar = false;
 			downloadFailed();
 			return;

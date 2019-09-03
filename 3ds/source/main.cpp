@@ -82,6 +82,7 @@ bool touching(touchPosition touch, Structs::ButtonPos button) {
 
 bool is3dsx;
 bool Is3dsxUpdated = false;
+std::string path3dsx;
 
 void getCurrentUsage(){
     u64 id;
@@ -114,6 +115,14 @@ int main()
 	srand(time(NULL));
 	getCurrentUsage();
 	
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	if (is3dsx == true) {
+		path3dsx = path;
+		path3dsx = path3dsx.substr(5, path3dsx.size());
+	}
+
+
 	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
 		Gui::setScreen(std::make_unique<MainMenu>());
 	} else if (Config::Credits == 1) {
