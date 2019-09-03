@@ -759,9 +759,8 @@ void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 		if(confirmPopup("Would you like to add to these songs to",
 						 "Now Playing or play them now?",
 						 "Play Now",
-						 "Add to Now Playing",
-						 100)) {
-			nowPlayingList.clear();
+						 "Add to Now Playing")) {
+							nowPlayingList.clear();
 		}
 		std::ifstream plst("sdmc:/Universal-Manager/playlists/"+plsts[selectedPlst].name);
 		if(plst) {

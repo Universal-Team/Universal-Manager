@@ -393,14 +393,14 @@ void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (subMenu == 0) {
 	if (scoreP1 == 10) {
 		stopLogic();
-		confirmPopup("Player 1 wins!\n\nPress A or B to continue to the subMenu.");
+		DisplayWaitMsg("Player 1 wins!");
 		subMenu = 1;
 		scoreP1 = 0;
 		scoreP2 = 0;
 		return;
 	} else if (scoreP2 == 10) {
 		stopLogic();
-		confirmPopup("Player 2 wins!\n\nPress A or B to continue to the subMenu.");
+		DisplayWaitMsg("Player 2 wins!");
 		subMenu = 1;
 		scoreP1 = 0;
 		scoreP2 = 0;

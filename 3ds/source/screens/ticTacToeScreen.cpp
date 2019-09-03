@@ -200,7 +200,7 @@ void TicTacToe::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(subMenu == 0) {
 		for(uint i=0;i<(sizeof(winIndexes)/sizeof(winIndexes[0]));i++) {
 			if(gameBoard[winIndexes[i].one] != 0 && gameBoard[winIndexes[i].one] == gameBoard[winIndexes[i].two] && gameBoard[winIndexes[i].two] == gameBoard[winIndexes[i].three]) {
-				confirmPopup("Player "+std::to_string(gameBoard[winIndexes[i].one])+" wins!\n\nPress A or B to continue to the subMenu.");
+				DisplayWaitMsg("Player "+std::to_string(gameBoard[winIndexes[i].one])+" wins!");
 				resetBoard();
 				subMenu = 1;
 				return;
@@ -214,7 +214,7 @@ void TicTacToe::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 		}
 		if(!canContinue) {
-			confirmPopup("Game over...\n\nPress A or B to continue to the subMenu.");
+			DisplayWaitMsg("Game over...");
 			resetBoard();
 			subMenu = 1;
 			return;

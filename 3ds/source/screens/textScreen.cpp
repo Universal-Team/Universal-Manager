@@ -282,7 +282,7 @@ void Text::EditorLogic(u32 hDown, u32 hHeld) {
 			out.close();
 		}
 	} else if(hDown & KEY_B) {
-		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel", 100)) {
+		if(confirmPopup("Discard all changes since last save?", "", "Discard", "Cancel")) {
 			stringPos = 0;
 			textEditorCurPos = 0;
 			TextMode = 0;

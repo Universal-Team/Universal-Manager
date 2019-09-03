@@ -31,21 +31,55 @@
 #include <unistd.h>
 
 
-
-// NOTE: This'll get the app stuck in a loop while its running, so background
-// processes like the clock won't update while the message bubble is up
-bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no, int ynXPos) {
+// Display a Message, which can be skipped with A.
+void DisplayWaitMsg(std::string waitMsg, ...)
+{
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	C2D_TargetClear(top, BLUE2);
 	C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	DisplayTime();
+	Gui::DrawString((400-Gui::GetStringWidth(0.6f, "Press A to continue."))/2, 217, 0.6f, WHITE, "Press A to continue.");
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, waitMsg.c_str()))/2, 100, 0.72f, WHITE, waitMsg.c_str());
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
+	C3D_FrameEnd(0);
+
+	while(1)
+	{
+		hidScanInput();
+		if(hidKeysDown() & KEY_A)
+			break;
+	}
+}
+
+// Display the Helper Box with dimmed Background effect.
+void helperBox(std::string msg1) {
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	set_screen(top);
+	Draw_Rect(0, 0, 400, 240, DIM);
+	Gui::sprite(0, sprites_textbox_idx, 10, 25);
+	Gui::DrawString(35, 42, 0.45f, BLACK, msg1.c_str());
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 240, DIM);
+	C3D_FrameEnd(0);
+}
+
+// NOTE: This'll get the app stuck in a loop while its running, so background
+// processes like the clock won't update while the message bubble is up
+bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no) {
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLUE2);
+	C2D_TargetClear(bottom, BLUE2);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	Gui::DrawString(200-(Gui::GetStringWidth(0.45f, msg1.c_str())/2), 90, 0.45f, BLACK, msg1.c_str());
-	Gui::DrawString(200-(Gui::GetStringWidth(0.45f, msg1.c_str())/2), 110, 0.45f, BLACK, msg2.c_str());
-	Gui::DrawString(ynXPos, 160, 0.45f, BLACK, ("B : "+no+"   A : "+yes).c_str());
+	Gui::DrawString((400-Gui::GetStringWidth(0.45f, msg1.c_str()))/2, 90, 0.45f, BLACK, msg1.c_str());
+	Gui::DrawString((400-Gui::GetStringWidth(0.45f, msg2.c_str()))/2, 110, 0.45f, BLACK, msg2.c_str());
+	Gui::DrawString((400-Gui::GetStringWidth(0.45f, ("A: "+yes+"   B: "+no).c_str()))/2, 160, 0.45f, BLACK, ("A: "+yes+"   B: "+no).c_str());
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -60,18 +94,7 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	}
 }
 
-void helperBox(std::string msg1) {
-	Gui::clearTextBufs();
-	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-	set_screen(top);
-	Draw_Rect(0, 0, 400, 240, DIM);
-	Gui::sprite(0, sprites_textbox_idx, 10, 25);
-	Gui::DrawString(35, 42, 0.45f, BLACK, msg1.c_str());
-	set_screen(bottom);
-	Draw_Rect(0, 0, 320, 240, DIM);
-	C3D_FrameEnd(0);
-}
-
+// For single confirm Popups.
 bool confirmPopup(std::string msg) {
-	return confirmPopup(msg, "", "Yes", "No", 100);
+	return confirmPopup(msg, "", "Yes", "No");
 }
