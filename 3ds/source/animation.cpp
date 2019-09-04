@@ -41,26 +41,49 @@ void animatedBGTop(void) {
 	if (Config::animation == 0) {
 	} else if (Config::animation == 1) {
 		if (!animated_bubbleMoveDelay) {
-		animated_bubblesYPos[0]--;
+
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[0] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[0] -= 2;
+			}
+
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
 	}
 	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
 
-	animated_bubblesYPos[1]--;
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[1] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[1] -= 2;
+			}
+
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
 	Gui::Draw_ImageBlend(2, animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
 	Gui::Draw_ImageBlend(2, animation_bubbles_top_1_idx, 0, animated_bubblesYPos[0]+240, Config::animationColor);
 	Gui::Draw_ImageBlend(2, animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1], Config::animationColor);
 	Gui::Draw_ImageBlend(2, animation_bubbles_top_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
+
 } else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
-		animated_bubblesYPos[0]--;
+
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[0] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[0] -= 2;
+			}
+
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
 	}
 	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
 
-	animated_bubblesYPos[1]--;
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[1] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[1] -= 2;
+			}
+
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
 	Gui::Draw_ImageBlend(2, animation_topscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
@@ -74,12 +97,23 @@ void animatedBGBot(void) {
 	if (Config::animation == 0) {
 	} else if (Config::animation == 1) {
 		if (!animated_bubbleMoveDelay) {
-		animated_bubblesYPos[0]--;
+
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[0] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[0] -= 2;
+			}
+
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
 	}
 	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
 
-	animated_bubblesYPos[1]--;
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[1] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[1] -= 2;
+			}
+
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
 	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_1_idx, 0, animated_bubblesYPos[0], Config::animationColor);
@@ -88,12 +122,23 @@ void animatedBGBot(void) {
 	Gui::Draw_ImageBlend(2, animation_bubbles_bottom_2_idx, 0, animated_bubblesYPos[1]+240, Config::animationColor);
 } else if (Config::animation == 2) {
 			if (!animated_bubbleMoveDelay) {
-		animated_bubblesYPos[0]--;
+
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[0] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[0] -= 2;
+			}
+			
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
 	}
 	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;
 
-	animated_bubblesYPos[1]--;
+			if (Config::FastMode == 0) {
+				animated_bubblesYPos[1] -= 1;
+			} else if (Config::FastMode == 1) {
+				animated_bubblesYPos[1] -= 2;
+			}
+
 	if (animated_bubblesYPos[1] <= -240) animated_bubblesYPos[1] = 0;
 
 	Gui::Draw_ImageBlend(2, animation_bottomscreenV1_idx, 0, animated_bubblesYPos[0], Config::animationColor);

@@ -38,6 +38,7 @@ namespace Config {
 	extern int Credits; // [CREDITS]
 	extern int selector;
 	extern int Points; // The Points in Pong's Hidden/Secret Mode.
+	extern int FastMode; // Speed of the animations!
 
 	void loadConfig();
 	void saveConfig();

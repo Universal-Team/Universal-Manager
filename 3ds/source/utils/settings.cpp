@@ -46,6 +46,7 @@ int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
 int Config::selector;
 int Config::Points;
+int Config::FastMode; // Animation speed of the animations.
 
 void Config::loadConfig() {
 	// [UI]
@@ -60,6 +61,8 @@ void Config::loadConfig() {
 	// [ANIMATED]
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
 	Config::animationColor = settingsini.GetInt("ANIMATED", "COLOR", BLUE);
+	Config::FastMode = settingsini.GetInt("ANIMATED", "FASTMODE", 0);
+
 	// [CITRA]
 	Config::Citra = settingsini.GetInt("CITRA", "ENABLED", 0);
 	// [TEXTCOLOR]
@@ -84,6 +87,7 @@ void Config::saveConfig() {
 	// [ANIMATED]
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
 	settingsini.SetInt("ANIMATED", "COLOR", Config::animationColor);
+	settingsini.SetInt("ANIMATED", "FASTMODE", Config::FastMode);
 
 	// [CITRA]
 	settingsini.SetInt("CITRA", "ENABLED", Config::Citra);
