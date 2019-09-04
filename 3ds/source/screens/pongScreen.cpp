@@ -120,6 +120,10 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 			case 0: {
 				if(confirmPopup("Would you like to set the speed?")) {
 					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
+					if (speed1 < 2) {
+						DisplayWaitMsg("Invalid Speed! Set the speed to 5.");
+						speed1 = 5;
+					}
 					speed2 = - + speed1;
 				} else {
 					speed1 = 5;
@@ -132,6 +136,10 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 			} case 1:
 				if(confirmPopup("Would you like to set the speed?")) {
 					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
+					if (speed1 < 2) {
+						DisplayWaitMsg("Invalid Speed! Set the speed to 5.");
+						speed1 = 5;
+					}
 					speed2 = - + speed1;
 				} else {
 					speed1 = 5;
@@ -244,10 +252,15 @@ void Pong::newModeLogic(void) {
 
 
 	// Message Prepare.
-std::string msg = "You reached ";
-			msg += std::to_string(points);
-			msg += " Points.";
-			msg += "\nDo you want to save your Points?"; // If the user wants to save the reached points.
+std::string msgRecord = "You got a new Record with ";
+			msgRecord += std::to_string(points);
+			msgRecord += " Points.";
+			msgRecord += "\nDo you want to save your Points?"; // If the user wants to save the reached points.
+
+std::string msgNoRecord = "Oh No! You haven't beaten your old Record.\n\n";
+			msgNoRecord += "Your Record was ";
+			msgNoRecord += std::to_string(Config::Points);
+			msgNoRecord += ".";
 
 
 		ballX += ballXSpd;
@@ -272,8 +285,12 @@ std::string msg = "You reached ";
 
 		if (ballX < 0 || ballX > 400) {
 			playScoreSfx();
-			if (confirmPopup(msg.c_str())) {
-				Config::setPongPoints(points);
+			if (Config::Points > points) {
+				DisplayWaitMsg(msgNoRecord.c_str());
+			} else if (Config::Points < points) {
+				if (confirmPopup(msgRecord.c_str())) {
+					Config::setPongPoints(points);
+				}
 			}
 			ballX = 200;
 			ballY = 100;
@@ -382,6 +399,7 @@ void Pong::stopLogic(void) {
 }
 
 void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+
 	if (subMenu == 1) {
 		selectionLogicPong(hDown, hHeld);
 	} else if (subMenu == 2) {
@@ -391,23 +409,23 @@ void Pong::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	}
 
 	if (subMenu == 0) {
-	if (scoreP1 == 10) {
-		stopLogic();
-		DisplayWaitMsg("Player 1 wins!");
-		subMenu = 1;
-		scoreP1 = 0;
-		scoreP2 = 0;
-		return;
-	} else if (scoreP2 == 10) {
-		stopLogic();
-		DisplayWaitMsg("Player 2 wins!");
-		subMenu = 1;
-		scoreP1 = 0;
-		scoreP2 = 0;
-		return;
-	} else if (scoreP1 < 10 || scoreP2 < 10) {
-		ballLogic();
-	}
+		if (scoreP1 == 10) {
+			stopLogic();
+			DisplayWaitMsg("Player 1 wins!");
+			subMenu = 1;
+			scoreP1 = 0;
+			scoreP2 = 0;
+			return;
+		} else if (scoreP2 == 10) {
+			stopLogic();
+			DisplayWaitMsg("Player 2 wins!");
+			subMenu = 1;
+			scoreP1 = 0;
+			scoreP2 = 0;
+			return;
+		} else if (scoreP1 < 10 || scoreP2 < 10) {
+			ballLogic();
+		}
 	}
 
 	if (subMenu == 0) {

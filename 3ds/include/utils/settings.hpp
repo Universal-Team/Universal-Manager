@@ -37,6 +37,7 @@ namespace Config {
 	extern int Screen; // [SCREEN]
 	extern int Credits; // [CREDITS]
 	extern int selector;
+	extern int Points; // The Points in Pong's Hidden/Secret Mode.
 
 	void loadConfig();
 	void saveConfig();

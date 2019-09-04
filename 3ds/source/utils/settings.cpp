@@ -45,6 +45,7 @@ int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
 int Config::selector;
+int Config::Points;
 
 void Config::loadConfig() {
 	// [UI]
@@ -68,6 +69,9 @@ void Config::loadConfig() {
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
 	// [CREDITS]
 	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
+
+	// [PONG]
+	Config::Points = settingsini.GetInt("PONG", "POINTS", 0); // The Points from Pong.
 }
 
 void Config::saveConfig() {
