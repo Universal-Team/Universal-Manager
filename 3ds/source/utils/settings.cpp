@@ -69,9 +69,6 @@ void Config::loadConfig() {
 	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
 	// [CREDITS]
 	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
-
-	// [PONG]
-	Config::Points = settingsini.GetInt("PONG", "POINTS", 0); // The Points from Pong.
 }
 
 void Config::saveConfig() {
@@ -106,6 +103,11 @@ void Config::setCredits() {
 	settingsini.SetInt("CREDITS", "ENABLE", Config::Credits);
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
+
+void Config::loadPoints() {
+	Config::Points = settingsini.GetInt("PONG", "POINTS", 0); // The Points from Pong.
+}
+
 
 void Config::setPongPoints(int points) {
 	settingsini.SetInt("PONG", "POINTS", points);

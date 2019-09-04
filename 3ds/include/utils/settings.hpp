@@ -42,7 +42,8 @@ namespace Config {
 	void loadConfig();
 	void saveConfig();
 	void setCredits();
-	void setPongPoints(int points);
+	void loadPoints(); // Load the current Record / Points.
+	void setPongPoints(int points); // Save the new Record, if reached.
 }
 
 #endif /* SETTINGS_HPP */

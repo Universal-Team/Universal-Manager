@@ -120,7 +120,7 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 			case 0: {
 				if(confirmPopup("Would you like to set the speed?")) {
 					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
-					if (speed1 < 2) {
+					if (speed1 < 2 || speed1 > 9) {
 						DisplayWaitMsg("Invalid Speed! Set the speed to 5.");
 						speed1 = 5;
 					}
@@ -136,7 +136,7 @@ void Pong::selectionLogicPong(u32 hDown, u32 hHeld) {
 			} case 1:
 				if(confirmPopup("Would you like to set the speed?")) {
 					speed1 = Input::getUint(9, "Please Type in the Speed Value.");
-					if (speed1 < 2) {
+					if (speed1 < 2 || speed1 > 9) {
 						DisplayWaitMsg("Invalid Speed! Set the speed to 5.");
 						speed1 = 5;
 					}
@@ -195,6 +195,9 @@ void Pong::drawNewMode(void) const
 {
 	std::string point = "Current Points: ";
 	point += std::to_string(points);
+	std::string record = "Current Record: ";
+	record += std::to_string(Config::Points);
+
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 1.0f, 400, 240, Config::bgColor);
 
@@ -206,6 +209,7 @@ void Pong::drawNewMode(void) const
 	Gui::DrawBarsBot();
 
 	Gui::DrawString((320-Gui::GetStringWidth(0.72f, point.c_str()))/2, 0, 0.72f, WHITE, point.c_str());
+	Gui::DrawString((320-Gui::GetStringWidth(0.72f, record.c_str()))/2, 217, 0.72f, WHITE, record.c_str());
 
 	Gui::DrawString(0, 60, 0.70f, WHITE, "How many Points can you reach? ;P");
 	Gui::DrawString(80, 80, 0.72f, WHITE, "How to Play:");
@@ -215,6 +219,8 @@ void Pong::drawNewMode(void) const
 }
 
 void Pong::newModeLogic(void) {
+	Config::loadPoints();
+	
 	if (points == 0) {
 		speed1 = 3;
 		speed2 = -3;
