@@ -131,10 +131,9 @@ void Gui::DrawBarsBottomBack(void) {
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, Config::barColor);
     if (Config::layout == 0) {
         Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
-        Gui::sprite(0, sprites_bottom_screen_bot_back_idx, 0, 210);
-    } else if (Config::layout == 1) {
-        Gui::sprite(0, sprites_back_idx, 291, 216);
+        Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
     }
+    Gui::sprite(0, sprites_back_idx, 291, 216);
 }
 
 void Gui::DrawBGTop(void) 
