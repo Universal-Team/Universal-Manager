@@ -236,7 +236,7 @@ void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 // FileManager Operations!
 
 void FileManager::renameFile(void) {
-	std::string newName = Input::getLine();
+	std::string newName = Input::getLine("Please type in the new name of the file.");
 	if(newName != "")	rename(dirContents[selectedFile].name.c_str(), newName.c_str());
 }
 
@@ -266,13 +266,13 @@ void FileManager::createFile(void) {
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
 	std::string currentPath = path;
-	currentPath += Input::getLine();
+	currentPath += Input::getLine("Please type in the new file's name.");
 	std::ofstream file { currentPath.c_str() };
 }
 
 
 void FileManager::createFolder(void) {
-	std::string newName = Input::getLine();
+	std::string newName = Input::getLine("Please type in the new folder's name.");
 	mkdir(newName.c_str(), 0777);
 }
 

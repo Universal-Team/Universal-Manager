@@ -580,7 +580,7 @@ void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (hDown & KEY_B) {
 			MusicMode = 1;
 	} else if (hDown & KEY_Y) {
-		std::string newPlaylist = Input::getLine();
+		std::string newPlaylist = Input::getLine("Please type in the new Playlist's name.");
 		if(newPlaylist != "") {
 			FILE* plst = fopen(("sdmc:/Universal-Manager/playlists/"+newPlaylist+".plst").c_str(), "w");
 			fclose(plst);

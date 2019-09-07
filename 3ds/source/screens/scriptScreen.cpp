@@ -135,7 +135,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			Gui::screenBack();
 			return;
 		} else if (hDown & KEY_Y) {
-			std::string newScript = Input::getLine();
+			std::string newScript = Input::getLine("Please type in the new Script's name.");
 			if(newScript != "") {
 				FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
 				fclose(scpt);
@@ -309,81 +309,101 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 			if (ScriptPage == 1) {
 			switch(Selection) {
 				case 0: {
-				std::string Function = "downloadRelease	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				std::string param3 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+					std::string Function = "downloadRelease	";
+					std::string param1 = Input::getLine("Please type in the Github Repo URL.");
+					std::string param2 = Input::getLine("Please type in the Asset, which you want to download.");
+					std::string param3 = Input::getLine("Please type in the Path. Like '/test/example.3dsx'.");
+					scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 					break;
+
+
 				} case 1: {
-				std::string Function = "downloadFile	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << " " << std::endl;
+					std::string Function = "downloadFile	";
+					std::string param1 = Input::getLine("Please type in the download URL.");
+					std::string param2 = Input::getLine("Please type in the path. Like '/test/example.3dsx'.");
+					scpt << Function << param1 << "	" << param2 << " " << std::endl;
 					break;
+
+
 				  } case 2: {
-				std::string Function = "extract	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				std::string param3 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+					std::string Function = "extract	";
+					std::string param1 = Input::getLine("Please type in the archive path. Like 'test/example.zip'.");
+					std::string param2 = Input::getLine("Please type in the stuff, which you want to extract.");
+					std::string param3 = Input::getLine("Please type the path, where the files should be extracted.");
+					scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 					break;
+
+
 				} case 3: {
-				std::string Function = "install	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "install	";
+					std::string param1 = Input::getLine("Please type in the path to the cia. like: '/test.cia'.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
+
+
 				} case 4: {
-				std::string Function = "delete	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "delete	";
+					std::string param1 = Input::getLine("Please type in the path to the delete file. 'sdmc:/test.cia'.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
+
+
 				} case 5: {
-				std::string Function = "msg	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "msg	";
+					std::string param1 = Input::getLine("Please type in your Message.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
+				}
 			}
-		}
 		} else if (ScriptPage == 2) {
 			switch(Selection) {
 				case 0: {
-				std::string Function = "mkdir	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "mkdir	";
+					std::string param1 = Input::getLine("Please type in the new folder path. like 'sdmc:/Test'.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
+
+
 				} case 1: {
-				std::string Function = "progressDownloadFile	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				std::string param3 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+					std::string Function = "progressDownloadFile	";
+					std::string param1 = Input::getLine("Please type in the download URL.");
+					std::string param2 = Input::getLine("Please type in the path. Like '/test/example.3dsx'.");
+					std::string param3 = Input::getLine("Please type in your Displayed Message.");
+					scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 					break;
+
+
 				  } case 2: {
-				std::string Function = "progressDownloadRelease	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				std::string param3 = Input::getLine();
-				std::string param4 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+					std::string Function = "progressDownloadRelease	";
+					std::string param1 = Input::getLine("Please type in the Github Repo URL.");
+					std::string param2 = Input::getLine("Please type in the Asset, which you want to download.");
+					std::string param3 = Input::getLine("Please type in the Path. Like '/test/example.3dsx'.");
+					std::string param4 = Input::getLine("Please type in your Displayed Message.");
+					scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
 					break;
+
+
 				} case 3: {
-				std::string Function = "progressExtract	";
-				std::string param1 = Input::getLine();
-				std::string param2 = Input::getLine();
-				std::string param3 = Input::getLine();
-				std::string param4 = Input::getLine();
-				scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+					std::string Function = "progressExtract	";
+					std::string param1 = Input::getLine("Please type in the archive path. Like 'test/example.zip'.");
+					std::string param2 = Input::getLine("Please type in the stuff, which you want to extract.");
+					std::string param3 = Input::getLine("Please type the path, where the files should be extracted.");
+					std::string param4 = Input::getLine("Please type in your Displayed Message.");
+					scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
 					break;
+
+
 				} case 4: {
-				std::string Function = "waitMsg	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "waitMsg	";
+					std::string param1 = Input::getLine("Please type in your Displayed Message.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
+
+
 				} case 5: {
-				std::string Function = "timeMsg	";
-				std::string param1 = Input::getLine();
-				scpt << Function << param1 << " " << std::endl;
+					std::string Function = "timeMsg	";
+					std::string param1 = Input::getLine("Please type in your Displayed Message.");
+					scpt << Function << param1 << " " << std::endl;
 					break;
 				}
 			}
@@ -417,44 +437,44 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (touching(touch, Functions[0])) {
 
 		std::string Function = "downloadRelease	";
-		std::string param1 = Input::getLine();
-		std::string param2 = Input::getLine();
-		std::string param3 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in the Github Repo URL.");
+		std::string param2 = Input::getLine("Please type in the Asset, which you want to download.");
+		std::string param3 = Input::getLine("Please type in the Path. Like '/test/example.3dsx'.");
 		scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[1])) {
 
 		std::string Function = "downloadFile	";
-		std::string param1 = Input::getLine();
-		std::string param2 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in the download URL.");
+		std::string param2 = Input::getLine("Please type in the path. Like '/test/example.3dsx'.");
 		scpt << Function << param1 << "	" << param2 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[2])) {
 
 		std::string Function = "extract	";
-		std::string param1 = Input::getLine();
-		std::string param2 = Input::getLine();
-		std::string param3 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in the archive path. Like 'test/example.zip'.");
+		std::string param2 = Input::getLine("Please type in the stuff, which you want to extract.");
+		std::string param3 = Input::getLine("Please type the path, where the files should be extracted.");
 		scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[3])) {
 		std::string Function = "install	";
-		std::string param1 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in the path to the cia. like: '/test.cia'.");
 		scpt << Function << param1 << " " << std::endl;
 
 
 	} 	else if (touching(touch, Functions[4])) {
 		std::string Function = "delete	";
-		std::string param1 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in the path to the delete file. 'sdmc:/test.cia'.");
 		scpt << Function << param1 << " " << std::endl;
 
 
 	} else if (touching(touch, Functions[5])) {
 		std::string Function = "msg	";
-		std::string param1 = Input::getLine();
+		std::string param1 = Input::getLine("Please type in your Message.");
 		scpt << Function << param1 << " " << std::endl;
 	}
 
@@ -462,35 +482,45 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	} else if (ScriptPage == 2 && hDown & KEY_TOUCH) {
 		if (touching(touch, Functions[0])) {
 			std::string Function = "mkdir	";
-			std::string param1 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in the new folder path. like 'sdmc:/Test'.");
 			scpt << Function << param1 << " " << std::endl;
+
+
 		} else if (touching(touch, Functions[1])) {
 			std::string Function = "progressDownloadFile	";
-			std::string param1 = Input::getLine();
-			std::string param2 = Input::getLine();
-			std::string param3 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in the download URL.");
+			std::string param2 = Input::getLine("Please type in the path. Like '/test/example.3dsx'.");
+			std::string param3 = Input::getLine("Please type in your Displayed Message.");
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+
+
 		} else if (touching(touch, Functions[2])) {
 			std::string Function = "progressDownloadRelease	";
-			std::string param1 = Input::getLine();
-			std::string param2 = Input::getLine();
-			std::string param3 = Input::getLine();
-			std::string param4 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in the Github Repo URL.");
+			std::string param2 = Input::getLine("Please type in the Asset, which you want to download.");
+			std::string param3 = Input::getLine("Please type in the Path. Like '/test/example.3dsx'.");
+			std::string param4 = Input::getLine("Please type in your Displayed Message.");
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+
+
 		} else if(touching(touch, Functions[3])) {
 			std::string Function = "progressExtract	";
-			std::string param1 = Input::getLine();
-			std::string param2 = Input::getLine();
-			std::string param3 = Input::getLine();
-			std::string param4 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in the archive path. Like 'test/example.zip'.");
+			std::string param2 = Input::getLine("Please type in the stuff, which you want to extract.");
+			std::string param3 = Input::getLine("Please type the path, where the files should be extracted.");
+			std::string param4 = Input::getLine("Please type in your Displayed Message.");
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+
+
 		} else if (touching(touch, Functions[4])) {
 			std::string Function = "waitMsg	";
-			std::string param1 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in your Displayed Message.");
 			scpt << Function << param1 << " " << std::endl;
+
+
 		} else if (touching(touch, Functions[5])) {
 			std::string Function = "timeMsg	";
-			std::string param1 = Input::getLine();
+			std::string param1 = Input::getLine("Please type in your Displayed Message.");
 			scpt << Function << param1 << " " << std::endl;
 		}
 	}

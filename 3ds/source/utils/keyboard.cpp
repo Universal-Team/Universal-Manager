@@ -112,9 +112,9 @@ void drawKeyboard() {
 	}
 }
 
-std::string Input::getLine() { return Input::getLine(-1); }
+std::string Input::getLine(std::string Text) { return Input::getLine(-1, Text); }
 
-std::string Input::getLine(uint maxLength) {
+std::string Input::getLine(uint maxLength, std::string Text) {
 	int hDown;
 	touchPosition touch;
 	std::string string;
@@ -128,6 +128,7 @@ std::string Input::getLine(uint maxLength) {
 			Gui::DrawBGTop();
 			animatedBGTop();
 			Gui::DrawBarsTop();
+			Gui::DrawString((400-Gui::GetStringWidth(0.55f, Text))/2, 2, 0.55f, WHITE, Text);
 			C2D_SceneBegin(bottom);
 			Gui::DrawBGBot();
 			animatedBGBot();
