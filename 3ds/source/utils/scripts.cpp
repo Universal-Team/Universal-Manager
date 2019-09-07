@@ -25,7 +25,9 @@
 */
 
 #include "gui.hpp"
+
 #include "screens/screenCommon.hpp"
+
 #include "utils/download.hpp"
 #include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
@@ -155,7 +157,17 @@ void runScript(std::string path) {
 				extractArchive(scpt.param1, scpt.param2, scpt.param3);
 				showProgressBar = false;
 			}
+			// Displays a Message until A is pressed.
+			//Param 1 -> Message.
+			if(scpt.function == "waitMsg") {
+				DisplayWaitMsg(scpt.param1.c_str());
+			}
 
+			// Displays a Message for 3 seconds.
+			//Param 1 -> Message.
+			if(scpt.function == "timeMsg") {
+				DisplayTimeMessage(scpt.param1.c_str());
+			}
 
 		}
 	}

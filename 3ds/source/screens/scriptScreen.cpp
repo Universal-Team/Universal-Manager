@@ -235,8 +235,14 @@ void Script::DrawBottom(void) const
 		Gui::sprite(3, button_button_3_idx, 1, 91);
 		Gui::DrawString(16, 107, 0.65f, WHITE, "progressRelease");
 
-		Gui::sprite(3, button_button_br_idx, 162, 88);
+		Gui::sprite(3, button_button_4_idx, 162, 91);
 		Gui::DrawString(180, 104, 0.7f, WHITE, "progressExtract");
+
+		Gui::sprite(3, button_button_5_idx, 1, 154);
+		Gui::DrawString(45, 174, 0.7f, WHITE, "waitMsg");
+
+		Gui::sprite(3, button_button_br_idx, 162, 151);
+		Gui::DrawString(210, 174, 0.7f, WHITE, "timeMsg");
 	}
 }
 
@@ -264,7 +270,11 @@ void Script::DrawSelection(void) const
 			} else if (Selection == 2) {
 				Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
 			} else if (Selection == 3) {
-				Gui::drawGUISelector(button_br_selector_idx, 161, 90, .020f);
+				Gui::drawGUISelector(button_selector_idx, 166, 95, .020f);
+			} else if (Selection == 4) {
+				Gui::drawGUISelector(button_selector_idx, 3, 158, .020f);
+			} else if (Selection == 5) {
+				Gui::drawGUISelector(button_br_selector_idx, 161, 153, .020f);
 			}
 		}
 }
@@ -293,7 +303,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 			if (ScriptPage == 1) {
 			if(Selection < 5)	Selection++;
 			} else if (ScriptPage == 2) {
-				if(Selection < 3)	Selection++;
+				if(Selection < 5)	Selection++;
 			}
 		} else if (hDown & KEY_A) {
 			if (ScriptPage == 1) {
@@ -364,6 +374,16 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				std::string param3 = Input::getLine();
 				std::string param4 = Input::getLine();
 				scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+					break;
+				} case 4: {
+				std::string Function = "waitMsg	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << " " << std::endl;
+					break;
+				} case 5: {
+				std::string Function = "timeMsg	";
+				std::string param1 = Input::getLine();
+				scpt << Function << param1 << " " << std::endl;
 					break;
 				}
 			}
@@ -440,30 +460,38 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 		// Page 2.
 	} else if (ScriptPage == 2 && hDown & KEY_TOUCH) {
-		if (touching(touch, Functions[6])) {
+		if (touching(touch, Functions[0])) {
 			std::string Function = "mkdir	";
 			std::string param1 = Input::getLine();
 			scpt << Function << param1 << " " << std::endl;
-		} else if (touching(touch, Functions[7])) {
+		} else if (touching(touch, Functions[1])) {
 			std::string Function = "progressDownloadFile	";
 			std::string param1 = Input::getLine();
 			std::string param2 = Input::getLine();
 			std::string param3 = Input::getLine();
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
-		} else if (touching(touch, Functions[8])) {
+		} else if (touching(touch, Functions[2])) {
 			std::string Function = "progressDownloadRelease	";
 			std::string param1 = Input::getLine();
 			std::string param2 = Input::getLine();
 			std::string param3 = Input::getLine();
 			std::string param4 = Input::getLine();
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
-		} else if(touching(touch, Functions[9])) {
+		} else if(touching(touch, Functions[3])) {
 			std::string Function = "progressExtract	";
 			std::string param1 = Input::getLine();
 			std::string param2 = Input::getLine();
 			std::string param3 = Input::getLine();
 			std::string param4 = Input::getLine();
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+		} else if (touching(touch, Functions[4])) {
+			std::string Function = "waitMsg	";
+			std::string param1 = Input::getLine();
+			scpt << Function << param1 << " " << std::endl;
+		} else if (touching(touch, Functions[5])) {
+			std::string Function = "timeMsg	";
+			std::string param1 = Input::getLine();
+			scpt << Function << param1 << " " << std::endl;
 		}
 	}
 }

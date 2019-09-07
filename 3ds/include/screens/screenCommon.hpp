@@ -43,5 +43,6 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 void helperBox(std::string msg1);
 bool displayActionBox(void);
 void DisplayWaitMsg(std::string waitMsg, ...);
+void DisplayTimeMessage(std::string Text);
 
 #endif

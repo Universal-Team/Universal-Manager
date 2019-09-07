@@ -98,3 +98,21 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 bool confirmPopup(std::string msg) {
 	return confirmPopup(msg, "", "Yes", "No");
 }
+
+// Display a Message for 3 seconds.
+void DisplayTimeMessage(std::string Text)
+{
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLUE2);
+	C2D_TargetClear(bottom, BLUE2);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, Text.c_str()))/2, 2, 0.72f, WHITE, Text.c_str());
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
+	C3D_FrameEnd(0);
+	for (int i = 0; i < 60*3; i++) {
+		gspWaitForVBlank();
+	}
+}
