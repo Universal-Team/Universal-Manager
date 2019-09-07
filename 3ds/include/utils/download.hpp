@@ -49,6 +49,8 @@ struct ThemeEntry {
 Result downloadToFile(std::string url, std::string path);
 Result downloadFromRelease(std::string url, std::string asset, std::string path);
 
+void displayProgressBar();
+
 /**
  * Check Wi-Fi status.
  * @return True if Wi-Fi is connected; false if not.

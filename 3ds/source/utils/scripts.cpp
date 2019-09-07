@@ -29,6 +29,7 @@
 #include "utils/download.hpp"
 #include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
+#include "utils/thread.hpp"
 
 #include <3ds.h>
 #include <algorithm>
@@ -41,11 +42,17 @@ extern "C" {
 #include "cia.h"
 }
 
+// Progressbar stuff.
+extern char progressBarMsg[128];
+extern bool showProgressBar;
+extern bool progressBarType; // 0 = Download | 1 = Extract
+
 struct Scpt {
 	std::string function;
 	std::string param1;
 	std::string param2;
 	std::string param3;
+	std::string param4;
 };
 
 Scpt getScptFromLine(std::string line) {
@@ -60,6 +67,9 @@ Scpt getScptFromLine(std::string line) {
 	line = line.substr(line.find("	")+1);
 
 	scpt.param3 = line.substr(0, std::min(line.find("	"), line.length()-1));
+	line = line.substr(line.find("	")+1);
+
+	scpt.param4 = line.substr(0, std::min(line.find("	"), line.length()-1));
 	line = line.substr(line.find("	")+1);
 	return scpt;
 }
@@ -105,13 +115,33 @@ void runScript(std::string path) {
 				DisplayMsg(scpt.param1.c_str());
 			}
 
-			if(scpt.function == "screenTop") {
-				set_screen(top);
+			// Download Functions with Progressbar!
+			if(scpt.function == "progressDownloadRelease") {
+				snprintf(progressBarMsg, sizeof(progressBarMsg), scpt.param4.c_str());
+				showProgressBar = true;
+				progressBarType = 0;
+				Threads::create((ThreadFunc)displayProgressBar);
+				if (downloadFromRelease(scpt.param1, scpt.param2, scpt.param3) != 0) {
+					showProgressBar = false;
+					downloadFailed();
+					return;
+				}
+					showProgressBar = false;
 			}
 
-			if(scpt.function == "screenBot") {
-				set_screen(bottom);
+			if(scpt.function == "progressDownloadFile") {
+				snprintf(progressBarMsg, sizeof(progressBarMsg), scpt.param3.c_str());
+				showProgressBar = true;
+				progressBarType = 0;
+				Threads::create((ThreadFunc)displayProgressBar);
+				if (downloadToFile(scpt.param1, scpt.param2) != 0) {
+					showProgressBar = false;
+					downloadFailed();
+					return;
+				}
+					showProgressBar = false;
 			}
+
 
 		}
 	}

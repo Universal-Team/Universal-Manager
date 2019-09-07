@@ -228,6 +228,12 @@ void Script::DrawBottom(void) const
 	} else if (ScriptPage == 2) {
 		Gui::sprite(3, button_button_tl_idx, 1, 27);
 		Gui::DrawString(50, 42, 0.65f, WHITE, "mkdir");
+
+		Gui::sprite(3, button_button_2_idx, 162, 27);
+		Gui::DrawString(190, 42, 0.7f, WHITE, "progressFile");
+
+		Gui::sprite(3, button_button_3_idx, 1, 91);
+		Gui::DrawString(16, 107, 0.65f, WHITE, "progressRelease");
 	}
 }
 
@@ -250,6 +256,10 @@ void Script::DrawSelection(void) const
 		} else if (ScriptPage == 2) {
 			if (Selection == 0) {
 				Gui::drawGUISelector(button_tl_selector_idx, 0, 26, .020f);
+			} else if (Selection == 1) {
+				Gui::drawGUISelector(button_selector_idx, 166, 31, .020f);
+			} else if (Selection == 2) {
+				Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
 			}
 		}
 }
@@ -270,7 +280,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 			if (ScriptPage == 1) {
 				helperBox("downloadRelease : Download a File from Github's Release.\n\ndownloadFile : Download a File from a URL.\n\nextract : Extract an Archive.\n\ninstall : Install a CIA File from the SD Card.\n\ndelete : Delete a FILE from the SD Card.\n\nmsg : Displays a Message on the Top Screen.");
 			} else if (ScriptPage == 2) {
-				helperBox("mkdir : Creates a Folder.");
+				helperBox("mkdir : Creates a Folder.\n\nprogressFile: Same as downloadFile, but with\n a progressbar.\n\nprogressRelease: Same as downloadRelease\n but with a progressbar.");
 			}
 		} else if (hDown & KEY_UP) {
 			if(Selection > 0)	Selection--;
@@ -278,7 +288,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 			if (ScriptPage == 1) {
 			if(Selection < 5)	Selection++;
 			} else if (ScriptPage == 2) {
-				if(Selection < 0)	Selection++;
+				if(Selection < 2)	Selection++;
 			}
 		} else if (hDown & KEY_A) {
 			if (ScriptPage == 1) {
@@ -326,6 +336,21 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				std::string Function = "mkdir	";
 				std::string param1 = Input::getLine();
 				scpt << Function << param1 << " " << std::endl;
+					break;
+				} case 1: {
+				std::string Function = "progressDownloadFile	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				std::string param3 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+					break;
+				  } case 2: {
+				std::string Function = "progressDownloadRelease	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				std::string param3 = Input::getLine();
+				std::string param4 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
 					break;
 				}
 			}
@@ -403,9 +428,22 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		// Page 2.
 	} else if (ScriptPage == 2 && hDown & KEY_TOUCH) {
 		if (touching(touch, Functions[6])) {
-		std::string Function = "mkdir	";
-		std::string param1 = Input::getLine();
-		scpt << Function << param1 << " " << std::endl;
+			std::string Function = "mkdir	";
+			std::string param1 = Input::getLine();
+			scpt << Function << param1 << " " << std::endl;
+		} else if (touching(touch, Functions[7])) {
+			std::string Function = "progressDownloadFile	";
+			std::string param1 = Input::getLine();
+			std::string param2 = Input::getLine();
+			std::string param3 = Input::getLine();
+			scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
+		} else if (touching(touch, Functions[8])) {
+			std::string Function = "progressDownloadRelease	";
+			std::string param1 = Input::getLine();
+			std::string param2 = Input::getLine();
+			std::string param3 = Input::getLine();
+			std::string param4 = Input::getLine();
+			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
 		}
 	}
 }

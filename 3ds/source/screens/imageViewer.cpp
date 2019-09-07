@@ -159,8 +159,8 @@ void Image::BrowseLogic(u32 hDown, u32 hHeld) {
 			if(dirContents[selectedFile].name != currentImage) {
 			}
 			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
-			imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-			ImageMode = 1;
+				imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
+				ImageMode = 1;
 			}
 		}
 	} else if (hDown & KEY_B) {
