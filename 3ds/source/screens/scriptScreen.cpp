@@ -234,6 +234,9 @@ void Script::DrawBottom(void) const
 
 		Gui::sprite(3, button_button_3_idx, 1, 91);
 		Gui::DrawString(16, 107, 0.65f, WHITE, "progressRelease");
+
+		Gui::sprite(3, button_button_br_idx, 162, 88);
+		Gui::DrawString(180, 104, 0.7f, WHITE, "progressExtract");
 	}
 }
 
@@ -260,6 +263,8 @@ void Script::DrawSelection(void) const
 				Gui::drawGUISelector(button_selector_idx, 166, 31, .020f);
 			} else if (Selection == 2) {
 				Gui::drawGUISelector(button_selector_idx, 3, 95, .020f);
+			} else if (Selection == 3) {
+				Gui::drawGUISelector(button_br_selector_idx, 161, 90, .020f);
 			}
 		}
 }
@@ -288,7 +293,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 			if (ScriptPage == 1) {
 			if(Selection < 5)	Selection++;
 			} else if (ScriptPage == 2) {
-				if(Selection < 2)	Selection++;
+				if(Selection < 3)	Selection++;
 			}
 		} else if (hDown & KEY_A) {
 			if (ScriptPage == 1) {
@@ -346,6 +351,14 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 					break;
 				  } case 2: {
 				std::string Function = "progressDownloadRelease	";
+				std::string param1 = Input::getLine();
+				std::string param2 = Input::getLine();
+				std::string param3 = Input::getLine();
+				std::string param4 = Input::getLine();
+				scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+					break;
+				} case 3: {
+				std::string Function = "progressExtract	";
 				std::string param1 = Input::getLine();
 				std::string param2 = Input::getLine();
 				std::string param3 = Input::getLine();
@@ -439,6 +452,13 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			scpt << Function << param1 << "	" << param2 << "	" << param3 << " " << std::endl;
 		} else if (touching(touch, Functions[8])) {
 			std::string Function = "progressDownloadRelease	";
+			std::string param1 = Input::getLine();
+			std::string param2 = Input::getLine();
+			std::string param3 = Input::getLine();
+			std::string param4 = Input::getLine();
+			scpt << Function << param1 << "	" << param2 << "	" << param3 << "	" << param4 << " " << std::endl;
+		} else if(touching(touch, Functions[9])) {
+			std::string Function = "progressExtract	";
 			std::string param1 = Input::getLine();
 			std::string param2 = Input::getLine();
 			std::string param3 = Input::getLine();

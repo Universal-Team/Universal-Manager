@@ -47,6 +47,9 @@ extern char progressBarMsg[128];
 extern bool showProgressBar;
 extern bool progressBarType; // 0 = Download | 1 = Extract
 
+extern int filesExtracted;
+extern std::string extractingFile;
+
 struct Scpt {
 	std::string function;
 	std::string param1;
@@ -140,6 +143,17 @@ void runScript(std::string path) {
 					return;
 				}
 					showProgressBar = false;
+			}
+
+			// The extract Function with a progressbar!
+			if(scpt.function == "progressExtract") {
+				snprintf(progressBarMsg, sizeof(progressBarMsg), scpt.param4.c_str());
+				showProgressBar = true;
+				filesExtracted = 0;
+				progressBarType = 1;
+				Threads::create((ThreadFunc)displayProgressBar);
+				extractArchive(scpt.param1, scpt.param2, scpt.param3);
+				showProgressBar = false;
 			}
 
 
