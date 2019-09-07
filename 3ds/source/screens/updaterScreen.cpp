@@ -150,7 +150,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				if(Selection < 2)	Selection++;
 
 			} else if (updaterMode == 2) {
-				if(Selection < 4)	Selection++;
+				if(Selection < 5)	Selection++;
 
 			} else if (updaterMode == 3) {
 				if(Selection < 1)	Selection++;
@@ -170,7 +170,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				} case 1:
 					Selection = 0;
-					buttonsAmount = 5;
+					buttonsAmount = 6;
 					titleButtons = 3;
 					updaterMode = 2;
 					break;
@@ -235,6 +235,9 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
 					updateCheats();
 					}
+					break;
+				} case 5: {
+					downloadBoxart();
 					break;
 				}
 			}
@@ -336,7 +339,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 
 		} else if (updaterMode == 3) {
 			Selection = 0;
-			buttonsAmount = 5;
+			buttonsAmount = 6;
 			titleButtons = 3;
 			updaterMode = 2;
 
@@ -350,7 +353,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 	} else if (hDown & KEY_R) {
 		if (updaterMode == 1) {
 			Selection = 0;
-			buttonsAmount = 5;
+			buttonsAmount = 6;
 			titleButtons = 3;
 			updaterMode = 2;
 
@@ -381,7 +384,7 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[7])) {
 			Selection = 0;
-			buttonsAmount = 5;
+			buttonsAmount = 6;
 			titleButtons = 3;
 			updaterMode = 2;
 
@@ -452,6 +455,10 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			if(confirmPopup("Are you sure you want to download the Usrcheat.dat?")) {
 			updateCheats();
 			}
+
+			} else if (touching(touch, Functions[5])) {
+				downloadBoxart();
+
 
 		} else if (touching(touch, Functions[10])) {
 			Selection = 0;
@@ -556,6 +563,7 @@ void Updater::DrawText(void) const
 
 	Gui::DrawString(30, 138, 0.7f, WHITE, "Extras");
 	Gui::DrawString(140, 138, 0.7f, WHITE, "Cheats");
+	Gui::DrawString(229, 138, 0.7f, WHITE, "Boxarts");
 
 	} else if (updaterMode == 3) {
 	Gui::DrawString(30, 58, 0.7f, WHITE, "Extras");
@@ -644,6 +652,8 @@ void Updater::DrawSelection(void) const
 		Gui::drawGUISelector(button_updater_selector_idx, Functions[3].x, Functions[3].y, .020f);
 	} else if (Selection == 4) {
 		Gui::drawGUISelector(button_updater_selector_idx, Functions[4].x, Functions[4].y, .020f);
+	} else if (Selection == 5) {
+		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[5].x, Functions[5].y, .020f);
 	}
 
 

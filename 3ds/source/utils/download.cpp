@@ -26,7 +26,9 @@
 
 #include "colors.hpp"
 #include "gui.hpp"
+
 #include "screens/screenCommon.hpp"
+
 #include "utils/download.hpp"
 #include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
@@ -35,8 +37,8 @@
 #include "utils/thread.hpp"
 
 #include <sys/stat.h>
-#include <unistd.h>
 #include <vector>
+#include <unistd.h>
 
 extern "C" {
 	#include "utils/cia.h"
@@ -60,6 +62,7 @@ extern std::string extractingFile;
 char progressBarMsg[128] = "";
 bool showProgressBar = false;
 bool progressBarType = 0; // 0 = Download | 1 = Extract
+bool continueNdsScan = true;
 
 extern bool updateAvailable[];
 
@@ -1091,5 +1094,242 @@ void updateLeafEditRelease(void) {
 		installCia("/LeafEdit-Release.cia");
 
 		deleteFile("sdmc:/LeafEdit-Release.cia");
+	doneMsg();
+}
+
+
+// Boxarts for TWLMenu++. Ported from TWLMenu++ Updater.
+const char* getBoxartRegion(char tid_region) {
+	// European boxart languages.
+	static const char *const ba_langs_eur[] = {
+		"EN",	// Japanese (English used in place)
+		"EN",	// English
+		"FR",	// French
+		"DE",	// German
+		"IT",	// Italian
+		"ES",	// Spanish
+		"ZHCN",	// Simplified Chinese
+		"KO",	// Korean
+	};
+	CIniFile ini("sdmc:/_nds/TWiLightMenu/settings.ini");
+	int language = ini.GetInt("SRLOADER", "LANGUAGE", -1);
+	const char *ba_region;
+
+	switch (tid_region) {
+		case 'E':
+		case 'T':
+			ba_region = "US";	// USA
+			break;
+		case 'J':
+			ba_region = "JA";	// Japanese
+			break;
+		case 'K':
+			ba_region = "KO";	// Korean
+			break;
+
+		case 'O':			// USA/Europe
+			// if(region == CFG_REGION_USA) {
+				// System is USA region.
+				// Get the USA boxart if it's available.
+				ba_region = "EN";
+				break;
+			// }
+			// fall-through
+		case 'P':			// Europe
+		default:
+			// System is not USA region.
+			// Get the European boxart that matches the system's language.
+			// TODO: Check country code for Australia.
+			// This requires parsing the Config savegame. (GetConfigInfoBlk2())
+			// Reference: https://3dbrew.org/wiki/Config_Savegame
+			if(language == -1)
+				ba_region = "EN";	// TODO: make this actually set to the console's language
+			else
+				ba_region = ba_langs_eur[language];
+			break;
+
+		case 'U':
+			// Alternate country code for Australia.
+			ba_region = "AU";
+			break;
+
+		// European country-specific localizations.
+		case 'D':
+			ba_region = "DE";	// German
+			break;
+		case 'F':
+			ba_region = "FR";	// French
+			break;
+		case 'H':
+			ba_region = "NL";	// Dutch
+			break;
+		case 'I':
+			ba_region = "IT";	// Italian
+			break;
+		case 'R':
+			ba_region = "RU";	// Russian
+			break;
+		case 'S':
+			ba_region = "ES";	// Spanish
+			break;
+		case '#':
+			ba_region = "HB"; // Homebrew
+			break;
+	}
+	return ba_region;
+}
+
+void scanToCancelBoxArt(void) {
+	while(continueNdsScan) {
+		hidScanInput();
+		if(hidKeysDown() & KEY_B) {
+			continueNdsScan = false;
+		}
+		gspWaitForVBlank();
+	}
+}
+
+void downloadBoxart(void) {
+
+	vector<DirEntry> dirContents;
+	std::string scanDir;
+
+	DisplayMsg("Would you like to choose a directory, or scan\nthe full card?\n\n\n\n\n\n\n\n\n\n       B: Cancel   A: Choose Directory   X: Full SD");
+
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+
+		if(hDown & KEY_A) {
+			chdir("sdmc:/");
+			bool dirChosen = false;
+			uint selectedDir = 0;
+			uint keyRepeatDelay = 0;
+			while(!dirChosen) {
+				getDirectoryContents(dirContents);
+				for(uint i=0;i<dirContents.size();i++) {
+					if(!dirContents[i].isDirectory) {
+						dirContents.erase(dirContents.begin()+i);
+					}
+				}
+				while(1) {
+					gspWaitForVBlank();
+					hidScanInput();
+					const u32 hDown = hidKeysDown();
+					const u32 hHeld = hidKeysHeld();
+					if(keyRepeatDelay)	keyRepeatDelay--;
+					if(hDown & KEY_A) {
+						chdir(dirContents[selectedDir].name.c_str());
+						selectedDir = 0;
+						break;
+					} else if(hDown & KEY_B) {
+						char path[PATH_MAX];
+						getcwd(path, PATH_MAX);
+						if(strcmp(path, "sdmc:/") == 0)	return;
+						chdir("..");
+						selectedDir = 0;
+						break;
+					}	else if(hDown & KEY_X) {
+						chdir(dirContents[selectedDir].name.c_str());
+						char path[1024];
+						getcwd(path, sizeof(path));
+						scanDir = path;
+						dirChosen = true;
+						break;
+					} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+						if(selectedDir > 0) {
+							selectedDir--;
+							keyRepeatDelay = 3;
+						}
+					} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+						if(selectedDir < dirContents.size()-1) {
+							selectedDir++;
+							keyRepeatDelay = 3;
+						}
+					} else if(hHeld & KEY_LEFT && !keyRepeatDelay) {
+						selectedDir -= 10;
+						if(selectedDir < 0) {
+							selectedDir = 0;
+						}
+						keyRepeatDelay = 3;
+					} else if(hHeld & KEY_RIGHT && !keyRepeatDelay) {
+						selectedDir += 10;
+						if(selectedDir > dirContents.size()) {
+							selectedDir = dirContents.size()-1;
+						}
+						keyRepeatDelay = 3;
+					}
+					std::string dirs;
+					for(uint i=(selectedDir<10) ? 0 : selectedDir-10;i<dirContents.size()&&i<((selectedDir<10) ? 11 : selectedDir+1);i++) {
+						if(i == selectedDir) {
+							dirs += "> " + dirContents[i].name + "\n";
+						} else {
+							dirs += "  " + dirContents[i].name + "\n";
+						}
+					}
+					for(uint i=0;i<((dirContents.size()<10) ? 11-dirContents.size() : 0);i++) {
+						dirs += "\n";
+					}
+					dirs += "B: Back   A: Open   X: Choose";
+					DisplayMsg(dirs.c_str());
+				}
+			}
+			break;
+		} else if(hDown & KEY_B) {
+			return;
+		} else if(hDown & KEY_X) {
+			scanDir = "sdmc:/";
+			break;
+		}
+	}
+
+	DisplayMsg("Scanning SD card for DS roms...\n\n(Press B to cancel)");
+
+	chdir(scanDir.c_str());
+	continueNdsScan = true;
+	Threads::create((ThreadFunc)scanToCancelBoxArt);
+	findNdsFiles(dirContents);
+	continueNdsScan = false;
+
+	mkdir("sdmc:/_nds/TWiLightMenu/boxart/temp", 0777);
+	for(int i=0;i<(int)dirContents.size();i++) {
+		char path[256];
+		snprintf(path, sizeof(path), "sdmc:/_nds/TWiLightMenu/boxart/%s.png", dirContents[i].tid);
+		if(access(path, F_OK) != 0) {
+			char downloadMessage[50];
+			snprintf(downloadMessage, sizeof(downloadMessage), "Downloading \"%s.png\"...\n", dirContents[i].tid);
+			DisplayMsg(downloadMessage);
+
+			const char *ba_region = getBoxartRegion(dirContents[i].tid[3]);
+
+			char boxartUrl[256];
+			snprintf(boxartUrl, sizeof(boxartUrl), "https://art.gametdb.com/ds/coverS/%s/%s.png", ba_region, dirContents[i].tid);
+			char boxartPath[256];
+			snprintf(boxartPath, sizeof(boxartPath), "/_nds/TWiLightMenu/boxart/temp/%s.png", dirContents[i].tid);
+
+			downloadToFile(boxartUrl, boxartPath);
+		}
+	}
+
+	chdir("sdmc:/_nds/TWiLightMenu/boxart/temp/");
+	getDirectoryContents(dirContents);
+
+	DisplayMsg("Cleaning up...");
+	for(int i=0;i<(int)dirContents.size();i++) {
+		if(dirContents[i].size == 0) {
+			char path[256];
+			snprintf(path, sizeof(path), "sdmc:/_nds/TWiLightMenu/boxart/temp/%s", dirContents[i].name.c_str());
+			deleteFile(path);
+		} else {
+			char tempPath[256];
+			snprintf(tempPath, sizeof(tempPath), "sdmc:/_nds/TWiLightMenu/boxart/temp/%s", dirContents[i].name.c_str());
+			char path[256];
+			snprintf(path, sizeof(path), "sdmc:/_nds/TWiLightMenu/boxart/%s", dirContents[i].name.c_str());
+			deleteFile(path);
+			rename(tempPath, path);
+		}
+		rmdir("sdmc:/_nds/TWiLightMenu/boxart/temp");
+	}
 	doneMsg();
 }

@@ -170,3 +170,8 @@ void updateLeafEdit(void);
  * Update LeafEdit to the latest Release.
  */
 void updateLeafEditRelease(void);
+
+/**
+ * Download boxart from gametdb for all roms found on SD.
+ */
+void downloadBoxart(void);
