@@ -118,10 +118,10 @@ int main()
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
 	if (is3dsx == true) {
-		if (Config::Citra == 0) {
 			path3dsx = path;
-			path3dsx = path3dsx.substr(5, path3dsx.size());
-		} else if (Config::Citra == 1) {
+			if (path3dsx == "sdmc:/") {
+				path3dsx = path3dsx.substr(5, path3dsx.size());
+			} else {
 		}
 	}
 
