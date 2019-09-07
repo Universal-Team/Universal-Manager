@@ -174,10 +174,13 @@ void Settings::DrawCurrentPage(void) const
 {
 	if (SettingsPage == 1) {
 		Gui::DrawString(240, 4, 0.50, WHITE, "1");
+		Gui::sprite(0, sprites_frame_idx, 236, 4);
 	} else if (SettingsPage == 2) {
 		Gui::DrawString(260, 4, 0.50, WHITE, "2");
+		Gui::sprite(0, sprites_frame_idx, 256, 4);
 	} else if (SettingsPage == 3) {
 		Gui::DrawString(280, 4, 0.50, WHITE, "3");
+		Gui::sprite(0, sprites_frame_idx, 276, 4);
 	}
 }
 

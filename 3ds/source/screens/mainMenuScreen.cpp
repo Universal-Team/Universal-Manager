@@ -165,8 +165,10 @@ void MainMenu::DrawCurrentPage(void) const
 {
 	if (currentPage == 1) {
 		Gui::DrawString(260, 4, 0.50, WHITE, "1");
+		Gui::sprite(0, sprites_frame_idx, 256, 4);
 	} else if (currentPage == 2) {
 		Gui::DrawString(280, 4, 0.50, WHITE, "2");
+		Gui::sprite(0, sprites_frame_idx, 276, 4);
 	}
 }
 
