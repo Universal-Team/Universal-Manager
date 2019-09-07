@@ -930,14 +930,65 @@ void downloadThemes(void) {
 }
 
 void downloadScripts(void) {
-DisplayMsg("Downloading latest Scripts Package...");
-		if (downloadToFile("https://cdn.discordapp.com/attachments/596873160083636274/596874729277882381/scripts.zip?raw=true", "/Scripts.zip") != 0) {
-		downloadFailed();
-		return;
+	int keyRepeatDelay = 0;
+
+	DisplayMsg("Getting Script list...");
+
+	std::vector<ThemeEntry> scriptList;
+	scriptList = getThemeList("Universal-Team/extras", "Scripts");
+	mkdir("sdmc:/Universal-Manager/scripts", 0777);
+
+	int selectedScript = 0;
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
+		if(keyRepeatDelay)	keyRepeatDelay--;
+		if(hDown & KEY_A) {
+			mkdir((scriptList[selectedScript].sdPath).c_str(), 0777);
+			DisplayMsg(("Downloading: "+scriptList[selectedScript].name).c_str());
+			downloadToFile(scriptList[selectedScript].downloadUrl, "sdmc:/Universal-Manager/scripts/"+scriptList[selectedScript].name);
+		} else if(hDown & KEY_B) {
+			selectedScript = 0;
+			return;
+		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+			if(selectedScript > 0) {
+				selectedScript--;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+			if(selectedScript < (int)scriptList.size()-1) {
+				selectedScript++;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_LEFT && !keyRepeatDelay) {
+			selectedScript -= 10;
+			if(selectedScript < 0) {
+				selectedScript = 0;
+			}
+			keyRepeatDelay = 3;
+		} else if(hHeld & KEY_RIGHT && !keyRepeatDelay) {
+			selectedScript += 10;
+			if(selectedScript > (int)scriptList.size()) {
+				selectedScript = scriptList.size()-1;
+			}
+			keyRepeatDelay = 3;
+		}
+		std::string scriptText;
+		for(int i=(selectedScript<10) ? 0 : selectedScript-10;i<(int)scriptList.size()&&i<((selectedScript<10) ? 11 : selectedScript+1);i++) {
+			if(i == selectedScript) {
+				scriptText += "> " + scriptList[i].name + "\n";
+			} else {
+				scriptText += "  " + scriptList[i].name + "\n";
+			}
+		}
+		for(uint i=0;i<((scriptList.size()<10) ? 11-scriptList.size() : 0);i++) {
+			scriptText += "\n";
+		}
+		scriptText += "                B: Back   A: Choose";
+		DisplayMsg(scriptText.c_str());
 	}
-	extractArchive("/Scripts.zip", "/", "/Universal-Manager/Scripts/");
-	deleteFile("sdmc:/Scripts.zip");
-	doneMsg();
 }
 
 void updateCheats(void) {
