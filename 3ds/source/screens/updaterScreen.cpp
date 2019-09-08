@@ -101,6 +101,14 @@ void Updater::DrawButtons(void) const
 			Gui::sprite(3, button_updater_idx, Functions[3].x, Functions[3].y);
 			Gui::sprite(3, button_updater_idx, Functions[4].x, Functions[4].y);
 			Gui::sprite(3, button_updater_br_idx, Functions[5].x, Functions[5].y);
+	} else if (buttonsAmount == 7) {
+			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
+			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
+			Gui::sprite(3, button_updater_idx, Functions[2].x, Functions[2].y);
+			Gui::sprite(3, button_updater_idx, Functions[3].x, Functions[3].y);
+			Gui::sprite(3, button_updater_idx, Functions[4].x, Functions[4].y);
+			Gui::sprite(3, button_updater_idx, Functions[5].x, Functions[5].y);
+			Gui::sprite(3, button_updater_idx, Functions[11].x, Functions[11].y);
 	} else if (buttonsAmount == 8) {
 			Gui::sprite(3, button_updater_tl_idx, Functions[0].x, Functions[0].y);
 			Gui::sprite(3, button_updater_idx, Functions[1].x, Functions[1].y);
@@ -150,7 +158,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				if(Selection < 2)	Selection++;
 
 			} else if (updaterMode == 2) {
-				if(Selection < 5)	Selection++;
+				if(Selection < 6)	Selection++;
 
 			} else if (updaterMode == 3) {
 				if(Selection < 1)	Selection++;
@@ -170,8 +178,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				} case 1:
 					Selection = 0;
-					buttonsAmount = 6;
-					titleButtons = 3;
+					buttonsAmount = 7;
+					titleButtons = 4;
 					updaterMode = 2;
 					break;
 				  case 2: {
@@ -238,6 +246,12 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				} case 5: {
 					downloadBoxart();
+					break;
+				}
+				case 6: {
+					if(confirmPopup("Are you sure you want to update GBARunner2\nTo Nightly?")) {
+						updateGBARunner2();
+					}
 					break;
 				}
 			}
@@ -339,8 +353,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 
 		} else if (updaterMode == 3) {
 			Selection = 0;
-			buttonsAmount = 6;
-			titleButtons = 3;
+			buttonsAmount = 7;
+			titleButtons = 4;
 			updaterMode = 2;
 
 		} else if (updaterMode == 4) {
@@ -353,8 +367,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 	} else if (hDown & KEY_R) {
 		if (updaterMode == 1) {
 			Selection = 0;
-			buttonsAmount = 6;
-			titleButtons = 3;
+			buttonsAmount = 7;
+			titleButtons = 4;
 			updaterMode = 2;
 
 		} else if (updaterMode == 2) {
@@ -384,8 +398,8 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[7])) {
 			Selection = 0;
-			buttonsAmount = 6;
-			titleButtons = 3;
+			buttonsAmount = 7;
+			titleButtons = 4;
 			updaterMode = 2;
 
 		} else if (touching(touch, Functions[8])) {
@@ -459,6 +473,10 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			} else if (touching(touch, Functions[5])) {
 				downloadBoxart();
 
+		} else if (touching(touch, Functions[11])) {
+			if(confirmPopup("Are you sure you want to update GBARunner2\nTo Nightly?")) {
+				updateGBARunner2();
+			}
 
 		} else if (touching(touch, Functions[10])) {
 			Selection = 0;
@@ -565,6 +583,9 @@ void Updater::DrawText(void) const
 	Gui::DrawString(140, 138, 0.7f, WHITE, "Cheats");
 	Gui::DrawString(229, 138, 0.7f, WHITE, "Boxarts");
 
+	Gui::DrawString(18, 178, 0.65f, WHITE, "GBARunner2");
+	Gui::DrawString(140, 178, 0.7f, WHITE, "Nightly");
+
 	} else if (updaterMode == 3) {
 	Gui::DrawString(30, 58, 0.7f, WHITE, "Extras");
 	Gui::DrawString(140, 58, 0.7f, WHITE, "Themes");
@@ -658,6 +679,8 @@ void Updater::DrawSelection(void) const
 		Gui::drawGUISelector(button_updater_selector_idx, Functions[4].x, Functions[4].y, .020f);
 	} else if (Selection == 5) {
 		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[5].x, Functions[5].y, .020f);
+	} else if (Selection == 6) {
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[11].x, Functions[11].y, .020f);
 	}
 
 

@@ -177,3 +177,8 @@ void updateLeafEditRelease(void);
  * Download boxart from gametdb for all roms found on SD.
  */
 void downloadBoxart(void);
+
+/**
+ * Update GBARunner2 to it's latest Nightly.
+ */
+void updateGBARunner2(void);

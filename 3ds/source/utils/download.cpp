@@ -1384,3 +1384,32 @@ void downloadBoxart(void) {
 	}
 	doneMsg();
 }
+
+// GBARunner2.
+void updateGBARunner2(void) 
+{
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 no waramicache...(Nightly)");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
+
+	// Download the normal version one.
+	if (downloadFromRelease("https://github.com/Gericom/GBARunner2", "GBARunner2_arm7dldi\\.nds", "/_nds/GBARunner2.nds") != 0) {
+		showProgressBar = false;
+		downloadFailed();
+		return;
+	}
+
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 wramicache...(Nightly)");
+		progressBarType = 0;
+
+	// Download the wramicache version.
+	if (downloadFromRelease("https://github.com/Gericom/GBARunner2", "GBARunner2_arm7dldi_wramicache\\.nds", "/_nds/GBARunner2_wramicache.nds") != 0) {
+		showProgressBar = false;
+		downloadFailed();
+		return;
+	}
+
+	showProgressBar = false;
+	doneMsg();
+}
