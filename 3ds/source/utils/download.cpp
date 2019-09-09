@@ -1388,7 +1388,7 @@ void downloadBoxart(void) {
 // GBARunner2.
 void updateGBARunner2(void) 
 {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 no waramicache...(Nightly)");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 no wramicache...(Nightly)");
 	showProgressBar = true;
 	progressBarType = 0;
 	Threads::create((ThreadFunc)displayProgressBar);
