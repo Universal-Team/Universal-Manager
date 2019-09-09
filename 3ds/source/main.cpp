@@ -133,6 +133,8 @@ int main()
 		return DisplayStartupError("sdmcInit failed.", res);
 	}
 
+	Config::loadConfig();
+
 	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
 
 	if (R_FAILED(res = acInit())) {
@@ -152,8 +154,6 @@ int main()
 	if (R_FAILED(res = ptmuxInit())) {
 		return DisplayStartupError("ptmuxInit failed.", res);
 	}
-
-	Config::loadConfig();
 
 	if (Config::Citra == 0) {
 		mcuInit();

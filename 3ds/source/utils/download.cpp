@@ -1016,19 +1016,36 @@ void updatePKMNChestRelease(void) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nRelease");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
-		progressBarType = 0;
-	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
+
+	showProgressBar = false;
+
+		if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
+		} else {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
+		}
 		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIA..");
@@ -1042,19 +1059,36 @@ void updatePKMNChestNightly(void) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nNightly");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
-		progressBarType = 0;
-	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
+
+	showProgressBar = false;
+
+		if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
+		} else {
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
+		}
 		showProgressBar = false;
 
 		DisplayMsg("Now Installing the CIA..");
