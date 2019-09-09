@@ -1,4 +1,4 @@
-#include "Graphics/stringUtils.hpp"
+#include "graphics/stringUtils.hpp"
 
 #include <algorithm>
 #include <map>
