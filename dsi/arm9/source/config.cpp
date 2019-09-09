@@ -1,5 +1,6 @@
 #include "config.h"
 #include "inifile.h"
+
 #include "graphics/graphics.h"
 
 int Config::Barcolor, Config::Bg;

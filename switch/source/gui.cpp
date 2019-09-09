@@ -1,9 +1,10 @@
 #include "gui.hpp"
-#include "screenCommon.hpp"
+#include "screens/screenCommon.hpp"
+
 #include <assert.h>
+#include <stack>
 #include <stdarg.h>
 #include <unistd.h>
-#include <stack>
 
 std::stack<std::unique_ptr<SCREEN>> screens;
 SDL_Window *Window;

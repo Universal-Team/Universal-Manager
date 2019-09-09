@@ -39,11 +39,14 @@ std::string Logging::format(const std::string& fmt_str, ...)
     return std::string(formatted.get());
 }
 
-std::string Logging::timeStr(void)
+std::string Logging::logDate(void)
 {
-    time_t unixTime       = time(NULL);
-    struct tm* timeStruct = gmtime((const time_t*)&unixTime);
-    return format("%02i:%02i:%02i", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec);
+    time_t unixTime;
+    struct tm timeStruct;
+    time(&unixTime);
+    localtime_r(&unixTime, &timeStruct);
+    return format("%04i-%02i-%02i %02i:%02i:%02i", timeStruct.tm_year + 1900, timeStruct.tm_mon + 1, timeStruct.tm_mday,
+        timeStruct.tm_hour, timeStruct.tm_min, timeStruct.tm_sec);
 }
 
 void Logging::createLogFile(void) {
@@ -58,7 +61,7 @@ void Logging::writeToLog(std::string debugText) {
 	std::ofstream logFile;
 	logFile.open(("sdmc:/Universal-Manager/universal.log"), std::ofstream::app);
 	std::string writeDebug = "[ ";
-	writeDebug += timeStr();
+	writeDebug += logDate();
 	writeDebug += " ] ";
 	writeDebug += debugText.c_str();
 	logFile << writeDebug << std::endl;

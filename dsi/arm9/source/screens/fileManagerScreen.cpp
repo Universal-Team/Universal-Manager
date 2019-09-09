@@ -23,11 +23,11 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-
-#include "screens/screenCommon.hpp"
 #include "config.h"
-#include "fileManagerScreen.hpp"
 #include "gui.hpp"
+
+#include "screens/fileManagerScreen.hpp"
+#include "screens/screenCommon.hpp"
 
 
 void FileManager::Draw(void) const

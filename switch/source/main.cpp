@@ -24,22 +24,25 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <switch.h>
+
 #include "colors.hpp"
-#include "screens/screenCommon.hpp"
 #include "gui.hpp"
+#include "logging.hpp"
+
+#include "screens/fileManagerScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+
 #include <algorithm>
 #include <dirent.h>
 #include <malloc.h>
 #include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <switch.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
-
-#include "mainMenuScreen.hpp"
-#include "fileManagerScreen.hpp"
 
 extern "C" {
     #include "touch_helper.h"
@@ -52,9 +55,13 @@ static Result servicesInit(void)
 {
     Result res = 0;
     romfsInit();
+    mkdir("sdmc:/switch", 0777);
+    mkdir("sdmc:/switch/Universal-Manager", 0777);
+    Logging::createLogFile();
 
     Gui::Init();
 	Textures_Load();
+    Logging::writeToLog("Universal-Manager launched Successfully!");
 
     return 0;
 }

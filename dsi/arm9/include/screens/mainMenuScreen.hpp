@@ -26,9 +26,9 @@
 #ifndef MAINMENU_HPP
 #define MAINMENU_HPP
 
-#include "screens/screen.hpp"
-
 #include "structs.hpp"
+
+#include "screens/screen.hpp"
 
 #include <array>
 

@@ -27,8 +27,9 @@
 #ifndef SETTINGSSCREEN_HPP
 #define SETTINGSSCREEN_HPP
 
-#include "screens/screen.hpp"
 #include "structs.hpp"
+
+#include "screens/screen.hpp"
 
 class Settings : public SCREEN 
 {

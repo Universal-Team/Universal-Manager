@@ -1,4 +1,5 @@
-#include "screen.hpp"
+#include "screens/screen.hpp"
+
 #include <random>
 #include <stack>
 #include <string.h>

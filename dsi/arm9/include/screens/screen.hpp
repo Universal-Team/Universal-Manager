@@ -1,8 +1,8 @@
 #ifndef SCREEN_HPP
 #define SCREEN_HPP
 
-#include <nds.h>
 #include <memory>
+#include <nds.h>
 
 class SCREEN
 {

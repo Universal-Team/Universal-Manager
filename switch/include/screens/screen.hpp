@@ -1,8 +1,8 @@
 #ifndef SCREEN_HPP
 #define SCREEN_HPP
 
-#include <switch.h>
 #include <memory>
+#include <switch.h>
 
 class SCREEN
 {

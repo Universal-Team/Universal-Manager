@@ -81,7 +81,7 @@ CFLAGS	 := -g -Wall -O3 -ffunction-sections \
             -DAPP_TITLE="\"$(APP_TITLE)\"" \
             $(ARCH) $(DEFINES)
 
-CFLAGS	 += -D__SWITCH__ $(INCLUDE) `freetype-config --cflags` `sdl2-config --cflags`
+CFLAGS	 += -D__SWITCH__ $(INCLUDE) `freetype-config --cflags` `sdl2-config --cflags` -D_GNU_SOURCE=1
 
 CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 

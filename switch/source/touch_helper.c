@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "touch_helper.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #define TAP_MOVEMENT_GAP 20
 #define LONG_TAP_PERIOD 1.5

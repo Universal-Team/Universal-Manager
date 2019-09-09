@@ -24,13 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/fileManagerScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
+
 #include <algorithm>
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include "fileManagerScreen.hpp"
-#include "mainMenuScreen.hpp"
 
 void FileManager::Draw(void) const
 {

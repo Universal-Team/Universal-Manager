@@ -27,8 +27,9 @@
 #ifndef MAINMENU_HPP
 #define MAINMENU_HPP
 
-#include "screens/screen.hpp"
 #include "textures.hpp"
+
+#include "screens/screen.hpp"
 
 class MainMenu : public SCREEN 
 {

@@ -24,11 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "screens/fileManagerScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "screens/screenCommon.hpp"
-#include "mainMenuScreen.hpp"
-#include "fileManagerScreen.hpp"
 
 
 extern "C" {

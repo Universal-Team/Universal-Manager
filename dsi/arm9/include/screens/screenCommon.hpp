@@ -24,7 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "../graphics/graphics.h"
+#include "graphics/graphics.h"
 
 // Graphic loading.
 void loadGraphics(void);

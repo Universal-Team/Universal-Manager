@@ -24,10 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
 #include "config.h"
-#include "settingsScreen.hpp"
 #include "gui.hpp"
+
+#include "screens/screenCommon.hpp"
+#include "screens/settingsScreen.hpp"
+
 
 bool touching(touchPosition touch, Structs::ButtonPos button);
 

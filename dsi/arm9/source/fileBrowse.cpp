@@ -21,6 +21,7 @@
 ------------------------------------------------------------------*/
 
 #include "fileBrowse.h"
+
 #include <algorithm>
 #include <cstdio>
 #include <dirent.h>

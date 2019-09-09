@@ -1,5 +1,6 @@
-#include <stack>
 #include "gui.hpp"
+
+#include <stack>
 
 
 std::stack<std::unique_ptr<SCREEN>> screens;

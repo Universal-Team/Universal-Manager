@@ -1,14 +1,16 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
-#include <switch.h>
+#include "colors.hpp"
+#include "SDL_FontCache.h"
+
+#include "screens/screen.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h> 
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include "SDL_FontCache.h"
-#include "colors.hpp"
-#include "screen.hpp"
+#include <switch.h>
 
 #define FONT_SIZE_18 0.72f
 #define FONT_SIZE_17 0.7f

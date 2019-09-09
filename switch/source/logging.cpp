@@ -24,20 +24,46 @@
 *         reasonable ways as different from the original version.
 */
 
-#include <fstream>
-#include <stdarg.h>
-#include <string>
-#include <time.h>
-#include <unistd.h>
+#include "logging.hpp"
 
-namespace Logging {
-	// Create the Log File.
-	void createLogFile(void);
+#include <memory>
 
-	// Write to the Log.
-	void writeToLog(std::string debugText);
+std::string Logging::format(const std::string& fmt_str, ...)
+{
+    va_list ap;
+    char* fp = NULL;
+    va_start(ap, fmt_str);
+    vasprintf(&fp, fmt_str.c_str(), ap);
+    va_end(ap);
+    std::unique_ptr<char, decltype(free)*> formatted(fp, free);
+    return std::string(formatted.get());
+}
 
-	// Other needed stuff. ;P
-	std::string logDate(void);
-	std::string format(const std::string& fmt_str, ...);
+std::string Logging::logDate(void)
+{
+    time_t unixTime;
+    struct tm timeStruct;
+    time(&unixTime);
+    localtime_r(&unixTime, &timeStruct);
+    return format("%04i-%02i-%02i %02i:%02i:%02i", timeStruct.tm_year + 1900, timeStruct.tm_mon + 1, timeStruct.tm_mday,
+        timeStruct.tm_hour, timeStruct.tm_min, timeStruct.tm_sec);
+}
+
+void Logging::createLogFile(void) {
+	if((access("sdmc:/switch/Universal-Manager/universal.log", F_OK) == 0)) {
+	} else {
+		FILE* logFile = fopen(("sdmc:/switch/Universal-Manager/universal.log"), "w");
+		fclose(logFile);
+	}
+}
+
+void Logging::writeToLog(std::string debugText) {
+	std::ofstream logFile;
+	logFile.open(("sdmc:/switch/Universal-Manager/universal.log"), std::ofstream::app);
+	std::string writeDebug = "[ ";
+	writeDebug += logDate();
+	writeDebug += " ] ";
+	writeDebug += debugText.c_str();
+	logFile << writeDebug << std::endl;
+	logFile.close();
 }

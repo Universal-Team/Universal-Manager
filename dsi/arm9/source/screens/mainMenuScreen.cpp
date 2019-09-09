@@ -24,13 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/screenCommon.hpp"
 #include "config.h"
-#include "mainMenuScreen.hpp"
-#include "fileManagerScreen.hpp"
-#include "settingsScreen.hpp"
 #include "gui.hpp"
 
+#include "screens/fileManagerScreen.hpp"
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+#include "screens/settingsScreen.hpp"
 
 
 bool touching(touchPosition touch, Structs::ButtonPos button);

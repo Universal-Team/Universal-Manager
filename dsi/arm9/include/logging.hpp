@@ -38,6 +38,6 @@ namespace Logging {
 	void writeToLog(std::string debugText);
 
 	// Other needed stuff. ;P
-	std::string timeStr(void);
+	std::string logDate(void);
 	std::string format(const std::string& fmt_str, ...);
 }
