@@ -52,7 +52,7 @@ jobs:
 ########################################
     - script: |
         sudo apt update
-        sudo apt install haveged p7zip-full qrencode
+        sudo apt install haveged p7zip-full
 
         curl -L https://github.com/devkitPro/pacman/releases/download/devkitpro-pacman-1.0.1/devkitpro-pacman.deb -o pacman.deb
         sudo dpkg -i pacman.deb
@@ -144,6 +144,7 @@ jobs:
         displayName: "Retrieving artifacts from Switch build"
 ########################################
       - script: |
+          sudo apt install qrencode
           export CURRENT_DATE=$(date +"%Y%m%d-%H%M%S")
           echo '##vso[task.setvariable variable=CURRENT_DATE]'$CURRENT_DATE
           echo '##vso[task.setvariable variable=CURRENT_DATE;isOutput=true]'$CURRENT_DATE
@@ -153,7 +154,7 @@ jobs:
           git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
           cd extras/builds/Universal-Manager
 
-          qrencode -o Universal-Updater.png https://github.com/TWLBot/Builds/releases/download/v$CURRENT_DATE/Universal-Updater.cia
+          qrencode -o Universal-Manager.png https://github.com/TWLBot/Builds/releases/download/v$CURRENT_DATE/Universal-Manager.cia
 
           cp $(Build.ArtifactStagingDirectory)/*/* .
 
