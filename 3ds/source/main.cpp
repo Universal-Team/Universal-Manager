@@ -25,6 +25,7 @@
 */
 
 #include "gui.hpp"
+#include "logging.hpp"
 #include "ptmu_x.h"
 #include "screens/creditsScreen.hpp"
 #include "screens/mainMenuScreen.hpp"
@@ -144,8 +145,9 @@ int main()
 		dspfirmfound = true;
 	 }
 
-	 loadSoundEffects();
-
+	loadSoundEffects();
+	createLogFile();
+	writeToLog("Starting Universal-Manager finished!");
 	// Loop as long as the status is not exit
     while (aptMainLoop() && !exiting)
     {
