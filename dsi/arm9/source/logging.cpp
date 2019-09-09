@@ -47,16 +47,16 @@ std::string Logging::timeStr(void)
 }
 
 void Logging::createLogFile(void) {
-	if((access("sdmc:/Universal-Manager/universal.log", F_OK) == 0)) {
+	if((access("sd:/_nds/Universal-Manager/universal.log", F_OK) == 0)) {
 	} else {
-		FILE* logFile = fopen(("sdmc:/Universal-Manager/universal.log"), "w");
+		FILE* logFile = fopen(("sd:/_nds/Universal-Manager/universal.log"), "w");
 		fclose(logFile);
 	}
 }
 
 void Logging::writeToLog(std::string debugText) {
 	std::ofstream logFile;
-	logFile.open(("sdmc:/Universal-Manager/universal.log"), std::ofstream::app);
+	logFile.open(("sd:/_nds/Universal-Manager/universal.log"), std::ofstream::app);
 	std::string writeDebug = "[ ";
 	writeDebug += timeStr();
 	writeDebug += " ] ";

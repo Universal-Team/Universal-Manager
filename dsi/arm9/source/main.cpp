@@ -1,3 +1,15 @@
+#include "config.h"
+#include "fileBrowse.h"
+#include "gui.hpp"
+#include "nitrofs.h"
+#include "logging.hpp"
+#include "structs.hpp"
+
+#include "graphics/graphics.h"
+
+#include "screens/mainMenuScreen.hpp"
+#include "screens/screenCommon.hpp"
+
 #include <cstdio>
 #include <ctype.h>
 #include <dirent.h>
@@ -9,14 +21,6 @@
 #include <unistd.h>
 #include <vector>
 
-#include "fileBrowse.h"
-#include "graphics/graphics.h"
-#include "nitrofs.h"
-#include "screens/screenCommon.hpp"
-#include "config.h"
-#include "gui.hpp"
-#include "mainMenuScreen.hpp"
-#include "structs.hpp"
 
 touchPosition touch;
 
@@ -31,15 +35,19 @@ int main(int argc, char **argv) {
 	initGraphics();
 	keysSetRepeat(25,5);
 
+	// If the log does not exists -> Create it.
+	Logging::createLogFile();
+
 	if(!fatInitDefault()) {
 		// Draws the bottom screen red if fatInitDefault() fails
 		drawRectangle(0, 0, 256, 192, BGR15(0, 0, 0xff), false);
-		printTextTinted("fatInit Failed.", BLACK, 60, 0, false);
+		printTextTinted("fatInit Failed and can't be logged.", BLACK, 60, 0, false);
 		while(1) swiWaitForVBlank();
 	}
 
 	if(!nitroFSInit(argv[0])) {
 		// Draws the bottom screen blue if nitroFSInit() fails
+		Logging::writeToLog("NitroFS Failed! Please use another start point, which passes NitroFS.");
 		drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
 		printTextTinted("NitroFS Failed.", BLACK, 60, 0, false);
 		while(1) swiWaitForVBlank();
@@ -53,6 +61,10 @@ int main(int argc, char **argv) {
 	Config::loadConfig();
 	Config::saveConfig();
 	loadGraphics();
+
+	// Log, that Universal-Manager starting is finished.
+	Logging::writeToLog("Universal-Manager launched successfully!");
+
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);

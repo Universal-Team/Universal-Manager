@@ -99,16 +99,19 @@ void getCurrentUsage(){
 
 int main()
 {
+	sdmcInit();
+	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
 	acInit();
 	amInit();
 	ptmuInit();	// For battery status
 	ptmuxInit();	// For AC adapter status
-	sdmcInit();
 	Config::loadConfig();
+
 	if (Config::Citra == 0) {
-	mcuInit();
+		mcuInit();
 	} else if (Config::Citra == 1) {
 	}
+
 	romfsInit();
 	cfguInit();
     gfxInitDefault();
@@ -146,8 +149,10 @@ int main()
 	 }
 
 	loadSoundEffects();
-	createLogFile();
-	writeToLog("Starting Universal-Manager finished!");
+
+	// We write a successfull Message, because it launched Successfully. Lol.
+	Logging::writeToLog("Universal-Manager launched successfully!");
+
 	// Loop as long as the status is not exit
     while (aptMainLoop() && !exiting)
     {
@@ -201,9 +206,9 @@ int main()
 	gfxExit();
 	cfguExit();
 	romfsExit();
-	sdmcExit();
 	acExit();
 	amExit();
-
+	Logging::writeToLog("Universal-Manager closing successfully!");
+	sdmcExit();
     return 0;
 }
