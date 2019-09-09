@@ -154,7 +154,7 @@ jobs:
           git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
           cd extras/builds/Universal-Manager
 
-          qrencode -o Universal-Manager.png https://github.com/TWLBot/Builds/releases/download/v$CURRENT_DATE/Universal-Manager.cia
+          qrencode -o Universal-Manager.png https://github.com/Universal-Team/extras/raw/v$CURRENT_DATE/builds/Universal-Manager/Universal-Manager.cia
 
           cp $(Build.ArtifactStagingDirectory)/*/* .
 
