@@ -202,7 +202,7 @@ jobs:
     steps:
 ########################################
       - script: |
-          export IMAGE=https://raw.githubusercontent.com/Universal-Team/extras/v$CURRENT_DATE/builds/Universal-Manager/Unversal-Manager.png
+          export IMAGE=https://raw.githubusercontent.com/Universal-Team/extras/v$CURRENT_DATE/builds/Universal-Manager/Universal-Manager.png
           curl -o send.sh https://raw.githubusercontent.com/Universal-Team/discord-webhooks/master/send-azure.sh
           chmod +x send.sh
           ./send.sh success $WEBHOOK_URL
