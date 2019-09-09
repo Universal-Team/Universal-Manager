@@ -153,6 +153,8 @@ jobs:
           git clone https://$GITHUB_TOKEN@github.com/Universal-Team/extras.git
           cd extras/builds/Universal-Manager
 
+          qrencode -o Universal-Updater.png https://github.com/TWLBot/Builds/releases/download/v$CURRENT_DATE/Universal-Updater.cia
+
           cp $(Build.ArtifactStagingDirectory)/*/* .
 
           git stage .
