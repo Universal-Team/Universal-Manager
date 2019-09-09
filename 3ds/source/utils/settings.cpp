@@ -42,11 +42,11 @@ int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay
 int Config::animation, Config::animationColor; // [ANIMATED]
 int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
-int Config::Screen; // [SCREEN]
 int Config::Credits; // [CREDITS]
 int Config::selector;
 int Config::Points;
 int Config::FastMode; // Animation speed of the animations.
+int Config::Logging; // Enable / Disable Logging.
 
 void Config::loadConfig() {
 	// [UI]
@@ -65,11 +65,14 @@ void Config::loadConfig() {
 
 	// [CITRA]
 	Config::Citra = settingsini.GetInt("CITRA", "ENABLED", 0);
+
 	// [TEXTCOLOR]
 	Config::selectedText = settingsini.GetInt("TEXTCOLOR", "SELECTED", BLUE);
 	Config::unselectedText = settingsini.GetInt("TEXTCOLOR", "UNSELECTED", BLACK);
-	// [SCREEN]
-	Config::Screen = settingsini.GetInt("SCREEN", "ENABLE", 0);
+
+	// [MISC]
+	Config::Logging = settingsini.GetInt("MISC", "LOGGING", 0);
+
 	// [CREDITS]
 	Config::Credits = settingsini.GetInt("CREDITS", "ENABLE", 1); // Show's the Credits Screen at startup if 1.
 }
@@ -96,8 +99,8 @@ void Config::saveConfig() {
 	settingsini.SetInt("TEXTCOLOR", "SELECTED", Config::selectedText);
 	settingsini.SetInt("TEXTCOLOR", "UNSELECTED", Config::unselectedText);
 	
-	// [SCREEN]
-	settingsini.SetInt("SCREEN", "ENABLE", Config::Screen);
+	// [MISC]
+	settingsini.SetInt("MISC", "LOGGING", Config::Logging);
 
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }

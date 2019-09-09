@@ -26,6 +26,8 @@
 
 #include "logging.hpp"
 
+#include "utils/settings.hpp"
+
 #include <memory>
 
 std::string Logging::format(const std::string& fmt_str, ...)
@@ -57,13 +59,17 @@ void Logging::createLogFile(void) {
 	}
 }
 
+// Only write to the Log, if it is enabled in the Settings File!
 void Logging::writeToLog(std::string debugText) {
-	std::ofstream logFile;
-	logFile.open(("sdmc:/Universal-Manager/universal.log"), std::ofstream::app);
-	std::string writeDebug = "[ ";
-	writeDebug += logDate();
-	writeDebug += " ] ";
-	writeDebug += debugText.c_str();
-	logFile << writeDebug << std::endl;
-	logFile.close();
+	if (Config::Logging == 0) {
+	} else if (Config::Logging == 1) {
+		std::ofstream logFile;
+		logFile.open(("sdmc:/Universal-Manager/universal.log"), std::ofstream::app);
+		std::string writeDebug = "[ ";
+		writeDebug += logDate();
+		writeDebug += " ] ";
+		writeDebug += debugText.c_str();
+		logFile << writeDebug << std::endl;
+		logFile.close();
+	}
 }

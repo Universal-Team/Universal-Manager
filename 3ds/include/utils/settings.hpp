@@ -34,7 +34,7 @@ namespace Config {
 	extern int animation, animationColor; // [ANIMATED]
 	extern int Citra; // [CITRA]
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
-	extern int Screen; // [SCREEN]
+	extern int Logging; // [MISC]
 	extern int Credits; // [CREDITS]
 	extern int selector;
 	extern int Points; // The Points in Pong's Hidden/Secret Mode.
