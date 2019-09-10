@@ -47,15 +47,15 @@ void MainMenu::Draw(void) const
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
-	printTextTinted("Universal-Manager", BLACK, 60, 5, true);
-	printTextTinted(APP_VERSION, BLACK, 180, 175, true);
+	printTextCenteredScaled("Universal-Manager", 1.4, 1.4, 0, 30, true);
+	printText(APP_VERSION, 180, 175, true, false);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextTinted("FileManager", WHITE, 5, 30, false);
+	printTextScaled("FileManager", 1.1, 1.1, 5, 70, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextTinted("Settings", WHITE, 135, 30, false);
+	printTextScaled("Settings", 1.1, 1.1, 135, 70, false);
 
 	screenDrawn = true;
 }

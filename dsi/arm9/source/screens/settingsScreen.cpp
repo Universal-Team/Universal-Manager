@@ -45,15 +45,15 @@ void Settings::Draw(void) const
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
-	printTextTinted("Settings Screen", BLACK, 60, 5, true);
+	printTextCenteredScaled("Settings Screen", 1.4, 1.4, 0, 30, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	// Buttons.
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextTinted("Bar Color", WHITE, 5, 30, false);
+	printTextScaled("Bar Color", 1.1, 1.1, 5, 70, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextTinted("BG Color", WHITE, 135, 30, false);
+	printTextScaled("BG Color", 1.1, 1.1, 135, 70, false);
 
 	screenDrawn = true;
 }

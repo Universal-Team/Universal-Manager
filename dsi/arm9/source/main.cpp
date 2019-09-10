@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 	if(!fatInitDefault()) {
 		// Draws the bottom screen red if fatInitDefault() fails
 		drawRectangle(0, 0, 256, 192, BGR15(0, 0, 0xff), false);
-		printTextTinted("fatInit Failed and can't be logged.", BLACK, 60, 0, false);
+		printf("fatInit Failed and can't be logged.");
 		while(1) swiWaitForVBlank();
 	}
 
@@ -49,7 +49,8 @@ int main(int argc, char **argv) {
 		// Draws the bottom screen blue if nitroFSInit() fails
 		Logging::writeToLog("NitroFS Failed! Please use another start point, which passes NitroFS.");
 		drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
-		printTextTinted("NitroFS Failed.", BLACK, 60, 0, false);
+		
+		printf("NitroFS Failed.");
 		while(1) swiWaitForVBlank();
 	}
 
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
 	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
-	printTextTinted("Press A to start. :)", BLACK, 60, 0, false);
+	printTextCenteredScaled("Press A to start. :)", 1.0, 1.0, 0, 5, false);
 
 	Gui::setScreen(std::make_unique<MainMenu>());
 

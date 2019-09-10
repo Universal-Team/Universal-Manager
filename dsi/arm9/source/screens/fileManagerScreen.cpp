@@ -42,7 +42,7 @@ void FileManager::Draw(void) const
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
 	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
 
-	printTextTinted("FileManager Sub Menu", BLACK, 60, 5, true);
+	printTextCenteredScaled("FileManager Sub Menu", 1.4, 1.4, 0, 30, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
