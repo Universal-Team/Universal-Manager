@@ -7,10 +7,13 @@
 namespace Lang {
 	extern std::vector<std::string>
 	// App strings
+
+	ButtonTester,
 	MainMenu,
 	Misc;
 
 	extern std::string
+	
 	CurrentPage,
 	Title;
 }

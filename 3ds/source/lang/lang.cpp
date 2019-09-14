@@ -20,6 +20,11 @@ void Lang::loadLangStrings(int lang) {
 
 	CIniFile ini(path);
 
+	// [ButtonTester]
+	Lang::ButtonTester[0] = ini.GetString("ButtonTester", "Title", Lang::ButtonTester[0]);
+	Lang::ButtonTester[1] = ini.GetString("ButtonTester", "pressedBtn", Lang::ButtonTester[1]);
+
+
 	// [CurrentPage]
 	Lang::CurrentPage = ini.GetString("CurrentPage", "CurrentPage", Lang::CurrentPage);
 

@@ -41,9 +41,8 @@ void ButtonTester::Draw(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
-	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Button Tester"))/2, 0, 0.72f, WHITE, "Button Tester");
-	std::string pressedBtn = "Currently Pressed Button: ";
-	Gui::DrawString((400-Gui::GetStringWidth(0.72f, pressedBtn.c_str()))/2, 218, 0.72f, WHITE, pressedBtn.c_str());
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, Lang::ButtonTester[0]))/2, 0, 0.72f, WHITE, Lang::ButtonTester[0]);
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, Lang::ButtonTester[1]))/2, 218, 0.72f, WHITE, Lang::ButtonTester[1]);
 
 	Gui::DrawBGBot();
 	animatedBGBot();

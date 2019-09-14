@@ -3,6 +3,9 @@
 namespace Lang {
 	std::vector<std::string>
 	// App strings
+	
+	// [ButtonTester]
+	ButtonTester = {"Button Tester", "Currently Pressed Button: "},
 
 	// [MainMenu]
 	MainMenu = {"FileManager", "FTP", "Scripts", "Music", "Updater", "Settings",
