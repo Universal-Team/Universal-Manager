@@ -311,13 +311,21 @@ void findAndReplaceAll(std::string & data, std::string toSearch, std::string rep
 
 
 // Draw String or Text.
-void Gui::DrawString(float x, float y, float size, u32 color, std::string Text)
+void Gui::DrawString(float x, float y, float size, u32 color, std::string Text, int maxWidth)
 {
+    float width = 1, height = 1;
+    
     findAndReplaceAll(Text, "\\n", "\n");
 	C2D_Text c2d_text;
     C2D_TextFontParse(&c2d_text, systemFont, sizeBuf, Text.c_str());
+
+	if(maxWidth > 0) {
+		C2D_TextGetDimensions(&c2d_text, size, size, &width, &height);
+	}
+
+
 	C2D_TextOptimize(&c2d_text);
-	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, size, size, color);
+	C2D_DrawText(&c2d_text, C2D_WithColor, x, y, 0.5f, std::min(size, size*(maxWidth/width)), size, color);
 }
 
 

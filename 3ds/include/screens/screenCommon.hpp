@@ -30,6 +30,8 @@
 #include "animation.hpp"
 #include "gui.hpp"
 
+#include "lang/langStrings.h" // So every screen can access the Strings without the need of adding the header again.
+
 extern C3D_RenderTarget* top;
 extern C3D_RenderTarget* bottom;
 

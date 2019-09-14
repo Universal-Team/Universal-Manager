@@ -30,7 +30,7 @@
 #include <string>
 
 namespace Config {
-	extern int barColor, bgColor, musicMode, percentDisplay, layout, layoutBG; // [UI]
+	extern int barColor, bgColor, musicMode, percentDisplay, layout, layoutBG, Language; // [UI]
 	extern int animation, animationColor; // [ANIMATED]
 	extern int Citra; // [CITRA]
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
@@ -45,6 +45,7 @@ namespace Config {
 	void setCredits();
 	void loadPoints(); // Load the current Record / Points.
 	void setPongPoints(int points); // Save the new Record, if reached.
+	void setLang(); // -> To-Do.
 }
 
 #endif /* SETTINGS_HPP */

@@ -47,6 +47,7 @@ int Config::selector;
 int Config::Points;
 int Config::FastMode; // Animation speed of the animations.
 int Config::Logging; // Enable / Disable Logging.
+int Config::Language; 
 
 void Config::loadConfig() {
 	// [UI]
@@ -57,6 +58,7 @@ void Config::loadConfig() {
 	Config::layout = settingsini.GetInt("UI", "LAYOUT", 0);
 	Config::layoutBG = settingsini.GetInt("UI", "LAYOUTBG", 0);
 	Config::selector = settingsini.GetInt("UI", "SELECTOR", 0);
+	Config::Language = settingsini.GetInt("UI", "LANGUAGE", 1); // English by default.
 
 	// [ANIMATED]
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
@@ -86,6 +88,7 @@ void Config::saveConfig() {
 	settingsini.SetInt("UI", "LAYOUT", Config::layout);
 	settingsini.SetInt("UI", "LAYOUTBG", Config::layoutBG);
 	settingsini.SetInt("UI", "SELECTOR", Config::selector);
+	settingsini.SetInt("UI", "LANGUAGE", Config::Language);
 
 	// [ANIMATED]
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
@@ -121,3 +124,6 @@ void Config::setPongPoints(int points) {
 	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
 }
 
+void Config::setLang() {
+	// To-Do.
+}

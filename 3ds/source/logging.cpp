@@ -60,9 +60,9 @@ void Logging::createLogFile(void) {
 }
 
 // Only write to the Log, if it is enabled in the Settings File!
-void Logging::writeToLog(std::string debugText) {
+void Logging::writeToLog(std::string debugText, bool isStartup) {
 	if (Config::Logging == 0) {
-	} else if (Config::Logging == 1) {
+	} else if (Config::Logging == 1 || isStartup == true) {
 		std::ofstream logFile;
 		logFile.open(("sdmc:/Universal-Manager/universal.log"), std::ofstream::app);
 		std::string writeDebug = "[ ";

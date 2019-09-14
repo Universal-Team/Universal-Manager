@@ -35,7 +35,7 @@ namespace Logging {
 	void createLogFile(void);
 
 	// Write to the Log.
-	void writeToLog(std::string debugText);
+	void writeToLog(std::string debugText, bool isStartup = false);
 
 	// Other needed stuff. ;P
 	std::string logDate(void);

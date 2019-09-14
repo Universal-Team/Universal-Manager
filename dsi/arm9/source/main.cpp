@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 
 	if(!nitroFSInit(argv[0])) {
 		// Draws the bottom screen blue if nitroFSInit() fails
-		Logging::writeToLog("NitroFS Failed! Please use another start point, which passes NitroFS.");
+		Logging::writeToLog("NitroFS Failed! Please use another start point, which passes NitroFS.", true);
 		drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
 		
 		printf("NitroFS Failed.");
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 	loadGraphics();
 
 	// Log, that Universal-Manager starting is finished.
-	Logging::writeToLog("Universal-Manager launched successfully!");
+	Logging::writeToLog("Universal-Manager launched successfully!", true);
 
 	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
 	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);

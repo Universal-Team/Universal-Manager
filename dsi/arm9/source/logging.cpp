@@ -49,7 +49,7 @@ std::string Logging::logDate(void)
         timeStruct.tm_hour, timeStruct.tm_min, timeStruct.tm_sec);
 }
 
-void Logging::createLogFile(void) {
+void Logging::createLogFile() {
 	if((access("sd:/_nds/Universal-Manager/universal.log", F_OK) == 0)) {
 	} else {
 		FILE* logFile = fopen(("sd:/_nds/Universal-Manager/universal.log"), "w");
@@ -57,13 +57,16 @@ void Logging::createLogFile(void) {
 	}
 }
 
-void Logging::writeToLog(std::string debugText) {
-	std::ofstream logFile;
-	logFile.open(("sd:/_nds/Universal-Manager/universal.log"), std::ofstream::app);
-	std::string writeDebug = "[ ";
-	writeDebug += logDate();
-	writeDebug += " ] ";
-	writeDebug += debugText.c_str();
-	logFile << writeDebug << std::endl;
-	logFile.close();
+void Logging::writeToLog(std::string debugText, bool isStartup) {
+	if (isStartup == true) {
+		std::ofstream logFile;
+		logFile.open(("sd:/_nds/Universal-Manager/universal.log"), std::ofstream::app);
+		std::string writeDebug = "[ ";
+		writeDebug += logDate();
+		writeDebug += " ] ";
+		writeDebug += debugText.c_str();
+		logFile << writeDebug << std::endl;
+		logFile.close();
+	} else {
+	}
 }

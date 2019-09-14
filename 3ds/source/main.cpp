@@ -27,9 +27,13 @@
 #include "gui.hpp"
 #include "logging.hpp"
 #include "ptmu_x.h"
+
+#include "lang/lang.h"
+
 #include "screens/creditsScreen.hpp"
 #include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
+
 #include "utils/settings.hpp"
 #include "utils/sound.h"
 
@@ -112,7 +116,7 @@ static Result DisplayStartupError(const std::string& message, Result res)
 	std::string error = message;
 	error += ", ";
 	error += std::to_string(res);
-	Logging::writeToLog(error.c_str());
+	Logging::writeToLog(error.c_str(), true);
 
     gfxFlushBuffers();
     gfxSwapBuffers();
@@ -132,8 +136,6 @@ int main()
 	if (R_FAILED(res = sdmcInit())) {
 		return DisplayStartupError("sdmcInit failed.", res);
 	}
-
-	Config::loadConfig();
 
 	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
 
@@ -155,14 +157,16 @@ int main()
 		return DisplayStartupError("ptmuxInit failed.", res);
 	}
 
+	if (R_FAILED(res = romfsInit())) {
+		return DisplayStartupError("romfsInit failed.", res);
+	}
+
+	Config::loadConfig();
+	Lang::loadLangStrings(Config::Language);
+
 	if (Config::Citra == 0) {
 		mcuInit();
 	} else if (Config::Citra == 1) {
-	}
-
-
-	if (R_FAILED(res = romfsInit())) {
-		return DisplayStartupError("romfsInit failed.", res);
 	}
 
 	if (R_FAILED(res = cfguInit())) {
