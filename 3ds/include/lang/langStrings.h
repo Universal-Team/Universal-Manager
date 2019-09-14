@@ -9,11 +9,12 @@ namespace Lang {
 	// App strings
 
 	ButtonTester,
+	Calendar,
 	MainMenu,
 	Misc;
 
 	extern std::string
-	
+
 	CurrentPage,
 	Title;
 }

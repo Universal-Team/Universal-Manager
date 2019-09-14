@@ -24,10 +24,22 @@ void Lang::loadLangStrings(int lang) {
 	Lang::ButtonTester[0] = ini.GetString("ButtonTester", "Title", Lang::ButtonTester[0]);
 	Lang::ButtonTester[1] = ini.GetString("ButtonTester", "pressedBtn", Lang::ButtonTester[1]);
 
+	// [Calendar]
+	Lang::Calendar[0] = ini.GetString("Calendar", "January", Lang::Calendar[0]);
+	Lang::Calendar[1] = ini.GetString("Calendar", "February", Lang::Calendar[1]);
+	Lang::Calendar[2] = ini.GetString("Calendar", "March", Lang::Calendar[2]);
+	Lang::Calendar[3] = ini.GetString("Calendar", "April", Lang::Calendar[3]);
+	Lang::Calendar[4] = ini.GetString("Calendar", "May", Lang::Calendar[4]);
+	Lang::Calendar[5] = ini.GetString("Calendar", "June", Lang::Calendar[5]);
+	Lang::Calendar[6] = ini.GetString("Calendar", "July", Lang::Calendar[6]);
+	Lang::Calendar[7] = ini.GetString("Calendar", "August", Lang::Calendar[7]);
+	Lang::Calendar[8] = ini.GetString("Calendar", "September", Lang::Calendar[8]);
+	Lang::Calendar[9] = ini.GetString("Calendar", "October", Lang::Calendar[9]);
+	Lang::Calendar[10] = ini.GetString("Calendar", "November", Lang::Calendar[10]);
+	Lang::Calendar[11] = ini.GetString("Calendar", "December", Lang::Calendar[11]);
 
 	// [CurrentPage]
 	Lang::CurrentPage = ini.GetString("CurrentPage", "CurrentPage", Lang::CurrentPage);
-
 
 	// [MainMenu]
 	Lang::MainMenu[0] = ini.GetString("MainMenu", "FileManager", Lang::MainMenu[0]);

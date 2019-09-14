@@ -26,6 +26,7 @@
 
 #include "structs.hpp"
 #include "screens/screen.hpp"
+#include "lang/langStrings.h"
 
 #include <citro2d.h>
 #include <string>
@@ -43,18 +44,18 @@ private:
 	C2D_TextBuf dynamicBuf, sizeBuf;
 
 	std::vector<std::string> months = {
-		"January",
-		"Febuary",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December"
+		Lang::Calendar[0],
+		Lang::Calendar[1],
+		Lang::Calendar[2],
+		Lang::Calendar[3],
+		Lang::Calendar[4],
+		Lang::Calendar[5],
+		Lang::Calendar[6],
+		Lang::Calendar[7],
+		Lang::Calendar[8],
+		Lang::Calendar[9],
+		Lang::Calendar[10],
+		Lang::Calendar[11],
 	};
 
 	std::vector<Structs::ButtonPos> calendarButtonPos = {

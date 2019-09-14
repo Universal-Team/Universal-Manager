@@ -3,9 +3,13 @@
 namespace Lang {
 	std::vector<std::string>
 	// App strings
-	
+
 	// [ButtonTester]
 	ButtonTester = {"Button Tester", "Currently Pressed Button: "},
+
+	// [Calendar]
+	Calendar = {"January", "February", "March", "April", "May", "June", "July", "August",
+				"September", "October", "November", "December"},
 
 	// [MainMenu]
 	MainMenu = {"FileManager", "FTP", "Scripts", "Music", "Updater", "Settings",
