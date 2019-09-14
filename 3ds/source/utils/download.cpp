@@ -364,7 +364,7 @@ std::string getLatestRelease(std::string repo, std::string item)
 	}
 
 	CURLcode cres = curl_easy_perform(hnd);
-    curl_easy_cleanup(hnd);
+	curl_easy_cleanup(hnd);
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
@@ -428,7 +428,7 @@ std::string getLatestCommit(std::string repo, std::string item)
 	}
 
 	CURLcode cres = curl_easy_perform(hnd);
-    curl_easy_cleanup(hnd);
+	curl_easy_cleanup(hnd);
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
@@ -492,7 +492,7 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 	}
 
 	CURLcode cres = curl_easy_perform(hnd);
-    curl_easy_cleanup(hnd);
+	curl_easy_cleanup(hnd);
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
@@ -1422,28 +1422,16 @@ void downloadBoxart(void) {
 // GBARunner2.
 void updateGBARunner2(void) 
 {
-	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 no wramicache...(Nightly)");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2... (Nightly)");
 	showProgressBar = true;
 	progressBarType = 0;
 	Threads::create((ThreadFunc)displayProgressBar);
 
-	// Download the normal version one.
-	if (downloadFromRelease("https://github.com/Gericom/GBARunner2", "GBARunner2_arm7dldi\\.nds", "/_nds/GBARunner2.nds") != 0) {
+	if (downloadFromRelease("https://github.com/Gericom/GBARunner2", "GBARunner2_arm7dldi_3ds\\.nds", "/_nds/GBARunner2_arm7dldi_3ds.nds") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2 wramicache...(Nightly)");
-		progressBarType = 0;
-
-	// Download the wramicache version.
-	if (downloadFromRelease("https://github.com/Gericom/GBARunner2", "GBARunner2_arm7dldi_wramicache\\.nds", "/_nds/GBARunner2_wramicache.nds") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
-
 	showProgressBar = false;
 	doneMsg();
 }
