@@ -58,6 +58,16 @@ private:
 		Lang::Calendar[11],
 	};
 
+	std::vector<std::string> weekDays = {
+		Lang::Calendar[12],
+		Lang::Calendar[13],
+		Lang::Calendar[14],
+		Lang::Calendar[15],
+		Lang::Calendar[16],
+		Lang::Calendar[17],
+		Lang::Calendar[18],
+	};
+
 	std::vector<Structs::ButtonPos> calendarButtonPos = {
 		// Back Icon.
 		{293, 213, 27, 27, -1},
@@ -65,4 +75,5 @@ private:
 
 	void displayDays(void) const;
 	void displayMonthYear(void) const;
+	void drawWeekDays(void) const;
 };

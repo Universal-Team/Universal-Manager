@@ -62,9 +62,19 @@ void drawDays(int year, int month, int day) {
 		int j = i-1+time->tm_wday;
 		int x = j-((j/7)*7);
 		int y = j/7;
-		Draw_Rect(10+(x*55), 25+(y*35), 50, 30, i == day ? Config::barColor : GRAY);
-		Gui::DrawString(35+(x*55)-(Gui::GetStringWidth(0.72f, std::to_string(i))/2), 28+(y*35), 0.72f, WHITE, std::to_string(i));
+		Draw_Rect(10+(x*55), 35+(y*35), 50, 30, i == day ? Config::barColor : GRAY);
+		Gui::DrawString(35+(x*55)-(Gui::GetStringWidth(0.72f, std::to_string(i))/2), 38+(y*35), 0.72f, WHITE, std::to_string(i));
 	}
+}
+
+void Calendar::drawWeekDays(void) const {
+	time_t unixTime = time(NULL);
+	struct tm* timeStruct = gmtime((const time_t*)&unixTime);
+	int weekDay = timeStruct->tm_wday;
+	std::string currentDay = Lang::Calendar[19];
+	currentDay += weekDays[weekDay];
+
+	Gui::DrawString(200-(Gui::GetStringWidth(0.72f, currentDay.c_str())/2), 217, 0.72f, WHITE, currentDay.c_str());
 }
 
 void Calendar::displayDays(void) const {
@@ -82,6 +92,7 @@ void Calendar::Draw(void) const {
 	drawBatteryTop();
 	displayMonthYear();
 	displayDays();
+	drawWeekDays();
 
 	Gui::DrawBGBot();
 	animatedBGBot();

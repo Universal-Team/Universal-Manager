@@ -9,7 +9,8 @@ namespace Lang {
 
 	// [Calendar]
 	Calendar = {"January", "February", "March", "April", "May", "June", "July", "August",
-				"September", "October", "November", "December"},
+				"September", "October", "November", "December", "Sunday", "Monday", "Tuesday", "Wednesday",
+				"Thursday", "Friday", "Saturday", "Current Day: "},
 
 	// [MainMenu]
 	MainMenu = {"FileManager", "FTP", "Scripts", "Music", "Updater", "Settings",

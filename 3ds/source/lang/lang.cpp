@@ -38,6 +38,15 @@ void Lang::loadLangStrings(int lang) {
 	Lang::Calendar[10] = ini.GetString("Calendar", "November", Lang::Calendar[10]);
 	Lang::Calendar[11] = ini.GetString("Calendar", "December", Lang::Calendar[11]);
 
+	Lang::Calendar[12] = ini.GetString("Calendar", "Sunday", Lang::Calendar[12]);
+	Lang::Calendar[13] = ini.GetString("Calendar", "Monday", Lang::Calendar[13]);
+	Lang::Calendar[14] = ini.GetString("Calendar", "Tuesday", Lang::Calendar[14]);
+	Lang::Calendar[15] = ini.GetString("Calendar", "Wednesday", Lang::Calendar[15]);
+	Lang::Calendar[16] = ini.GetString("Calendar", "Thursday", Lang::Calendar[16]);
+	Lang::Calendar[17] = ini.GetString("Calendar", "Friday", Lang::Calendar[17]);
+	Lang::Calendar[18] = ini.GetString("Calendar", "Saturday", Lang::Calendar[18]);
+	Lang::Calendar[19] = ini.GetString("Calendar", "currentDay", Lang::Calendar[19]);
+
 	// [CurrentPage]
 	Lang::CurrentPage = ini.GetString("CurrentPage", "CurrentPage", Lang::CurrentPage);
 
