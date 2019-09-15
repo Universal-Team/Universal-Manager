@@ -63,6 +63,6 @@ private:
 		{293, 213, 27, 27, -1},
 	};
 
-	void DisplayMonth(void) const;
-	void DisplayYear(void) const;
+	void displayDays(void) const;
+	void displayMonthYear(void) const;
 };
