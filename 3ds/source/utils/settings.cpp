@@ -25,6 +25,9 @@
 */
 
 #include "colors.hpp"
+
+#include "lang/lang.h"
+
 #include "utils/inifile.h"
 #include "utils/settings.hpp"
 
@@ -125,5 +128,7 @@ void Config::setPongPoints(int points) {
 }
 
 void Config::setLang() {
-	// To-Do.
+	settingsini.SetInt("UI", "LANGUAGE", Config::Language);
+	settingsini.SaveIniFile("sdmc:/Universal-Manager/Settings.ini");
+	Lang::refreshLanguage(Config::Language);
 }
