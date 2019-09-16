@@ -32,7 +32,6 @@
 namespace Config {
 	extern int barColor, bgColor, musicMode, percentDisplay, layout, layoutBG, Language; // [UI]
 	extern int animation, animationColor; // [ANIMATED]
-	extern int Citra; // [CITRA]
 	extern int selectedText, unselectedText; // [TEXTCOLOR]
 	extern int Logging; // [MISC]
 	extern int Credits; // [CREDITS]

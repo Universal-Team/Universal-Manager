@@ -37,3 +37,10 @@ Universal-Team : For the Project.
 [RocketRobz](https://github.com/RocketRobz) : [PDSX-3D](https://github.com/RocketRobz/PDSX-3D) : For the Animated Background Stuff from PDSX-3D.
 
 ****
+
+**Important**
+
+- If you want to use Universal-Manager 3DS with Citra -> Set `bool isCitra = false;` to `true`.
+(This is in main.cpp Line 66 Currently as of this Message.)
+
+- Always set it back to `false` when you commit something! Otherwise the Battery will not work correctly on a 3DS.

@@ -43,7 +43,6 @@ static CIniFile settingsini( "sdmc:/Universal-Manager/Settings.ini" );
 
 int Config::barColor, Config::bgColor, Config::musicMode, Config::percentDisplay, Config::layout, Config::layoutBG; // [UI]
 int Config::animation, Config::animationColor; // [ANIMATED]
-int Config::Citra; // [CITRA]
 int Config::selectedText, Config::unselectedText; // [TEXTCOLOR]
 int Config::Credits; // [CREDITS]
 int Config::selector;
@@ -67,9 +66,6 @@ void Config::loadConfig() {
 	Config::animation = settingsini.GetInt("ANIMATED", "ENABLE", 1);
 	Config::animationColor = settingsini.GetInt("ANIMATED", "COLOR", BLUE);
 	Config::FastMode = settingsini.GetInt("ANIMATED", "FASTMODE", 0);
-
-	// [CITRA]
-	Config::Citra = settingsini.GetInt("CITRA", "ENABLED", 0);
 
 	// [TEXTCOLOR]
 	Config::selectedText = settingsini.GetInt("TEXTCOLOR", "SELECTED", BLUE);
@@ -97,9 +93,6 @@ void Config::saveConfig() {
 	settingsini.SetInt("ANIMATED", "ENABLE", Config::animation);
 	settingsini.SetInt("ANIMATED", "COLOR", Config::animationColor);
 	settingsini.SetInt("ANIMATED", "FASTMODE", Config::FastMode);
-
-	// [CITRA]
-	settingsini.SetInt("CITRA", "ENABLED", Config::Citra);
 
 	// [TEXTCOLOR]
 	settingsini.SetInt("TEXTCOLOR", "SELECTED", Config::selectedText);

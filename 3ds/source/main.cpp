@@ -63,6 +63,8 @@ extern bool musicShuffle;
 extern std::vector<Playlist> nowPlayingList;
 extern std::string currentSong;
 
+bool isCitra = false; // Set it to true, if it is used with Citra.
+
 
 touchPosition touch;
 
@@ -164,9 +166,9 @@ int main()
 	Config::loadConfig();
 	Lang::loadLangStrings(Config::Language);
 
-	if (Config::Citra == 0) {
+	if (isCitra == false) {
 		mcuInit();
-	} else if (Config::Citra == 1) {
+	} else if (isCitra == true) {
 	}
 
 	if (R_FAILED(res = cfguInit())) {

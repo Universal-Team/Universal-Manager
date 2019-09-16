@@ -43,6 +43,7 @@ extern bool exiting;
 extern int fadealpha;
 extern bool fadein;
 extern bool is3dsx;
+extern bool isCitra;
 
 void MainMenu::DrawSelection(void) const
 {
@@ -88,9 +89,9 @@ void MainMenu::Draw(void) const
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, Lang::Title))/2, 0, 0.72f, WHITE, Lang::Title);
 	Gui::DrawString(395-Gui::GetStringWidth(FONT_SIZE_18, VERSION_STRING), 218, FONT_SIZE_18, WHITE, VERSION_STRING);
 
-	if (Config::Citra == 1) {
+	if (isCitra == true) {
 		running += " Citra.";
-	} else if (Config::Citra == 0) {
+	} else if (isCitra == false) {
 		if (is3dsx == true) {
 			running += " 3dsx.";
 		} else if (is3dsx == false) {
