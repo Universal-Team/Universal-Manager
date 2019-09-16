@@ -121,47 +121,47 @@ void MainMenu::DrawBottom(void) const
 	if (currentPage == 1) {
 		Gui::sprite(3, button_button_tl_idx, 1, 27);
 		Gui::sprite(0, sprites_fileManagerIcon_idx, 9, 41);
-		Gui::DrawString(43, 48, 0.65f, WHITE, Lang::MainMenu[0], 90);
+		Gui::DrawString(43, 48, 0.65f, WHITE, Lang::MainMenu[0], 100);
 
 		Gui::sprite(3, button_button_2_idx, 162, 27); 
 		Gui::sprite(0, sprites_ftpIcon_idx, 172, 40);
-		Gui::DrawString(230, 45, 0.65f, WHITE, Lang::MainMenu[1], 90);
+		Gui::DrawString(210, 45, 0.65f, WHITE, Lang::MainMenu[1], 100);
 
 		Gui::sprite(3, button_button_3_idx, 1, 91);
 		Gui::sprite(0, sprites_scriptIcon_idx, 4, 102);
-		Gui::DrawString(50, 110, 0.65f, WHITE, Lang::MainMenu[2], 90);
+		Gui::DrawString(43, 110, 0.65f, WHITE, Lang::MainMenu[2], 100);
 
 		Gui::sprite(3, button_button_4_idx, 162, 91);
 		Gui::sprite(0, sprites_music_icon_idx, 175, 106);
-		Gui::DrawString(230, 110, 0.65f, WHITE, Lang::MainMenu[3], 90);
+		Gui::DrawString(210, 110, 0.65f, WHITE, Lang::MainMenu[3], 100);
 
 		Gui::sprite(3, button_button_5_idx, 1, 154);
 		Gui::sprite(0, sprites_updaterIcon_idx, 9, 167);
-		Gui::DrawString(50, 173, 0.65f, WHITE, Lang::MainMenu[4], 90);
+		Gui::DrawString(43, 173, 0.65f, WHITE, Lang::MainMenu[4], 100);
 
 		Gui::sprite(3, button_button_br_idx, 162, 151);
 		Gui::sprite(0, sprites_settingsIcon_idx, 172, 165);
-		Gui::DrawString(220, 173, 0.65f, WHITE, Lang::MainMenu[5], 90);
+		Gui::DrawString(210, 173, 0.65f, WHITE, Lang::MainMenu[5], 100);
 
 
 	} else if (currentPage == 2) {
 		Gui::sprite(3, button_button_tl_idx, 1, 27);
 		Gui::sprite(0, sprites_image_icon_idx, 6, 37);
-		Gui::DrawString(42, 45, 0.65f, WHITE, Lang::MainMenu[6], 90);
+		Gui::DrawString(43, 45, 0.65f, WHITE, Lang::MainMenu[6], 100);
 
 		Gui::sprite(3, button_button_2_idx, 162, 27);
-		Gui::DrawString(230, 45, 0.65f, WHITE, Lang::MainMenu[7], 90);
+		Gui::DrawString(210, 45, 0.65f, WHITE, Lang::MainMenu[7], 100);
 
 		Gui::sprite(3, button_button_3_idx, 1, 91);
 		Gui::sprite(0, sprites_textEditorIcon_idx, 9, 103);
-		Gui::DrawString(40, 110, 0.65f, WHITE, Lang::MainMenu[8], 90);
+		Gui::DrawString(43, 110, 0.65f, WHITE, Lang::MainMenu[8], 100);
 
 		Gui::sprite(3, button_button_4_idx, 162, 91);
 		Gui::sprite(0, sprites_utilsIcon_idx, 175, 102);
-		Gui::DrawString(215, 110, 0.65f, WHITE, Lang::MainMenu[9], 90);
+		Gui::DrawString(210, 110, 0.65f, WHITE, Lang::MainMenu[9], 100);
 
 		Gui::sprite(3, button_button_5_idx, 1, 154);
-		Gui::DrawString(50, 173, 0.65f, WHITE, Lang::MainMenu[10], 90);
+		Gui::DrawString(43, 173, 0.65f, WHITE, Lang::MainMenu[10], 100);
 	}
 }
 
