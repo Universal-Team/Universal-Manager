@@ -36,6 +36,10 @@ namespace Gui
 	void mainLoop(u64 hDown);
 	void setScreen(std::unique_ptr<SCREEN> screen);
 	void screenBack(void);
+
+    // GUI Stuff.
+    void DrawBars();
+    void DrawBG();
 }
 
     SDL_Window *SDL_GetMainWindow(void);

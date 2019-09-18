@@ -141,3 +141,17 @@ void Gui::screenBack()
 {
     screens.pop();
 }
+
+
+// Basic GUI Stuff.
+
+void Gui::DrawBG(void) 
+{
+	Gui::DrawRect(0, 0, 1280, 720, GRAY);
+}
+
+void Gui::DrawBars(void) 
+{
+	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
+	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
+}

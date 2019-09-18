@@ -42,9 +42,8 @@ extern bool fadein;
 
 void MainMenu::Draw(void) const
 {
-	Gui::DrawRect(0, 0, 1280, 720, GRAY);
-	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
-	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);
+	Gui::DrawBG();
+	Gui::DrawBars();
 	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
 	Gui::DrawText(1000, 630, 72, WHITE, VERSION_STRING);
 

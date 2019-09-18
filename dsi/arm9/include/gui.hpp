@@ -1,3 +1,7 @@
+#include "config.h"
+
+#include "graphics/graphics.h"
+
 #include "screens/screen.hpp"
 
 #include <random>
@@ -9,4 +13,10 @@ namespace Gui {
 	void mainLoop(u16 hDown, touchPosition touch);
 	void setScreen(std::unique_ptr<SCREEN> screen);
 	void screenBack(void);
+
+	// GUI Stuff.
+	void DrawBGTop(void);
+	void DrawBarsTop(void);
+	void DrawBGBot(void);
+	void DrawBarsBot(void);
 };

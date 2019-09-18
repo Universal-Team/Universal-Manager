@@ -24,7 +24,6 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "config.h"
 #include "gui.hpp"
 
 #include "screens/fileManagerScreen.hpp"
@@ -39,13 +38,11 @@ void MainMenu::Draw(void) const
 {
 	if (screenDrawn) return;
 
-	drawRectangle(0, 20, 256, 152, Config::Bg, true); //	Top Screen.
-	drawRectangle(0, 0, 256, 20, Config::Barcolor, true);
-	drawRectangle(0, 172, 256, 20, Config::Barcolor, true);
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
 
-	drawRectangle(0, 20, 256, 152, Config::Bg, false); //	Bottom Screen.
-	drawRectangle(0, 0, 256, 20, Config::Barcolor, false);
-	drawRectangle(0, 172, 256, 20, Config::Barcolor, false);
+	Gui::DrawBGBot();
+	Gui::DrawBarsBot();
 
 	printTextCenteredScaled("Universal-Manager", 1.4, 1.4, 0, 30, true);
 	printText(APP_VERSION, 180, 175, true, false);
