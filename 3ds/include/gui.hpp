@@ -85,6 +85,7 @@ namespace Gui
     void drawGUISelector(int key, float x, float y, float speed);
 
     // New Text / String Functions.
+    void DrawStringCentered(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
     void DrawString(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
     void GetStringSize(float size, float *width, float *height, std::string Text);
     float GetStringWidth(float size, std::string Text);

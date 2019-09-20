@@ -47,6 +47,8 @@ C2D_TextBuf dynamicBuf, sizeBuf;
 C2D_Font systemFont, editorFont;
 std::stack<std::unique_ptr<SCREEN>> screens;
 
+bool currentScreen = false;
+
 void Gui::clearTextBufs(void)
 {
     C2D_TextBufClear(dynamicBuf);
@@ -108,6 +110,7 @@ void Gui::exit(void)
 void set_screen(C3D_RenderTarget * screen)
 {
     C2D_SceneBegin(screen);
+    currentScreen = screen == top ? 1 : 0;
 }
 
 // Draw a Sprite from the Sheet.
@@ -309,6 +312,9 @@ void findAndReplaceAll(std::string & data, std::string toSearch, std::string rep
 	}
 }
 
+void Gui::DrawStringCentered(float x, float y, float size, u32 color, std::string Text, int maxWidth) {
+    Gui::DrawString((currentScreen ? 400 : 320)+x-(std::min(maxWidth, (int)Gui::GetStringWidth(size, Text)/2)), y, size, color, Text, maxWidth);
+}
 
 // Draw String or Text.
 void Gui::DrawString(float x, float y, float size, u32 color, std::string Text, int maxWidth)
