@@ -240,7 +240,7 @@ void Credits::Draw(void) const
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 	drawCreditsDialogs();
 	drawButtons();
-	Gui::DrawString(0, 218, 0.55, WHITE, "Join our Discord here: https://discord.gg/KDJCfGF", 320);
+	Gui::DrawString(5, 220, 0.55, WHITE, "Join our Discord: https://discord.gg/KDJCfGF", 320);
 }
 
 void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
