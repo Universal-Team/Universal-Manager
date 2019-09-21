@@ -134,29 +134,34 @@ void Music::DrawMusicMain(void) const
 	}
 }
 
+
 void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
-	if(keysDown() & KEY_UP) {
-		if(selection > 0)	selection--;
-	} else if(keysDown() & KEY_DOWN) {
-		if(selection < 3)	selection++;
-		} else if(keysDown() & KEY_A) {
-			switch(selection) {
-				case 0: {
-					MusicMode = 1;
-					break;
-				} case 1:
-					MusicMode = 2;
-					break;
-				  case 2: {
-					MusicMode = 3;
-					selectedPlst = 0;
-					dirChanged = true;
-					break;
-				} case 3: {
-					MusicMode = 4;
-					break;
-				}
+	if(hDown & KEY_UP) {
+		if(selection > 1)	selection -= 2;
+	} else if(hDown & KEY_DOWN) {
+		if(selection < 3)	selection += 2;
+	} else if (hDown & KEY_LEFT) {
+		if (selection%2) selection--;
+	} else if (hDown & KEY_RIGHT) {
+		if (!(selection%2)) selection++;
+	} else if(hDown & KEY_A) {
+		switch(selection) {
+			case 0: {
+				MusicMode = 1;
+				break;
+			} case 1:
+				MusicMode = 2;
+				break;
+			case 2: {
+				MusicMode = 3;
+				selectedPlst = 0;
+				dirChanged = true;
+				break;
+			} case 3: {
+				MusicMode = 4;
+				break;
 			}
+		}
 	} else if(hDown & KEY_B) {
 		Gui::screenBack();
 		return;

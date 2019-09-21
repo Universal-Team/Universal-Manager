@@ -298,13 +298,15 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				helperBox("mkdir : Creates a Folder.\n\nprogressFile: Same as downloadFile, but with\n a progressbar.\n\nprogressRelease: Same as downloadRelease\n but with a progressbar.");
 			}
 		} else if (hDown & KEY_UP) {
-			if(Selection > 0)	Selection--;
+			if(Selection > 1)	Selection -= 2;
+
 		} else if (hDown & KEY_DOWN) {
-			if (ScriptPage == 1) {
-			if(Selection < 5)	Selection++;
-			} else if (ScriptPage == 2) {
-				if(Selection < 5)	Selection++;
-			}
+				if(Selection < 4)	Selection += 2;
+
+		} else if (hDown & KEY_LEFT) {
+			if (Selection%2) Selection--;
+		} else if (hDown & KEY_RIGHT) {
+				if (!(Selection%2)) Selection++;
 		} else if (hDown & KEY_A) {
 			if (ScriptPage == 1) {
 			switch(Selection) {

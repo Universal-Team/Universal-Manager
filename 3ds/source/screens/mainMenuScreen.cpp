@@ -177,16 +177,27 @@ void MainMenu::DrawCurrentPage(void) const
 }
 
 void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
+
 		if (hDown & KEY_UP) {
-			if(Selection > 0)	Selection--;
+			if(Selection > 1)	Selection -= 2;
 
 		} else if (hDown & KEY_DOWN) {
 			if (currentPage == 1) {
-				if(Selection < 5)	Selection++;
+				if(Selection < 4)	Selection += 2;
 
 			} else if (currentPage == 2) {
-				if(Selection < 4)	Selection++;
+				if(Selection < 4 && Selection != 3)	Selection += 2;
 			}
+
+		} else if (hDown & KEY_LEFT) {
+			if (Selection%2) Selection--;
+		} else if (hDown & KEY_RIGHT) {
+			if(currentPage == 1) {
+				if (!(Selection%2)) Selection++;
+			} else if(currentPage == 2) {
+				if (!(Selection%2) && Selection != 4)	Selection++; // Special case, because of only 5 Buttons.
+			}
+
 
 		} else if (hHeld & KEY_SELECT) {
 			helperBox("Press L/R to switch the Pages.\n\nPress D-Pad Up/Down to switch Selection.\n\nPress A to select.\n\nTouch a Button to select.");

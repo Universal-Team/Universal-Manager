@@ -81,9 +81,15 @@ void Utils::Draw(void) const
 
 void Utils::SelectionLogic(u32 hDown) {
 		if (hDown & KEY_UP) {
-			if(Selection > 0)	Selection--;
+			if(Selection > 1)	Selection -= 2;
+
 		} else if (hDown & KEY_DOWN) {
-			if(Selection < 2)	Selection++;
+			if(Selection < 1 && Selection != 1)	Selection += 2;
+
+		} else if (hDown & KEY_LEFT) {
+			if (Selection%2) Selection--;
+		} else if (hDown & KEY_RIGHT) {
+			if (!(Selection%2) && Selection != 2) Selection++;
 		} else if (hDown & KEY_A) {
 			switch(Selection) {
 				case 0: {

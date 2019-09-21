@@ -299,13 +299,21 @@ void FileManager::ActionBoxLogic(void) {
 		hidTouchRead(&touch);
 
 		if(keysDown() & KEY_UP) {
-			if(currentSelection > 0)	currentSelection--;
-
+			if(currentSelection > 1)	currentSelection -= 2;
+			
 
 		} else if(keysDown() & KEY_DOWN) {
 			if (currentPage == 1) {
-				if(currentSelection < 5)	currentSelection++;
-			} else if (currentPage == 2) {
+				if(currentSelection < 4)	currentSelection += 2;
+			}
+
+		} else if (keysDown() & KEY_LEFT) {
+			if(currentPage == 1) {
+				if (currentSelection%2) currentSelection--;
+			}
+		} else if (keysDown() & KEY_RIGHT) {
+			if(currentPage == 1) {
+				if (!(currentSelection%2)) currentSelection++;
 			}
 
 		} else if (keysDown() & KEY_L) {

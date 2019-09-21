@@ -149,22 +149,46 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 			helperBox(" Press \uE052 / \uE053 to switch Pages.");
 		}
 	} else if (hDown & KEY_UP) {
-		if(Selection > 0)	Selection--;
+		if (updaterMode == 0) {
+			if(Selection > 2)	Selection -= 3;
+		} else if (updaterMode == 2 || updaterMode == 4 || updaterMode == 1) {
+			if(Selection > 1)	Selection -= 2;
+		}
+
 		} else if (hDown & KEY_DOWN) {
 			if (updaterMode == 0) {
-				if(Selection < 3)	Selection++;
+				if(Selection == 0)	Selection = 3;
 
 			} else if (updaterMode == 1) {
-				if(Selection < 2)	Selection++;
+				if(Selection < 1 && Selection != 1)	Selection += 2;
 
 			} else if (updaterMode == 2) {
-				if(Selection < 6)	Selection++;
-
-			} else if (updaterMode == 3) {
-				if(Selection < 1)	Selection++;
+				if(Selection < 5 && Selection != 5)	Selection += 2;
 
 			} else if (updaterMode == 4) {
-				if(Selection < 7)	Selection++;
+				if(Selection < 5)	Selection += 2;
+			}
+
+		} else if (hDown & KEY_RIGHT) {
+			if (updaterMode == 0) {
+				if (Selection < 2) Selection++;
+			} else if (updaterMode == 1) {
+				if (!(Selection%2) && Selection != 2) Selection++;
+			} else if (updaterMode == 2) {
+				if (!(Selection%2) && Selection != 6) Selection++;
+			} else if (updaterMode == 3 || updaterMode == 4) {
+				if (!(Selection%2)) Selection++;
+			}
+
+		} else if (hDown & KEY_LEFT) {
+			if (updaterMode == 0) {
+				if (Selection > 0) Selection--;
+			} else if (updaterMode == 1) {
+				if (Selection%2 && Selection != 2)	Selection--;
+			} else if (updaterMode == 2) {
+				if (Selection%2 && Selection != 6)	Selection--;
+			} else if (updaterMode == 3 || updaterMode == 4) {
+				if (Selection%2) Selection--;
 			}
 
 	} else if (hDown & KEY_A) {
@@ -678,7 +702,7 @@ void Updater::DrawSelection(void) const
 	} else if (Selection == 4) {
 		Gui::drawGUISelector(button_updater_selector_idx, Functions[4].x, Functions[4].y, .020f);
 	} else if (Selection == 5) {
-		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[5].x, Functions[5].y, .020f);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[5].x, Functions[5].y, .020f);
 	} else if (Selection == 6) {
 		Gui::drawGUISelector(button_updater_selector_idx, Functions[11].x, Functions[11].y, .020f);
 	}
