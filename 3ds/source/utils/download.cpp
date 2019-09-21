@@ -676,19 +676,35 @@ void updateBootstrap(bool nightly) {
 
 void updateTWiLight(bool nightly) {
 	if(nightly) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg),"Now Downloading TWiLightMenu++\n"
+		if(confirmPopup("Which version Would you like to download?", "", "lite version", "full version")) {
+			snprintf(progressBarMsg, sizeof(progressBarMsg),"Now Downloading TWiLightMenu++ lite\n"
 						"(Nightly)\n\nThis may take a while.");
-		showProgressBar = true;
-		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu-Lite.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
 			showProgressBar = false;
-			downloadFailed();
-			return;
+		} else {
+			snprintf(progressBarMsg, sizeof(progressBarMsg),"Now Downloading TWiLightMenu++ full\n"
+						"(Nightly)\n\nThis may take a while.");
+			showProgressBar = true;
+			progressBarType = 0;
+			Threads::create((ThreadFunc)displayProgressBar);
+			if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/TWiLightMenu.7z?raw=true", "/TWiLightMenu-nightly.7z") != 0) {
+				showProgressBar = false;
+				downloadFailed();
+				return;
+			}
+			showProgressBar = false;
 		}
 
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
-						"(Nightly)\n\nThis may take a while.");
+		"(Nightly)\n\nThis may take a while.");
+		showProgressBar = true;
 		filesExtracted = 0;
 		progressBarType = 1;
 		extractArchive("/TWiLightMenu-nightly.7z", "TWiLightMenu/_nds/", "/_nds/");
