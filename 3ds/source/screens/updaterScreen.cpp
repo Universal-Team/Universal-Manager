@@ -166,7 +166,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				if(Selection < 5 && Selection != 5)	Selection += 2;
 
 			} else if (updaterMode == 4) {
-				if(Selection < 5)	Selection += 2;
+				if(Selection < 6)	Selection += 2;
 			}
 
 		} else if (hDown & KEY_RIGHT) {
