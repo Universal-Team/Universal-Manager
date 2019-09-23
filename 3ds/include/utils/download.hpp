@@ -182,3 +182,8 @@ void downloadBoxart(void);
  * Update GBARunner2 to it's latest Nightly.
  */
 void updateGBARunner2(void);
+
+/**
+ * Download Spritesheets for LeafEdit's custom Spritesheet Feature.
+ */
+void downloadSheets(void);

@@ -1451,3 +1451,68 @@ void updateGBARunner2(void)
 	showProgressBar = false;
 	doneMsg();
 }
+
+// LeafEdit Spritesheet Stuff.
+
+void downloadSheets(void) {
+	int keyRepeatDelay = 0;
+
+	DisplayMsg("Getting Spritesheet list...");
+
+	std::vector<ThemeEntry> sheetList;
+	sheetList = getThemeList("Universal-Team/extras", "SpriteSheets");
+	mkdir("sdmc:/LeafEdit", 0777); // Create LeafEdit folder, if not exist.
+	mkdir("sdmc:/LeafEdit/SpriteSheets", 0777); // Create SpriteSheets folder, if not exist.
+
+	int selectedSheet = 0;
+	while(1) {
+		gspWaitForVBlank();
+		hidScanInput();
+		const u32 hDown = hidKeysDown();
+		const u32 hHeld = hidKeysHeld();
+		if(keyRepeatDelay)	keyRepeatDelay--;
+		if(hDown & KEY_A) {
+			mkdir((sheetList[selectedSheet].sdPath).c_str(), 0777);
+			DisplayMsg(("Downloading: "+sheetList[selectedSheet].name).c_str());
+			downloadToFile(sheetList[selectedSheet].downloadUrl, "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name);
+		} else if(hDown & KEY_B) {
+			selectedSheet = 0;
+			return;
+		} else if(hHeld & KEY_UP && !keyRepeatDelay) {
+			if(selectedSheet > 0) {
+				selectedSheet--;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_DOWN && !keyRepeatDelay) {
+			if(selectedSheet < (int)sheetList.size()-1) {
+				selectedSheet++;
+				keyRepeatDelay = 3;
+			}
+		} else if(hHeld & KEY_LEFT && !keyRepeatDelay) {
+			selectedSheet -= 10;
+			if(selectedSheet < 0) {
+				selectedSheet = 0;
+			}
+			keyRepeatDelay = 3;
+		} else if(hHeld & KEY_RIGHT && !keyRepeatDelay) {
+			selectedSheet += 10;
+			if(selectedSheet > (int)sheetList.size()) {
+				selectedSheet = sheetList.size()-1;
+			}
+			keyRepeatDelay = 3;
+		}
+		std::string sheetText;
+		for(int i=(selectedSheet<10) ? 0 : selectedSheet-10;i<(int)sheetList.size()&&i<((selectedSheet<10) ? 11 : selectedSheet+1);i++) {
+			if(i == selectedSheet) {
+				sheetText += "> " + sheetList[i].name + "\n";
+			} else {
+				sheetText += "  " + sheetList[i].name + "\n";
+			}
+		}
+		for(uint i=0;i<((sheetList.size()<10) ? 11-sheetList.size() : 0);i++) {
+			sheetText += "\n";
+		}
+		sheetText += "                B: Back   A: Choose";
+		DisplayMsg(sheetText.c_str());
+	}
+}

@@ -151,7 +151,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 	} else if (hDown & KEY_UP) {
 		if (updaterMode == 0) {
 			if(Selection > 2)	Selection -= 3;
-		} else if (updaterMode == 2 || updaterMode == 4 || updaterMode == 1) {
+		} else if (updaterMode == 2 || updaterMode == 4 || updaterMode == 1 || updaterMode == 3) {
 			if(Selection > 1)	Selection -= 2;
 		}
 
@@ -159,7 +159,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 			if (updaterMode == 0) {
 				if(Selection == 0)	Selection = 3;
 
-			} else if (updaterMode == 1) {
+			} else if (updaterMode == 1 || updaterMode == 3) {
 				if(Selection < 1 && Selection != 1)	Selection += 2;
 
 			} else if (updaterMode == 2) {
@@ -172,22 +172,22 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 		} else if (hDown & KEY_RIGHT) {
 			if (updaterMode == 0) {
 				if (Selection < 2) Selection++;
-			} else if (updaterMode == 1) {
+			} else if (updaterMode == 1 || updaterMode == 3) {
 				if (!(Selection%2) && Selection != 2) Selection++;
 			} else if (updaterMode == 2) {
 				if (!(Selection%2) && Selection != 6) Selection++;
-			} else if (updaterMode == 3 || updaterMode == 4) {
+			} else if (updaterMode == 4) {
 				if (!(Selection%2)) Selection++;
 			}
 
 		} else if (hDown & KEY_LEFT) {
 			if (updaterMode == 0) {
 				if (Selection > 0) Selection--;
-			} else if (updaterMode == 1) {
+			} else if (updaterMode == 1 || updaterMode == 3) {
 				if (Selection%2 && Selection != 2)	Selection--;
 			} else if (updaterMode == 2) {
 				if (Selection%2 && Selection != 6)	Selection--;
-			} else if (updaterMode == 3 || updaterMode == 4) {
+			} else if (updaterMode == 4) {
 				if (Selection%2) Selection--;
 			}
 
@@ -208,8 +208,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				  case 2: {
 					Selection = 0;
-					buttonsAmount = 2;
-					titleButtons = 1;
+					buttonsAmount = 3;
+					titleButtons = 2;
 					updaterMode = 3;
 					break;
 				} case 3: {
@@ -288,6 +288,10 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				} case 1:
 					downloadScripts();
 					break;
+				 case 2: {
+					 downloadSheets();
+					 break;
+				 }
 			}
 		} else if (updaterMode == 4) {
 			switch(Selection) {
@@ -383,8 +387,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 
 		} else if (updaterMode == 4) {
 			Selection = 0;
-			buttonsAmount = 2;
-			titleButtons = 1;
+			buttonsAmount = 3;
+			titleButtons = 2;
 			updaterMode = 3;
 		}
 
@@ -397,8 +401,8 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 
 		} else if (updaterMode == 2) {
 			Selection = 0;
-			buttonsAmount = 2;
-			titleButtons = 1;
+			buttonsAmount = 3;
+			titleButtons = 2;
 			updaterMode = 3;
 
 		} else if (updaterMode == 3) {
@@ -428,8 +432,8 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[8])) {
 			Selection = 0;
-			buttonsAmount = 2;
-			titleButtons = 1;
+			buttonsAmount = 3;
+			titleButtons = 2;
 			updaterMode = 3;
 
 		} else if (touching(touch, Functions[9])) {
@@ -516,6 +520,10 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[1])) {
 			downloadScripts();
+
+		} else if (touching(touch, Functions[2])) {
+			downloadSheets(); 
+
 
 		} else if(touching(touch, Functions[10])) {
 			Selection = 0;
@@ -615,6 +623,9 @@ void Updater::DrawText(void) const
 	Gui::DrawString(140, 58, 0.7f, WHITE, "Themes");
 	Gui::DrawString(229, 58, 0.7f, WHITE, "Scripts");
 
+	Gui::DrawString(18, 98, 0.65f, WHITE, "LeafEdit");
+	Gui::DrawString(140, 98, 0.7f, WHITE, "Sprites");
+
 	} else if (updaterMode == 4) {
 	Gui::DrawString(5, 58, 0.65f, WHITE, "Univ-Manager");
 	Gui::DrawString(140, 58, 0.7f, WHITE, "Release");
@@ -712,7 +723,9 @@ void Updater::DrawSelection(void) const
 	if (Selection == 0) {
 		Gui::drawGUISelector(button_updater_selector_tl_idx, Functions[0].x, Functions[0].y, .020f);
 	} else if (Selection == 1) {
-		Gui::drawGUISelector(button_updater_selector_br_idx, Functions[1].x, Functions[1].y, .020f);
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[1].x, Functions[1].y, .020f);
+	} else if (Selection == 2) {
+		Gui::drawGUISelector(button_updater_selector_idx, Functions[2].x, Functions[2].y, .020f);
 	}
 
 
