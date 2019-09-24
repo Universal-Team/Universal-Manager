@@ -37,6 +37,16 @@ public:
 
 private:
 	mutable bool screenDrawn;
+
+
+	// Filemanager Operations.
+	void CreateFolder(std::string FolderName);
+
+	void CreateFile(std::string pathToFile);
+
+	void RenameFile(std::string oldFileName, std::string newFileName);
+
+	void DeleteFile(std::string pathToFile);
 };
 
 #endif
