@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Manager-DSi
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -24,31 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef FILEMANAGERSCREEN_HPP
-#define FILEMANAGERSCREEN_HPP
-
-#include "screens/screen.hpp"
-
-class FileManager : public SCREEN 
-{
-public:
-	void Draw(void) const override;
-	void Logic(u16 hDown, touchPosition touch) override;
-
-private:
-	mutable bool screenDrawn;
-	int mode = 1;
-
-	void DrawBrowse(void) const;
-	
-	// Filemanager Operations.
-	void CreateFolder(std::string FolderName);
-
-	void CreateFile(std::string pathToFile);
-
-	void RenameFile(std::string oldFileName, std::string newFileName);
-
-	void DeleteFile(std::string pathToFile);
+struct Scpt {
+    std::string function;
+    std::string param1;
+    std::string param2;
+    std::string param3;
+    std::string param4;
 };
 
-#endif
+void runScript(std::string path);

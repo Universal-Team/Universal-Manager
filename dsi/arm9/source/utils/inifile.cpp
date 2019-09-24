@@ -18,7 +18,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "inifile.h"
+#include "utils/inifile.h"
+
 #include <cstdio>
 #include <cstdlib>
 

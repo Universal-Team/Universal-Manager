@@ -1,14 +1,15 @@
-#include "config.h"
-#include "fileBrowse.h"
 #include "gui.hpp"
-#include "nitrofs.h"
 #include "logging.hpp"
-#include "structs.hpp"
 
 #include "graphics/graphics.h"
 
 #include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
+
+#include "utils/config.h"
+#include "utils/fileBrowse.h"
+#include "utils/nitrofs.h"
+#include "utils/structs.hpp"
 
 #include <cstdio>
 #include <ctype.h>
@@ -55,8 +56,9 @@ int main(int argc, char **argv) {
 	}
 
 	// Make directories
-	mkdir("sd:/_nds", 0777);
-	mkdir("sd:/_nds/Universal-Manager", 0777);
+	mkdir("/_nds", 0777);
+	mkdir("/_nds/Universal-Manager", 0777);
+	mkdir("/_nds/Universal-Manager/scripts", 0777);
 
 	loadFont();
 	Config::loadConfig();

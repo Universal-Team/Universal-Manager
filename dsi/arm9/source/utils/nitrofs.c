@@ -54,7 +54,7 @@
 #include <nds.h>
 #include <string.h>
 
-#include "nitrofs.h"
+#include "utils/nitrofs.h"
 
 //This seems to be a typo! memory.h has REG_EXEMEMCNT
 #ifndef REG_EXMEMCNT

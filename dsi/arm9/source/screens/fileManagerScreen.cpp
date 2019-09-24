@@ -23,11 +23,14 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
-#include "config.h"
+
 #include "gui.hpp"
 
 #include "screens/fileManagerScreen.hpp"
 #include "screens/screenCommon.hpp"
+
+#include "utils/config.h"
+#include "utils/scripts.hpp"
 
 #include <algorithm>
 #include <dirent.h>
@@ -52,11 +55,20 @@ void FileManager::Draw(void) const
 	screenDrawn = true;
 }
 
+void FileManager::DrawBrowse(void) const {
+
+}
+
+
 void FileManager::Logic(u16 hDown, touchPosition touch) {
 	if (hDown & KEY_B) {
 		screenDrawn = false;
 		Gui::screenBack();
 		return;
+	}
+
+	if (hDown & KEY_Y) {
+		runScript("/_nds/Universal-Manager/scripts/Test.scpt");
 	}
 }
 

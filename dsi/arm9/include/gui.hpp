@@ -1,8 +1,8 @@
-#include "config.h"
-
 #include "graphics/graphics.h"
 
 #include "screens/screen.hpp"
+
+#include "utils/config.h"
 
 #include <random>
 #include <stack>

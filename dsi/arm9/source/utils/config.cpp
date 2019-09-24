@@ -1,5 +1,5 @@
-#include "config.h"
-#include "inifile.h"
+#include "utils/config.h"
+#include "utils/inifile.h"
 
 #include "graphics/graphics.h"
 
