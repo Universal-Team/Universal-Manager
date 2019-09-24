@@ -25,6 +25,7 @@
 */
 
 #include "gui.hpp"
+#include "msg.hpp"
 
 #include "screens/fileManagerScreen.hpp"
 #include "screens/screenCommon.hpp"
@@ -68,7 +69,10 @@ void FileManager::Logic(u16 hDown, touchPosition touch) {
 	}
 
 	if (hDown & KEY_Y) {
-		runScript("/_nds/Universal-Manager/scripts/Test.scpt");
+		if(Msg::confirmPopup("Would you like to run the Script?")) {
+			runScript("/_nds/Universal-Manager/scripts/Test.scpt");
+		}
+		screenDrawn = false;
 	}
 }
 
