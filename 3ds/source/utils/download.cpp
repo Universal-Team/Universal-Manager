@@ -892,6 +892,13 @@ void downloadThemes(void) {
 	themeList = getThemeList("Universal-Team/extras", "Themes");
 	mkdir("sdmc:/Universal-Manager/Themes", 0777);
 
+	for(uint i=0;i<themeList.size();i++) {
+		if(themeList[i].name.size() < 3 || themeList[i].name.substr(themeList[i].name.size()-3) != "png") {
+			themeList.erase(themeList.begin()+i);
+			i--;
+		}
+	}
+
 	int selectedTheme = 0;
 	while(1) {
 		gspWaitForVBlank();
@@ -1470,6 +1477,13 @@ void downloadSheets(void) {
 	sheetList = getThemeList("Universal-Team/extras", "SpriteSheets");
 	mkdir("sdmc:/LeafEdit", 0777); // Create LeafEdit folder, if not exist.
 	mkdir("sdmc:/LeafEdit/SpriteSheets", 0777); // Create SpriteSheets folder, if not exist.
+
+	for(uint i=0;i<sheetList.size();i++) {
+		if(sheetList[i].name.size() < 3 || sheetList[i].name.substr(sheetList[i].name.size()-3) != "t3x") {
+			sheetList.erase(sheetList.begin()+i);
+			i--;
+		}
+	}
 
 	int selectedSheet = 0;
 	while(1) {
