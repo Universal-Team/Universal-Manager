@@ -954,6 +954,13 @@ void downloadScripts(void) {
 	scriptList = getThemeList("Universal-Team/extras", "Scripts");
 	mkdir("sdmc:/Universal-Manager/scripts", 0777);
 
+	for(uint i=0;i<scriptList.size();i++) {
+		if(scriptList[i].name.size() < 4 || scriptList[i].name.substr(scriptList[i].name.size()-4) != "scpt") {
+			scriptList.erase(scriptList.begin()+i);
+			i--;
+		}
+	}
+
 	int selectedScript = 0;
 	while(1) {
 		gspWaitForVBlank();
