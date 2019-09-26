@@ -153,18 +153,25 @@ void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 			readFile(dirContents[selectedFile].name.c_str());
 			TextMode = 1;
 		}
-		} else if (hDown & KEY_B) {
+	} else if (hDown &  KEY_Y) {
+		char path[PATH_MAX];
+		getcwd(path, PATH_MAX);
+		std::string currentPath = path;
+		currentPath += Input::getLine("Please type in the new file's name.");
+		std::ofstream file { currentPath.c_str() };
+		dirChanged = true;
+	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
 		getcwd(path, PATH_MAX);
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
 			Gui::screenBack();
 			return;
- 		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
+		} else {
+			chdir("..");
+			selectedFile = 0;
+			dirChanged = true;
 		}
-		} else if (hHeld & KEY_UP) {
+	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
 			playScrollSfx();

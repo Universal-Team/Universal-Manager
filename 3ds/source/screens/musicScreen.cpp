@@ -246,12 +246,12 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+				dirContents.clear();
+				std::vector<DirEntry> dirContentsTemp;
+				getDirectoryContents(dirContentsTemp, {"mp3", "ogg", "wav"});
+				for(uint i=0;i<dirContentsTemp.size();i++) {
+				dirContents.push_back(dirContentsTemp[i]);
+			}
 		dirChanged = false;
 	}
 
@@ -262,9 +262,6 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 			selectedFile = 0;
 			dirChanged = true;
 		} else {
-			if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "mp3") == 0) ||
-			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "wav") == 0) ||
-			(strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-3, 3).c_str(), "ogg") == 0)) {
 			if(dirContents[selectedFile].name != currentSong) {
 				nowPlayingList.clear();
 				char path[PATH_MAX];
@@ -278,12 +275,6 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
 			}
 			togglePlayback(); // Since it would otherwise pause it.
-		} else {
-			DisplayMsg("This is not a valid Music File!\nThe supported Formats are :\nMP3, WAV and OGG.");
-			for (int i = 0; i < 60*2; i++) {
-				gspWaitForVBlank();
-			}
-		}
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];
@@ -291,15 +282,15 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 		if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
 			MusicMode = 0;
 		} else {
-		chdir("..");
-		selectedFile = 0;
-		dirChanged = true;
+			chdir("..");
+			selectedFile = 0;
+			dirChanged = true;
 		}
 	} else if (hDown & KEY_Y) {
 		MusicMode = 5;
 		dirChanged = true; // Not anymore!
 	} else if (hDown & KEY_X) {
-			MusicMode = 0;
+		MusicMode = 0;
 	} else if (hHeld & KEY_UP) {
 		if (selectedFile > 0 && !keyRepeatDelay) {
 			selectedFile--;
