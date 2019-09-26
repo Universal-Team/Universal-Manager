@@ -101,6 +101,20 @@ off_t getFileSize(const char *fileName)
 	return fsize;
 }
 
+bool nameEndsWith(const std::string& name, const std::vector<std::string> extensionList) {
+	if(name.substr(0, 2) == "._") return false;
+
+	if(name.size() == 0) return false;
+
+	if(extensionList.size() == 0) return true;
+
+	for(int i = 0; i <(int)extensionList.size(); i++) {
+		const std::string ext = extensionList.at(i);
+		if(strcasecmp(name.c_str() + name.size() - ext.size(), ext.c_str()) == 0) return true;
+	}
+	return false;
+}
+
 bool dirEntryPredicate(const DirEntry& lhs, const DirEntry& rhs) {
 	if(!lhs.isDirectory && rhs.isDirectory) {
 		return false;
@@ -111,19 +125,17 @@ bool dirEntryPredicate(const DirEntry& lhs, const DirEntry& rhs) {
 	return strcasecmp(lhs.name.c_str(), rhs.name.c_str()) < 0;
 }
 
-void getDirectoryContents(std::vector<DirEntry>& dirContents) {
+void getDirectoryContents(std::vector<DirEntry>& dirContents, const std::vector<std::string> extensionList) {
 	struct stat st;
 
 	dirContents.clear();
 
-	DIR *pdir = opendir ("."); 
-	
-	if (pdir == NULL) {
-		DisplayMsg("Unable to open the directory.");
-		for(int i=0;i<120;i++)
-			gspWaitForVBlank();
-	} else {
+	DIR *pdir = opendir(".");
 
+	if(pdir == NULL) {
+		DisplayMsg("Unable to open the directory.");
+		for(int i=0;i<120;i++)	gspWaitForVBlank();
+	} else {
 		while(true) {
 			DirEntry dirEntry;
 
@@ -131,21 +143,18 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 			if(pent == NULL) break;
 
 			stat(pent->d_name, &st);
-			if (strcmp(pent->d_name, "..") != 0) {
-				dirEntry.name = pent->d_name;
-				dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
-				if (!dirEntry.isDirectory) {
-					dirEntry.size = getFileSize(dirEntry.name.c_str());
-				}
+			dirEntry.name = pent->d_name;
+			dirEntry.isDirectory = (st.st_mode & S_IFDIR) ? true : false;
 
-				if (dirEntry.name.compare(".") != 0) {
-					dirContents.push_back (dirEntry);
-				}
+			if(dirEntry.name.compare(".") != 0 && (dirEntry.isDirectory || nameEndsWith(dirEntry.name, extensionList))) {
+				dirContents.push_back(dirEntry);
 			}
-
 		}
-		
 		closedir(pdir);
 	}
 	sort(dirContents.begin(), dirContents.end(), dirEntryPredicate);
+}
+
+void getDirectoryContents(std::vector<DirEntry>& dirContents) {
+	getDirectoryContents(dirContents, {});
 }

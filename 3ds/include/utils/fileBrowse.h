@@ -23,6 +23,8 @@ typedef struct {
 
 void findNdsFiles(vector<DirEntry>& dirContents);
 
+bool nameEndsWith(const std::string& name, const std::vector<std::string> extensionList);
+void getDirectoryContents(std::vector<DirEntry>& dirContents, const std::vector<std::string> extensionList);
 void getDirectoryContents(std::vector<DirEntry>& dirContents);
 
 #endif //FILE_BROWSE_H

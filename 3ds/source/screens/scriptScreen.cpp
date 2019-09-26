@@ -119,7 +119,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			getcwd(startPath, PATH_MAX);
 			chdir("sdmc:/Universal-Manager/scripts/");
 			std::vector<DirEntry> dirContentsTemp;
-			getDirectoryContents(dirContentsTemp);
+			getDirectoryContents(dirContentsTemp, {"scpt"});
 			chdir(startPath);
 			for(uint i=0;i<dirContentsTemp.size();i++) {
 				dirContents.push_back(dirContentsTemp[i]);
