@@ -288,10 +288,10 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 				} case 1:
 					downloadScripts();
 					break;
-				 case 2: {
-					 downloadSheets();
-					 break;
-				 }
+				case 2: {
+					downloadSheets();
+					break;
+				}
 			}
 		} else if (updaterMode == 4) {
 			switch(Selection) {

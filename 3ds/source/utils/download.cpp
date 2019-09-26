@@ -70,57 +70,57 @@ extern bool updateAvailable[];
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
 static size_t handle_data(char* ptr, size_t size, size_t nmemb, void* userdata)
 {
-    (void) userdata;
-    const size_t bsz = size*nmemb;
+	(void) userdata;
+	const size_t bsz = size*nmemb;
 
-    if (result_sz == 0 || !result_buf)
-    {
-        result_sz = 0x1000;
-        result_buf = (char*)malloc(result_sz);
-    }
+	if (result_sz == 0 || !result_buf)
+	{
+		result_sz = 0x1000;
+		result_buf = (char*)malloc(result_sz);
+	}
 
-    bool need_realloc = false;
-    while (result_written + bsz > result_sz) 
-    {
-        result_sz <<= 1;
-        need_realloc = true;
-    }
+	bool need_realloc = false;
+	while (result_written + bsz > result_sz) 
+	{
+		result_sz <<= 1;
+		need_realloc = true;
+	}
 
-    if (need_realloc)
-    {
-        char *new_buf = (char*)realloc(result_buf, result_sz);
-        if (!new_buf)
-        {
-            return 0;
-        }
-        result_buf = new_buf;
-    }
+	if (need_realloc)
+	{
+		char *new_buf = (char*)realloc(result_buf, result_sz);
+		if (!new_buf)
+		{
+			return 0;
+		}
+		result_buf = new_buf;
+	}
 
-    if (!result_buf)
-    {
-        return 0;
-    }
+	if (!result_buf)
+	{
+		return 0;
+	}
 
-    memcpy(result_buf + result_written, ptr, bsz);
-    result_written += bsz;
-    return bsz;
+	memcpy(result_buf + result_written, ptr, bsz);
+	result_written += bsz;
+	return bsz;
 }
 
 static Result setupContext(CURL *hnd, const char * url)
 {
-    curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, 102400L);
-    curl_easy_setopt(hnd, CURLOPT_URL, url);
-    curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
-    curl_easy_setopt(hnd, CURLOPT_USERAGENT, USER_AGENT);
-    curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
-    curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
-    curl_easy_setopt(hnd, CURLOPT_HTTP_VERSION, (long)CURL_HTTP_VERSION_2TLS);
-    curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, handle_data);
-    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
-    curl_easy_setopt(hnd, CURLOPT_STDERR, stdout);
+	curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, 102400L);
+	curl_easy_setopt(hnd, CURLOPT_URL, url);
+	curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
+	curl_easy_setopt(hnd, CURLOPT_USERAGENT, USER_AGENT);
+	curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
+	curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+	curl_easy_setopt(hnd, CURLOPT_HTTP_VERSION, (long)CURL_HTTP_VERSION_2TLS);
+	curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, handle_data);
+	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
+	curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
+	curl_easy_setopt(hnd, CURLOPT_STDERR, stdout);
 
-    return 0;
+	return 0;
 }
 
 Result downloadToFile(std::string url, std::string path)
@@ -128,18 +128,18 @@ Result downloadToFile(std::string url, std::string path)
 	Result ret = 0;	
 	printf("Downloading from:\n%s\nto:\n%s\n", url.c_str(), path.c_str());
 
-    void *socubuf = memalign(0x1000, 0x100000);
-    if (!socubuf)
-    {
-        return -1;
-    }
+	void *socubuf = memalign(0x1000, 0x100000);
+	if (!socubuf)
+	{
+		return -1;
+	}
 
 	ret = socInit((u32*)socubuf, 0x100000);
 	if (R_FAILED(ret))
-    {
+	{
 		free(socubuf);
-        return ret;
-    }
+		return ret;
+	}
 
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, url.c_str());
@@ -172,7 +172,7 @@ Result downloadToFile(std::string url, std::string path)
 	u64 startTime = osGetTime();
 
 	CURLcode cres = curl_easy_perform(hnd);
-    curl_easy_cleanup(hnd);
+	curl_easy_cleanup(hnd);
 
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
@@ -191,9 +191,9 @@ Result downloadToFile(std::string url, std::string path)
 	u64 totalTime = endTime - startTime;
 	printf("Download took %llu milliseconds.\n", totalTime);
 
-    socExit();
-    free(result_buf);
-    free(socubuf);
+	socExit();
+	free(result_buf);
+	free(socubuf);
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
@@ -204,18 +204,18 @@ Result downloadToFile(std::string url, std::string path)
 Result downloadFromRelease(std::string url, std::string asset, std::string path)
 {
 	Result ret = 0;
-    void *socubuf = memalign(0x1000, 0x100000);
-    if (!socubuf)
-    {
-        return -1;
-    }
+	void *socubuf = memalign(0x1000, 0x100000);
+	if (!socubuf)
+	{
+		return -1;
+	}
 
 	ret = socInit((u32*)socubuf, 0x100000);
 	if (R_FAILED(ret))
-    {
+	{
 		free(socubuf);
-        return ret;
-    }
+		return ret;
+	}
 
 	std::regex parseUrl("github\\.com\\/(.+)\\/(.+)");
 	std::smatch result;
@@ -243,7 +243,7 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 	}
 
 	CURLcode cres = curl_easy_perform(hnd);
-    curl_easy_cleanup(hnd);
+	curl_easy_cleanup(hnd);
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
@@ -273,9 +273,9 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 			}
 		}
 	}
-    socExit();
-    free(result_buf);
-    free(socubuf);
+	socExit();
+	free(result_buf);
+	free(socubuf);
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
@@ -334,18 +334,18 @@ void notConnectedMsg(void) {
 std::string getLatestRelease(std::string repo, std::string item)
 {
 	Result ret = 0;
-    void *socubuf = memalign(0x1000, 0x100000);
-    if (!socubuf)
-    {
-        return "";
-    }
+	void *socubuf = memalign(0x1000, 0x100000);
+	if (!socubuf)
+	{
+		return "";
+	}
 
 	ret = socInit((u32*)socubuf, 0x100000);
 	if (R_FAILED(ret))
-    {
+	{
 		free(socubuf);
-        return "";
-    }
+		return "";
+	}
 	
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/releases/latest";
@@ -385,9 +385,9 @@ std::string getLatestRelease(std::string repo, std::string item)
 	if (parsedAPI[item].is_string()) {
 		jsonItem = parsedAPI[item];
 	}
-    socExit();
-    free(result_buf);
-    free(socubuf);
+	socExit();
+	free(result_buf);
+	free(socubuf);
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
@@ -398,18 +398,18 @@ std::string getLatestRelease(std::string repo, std::string item)
 std::string getLatestCommit(std::string repo, std::string item)
 {
 	Result ret = 0;
-    void *socubuf = memalign(0x1000, 0x100000);
-    if (!socubuf)
-    {
-        return "";
-    }
+	void *socubuf = memalign(0x1000, 0x100000);
+	if (!socubuf)
+	{
+		return "";
+	}
 
 	ret = socInit((u32*)socubuf, 0x100000);
 	if (R_FAILED(ret))
-    {
+	{
 		free(socubuf);
-        return "";
-    }
+		return "";
+	}
 	
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/commits/master";
@@ -449,9 +449,9 @@ std::string getLatestCommit(std::string repo, std::string item)
 	if (parsedAPI[item].is_string()) {
 		jsonItem = parsedAPI[item];
 	}
-    socExit();
-    free(result_buf);
-    free(socubuf);
+	socExit();
+	free(result_buf);
+	free(socubuf);
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
@@ -462,18 +462,18 @@ std::string getLatestCommit(std::string repo, std::string item)
 std::string getLatestCommit(std::string repo, std::string array, std::string item)
 {
 	Result ret = 0;
-    void *socubuf = memalign(0x1000, 0x100000);
-    if (!socubuf)
-    {
-        return "";
-    }
+	void *socubuf = memalign(0x1000, 0x100000);
+	if (!socubuf)
+	{
+		return "";
+	}
 
 	ret = socInit((u32*)socubuf, 0x100000);
 	if (R_FAILED(ret))
-    {
+	{
 		free(socubuf);
-        return "";
-    }
+		return "";
+	}
 	
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/commits/master";
@@ -513,9 +513,9 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 	if (parsedAPI[array][item].is_string()) {
 		jsonItem = parsedAPI[array][item];
 	}
-    socExit();
-    free(result_buf);
-    free(socubuf);
+	socExit();
+	free(result_buf);
+	free(socubuf);
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
@@ -636,7 +636,7 @@ void updateBootstrap(bool nightly) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Nightly)");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/TWLBot/Builds/blob/master/nds-bootstrap.7z?raw=true", "/nds-bootstrap-nightly.7z") != 0) {
 			showProgressBar = false;
 			downloadFailed();
@@ -829,7 +829,7 @@ void updateLuma(bool nightly) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Luma 3DS...\nNightly");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/hax0kartik/luma-hourlies", "boot\\.firm", "/boot.firm") != 0) {
 			showProgressBar = false;
 			downloadFailed();
@@ -864,7 +864,7 @@ void downloadGodMode9(void) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GodMode9...\nRelease");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 			showProgressBar = false;
 			downloadFailed();
@@ -1166,7 +1166,7 @@ void updateLeafEdit(void) {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly");
 		showProgressBar = true;
 		progressBarType = 0;
-		 Threads::create((ThreadFunc)displayProgressBar);
+		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/LeafEdit/LeafEdit.cia?raw=true", "/LeafEdit-Nightly.cia") != 0) {
 		showProgressBar = false;
 		downloadFailed();

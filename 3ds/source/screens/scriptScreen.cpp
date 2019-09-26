@@ -99,11 +99,11 @@ void Script::DrawScriptBrowse(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
-        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1 || Config::selector == 2) {
-        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
-    }
+	if (Config::selector == 0) {
+		Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
+	} else if (Config::selector == 1 || Config::selector == 2) {
+		Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
+	}
 
 		Gui::DrawBGBot();
 		animatedBGBot();
@@ -114,16 +114,16 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (refresh) {
-            dirContents.clear();
+			dirContents.clear();
 			char startPath[PATH_MAX];
 			getcwd(startPath, PATH_MAX);
 			chdir("sdmc:/Universal-Manager/scripts/");
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
+			std::vector<DirEntry> dirContentsTemp;
+			getDirectoryContents(dirContentsTemp);
 			chdir(startPath);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+			for(uint i=0;i<dirContentsTemp.size();i++) {
+				dirContents.push_back(dirContentsTemp[i]);
+		}
 		refresh = false;
 	}
 
@@ -327,7 +327,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 					break;
 
 
-				  } case 2: {
+				} case 2: {
 					std::string Function = "extract	";
 					std::string param1 = Input::getLine("Please type in the archive path. Like 'test/example.zip'.");
 					std::string param2 = Input::getLine("Please type in the stuff, which you want to extract.");
@@ -375,7 +375,7 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 					break;
 
 
-				  } case 2: {
+				} case 2: {
 					std::string Function = "progressDownloadRelease	";
 					std::string param1 = Input::getLine("Please type in the Github Repo URL.");
 					std::string param2 = Input::getLine("Please type in the Asset, which you want to download.");
@@ -468,7 +468,7 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		scpt << Function << param1 << " " << std::endl;
 
 
-	} 	else if (touching(touch, Functions[4])) {
+	} else if (touching(touch, Functions[4])) {
 		std::string Function = "delete	";
 		std::string param1 = Input::getLine("Please type in the path to the delete file. 'sdmc:/test.cia'.");
 		scpt << Function << param1 << " " << std::endl;
@@ -480,7 +480,7 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		scpt << Function << param1 << " " << std::endl;
 	}
 
-		// Page 2.
+	// Page 2.
 	} else if (ScriptPage == 2 && hDown & KEY_TOUCH) {
 		if (touching(touch, Functions[0])) {
 			std::string Function = "mkdir	";
