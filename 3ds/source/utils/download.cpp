@@ -1177,39 +1177,67 @@ void updateRelaunchRelease(void) {
 
 
 void updateLeafEdit(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly");
+	if(confirmPopup("Which version would you like to update?", "", "cia", "3dsx")) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly CIA");
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/LeafEdit/LeafEdit.cia?raw=true", "/LeafEdit-Nightly.cia") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
 		showProgressBar = false;
 		DisplayMsg("Now Installing the CIA..");
 		installCia("/LeafEdit-Nightly.cia");
 
 		deleteFile("sdmc:/LeafEdit-Nightly.cia");
-	doneMsg();
+		doneMsg();
+	} else {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly 3DSX");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/LeafEdit/LeafEdit.3dsx?raw=true", "/3ds/LeafEdit.3dsx") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+		showProgressBar = false;
+		doneMsg();
+	}
 }
 
 void updateLeafEditRelease(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nRelease");
+	if(confirmPopup("Which version would you like to update?", "", "cia", "3dsx")) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nRelease CIA");
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
 		if (downloadFromRelease("https://github.com/Universal-Team/LeafEdit", "LeafEdit\\.cia", "/LeafEdit-Release.cia") != 0) {
-		showProgressBar = false;
-		downloadFailed();
-		return;
-	}
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
 		showProgressBar = false;
 		DisplayMsg("Now Installing the CIA..");
 		installCia("/LeafEdit-Release.cia");
 
 		deleteFile("sdmc:/LeafEdit-Release.cia");
-	doneMsg();
+		doneMsg();
+	} else {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nRelease 3DSX");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadFromRelease("https://github.com/Universal-Team/LeafEdit", "LeafEdit\\.3dsx", "/3ds/LeafEdit.3dsx") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+		showProgressBar = false;
+		doneMsg();
+	}
 }
 
 
