@@ -151,16 +151,20 @@ void Image::BrowseLogic(u32 hDown, u32 hHeld) {
 
 	
 	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
+		if (dirContents.size() == 0) {
+			DisplayTimeMessage("What are you trying to do? :P");
 		} else {
-			if(dirContents[selectedFile].name != currentImage) {
-			}
-			if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
-				imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
-				ImageMode = 1;
+			if (dirContents[selectedFile].isDirectory) {
+				chdir(dirContents[selectedFile].name.c_str());
+				selectedFile = 0;
+				dirChanged = true;
+			} else {
+				if(dirContents[selectedFile].name != currentImage) {
+				}
+				if(confirmPopup("Do you want, to see this Image?\nMake sure it is not taller than 1024x576 pixel.")) {
+					imageSize = Draw_LoadImageFile(&image, dirContents[selectedFile].name.c_str());
+					ImageMode = 1;
+				}
 			}
 		}
 	} else if (hDown & KEY_B) {

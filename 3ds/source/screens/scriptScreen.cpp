@@ -128,9 +128,13 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	}
 
 		if(hDown & KEY_A) {
-			if(confirmPopup("Do you want to run this Script : \n\n "+dirContents[selectedFile].name+"")) {
-				runScript("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name);
-			} 
+			if (dirContents.size() == 0) {
+				DisplayTimeMessage("What are you trying to do? :P");
+			} else {
+				if(confirmPopup("Do you want to run this Script : \n\n "+dirContents[selectedFile].name+"")) {
+					runScript("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name);
+				}
+			}
 		} else if (hDown & KEY_B) {
 			Gui::screenBack();
 			return;
@@ -142,7 +146,9 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 				refresh = true;
 		}
 		} else if (hDown & KEY_X) {
-			if (selectedFile != 0) {
+			if (dirContents.size() == 0) {
+				DisplayTimeMessage("What are you trying to do? :P");
+			} else {
 				if(confirmPopup("Are you sure you want to delete this Script?")) {
 					remove(("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name).c_str());
 					refresh = true;

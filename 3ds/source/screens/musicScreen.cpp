@@ -257,24 +257,28 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 
 
 	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
+		if (dirContents.size() == 0) {
+			DisplayTimeMessage("What are you trying to do? :P");
 		} else {
-			if(dirContents[selectedFile].name != currentSong) {
-				nowPlayingList.clear();
-				char path[PATH_MAX];
-				getcwd(path, PATH_MAX);
-				currentSong = path + dirContents[selectedFile].name;
-				Playlist song;
-				song.name = currentSong;
-				song.position = nowPlayingList.size() + 1;
-				nowPlayingList.push_back(song);
-				playbackInfo_t playbackInfo;
-				changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
+			if (dirContents[selectedFile].isDirectory) {
+				chdir(dirContents[selectedFile].name.c_str());
+				selectedFile = 0;
+				dirChanged = true;
+			} else {
+				if(dirContents[selectedFile].name != currentSong) {
+					nowPlayingList.clear();
+					char path[PATH_MAX];
+					getcwd(path, PATH_MAX);
+					currentSong = path + dirContents[selectedFile].name;
+					Playlist song;
+					song.name = currentSong;
+					song.position = nowPlayingList.size() + 1;
+					nowPlayingList.push_back(song);
+					playbackInfo_t playbackInfo;
+					changeFile(dirContents[selectedFile].name.c_str(), &playbackInfo);
+				}
+				togglePlayback(); // Since it would otherwise pause it.
 			}
-			togglePlayback(); // Since it would otherwise pause it.
 		}
 	} else if (hDown & KEY_B) {
 		char path[PATH_MAX];

@@ -139,14 +139,18 @@ void LeafEditEditor::IniBrowseLogic(u32 hDown, u32 hHeld) {
 	}
 
 		if(hDown & KEY_A) {
-			if(confirmPopup("Do you want edit this ini? : \n\n "+dirContents[selectedSheetIniFile].name+"")) {
-				sheetFile = "sdmc:/LeafEdit/SpriteSheets/"+dirContents[selectedSheetIniFile].name;
-				sheetFile += "/sheet.ini";
-				sheetFileIni = sheetFile;
-				loadIniContents();
-				mode = 1;
+			if (dirContents.size() == 0) {
+				DisplayTimeMessage("What are you trying to do? :P");
+			} else {
+				if(confirmPopup("Do you want edit this ini? : \n\n "+dirContents[selectedSheetIniFile].name+"")) {
+					sheetFile = "sdmc:/LeafEdit/SpriteSheets/"+dirContents[selectedSheetIniFile].name;
+					sheetFile += "/sheet.ini";
+					sheetFileIni = sheetFile;
+					loadIniContents();
+					mode = 1;
+					savePath = sheetFile;
+				}
 			}
-			savePath = sheetFile;
 		} else if (hDown & KEY_B) {
 			Gui::screenBack();
 			return;

@@ -144,14 +144,18 @@ void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 
 
 	if (hDown & KEY_A) {
-		if (dirContents[selectedFile].isDirectory) {
-			chdir(dirContents[selectedFile].name.c_str());
-			selectedFile = 0;
-			dirChanged = true;
+		if (dirContents.size() == 0) {
+			DisplayTimeMessage("What are you trying to do? :P");
 		} else {
-			currentEditFile = dirContents[selectedFile].name;
-			readFile(dirContents[selectedFile].name.c_str());
-			TextMode = 1;
+			if (dirContents[selectedFile].isDirectory) {
+				chdir(dirContents[selectedFile].name.c_str());
+				selectedFile = 0;
+				dirChanged = true;
+			} else {
+				currentEditFile = dirContents[selectedFile].name;
+				readFile(dirContents[selectedFile].name.c_str());
+				TextMode = 1;
+			}
 		}
 	} else if (hDown &  KEY_Y) {
 		char path[PATH_MAX];
