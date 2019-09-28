@@ -50,7 +50,7 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 	std::string Selectors[] = {"Selector1", "Selector2", "Selector3"};
 	std::string Language[] = {"Deutsch", "English", "Español", "Français", "Italiano", "日本語", "Lietuvių", "Português"};
 	
-int Settings::getColorValue(int color, int bgr) const
+int ColorHelper::getColorValue(int color, int bgr)
 {
 	char colorName[10];
 	int i;
@@ -64,7 +64,7 @@ int Settings::getColorValue(int color, int bgr) const
 	return i;
 }
 
-std::string Settings::getColorName(int color, int bgr) const
+std::string ColorHelper::getColorName(int color, int bgr)
 {
 	char colorName[10];
 	int i = getColorValue(color, bgr);
@@ -101,20 +101,20 @@ void Settings::DrawBottom(void) const
 	if (SettingsPage == 1) {
 		Gui::DrawString((320-Gui::GetStringWidth(0.7f, "Bars"))/2, 58, 0.7f, WHITE, "Bars");
 		Gui::sprite(3, button_red_idx, 17, 85);
-		Gui::DrawString(56, 98, 0.7f, WHITE, getColorName(Config::barColor, 2).c_str());
+		Gui::DrawString(56, 98, 0.7f, WHITE, ColorHelper::getColorName(Config::barColor, 2).c_str());
 		Gui::sprite(3, button_green_idx, 112, 85);
-		Gui::DrawString(150, 98, 0.7f, WHITE, getColorName(Config::barColor, 1).c_str());
+		Gui::DrawString(150, 98, 0.7f, WHITE, ColorHelper::getColorName(Config::barColor, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 85);
-		Gui::DrawString(239, 98, 0.7f, WHITE, getColorName(Config::barColor, 0).c_str());
+		Gui::DrawString(239, 98, 0.7f, WHITE, ColorHelper::getColorName(Config::barColor, 0).c_str());
 
 	// Background.
 		Gui::DrawString(100, 138, 0.7f, WHITE, "Background");
 		Gui::sprite(3, button_red_idx, 17, 168);
-		Gui::DrawString(56, 178, 0.7f, WHITE, getColorName(Config::bgColor, 2).c_str());
+		Gui::DrawString(56, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::bgColor, 2).c_str());
 		Gui::sprite(3, button_green_idx, 112, 168);
-		Gui::DrawString(150, 178, 0.7f, WHITE, getColorName(Config::bgColor, 1).c_str());
+		Gui::DrawString(150, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::bgColor, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 168);
-		Gui::DrawString(239, 178, 0.7f, WHITE, getColorName(Config::bgColor, 0).c_str());
+		Gui::DrawString(239, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::bgColor, 0).c_str());
 
 		Gui::sprite(3, button_updater_idx, 207, 31);
 		Gui::DrawString(225, 38, 0.65f, WHITE, musicModes[Config::musicMode].c_str());
@@ -128,11 +128,11 @@ void Settings::DrawBottom(void) const
 	} else if (SettingsPage == 2) {
 		Gui::DrawString(70, 73, 0.7f, WHITE, "Animation Color");
 		Gui::sprite(3, button_red_idx, 17, 100);
-		Gui::DrawString(56, 113, 0.7f, WHITE, getColorName(Config::animationColor, 2).c_str());
+		Gui::DrawString(56, 113, 0.7f, WHITE, ColorHelper::getColorName(Config::animationColor, 2).c_str());
 		Gui::sprite(3, button_green_idx, 112, 100);
-		Gui::DrawString(150, 113, 0.7f, WHITE, getColorName(Config::animationColor, 1).c_str());
+		Gui::DrawString(150, 113, 0.7f, WHITE, ColorHelper::getColorName(Config::animationColor, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 100);
-		Gui::DrawString(239, 113, 0.7f, WHITE, getColorName(Config::animationColor, 0).c_str());
+		Gui::DrawString(239, 113, 0.7f, WHITE, ColorHelper::getColorName(Config::animationColor, 0).c_str());
 
 		Gui::sprite(3, button_updater_idx, 207, 31);
 		Gui::DrawString(220, 40, 0.65f, WHITE, animationModes[Config::animation].c_str());
@@ -154,19 +154,19 @@ void Settings::DrawBottom(void) const
 	} else if (SettingsPage == 3) {
 		Gui::DrawString(100, 78, 0.7f, WHITE, "Selected Text");
 		Gui::sprite(3, button_red_idx, 17, 105);
-		Gui::DrawString(56, 118, 0.7f, WHITE, getColorName(Config::selectedText, 2).c_str());
+		Gui::DrawString(56, 118, 0.7f, WHITE, ColorHelper::getColorName(Config::selectedText, 2).c_str());
 		Gui::sprite(3, button_green_idx, 112, 105);
-		Gui::DrawString(150, 118, 0.7f, WHITE, getColorName(Config::selectedText, 1).c_str());
+		Gui::DrawString(150, 118, 0.7f, WHITE, ColorHelper::getColorName(Config::selectedText, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 105);
-		Gui::DrawString(239, 118, 0.7f, WHITE, getColorName(Config::selectedText, 0).c_str());
+		Gui::DrawString(239, 118, 0.7f, WHITE, ColorHelper::getColorName(Config::selectedText, 0).c_str());
 
 		Gui::DrawString(100, 148, 0.7f, WHITE, "Unselected Text");
 		Gui::sprite(3, button_red_idx, 17, 168);
-		Gui::DrawString(56, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 2).c_str());
+		Gui::DrawString(56, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 2).c_str());
 		Gui::sprite(3, button_green_idx, 112, 168);
-		Gui::DrawString(150, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 1).c_str());
+		Gui::DrawString(150, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 168);
-		Gui::DrawString(239, 178, 0.7f, WHITE, getColorName(Config::unselectedText, 0).c_str());
+		Gui::DrawString(239, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 0).c_str());
 
 		// Selectors.
 		Gui::DrawString(30, 40, 0.7f, WHITE, "FileBrowse Selector");
@@ -230,7 +230,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
-				Config::barColor = RGBA8(red, getColorValue(Config::barColor, 1), getColorValue(Config::barColor, 0), 255);
+				Config::barColor = RGBA8(red, ColorHelper::getColorValue(Config::barColor, 1), ColorHelper::getColorValue(Config::barColor, 0), 255);
 			}
 
 
@@ -238,7 +238,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
-				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), green, getColorValue(Config::barColor, 0), 255);
+				Config::barColor = RGBA8(ColorHelper::getColorValue(Config::barColor, 2), green, ColorHelper::getColorValue(Config::barColor, 0), 255);
 			}
 
 
@@ -246,7 +246,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
-				Config::barColor = RGBA8(getColorValue(Config::barColor, 2), getColorValue(Config::barColor, 1), blue, 255);
+				Config::barColor = RGBA8(ColorHelper::getColorValue(Config::barColor, 2), ColorHelper::getColorValue(Config::barColor, 1), blue, 255);
 			}
 
 
@@ -254,7 +254,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
-				Config::bgColor = RGBA8(red, getColorValue(Config::bgColor, 1), getColorValue(Config::bgColor, 0), 255);
+				Config::bgColor = RGBA8(red, ColorHelper::getColorValue(Config::bgColor, 1), ColorHelper::getColorValue(Config::bgColor, 0), 255);
 			}
 
 
@@ -262,7 +262,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
-				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), green, getColorValue(Config::bgColor, 0), 255);
+				Config::bgColor = RGBA8(ColorHelper::getColorValue(Config::bgColor, 2), green, ColorHelper::getColorValue(Config::bgColor, 0), 255);
 			}
 
 
@@ -270,7 +270,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
-				Config::bgColor = RGBA8(getColorValue(Config::bgColor, 2), getColorValue(Config::bgColor, 1), blue, 255);
+				Config::bgColor = RGBA8(ColorHelper::getColorValue(Config::bgColor, 2), ColorHelper::getColorValue(Config::bgColor, 1), blue, 255);
 			}
 
 
@@ -297,7 +297,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
-				Config::animationColor = RGBA8(red, getColorValue(Config::animationColor, 1), getColorValue(Config::animationColor, 0), 255);
+				Config::animationColor = RGBA8(red, ColorHelper::getColorValue(Config::animationColor, 1), ColorHelper::getColorValue(Config::animationColor, 0), 255);
 			}
 
 
@@ -305,7 +305,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
-				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), green, getColorValue(Config::animationColor, 0), 255);
+				Config::animationColor = RGBA8(ColorHelper::getColorValue(Config::animationColor, 2), green, ColorHelper::getColorValue(Config::animationColor, 0), 255);
 			}
 
 
@@ -313,7 +313,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
-				Config::animationColor = RGBA8(getColorValue(Config::animationColor, 2), getColorValue(Config::animationColor, 1), blue, 255);
+				Config::animationColor = RGBA8(ColorHelper::getColorValue(Config::animationColor, 2), ColorHelper::getColorValue(Config::animationColor, 1), blue, 255);
 			}
 
 
@@ -352,7 +352,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 		int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
-				Config::selectedText = RGBA8(red, getColorValue(Config::selectedText, 1), getColorValue(Config::selectedText, 0), 255);
+				Config::selectedText = RGBA8(red, ColorHelper::getColorValue(Config::selectedText, 1), ColorHelper::getColorValue(Config::selectedText, 0), 255);
 			}
 
 
@@ -360,7 +360,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 		int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
-				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), green, getColorValue(Config::selectedText, 0), 255);
+				Config::selectedText = RGBA8(ColorHelper::getColorValue(Config::selectedText, 2), green, ColorHelper::getColorValue(Config::selectedText, 0), 255);
 			}
 
 
@@ -368,7 +368,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
-				Config::selectedText = RGBA8(getColorValue(Config::selectedText, 2), getColorValue(Config::selectedText, 1), blue, 255);
+				Config::selectedText = RGBA8(ColorHelper::getColorValue(Config::selectedText, 2), ColorHelper::getColorValue(Config::selectedText, 1), blue, 255);
 			}
 
 
@@ -376,7 +376,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 		int temp = Input::getUint(255, "Please Type in the Red RGB Value.");
 			if(temp != -1) {
 				red = temp;
-				Config::unselectedText = RGBA8(red, getColorValue(Config::unselectedText, 1), getColorValue(Config::unselectedText, 0), 255);
+				Config::unselectedText = RGBA8(red, ColorHelper::getColorValue(Config::unselectedText, 1), ColorHelper::getColorValue(Config::unselectedText, 0), 255);
 			}
 
 
@@ -384,7 +384,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 		int temp = Input::getUint(255, "Please Type in the Green RGB Value.");
 			if(temp != -1) {
 				green = temp;
-				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), green, getColorValue(Config::unselectedText, 0), 255);
+				Config::unselectedText = RGBA8(ColorHelper::getColorValue(Config::unselectedText, 2), green, ColorHelper::getColorValue(Config::unselectedText, 0), 255);
 			}
 
 
@@ -392,7 +392,7 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			int temp = Input::getUint(255, "Please Type in the Blue RGB Value.");
 			if(temp != -1) {
 				blue = temp;
-				Config::unselectedText = RGBA8(getColorValue(Config::unselectedText, 2), getColorValue(Config::unselectedText, 1), blue, 255);
+				Config::unselectedText = RGBA8(ColorHelper::getColorValue(Config::unselectedText, 2), ColorHelper::getColorValue(Config::unselectedText, 1), blue, 255);
 			}
 
 

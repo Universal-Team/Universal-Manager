@@ -9,7 +9,7 @@ class CIniFile
 {
   public:
     CIniFile();
-    explicit CIniFile(const std::string& filename);
+    CIniFile(const std::string& filename);
     virtual ~CIniFile();
 
   public:

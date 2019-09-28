@@ -24,78 +24,63 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "utils/inifile.h"
+
 #include "structs.hpp"
+
+#include "utils/fileBrowse.h"
+
 #include "screens/screen.hpp"
 
+#include <algorithm>
+#include <fstream>
+#include <string>
+#include <unistd.h>
 #include <vector>
 
-class Settings : public SCREEN 
+class LeafEditEditor : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int SettingsPage = 1;
+	int mode = 0;
+	int colorMode = 0;
 
-	void DrawBottom(void) const;
-	void DrawCurrentPage(void) const;
+	CIniFile sheetFileIni; // Sheet color informations.
 
-	void ButtonLogic(u32 hDown, u32 hHeld);
-	void TouchLogic(u32 hDown, touchPosition touch);
+	void DrawIniBrowse(void) const;
+	void IniBrowseLogic(u32 hDown, u32 hHeld);
 
-	// Struct.
-	std::vector<Structs::ButtonPos> uiSettingsButtonPos = {
-		// Bars
+	void DrawIniEditor(void) const;
+	void EditorLogic(u32 hDown, touchPosition touch);
+
+	void drawTestSelector(float x, float y) const;
+
+	void loadIniContents();
+	void saveIniContents();
+	void createNewSheet(std::string sheetIni);
+
+	uint selectedSheetIniFile = 0;
+	int keyRepeatDelay = 0;
+	int fastMode = false;
+	mutable bool refresh = true;
+	std::vector<DirEntry> dirContents;
+
+	std::string sheetFile = "";
+	std::string savePath = "";
+
+
+
+	std::vector<Structs::ButtonPos> buttons = {
 		{17, 85, 95, 41, -1},
 		{112, 85, 95, 41, -1},
 		{207, 85, 95, 41, -1},
-		// Background
-
-		{17, 165, 95, 41, -1},
-		{112, 165, 95, 41, -1},
-		{207, 165, 95, 41, -1},
-
 		{293, 213, 27, 27, -1},
-
-		// Music BG
-		{207, 31, 95, 41, -1},
-
-		// Bubble Color.
-		{17, 100, 95, 41, -1},
-		{112, 100, 95, 41, -1},
-		{207, 100, 95, 41, -1},
-
-		// Animation enable.
-		{207, 31, 95, 41, -1},
-
-		// Battery percent.
-		{207, 165, 87, 33, -1},
-
-		// Bars Layout.
-		{17, 165, 95, 41, -1},
-
-		// BG Layout.
-		{17, 31, 95, 41, -1},
-
-		// Selected Text Color.
-	
-		{17, 105, 95, 41, -1},
-		{112, 105, 95, 41, -1},
-		{207, 105, 95, 41, -1},
-
-		// Unselected Text Color.
-
-		{17, 165, 95, 41, -1},
-		{112, 165, 95, 41, -1},
-		{207, 165, 95, 41, -1},
-
-		// Selector.
-		{207, 31, 95, 41, -1},
 	};
 };
 
-namespace ColorHelper {
-	int getColorValue(int color, int bgr);
-	std::string getColorName(int color, int bgr);
+namespace Sheet {
+	extern int barText, bgText, buttonText, boxText, SelectorColor, SelectorBG, SelectorText;
 }

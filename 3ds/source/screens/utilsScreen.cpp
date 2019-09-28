@@ -27,6 +27,7 @@
 #include "screens/buttonTester.hpp"
 #include "screens/calculatorScreen.hpp"
 #include "screens/calendarScreen.hpp"
+#include "screens/leafEditEditor.hpp"
 #include "screens/screenCommon.hpp"
 #include "screens/utilsScreen.hpp"
 #include "utils/settings.hpp"
@@ -46,6 +47,8 @@ void Utils::drawSelection(void) const
 		Gui::drawGUISelector(button_selector_idx, 166, 44, .020f);
 	} else if (Selection == 2) {
 		Gui::drawGUISelector(button_selector_idx, 3, 154, .020f);
+	} else if (Selection == 3) {
+		Gui::drawGUISelector(button_br_selector_idx, 161, 149, .020f);
 	}
 }
 
@@ -76,20 +79,21 @@ void Utils::Draw(void) const
 	Gui::sprite(3, button_button_3_idx, utilsButtonPos[2].x, utilsButtonPos[2].y);
 	Gui::DrawString(37, 167, 0.65f, WHITE, "Calculator");
 
+	Gui::sprite(3, button_button_br_idx, utilsButtonPos[4].x, utilsButtonPos[4].y);
+	Gui::DrawString(220, 173, 0.65f, WHITE, "LeafEdit");
+
 	drawSelection();
 }
 
 void Utils::SelectionLogic(u32 hDown) {
-		if (hDown & KEY_UP) {
-			if(Selection > 1)	Selection -= 2;
-
-		} else if (hDown & KEY_DOWN) {
-			if(Selection < 1 && Selection != 1)	Selection += 2;
-
-		} else if (hDown & KEY_LEFT) {
-			if (Selection%2) Selection--;
-		} else if (hDown & KEY_RIGHT) {
-			if (!(Selection%2) && Selection != 2) Selection++;
+	if(hDown & KEY_UP) {
+		if(Selection > 1)	Selection -= 2;
+	} else if(hDown & KEY_DOWN) {
+		if(Selection < 3)	Selection += 2;
+	} else if (hDown & KEY_LEFT) {
+		if (Selection%2) Selection--;
+	} else if (hDown & KEY_RIGHT) {
+		if (!(Selection%2)) Selection++;
 		} else if (hDown & KEY_A) {
 			switch(Selection) {
 				case 0: {
@@ -101,6 +105,8 @@ void Utils::SelectionLogic(u32 hDown) {
 				case 2: {
 					Gui::setScreen(std::make_unique<Calculator>());
 					break;
+				} case 3: {
+					Gui::setScreen(std::make_unique<LeafEditEditor>());
 				}
 		}
 		}
@@ -121,6 +127,8 @@ void Utils::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, utilsButtonPos[3])) {
 			Gui::screenBack();
 			return;
+		} else if (touching(touch, utilsButtonPos[4])) {
+			Gui::setScreen(std::make_unique<LeafEditEditor>());
 		}
 	}
 }
