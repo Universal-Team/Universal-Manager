@@ -1133,7 +1133,7 @@ void updateRelaunchNightly(void) {
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
-	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Relaunch.7z?raw=true", "/Relaunch-Nightly.7z") != 0) {
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Relaunch/Relaunch.7z?raw=true", "/Relaunch-Nightly.7z") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
