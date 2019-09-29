@@ -1338,7 +1338,7 @@ void downloadBoxart(void) {
 	vector<DirEntry> dirContents;
 	std::string scanDir;
 
-	DisplayMsg("Would you like to choose a directory, or scan\nthe full card?\n\n\n\n\n\n\n\n\n\n       B: Cancel   A: Choose Directory   X: Full SD");
+	DisplayMsg("Would you like to choose a directory, or scan the full card?\n\n\n\n\n\n\n\n\n\n       B: Cancel   A: Choose Directory   X: Full SD");
 
 	while(1) {
 		gspWaitForVBlank();

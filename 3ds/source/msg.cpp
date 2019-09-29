@@ -55,13 +55,13 @@ void DisplayWaitMsg(std::string waitMsg, ...)
 }
 
 // Display the Helper Box with dimmed Background effect.
-void helperBox(std::string msg1) {
+void helperBox(std::string Msg) {
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(top);
 	Draw_Rect(0, 0, 400, 240, DIM);
-	Gui::sprite(0, sprites_textbox_idx, 10, 25);
-	Gui::DrawString(35, 42, 0.45f, BLACK, msg1.c_str());
+	Gui::sprite(0, sprites_helperBox_idx, 0, 25);
+	Gui::DrawString(10, 40, 0.45f, BLACK, Msg, 380);
 	set_screen(bottom);
 	Draw_Rect(0, 0, 320, 240, DIM);
 	C3D_FrameEnd(0);

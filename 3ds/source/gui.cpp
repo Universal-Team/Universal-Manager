@@ -208,8 +208,8 @@ void DisplayMsg(std::string text) {
     C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-    Gui::sprite(0, sprites_textbox_idx, 10, 25);
-	Gui::DrawString(35, 42, 0.45f, BLACK, text);
+	Gui::sprite(0, sprites_helperBox_idx, 0, 25);
+	Gui::DrawString(10, 40, 0.45f, BLACK, text, 380);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);

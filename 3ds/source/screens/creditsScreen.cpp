@@ -68,7 +68,7 @@ void drawVoltZ(void) {
 	Gui::sprite(1, credits_textbox_idx, 180, 30);
 	Gui::sprite(1, credits_voltZ_idx, -10, 40);
 	Gui::DrawString(250, 50, 0.40, BLACK, "Hello There!");
-	Gui::DrawString(190, 65, 0.40, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
+	Gui::DrawString(185, 65, 0.40, BLACK, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\nBefore Universal-Manager, it was\nUniversal-Updater. Because it was\nOnly an Updater.. I decided to\nDo an Universal-Manager with\nMuch Functions!\nVisit our Site on : \nhttps://universal-team.github.io/ !\nI like it to work on Universal-Manager! ;)");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -94,7 +94,7 @@ void drawFlame(void) {
 	Gui::sprite(1, credits_textbox_idx, 180, 30);
 	Gui::sprite(1, credits_flame_idx, 0, 40);
 	Gui::DrawString(240, 50, 0.40, BLACK, "Hey, I’m Flame!");
-	Gui::DrawString(190, 65, 0.40, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
+	Gui::DrawString(185, 65, 0.40, BLACK, "I’m the main developer of Relaunch!\nI have helped VoltZ with a small bit\n       of code in Universal-Manager.");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -120,7 +120,7 @@ void drawPk11(void) {
 	Gui::sprite(1, credits_textbox_idx, 180, 30);
 	Gui::sprite(1, credits_pk11_idx, -20, 40);
 	Gui::DrawString(270, 50, 0.40, BLACK, "Hi .o/");
-	Gui::DrawString(190, 65, 0.40, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
+	Gui::DrawString(185, 65, 0.40, BLACK, "I'm Pk11, I've helped out with this app\na bit and am the main dev on pkmn-chest,\nanother Universal-Team project which\nyou can install using Universal Manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -146,7 +146,7 @@ void drawRocketRobz(void) {
 	Gui::sprite(1, credits_textbox_idx, 180, 30);
 	Gui::sprite(1, credits_rocketRobz_idx, 0, 40);
 	Gui::DrawString(270, 50, 0.40, BLACK, "Hi!");
-	Gui::DrawString(190, 65, 0.40, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
+	Gui::DrawString(185, 65, 0.40, BLACK, "I'm RocketRobz, main developer of\n           TWiLight Menu++.\nSome code I made (not from TWLM++)\n       has made it into this app.\nEnjoy this universally good manager!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -172,7 +172,7 @@ void drawTotallyNotGuy(void) {
 	Gui::sprite(1, credits_textbox_idx, 180, 30);
 	Gui::sprite(1, credits_totallyNotGuy_idx, 0, 40);
 	Gui::DrawString(250, 50, 0.40, BLACK, "Hello!");
-	Gui::DrawString(190, 65, 0.40, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
+	Gui::DrawString(185, 65, 0.40, BLACK, "I'm TotallyNotGuy and I did \nmost of the graphics in \nUniversal-Manager and pkmn-chest. \nI hope you enjoy the graphics \nin both Apps!");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
