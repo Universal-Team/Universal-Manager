@@ -1475,6 +1475,7 @@ void downloadBoxart(void) {
 		rmdir("sdmc:/_nds/TWiLightMenu/boxart/temp");
 	}
 	doneMsg();
+	chdir("sdmc:/");
 }
 
 // GBARunner2.
@@ -1507,13 +1508,15 @@ void downloadSheets(void) {
 	mkdir("sdmc:/LeafEdit/SpriteSheets", 0777); // Create SpriteSheets folder, if not exist.
 
 	for(uint i=0;i<sheetList.size();i++) {
-		if(sheetList[i].name.size() < 3 || sheetList[i].name.substr(sheetList[i].name.size()-3) != "t3x") {
+		if(sheetList[i].name.size() < 3 || sheetList[i].name.substr(sheetList[i].name.size()-3) != "zip") {
 			sheetList.erase(sheetList.begin()+i);
 			i--;
 		}
 	}
 
 	int selectedSheet = 0;
+	std::string sheet;
+	std::string zipFile;
 	while(1) {
 		gspWaitForVBlank();
 		hidScanInput();
@@ -1524,6 +1527,14 @@ void downloadSheets(void) {
 			mkdir((sheetList[selectedSheet].sdPath).c_str(), 0777);
 			DisplayMsg(("Downloading: "+sheetList[selectedSheet].name).c_str());
 			downloadToFile(sheetList[selectedSheet].downloadUrl, "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name);
+			sheet = "/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name;
+			std::string newSheet = sheet.substr(0, sheet.size()-4);
+			newSheet += "/";
+			zipFile = "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name;
+			zipFile += "/";
+			extractArchive("/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name, "/", newSheet);
+			deleteFile(zipFile.c_str());
+
 		} else if(hDown & KEY_B) {
 			selectedSheet = 0;
 			return;
