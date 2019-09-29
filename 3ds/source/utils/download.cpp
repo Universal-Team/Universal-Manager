@@ -41,6 +41,7 @@
 #include <unistd.h>
 
 extern "C" {
+	#include "C2D_helper.h"
 	#include "utils/cia.h"
 }
 
@@ -1497,6 +1498,40 @@ void updateGBARunner2(void)
 
 // LeafEdit Spritesheet Stuff.
 
+C2D_Image topImage;
+C2D_Image bottomImage;
+
+void displaySheetImage(std::string topImg, std::string bottomImg, C2D_Image *image1, C2D_Image *image2) {
+	Gui::clearTextBufs();
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
+	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
+	Draw_LoadImageFile(&topImage, topImg.c_str());
+	Draw_LoadImageFile(&bottomImage, bottomImg.c_str());
+	set_screen(top);
+	Draw_Rect(0, 0, 400, 240, C2D_Color32(33, 39, 43, 255));
+	C2D_DrawImageAt(topImage, 0, 0, 0.5, nullptr);
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
+	C2D_DrawImageAt(bottomImage, 0, 0, 0.5, nullptr);
+	C3D_FrameEnd(0);
+
+	while(1)
+	{
+		hidScanInput();
+		if(hidKeysDown() & KEY_Y) {
+			// Free Images.
+			C3D_TexDelete(image1->tex);
+			linearFree((Tex3DS_SubTexture *)image1->subtex);
+			C3D_TexDelete(image2->tex);
+			linearFree((Tex3DS_SubTexture *)image2->subtex);
+			C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
+			C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
+				break;
+		}
+	}
+}
+
 void downloadSheets(void) {
 	int keyRepeatDelay = 0;
 
@@ -1533,6 +1568,42 @@ void downloadSheets(void) {
 			zipFile = "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name;
 			zipFile += "/";
 			extractArchive("/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name, "/", newSheet);
+			deleteFile(zipFile.c_str());
+
+		} else if (hDown & KEY_Y) {
+			mkdir((sheetList[selectedSheet].sdPath).c_str(), 0777);
+			DisplayMsg(("Downloading for Preview: "+sheetList[selectedSheet].name).c_str());
+			downloadToFile(sheetList[selectedSheet].downloadUrl, "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name);
+			sheet = "/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name;
+			std::string newSheet = sheet.substr(0, sheet.size()-4);
+			newSheet += "/";
+			zipFile = "sdmc:/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name;
+			zipFile += "/";
+			extractArchive("/LeafEdit/SpriteSheets/"+sheetList[selectedSheet].name, "/", newSheet);
+
+			std::string topPrev = newSheet;
+			std::string botPrev = newSheet;
+			std::string sprites = newSheet;
+			std::string sheet = newSheet;
+			topPrev += "top.png";
+			botPrev += "bottom.png";
+			sprites += "sprites.t3x";
+			sheet += "sheet.ini";
+
+			if((access(topPrev.c_str(), F_OK) == 0)) {
+				if((access(botPrev.c_str(), F_OK) == 0)) {
+					displaySheetImage(topPrev, botPrev, &topImage, &bottomImage);
+				} else {
+					DisplayTimeMessage("top.png not found.");
+				}
+			} else {
+				DisplayTimeMessage("bottom.png not found.");
+			}
+			// Delete Files.
+			deleteFile(topPrev.c_str());
+			deleteFile(botPrev.c_str());
+			deleteFile(sprites.c_str());
+			deleteFile(sheet.c_str());
 			deleteFile(zipFile.c_str());
 
 		} else if(hDown & KEY_B) {
@@ -1572,7 +1643,7 @@ void downloadSheets(void) {
 		for(uint i=0;i<((sheetList.size()<10) ? 11-sheetList.size() : 0);i++) {
 			sheetText += "\n";
 		}
-		sheetText += "                B: Back   A: Choose";
+		sheetText += "                B: Back   A: Download   Y: Preview";
 		DisplayMsg(sheetText.c_str());
 	}
 }
