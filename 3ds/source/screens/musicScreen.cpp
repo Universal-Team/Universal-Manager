@@ -139,7 +139,7 @@ void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if(hDown & KEY_UP) {
 		if(selection > 1)	selection -= 2;
 	} else if(hDown & KEY_DOWN) {
-		if(selection < 3)	selection += 2;
+		if(selection < 3 && selection != 2 && selection != 3)	selection += 2;
 	} else if (hDown & KEY_LEFT) {
 		if (selection%2) selection--;
 	} else if (hDown & KEY_RIGHT) {

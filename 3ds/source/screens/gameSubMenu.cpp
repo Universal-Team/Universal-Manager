@@ -73,13 +73,8 @@ void GameSub::Draw(void) const
 }
 
 void GameSub::SelectionLogic(u32 hDown) {
-		if (hDown & KEY_UP) {
-			if(Selection > 1)	Selection -= 2;
 
-		} else if (hDown & KEY_DOWN) {
-			if(Selection < 1 && Selection != 1)	Selection += 2;
-
-		} else if (hDown & KEY_LEFT) {
+		if (hDown & KEY_LEFT) {
 			if (Selection%2) Selection--;
 		} else if (hDown & KEY_RIGHT) {
 			if (!(Selection%2) && Selection != 2) Selection++;
