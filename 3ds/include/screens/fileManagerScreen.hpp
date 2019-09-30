@@ -69,6 +69,7 @@ private:
 	std::vector<DirEntry> dirContents;
 	std::string currentFile = "";
 	std::string currentFiles;
+	bool folderIsEmpty = true;
 
 	// Operations.
 	DirEntry clipboard;

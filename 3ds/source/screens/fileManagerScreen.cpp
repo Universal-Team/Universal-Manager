@@ -201,6 +201,11 @@ void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		dirChanged = true;
 		}
 	} else if (hDown & KEY_X) {
+		if (dirContents.size() == 0) {
+			folderIsEmpty = true;
+		} else {
+			folderIsEmpty = false;
+		}
 		currentSelectedFile = "Current File: ";
 		currentSelectedFile += dirContents[selectedFile].name.c_str();
 		fileMode = 1;
@@ -330,6 +335,7 @@ void FileManager::ActionBoxLogic(void) {
 		} else if (keysDown() & KEY_TOUCH) {
 			if (currentPage == 1) {
 				if (touching(touch, functionPos[0])) {
+					if (folderIsEmpty == false) {
 						if(confirmPopup("Do you want to rename this File?")) { 
 							renameFile();
 							refresh = true;
@@ -337,9 +343,13 @@ void FileManager::ActionBoxLogic(void) {
 							currentSelection = 0;
 							currentPage = 1;
 						}
+					} else {
+						DisplayTimeMessage("What are you trying to do? :P");
+					}
 
 
 				} else if (touching(touch, functionPos[1])) {
+					if (folderIsEmpty == false) {
 						if(confirmPopup("Do you want to delete this File?")) {
 							deleteFile();
 							refresh = true;
@@ -347,6 +357,9 @@ void FileManager::ActionBoxLogic(void) {
 							currentSelection = 0;
 							currentPage = 1;
 						}
+					} else {
+						DisplayTimeMessage("What are you trying to do? :P");
+					}
 
 
 				} else if (touching(touch, functionPos[2])) {
@@ -370,6 +383,7 @@ void FileManager::ActionBoxLogic(void) {
 
 
 				} else if (touching(touch, functionPos[4])) {
+					if (folderIsEmpty == false) {
 						if(confirmPopup("Do you want to extract this Archive?")) {
 							extractarchive();
 							refresh = true;
@@ -377,6 +391,9 @@ void FileManager::ActionBoxLogic(void) {
 							currentSelection = 0;
 							currentPage = 1;
 						}
+					} else {
+						DisplayTimeMessage("What are you trying to do? :P");
+					}
 
 
 				} else if (touching(touch, functionPos[5])) {
@@ -387,32 +404,44 @@ void FileManager::ActionBoxLogic(void) {
 							currentSelection = 0;
 							currentPage = 1;
 						}
-			}
+				}
 			} else if (currentPage == 2) {
 
 				if (touching(touch, functionPos[6])) {
+					if (folderIsEmpty == false) {
 						if(confirmPopup("Do you want to Install this File?")) { 
 							install();
 							fileMode = 0;
 							currentSelection = 0;
 							currentPage = 1;
 						}
-			}
+					} else {
+						DisplayTimeMessage("What are you trying to do? :P");
+					}
+				}
 			}
 
 		} else if(keysDown() & KEY_A) {
 			if (currentPage == 1) {
 				switch(currentSelection) {
 					case 0: {
-						if(confirmPopup("Do you want to rename this File?")) { 
-							renameFile();
-							refresh = true;
+						if (folderIsEmpty == false) {
+							if(confirmPopup("Do you want to rename this File?")) { 
+								renameFile();
+								refresh = true;
+							}
+						} else {
+							DisplayTimeMessage("What are you trying to do? :P");
 						}
 						break;
 					} case 1:
-						if(confirmPopup("Do you want to delete this File?")) {
-							deleteFile();
-							refresh = true;
+						if (folderIsEmpty == false) {
+							if(confirmPopup("Do you want to delete this File?")) {
+								deleteFile();
+								refresh = true;
+							}
+						} else {
+							DisplayTimeMessage("What are you trying to do? :P");
 						}
 						break;
 					case 2: {
@@ -428,9 +457,13 @@ void FileManager::ActionBoxLogic(void) {
 						}
 						break;
 					} case 4: {
-						if(confirmPopup("Do you want to extract this Archive?")) {
-							extractarchive();
-							refresh = true;
+						if (folderIsEmpty == false) {
+							if(confirmPopup("Do you want to extract this Archive?")) {
+								extractarchive();
+								refresh = true;
+							}
+						} else {
+							DisplayTimeMessage("What are you trying to do? :P");
 						}
 						break;
 					} case 5:
@@ -443,8 +476,12 @@ void FileManager::ActionBoxLogic(void) {
 			} else if (currentPage == 2) {
 				switch(currentSelection) {
 					case 0: {
-						if(confirmPopup("Do you want to Install this File?")) { 
-							install();
+						if (folderIsEmpty == false) {
+							if(confirmPopup("Do you want to Install this File?")) { 
+								install();
+							}
+						} else {
+							DisplayTimeMessage("What are you trying to do? :P");
 						}
 						break;
 					}
