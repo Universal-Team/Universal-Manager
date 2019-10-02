@@ -81,6 +81,15 @@ void Gui::ClearScreen(SDL_Color colour) {
 	SDL_RenderClear(Rendering);
 }
 
+void Gui::displayMsg(std::string msg) {
+	Gui::ClearScreen(GREEN);
+	Gui::DrawBG();
+	Gui::DrawBars();
+	Gui::DrawText(250, 0, 30, WHITE, msg.c_str());
+	Gui::RenderScreen();
+}
+
+
 void Gui::DrawRect(int x, int y, int w, int h, SDL_Color colour) {
 	SDL_Rect rect;
 	rect.x = x; rect.y = y; rect.w = w; rect.h = h;

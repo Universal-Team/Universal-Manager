@@ -1,5 +1,5 @@
-	/*
-*   This file is part of Universal-Manager-NX
+/*
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -24,42 +24,19 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "screens/fileManagerScreen.hpp"
-#include "screens/mainMenuScreen.hpp"
-#include "screens/screenCommon.hpp"
+#pragma once
 
-#include "utils/download.hpp"
+#define APP_TITLE "Universal-Manager"
+#define V_STRING "3.1.0"
 
-#include <stdio.h>
-#include <stdlib.h>
+enum DownloadError {
+	DL_ERROR_NONE = 0,
+	DL_ERROR_WRITEFILE,
+	DL_ERROR_ALLOC,
+	DL_ERROR_STATUSCODE,
+	DL_ERROR_GIT,
+};
 
+Result downloadToFile(std::string URL, std::string destination);
 
-extern "C" {
-	#include "touch_helper.h"
-}
-
-extern int fadealpha;
-extern bool fadein;
-
-
-void MainMenu::Draw(void) const
-{
-	Gui::DrawBG();
-	Gui::DrawBars();
-	Gui::DrawText(250, 0, 72, WHITE, "Universal-Manager-NX");
-	Gui::DrawText(1000, 630, 72, WHITE, VERSION_STRING);
-
-	// Buttons.
-	Gui::DrawImage(MainMenuButton, 40, 150);
-	Gui::DrawImage(MainMenuButton, 40, 300);
-	Gui::DrawImage(MainMenuButton, 40, 450);
-	if (fadealpha > 0) Gui::DrawRect(0, 0, 1280, 720, FC_MakeColor(0, 0, 0, fadealpha)); // Fade in/out effect
-}
-
-void MainMenu::Logic(u64 hDown) {
-	if (hDown & KEY_A)
-		Gui::setScreen(std::make_unique<FileManager>());
-
-	if (hDown & KEY_Y)
-		updateUniversalManager();
-}
+void updateUniversalManager(void); // Test.

@@ -32,9 +32,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET        := Universal-Manager
 BUILD         := build
-SOURCES       := source source/screens
+SOURCES       := source source/screens source/utils
 DATA          := data
-INCLUDES      := include include/screens
+INCLUDES      := include include/screens include/utils
 EXEFS_SRC     := exefs_src
 ROMFS         := romfs
 
@@ -88,7 +88,7 @@ CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 ASFLAGS	 := -g $(ARCH)
 LDFLAGS	 = -specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	 := -lSDL2_ttf -lSDL2_image -lwebp -lpng -lturbojpeg -lSDL2 -lSDL2_gfx `sdl2-config --libs` `freetype-config --libs`\
+LIBS	 := -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lSDL2_ttf -lSDL2_image -lwebp -lpng -lturbojpeg -lSDL2 -lSDL2_gfx `sdl2-config --libs` `freetype-config --libs`\
             -lnx -lm
 
 #---------------------------------------------------------------------------------

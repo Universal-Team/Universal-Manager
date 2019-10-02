@@ -40,6 +40,7 @@ namespace Gui
     // GUI Stuff.
     void DrawBars();
     void DrawBG();
+    void displayMsg(std::string msg);
 }
 
     SDL_Window *SDL_GetMainWindow(void);
