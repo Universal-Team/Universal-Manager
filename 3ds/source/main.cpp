@@ -259,6 +259,7 @@ int main()
 		C2D_TargetClear(bottom, BLACK);
 		Gui::clearTextBufs();
 		Gui::mainLoop(hDown, hHeld, touch);
+		displayBatteryNearlyToDead();
 		C3D_FrameEnd(0);
 
 		if (fadein == true) {

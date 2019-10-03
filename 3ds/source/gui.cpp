@@ -218,6 +218,23 @@ void DisplayTime(void) {
 
 // Battery stuff.
 
+void displayBatteryNearlyToDead(void) {
+    static bool isAlreadyDisplayed = false;
+    static bool BatteryIsCharging = false;
+    u8 batteryChargeState = 0;
+    u8 batteryPercent;
+    mcuGetBatteryLevel(&batteryPercent);
+
+    if (batteryPercent > 0 && batteryPercent <= 5 && isAlreadyDisplayed == false && BatteryIsCharging == false) {
+        if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
+        } else {
+            DisplayTimeMessage("Your Battery is currently going to Die.", 3);
+            isAlreadyDisplayed = true;
+        }
+    }
+}
+
+
 void drawBatteryTop(void) {
     u8 batteryChargeState = 0;
     char percent[5];

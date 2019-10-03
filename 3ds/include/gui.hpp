@@ -101,6 +101,8 @@ namespace Gui
     void drawBatteryTop(void);
     void drawBatteryBot(void);
 
+    void displayBatteryNearlyToDead(void);
+
     void set_screen(C3D_RenderTarget * screen);
 
     // Misc.
