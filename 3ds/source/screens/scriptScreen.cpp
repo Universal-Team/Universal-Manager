@@ -411,7 +411,8 @@ void Script::ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld) {
 				} case 5: {
 					std::string Function = "timeMsg	";
 					std::string param1 = Input::getLine("Please type in your Displayed Message.");
-					scpt << Function << param1 << " " << std::endl;
+					std::string param2 = Input::Numpad("Please type in the amount of seconds.");
+					scpt << Function << param1 << "	" << param2 << " " << std::endl;
 					break;
 				}
 			}
@@ -529,7 +530,8 @@ void Script::ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, Functions[5])) {
 			std::string Function = "timeMsg	";
 			std::string param1 = Input::getLine("Please type in your Displayed Message.");
-			scpt << Function << param1 << " " << std::endl;
+			std::string param2 = Input::Numpad("Please type in the amount of seconds.");
+			scpt << Function << param1 << "	" << param2 << " " << std::endl;
 		}
 	}
 }

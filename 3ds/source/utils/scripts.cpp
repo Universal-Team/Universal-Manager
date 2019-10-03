@@ -166,7 +166,8 @@ void runScript(std::string path) {
 			// Displays a Message for 3 seconds.
 			//Param 1 -> Message.
 			if(scpt.function == "timeMsg") {
-				DisplayTimeMessage(scpt.param1.c_str());
+				int param2 = (int)(std::stoi(scpt.param2.c_str()));
+				DisplayTimeMessage(scpt.param1.c_str(), param2);
 			}
 
 		}

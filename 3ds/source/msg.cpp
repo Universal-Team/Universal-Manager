@@ -100,7 +100,7 @@ bool confirmPopup(std::string msg) {
 }
 
 // Display a Message for 3 seconds.
-void DisplayTimeMessage(std::string Text)
+void DisplayTimeMessage(std::string Text, int Time)
 {
 	Gui::clearTextBufs();
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
@@ -112,7 +112,7 @@ void DisplayTimeMessage(std::string Text)
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
-	for (int i = 0; i < 60*3; i++) {
+	for (int i = 0; i < 60*Time; i++) {
 		gspWaitForVBlank();
 	}
 }
