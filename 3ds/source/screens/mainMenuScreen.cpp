@@ -31,6 +31,7 @@
 #include "screens/imageScreen.hpp"
 #include "screens/mainMenuScreen.hpp"
 #include "screens/musicScreen.hpp"
+#include "screens/paint.hpp"
 #include "screens/screenCommon.hpp"
 #include "screens/scriptScreen.hpp"
 #include "screens/settingsScreen.hpp"
@@ -202,7 +203,9 @@ void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
 		} else if (hHeld & KEY_SELECT) {
 			helperBox("Press L/R to switch the Pages.\n\nPress D-Pad Up/Down to switch Selection.\n\nPress A to select.\n\nTouch a Button to select.");
 
-
+		} else if (hDown & KEY_X) {
+			Gui::setScreen(std::make_unique<Paint>());
+			
 		}  else if (hDown & KEY_A) {
 			if (currentPage == 1) {
 				switch(Selection) {
