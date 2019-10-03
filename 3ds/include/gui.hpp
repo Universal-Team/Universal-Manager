@@ -58,6 +58,7 @@ namespace DateTime {
 namespace Gui
 {
     Result init(void);
+    Result loadSheetsAndFont(void);
     void exit(void);
 
 	void mainLoop(u32 hDown, u32 hHeld, touchPosition touch);

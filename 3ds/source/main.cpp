@@ -92,42 +92,72 @@ bool Is3dsxUpdated = false;
 std::string path3dsx;
 
 void getCurrentUsage(){
-    u64 id;
-    APT_GetProgramID(&id);
+	u64 id;
+	APT_GetProgramID(&id);
 
-    if(id == 0x0004000004394100){
-        is3dsx = false;
-        return;
-    }
+	if(id == 0x0004000004394100){
+		is3dsx = false;
+		return;
+	}
 
-    is3dsx = true;
+	is3dsx = true;
 }
 
 
 // If an Error while startup appears, Return this!
 
-static Result DisplayStartupError(const std::string& message, Result res)
+// If an Error while startup appears, Return this!
+
+static Result DisplayStartupError(std::string message, Result res)
 {
-    consoleInit(GFX_TOP, nullptr);
-    printf("\x1b[2;16H\x1b[34mUniversal-Manager");
-    printf("\x1b[5;1HError during startup: \x1b[31m0x%08lX\x1b[0m", res);
-    printf("\x1b[8;1HDescription: \x1b[33m%s\x1b[0m", message.c_str());
-    printf("\x1b[29;16HPress START to exit.");
+		std::string errorMsg = std::to_string(res);
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		C2D_TargetClear(top, BLACK);
+		C2D_TargetClear(bottom, BLACK);
+		Gui::clearTextBufs();
+		set_screen(top);
+		Draw_Rect(0, 0, 400, 27, BARCOLOR);
+		Draw_Rect(0, 27, 400, 186, GRAY);
+		Draw_Rect(0, 213, 400, 27, BARCOLOR);
+		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Oh no, an error occured!"))/2, 2, 0.8f, WHITE, "Oh no, an error occured!", 400);
+		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Description: "+ message))/2, 155, 0.8f, WHITE, "Description: "+message, 400);
+		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Press Start to exit."))/2, 213, 0.8f, WHITE, "Press Start to exit.", 400);
+		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Error during Startup: "+errorMsg))/2, 80, 0.8f, WHITE, "Error during Startup: "+errorMsg, 400);
+		set_screen(bottom);
+		Draw_Rect(0, 0, 320, 27, BARCOLOR);
+		Draw_Rect(0, 27, 320, 186, GRAY);
+		Draw_Rect(0, 213, 320, 27, BARCOLOR);
+		C3D_FrameEnd(0);
 
-	// For the Log.
-	std::string error = message;
-	error += ", ";
-	error += std::to_string(res);
-	Logging::writeToLog(error.c_str(), true);
+		// For the Log.
+		std::string error = message;
+		error += ", ";
+		error += std::to_string(res);
+		Logging::writeToLog(error.c_str());
 
-    gfxFlushBuffers();
-    gfxSwapBuffers();
-    gspWaitForVBlank();
-    while (aptMainLoop() && !(hidKeysDown() & KEY_START))
-    {
-        hidScanInput();
-    }
-    return res;
+		gspWaitForVBlank();
+		while (aptMainLoop() && !(hidKeysDown() & KEY_START))
+		{
+			hidScanInput();
+		}
+	return res;
+}
+
+void loadMessage(std::string Message) {
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		C2D_TargetClear(top, BLACK);
+		C2D_TargetClear(bottom, BLACK);
+		Gui::clearTextBufs();
+		set_screen(top);
+		Draw_Rect(0, 0, 400, 27, BARCOLOR);
+		Draw_Rect(0, 27, 400, 186, GRAY);
+		Draw_Rect(0, 213, 400, 27, BARCOLOR);
+		Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 2, 0.8f, WHITE, Message, 400);
+		set_screen(bottom);
+		Draw_Rect(0, 0, 320, 27, BARCOLOR);
+		Draw_Rect(0, 27, 320, 186, GRAY);
+		Draw_Rect(0, 213, 320, 27, BARCOLOR);
+		C3D_FrameEnd(0);
 }
 
 int main()
@@ -135,9 +165,18 @@ int main()
 	gfxInitDefault();
 	Result res;
 
+	Gui::init();
+
+	if (R_FAILED(res = romfsInit())) {
+		return DisplayStartupError("romfsInit failed.", res);
+	}
+
 	if (R_FAILED(res = sdmcInit())) {
 		return DisplayStartupError("sdmcInit failed.", res);
 	}
+
+	loadMessage("Loading Spritesheets...");
+	Gui::loadSheetsAndFont();
 
 	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
 
@@ -159,10 +198,6 @@ int main()
 		return DisplayStartupError("ptmuxInit failed.", res);
 	}
 
-	if (R_FAILED(res = romfsInit())) {
-		return DisplayStartupError("romfsInit failed.", res);
-	}
-
 	Config::loadConfig();
 	Lang::loadLangStrings(Config::Language);
 
@@ -173,10 +208,6 @@ int main()
 
 	if (R_FAILED(res = cfguInit())) {
 		return DisplayStartupError("cfguInit failed.", res);
-	}
-
-	if (R_FAILED(res = Gui::init())) {
-		return DisplayStartupError("Gui::Init failed.", res);
 	}
 
 	srand(time(NULL));
@@ -217,15 +248,15 @@ int main()
 	Logging::writeToLog("Universal-Manager launched successfully!");
 
 	// Loop as long as the status is not exit
-    while (aptMainLoop() && !exiting)
-    {
-        hidScanInput();
-        u32 hHeld = hidKeysHeld();
-        u32 hDown = hidKeysDown();
+	while (aptMainLoop() && !exiting)
+	{
+		hidScanInput();
+		u32 hHeld = hidKeysHeld();
+		u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
-        C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(top, BLACK);
-        C2D_TargetClear(bottom, BLACK);
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		C2D_TargetClear(top, BLACK);
+		C2D_TargetClear(bottom, BLACK);
 		Gui::clearTextBufs();
 		Gui::mainLoop(hDown, hHeld, touch);
 		C3D_FrameEnd(0);
@@ -242,7 +273,7 @@ int main()
 			break;
 		}
 
- 	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
 		if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
 		if (musicRepeat != 2 && !firstSong) {
 			locInPlaylist++;
@@ -273,5 +304,5 @@ int main()
 	amExit();
 	Logging::writeToLog("Universal-Manager closing successfully!");
 	sdmcExit();
-    return 0;
+	return 0;
 }

@@ -43,7 +43,7 @@ static C2D_SpriteSheet animation;
 static C2D_SpriteSheet credits;
 static C2D_SpriteSheet button;
 
-C2D_TextBuf dynamicBuf, sizeBuf;
+C2D_TextBuf sizeBuf;
 C2D_Font systemFont, editorFont;
 std::stack<std::unique_ptr<SCREEN>> screens;
 
@@ -51,7 +51,6 @@ bool currentScreen = false;
 
 void Gui::clearTextBufs(void)
 {
-    C2D_TextBufClear(dynamicBuf);
     C2D_TextBufClear(sizeBuf);
 }
 
@@ -82,14 +81,16 @@ Result Gui::init(void)
     C2D_Prepare();
     top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
-    dynamicBuf = C2D_TextBufNew(4096);
     sizeBuf = C2D_TextBufNew(4096);
+    systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
+    return 0;
+}
+
+Result Gui::loadSheetsAndFont(void) {
     sprites    = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
     animation = C2D_SpriteSheetLoad("romfs:/gfx/animation.t3x");
     credits   = C2D_SpriteSheetLoad("romfs:/gfx/credits.t3x");
     button   = C2D_SpriteSheetLoad("romfs:/gfx/button.t3x");
-    
-    systemFont = C2D_FontLoadSystem(CFG_REGION_USA);
     editorFont = C2D_FontLoad("romfs:/gfx/TextEditorFont.bcfnt");
     return 0;
 }
@@ -100,7 +101,6 @@ void Gui::exit(void)
     C2D_SpriteSheetFree(animation);
     C2D_SpriteSheetFree(credits);
     C2D_SpriteSheetFree(button);
-    C2D_TextBufDelete(dynamicBuf);
     C2D_TextBufDelete(sizeBuf);
     C2D_FontFree(editorFont);
     C2D_Fini();
@@ -144,17 +144,15 @@ void Gui::DrawBGTop(void)
     set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
+	    Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
-            for (int x = 0; x < 400; x += 14)
-        {
-            for (int y = 0; y < 240; y += 14)
-            {
-                Gui::sprite(0, sprites_stripes_idx, x, y);
-            }
-}
-} else if (Config::layoutBG == 2) {
-}
+            for (int x = 0; x < 400; x += 14) {
+                for (int y = 0; y < 240; y += 14) {
+                    Gui::sprite(0, sprites_stripes_idx, x, y);
+                }
+        }
+    } else if (Config::layoutBG == 2) {
+    }
 }
 
 void Gui::DrawBarsTop(void) 
@@ -173,19 +171,15 @@ void Gui::DrawBGBot(void)
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
     if (Config::layoutBG == 0) {
-	Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
+	    Gui::sprite(0, sprites_universal_bg_bottom_idx, 0, 25);
     } else if (Config::layoutBG == 1) {
-       {
-        for (int x = 0; x < 320; x += 14)
-        {
-            for (int y = 0; y < 240; y += 14)
-            {
-                Gui::sprite(0, sprites_stripes2_idx, x, y);
+        for (int x = 0; x < 320; x += 14) {
+                for (int y = 0; y < 240; y += 14) {
+                    Gui::sprite(0, sprites_stripes2_idx, x, y);
+                }
             }
-        }
+        } else if (Config::layoutBG == 2) {
     }
-} else if (Config::layoutBG == 2) {
-}
 }
 
 void Gui::DrawBarsBot(void)
@@ -225,21 +219,21 @@ void DisplayTime(void) {
 // Battery stuff.
 
 void drawBatteryTop(void) {
-	  u8 batteryChargeState = 0;
-      char percent[5];
+    u8 batteryChargeState = 0;
+    char percent[5];
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(0, sprites_battery0_idx, 361, 0);
+	    Gui::sprite(0, sprites_battery0_idx, 361, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(0, sprites_battery25_idx, 361, 0);
+	    Gui::sprite(0, sprites_battery25_idx, 361, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(0, sprites_battery50_idx, 361, 0);
+	    Gui::sprite(0, sprites_battery50_idx, 361, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(0, sprites_battery75_idx, 361, 0);
+        Gui::sprite(0, sprites_battery75_idx, 361, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(0, sprites_battery100_idx, 361, 0);
+	    Gui::sprite(0, sprites_battery100_idx, 361, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
@@ -248,34 +242,34 @@ void drawBatteryTop(void) {
 
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
-	    if(batteryPercent == 100) {
-		Gui::DrawString(315, 2, 0.65f, WHITE, "100%");
+	        if(batteryPercent == 100) {
+		    Gui::DrawString(315, 2, 0.65f, WHITE, "100%");
 	    } else {
-		snprintf(percent, 5, "%d%%", batteryPercent);
-        C2D_Text percentText;
-        C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
-		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 315.0f, 2.0f, 0.5f, 0.65f, 0.65f, WHITE);
-}
-}
+		    snprintf(percent, 5, "%d%%", batteryPercent);
+            C2D_Text percentText;
+            C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
+            C2D_TextOptimize(&percentText);
+            C2D_DrawText(&percentText, C2D_WithColor, 315.0f, 2.0f, 0.5f, 0.65f, 0.65f, WHITE);
+        }
+    }
 }
 
 void drawBatteryBot(void) {
-	 u8 batteryChargeState = 0;
-     char percent[5];
+    u8 batteryChargeState = 0;
+    char percent[5];
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
 	if(batteryPercent == 0) {
-	Gui::sprite(0, sprites_battery0_idx, 281, 0);
+	    Gui::sprite(0, sprites_battery0_idx, 281, 0);
 	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	Gui::sprite(0, sprites_battery25_idx, 281, 0);
+	    Gui::sprite(0, sprites_battery25_idx, 281, 0);
 	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	Gui::sprite(0, sprites_battery50_idx, 281, 0);
+	    Gui::sprite(0, sprites_battery50_idx, 281, 0);
 	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-    Gui::sprite(0, sprites_battery75_idx, 281, 0);
+        Gui::sprite(0, sprites_battery75_idx, 281, 0);
 	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	Gui::sprite(0, sprites_battery100_idx, 281, 0);
+	    Gui::sprite(0, sprites_battery100_idx, 281, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
@@ -284,16 +278,16 @@ void drawBatteryBot(void) {
 
         if (Config::percentDisplay == 0) {
         } else if (Config::percentDisplay == 1) {
-    	if(batteryPercent == 100) {
-		Gui::DrawString(230, 0, 0.65f, WHITE, "100%");
-	    } else {
-		snprintf(percent, 5, "%d%%", batteryPercent);
-        C2D_Text percentText;
-        C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
-		C2D_TextOptimize(&percentText);
-        C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
-}
-}
+    	    if(batteryPercent == 100) {
+		    Gui::DrawString(230, 0, 0.65f, WHITE, "100%");
+        } else {
+		    snprintf(percent, 5, "%d%%", batteryPercent);
+            C2D_Text percentText;
+            C2D_TextFontParse(&percentText, systemFont, sizeBuf, percent);
+		    C2D_TextOptimize(&percentText);
+            C2D_DrawText(&percentText, C2D_WithColor, 230.0f, 0.0f, 0.5f, 0.65f, 0.65f, WHITE);
+        }
+    }
 }
 
 // This is mainly, to replace `\\n` from the Ini file with `\n`.
