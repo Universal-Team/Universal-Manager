@@ -166,6 +166,7 @@ int main()
 	Result res;
 
 	Gui::init();
+	loadMessage("Initialize everything.. please wait.");
 
 	if (R_FAILED(res = romfsInit())) {
 		return DisplayStartupError("romfsInit failed.", res);
@@ -175,7 +176,6 @@ int main()
 		return DisplayStartupError("sdmcInit failed.", res);
 	}
 
-	loadMessage("Loading Spritesheets...");
 	Gui::loadSheetsAndFont();
 
 	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
