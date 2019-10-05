@@ -1,10 +1,10 @@
 --atlas -f rgba -z auto
 
 sprites/battery/battery0.png
-sprites/battery/battery25.png
-sprites/battery/battery50.png
-sprites/battery/battery75.png
-sprites/battery/battery100.png
+sprites/battery/battery1.png
+sprites/battery/battery2.png
+sprites/battery/battery3.png
+sprites/battery/battery4.png
 sprites/battery/batteryCharge.png
 
 sprites/gui/bottom_screen_bot.png
