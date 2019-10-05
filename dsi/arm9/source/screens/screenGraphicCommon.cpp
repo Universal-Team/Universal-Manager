@@ -26,8 +26,8 @@
 
 #include "screens/screenCommon.hpp"
 
-std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard;
-ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData;
+std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard, fileBrowse;
+ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData, fileBrowseData;
 
 void loadGraphics(void) {
 	batteryChargeData = loadPng("nitro:/graphics/batteryCharge.png", batteryCharge);
@@ -38,4 +38,5 @@ void loadGraphics(void) {
 	battery100Data = loadPng("nitro:/graphics/battery100.png", battery100);
 	menuButtonData = loadPng("nitro:/graphics/menuButton.png", menuButton);
 	keyboardData = loadPng("nitro:/graphics/keyboard.png", keyboard);
+	fileBrowseData = loadPng("nitro:/graphics/fileBrowseBg.png", fileBrowse);
 }

@@ -37,6 +37,20 @@ ImageData loadBmp(std::string path, std::vector<u16>& imageBuffer);
  */
 ImageData loadPng(std::string path, std::vector<u16>& imageBuffer);
 
+/*
+ * Draws an image to the screen from a portion of a vector of raw pixel data
+ * int x is the X position
+ * int y is the Y position
+ * int w is the Width
+ * int h is the Height
+ * std::vector<u16> &imageBuffer is the raw pixel data
+ * int imageWidth is the width of the spritesheet
+ * int xOffset is the X position in the sheet to start at
+ * int yOffset is the Y position in the sheet to start at
+ * bool top is whether to draw on the top or bottom screen
+ */
+void drawImageFromSheet(int x, int y, int w, int h, std::vector<u16> &imageBuffer, int imageWidth, int xOffset, int yOffset, bool top);
+
 void loadFont(void);
 /*
  * Draws an image to the screen from a vector of raw pixel data

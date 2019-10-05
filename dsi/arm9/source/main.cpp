@@ -7,7 +7,6 @@
 #include "screens/screenCommon.hpp"
 
 #include "utils/config.h"
-#include "utils/fileBrowse.h"
 #include "utils/nitrofs.h"
 #include "utils/structs.hpp"
 

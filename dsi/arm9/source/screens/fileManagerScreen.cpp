@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "filebrowse.h"
 #include "gui.hpp"
 #include "msg.hpp"
 
@@ -73,6 +74,8 @@ void FileManager::Logic(u16 hDown, touchPosition touch) {
 			runScript("/_nds/Universal-Manager/scripts/Test.scpt");
 		}
 		screenDrawn = false;
+	} else if (hDown & KEY_X) {
+		browseForFile({}, true);
 	}
 }
 

@@ -180,6 +180,16 @@ ImageData loadPng(std::string path, std::vector<u16>& imageBuffer) {
     return imageData;
 }
 
+void drawImageFromSheet(int x, int y, int w, int h, std::vector<u16> &imageBuffer, int imageWidth, int xOffset, int yOffset, bool top) {
+	for(int i=0;i<h;i++) {
+		for(int j=0;j<w;j++) {
+			if(imageBuffer[((i+yOffset)*imageWidth)+j+xOffset]>>15 != 0) { // Do not render transparent pixel
+				(top ? BG_GFX : BG_GFX_SUB)[((y+i)*256)+j+x] = imageBuffer[((i+yOffset)*imageWidth)+j+xOffset];
+			}
+		}
+	}
+}
+
 void drawImage(int x, int y, int w, int h, std::vector<u16> imageBuffer, bool top) {
 	for(int i=0;i<h;i++) {
 		for(int j=0;j<w;j++) {
