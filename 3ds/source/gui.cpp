@@ -234,23 +234,22 @@ void displayBatteryNearlyToDead(void) {
     }
 }
 
-
 void drawBatteryTop(void) {
     u8 batteryChargeState = 0;
     char percent[5];
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
-	if(batteryPercent == 0) {
+	if (batteryPercent >= 0 && batteryPercent <= 5) {
 	    Gui::sprite(0, sprites_battery0_idx, 361, 0);
-	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	    Gui::sprite(0, sprites_battery25_idx, 361, 0);
-	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	    Gui::sprite(0, sprites_battery50_idx, 361, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-        Gui::sprite(0, sprites_battery75_idx, 361, 0);
-	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	    Gui::sprite(0, sprites_battery100_idx, 361, 0);
+	} else if (batteryPercent >= 6 && batteryPercent <= 10) {
+	    Gui::sprite(0, sprites_battery1_idx, 361, 0);
+	} else if(batteryPercent >= 11 && batteryPercent <= 30) {
+	    Gui::sprite(0, sprites_battery2_idx, 361, 0);
+	} else if(batteryPercent >= 31 && batteryPercent <= 60) {
+        Gui::sprite(0, sprites_battery3_idx, 361, 0);
+	} else if(batteryPercent >= 61 || batteryPercent == 100) {
+	    Gui::sprite(0, sprites_battery4_idx, 361, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {
@@ -277,16 +276,16 @@ void drawBatteryBot(void) {
 
 	u8 batteryPercent;
 	mcuGetBatteryLevel(&batteryPercent);
-	if(batteryPercent == 0) {
+	if (batteryPercent >= 0 && batteryPercent <= 5) {
 	    Gui::sprite(0, sprites_battery0_idx, 281, 0);
-	} else if (batteryPercent > 0 && batteryPercent <= 25) {
-	    Gui::sprite(0, sprites_battery25_idx, 281, 0);
-	} else if(batteryPercent > 25 && batteryPercent <= 50) {
-	    Gui::sprite(0, sprites_battery50_idx, 281, 0);
-	} else if(batteryPercent > 50 && batteryPercent <= 75) {
-        Gui::sprite(0, sprites_battery75_idx, 281, 0);
-	} else if(batteryPercent > 75 || batteryPercent == 100) {
-	    Gui::sprite(0, sprites_battery100_idx, 281, 0);
+	} else if (batteryPercent >= 6 && batteryPercent <= 10) {
+	    Gui::sprite(0, sprites_battery1_idx, 281, 0);
+	} else if(batteryPercent >= 11 && batteryPercent <= 50) {
+	    Gui::sprite(0, sprites_battery2_idx, 281, 0);
+	} else if(batteryPercent >= 31 && batteryPercent <= 60) {
+        Gui::sprite(0, sprites_battery3_idx, 281, 0);
+	} else if(batteryPercent >= 61 || batteryPercent == 100) {
+	    Gui::sprite(0, sprites_battery4_idx, 281, 0);
 	}
 
     if (R_SUCCEEDED(PTMU_GetBatteryChargeState(&batteryChargeState)) && batteryChargeState) {

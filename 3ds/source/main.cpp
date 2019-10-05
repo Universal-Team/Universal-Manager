@@ -203,7 +203,7 @@ int main()
 	}
 
 	Config::loadConfig();
-	Lang::loadLangStrings(Config::Language);
+	Lang::loadLangStrings(1);
 
 	if (isCitra == false) {
 		mcuInit();

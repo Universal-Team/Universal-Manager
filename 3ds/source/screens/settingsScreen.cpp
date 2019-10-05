@@ -48,7 +48,7 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 	std::string layoutModes[] = {"Bars", "Bars2"}; 
 	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
 	std::string Selectors[] = {"Selector1", "Selector2", "Selector3"};
-	std::string Language[] = {"Deutsch", "English", "Español", "Français", "Italiano", "日本語", "Lietuvių", "Português"};
+//	std::string Language[] = {"Deutsch", "English", "Español", "Français", "Italiano", "日本語", "Lietuvių", "Português"};
 	
 int ColorHelper::getColorValue(int color, int bgr)
 {
@@ -121,8 +121,8 @@ void Settings::DrawBottom(void) const
 		Gui::DrawString(110, 38, 0.65f, WHITE, "Music Mode:");
 
 	// Languages.
-		Gui::sprite(3, button_updater_idx, 17, 31);
-		Gui::DrawString(23, 40, 0.7f, WHITE, Language[Config::Language].c_str(), 85);
+//		Gui::sprite(3, button_updater_idx, 17, 31);
+//		Gui::DrawString(23, 40, 0.7f, WHITE, Language[Config::Language].c_str(), 85);
 
 
 	} else if (SettingsPage == 2) {
@@ -284,10 +284,10 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 			Config::musicMode++;
 			if (Config::musicMode > 2) Config::musicMode = 0;
 
-			} else if (touching(touch, uiSettingsButtonPos[14])) {
-			Config::Language++;
-			if (Config::Language > 7) Config::Language = 0;
-			Config::setLang();
+//			} else if (touching(touch, uiSettingsButtonPos[14])) {
+//			Config::Language++;
+//			if (Config::Language > 7) Config::Language = 0;
+//			Config::setLang();
 			}
 
 
