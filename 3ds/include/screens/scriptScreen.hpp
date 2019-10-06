@@ -48,6 +48,7 @@ private:
 	int keyRepeatDelay = 0;
 	int fastMode = false;
 	mutable bool refresh = true;
+	mutable bool dirChanged = false;
 	std::vector<DirEntry> dirContents;
 	std::ofstream scpt;
 

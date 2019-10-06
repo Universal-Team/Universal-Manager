@@ -53,6 +53,7 @@ void Script::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 	}
 }
 
+
 void Script::DrawScriptBrowse(void) const
 {
 	Gui::DrawFileBrowseBG();
@@ -60,6 +61,9 @@ void Script::DrawScriptBrowse(void) const
 	Gui::DrawBarsTop();
 	DisplayTime();
 	drawBatteryTop();
+	char path[PATH_MAX];
+	getcwd(path, PATH_MAX);
+	Gui::DrawString((400-(Gui::GetStringWidth(0.60f, path)))/2, 218, 0.60f, WHITE, path);
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
 	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 
@@ -85,14 +89,20 @@ void Script::DrawScriptBrowse(void) const
 void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
-			if (refresh) {
+			if (dirChanged) {
 				dirContents.clear();
-				char startPath[PATH_MAX];
-				getcwd(startPath, PATH_MAX);
-				chdir("sdmc:/Universal-Manager/scripts/");
 				std::vector<DirEntry> dirContentsTemp;
 				getDirectoryContents(dirContentsTemp, {"scpt"});
-				chdir(startPath);
+				for(uint i=0;i<dirContentsTemp.size();i++) {
+					dirContents.push_back(dirContentsTemp[i]);
+				}
+			dirChanged = false;
+			}
+
+			if (refresh) {
+				dirContents.clear();
+				std::vector<DirEntry> dirContentsTemp;
+				getDirectoryContents(dirContentsTemp, {"scpt"});
 				for(uint i=0;i<dirContentsTemp.size();i++) {
 					dirContents.push_back(dirContentsTemp[i]);
 				}
@@ -100,20 +110,59 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 
 		if(hDown & KEY_A) {
-			if (dirContents.size() == 0) {
-				DisplayTimeMessage("What are you trying to do? :P");
+			if (dirContents[selectedFile].isDirectory) {
+				chdir(dirContents[selectedFile].name.c_str());
+				selectedFile = 0;
+				dirChanged = true;
 			} else {
-				if(confirmPopup("Do you want to run this Script : \n\n "+dirContents[selectedFile].name+"")) {
-					runScript("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name);
+				if (dirContents.size() == 0) {
+					DisplayTimeMessage("What are you trying to do? :P");
+				} else {
+					char path[PATH_MAX];
+					getcwd(path, PATH_MAX);
+					std::string scriptPath = path;
+					std::string newPath;
+					if (scriptPath == "/") {
+						newPath = "sdmc:";
+						newPath += scriptPath;
+					} else {
+						newPath = scriptPath;
+					}
+					newPath += dirContents[selectedFile].name;
+					if(confirmPopup("Do you want to run this Script : \n\n "+dirContents[selectedFile].name+"")) {
+						runScript(newPath);
+					}
 				}
 			}
 		} else if (hDown & KEY_B) {
-			Gui::screenBack();
-			return;
+			char path[PATH_MAX];
+			getcwd(path, PATH_MAX);
+			if(strcmp(path, "sdmc:/") == 0 || strcmp(path, "/") == 0) {
+				Gui::screenBack();
+				return;
+			} else {
+				chdir("..");
+				selectedFile = 0;
+				dirChanged = true;
+			}
 		} else if (hDown & KEY_Y) {
+			char path[PATH_MAX];
+			getcwd(path, PATH_MAX);
+			std::string scriptPath = path;
+			std::string newPath;
+			if (scriptPath == "/") {
+				newPath = "sdmc:";
+				newPath += scriptPath;
+			} else {
+				newPath = scriptPath;
+			}
+
 			std::string newScript = Input::getLine("Please type in the new Script's name.");
 			if(newScript != "") {
-				FILE* scpt = fopen(("sdmc:/Universal-Manager/scripts/"+newScript+".scpt").c_str(), "w");
+				newPath += "/";
+				newPath += newScript;
+				newPath += ".scpt";
+				FILE* scpt = fopen(newPath.c_str(), "w");
 				fclose(scpt);
 				refresh = true;
 		}
@@ -121,9 +170,24 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			if (dirContents.size() == 0) {
 				DisplayTimeMessage("What are you trying to do? :P");
 			} else {
-				if(confirmPopup("Are you sure you want to delete this Script?")) {
-					remove(("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name).c_str());
-					refresh = true;
+				if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-4, 4).c_str(), "scpt") == 0)) {
+						char path[PATH_MAX];
+						getcwd(path, PATH_MAX);
+						std::string scriptPath = path;
+						std::string newPath;
+						if (scriptPath == "/") {
+							newPath = "sdmc:";
+							newPath += scriptPath;
+						} else {
+							newPath = scriptPath;
+						}
+						newPath += dirContents[selectedFile].name;
+					if(confirmPopup("Are you sure you want to delete this Script?")) {
+						remove(newPath.c_str());
+						refresh = true;
+					}
+				} else {
+					DisplayTimeMessage("This is not a '.scpt' File!");
 				}
 			}
 		} else if (hHeld & KEY_UP) {
@@ -147,8 +211,19 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 			}
 		} else if (hDown & KEY_START) {
+			char path[PATH_MAX];
+			getcwd(path, PATH_MAX);
+			std::string scriptPath = path;
+			std::string newPath;
+			if (scriptPath == "/") {
+				newPath = "sdmc:";
+				newPath += scriptPath;
+			} else {
+				newPath = scriptPath;
+			}
+			newPath += dirContents[selectedFile].name;
 			if(confirmPopup("Do you want to edit this Script : \n\n "+dirContents[selectedFile].name+"")) {
-				scpt.open(("sdmc:/Universal-Manager/scripts/"+dirContents[selectedFile].name).c_str(), std::ofstream::app);
+				scpt.open(newPath.c_str(), std::ofstream::app);
 				Selection = 0;
 				ScriptPage = 1;
 				ScriptMode = 1;

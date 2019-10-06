@@ -136,22 +136,22 @@ void FileManager::FileBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+			dirContents.clear();
+			std::vector<DirEntry> dirContentsTemp;
+			getDirectoryContents(dirContentsTemp);
+			for(uint i=0;i<dirContentsTemp.size();i++) {
+			dirContents.push_back(dirContentsTemp[i]);
+		}
 		dirChanged = false;
 	}
 
 			if (refresh) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+			dirContents.clear();
+			std::vector<DirEntry> dirContentsTemp;
+			getDirectoryContents(dirContentsTemp);
+			for(uint i=0;i<dirContentsTemp.size();i++) {
+			dirContents.push_back(dirContentsTemp[i]);
+		}
 		refresh = false;
 	}
 
