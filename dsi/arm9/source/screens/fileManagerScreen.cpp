@@ -41,42 +41,75 @@
 
 void FileManager::Draw(void) const
 {
-	if (screenDrawn) return;
+	if (mode == 0) {
+		if (screenDrawn) return;
 
-	Gui::DrawBGTop();
-	Gui::DrawBarsTop();
+		Gui::DrawBGTop();
+		Gui::DrawBarsTop();
 
-	Gui::DrawBGBot();
-	Gui::DrawBarsBot();
+		Gui::DrawBGBot();
+		Gui::DrawBarsBot();
 
-	printTextCenteredScaled("FileManager Sub Menu", 1.4, 1.4, 0, 0, true);
+		printTextCenteredScaled("FileManager Sub Menu", 1.4, 1.4, 0, 0, true);
 
-	// Battery Icon.
-	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
+		// Battery Icon.
+		drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 
-	screenDrawn = true;
+		screenDrawn = true;
+	} else if (mode == 1) {
+		if (screenDrawn) return;
+		DrawBox();
+		screenDrawn = true;
+	}
 }
 
-void FileManager::DrawBrowse(void) const {
+void FileManager::DrawBox(void) const {
+	Gui::DrawBGTop();
+	Gui::DrawBarsTop();
+	drawImage(0, 0, optionsData.width, optionsData.height, options, false);
+	printTextTinted("Delete", GRAY, 10, 13, false, true);
+}
 
+void FileManager::boxLogic(u16 hDown) {
+	if (selectedOption == 0 && hDown & KEY_A) {
+		if(Msg::confirmPopup("Would you like to delete this File?")) {
+			DeleteFile(selectedFile.c_str());
+		}
+		screenDrawn = false;
+	} else if (hDown & KEY_DOWN) {
+		if(selectedOption < 1) {
+			selectedOption++;
+		}
+	} else if (hDown & KEY_UP) {
+		if(selectedOption > 0) {
+			selectedOption--;
+		}
+	} else if (hDown & KEY_B) {
+		mode = 0;
+	}
 }
 
 
 void FileManager::Logic(u16 hDown, touchPosition touch) {
-	if (hDown & KEY_B) {
-		screenDrawn = false;
-		Gui::screenBack();
-		return;
-	}
-
-	if (hDown & KEY_Y) {
-		if(Msg::confirmPopup("Would you like to run the Script?")) {
-			runScript("/_nds/Universal-Manager/scripts/Test.scpt");
+	if (mode == 0) {
+		if (hDown & KEY_B) {
+			screenDrawn = false;
+			Gui::screenBack();
+			return;
 		}
-		screenDrawn = false;
-	} else if (hDown & KEY_X) {
-		screenDrawn = false;
-		browseForFile({}, true);
+
+		if (hDown & KEY_Y) {
+			if(Msg::confirmPopup("Would you like to run the Script?")) {
+				runScript("/_nds/Universal-Manager/scripts/Test.scpt");
+			}
+			screenDrawn = false;
+		} else if (hDown & KEY_X) {
+			selectedFile = browseForFile({}, true);
+			screenDrawn = false;
+			mode = 1;
+		}
+	} else if (mode == 1) {
+		boxLogic(hDown);
 	}
 }
 

@@ -30,5 +30,5 @@
 // Graphic loading.
 void loadGraphics(void);
 
-extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard, fileBrowse;
-extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData, fileBrowseData;
+extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard, fileBrowse, options;
+extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData, fileBrowseData, optionsData;
