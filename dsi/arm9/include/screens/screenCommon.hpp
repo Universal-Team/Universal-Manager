@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "colors.h"
 #include "gui.hpp"
 
 // Graphic loading.

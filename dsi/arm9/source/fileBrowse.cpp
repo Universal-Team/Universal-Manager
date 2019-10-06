@@ -20,6 +20,7 @@
 
 ------------------------------------------------------------------*/
 
+#include "colors.h"
 #include "fileBrowse.h"
 
 #include "screenCommon.hpp"
@@ -100,25 +101,27 @@ void getDirectoryContents(std::vector<DirEntry>& dirContents) {
 void showDirectoryContents(const std::vector<DirEntry>& dirContents, int startRow) {
 	getcwd(path, PATH_MAX);
 
-	// Draw background
-	drawImage(0, 0, fileBrowseData.width, fileBrowseData.height, fileBrowse, false);
-
 	// Print path
-	printText(path, 0, 1, false);
+	printTextMaxW(path, 250, 1, 5, 0, false);
 
 	// Print directory listing
-	for(int i=0;i < ((int)dirContents.size() - startRow) && i < ENTRIES_PER_SCREEN; i++) {
-		std::u16string name = StringUtils::UTF8toUTF16(dirContents[i + startRow].name);
+	for(int i=0;i < ENTRIES_PER_SCREEN; i++) {
+		// Clear row
+		drawImageFromSheet(10, i*16+16, 246, 16, fileBrowse, fileBrowseData.width, 10, i*16+16, false);
 
-		// Trim to fit on screen
-		bool addEllipsis = false;
-		while(getTextWidth(name) > 227) {
-			name = name.substr(0, name.length()-1);
-			addEllipsis = true;
+		if(i < ((int)dirContents.size() - startRow)) {
+			std::u16string name = StringUtils::UTF8toUTF16(dirContents[i + startRow].name);
+
+			// Trim to fit on screen
+			bool addEllipsis = false;
+			while(getTextWidth(name) > 227) {
+				name = name.substr(0, name.length()-1);
+				addEllipsis = true;
+			}
+			if(addEllipsis)	name += StringUtils::UTF8toUTF16("...");
+
+			printTextTinted(name, GRAY, 10, i*16+16, false, true);
 		}
-		if(addEllipsis)	name += StringUtils::UTF8toUTF16("...");
-
-		printTextTinted(name, GRAY, 10, i*16+16, false, true);
 	}
 }
 
@@ -229,4 +232,50 @@ std::string browseForSave(void) {
 		extensionList.push_back(sav);
 	}
 	return browseForFile(extensionList, true);
+}
+
+int fcopy(const char *sourcePath, const char *destinationPath) {
+	DIR *isDir = opendir(sourcePath);
+
+	if(isDir == NULL) {
+		closedir(isDir);
+
+		// Source path is a file
+		FILE* sourceFile = fopen(sourcePath, "rb");
+		off_t fsize = 0;
+		if(sourceFile) {
+			fseek(sourceFile, 0, SEEK_END);
+			fsize = ftell(sourceFile);			// Get source file's size
+			fseek(sourceFile, 0, SEEK_SET);
+		} else {
+			fclose(sourceFile);
+			return -1;
+		}
+
+		FILE* destinationFile = fopen(destinationPath, "wb");
+			fseek(destinationFile, 0, SEEK_SET);
+
+		off_t offset = 0;
+		int numr;
+		while(1) {
+			drawRectangle(((offset < fsize ? (double)offset/fsize : 1)*227)+5, 33, 19, 16, DARK_GRAY, false);
+			// Copy file to destination path
+			numr = fread(copyBuf, 2, copyBufSize, sourceFile);
+			fwrite(copyBuf, 2, numr, destinationFile);
+			offset += copyBufSize;
+
+			if(offset > fsize) {
+				fclose(sourceFile);
+				fclose(destinationFile);
+
+				return 1;
+				break;
+			}
+		}
+
+		return -1;
+	} else {
+		closedir(isDir);
+		return -2;
+	}
 }

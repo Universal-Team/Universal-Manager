@@ -44,15 +44,15 @@ void MainMenu::Draw(void) const
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 
-	printTextCenteredScaled("Universal-Manager", 1.4, 1.4, 0, 30, true);
+	printTextCenteredScaled("Universal-Manager", 1.4, 1.4, 0, 0, true);
 	printText(APP_VERSION, 180, 175, true, false);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextScaled("FileManager", 1.1, 1.1, 5, 70, false);
+	printTextScaled("FileManager", 1.1, 1.1, 5, 45, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextScaled("Settings", 1.1, 1.1, 135, 70, false);
+	printTextScaled("Settings", 1.1, 1.1, 135, 45, false);
 
 	screenDrawn = true;
 }

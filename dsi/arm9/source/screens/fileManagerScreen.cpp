@@ -49,7 +49,7 @@ void FileManager::Draw(void) const
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 
-	printTextCenteredScaled("FileManager Sub Menu", 1.4, 1.4, 0, 30, true);
+	printTextCenteredScaled("FileManager Sub Menu", 1.4, 1.4, 0, 0, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
@@ -75,6 +75,7 @@ void FileManager::Logic(u16 hDown, touchPosition touch) {
 		}
 		screenDrawn = false;
 	} else if (hDown & KEY_X) {
+		screenDrawn = false;
 		browseForFile({}, true);
 	}
 }
