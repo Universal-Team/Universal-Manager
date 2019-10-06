@@ -21,9 +21,10 @@
 ------------------------------------------------------------------*/
 
 #include "colors.h"
-#include "fileBrowse.h"
 
 #include "screenCommon.hpp"
+
+#include "utils/fileBrowse.h"
 
 #include <algorithm>
 #include <dirent.h>

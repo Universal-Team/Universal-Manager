@@ -24,7 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "filebrowse.h"
+#include "utils/fileBrowse.h"
 #include "gui.hpp"
 #include "msg.hpp"
 
