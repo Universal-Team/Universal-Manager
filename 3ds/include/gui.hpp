@@ -91,6 +91,8 @@ namespace Gui
     void GetStringSize(float size, float *width, float *height, std::string Text);
     float GetStringWidth(float size, std::string Text);
     float GetStringHeight(float size, std::string Text);
+
+    void DrawFileBrowseBG(u32 color1 = C2D_Color32(127, 127, 127, 255), u32 color2 = C2D_Color32(195, 195, 195, 255), bool topDraw = true);
 }
 
    // Other Display stuff.

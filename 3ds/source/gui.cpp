@@ -458,3 +458,26 @@ void Gui::drawGUISelector(int key, float x, float y, float speed)
 
     timer += speed;
 }
+
+// FileBrowse BG. 127, 127, 127 | 195, 195, 195 | 400x31 | 320x31
+void Gui::DrawFileBrowseBG(u32 color1, u32 color2, bool topDraw) {
+    if (topDraw) {
+        C2D_SceneBegin(top);
+        C2D_DrawRectSolid(0, 25, 0.5f, 400, 190, C2D_Color32(70, 70, 70, 255)); // For the blank BG.
+        C2D_DrawRectSolid(0, 27, 0.5f, 400, 31, color1);
+        C2D_DrawRectSolid(0, 58, 0.5f, 400, 31, color2);
+        C2D_DrawRectSolid(0, 89, 0.5f, 400, 31, color1);
+        C2D_DrawRectSolid(0, 120, 0.5f, 400, 31, color2);
+        C2D_DrawRectSolid(0, 151, 0.5f, 400, 31, color1);
+        C2D_DrawRectSolid(0, 182, 0.5f, 400, 31, color2); 
+    } else {
+        C2D_SceneBegin(bottom);
+        C2D_DrawRectSolid(0, 25, 0.5f, 320, 190, C2D_Color32(70, 70, 70, 255)); // For the blank BG.
+        C2D_DrawRectSolid(0, 27, 0.5f, 320, 31, color1);
+        C2D_DrawRectSolid(0, 58, 0.5f, 320, 31, color2);
+        C2D_DrawRectSolid(0, 89, 0.5f, 320, 31, color1);
+        C2D_DrawRectSolid(0, 120, 0.5f, 320, 31, color2);
+        C2D_DrawRectSolid(0, 151, 0.5f, 320, 31, color1);
+        C2D_DrawRectSolid(0, 182, 0.5f, 320, 31, color2);
+    }
+}

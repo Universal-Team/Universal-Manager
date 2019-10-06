@@ -47,7 +47,6 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 	std::string percentModes[] = {"Hidden", "Shown"}; 
 	std::string layoutModes[] = {"Bars", "Bars2"}; 
 	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
-	std::string Selectors[] = {"Selector1", "Selector2", "Selector3"};
 //	std::string Language[] = {"Deutsch", "English", "Español", "Français", "Italiano", "日本語", "Lietuvių", "Português"};
 	
 int ColorHelper::getColorValue(int color, int bgr)
@@ -167,11 +166,6 @@ void Settings::DrawBottom(void) const
 		Gui::DrawString(150, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 168);
 		Gui::DrawString(239, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 0).c_str());
-
-		// Selectors.
-		Gui::DrawString(30, 40, 0.7f, WHITE, "FileBrowse Selector");
-		Gui::sprite(3, button_updater_idx, 207, 31);
-		Gui::DrawString(213, 40, 0.7f, WHITE, Selectors[Config::selector].c_str());
 	}
 }
 
@@ -394,11 +388,6 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 				blue = temp;
 				Config::unselectedText = RGBA8(ColorHelper::getColorValue(Config::unselectedText, 2), ColorHelper::getColorValue(Config::unselectedText, 1), blue, 255);
 			}
-
-
-	} else if (touching(touch, uiSettingsButtonPos[21])) {
-		Config::selector++;
-		if (Config::selector > 2) Config::selector = 0;
 
 
 	} else if (touching(touch, uiSettingsButtonPos[6])) {

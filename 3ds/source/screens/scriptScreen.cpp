@@ -55,43 +55,19 @@ void Script::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 
 void Script::DrawScriptBrowse(void) const
 {
-		Gui::DrawBGTop();
-		animatedBGTop();
-		Gui::DrawBarsTop();
-		DisplayTime();
-		drawBatteryTop();
-		Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
-		mkdir("sdmc:/Universal-Manager/scripts/", 0777);
+	Gui::DrawFileBrowseBG();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Script Main Screen"))/2, 0, 0.72f, WHITE, "Script Main Screen");
+	mkdir("sdmc:/Universal-Manager/scripts/", 0777);
 
-		std::string dirs;
+	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
-		(i == selectedFile);
-
-		if (selectedFile == 0) {
-			Gui::drawFileSelector(0, 28);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 1) {
-			Gui::drawFileSelector(0, 58);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 2) {
-			Gui::drawFileSelector(0, 91);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 3) {
-			Gui::drawFileSelector(0, 125);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 4) {
-			Gui::drawFileSelector(0, 156);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 5) {
-			Gui::drawFileSelector(0, 188);
-			dirs +=  dirContents[i].name + "\n\n";
+		if (i == selectedFile) {
+			dirs += "> " + dirContents[i].name + "\n\n";
 		} else {
-			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
@@ -99,33 +75,29 @@ void Script::DrawScriptBrowse(void) const
 		dirs += "\n\n";
 	}
 
-	if (Config::selector == 0) {
-		Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
-	} else if (Config::selector == 1 || Config::selector == 2) {
-		Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
-	}
+	Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
 
-		Gui::DrawBGBot();
-		animatedBGBot();
-		Gui::DrawBarsBot();
+	Gui::DrawBGBot();
+	animatedBGBot();
+	Gui::DrawBarsBot();
 }
 
 void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (refresh) {
-			dirContents.clear();
-			char startPath[PATH_MAX];
-			getcwd(startPath, PATH_MAX);
-			chdir("sdmc:/Universal-Manager/scripts/");
-			std::vector<DirEntry> dirContentsTemp;
-			getDirectoryContents(dirContentsTemp, {"scpt"});
-			chdir(startPath);
-			for(uint i=0;i<dirContentsTemp.size();i++) {
-				dirContents.push_back(dirContentsTemp[i]);
-		}
-		refresh = false;
-	}
+				dirContents.clear();
+				char startPath[PATH_MAX];
+				getcwd(startPath, PATH_MAX);
+				chdir("sdmc:/Universal-Manager/scripts/");
+				std::vector<DirEntry> dirContentsTemp;
+				getDirectoryContents(dirContentsTemp, {"scpt"});
+				chdir(startPath);
+				for(uint i=0;i<dirContentsTemp.size();i++) {
+					dirContents.push_back(dirContentsTemp[i]);
+				}
+			refresh = false;
+			}
 
 		if(hDown & KEY_A) {
 			if (dirContents.size() == 0) {
