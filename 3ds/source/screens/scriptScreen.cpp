@@ -211,23 +211,27 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			}
 			}
 		} else if (hDown & KEY_START) {
-			char path[PATH_MAX];
-			getcwd(path, PATH_MAX);
-			std::string scriptPath = path;
-			std::string newPath;
-			if (scriptPath == "/") {
-				newPath = "sdmc:";
-				newPath += scriptPath;
-			} else {
-				newPath = scriptPath;
-			}
-			newPath += dirContents[selectedFile].name;
-			if(confirmPopup("Do you want to edit this Script : \n\n "+dirContents[selectedFile].name+"")) {
-				scpt.open(newPath.c_str(), std::ofstream::app);
-				Selection = 0;
-				ScriptPage = 1;
-				ScriptMode = 1;
+			if ((strcasecmp(dirContents[selectedFile].name.substr(dirContents[selectedFile].name.length()-4, 4).c_str(), "scpt") == 0)) {
+				char path[PATH_MAX];
+				getcwd(path, PATH_MAX);
+				std::string scriptPath = path;
+				std::string newPath;
+				if (scriptPath == "/") {
+					newPath = "sdmc:";
+					newPath += scriptPath;
+				} else {
+					newPath = scriptPath;
 				}
+				newPath += dirContents[selectedFile].name;
+				if(confirmPopup("Do you want to edit this Script : \n\n "+dirContents[selectedFile].name+"")) {
+					scpt.open(newPath.c_str(), std::ofstream::app);
+					Selection = 0;
+					ScriptPage = 1;
+					ScriptMode = 1;
+				}
+			} else {
+				DisplayTimeMessage("This is not a '.scpt' File!");
+			}
 		} else if (hDown & KEY_R) {
 			fastMode = true;
 		} else if (hDown & KEY_L) {
