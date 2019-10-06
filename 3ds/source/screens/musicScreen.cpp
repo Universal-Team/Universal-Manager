@@ -187,7 +187,7 @@ void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 void Music::DrawMusicList(void) const
 {
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -197,33 +197,9 @@ void Music::DrawMusicList(void) const
 	Gui::DrawString((400-(Gui::GetStringWidth(0.60f, path)))/2, 218, 0.60f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
-		(i == selectedFile);
-
-		if (selectedFile == 0) {
-			Gui::drawFileSelector(0, 28);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 1) {
-			Gui::drawFileSelector(0, 58);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 2) {
-			Gui::drawFileSelector(0, 91);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 3) {
-			Gui::drawFileSelector(0, 125);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 4) {
-			Gui::drawFileSelector(0, 156);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 5) {
-			Gui::drawFileSelector(0, 188);
-			dirs +=  dirContents[i].name + "\n\n";
+		if (i == selectedFile) {
+			dirs +=  "> " + dirContents[i].name + "\n\n";
 		} else {
-			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
@@ -231,11 +207,7 @@ void Music::DrawMusicList(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
-        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1 || Config::selector == 2) {
-        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
-    }
+		Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -503,7 +475,7 @@ void Music::PlayerLogic(u32 hDown, touchPosition touch) {
 void Music::DrawPlaylistAdd(void) const
 {
 	// Theme Stuff.
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -513,17 +485,17 @@ void Music::DrawPlaylistAdd(void) const
 
 
 	std::string plstList;
-	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
+	for (uint i=(selectedPlst<5) ? 0 : selectedPlst-5;i<plsts.size()&&i<((selectedPlst<5) ? 6 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
-			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n\n";
 		} else {
-			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n\n";
 		}
 	}
-	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
-		plstList += "\n";
+	for (uint i=0;i<((plsts.size()<6) ? 6-plsts.size() : 0);i++) {
+		plstList += "\n\n";
 	}
-	Gui::DrawString(26, 32, 0.53f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.53f, BLACK, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -628,7 +600,7 @@ void Music::PlaylistAddLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 
 void Music::DrawPlaylistEdit(void) const
 {
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -636,19 +608,19 @@ void Music::DrawPlaylistEdit(void) const
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 
 	std::string plstList;
-	for (uint i=(selectedPlstItem<12) ? 0 : selectedPlstItem-12;i<plstContents.size()&&i<((selectedPlstItem<12) ? 13 : selectedPlstItem+1);i++) {
+	for (uint i=(selectedPlstItem<5) ? 0 : selectedPlstItem-5;i<plstContents.size()&&i<((selectedPlstItem<5) ? 6 : selectedPlstItem+1);i++) {
 		if (i == selectedPlstItem) {
-			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+			plstList += "> " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n\n";
 		} else if ((int)i == movingPlstItem) {
-			plstList += "x " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+			plstList += "x " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n\n";
 		} else {
-			plstList += "  " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n";
+			plstList += "  " + plstContents[i].substr(plstContents[i].find_last_of("/")+1) + "\n\n";
 		}
 	}
-	for (uint i=0;i<((plstContents.size()<13) ? 13-plstContents.size() : 0);i++) {
-		plstList += "\n";
+	for (uint i=0;i<((plstContents.size()<6) ? 6-plstContents.size() : 0);i++) {
+		plstList += "\n\n";
 	}
-	Gui::DrawString(26, 32, 0.45f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.53f, BLACK, plstList.c_str());
 	Gui::DrawBGBot();
 	animatedBGBot();
 	Gui::DrawBarsBot();
@@ -713,8 +685,7 @@ void Music::PlaylistEditLogic(u32 hDown, u32 hHeld) {
 
 void Music::DrawPlaylistPlay(void) const
 {
-	// Theme Stuff.
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -725,17 +696,17 @@ void Music::DrawPlaylistPlay(void) const
 
 
 	std::string plstList;
-	for (uint i=(selectedPlst<12) ? 0 : selectedPlst-12;i<plsts.size()&&i<((selectedPlst<12) ? 13 : selectedPlst+1);i++) {
+	for (uint i=(selectedPlst<5) ? 0 : selectedPlst-5;i<plsts.size()&&i<((selectedPlst<5) ? 6 : selectedPlst+1);i++) {
 		if (i == selectedPlst) {
-			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+			plstList += "> " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n\n";
 		} else {
-			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n";
+			plstList += "  " + plsts[i].name.substr(0, plsts[i].name.find_last_of(".")) + "\n\n";
 		}
 	}
-	for (uint i=0;i<((plsts.size()<13) ? 13-plsts.size() : 0);i++) {
-		plstList += "\n";
+	for (uint i=0;i<((plsts.size()<6) ? 6-plsts.size() : 0);i++) {
+		plstList += "\n\n";
 	}
-	Gui::DrawString(26, 32, 0.45f, WHITE, plstList.c_str());
+	Gui::DrawString(26, 32, 0.53f, BLACK, plstList.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -824,7 +795,7 @@ void Music::PlaylistPlayLogic(u32 hDown, u32 hHeld) {
 
 void Music::DrawThemeSelector(void) const
 {
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -834,33 +805,9 @@ void Music::DrawThemeSelector(void) const
 	Gui::DrawString((400-(Gui::GetStringWidth(0.60f, path)))/2, 218, 0.60f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
-		(i == selectedFile);
-
-		if (selectedFile == 0) {
-			Gui::drawFileSelector(0, 28);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 1) {
-			Gui::drawFileSelector(0, 58);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 2) {
-			Gui::drawFileSelector(0, 91);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 3) {
-			Gui::drawFileSelector(0, 125);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 4) {
-			Gui::drawFileSelector(0, 156);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 5) {
-			Gui::drawFileSelector(0, 188);
-			dirs +=  dirContents[i].name + "\n\n";
+		if (i == selectedFile) {
+			dirs +=  "> " + dirContents[i].name + "\n\n";
 		} else {
-			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
@@ -868,11 +815,7 @@ void Music::DrawThemeSelector(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
-        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1 || Config::selector == 2) {
-        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
-    }
+		Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -883,12 +826,12 @@ void Music::ThemeSelectorLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+				dirContents.clear();
+				std::vector<DirEntry> dirContentsTemp;
+				getDirectoryContents(dirContentsTemp);
+				for(uint i=0;i<dirContentsTemp.size();i++) {
+				dirContents.push_back(dirContentsTemp[i]);
+			}
 		dirChanged = false;
 	}
 

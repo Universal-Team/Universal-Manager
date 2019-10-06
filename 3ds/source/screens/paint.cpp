@@ -1,5 +1,5 @@
 /*
-*   This file is part of Universal-Manager-DSi
+*   This file is part of Universal-Manager
 *   Copyright (C) 2019 VoltZ, Epicpkmn11, Flame, RocketRobz, TotallyNotGuy
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,37 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "colors.h"
-#include "gui.hpp"
+#include "screens/paint.hpp"
+#include "screens/screenCommon.hpp"
 
-// Graphic loading.
-void loadGraphics(void);
+#include <algorithm>
+#include <fstream>
+#include <unistd.h>
 
-extern std::vector<u16> battery0, battery25, battery50, battery75, battery100, batteryCharge, menuButton, keyboard, fileBrowse, options;
-extern ImageData battery0Data, battery25Data, battery50Data, battery75Data, battery100Data, batteryChargeData, menuButtonData, keyboardData, fileBrowseData, optionsData;
+
+void Paint::Draw(void) const
+{
+	Gui::DrawBGTop();
+	animatedBGTop();
+	Gui::DrawBarsTop();
+	DisplayTime();
+	drawBatteryTop();
+	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Universal-Manager Paint!"))/2, 0, 0.72f, WHITE, "Universal-Manager Paint!");
+
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 240, WHITE);
+	Draw_Rect(drawX, drawY, drawX2, drawY2, BLACK);
+}
+
+void Paint::Logic(u32 hDown, u32 hHeld, touchPosition touch)
+{
+	if (hHeld & KEY_TOUCH) {
+		drawX = touch.px;
+		drawY = touch.py;
+		drawX2 = touch.px+50;
+		drawY2 = touch.py+50;
+	} else if (hDown & KEY_B) {
+		Gui::screenBack();
+		return;
+	}
+}

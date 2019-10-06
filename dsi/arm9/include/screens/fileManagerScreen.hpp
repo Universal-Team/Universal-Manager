@@ -37,9 +37,12 @@ public:
 
 private:
 	mutable bool screenDrawn;
-	int mode = 1;
+	int mode = 0;
+	std::string selectedFile = "";
+	int selectedOption = 0;
 
-	void DrawBrowse(void) const;
+	void DrawBox(void) const;
+	void boxLogic(u16 hDown);
 	
 	// Filemanager Operations.
 	void CreateFolder(std::string FolderName);

@@ -43,15 +43,15 @@ void Settings::Draw(void) const
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 
-	printTextCenteredScaled("Settings Screen", 1.4, 1.4, 0, 30, true);
+	printTextCenteredScaled("Settings Screen", 1.4, 1.4, 0, 0, true);
 
 	// Battery Icon.
 	drawImage(217, 0, batteryChargeData.width, batteryChargeData.height, batteryCharge, true);
 	// Buttons.
 	drawImage(0, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextScaled("Bar Color", 1.1, 1.1, 5, 70, false);
+	printTextScaled("Bar Color", 1.1, 1.1, 5, 45, false);
 	drawImage(130, 25, menuButtonData.width, menuButtonData.height, menuButton, false);
-	printTextScaled("BG Color", 1.1, 1.1, 135, 70, false);
+	printTextScaled("BG Color", 1.1, 1.1, 135, 45, false);
 
 	screenDrawn = true;
 }
@@ -59,7 +59,7 @@ void Settings::Draw(void) const
 void Settings::Logic(u16 hDown, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, SettingsButtonPos[0])) {
-		Config::Barcolor = DARK_BLUE;
+		Config::Barcolor = DARK_BLUE2;
 		Config::saveConfig();
 		screenDrawn = false;
 		} else if (touching(touch, SettingsButtonPos[1])) {

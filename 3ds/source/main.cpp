@@ -194,6 +194,10 @@ int main()
 	}
 
 	// For AC adapter status
+	if (isCitra == false) {
+		loadMessage("If this appears for a bit, then set 'isCitra' to true.");
+	}
+	
 	if (R_FAILED(res = ptmuxInit())) {
 		return DisplayStartupError("ptmuxInit failed.", res);
 	}

@@ -24,75 +24,24 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "structs.hpp"
 #include "screens/screen.hpp"
 
-#include <vector>
-
-class Settings : public SCREEN 
+class Paint : public SCREEN 
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int SettingsPage = 1;
 
-	void DrawBottom(void) const;
-	void DrawCurrentPage(void) const;
+	int drawX = 0;
+	int drawY = 0;
 
-	void ButtonLogic(u32 hDown, u32 hHeld);
-	void TouchLogic(u32 hDown, touchPosition touch);
-
-	// Struct.
-	std::vector<Structs::ButtonPos> uiSettingsButtonPos = {
-		// Bars
-		{17, 85, 95, 41, -1},
-		{112, 85, 95, 41, -1},
-		{207, 85, 95, 41, -1},
-		// Background
-
-		{17, 165, 95, 41, -1},
-		{112, 165, 95, 41, -1},
-		{207, 165, 95, 41, -1},
-
-		{293, 213, 27, 27, -1},
-
-		// Music BG
-		{207, 31, 95, 41, -1},
-
-		// Bubble Color.
-		{17, 100, 95, 41, -1},
-		{112, 100, 95, 41, -1},
-		{207, 100, 95, 41, -1},
-
-		// Animation enable.
-		{207, 31, 95, 41, -1},
-
-		// Battery percent.
-		{207, 165, 87, 33, -1},
-
-		// Bars Layout.
-		{17, 165, 95, 41, -1},
-
-		// BG Layout.
-		{17, 31, 95, 41, -1},
-
-		// Selected Text Color.
+	int drawX1 = 0;
+	int drawX2 = 0;
+	int drawY1 = 0;
+	int drawY2 = 0;
 	
-		{17, 105, 95, 41, -1},
-		{112, 105, 95, 41, -1},
-		{207, 105, 95, 41, -1},
-
-		// Unselected Text Color.
-
-		{17, 165, 95, 41, -1},
-		{112, 165, 95, 41, -1},
-		{207, 165, 95, 41, -1},
-	};
+	int screenHeight = 240;
+	int screenWidth = 320;
 };
-
-namespace ColorHelper {
-	int getColorValue(int color, int bgr);
-	std::string getColorName(int color, int bgr);
-}

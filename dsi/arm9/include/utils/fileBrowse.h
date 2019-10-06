@@ -25,12 +25,39 @@
 #include <string>
 #include <vector>
 
+struct DirEntry {
+	std::string name;
+	bool isDirectory;
+};
+
 /*
- * *Currently broken as there is no console text*
- * Browse for a file with console displayed text
+ * Gets the contents of the current directory
+ * std::vector<DirEntry>& dirContents is where the contents will be stored
+ * const std::vector<std::string> extensionList is the extensions to include
+ */
+void getDirectoryContents(std::vector<DirEntry>& dirContents, const std::vector<std::string> extensionList);
+
+/*
+ * Browse for a file
  * const std::vector<std::string>& extensionList is the extensions to show
+ * bool directoryNavigation is whether to allow changing folders
  * Returns the selected file
  */
-std::string browseForFile(const std::vector<std::string>& extensionList);
+std::string browseForFile(const std::vector<std::string>& extensionList, bool directoryNavigation);
+
+/*
+ * Browse for a save file
+ * Returns the selected file
+ */
+std::string browseForSave(void);
+
+
+/*
+ * Copies a file to another location
+ * const char *sourcePath is the path to the source file
+ * const char *destinationPath is the path to copy to
+ * returns 1 if successful, -2 if a directory was given, or -1 for an error while copying
+ */
+int fcopy(const char *sourcePath, const char *destinationPath);
 
 #endif //FILE_BROWSE_H

@@ -74,7 +74,7 @@ void Text::readFile(std::string path)
 
 void Text::DrawBrowse(void) const
 {
-	Gui::DrawBGTop();
+	Gui::DrawFileBrowseBG();
 	animatedBGTop();
 	Gui::DrawBarsTop();
 	DisplayTime();
@@ -84,33 +84,9 @@ void Text::DrawBrowse(void) const
 	Gui::DrawString((400-(Gui::GetStringWidth(0.60f, path)))/2, 218, 0.60f, WHITE, path);
 	std::string dirs;
 	for (uint i=(selectedFile<5) ? 0 : selectedFile-5;i<dirContents.size()&&i<((selectedFile<5) ? 6 : selectedFile+1);i++) {
-		(i == selectedFile);
-
-		if (selectedFile == 0) {
-			Gui::drawFileSelector(0, 28);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 1) {
-			Gui::drawFileSelector(0, 58);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 2) {
-			Gui::drawFileSelector(0, 91);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 3) {
-			Gui::drawFileSelector(0, 125);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 4) {
-			Gui::drawFileSelector(0, 156);
-			dirs +=  dirContents[i].name + "\n\n";
-
-		} else if (selectedFile == 5) {
-			Gui::drawFileSelector(0, 188);
-			dirs +=  dirContents[i].name + "\n\n";
+		if (i == selectedFile) {
+			dirs +=  "> " + dirContents[i].name + "\n\n";
 		} else {
-			Gui::drawFileSelector(0, 188);
 			dirs +=  dirContents[i].name + "\n\n";
 		}
 	}
@@ -118,11 +94,8 @@ void Text::DrawBrowse(void) const
 		dirs += "\n\n";
 	}
 
-    if (Config::selector == 0) {
-        Gui::DrawString(26, 32, 0.53f, WHITE, dirs.c_str());
-    } else if (Config::selector == 1 || Config::selector == 2) {
-        Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
-    }
+
+	Gui::DrawString(26, 32, 0.53f, BLACK, dirs.c_str());
 
 	Gui::DrawBGBot();
 	animatedBGBot();
@@ -133,12 +106,12 @@ void Text::BrowseLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+				dirContents.clear();
+				std::vector<DirEntry> dirContentsTemp;
+				getDirectoryContents(dirContentsTemp);
+				for(uint i=0;i<dirContentsTemp.size();i++) {
+				dirContents.push_back(dirContentsTemp[i]);
+			}
 		dirChanged = false;
 	}
 
