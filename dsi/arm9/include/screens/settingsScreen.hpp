@@ -31,7 +31,7 @@
 
 #include "screens/screen.hpp"
 
-class Settings : public SCREEN 
+class Settings : public SCREEN
 {
 public:
 	void Draw(void) const override;

@@ -59,13 +59,13 @@ void Settings::Draw(void) const
 void Settings::Logic(u16 hDown, touchPosition touch) {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, SettingsButtonPos[0])) {
-		Config::Barcolor = DARK_BLUE2;
-		Config::saveConfig();
-		screenDrawn = false;
+			Config::Barcolor = DARK_BLUE2;
+			Config::saveConfig();
+			screenDrawn = false;
 		} else if (touching(touch, SettingsButtonPos[1])) {
-		Config::Bg = 0xFFF;
-		Config::saveConfig();
-		screenDrawn = false;
+			Config::Bg = 0xFFF;
+			Config::saveConfig();
+			screenDrawn = false;
 		}
 	} else if (hDown & KEY_B) {
 		screenDrawn = false;

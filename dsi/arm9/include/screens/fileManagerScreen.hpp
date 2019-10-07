@@ -29,7 +29,7 @@
 
 #include "screens/screen.hpp"
 
-class FileManager : public SCREEN 
+class FileManager : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -43,7 +43,7 @@ private:
 
 	void DrawBox(void) const;
 	void boxLogic(u16 hDown);
-	
+
 	// Filemanager Operations.
 	void CreateFolder(std::string FolderName);
 

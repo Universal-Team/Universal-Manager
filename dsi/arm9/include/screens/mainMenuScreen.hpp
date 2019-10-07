@@ -32,7 +32,7 @@
 
 #include <array>
 
-class MainMenu : public SCREEN 
+class MainMenu : public SCREEN
 {
 public:
 	void Draw(void) const override;

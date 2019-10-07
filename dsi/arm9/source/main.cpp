@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 		// Draws the bottom screen blue if nitroFSInit() fails
 		Logging::writeToLog("NitroFS Failed! Please use another start point, which passes NitroFS.", true);
 		drawRectangle(0, 0, 256, 192, BGR15(0xff, 0, 0), false);
-		
+
 		printf("NitroFS Failed.");
 		while(1) swiWaitForVBlank();
 	}

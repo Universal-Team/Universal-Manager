@@ -57,7 +57,7 @@ void MainMenu::Draw(void) const
 	screenDrawn = true;
 }
 
-void MainMenu::Logic(u16 hDown, touchPosition touch) 
+void MainMenu::Logic(u16 hDown, touchPosition touch)
 {
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, mainButtonPos[0])) {
