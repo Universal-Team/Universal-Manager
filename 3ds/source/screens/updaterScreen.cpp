@@ -68,7 +68,7 @@ void Updater::Draw(void) const
 	DrawCurrentPage();
 }
 
-void Updater::Logic(u32 hDown, u32 hHeld, touchPosition touch) 
+void Updater::Logic(u32 hDown, u32 hHeld, touchPosition touch)
 {
 	ButtonLogic(hDown, hHeld);
 	TouchLogic(hDown, touch);
@@ -311,22 +311,22 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				  case 2: {
 					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
-					updatePKMNChestRelease(); 
+					updatePKMNChestRelease();
 					}
 					break;
 				} case 3: {
 					if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Nightly?")) {
-					updatePKMNChestNightly(); 
+					updatePKMNChestNightly();
 					}
 					break;
 				} case 4: {
 					if(confirmPopup("Are you sure you want to update Relaunch\nTo Release?")) {
-					updateRelaunchRelease(); 
+					updateRelaunchRelease();
 					}
 					break;
 				} case 5:
 					if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
-					updateRelaunchNightly(); 
+					updateRelaunchNightly();
 					}
 					break;
 				case 6: {
@@ -336,7 +336,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 					break;
 				} case 7:
 					if(confirmPopup("Are you sure you want to update LeafEdit\nTo Nightly?")) {
-					updateLeafEdit(); 
+					updateLeafEdit();
 					}
 					break;
 			}
@@ -522,7 +522,7 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			downloadScripts();
 
 		} else if (touching(touch, Functions[2])) {
-			downloadSheets(); 
+			downloadSheets();
 
 
 		} else if(touching(touch, Functions[10])) {
@@ -556,22 +556,22 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 
 		} else if (touching(touch, Functions[2])) {
 			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Release?")) {
-			updatePKMNChestRelease(); 
+			updatePKMNChestRelease();
 			}
 
 		} else if (touching(touch, Functions[3])) {
 			if(confirmPopup("Are you sure you want to update PKMN-Chest\nTo Nightly?")) {
-			updatePKMNChestNightly(); 
+			updatePKMNChestNightly();
 			}
 
 			} else if (touching(touch, Functions[4])) {
 			if(confirmPopup("Are you sure you want to update Relaunch\nTo Release?")) {
-			updateRelaunchRelease(); 
+			updateRelaunchRelease();
 			}
 
 		} else if (touching(touch, Functions[5])) {
 			if(confirmPopup("Are you sure you want to update Relaunch\nTo Nightly?")) {
-			updateRelaunchNightly(); 
+			updateRelaunchNightly();
 			}
 		} else if (touching(touch, Functions[11])) {
 			if(confirmPopup("Are you sure you want to update LeafEdit\nTo Release?")) {
@@ -579,7 +579,7 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			}
 		} else if (touching(touch, Functions[12])) {
 			if(confirmPopup("Are you sure you want to update LeafEdit\nTo Nightly?")) {
-			updateLeafEdit(); 
+			updateLeafEdit();
 			}
 		}
 	}

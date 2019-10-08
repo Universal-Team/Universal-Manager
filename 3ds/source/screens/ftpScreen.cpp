@@ -76,9 +76,9 @@ void FTP::Draw(void) const
 
 				// Boundary stuff
 				C2D_DrawRectSolid(0, 140, 0.5f, 50, 3, BLACK);
-				C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, BLACK); 
+				C2D_DrawRectSolid(270, 140, 0.5f, 50, 3, BLACK);
 				pBar += 4;
-			
+
 				if (pBar >= xlim)
 					pBar = 34;
 			}

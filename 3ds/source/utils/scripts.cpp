@@ -64,7 +64,7 @@ Scpt getScptFromLine(std::string line) {
 	Scpt scpt;
 	scpt.function = line.substr(0, line.find("	"));
 	line = line.substr(line.find("	")+1);
-	
+
 	scpt.param1 = line.substr(0, std::min(line.find("	"), line.length()-1));
 	line = line.substr(line.find("	")+1);
 
@@ -115,7 +115,7 @@ void runScript(std::string path) {
 			if(scpt.function == "delete") {
 				deleteFile(scpt.param1.c_str());
 			}
-			
+
 			if(scpt.function == "msg") {
 				DisplayMsg(scpt.param1.c_str());
 			}

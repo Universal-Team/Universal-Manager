@@ -65,7 +65,7 @@ void Lang::loadLangStrings(int lang) {
 	Lang::MainMenu[10] = ini.GetString("MainMenu", "Games", Lang::MainMenu[10]);
 
 	// [Misc]
-	Lang::Misc[0] = ini.GetString("Misc", "running", Lang::Misc[0]); 
+	Lang::Misc[0] = ini.GetString("Misc", "running", Lang::Misc[0]);
 
 	// [Title]
 	Lang::Title = ini.GetString("Title", "Name", Lang::Title);

@@ -46,7 +46,7 @@ Key modifierKeys[] = {
 
 Key NumpadStruct[] = {
 	{"1", 10, 25},
-	{"2", 90, 25}, 
+	{"2", 90, 25},
 	{"3", 170, 25},
 
 	{"4", 10, 95},
@@ -200,7 +200,7 @@ std::string Input::getLine(uint maxLength, std::string Text) {
 			string = string.substr(0, string.length()-1);
 			Gui::DrawString(0, 103, 0.5, BLACK, string.c_str());
 		}
-		
+
 		if(hDown & KEY_START || enter) {
 			break;
 		}
@@ -283,8 +283,8 @@ std::string Input::Numpad(uint maxLength, std::string Text)
 			C3D_FrameEnd(0);
 			Gui::clearTextBufs();
 			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        	C2D_TargetClear(top, BLACK);
-        	C2D_TargetClear(bottom, BLACK);
+			C2D_TargetClear(top, BLACK);
+			C2D_TargetClear(bottom, BLACK);
 			Gui::DrawBGTop();
 			animatedBGTop();
 			Gui::DrawBarsTop();

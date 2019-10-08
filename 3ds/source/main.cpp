@@ -144,20 +144,20 @@ static Result DisplayStartupError(std::string message, Result res)
 }
 
 void loadMessage(std::string Message) {
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, BLACK);
-		C2D_TargetClear(bottom, BLACK);
-		Gui::clearTextBufs();
-		set_screen(top);
-		Draw_Rect(0, 0, 400, 27, BARCOLOR);
-		Draw_Rect(0, 27, 400, 186, GRAY);
-		Draw_Rect(0, 213, 400, 27, BARCOLOR);
-		Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 2, 0.8f, WHITE, Message, 400);
-		set_screen(bottom);
-		Draw_Rect(0, 0, 320, 27, BARCOLOR);
-		Draw_Rect(0, 27, 320, 186, GRAY);
-		Draw_Rect(0, 213, 320, 27, BARCOLOR);
-		C3D_FrameEnd(0);
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLACK);
+	C2D_TargetClear(bottom, BLACK);
+	Gui::clearTextBufs();
+	set_screen(top);
+	Draw_Rect(0, 0, 400, 27, BARCOLOR);
+	Draw_Rect(0, 27, 400, 186, GRAY);
+	Draw_Rect(0, 213, 400, 27, BARCOLOR);
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 2, 0.8f, WHITE, Message, 400);
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 27, BARCOLOR);
+	Draw_Rect(0, 27, 320, 186, GRAY);
+	Draw_Rect(0, 213, 320, 27, BARCOLOR);
+	C3D_FrameEnd(0);
 }
 
 int main()
@@ -197,7 +197,7 @@ int main()
 	if (isCitra == false) {
 		loadMessage("If this appears for a bit, then set 'isCitra' to true.");
 	}
-	
+
 	if (R_FAILED(res = ptmuxInit())) {
 		return DisplayStartupError("ptmuxInit failed.", res);
 	}
@@ -216,7 +216,7 @@ int main()
 
 	srand(time(NULL));
 	getCurrentUsage();
-	
+
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
 	if (is3dsx == true) {
@@ -278,20 +278,20 @@ int main()
 			break;
 		}
 
-	if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
-		if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
-		if (musicRepeat != 2 && !firstSong) {
-			locInPlaylist++;
+		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
+			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
+			if (musicRepeat != 2 && !firstSong) {
+				locInPlaylist++;
+			}
+			firstSong = false;
+			currentSong = nowPlayingList[locInPlaylist].name;
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
+		} else if (isPlaying() && currentSong == "") {
+			stopPlayback();
+		} else if (!isPlaying() && currentSong != "") {
+			currentSong = "";
 		}
-		firstSong = false;
-		currentSong = nowPlayingList[locInPlaylist].name;
-		playbackInfo_t playbackInfo;
-		changeFile(currentSong.c_str(), &playbackInfo);
-	} else if (isPlaying() && currentSong == "") {
-		stopPlayback();
-	} else if (!isPlaying() && currentSong != "") {
-		currentSong = "";
-	}
 	}
 
 	delete sfx_scroll;

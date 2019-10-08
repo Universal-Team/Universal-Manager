@@ -5,9 +5,9 @@
 /*! Loop status */
 typedef enum
 {
-  LOOP_CONTINUE, /*!< Continue looping */
-  LOOP_RESTART,  /*!< Reinitialize */
-  LOOP_EXIT,     /*!< Terminate looping */
+	LOOP_CONTINUE, /*!< Continue looping */
+	LOOP_RESTART,  /*!< Reinitialize */
+	LOOP_EXIT,     /*!< Terminate looping */
 } loop_status_t;
 
 bool isTransfering;

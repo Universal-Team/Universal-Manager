@@ -30,7 +30,7 @@
 #include <string>
 #include <vector>
 
-class Text : public SCREEN 
+class Text : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -52,7 +52,7 @@ private:
 	std::vector<std::string> textEditorText;
 
 	std::vector<DirEntry> dirContents;
-	
+
 	mutable uint rowsDisplayed = 0;
 	uint selectedFile = 0;
 	int keyRepeatDelay = 0;

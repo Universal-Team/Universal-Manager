@@ -30,14 +30,14 @@
 #include <string>
 #include <vector>
 
-class Credits : public SCREEN 
+class Credits : public SCREEN
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int dialog = 5; 
+	int dialog = 5;
 
 	std::vector<std::string> names = {
 		"VoltZ",
@@ -49,12 +49,12 @@ private:
 	};
 
 	std::vector<Structs::ButtonPos> creditsButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{160, 25, 149, 52, -1},
+		{0, 25, 149, 52, -1},
+		{160, 25, 149, 52, -1},
 		{0, 90, 149, 52, -1},
 		{160, 90, 149, 52, -1},
 		{0, 150, 149, 52, -1},
-    	{160, 150, 149, 52, -1},
+		{160, 150, 149, 52, -1},
 	};
 
 	void drawCreditsDialogs(void) const;

@@ -29,7 +29,7 @@
 
 #include <vector>
 
-class Updater : public SCREEN 
+class Updater : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -64,6 +64,5 @@ private:
 		{293, 213, 27, 27, -1}, // 10
 		{129, 168, 87, 33, -1}, // 11
 		{220, 168, 87, 33, -1}, // 12
-
 	};
 };

@@ -155,7 +155,7 @@ bool Draw_LoadImageMemory(C2D_Image *texture, void *data, size_t size) {
 	int width = 0, height = 0;
 
 	image = stbi_load_from_memory((stbi_uc const *)data, size, &width, &height, NULL, STBI_rgb_alpha);
-	
+
 	for (u32 row = 0; row < (u32)width; row++) {
 		for (u32 col = 0; col < (u32)height; col++) {
 			u32 z = (row + col * (u32)width) * BYTES_PER_PIXEL;

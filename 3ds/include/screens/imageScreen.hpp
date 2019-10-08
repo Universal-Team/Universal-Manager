@@ -33,7 +33,7 @@ extern "C" {
 #include "C2D_helper.h"
 }
 
-class Image : public SCREEN 
+class Image : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -51,7 +51,7 @@ private:
 	void FreeImage(C2D_Image *image);
 	bool Draw_Image(void) const;
 
-	
+
 	std::string currentImage = "";
 	uint selectedFile = 0;
 	int keyRepeatDelay = 0;

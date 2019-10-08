@@ -29,7 +29,7 @@
 
 #include <vector>
 
-class GameSub : public SCREEN 
+class GameSub : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -43,7 +43,7 @@ private:
 
 	std::vector<Structs::ButtonPos> gamesSubMenuButtonPos = {
 			// Pong. :P
-    	{1, 40, 149, 52, -1},
+		{1, 40, 149, 52, -1},
 		// Tic-Tac-Toe. ;P
 		{162, 40, 149, 52, -1},
 		// Back Icon.

@@ -31,7 +31,7 @@
 
 #include <vector>
 
-class MainMenu : public SCREEN 
+class MainMenu : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -50,14 +50,14 @@ private:
 
 	// Structs.
 	std::vector<Structs::ButtonPos> mainScreenButtonPos = {
-    	{0, 25, 149, 52, -1},
-    	{170, 25, 149, 52, -1},
+		{0, 25, 149, 52, -1},
+		{170, 25, 149, 52, -1},
 		{0, 90, 149, 52, -1},
 		{170, 90, 149, 52, -1},
 		{0, 150, 149, 52, -1},
-    	{170, 150, 149, 52, -1},
+		{170, 150, 149, 52, -1},
 
-    	{0, 25, 149, 52, -1},
+		{0, 25, 149, 52, -1},
 		{170, 25, 149, 52, -1},
 		{0, 90, 149, 52, -1},
 		{170, 90, 149, 52, -1},

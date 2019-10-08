@@ -29,15 +29,15 @@
 
 #include <array>
 
-class Calculator : public SCREEN 
+class Calculator : public SCREEN
 {
 public:
 	void Draw(void) const override;
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-    char op; // The operation like '-' '+' '*' '/'.
-    float num1, num2; // The Numbers like '1' '5' or whatever.
+	char op; // The operation like '-' '+' '*' '/'.
+	float num1, num2; // The Numbers like '1' '5' or whatever.
 	std::string display = "Not Implemented yet."; // Display the Values and stuff.
 
 	// Functions.
@@ -69,6 +69,5 @@ private:
 		{"E", 290, 40},
 		{"B", 290, 90},
 		{"C", 290, 140}
-	}
-	};
+	}};
 };

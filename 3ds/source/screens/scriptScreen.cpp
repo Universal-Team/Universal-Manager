@@ -255,7 +255,7 @@ void Script::DrawScriptCreator(void) const
 	DrawBottom();
 	Gui::DrawString(150, 0, 0.50f, WHITE, "Current Page:");
 	Gui::DrawString(260, 4, 0.50, BLACK, "1");
-	Gui::DrawString(280, 4, 0.50, BLACK, "2"); 
+	Gui::DrawString(280, 4, 0.50, BLACK, "2");
 	DrawSelection();
 	DrawCurrentPage();
 }

@@ -18,7 +18,7 @@ static u64 frames_read = 0, total_samples = 0;
 // Helper for v1 printing, get these strings their zero byte.
 static void safe_print(char *tag, char *name, char *data, size_t size) {
 	char safe[31];
-	if (size > 30) 
+	if (size > 30)
 		return;
 	memcpy(safe, data, size);
 	safe[size] = 0;
@@ -51,18 +51,18 @@ static void print_lines(char *data, const char *prefix, mpg123_string *inlines) 
 		lines = inlines->p;
 		len   = inlines->fill;
 	}
-	else 
+	else
 		return;
 
 	line = lines;
 	for (i = 0; i < len; ++i) {
 		if (lines[i] == '\n' || lines[i] == '\r' || lines[i] == 0) {
 			char save = lines[i]; /* saving, changing, restoring a byte in the data */
-			if (save == '\n') 
+			if (save == '\n')
 				++hadlf;
-			if (save == '\r') 
+			if (save == '\r')
 				++hadcr;
-			if ((hadcr || hadlf) && (hadlf % 2 == 0) && (hadcr % 2 == 0)) 
+			if ((hadcr || hadlf) && (hadlf % 2 == 0) && (hadcr % 2 == 0))
 				line = "";
 
 			if (line) {
@@ -77,7 +77,7 @@ static void print_lines(char *data, const char *prefix, mpg123_string *inlines) 
 		}
 		else {
 			hadlf = hadcr = 0;
-			if (line == NULL) 
+			if (line == NULL)
 				line = lines + i;
 		}
 	}

@@ -44,11 +44,11 @@ extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
 	std::string musicModes[] = {"DEFAULT", "COVER", "BG"};
 	std::string animationModes[] = {"Disabled", "Bubbles", "Geometry"};
-	std::string percentModes[] = {"Hidden", "Shown"}; 
-	std::string layoutModes[] = {"Bars", "Bars2"}; 
+	std::string percentModes[] = {"Hidden", "Shown"};
+	std::string layoutModes[] = {"Bars", "Bars2"};
 	std::string layout2Modes[] = {"BG1", "BG2", "BG3"};
 //	std::string Language[] = {"Deutsch", "English", "Español", "Français", "Italiano", "日本語", "Lietuvių", "Português"};
-	
+
 int ColorHelper::getColorValue(int color, int bgr)
 {
 	char colorName[10];
@@ -187,7 +187,7 @@ void Settings::DrawCurrentPage(void) const
 void Settings::ButtonLogic(u32 hDown, u32 hHeld)
 {
 	if (hHeld & KEY_SELECT) {
-		helperBox(" Press \uE052 / \uE053 to switch Pages."); 
+		helperBox(" Press \uE052 / \uE053 to switch Pages.");
 	} else if (hDown & KEY_B) {
 		Config::saveConfig();
 		Gui::screenBack();

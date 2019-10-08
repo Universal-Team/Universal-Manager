@@ -313,16 +313,16 @@ bool Music::Draw_CoverImage(void) const
 
 std::string Music::secondsToString(u64 seconds) const
 {
-    int h = 0, m = 0, s = 0;
-    h = (seconds / 3600);
-    m = (seconds - (3600 * h)) / 60;
-    s = (seconds - (3600 * h) - (m * 60));
+	int h = 0, m = 0, s = 0;
+	h = (seconds / 3600);
+	m = (seconds - (3600 * h)) / 60;
+	s = (seconds - (3600 * h) - (m * 60));
 
 	char string[35];
 
-    if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
-    else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
-	
+	if (h > 0) snprintf(string, sizeof(string), "%02d:%02d:%02d", h, m, s);
+	else	snprintf(string, sizeof(string), "%02d:%02d", m, s);
+
 	return string;
 }
 
@@ -347,7 +347,7 @@ void Music::DrawPlayer(void) const
 		}
 
 		if (coverImageLoaded == true) {
-			Draw_CoverImage(); 
+			Draw_CoverImage();
 		} else if (coverImageLoaded == false) {
 			Gui::sprite(0, sprites_cover_glow_idx, 250, 30);
 			Gui::sprite(0, sprites_cover_normal_idx, 250, 30);
@@ -355,12 +355,12 @@ void Music::DrawPlayer(void) const
 
 	} else if (Config::musicMode == 2) {
 		if (themeImageLoaded == true) {
-		Draw_ThemeImage(); 
+		Draw_ThemeImage();
 	} else if (themeImageLoaded == false) {
 			Gui::DrawString(15, 40, 0.5f, WHITE, "Please load an Image under `Themes`.");
 	}
 	}
-	
+
 	if(isPlaying()) {
 
 		// Current Song.
@@ -375,7 +375,7 @@ void Music::DrawPlayer(void) const
 		Draw_Rect(120, 194, (((double)Audio_GetPosition()/(double)Audio_GetLength()) * 150.0), 12, Config::barColor);
 	}
 
-	
+
 	if(!isPaused() && isPlaying()) {
 		Gui::DrawString(80, 220, 0.45f, WHITE, "A : Pause   B : Back   X : Stop song");
 	} else if(isPaused() && isPlaying()) {
@@ -692,7 +692,7 @@ void Music::DrawPlaylistPlay(void) const
 	drawBatteryTop();
 	Gui::DrawString((400-Gui::GetStringWidth(0.72f, "Music Playlist Menu"))/2, 0, 0.72f, WHITE, "Music Playlist Menu");
 	mkdir("sdmc:/Universal-Manager/playlists/", 0777);
-	
+
 
 
 	std::string plstList;

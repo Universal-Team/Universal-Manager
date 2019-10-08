@@ -6,5 +6,5 @@ bool matchPattern(std::string pattern, std::string tested);
 
 namespace StringUtils
 {
-    std::string format(const std::string& fmt_str, ...);
+	std::string format(const std::string& fmt_str, ...);
 }

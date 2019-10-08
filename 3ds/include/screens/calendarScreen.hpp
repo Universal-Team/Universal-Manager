@@ -33,7 +33,7 @@
 #include <vector>
 
 // CALENDAR
-class Calendar : public SCREEN 
+class Calendar : public SCREEN
 {
 public:
 	void Draw(void) const override;

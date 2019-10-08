@@ -60,8 +60,8 @@ void drawVoltZ(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, VOLTZCOLORBG);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, VOLTZCOLORBAR);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, VOLTZCOLORBAR);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
@@ -86,8 +86,8 @@ void drawFlame(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, FLAMECOLORBG);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, FLAMECOLORBAR);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, FLAMECOLORBAR);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
@@ -112,8 +112,8 @@ void drawPk11(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, PK11COLORBG);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, PK11COLORBAR);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, PK11COLORBAR);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
@@ -138,8 +138,8 @@ void drawRocketRobz(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, ROCKETROBZCOLORBG);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, ROCKETROBZCOLORBAR);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, ROCKETROBZCOLORBAR);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
@@ -164,8 +164,8 @@ void drawTotallyNotGuy(void) {
 	set_screen(top);
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, TNGCOLORBG);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, TNGCOLORBAR);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, TNGCOLORBAR);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 
 
@@ -232,11 +232,11 @@ void Credits::drawButtons(void) const
 
 void Credits::Draw(void) const
 {
-    C2D_TargetClear(top, GRAY);
-    C2D_TargetClear(bottom, GRAY);
+	C2D_TargetClear(top, GRAY);
+	C2D_TargetClear(bottom, GRAY);
 	set_screen(top);
 	Gui::sprite(0, sprites_universal_bg_top_idx, 0, 25);
-    Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 	drawCreditsDialogs();
 	drawButtons();
@@ -261,8 +261,7 @@ void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Config::Credits = 0;
 				Config::setCredits();
 			}
-				Gui::setScreen(std::make_unique<MainMenu>());
+			Gui::setScreen(std::make_unique<MainMenu>());
 		}
 	}
 }
-			

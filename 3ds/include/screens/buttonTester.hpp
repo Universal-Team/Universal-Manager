@@ -29,7 +29,7 @@
 
 #include <vector>
 
-class ButtonTester : public SCREEN 
+class ButtonTester : public SCREEN
 {
 public:
 	void Draw(void) const override;
