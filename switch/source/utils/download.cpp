@@ -42,9 +42,9 @@ static size_t result_written = 0;
 std::vector<std::string> _topText;
 
 Result downloadToFile(std::string URL, std::string destination) {
-	Result ret = 0;	
+	Result ret = 0;
 	socketInitializeDefault();
-	CURL *curl; 
+	CURL *curl;
 	FILE *fp;
 	CURLcode res;
 	char *url = &URL[0]; // string used for curl_easy_setopt

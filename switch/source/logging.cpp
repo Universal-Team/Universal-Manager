@@ -30,23 +30,23 @@
 
 std::string Logging::format(const std::string& fmt_str, ...)
 {
-    va_list ap;
-    char* fp = NULL;
-    va_start(ap, fmt_str);
-    vasprintf(&fp, fmt_str.c_str(), ap);
-    va_end(ap);
-    std::unique_ptr<char, decltype(free)*> formatted(fp, free);
-    return std::string(formatted.get());
+	va_list ap;
+	char* fp = NULL;
+	va_start(ap, fmt_str);
+	vasprintf(&fp, fmt_str.c_str(), ap);
+	va_end(ap);
+	std::unique_ptr<char, decltype(free)*> formatted(fp, free);
+	return std::string(formatted.get());
 }
 
 std::string Logging::logDate(void)
 {
-    time_t unixTime;
-    struct tm timeStruct;
-    time(&unixTime);
-    localtime_r(&unixTime, &timeStruct);
-    return format("%04i-%02i-%02i %02i:%02i:%02i", timeStruct.tm_year + 1900, timeStruct.tm_mon + 1, timeStruct.tm_mday,
-        timeStruct.tm_hour, timeStruct.tm_min, timeStruct.tm_sec);
+	time_t unixTime;
+	struct tm timeStruct;
+	time(&unixTime);
+	localtime_r(&unixTime, &timeStruct);
+	return format("%04i-%02i-%02i %02i:%02i:%02i", timeStruct.tm_year + 1900, timeStruct.tm_mon + 1, timeStruct.tm_mday,
+		timeStruct.tm_hour, timeStruct.tm_min, timeStruct.tm_sec);
 }
 
 void Logging::createLogFile(void) {
