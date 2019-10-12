@@ -46,6 +46,8 @@ extern bool fadein;
 extern bool is3dsx;
 extern bool isCitra;
 
+extern bool isDownloadMode;
+
 void MainMenu::DrawSelection(void) const
 {
 	if (currentPage == 1) {
@@ -223,6 +225,7 @@ void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
 						break;
 					} case 4: {
 						Gui::setScreen(std::make_unique<Updater>());
+						isDownloadMode = true;
 						break;
 					} case 5:
 						Gui::setScreen(std::make_unique<Settings>());
@@ -276,6 +279,7 @@ void MainMenu::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Gui::setScreen(std::make_unique<Music>());
 			} else if (touching(touch, mainScreenButtonPos[4])) {
 				Gui::setScreen(std::make_unique<Updater>());
+				isDownloadMode = true;
 			} else if (touching(touch, mainScreenButtonPos[5])) {
 				Gui::setScreen(std::make_unique<Settings>());
 			}

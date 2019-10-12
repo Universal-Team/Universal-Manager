@@ -62,6 +62,8 @@ extern int musicRepeat;
 extern bool musicShuffle;
 extern std::vector<Playlist> nowPlayingList;
 extern std::string currentSong;
+bool songIsFound = false;
+bool isDownloadMode = false;
 
 bool isCitra = false; // Set it to true, if it is used with Citra.
 
@@ -73,10 +75,28 @@ sound *sfx_scroll = NULL;
 sound *sfx_pong = NULL;
 sound *sfx_score = NULL;
 
+
+sound *downloadMusic = NULL;
+
 void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
 	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
 	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
+	if( access( "sdmc:/Universal-Manager/Music.wav", F_OK ) != -1 ) {
+		downloadMusic = new sound("sdmc:/Universal-Manager/Music.wav", 1, true);
+		songIsFound = true;
+	}
+}
+
+void playMusic(void) {
+	if (isPlaying()) {
+		stopPlayback();
+	}
+	downloadMusic->play();
+}
+
+void stopMusic(void) {
+	downloadMusic->stop();
 }
 
 
@@ -262,6 +282,18 @@ int main()
 		displayBatteryNearlyToDead();
 		C3D_FrameEnd(0);
 
+		if (isDownloadMode == true) {
+			if (songIsFound == true) {
+				playMusic();
+			}
+		}
+
+		if (isDownloadMode == false) {
+			if (songIsFound == true) {
+				stopMusic();
+			}
+		}
+
 		if (fadein == true) {
 			fadealpha -= 3;
 			if (fadealpha < 0) {
@@ -293,6 +325,7 @@ int main()
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
+	delete downloadMusic;
 	stopPlayback();
 	if (dspfirmfound == true) {
 		ndspExit();

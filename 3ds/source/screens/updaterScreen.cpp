@@ -38,6 +38,7 @@ extern "C" {
 }
 
 extern bool updatingSelf;
+extern bool isDownloadMode;
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
@@ -344,6 +345,7 @@ void Updater::ButtonLogic(u32 hDown, u32 hHeld)
 	} else if (hDown & KEY_B) {
 		if (updaterMode == 0) {
 			Selection = 0;
+			isDownloadMode = false;
 			Gui::screenBack();
 			return;
 
@@ -443,6 +445,7 @@ void Updater::TouchLogic(u32 hDown, touchPosition touch)
 			updaterMode = 4;
 
 		} else if(touching(touch, Functions[10])) {
+			isDownloadMode = false;
 			Gui::screenBack();
 			return;
 		}

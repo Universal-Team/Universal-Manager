@@ -862,25 +862,24 @@ void updateLuma(bool nightly) {
 }
 
 void downloadGodMode9(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GodMode9...\nRelease");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
-			showProgressBar = false;
-			downloadFailed();
-			return;
-		}
-
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
-						"(Release)\n\nThis may take a while.");
-		filesExtracted = 0;
-		progressBarType = 1;
-		extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
-		extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GodMode9...\nRelease");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
+	if (downloadFromRelease("https://github.com/D0k3/GodMode9", "GodMode9.*\\.zip", "/GodMode9.zip") != 0) {
 		showProgressBar = false;
+		downloadFailed();
+		return;
+	}
 
-		deleteFile("sdmc:/GodMode9.zip");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now extracting.\n"
+					"(Release)\n\nThis may take a while.");
+	filesExtracted = 0;
+	progressBarType = 1;
+	extractArchive("/GodMode9.zip", "GodMode9.firm", "/luma/payloads/GodMode9.firm");
+	extractArchive("/GodMode9.zip", "gm9/", "/gm9/");
+	showProgressBar = false;
+	deleteFile("sdmc:/GodMode9.zip");
 	doneMsg();
 }
 
@@ -1044,11 +1043,11 @@ void updateCheats(void) {
 }
 
 void updatePKMNChestRelease(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nRelease");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nRelease");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
+	if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.cia", "/PKMN-Chest-Release.cia") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
@@ -1056,42 +1055,42 @@ void updatePKMNChestRelease(void) {
 
 	showProgressBar = false;
 
-		if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
-			showProgressBar = true;
-			progressBarType = 0;
-			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
-				showProgressBar = false;
-				downloadFailed();
-				return;
-			}
-		} else {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
-			showProgressBar = true;
-			progressBarType = 0;
-			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
-				showProgressBar = false;
-				downloadFailed();
-				return;
-			}
+	if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
 		}
-		showProgressBar = false;
+	} else {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nRelease");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadFromRelease("https://github.com/Universal-Team/pkmn-chest", "pkmn-chest\\.nds", "/pkmn-chest.nds") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+	}
+	showProgressBar = false;
 
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/PKMN-Chest-Release.cia");
+	DisplayMsg("Now Installing the CIA..");
+	installCia("/PKMN-Chest-Release.cia");
 
-		deleteFile("sdmc:/PKMN-Chest-Release.cia");
-		doneMsg();
+	deleteFile("sdmc:/PKMN-Chest-Release.cia");
+	doneMsg();
 }
 
 void updatePKMNChestNightly(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest CIA...\nNightly");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
-		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest CIA...\nNightly");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
+	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.cia?raw=true", "/PKMN-Chest-Nightly.cia") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
@@ -1099,81 +1098,81 @@ void updatePKMNChestNightly(void) {
 
 	showProgressBar = false;
 
-		if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
-			showProgressBar = true;
-			progressBarType = 0;
-			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
-				showProgressBar = false;
-				downloadFailed();
-				return;
-			}
-		} else {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
-			showProgressBar = true;
-			progressBarType = 0;
-			Threads::create((ThreadFunc)displayProgressBar);
-			if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
-				showProgressBar = false;
-				downloadFailed();
-				return;
-			}
-		}
-		showProgressBar = false;
-
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/PKMN-Chest-Nightly.cia");
-
-		deleteFile("sdmc:/PKMN-Chest-Nightly.cia");
-		doneMsg();
-}
-
-void updateRelaunchNightly(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nNightly");
+	if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/_nds/pkmn-chest/pkmn-chest.nds") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+	} else {
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/pkmn-chest/pkmn-chest.nds?raw=true", "/pkmn-chest.nds") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+	}
+	showProgressBar = false;
+
+	DisplayMsg("Now Installing the CIA..");
+	installCia("/PKMN-Chest-Nightly.cia");
+
+	deleteFile("sdmc:/PKMN-Chest-Nightly.cia");
+	doneMsg();
+}
+
+void updateRelaunchNightly(void) {
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nNightly");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
 	if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/Relaunch/Relaunch.7z?raw=true", "/Relaunch-Nightly.7z") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
 	}
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nNightly");
-		filesExtracted = 0;
-		progressBarType = 1;
-		extractArchive("/Relaunch-Nightly.7z", "Relaunch/3DS/", "/");
-		showProgressBar = false;
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/Relaunch.cia");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nNightly");
+	filesExtracted = 0;
+	progressBarType = 1;
+	extractArchive("/Relaunch-Nightly.7z", "Relaunch/3DS/", "/");
+	showProgressBar = false;
+	DisplayMsg("Now Installing the CIA..");
+	installCia("/Relaunch.cia");
 
-		deleteFile("sdmc:/Relaunch-Nightly.7z");
-		deleteFile("sdmc:/Relaunch.cia");
-		doneMsg();
+	deleteFile("sdmc:/Relaunch-Nightly.7z");
+	deleteFile("sdmc:/Relaunch.cia");
+	doneMsg();
 }
 
 void updateRelaunchRelease(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nRelease");
-		showProgressBar = true;
-		progressBarType = 0;
-		Threads::create((ThreadFunc)displayProgressBar);
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Relaunch...\nRelease");
+	showProgressBar = true;
+	progressBarType = 0;
+	Threads::create((ThreadFunc)displayProgressBar);
 	if (downloadFromRelease("https://github.com/Universal-Team/Relaunch", "Relaunch\\.7z", "/Relaunch-Release.7z") != 0) {
 		showProgressBar = false;
 		downloadFailed();
 		return;
 }
 
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nRelease");
-		filesExtracted = 0;
-		progressBarType = 1;
-		extractArchive("/Relaunch-Release.7z", "Relaunch/3DS/", "/");
-		showProgressBar = false;
-		DisplayMsg("Now Installing the CIA..");
-		installCia("/Relaunch.cia");
+	snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting...\nRelease");
+	filesExtracted = 0;
+	progressBarType = 1;
+	extractArchive("/Relaunch-Release.7z", "Relaunch/3DS/", "/");
+	showProgressBar = false;
+	DisplayMsg("Now Installing the CIA..");
+	installCia("/Relaunch.cia");
 
-		deleteFile("sdmc:/Relaunch-Release.7z");
-		deleteFile("sdmc:/Relaunch.cia");
-		doneMsg();
+	deleteFile("sdmc:/Relaunch-Release.7z");
+	deleteFile("sdmc:/Relaunch.cia");
+	doneMsg();
 }
 
 
