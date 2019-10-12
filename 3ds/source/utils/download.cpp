@@ -1087,7 +1087,7 @@ void updatePKMNChestRelease(void) {
 }
 
 void updatePKMNChestNightly(void) {
-		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest CIA...\nNightly");
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest CIA...\nNightly");
 		showProgressBar = true;
 		progressBarType = 0;
 		Threads::create((ThreadFunc)displayProgressBar);
@@ -1100,7 +1100,7 @@ void updatePKMNChestNightly(void) {
 	showProgressBar = false;
 
 		if(confirmPopup("Where do you want to place the downloaded NDS File?", "", "sdmc:/_nds/pkmn-chest/pkmn-chest.nds", "sdmc:/pkmn-chest.nds")) {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
 			showProgressBar = true;
 			progressBarType = 0;
 			Threads::create((ThreadFunc)displayProgressBar);
@@ -1110,7 +1110,7 @@ void updatePKMNChestNightly(void) {
 				return;
 			}
 		} else {
-			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading PKMN-Chest NDS...\nNightly");
+			snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading pkmn-chest NDS...\nNightly");
 			showProgressBar = true;
 			progressBarType = 0;
 			Threads::create((ThreadFunc)displayProgressBar);
