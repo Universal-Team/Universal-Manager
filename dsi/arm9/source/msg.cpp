@@ -30,7 +30,7 @@
 #include "graphics/graphics.h"
 
 bool Msg::confirmPopup(std::string msg1, std::string msg2, std::string yes, std::string no) {
-	
+
 	do {
 		Gui::DrawBarsTop();
 		Gui::DrawBGTop();

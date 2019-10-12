@@ -67,7 +67,7 @@ bool continueNdsScan = true;
 
 extern bool updateAvailable[];
 
-// following function is from 
+// following function is from
 // https://github.com/angelsl/libctrfgh/blob/master/curl_test/src/main.c
 static size_t handle_data(char* ptr, size_t size, size_t nmemb, void* userdata)
 {
@@ -81,7 +81,7 @@ static size_t handle_data(char* ptr, size_t size, size_t nmemb, void* userdata)
 	}
 
 	bool need_realloc = false;
-	while (result_written + bsz > result_sz) 
+	while (result_written + bsz > result_sz)
 	{
 		result_sz <<= 1;
 		need_realloc = true;
@@ -126,7 +126,7 @@ static Result setupContext(CURL *hnd, const char * url)
 
 Result downloadToFile(std::string url, std::string path)
 {
-	Result ret = 0;	
+	Result ret = 0;
 	printf("Downloading from:\n%s\nto:\n%s\n", url.c_str(), path.c_str());
 
 	void *socubuf = memalign(0x1000, 0x100000);
@@ -157,7 +157,7 @@ Result downloadToFile(std::string url, std::string path)
 	Handle fileHandle;
 	u64 offset = 0;
 	u32 bytesWritten = 0;
-	
+
 	ret = openFile(&fileHandle, path.c_str(), true);
 	if (R_FAILED(ret)) {
 		printf("Error: couldn't open file to write.\n");
@@ -169,7 +169,7 @@ Result downloadToFile(std::string url, std::string path)
 		result_written = 0;
 		return DL_ERROR_WRITEFILE;
 	}
-	
+
 	u64 startTime = osGetTime();
 
 	CURLcode cres = curl_easy_perform(hnd);
@@ -185,7 +185,7 @@ Result downloadToFile(std::string url, std::string path)
 		result_written = 0;
 		return -1;
 	}
-	
+
 	FSFILE_Write(fileHandle, &bytesWritten, offset, result_buf, result_written, 0);
 
 	u64 endTime = osGetTime();
@@ -221,16 +221,16 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 	std::regex parseUrl("github\\.com\\/(.+)\\/(.+)");
 	std::smatch result;
 	regex_search(url, result, parseUrl);
-	
+
 	std::string repoOwner = result[1].str(), repoName = result[2].str();
-	
+
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repoOwner << "/" << repoName << "/releases/latest";
 	std::string apiurl = apiurlStream.str();
-	
+
 	printf("Downloading latest release from repo:\n%s\nby:\n%s\n", repoName.c_str(), repoOwner.c_str());
 	printf("Crafted API url:\n%s\n", apiurl.c_str());
-	
+
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, apiurl.c_str());
 	if (ret != 0) {
@@ -248,7 +248,7 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
-	
+
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
 		socExit();
@@ -259,7 +259,7 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 		result_written = 0;
 		return -1;
 	}
-	
+
 	printf("Looking for asset with matching name:\n%s\n", asset.c_str());
 	std::string assetUrl;
 	json parsedAPI = json::parse(result_buf);
@@ -280,12 +280,12 @@ Result downloadFromRelease(std::string url, std::string asset, std::string path)
 	result_buf = NULL;
 	result_sz = 0;
 	result_written = 0;
-	
+
 	if (assetUrl.empty())
 		ret = DL_ERROR_GIT;
 	else
 		ret = downloadToFile(assetUrl, path);
-	
+
 	return ret;
 }
 
@@ -300,7 +300,7 @@ bool checkWifiStatus(void) {
 	if (R_SUCCEEDED(ACU_GetWifiStatus(&wifiStatus)) && wifiStatus) {
 		res = true;
 	}
-	
+
 	return res;
 }
 
@@ -347,11 +347,11 @@ std::string getLatestRelease(std::string repo, std::string item)
 		free(socubuf);
 		return "";
 	}
-	
+
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/releases/latest";
 	std::string apiurl = apiurlStream.str();
-	
+
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, apiurl.c_str());
 	if (ret != 0) {
@@ -369,7 +369,7 @@ std::string getLatestRelease(std::string repo, std::string item)
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
-	
+
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
 		socExit();
@@ -380,7 +380,7 @@ std::string getLatestRelease(std::string repo, std::string item)
 		result_written = 0;
 		return "";
 	}
-	
+
 	std::string jsonItem;
 	json parsedAPI = json::parse(result_buf);
 	if (parsedAPI[item].is_string()) {
@@ -411,11 +411,11 @@ std::string getLatestCommit(std::string repo, std::string item)
 		free(socubuf);
 		return "";
 	}
-	
+
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/commits/master";
 	std::string apiurl = apiurlStream.str();
-	
+
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, apiurl.c_str());
 	if (ret != 0) {
@@ -433,7 +433,7 @@ std::string getLatestCommit(std::string repo, std::string item)
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
-	
+
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
 		socExit();
@@ -444,7 +444,7 @@ std::string getLatestCommit(std::string repo, std::string item)
 		result_written = 0;
 		return "";
 	}
-	
+
 	std::string jsonItem;
 	json parsedAPI = json::parse(result_buf);
 	if (parsedAPI[item].is_string()) {
@@ -475,11 +475,11 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 		free(socubuf);
 		return "";
 	}
-	
+
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/commits/master";
 	std::string apiurl = apiurlStream.str();
-	
+
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, apiurl.c_str());
 	if (ret != 0) {
@@ -497,7 +497,7 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
-	
+
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
 		socExit();
@@ -508,7 +508,7 @@ std::string getLatestCommit(std::string repo, std::string array, std::string ite
 		result_written = 0;
 		return "";
 	}
-	
+
 	std::string jsonItem;
 	json parsedAPI = json::parse(result_buf);
 	if (parsedAPI[array][item].is_string()) {
@@ -540,11 +540,11 @@ std::vector<ThemeEntry> getThemeList(std::string repo, std::string path)
 		free(socubuf);
 		return emptyVector;
 	}
-	
+
 	std::stringstream apiurlStream;
 	apiurlStream << "https://api.github.com/repos/" << repo << "/contents/" << path;
 	std::string apiurl = apiurlStream.str();
-	
+
 	CURL *hnd = curl_easy_init();
 	ret = setupContext(hnd, apiurl.c_str());
 	if (ret != 0) {
@@ -562,7 +562,7 @@ std::vector<ThemeEntry> getThemeList(std::string repo, std::string path)
 	char* newbuf = (char*)realloc(result_buf, result_written + 1);
 	result_buf = newbuf;
 	result_buf[result_written] = 0; //nullbyte to end it as a proper C style string
-	
+
 	if (cres != CURLE_OK) {
 		printf("Error in:\ncurl\n");
 		socExit();
@@ -571,10 +571,10 @@ std::vector<ThemeEntry> getThemeList(std::string repo, std::string path)
 		result_buf = NULL;
 		result_sz = 0;
 		result_written = 0;
-		
+
 		return emptyVector;
 	}
-	
+
 	std::vector<ThemeEntry> jsonItems;
 	json parsedAPI = json::parse(result_buf);
 	for(uint i=0;i<parsedAPI.size();i++) {
@@ -651,7 +651,7 @@ void updateBootstrap(bool nightly) {
 		showProgressBar = false;
 
 		deleteFile("sdmc:/nds-bootstrap-nightly.7z");
-	} else {	
+	} else {
 		DisplayMsg("Downloading nds-bootstrap...\n(Release)");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading nds-bootstrap...\n(Release)");
 		showProgressBar = true;
@@ -837,7 +837,7 @@ void updateLuma(bool nightly) {
 			return;
 		}
 			showProgressBar = false;
-	} else {	
+	} else {
 		DisplayMsg("Downloading Luma 3DS...\nRelease");
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Luma 3DS...\nRelease");
 		showProgressBar = true;
@@ -881,7 +881,7 @@ void downloadGodMode9(void) {
 		showProgressBar = false;
 
 		deleteFile("sdmc:/GodMode9.zip");
-	doneMsg(); 
+	doneMsg();
 }
 
 void downloadThemes(void) {
@@ -1480,7 +1480,7 @@ void downloadBoxart(void) {
 }
 
 // GBARunner2.
-void updateGBARunner2(void) 
+void updateGBARunner2(void)
 {
 	snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading GBARunner2... (Nightly)");
 	showProgressBar = true;

@@ -124,7 +124,7 @@ void MainMenu::DrawBottom(void) const
 		Gui::sprite(0, sprites_fileManagerIcon_idx, 9, 41);
 		Gui::DrawString(43, 48, 0.65f, WHITE, Lang::MainMenu[0], 100);
 
-		Gui::sprite(3, button_button_2_idx, 162, 27); 
+		Gui::sprite(3, button_button_2_idx, 162, 27);
 		Gui::sprite(0, sprites_ftpIcon_idx, 172, 40);
 		Gui::DrawString(210, 45, 0.65f, WHITE, Lang::MainMenu[1], 100);
 
@@ -205,7 +205,7 @@ void MainMenu::SelectionLogic(u32 hDown, u32 hHeld) {
 
 		} else if (hDown & KEY_X) {
 			Gui::setScreen(std::make_unique<Paint>());
-			
+
 		}  else if (hDown & KEY_A) {
 			if (currentPage == 1) {
 				switch(Selection) {

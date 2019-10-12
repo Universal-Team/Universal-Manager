@@ -45,7 +45,7 @@ extern "C" {
 #include "cia.h"
 }
 
-class FileManager : public SCREEN 
+class FileManager : public SCREEN
 {
 public:
 	void Draw(void) const override;

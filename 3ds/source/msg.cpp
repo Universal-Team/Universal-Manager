@@ -60,8 +60,11 @@ void helperBox(std::string Msg) {
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	set_screen(top);
 	Draw_Rect(0, 0, 400, 240, DIM);
-	Gui::sprite(0, sprites_helperBox_idx, 0, 25);
-	Gui::DrawString(10, 40, 0.45f, BLACK, Msg, 380);
+
+	Draw_Rect(0, 25, 400, 190, C2D_Color32(128, 128, 128, 255));
+	Draw_Rect(5, 30, 390, 180, C2D_Color32(0, 0, 0, 190));
+
+	Gui::DrawString(10, 40, 0.45f, WHITE, Msg, 380);
 	set_screen(bottom);
 	Draw_Rect(0, 0, 320, 240, DIM);
 	C3D_FrameEnd(0);

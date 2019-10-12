@@ -108,4 +108,3 @@ err:
 	fclose(ftest);
 	return file_type;
 }
-

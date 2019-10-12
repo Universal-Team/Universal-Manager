@@ -102,26 +102,26 @@ void Image::DrawViewer(void) const
 	C2D_TargetClear(top, C2D_Color32(33, 39, 43, 255));
 	C2D_TargetClear(bottom, C2D_Color32(33, 39, 43, 255));
 	set_screen(top);
-	Draw_Image(); 
+	Draw_Image();
 	set_screen(bottom);
 	Draw_Rect(0, 0, 320, 240, C2D_Color32(33, 39, 43, 255));
 }
 
 
-void Image::BrowseLogic(u32 hDown, u32 hHeld) { 
+void Image::BrowseLogic(u32 hDown, u32 hHeld) {
 	if (keyRepeatDelay)	keyRepeatDelay--;
 
 			if (dirChanged) {
-            dirContents.clear();
-            std::vector<DirEntry> dirContentsTemp;
-            getDirectoryContents(dirContentsTemp);
-            for(uint i=0;i<dirContentsTemp.size();i++) {
-                  dirContents.push_back(dirContentsTemp[i]);
-        }
+			dirContents.clear();
+			std::vector<DirEntry> dirContentsTemp;
+			getDirectoryContents(dirContentsTemp);
+			for(uint i=0;i<dirContentsTemp.size();i++) {
+				  dirContents.push_back(dirContentsTemp[i]);
+		}
 		dirChanged = false;
 	}
 
-	
+
 	if (hDown & KEY_A) {
 		if (dirContents.size() == 0) {
 			DisplayTimeMessage("What are you trying to do? :P");

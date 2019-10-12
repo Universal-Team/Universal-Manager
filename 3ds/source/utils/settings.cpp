@@ -49,7 +49,7 @@ int Config::selector;
 int Config::Points;
 int Config::FastMode; // Animation speed of the animations.
 int Config::Logging; // Enable / Disable Logging.
-int Config::Language; 
+int Config::Language;
 
 void Config::loadConfig() {
 	// [UI]
@@ -97,7 +97,7 @@ void Config::saveConfig() {
 	// [TEXTCOLOR]
 	settingsini.SetInt("TEXTCOLOR", "SELECTED", Config::selectedText);
 	settingsini.SetInt("TEXTCOLOR", "UNSELECTED", Config::unselectedText);
-	
+
 	// [MISC]
 	settingsini.SetInt("MISC", "LOGGING", Config::Logging);
 

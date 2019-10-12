@@ -46,7 +46,7 @@ bool isPlaying(void)
 
 /**
  * Returns whether music is playing or paused.
- * 
+ *
  * \return	True if paused.
  */
 bool isPaused(void)

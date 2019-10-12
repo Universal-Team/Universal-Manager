@@ -118,19 +118,19 @@ void FileManager::Logic(u16 hDown, touchPosition touch) {
 // Creates a Folder. (The Path must begin with 'sd:/' or 'fat:/'.)
 
 void FileManager::CreateFolder(std::string FolderName) {
-    mkdir(FolderName.c_str(), 0777);
+	mkdir(FolderName.c_str(), 0777);
 }
 
 // Creates a File. (The Path must begin with 'sd:/' or 'fat:/' and it must contain the FileName.)
 
 void FileManager::CreateFile(std::string pathToFile) {
-    std::ofstream file { pathToFile.c_str() };
+	std::ofstream file { pathToFile.c_str() };
 }
 
 // Renames a File. (The Path must begin with 'sd:/' or 'fat:/' and it must contain the FileNames.)
 
 void FileManager::RenameFile(std::string oldFileName, std::string newFileName) {
-    rename(oldFileName.c_str(), newFileName.c_str());
+	rename(oldFileName.c_str(), newFileName.c_str());
 }
 
 void FileManager::DeleteFile(std::string pathToFile) {

@@ -128,7 +128,7 @@ void animatedBGBot(void) {
 			} else if (Config::FastMode == 1) {
 				animated_bubblesYPos[0] -= 2;
 			}
-			
+
 		if (animated_bubblesYPos[0] <= -240) animated_bubblesYPos[0] = 0;
 	}
 	animated_bubbleMoveDelay = !animated_bubbleMoveDelay;

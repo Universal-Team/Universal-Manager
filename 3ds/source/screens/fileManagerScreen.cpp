@@ -277,7 +277,7 @@ void FileManager::ActionBoxLogic(void) {
 
 		if(keysDown() & KEY_UP) {
 			if(currentSelection > 1)	currentSelection -= 2;
-			
+
 
 		} else if(keysDown() & KEY_DOWN) {
 			if (currentPage == 1) {
@@ -308,7 +308,7 @@ void FileManager::ActionBoxLogic(void) {
 			if (currentPage == 1) {
 				if (touching(touch, functionPos[0])) {
 					if (folderIsEmpty == false) {
-						if(confirmPopup("Do you want to rename this File?")) { 
+						if(confirmPopup("Do you want to rename this File?")) {
 							renameFile();
 							refresh = true;
 							fileMode = 0;
@@ -343,7 +343,7 @@ void FileManager::ActionBoxLogic(void) {
 							currentPage = 1;
 						}
 
-						
+
 				} else if (touching(touch, functionPos[3])) {
 						if(confirmPopup("Do you want to create a Folder?")) {
 							createFolder();
@@ -381,7 +381,7 @@ void FileManager::ActionBoxLogic(void) {
 
 				if (touching(touch, functionPos[6])) {
 					if (folderIsEmpty == false) {
-						if(confirmPopup("Do you want to Install this File?")) { 
+						if(confirmPopup("Do you want to Install this File?")) {
 							install();
 							fileMode = 0;
 							currentSelection = 0;
@@ -398,7 +398,7 @@ void FileManager::ActionBoxLogic(void) {
 				switch(currentSelection) {
 					case 0: {
 						if (folderIsEmpty == false) {
-							if(confirmPopup("Do you want to rename this File?")) { 
+							if(confirmPopup("Do you want to rename this File?")) {
 								renameFile();
 								refresh = true;
 							}
@@ -422,7 +422,7 @@ void FileManager::ActionBoxLogic(void) {
 							refresh = true;
 						}
 						break;
-					} case 3: { 
+					} case 3: {
 						if(confirmPopup("Do you want to create a Folder?")) {
 							createFolder();
 							refresh = true;
@@ -449,7 +449,7 @@ void FileManager::ActionBoxLogic(void) {
 				switch(currentSelection) {
 					case 0: {
 						if (folderIsEmpty == false) {
-							if(confirmPopup("Do you want to Install this File?")) { 
+							if(confirmPopup("Do you want to Install this File?")) {
 								install();
 							}
 						} else {

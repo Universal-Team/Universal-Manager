@@ -45,7 +45,7 @@
 #include <unistd.h>
 
 extern "C" {
-    #include "touch_helper.h"
+	#include "touch_helper.h"
 }
 
 int fadealpha = 255;
@@ -53,59 +53,58 @@ bool fadein = true;
 
 static Result servicesInit(void)
 {
-    Result res = 0;
-    romfsInit();
-    mkdir("sdmc:/switch", 0777);
-    mkdir("sdmc:/switch/Universal-Manager", 0777);
-    Logging::createLogFile();
+	Result res = 0;
+	romfsInit();
+	mkdir("sdmc:/switch", 0777);
+	mkdir("sdmc:/switch/Universal-Manager", 0777);
+	Logging::createLogFile();
 
-    Gui::Init();
+	Gui::Init();
 	Textures_Load();
-    Logging::writeToLog("Universal-Manager launched Successfully!");
+	Logging::writeToLog("Universal-Manager launched Successfully!");
 
-    return 0;
+	return 0;
 }
 
 static void servicesExit(void)
 {
-//    nsExit();
+//	nsExit();
 	Gui::Exit();
-//    plExit();
-    romfsExit();
-    Textures_Free();
+//	plExit();
+	romfsExit();
+	Textures_Free();
 }
 
 int main(void)
 {
-    Result res = servicesInit();
-    if (R_FAILED(res)) {
-        servicesExit();
-        return res;
-    }
-    
-	    TouchInfo touchInfo;
-	    Touch_Init(&touchInfo);
-        Gui::setScreen(std::make_unique<MainMenu>());
+	Result res = servicesInit();
+	if (R_FAILED(res)) {
+		servicesExit();
+		return res;
+	}
 
-        while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
-        hidScanInput();
-        u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
+		TouchInfo touchInfo;
+		Touch_Init(&touchInfo);
+		Gui::setScreen(std::make_unique<MainMenu>());
 
-        Gui::ClearScreen(BLACK);
+		while (appletMainLoop() && !(hidKeysDown(CONTROLLER_P1_AUTO) & KEY_PLUS)) {
+			hidScanInput();
+			u64 hDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-		Gui::mainLoop(hDown);
+			Gui::ClearScreen(BLACK);
 
-        Gui::RenderScreen();
+			Gui::mainLoop(hDown);
 
-		if (fadein == true) {
-			fadealpha -= 3;
-			if (fadealpha < 0) {
-				fadealpha = 0;
-				fadein = false;
+			Gui::RenderScreen();
+
+			if (fadein == true) {
+				fadealpha -= 3;
+				if (fadealpha < 0) {
+					fadealpha = 0;
+					fadein = false;
+				}
 			}
 		}
-        }
-
-    servicesExit();
-    return 0;
+	servicesExit();
+	return 0;
 }

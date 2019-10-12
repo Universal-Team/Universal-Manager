@@ -12,12 +12,12 @@ void Gui::mainLoop(u16 hDown, touchPosition touch) {
 
 void Gui::setScreen(std::unique_ptr<SCREEN> screen)
 {
-    screens.push(std::move(screen));
+	screens.push(std::move(screen));
 }
 
 void Gui::screenBack()
 {
-    screens.pop();
+	screens.pop();
 }
 
 // Basic GUI Stuff.

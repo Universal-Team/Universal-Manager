@@ -11,7 +11,7 @@ namespace Input {
 
 	std::string getLine(std::string Text);
 	std::string getLine(uint maxLength, std::string Text);
-	
+
 	// -1 if invaild text entered
 	int getUint(int max, std::string Text);
 	char checkKeyboard(int hDown, int hHeld);

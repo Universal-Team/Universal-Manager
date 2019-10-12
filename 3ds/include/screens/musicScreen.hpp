@@ -33,7 +33,7 @@
 #include <vector>
 
 // Music Main.
-class Music : public SCREEN 
+class Music : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -80,11 +80,11 @@ private:
 
 	std::vector<std::string> plstContents;
 	C2D_Image musicImage, coverImage;
-	
+
 	std::vector<Structs::ButtonPos> Functions = {
-    	{1, 40, 149, 52, -1}, // 0
-    	{162, 40, 149, 52, -1}, // 1
-    	{1, 150, 149, 52, -1}, // 2
+		{1, 40, 149, 52, -1}, // 0
+		{162, 40, 149, 52, -1}, // 1
+		{1, 150, 149, 52, -1}, // 2
 		{162, 147, 149, 52, -1}, // 3
 
 		{130, 90, 60, 60, -1}, // 4

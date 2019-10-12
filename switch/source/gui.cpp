@@ -1,4 +1,5 @@
 #include "gui.hpp"
+
 #include "screens/screenCommon.hpp"
 
 #include <assert.h>
@@ -28,7 +29,7 @@ static FC_Font *SDL_GetFont(int size) {
 		return Roboto_large;
 	else if (size == 72)
 		return Roboto_title;
-	
+
 	return Roboto;
 }
 
@@ -105,9 +106,9 @@ void Gui::DrawText(int x, int y, int size, SDL_Color colour, const char *text) {
 void Gui::GetTextDimensions(int size, const char *text, u32 *width, u32 *height) {
 	FC_Font *font = SDL_GetFont(size);
 
-	if (width != NULL) 
+	if (width != NULL)
 		*width = FC_GetWidth(font, text);
-	if (height != NULL) 
+	if (height != NULL)
 		*height = FC_GetHeight(font, text);
 }
 
@@ -143,23 +144,23 @@ void Gui::mainLoop(u64 hDown) {
 
 void Gui::setScreen(std::unique_ptr<SCREEN> screen)
 {
-    screens.push(std::move(screen));
+	screens.push(std::move(screen));
 }
 
 void Gui::screenBack()
 {
-    screens.pop();
+	screens.pop();
 }
 
 
 // Basic GUI Stuff.
 
-void Gui::DrawBG(void) 
+void Gui::DrawBG(void)
 {
 	Gui::DrawRect(0, 0, 1280, 720, GRAY);
 }
 
-void Gui::DrawBars(void) 
+void Gui::DrawBars(void)
 {
 	Gui::DrawRect(0, 0, 1280, 100, BARCOLOR);
 	Gui::DrawRect(0, 620, 1280, 100, BARCOLOR);

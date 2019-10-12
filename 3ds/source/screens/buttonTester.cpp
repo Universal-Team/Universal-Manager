@@ -153,6 +153,6 @@ void ButtonTester::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (touching(touch, buttonTesterButtonPos[0])) {
 			Gui::screenBack();
 			return;
+		}
 	}
-}
 }

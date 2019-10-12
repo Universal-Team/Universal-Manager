@@ -29,7 +29,7 @@
 
 #include <vector>
 
-class Utils : public SCREEN 
+class Utils : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -43,7 +43,7 @@ private:
 
 	std::vector<Structs::ButtonPos> utilsButtonPos = {
 			// Calendar.
-    	{1, 40, 149, 52, -1},
+		{1, 40, 149, 52, -1},
 			// Button Tester. ;P
 		{162, 40, 149, 52, -1},
 			// Calculator.

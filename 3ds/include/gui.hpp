@@ -52,67 +52,67 @@
 #define FONT_SIZE_9 0.37f
 
 namespace DateTime {
-    std::string timeStr(void);
+	std::string timeStr(void);
 }
 
 namespace Gui
 {
-    Result init(void);
-    Result loadSheetsAndFont(void);
-    void exit(void);
+	Result init(void);
+	Result loadSheetsAndFont(void);
+	void exit(void);
 
 	void mainLoop(u32 hDown, u32 hHeld, touchPosition touch);
 	void setScreen(std::unique_ptr<SCREEN> screen);
 	void screenBack(void);
 
-    C3D_RenderTarget* target(gfxScreen_t t);
+	C3D_RenderTarget* target(gfxScreen_t t);
 
-    // Clear Text.
-    void clearTextBufs(void);
-    
-    // Draw Sprites from the Sheets.
-    void sprite(int sheet, int key, int x, int y);
-    void Draw_ImageBlend(int sheet, int key, int x, int y, u32 color);
+	// Clear Text.
+	void clearTextBufs(void);
 
-    // Layouts!
-    void DrawBGTop(void);
-    void DrawBarsTop(void);
-    void DrawBGBot(void);
-    void DrawBarsBot(void);
-    void DrawBarsBottomBack(void);
+	// Draw Sprites from the Sheets.
+	void sprite(int sheet, int key, int x, int y);
+	void Draw_ImageBlend(int sheet, int key, int x, int y, u32 color);
 
-    // The animated Selectors.
-    void drawFileSelector(float x, float y);
-    void drawGUISelector(int key, float x, float y, float speed);
+	// Layouts!
+	void DrawBGTop(void);
+	void DrawBarsTop(void);
+	void DrawBGBot(void);
+	void DrawBarsBot(void);
+	void DrawBarsBottomBack(void);
 
-    // New Text / String Functions.
-    void DrawStringCentered(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
-    void DrawString(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
-    void GetStringSize(float size, float *width, float *height, std::string Text);
-    float GetStringWidth(float size, std::string Text);
-    float GetStringHeight(float size, std::string Text);
+	// The animated Selectors.
+	void drawFileSelector(float x, float y);
+	void drawGUISelector(int key, float x, float y, float speed);
 
-    void DrawFileBrowseBG(u32 color1 = C2D_Color32(127, 127, 127, 255), u32 color2 = C2D_Color32(195, 195, 195, 255), bool topDraw = true);
+	// New Text / String Functions.
+	void DrawStringCentered(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
+	void DrawString(float x, float y, float size, u32 color, std::string Text, int maxWidth = 400);
+	void GetStringSize(float size, float *width, float *height, std::string Text);
+	float GetStringWidth(float size, std::string Text);
+	float GetStringHeight(float size, std::string Text);
+
+	void DrawFileBrowseBG(u32 color1 = C2D_Color32(127, 127, 127, 255), u32 color2 = C2D_Color32(195, 195, 195, 255), bool topDraw = true);
 }
 
-   // Other Display stuff.
-    void DisplayMsg(std::string text);
-    void DisplayTime(void);
+	// Other Display stuff.
+	void DisplayMsg(std::string text);
+	void DisplayTime(void);
 
-    // Battery Draw (Top/Bottom Screen.)
-    void drawBatteryTop(void);
-    void drawBatteryBot(void);
+	// Battery Draw (Top/Bottom Screen.)
+	void drawBatteryTop(void);
+	void drawBatteryBot(void);
 
-    void displayBatteryNearlyToDead(void);
+	void displayBatteryNearlyToDead(void);
 
-    void set_screen(C3D_RenderTarget * screen);
+	void set_screen(C3D_RenderTarget * screen);
 
-    // Misc.
-    bool Draw_Rect(float x, float y, float w, float h, u32 color);
+	// Misc.
+	bool Draw_Rect(float x, float y, float w, float h, u32 color);
 
-    // Editor Draw.
-    void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);
-    void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
-    float Draw_GetTextWidthEditor(float size, const char *text);
+	// Editor Draw.
+	void Draw_Text_Editor(float x, float y, float size, u32 color, const char *text);
+	void Draw_GetTextSizeEditor(float size, float *width, float *height, const char *text);
+	float Draw_GetTextWidthEditor(float size, const char *text);
 
 #endif

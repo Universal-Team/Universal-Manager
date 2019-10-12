@@ -4,11 +4,11 @@ by Jonathan Dearborn
 Dedicated to the memory of Florian Hufsky
 
 License:
-    The short:
-    Use it however you'd like, but keep the copyright and license notice
-    whenever these files or parts of them are distributed in uncompiled form.
+	The short:
+	Use it however you'd like, but keep the copyright and license notice
+	whenever these files or parts of them are distributed in uncompiled form.
 
-    The long:
+	The long:
 Copyright (c) 2019 Jonathan Dearborn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "SDL_ttf.h"
 
 #ifdef FC_USE_SDL_GPU
-    #include "SDL_gpu.h"
+	#include "SDL_gpu.h"
 #endif
 
 
@@ -71,29 +71,29 @@ extern "C" {
 
 typedef enum
 {
-    FC_ALIGN_LEFT,
-    FC_ALIGN_CENTER,
-    FC_ALIGN_RIGHT
+	FC_ALIGN_LEFT,
+	FC_ALIGN_CENTER,
+	FC_ALIGN_RIGHT
 } FC_AlignEnum;
 
 typedef enum
 {
-    FC_FILTER_NEAREST,
-    FC_FILTER_LINEAR
+	FC_FILTER_NEAREST,
+	FC_FILTER_LINEAR
 } FC_FilterEnum;
 
 typedef struct FC_Scale
 {
-    float x;
-    float y;
+	float x;
+	float y;
 
 } FC_Scale;
 
 typedef struct FC_Effect
 {
-    FC_AlignEnum alignment;
-    FC_Scale scale;
-    SDL_Color color;
+	FC_AlignEnum alignment;
+	FC_Scale scale;
+	SDL_Color color;
 
 } FC_Effect;
 
@@ -103,8 +103,8 @@ typedef struct FC_Font FC_Font;
 
 typedef struct FC_GlyphData
 {
-    SDL_Rect rect;
-    int cache_level;
+	SDL_Rect rect;
+	int cache_level;
 
 } FC_GlyphData;
 

@@ -28,7 +28,7 @@
 
 #include <array>
 
-class TicTacToe : public SCREEN 
+class TicTacToe : public SCREEN
 {
 public:
 	void Draw(void) const override;

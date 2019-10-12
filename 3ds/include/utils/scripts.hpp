@@ -25,11 +25,11 @@
 */
 
 struct Scpt {
-    std::string function;
-    std::string param1;
-    std::string param2;
-    std::string param3;
-    std::string param4;
+	std::string function;
+	std::string param1;
+	std::string param2;
+	std::string param3;
+	std::string param4;
 };
 
 void runScript(std::string path);

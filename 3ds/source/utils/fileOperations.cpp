@@ -20,7 +20,7 @@ void dirCopy(DirEntry* entry, int i, const char *destinationPath, const char *so
 
 int fcopy(const char *sourcePath, const char *destinationPath) {
 	DIR *isDir = opendir(sourcePath);
-	
+
 	if(isDir != NULL) {
 		closedir(isDir);
 
@@ -29,7 +29,7 @@ int fcopy(const char *sourcePath, const char *destinationPath) {
 		std::vector<DirEntry> dirContents;
 		getDirectoryContents(dirContents);
 		DirEntry* entry = &dirContents.at(1);
-		
+
 		mkdir(destinationPath, 0777);
 		for(int i = 1; i < ((int)dirContents.size()); i++) {
 			chdir(sourcePath);

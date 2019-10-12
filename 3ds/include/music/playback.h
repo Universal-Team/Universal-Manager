@@ -9,10 +9,10 @@
 
 typedef struct {
 	bool has_meta;
-    char title[31];
-    char album[31];
-    char artist[31];
-    char year[5];
+	char title[31];
+	char album[31];
+	char artist[31];
+	char year[5];
 } Audio_Metadata;
 
 extern Audio_Metadata metadata;
@@ -52,7 +52,7 @@ bool isPlaying(void);
 
 /**
  * Returns whether music is playing or paused.
- * 
+ *
  * \return	True if paused.
  */
 bool isPaused(void);

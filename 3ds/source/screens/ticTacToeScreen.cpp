@@ -133,20 +133,20 @@ void TicTacToe::drawSubMenu(void) const
 	Gui::DrawBarsTop();
 	Gui::DrawString(120, 0, 0.72f, WHITE, "Tic-Tac-Toe");
 	Gui::DrawString(70, 218, 0.72f, WHITE, "Universal-Manager Edition");
-	
+
 
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, Config::bgColor);
 	Gui::DrawBarsBot();
 
 	// Draw all of the 3 Buttons.
-	Gui::sprite(3, button_button_2_idx, 90, 25); 
+	Gui::sprite(3, button_button_2_idx, 90, 25);
 	Gui::DrawString(110, 42, 0.65f, WHITE, "1 Player Mode");
 
-	Gui::sprite(3, button_button_2_idx, 90, 90); 
+	Gui::sprite(3, button_button_2_idx, 90, 90);
 	Gui::DrawString(110, 107, 0.65f, WHITE, "2 Player Mode");
 
-	Gui::sprite(3, button_button_2_idx, 90, 160); 
+	Gui::sprite(3, button_button_2_idx, 90, 160);
 	Gui::DrawString(100, 177, 0.7f, WHITE, "Exit Tic-Tac-Toe");
 	drawSelection();
 }

@@ -2,9 +2,9 @@
 //# tonccpy.c
 
 //! VRAM-safe cpy.
-/*! This version mimics memcpy in functionality, with 
-	the benefit of working for VRAM as well. It is also 
-	slightly faster than the original memcpy, but faster 
+/*! This version mimics memcpy in functionality, with
+	the benefit of working for VRAM as well. It is also
+	slightly faster than the original memcpy, but faster
 	implementations can be made.
 	\param dst  Destination pointer.
 	\param src  Source pointer.
@@ -67,14 +67,14 @@ void tonccpy(void *dst, const void *src, uint size) {
 //# toncset.c
 
 //! VRAM-safe memset, internal routine.
-/*! This version mimics memset in functionality, with 
-	the benefit of working for VRAM as well. It is also 
+/*! This version mimics memset in functionality, with
+	the benefit of working for VRAM as well. It is also
 	slightly faster than the original memset.
 	\param dst  Destination pointer.
 	\param fill Word to fill with.
 	\param size Fill-length in bytes.
-	\note   The \a dst pointer and \a size need not be 
-		word-aligned. In the case of unaligned fills, \a fill 
+	\note   The \a dst pointer and \a size need not be
+		word-aligned. In the case of unaligned fills, \a fill
 		will be masked off to match the situation.
 */
 void __toncset(void *dst, u32 fill, uint size) {
@@ -88,7 +88,7 @@ void __toncset(void *dst, u32 fill, uint size) {
 	if(left != 0) {
 		// Adjust for very small stint.
 		if(left+size<4) {
-			mask= BIT_MASK(size*8)<<(left*8);   
+			mask= BIT_MASK(size*8)<<(left*8);
 			*dst32= (*dst32 &~ mask) | (fill & mask);
 			return;
 		}

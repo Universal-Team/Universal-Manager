@@ -29,7 +29,7 @@
 
 #include <vector>
 
-class Settings : public SCREEN 
+class Settings : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -79,7 +79,7 @@ private:
 		{17, 31, 95, 41, -1},
 
 		// Selected Text Color.
-	
+
 		{17, 105, 95, 41, -1},
 		{112, 105, 95, 41, -1},
 		{207, 105, 95, 41, -1},

@@ -55,7 +55,7 @@
  */
 #define RGB565_TO_RGBA8(rgb, a) \
 	(RGBA8(((rgb>>11)&0x1F)*0xFF/0x1F, ((rgb>>5)&0x3F)*0xFF/0x3F, (rgb&0x1F)*0xFF/0x1F, a&0xFF))
-	
+
 /**
  * @brief Converts a RGB565 color to ABGR8 color (adds maximum alpha)
  * @param rgb 565 to be converted

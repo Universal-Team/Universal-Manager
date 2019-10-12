@@ -34,7 +34,7 @@
 #include <unistd.h>
 #include <vector>
 
-class Script : public SCREEN 
+class Script : public SCREEN
 {
 public:
 	void Draw(void) const override;
@@ -55,12 +55,12 @@ private:
 		// Structs.
 	std::vector<Structs::ButtonPos> Functions = {
 		// First Page.
-    	{0, 25, 149, 52, -1}, // 0
-    	{170, 25, 149, 52, -1}, // 1
+		{0, 25, 149, 52, -1}, // 0
+		{170, 25, 149, 52, -1}, // 1
 		{0, 90, 149, 52, -1}, // 2
 		{170, 90, 149, 52, -1}, // 3
 		{0, 150, 149, 52, -1}, // 4
-    	{170, 150, 149, 52, -1}, // 5
+		{170, 150, 149, 52, -1}, // 5
 		// Second Page.
 		{0, 25, 149, 52, -1}, // 6
 	};

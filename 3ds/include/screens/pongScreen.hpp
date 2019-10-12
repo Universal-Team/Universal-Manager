@@ -26,7 +26,7 @@
 
 #include "screens/screen.hpp"
 
-class Pong : public SCREEN 
+class Pong : public SCREEN
 {
 public:
 	void Draw(void) const override;
