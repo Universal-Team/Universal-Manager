@@ -244,11 +244,17 @@ void Credits::drawCreditsDialogs(void) const
 
 void Credits::drawButtons(void) const
 {
+	Gui::sprite(3, button_button_tl_idx, 1, 27);
+	Gui::sprite(3, button_button_2_idx, 162, 27);
+	Gui::sprite(3, button_button_3_idx, 1, 91);
+	Gui::sprite(3, button_button_4_idx, 162, 91);
+	Gui::sprite(3, button_button_5_idx, 1, 154);
+	Gui::sprite(3, button_button_br_idx, 162, 151);
+
+
 	// Buttons.
 	for(int i=0;i<3;i++) {
-		Gui::sprite(3, button_button_2_idx, 0, 29+(i*65));
 		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)].c_str()))/2)-85, 46+(i*65), 0.65f, WHITE, names[(2*i)].c_str());
-		Gui::sprite(3, button_button_2_idx, 160, 29+(i*65));
 		Gui::DrawString(((320-Gui::GetStringWidth(0.65f, names[(2*i)+1].c_str()))/2)+85, 46+(i*65), 0.65f, WHITE, names[(2*i)+1].c_str());
 	}
 }
