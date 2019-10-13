@@ -166,6 +166,9 @@ void Settings::DrawBottom(void) const
 		Gui::DrawString(150, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 1).c_str());
 		Gui::sprite(3, button_blue_idx, 207, 168);
 		Gui::DrawString(239, 178, 0.7f, WHITE, ColorHelper::getColorName(Config::unselectedText, 0).c_str());
+
+		Gui::sprite(3, button_updater_idx, 17, 31);
+		Gui::DrawString(21, 42, 0.65f, WHITE, "Rand Color");
 	}
 }
 
@@ -389,6 +392,38 @@ void Settings::TouchLogic(u32 hDown, touchPosition touch)
 				Config::unselectedText = RGBA8(ColorHelper::getColorValue(Config::unselectedText, 2), ColorHelper::getColorValue(Config::unselectedText, 1), blue, 255);
 			}
 
+	} else if (touching(touch, uiSettingsButtonPos[21])) {
+
+		if(confirmPopup("Would you like to randomize the BG Color?")) {
+			red = rand() % 255 + 0;
+			green = rand() % 255 + 0;
+			blue = rand() % 255 + 0;
+			Config::bgColor = RGBA8(red, green, blue, 255);
+		}
+		if(confirmPopup("Would you like to randomize the Bar Color?")) {
+			red = rand() % 255 + 0;
+			green = rand() % 255 + 0;
+			blue = rand() % 255 + 0;
+			Config::barColor = RGBA8(red, green, blue, 255);
+		}
+		if(confirmPopup("Would you like to randomize the animation Color?")) {
+			red = rand() % 255 + 0;
+			green = rand() % 255 + 0;
+			blue = rand() % 255 + 0;
+			Config::animationColor = RGBA8(red, green, blue, 255);
+		}
+		if(confirmPopup("Would you like to randomize the Selected Text Color?")) {
+			red = rand() % 255 + 0;
+			green = rand() % 255 + 0;
+			blue = rand() % 255 + 0;
+			Config::selectedText = RGBA8(red, green, blue, 255);
+		}
+		if(confirmPopup("Would you like to randomize the Unselected Text Color?")) {
+			red = rand() % 255 + 0;
+			green = rand() % 255 + 0;
+			blue = rand() % 255 + 0;
+			Config::unselectedText = RGBA8(red, green, blue, 255);
+		}
 
 	} else if (touching(touch, uiSettingsButtonPos[6])) {
 			Config::saveConfig();
