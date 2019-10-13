@@ -60,6 +60,22 @@ void drawTextBox(void) {
 	Draw_Rect(180, 35, 210, 180, C2D_Color32(0, 0, 0, 190));
 }
 
+void drawDiscordQR(void) {
+	set_screen(top);
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, C2D_Color32(7, 54, 66, 255));
+	C2D_DrawRectSolid(0, 215, 0.5f, 400, 25, C2D_Color32(0, 44, 57, 255));
+	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, C2D_Color32(0, 44, 57, 255));
+	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_top_screen_bot_idx, 0, 215);
+	Gui::sprite(1, credits_discord_idx, 115, 35);
+	set_screen(bottom);
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, C2D_Color32(7, 54, 66, 255));
+	C2D_DrawRectSolid(0, 215, 0.5f, 320, 25, C2D_Color32(0, 44, 57, 255));
+	C2D_DrawRectSolid(0, 0, 0.5f, 320, 25, C2D_Color32(0, 44, 57, 255));
+	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
+	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
+}
+
 void drawVoltZ(void) {
 	// Top BG Stuff.
 	set_screen(top);
@@ -221,6 +237,8 @@ void Credits::drawCreditsDialogs(void) const
 		drawTotallyNotGuy();
 	} else if (dialog == 5) {
 		drawCredits();
+	} else if (dialog == 6) {
+		drawDiscordQR();
 	}
 }
 
@@ -235,6 +253,16 @@ void Credits::drawButtons(void) const
 	}
 }
 
+void Credits::Loop() {
+	gspWaitForVBlank();
+	if(delay > 0) {
+		delay--;
+	} else {
+		delay = 120;
+		discordText = !discordText;
+	}
+}
+
 void Credits::Draw(void) const
 {
 	C2D_TargetClear(top, GRAY);
@@ -245,10 +273,11 @@ void Credits::Draw(void) const
 	Gui::DrawString(50, 0, 0.72f, WHITE, "Welcome to Universal-Manager!");
 	drawCreditsDialogs();
 	drawButtons();
-	Gui::DrawString((320-Gui::GetStringWidth(0.55, "Join our Discord: https://discord.gg/KDJCfGF"))/2, 220, 0.55, WHITE, "Join our Discord: https://discord.gg/KDJCfGF", 320);
+	Gui::DrawString((320-Gui::GetStringWidth(0.55, discordText ? "Click here to show the QR Code." : "Join our Discord: https://discord.gg/KDJCfGF"))/2, 220, 0.55, WHITE, discordText ? "Click here to show the QR Code." : "Join our Discord: https://discord.gg/KDJCfGF", 320);
 }
 
 void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
+	Loop();
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, creditsButtonPos[0])) {
 			dialog = 0;
@@ -267,6 +296,8 @@ void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 				Config::setCredits();
 			}
 			Gui::setScreen(std::make_unique<MainMenu>());
+		} else if (touching(touch, creditsButtonPos[6])) {
+			dialog = 6;
 		}
 	}
 }

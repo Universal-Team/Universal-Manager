@@ -38,7 +38,10 @@ public:
 
 private:
 	int dialog = 5;
-
+	int delay = 120;
+	bool discordText = false;
+	
+	void Loop();
 	std::vector<std::string> names = {
 		"VoltZ",
 		"FlameKat53",
@@ -55,6 +58,7 @@ private:
 		{160, 90, 149, 52, -1},
 		{0, 150, 149, 52, -1},
 		{160, 150, 149, 52, -1},
+		{0, 215, 320, 25, -1},
 	};
 
 	void drawCreditsDialogs(void) const;
