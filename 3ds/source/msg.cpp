@@ -40,8 +40,8 @@ void DisplayWaitMsg(std::string waitMsg, ...)
 	C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Gui::DrawString((400-Gui::GetStringWidth(0.6f, "Press A to continue."))/2, 217, 0.6f, WHITE, "Press A to continue.");
-	Gui::DrawString((400-Gui::GetStringWidth(0.72f, waitMsg.c_str()))/2, 100, 0.72f, WHITE, waitMsg.c_str());
+	Gui::DrawStringCentered(0, 217, 0.6f, WHITE, "Press A to continue.", 400);
+	Gui::DrawStringCentered(0, 100, 0.72f, WHITE, waitMsg.c_str(), 400);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -80,9 +80,9 @@ bool confirmPopup(std::string msg1, std::string msg2, std::string yes, std::stri
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
 	C2D_DrawRectSolid(0, 60, 0.5f, 400, 120, WHITE);
-	Gui::DrawString((400-Gui::GetStringWidth(0.45f, msg1.c_str()))/2, 90, 0.45f, BLACK, msg1.c_str());
-	Gui::DrawString((400-Gui::GetStringWidth(0.45f, msg2.c_str()))/2, 110, 0.45f, BLACK, msg2.c_str());
-	Gui::DrawString((400-Gui::GetStringWidth(0.45f, ("A: "+yes+"   B: "+no).c_str()))/2, 160, 0.45f, BLACK, ("A: "+yes+"   B: "+no).c_str());
+	Gui::DrawStringCentered(0, 90, 0.45f, BLACK, msg1.c_str());
+	Gui::DrawStringCentered(0, 110, 0.45f, BLACK, msg2.c_str());
+	Gui::DrawStringCentered(0, 160, 0.45f, BLACK, ("A: "+yes+"   B: "+no).c_str());
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);
@@ -111,7 +111,7 @@ void DisplayTimeMessage(std::string Text, int Time)
 	C2D_TargetClear(bottom, BLUE2);
 	Gui::DrawBGTop();
 	Gui::DrawBarsTop();
-	Gui::DrawString((400-Gui::GetStringWidth(0.72f, Text.c_str()))/2, 2, 0.72f, WHITE, Text.c_str());
+	Gui::DrawStringCentered(0, 2, 0.72f, WHITE, Text.c_str(), 400);
 	Gui::DrawBGBot();
 	Gui::DrawBarsBot();
 	C3D_FrameEnd(0);

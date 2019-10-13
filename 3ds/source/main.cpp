@@ -130,36 +130,41 @@ void getCurrentUsage(){
 
 static Result DisplayStartupError(std::string message, Result res)
 {
-		std::string errorMsg = std::to_string(res);
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, BLACK);
-		C2D_TargetClear(bottom, BLACK);
-		Gui::clearTextBufs();
-		set_screen(top);
-		Draw_Rect(0, 0, 400, 27, BARCOLOR);
-		Draw_Rect(0, 27, 400, 186, GRAY);
-		Draw_Rect(0, 213, 400, 27, BARCOLOR);
-		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Oh no, an error occured!"))/2, 2, 0.8f, WHITE, "Oh no, an error occured!", 400);
-		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Description: "+ message))/2, 155, 0.8f, WHITE, "Description: "+message, 400);
-		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Press Start to exit."))/2, 213, 0.8f, WHITE, "Press Start to exit.", 400);
-		Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Error during Startup: "+errorMsg))/2, 80, 0.8f, WHITE, "Error during Startup: "+errorMsg, 400);
-		set_screen(bottom);
-		Draw_Rect(0, 0, 320, 27, BARCOLOR);
-		Draw_Rect(0, 27, 320, 186, GRAY);
-		Draw_Rect(0, 213, 320, 27, BARCOLOR);
-		C3D_FrameEnd(0);
+	std::string errorMsg = std::to_string(res);
+	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+	C2D_TargetClear(top, BLACK);
+	C2D_TargetClear(bottom, BLACK);
+	Gui::clearTextBufs();
+	set_screen(top);
+	Draw_Rect(0, 0, 400, 25, WHITE);
+	Draw_Rect(0, 213, 400, 25, WHITE);
 
-		// For the Log.
-		std::string error = message;
-		error += ", ";
-		error += std::to_string(res);
-		Logging::writeToLog(error.c_str());
+	Draw_Rect(0, 25, 400, 190, C2D_Color32(128, 128, 128, 255));
+	Draw_Rect(5, 30, 390, 180, C2D_Color32(0, 0, 0, 190));
 
-		gspWaitForVBlank();
-		while (aptMainLoop() && !(hidKeysDown() & KEY_START))
-		{
-			hidScanInput();
-		}
+	Gui::DrawStringCentered(0, 0, 0.8f, BLACK, "Universal-Manager", 380);
+
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Oh no, an error occured!"))/2, 40, 0.8f, WHITE, "Oh no, an error occured!", 400);
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Description: "+ message))/2, 155, 0.8f, WHITE, "Description: "+message, 400);
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Press Start to exit."))/2, 213, 0.8f, BLACK, "Press Start to exit.", 400);
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Error during Startup: "+errorMsg))/2, 80, 0.8f, WHITE, "Error during Startup: "+errorMsg, 400);
+	set_screen(bottom);
+	Draw_Rect(0, 0, 320, 25, WHITE);
+	Draw_Rect(0, 25, 320, 190, GRAY);
+	Draw_Rect(0, 215, 320, 25, WHITE);
+	C3D_FrameEnd(0);
+
+	// For the Log.
+	std::string error = message;
+	error += ", ";
+	error += std::to_string(res);
+	Logging::writeToLog(error.c_str());
+
+	gspWaitForVBlank();
+	while (aptMainLoop() && !(hidKeysDown() & KEY_START))
+	{
+		hidScanInput();
+	}
 	return res;
 }
 
@@ -169,14 +174,20 @@ void loadMessage(std::string Message) {
 	C2D_TargetClear(bottom, BLACK);
 	Gui::clearTextBufs();
 	set_screen(top);
-	Draw_Rect(0, 0, 400, 27, BARCOLOR);
-	Draw_Rect(0, 27, 400, 186, GRAY);
-	Draw_Rect(0, 213, 400, 27, BARCOLOR);
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 2, 0.8f, WHITE, Message, 400);
+	Draw_Rect(0, 0, 400, 25, WHITE);
+	Draw_Rect(0, 213, 400, 25, WHITE);
+
+	Draw_Rect(0, 25, 400, 190, C2D_Color32(128, 128, 128, 255));
+	Draw_Rect(5, 30, 390, 180, C2D_Color32(0, 0, 0, 190));
+
+	Gui::DrawStringCentered(0, 0, 0.8f, BLACK, "Universal-Manager", 380);
+
+	
+	Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 40, 0.8f, WHITE, Message, 400);
 	set_screen(bottom);
-	Draw_Rect(0, 0, 320, 27, BARCOLOR);
-	Draw_Rect(0, 27, 320, 186, GRAY);
-	Draw_Rect(0, 213, 320, 27, BARCOLOR);
+	Draw_Rect(0, 0, 320, 25, WHITE);
+	Draw_Rect(0, 25, 320, 190, GRAY);
+	Draw_Rect(0, 215, 320, 25, WHITE);
 	C3D_FrameEnd(0);
 }
 
