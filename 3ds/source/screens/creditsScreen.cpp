@@ -67,6 +67,7 @@ void drawDiscordQR(void) {
 	C2D_DrawRectSolid(0, 0, 0.5f, 400, 25, C2D_Color32(0, 44, 57, 255));
 	Gui::sprite(0, sprites_top_screen_top_idx, 0, 0);
 	Gui::sprite(0, sprites_top_screen_bot_idx, 0, 215);
+	Draw_Rect(0, 0, 400, 240, DIM);
 	Gui::sprite(1, credits_discord_idx, 115, 35);
 	set_screen(bottom);
 	C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, C2D_Color32(7, 54, 66, 255));
