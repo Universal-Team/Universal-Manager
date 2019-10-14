@@ -31,6 +31,7 @@
 #include "utils/download.hpp"
 #include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
+#include "utils/inifile.h"
 #include "utils/thread.hpp"
 
 #include <3ds.h>
@@ -224,6 +225,29 @@ void runScript(std::string path) {
 					APT_DoApplicationJump(param, sizeof(param), hmac);
 				}
 				isFound = false;
+			}
+
+
+			if(scpt.function == "iniString") {
+				std::string iniFile = scpt.param1;
+				std::string categorie = scpt.param2;
+				std::string content = scpt.param3;
+				std::string value = scpt.param4;
+
+				static CIniFile scriptStringIni(iniFile);
+				scriptStringIni.SetString(categorie, content, value);
+				scriptStringIni.SaveIniFile(iniFile);
+			}
+
+			if(scpt.function == "iniInt") {
+				std::string iniFile = scpt.param1;
+				std::string categorie = scpt.param2;
+				std::string content = scpt.param3;
+				int value = (int)(std::stoi(scpt.param4.c_str()));
+
+				static CIniFile scriptIntIni(iniFile);
+				scriptIntIni.SetInt(categorie, content, value);
+				scriptIntIni.SaveIniFile(iniFile);
 			}
 		}
 	}
