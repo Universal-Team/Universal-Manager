@@ -170,6 +170,61 @@ void runScript(std::string path) {
 				DisplayTimeMessage(scpt.param1.c_str(), param2);
 			}
 
+			// Launch a Title from the NAND or SD.
+			if(scpt.function == "launch") {
+				static bool isFound = false;
+				FS_MediaType Media;
+				u64 TitleID = std::stoull (scpt.param1, 0, 0);
+
+				if (scpt.param2 == "NAND") {
+					Media = MEDIATYPE_NAND;
+				} else if (scpt.param2 == "SD") {
+					Media = MEDIATYPE_SD;
+				} else {
+					Media = MEDIATYPE_SD;
+				}
+
+				// We will check, if this ID even exist, so it will not boot into it, if it does not exist.
+
+				Result res = 0;
+				u32 titleCount;
+
+				res = AM_GetTitleCount(Media, &titleCount);
+				if (R_FAILED(res))
+				{
+					return;
+				}
+
+				// get the Title List and check, if the ID is found.
+				std::vector<u64> IDs;
+				IDs.resize(titleCount);
+				res	= AM_GetTitleList(nullptr, Media, titleCount, &IDs[0]);
+				if (R_FAILED(res))
+				{
+					return;
+				}
+
+				DisplayTimeMessage("Checking, if Title Exists...", 2);
+
+				if (std::find(IDs.begin(), IDs.end(), TitleID) != IDs.end())
+				{
+					DisplayTimeMessage("Title exist!", 2);
+					isFound = true;
+				} else {
+					DisplayTimeMessage("Title does not exist!", 2);
+				}
+
+				if (isFound == true) {
+					DisplayMsg("Booting Title... Please wait.");
+					u8 param[0x300];
+					u8 hmac[0x20];
+					memset(param, 0, sizeof(param));
+					memset(hmac, 0, sizeof(hmac));
+					APT_PrepareToDoApplicationJump(0, TitleID, Media);
+					APT_DoApplicationJump(param, sizeof(param), hmac);
+				}
+				isFound = false;
+			}
 		}
 	}
 }
