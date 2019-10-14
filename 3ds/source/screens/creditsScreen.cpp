@@ -27,7 +27,9 @@
 #include "screens/creditsScreen.hpp"
 #include "screens/mainMenuScreen.hpp"
 #include "screens/screenCommon.hpp"
+
 #include "utils/settings.hpp"
+#include "utils/sound.h"
 
 #include <algorithm>
 #include <citro2d.h>
@@ -76,6 +78,21 @@ void drawDiscordQR(void) {
 	Gui::sprite(0, sprites_bottom_screen_top_idx, 0, 0);
 	Gui::sprite(0, sprites_bottom_screen_bot_idx, 0, 215);
 }
+
+void Credits::drawEasterEgg(void) const {
+	if (isVoltZAlready == true) {
+		playEasteregg();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		set_screen(top);
+		drawTextBox();
+		Gui::DrawString(185, 65, 0.60, WHITE, "IT'S OVER 9000!!");
+		C3D_FrameEnd(0);
+		for (float i = 0.0; i < 60*2.6; i++) {
+			gspWaitForVBlank();
+		}
+	}
+}
+
 
 void drawVoltZ(void) {
 	// Top BG Stuff.
@@ -287,7 +304,13 @@ void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 	Loop();
 	if (hDown & KEY_TOUCH) {
 		if (touching(touch, creditsButtonPos[0])) {
+			if (dialog == 0) {
+				isVoltZAlready = true;
+			} else {
+				isVoltZAlready = false;
+			}
 			dialog = 0;
+			drawEasterEgg();
 		} else if (touching(touch, creditsButtonPos[1])) {
 			dialog = 1;
 		} else if (touching(touch, creditsButtonPos[2])) {

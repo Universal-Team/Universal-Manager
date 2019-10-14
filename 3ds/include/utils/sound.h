@@ -21,3 +21,4 @@ private:
 void playScrollSfx(void);
 void playPongSfx(void);
 void playScoreSfx(void);
+void playEasteregg(void);

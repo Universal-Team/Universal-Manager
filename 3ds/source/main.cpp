@@ -74,14 +74,14 @@ touchPosition touch;
 sound *sfx_scroll = NULL;
 sound *sfx_pong = NULL;
 sound *sfx_score = NULL;
-
-
+sound *easteregg = NULL;
 sound *downloadMusic = NULL;
 
 void loadSoundEffects(void) {
 	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
 	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
 	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
+	easteregg = new sound("romfs:/sfx/easteregg.wav", 2, false);
 	if( access( "sdmc:/Universal-Manager/Music.wav", F_OK ) != -1 ) {
 		downloadMusic = new sound("sdmc:/Universal-Manager/Music.wav", 1, true);
 		songIsFound = true;
@@ -336,6 +336,7 @@ int main()
 	delete sfx_scroll;
 	delete sfx_pong;
 	delete sfx_score;
+	delete easteregg;
 	delete downloadMusic;
 	stopPlayback();
 	if (dspfirmfound == true) {

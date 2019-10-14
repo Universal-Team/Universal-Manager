@@ -40,6 +40,7 @@ private:
 	int dialog = 5;
 	int delay = 120;
 	bool discordText = false;
+	bool isVoltZAlready = false;
 	
 	void Loop();
 	std::vector<std::string> names = {
@@ -65,4 +66,5 @@ private:
 	void drawCreditsDialogs(void) const;
 	void drawCredits(void) const;
 	void drawButtons(void) const;
+	void drawEasterEgg(void) const;
 };

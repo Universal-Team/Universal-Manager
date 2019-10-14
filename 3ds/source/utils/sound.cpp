@@ -7,7 +7,7 @@
 
 using std::string;
 
-extern sound *sfx_scroll, *sfx_pong, *sfx_score;
+extern sound *sfx_scroll, *sfx_pong, *sfx_score, *easteregg;
 
 extern bool dspfirmfound;
 
@@ -138,21 +138,28 @@ void sound::stop()
 
 void playScrollSfx(void) {
 	if (dspfirmfound) {
-	sfx_scroll->stop();
-	sfx_scroll->play();
+		sfx_scroll->stop();
+		sfx_scroll->play();
 	}
 }
 
 void playPongSfx(void) {
 	if (dspfirmfound) {
-	sfx_pong->stop();
-	sfx_pong->play();
+		sfx_pong->stop();
+		sfx_pong->play();
 	}
 }
 
 void playScoreSfx(void) {
 	if (dspfirmfound) {
-	sfx_score->stop();
-	sfx_score->play();
+		sfx_score->stop();
+		sfx_score->play();
+	}
+}
+
+void playEasteregg(void) {
+	if (dspfirmfound) {
+		easteregg->stop();
+		easteregg->play();
 	}
 }
