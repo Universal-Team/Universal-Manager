@@ -25,6 +25,7 @@
 */
 
 #include "gui.hpp"
+#include "logging.hpp"
 
 #include "screens/screenCommon.hpp"
 
@@ -176,13 +177,17 @@ void runScript(std::string path) {
 				static bool isFound = false;
 				FS_MediaType Media;
 				u64 TitleID = std::stoull (scpt.param1, 0, 0);
+				int param2 = (int)(std::stoi(scpt.param2.c_str()));
 
-				if (scpt.param2 == "NAND") {
+				if (param2 == 0) {
 					Media = MEDIATYPE_NAND;
-				} else if (scpt.param2 == "SD") {
+					Logging::writeToLog("Title Check is set to: NAND.");
+				} else if (param2 == 1) {
 					Media = MEDIATYPE_SD;
+					Logging::writeToLog("Title Check is set to: SD.");
 				} else {
 					Media = MEDIATYPE_SD;
+					Logging::writeToLog("Could not check Param.");
 				}
 
 				// We will check, if this ID even exist, so it will not boot into it, if it does not exist.
@@ -229,25 +234,25 @@ void runScript(std::string path) {
 
 
 			if(scpt.function == "iniString") {
-				std::string iniFile = scpt.param1;
+				std::string iniStringFile = scpt.param1;
 				std::string categorie = scpt.param2;
 				std::string content = scpt.param3;
 				std::string value = scpt.param4;
 
-				static CIniFile scriptStringIni(iniFile);
+				CIniFile scriptStringIni = iniStringFile;
 				scriptStringIni.SetString(categorie, content, value);
-				scriptStringIni.SaveIniFile(iniFile);
+				scriptStringIni.SaveIniFile(iniStringFile);
 			}
 
 			if(scpt.function == "iniInt") {
-				std::string iniFile = scpt.param1;
+				std::string iniIntFile = scpt.param1;
 				std::string categorie = scpt.param2;
 				std::string content = scpt.param3;
 				int value = (int)(std::stoi(scpt.param4.c_str()));
 
-				static CIniFile scriptIntIni(iniFile);
+				CIniFile scriptIntIni = iniIntFile;
 				scriptIntIni.SetInt(categorie, content, value);
-				scriptIntIni.SaveIniFile(iniFile);
+				scriptIntIni.SaveIniFile(iniIntFile);
 			}
 		}
 	}
