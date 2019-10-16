@@ -29,7 +29,7 @@
 #include "common.hpp"
 
 #define APP_TITLE "Universal-Manager"
-#define V_STRING "3.1.0"
+#define V_STRING "4.0.1"
 
 enum DownloadError {
 	DL_ERROR_NONE = 0,
