@@ -92,7 +92,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			if (dirChanged) {
 				dirContents.clear();
 				std::vector<DirEntry> dirContentsTemp;
-				getDirectoryContents(dirContentsTemp, {"scpt"});
+				getDirectoryContents(dirContentsTemp, {"json"});
 				for(uint i=0;i<dirContentsTemp.size();i++) {
 					dirContents.push_back(dirContentsTemp[i]);
 				}
@@ -102,7 +102,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			if (refresh) {
 				dirContents.clear();
 				std::vector<DirEntry> dirContentsTemp;
-				getDirectoryContents(dirContentsTemp, {"scpt"});
+				getDirectoryContents(dirContentsTemp, {"json"});
 				for(uint i=0;i<dirContentsTemp.size();i++) {
 					dirContents.push_back(dirContentsTemp[i]);
 				}
@@ -161,7 +161,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			if(newScript != "") {
 				newPath += "/";
 				newPath += newScript;
-				newPath += ".scpt";
+				newPath += ".json";
 				FILE* scpt = fopen(newPath.c_str(), "w");
 				fclose(scpt);
 				refresh = true;
@@ -230,7 +230,7 @@ void Script::ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 					ScriptMode = 1;
 				}
 			} else {
-				DisplayTimeMessage("This is not a '.scpt' File!");
+				DisplayTimeMessage("This is not a '.json' File!");
 			}
 		} else if (hDown & KEY_R) {
 			fastMode = true;

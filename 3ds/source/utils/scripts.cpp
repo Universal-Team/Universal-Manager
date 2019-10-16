@@ -33,6 +33,7 @@
 #include "utils/extract.hpp"
 #include "utils/fileBrowse.h"
 #include "utils/inifile.h"
+#include "utils/json.hpp"
 #include "utils/thread.hpp"
 
 #include <3ds.h>
@@ -53,6 +54,8 @@ extern bool progressBarType; // 0 = Download | 1 = Extract
 
 extern int filesExtracted;
 extern std::string extractingFile;
+
+using json = nlohmann::json;
 
 struct Scpt {
 	std::string function;
