@@ -187,3 +187,6 @@ void updateGBARunner2(void);
  * Download Spritesheets for LeafEdit's custom Spritesheet Feature.
  */
 void downloadSheets(void);
+
+// Download the default LeafEdit Spritesheet package, if the files do not exist.
+void leafEditSheets(void);

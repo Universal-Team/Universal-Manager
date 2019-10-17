@@ -1,7 +1,7 @@
 trigger:
   branches:
     include: ['*']
-    exclude: [some-testing-stuff, cleanup]
+    exclude: [leafedit-changes, cleanup]
   tags:
     include: ['*']
 

@@ -1192,7 +1192,6 @@ void updateLeafEdit(void) {
 		installCia("/LeafEdit-Nightly.cia");
 
 		deleteFile("sdmc:/LeafEdit-Nightly.cia");
-		doneMsg();
 	} else {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nNightly 3DSX");
 		showProgressBar = true;
@@ -1204,8 +1203,9 @@ void updateLeafEdit(void) {
 			return;
 		}
 		showProgressBar = false;
-		doneMsg();
 	}
+	leafEditSheets();
+	doneMsg();
 }
 
 void updateLeafEditRelease(void) {
@@ -1224,7 +1224,6 @@ void updateLeafEditRelease(void) {
 		installCia("/LeafEdit-Release.cia");
 
 		deleteFile("sdmc:/LeafEdit-Release.cia");
-		doneMsg();
 	} else {
 		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading LeafEdit...\nRelease 3DSX");
 		showProgressBar = true;
@@ -1236,8 +1235,9 @@ void updateLeafEditRelease(void) {
 			return;
 		}
 		showProgressBar = false;
-		doneMsg();
 	}
+	leafEditSheets();
+	doneMsg();
 }
 
 
@@ -1644,5 +1644,29 @@ void downloadSheets(void) {
 		}
 		sheetText += "                B: Back   A: Download   Y: Preview";
 		DisplayMsg(sheetText.c_str());
+	}
+}
+
+void leafEditSheets(void) {
+	if((access("sdmc:/LeafEdit/villagers2.t3x", F_OK) != 0) ||
+	(access("sdmc:/LeafEdit/villagers.t3x", F_OK) != 0) ||
+	(access("sdmc:/LeafEdit/items.t3x", F_OK) != 0) ||
+	(access("sdmc:/LeafEdit/acres.t3x", F_OK) != 0)) {
+
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Downloading Spritesheet Package...");
+		showProgressBar = true;
+		progressBarType = 0;
+		Threads::create((ThreadFunc)displayProgressBar);
+		if (downloadToFile("https://github.com/Universal-Team/extras/blob/master/builds/LeafEdit/Spritesheets.zip?raw=true", "/Spritesheets.zip") != 0) {
+			showProgressBar = false;
+			downloadFailed();
+			return;
+		}
+		snprintf(progressBarMsg, sizeof(progressBarMsg), "Now Extracting the Package...\nNightly");
+		filesExtracted = 0;
+		progressBarType = 1;
+		extractArchive("/Spritesheets.zip", "/", "/LeafEdit/");
+		showProgressBar = false;
+		deleteFile("sdmc:/Spritesheets.zip");
 	}
 }
