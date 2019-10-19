@@ -107,7 +107,7 @@ void drawVoltZ(void) {
 
 	Gui::sprite(1, credits_voltZ_idx, -10, 40);
 	Gui::DrawString(250, 50, 0.40, WHITE, "Hello There!");
-	Gui::DrawString(185, 65, 0.40, WHITE, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\n I'm also the Main Developer of LeafEdit,\nanother project from our Team which you \ncan download Using: Universal-Manager! \nI hope You enjoy Universal-Manager\nand don't be shy:\nTo join the Universal-Server on Discord!\nAlso visit our site here: \nhttps://universal-team.github.io/");
+	Gui::DrawString(185, 65, 0.40, WHITE, "Thank you for using Universal-Manager!\nI'm the Main Developer, VoltZ.\n I'm also the Main Developer of LeafEdit,\nanother project from our Team which you \ncan download Using: Universal-Manager! \nI hope You enjoy Universal-Manager\nand don't be shy:\nTo join the Universal-Server on Discord!\nAlso visit our site here: \nhttps://universal-team.github.io/\nYou can always hold Select, to see the \nInstructions.");
 
 	// BG Bottom Stuff.
 	set_screen(bottom);
@@ -329,5 +329,7 @@ void Credits::Logic(u32 hDown, u32 hHeld, touchPosition touch) {
 		} else if (touching(touch, creditsButtonPos[6])) {
 			dialog = 6;
 		}
+	} else if (hHeld & KEY_SELECT) {
+		helperBox("Hello! I'm a Test Instruction! :P");
 	}
 }
