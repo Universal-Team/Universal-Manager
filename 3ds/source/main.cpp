@@ -66,7 +66,7 @@ bool songIsFound = false;
 bool isDownloadMode = false;
 
 bool isCitra = false; // Set it to true, if it is used with Citra.
-
+bool MusicPlays = false;
 
 touchPosition touch;
 
@@ -311,6 +311,12 @@ int main()
 				fadealpha = 0;
 				fadein = false;
 			}
+		}
+
+		if (isPlaying()) {
+			MusicPlays = true;
+		} else if (!isPlaying()) {
+			MusicPlays = false;
 		}
 
 		if (Is3dsxUpdated == true) {

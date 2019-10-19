@@ -50,6 +50,7 @@ int musicRepeat = 0;
 bool musicShuffle = 0;
 std::vector<Playlist> nowPlayingList;
 std::string currentSong = "";
+extern bool MusicPlays;
 
 extern bool touching(touchPosition touch, Structs::ButtonPos button);
 
@@ -146,21 +147,22 @@ void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 		if (!(selection%2)) selection++;
 	} else if(hDown & KEY_A) {
 		switch(selection) {
-			case 0: {
+			case 0:
 				MusicMode = 1;
 				break;
-			} case 1:
-				MusicMode = 2;
+			case 1:
+				if (MusicPlays == true) {
+					MusicMode = 2;
+				}
 				break;
-			case 2: {
+			case 2:
 				MusicMode = 3;
 				selectedPlst = 0;
 				dirChanged = true;
 				break;
-			} case 3: {
+			case 3:
 				MusicMode = 4;
 				break;
-			}
 		}
 	} else if(hDown & KEY_B) {
 		Gui::screenBack();
@@ -169,7 +171,9 @@ void Music::MusicMainLogic(u32 hDown, u32 hHeld, touchPosition touch) {
 			if (touching(touch, Functions[0])) {
 				MusicMode = 1;
 			} else if (touching(touch, Functions[1])) {
-				MusicMode = 2;
+				if (MusicPlays == true) {
+					MusicMode = 2;
+				}
 			} else if (touching(touch, Functions[2])) {
 				MusicMode = 3;
 				selectedPlst = 0;
@@ -288,7 +292,9 @@ void Music::MusicListLogic(u32 hDown, u32 hHeld) {
 			}
 		}
 	} else if (hDown & KEY_START) {
-		MusicMode = 2;
+		if (MusicPlays == true) {
+			MusicMode = 2;
+		}
 	} else if (hDown & KEY_R) {
 		fastMode = true;
 	} else if (hDown & KEY_L) {
@@ -436,35 +442,43 @@ void Music::PlayerLogic(u32 hDown, touchPosition touch) {
 		}
 	} else if (hDown & KEY_LEFT) {
 		prevSong:
-		if(locInPlaylist > 0) {
-			locInPlaylist--;
-		} else if (nowPlayingList.size() > 0) {
-			locInPlaylist = nowPlayingList.size() - 1;
+		if (isPlaying()) {
+			if(locInPlaylist > 0) {
+				locInPlaylist--;
+			} else if (nowPlayingList.size() > 0) {
+				locInPlaylist = nowPlayingList.size() - 1;
+			}
+			currentSong = nowPlayingList[locInPlaylist].name;
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
 		}
-		currentSong = nowPlayingList[locInPlaylist].name;
-		playbackInfo_t playbackInfo;
-		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_RIGHT) {
 		nextSong:
-		if(locInPlaylist < (int)nowPlayingList.size()-1) {
-			locInPlaylist++;
-		} else {
-			locInPlaylist = 0;
+		if (isPlaying()) {
+			if(locInPlaylist < (int)nowPlayingList.size()-1) {
+				locInPlaylist++;
+			} else {
+				locInPlaylist = 0;
+			}
+			currentSong = nowPlayingList[locInPlaylist].name;
+			playbackInfo_t playbackInfo;
+			changeFile(currentSong.c_str(), &playbackInfo);
 		}
-		currentSong = nowPlayingList[locInPlaylist].name;
-		playbackInfo_t playbackInfo;
-		changeFile(currentSong.c_str(), &playbackInfo);
 	} else if (hDown & KEY_START) {
 		toggleRepeat:
-		if (musicRepeat < 2 ) {
-			musicRepeat++;
-		} else {
-			musicRepeat = 0;
+		if (isPlaying()) {
+			if (musicRepeat < 2 ) {
+				musicRepeat++;
+			} else {
+				musicRepeat = 0;
+			}
 		}
 	} else if (hDown & KEY_SELECT) {
 		toggleShuffle:
-		musicShuffle = !musicShuffle;
-		std::sort(nowPlayingList.begin(), nowPlayingList.end(), musicShuffle ?  playlistShufflePredicate : playlistSortPredicate);
+		if (isPlaying()) {
+			musicShuffle = !musicShuffle;
+			std::sort(nowPlayingList.begin(), nowPlayingList.end(), musicShuffle ?  playlistShufflePredicate : playlistSortPredicate);
+		}
 	}
 	aptSetSleepAllowed(false);
 }
