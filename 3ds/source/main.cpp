@@ -24,259 +24,32 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "gui.hpp"
-#include "logging.hpp"
-#include "ptmu_x.h"
-
-#include "lang/lang.h"
-
-#include "screens/creditsScreen.hpp"
-#include "screens/mainMenuScreen.hpp"
-#include "screens/screenCommon.hpp"
-
-#include "utils/settings.hpp"
-#include "utils/sound.h"
-
 #include <3ds.h>
-#include <algorithm>
-#include <dirent.h>
-#include <unistd.h>
+#include <citro2d.h>
+#include <citro3d.h>
 
-extern "C" {
-	#include "music/error.h"
-	#include "music/playback.h"
-}
+C3D_RenderTarget* Top;
+C3D_RenderTarget* Bottom;
 
-bool dspfirmfound = false;
 bool exiting = false;
-int fadealpha = 255;
-bool fadein = true;
-
-extern bool decForRepeat2;
-extern uint selectedPlstItem;
-extern int movingPlstItem;
-
-extern bool firstSong;
-extern int locInPlaylist;
-extern int musicRepeat;
-extern bool musicShuffle;
-extern std::vector<Playlist> nowPlayingList;
-extern std::string currentSong;
-bool songIsFound = false;
-bool isDownloadMode = false;
-
-bool isCitra = false; // Set it to true, if it is used with Citra.
-bool MusicPlays = false;
 
 touchPosition touch;
 
-//Music and sound effects.
-sound *sfx_scroll = NULL;
-sound *sfx_pong = NULL;
-sound *sfx_score = NULL;
-sound *easteregg = NULL;
-sound *downloadMusic = NULL;
-
-void loadSoundEffects(void) {
-	sfx_scroll = new sound("romfs:/sfx/scroll.wav", 2, false);
-	sfx_pong = new sound("romfs:/sfx/pong.wav", 2, false);
-	sfx_score = new sound("romfs:/sfx/score.wav", 2, false);
-	easteregg = new sound("romfs:/sfx/easteregg.wav", 2, false);
-	if( access( "sdmc:/Universal-Manager/Music.wav", F_OK ) != -1 ) {
-		downloadMusic = new sound("sdmc:/Universal-Manager/Music.wav", 1, true);
-		songIsFound = true;
-	}
-}
-
-void playMusic(void) {
-	if (isPlaying()) {
-		stopPlayback();
-	}
-	downloadMusic->play();
-}
-
-void stopMusic(void) {
-	downloadMusic->stop();
-}
-
-
-bool touching(touchPosition touch, Structs::ButtonPos button) {
-	if (touch.px >= button.x && touch.px <= (button.x + button.w) && touch.py >= button.y && touch.py <= (button.y + button.h))
-		return true;
-	else
-		return false;
-}
-
-bool is3dsx;
-bool Is3dsxUpdated = false;
-std::string path3dsx;
-
-void getCurrentUsage(){
-	u64 id;
-	APT_GetProgramID(&id);
-
-	if(id == 0x0004000004394100){
-		is3dsx = false;
-		return;
-	}
-
-	is3dsx = true;
-}
-
-
-// If an Error while startup appears, Return this!
-
-// If an Error while startup appears, Return this!
-
-static Result DisplayStartupError(std::string message, Result res)
-{
-	std::string errorMsg = std::to_string(res);
-	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-	C2D_TargetClear(top, BLACK);
-	C2D_TargetClear(bottom, BLACK);
-	Gui::clearTextBufs();
-	set_screen(top);
-	Draw_Rect(0, 0, 400, 25, WHITE);
-	Draw_Rect(0, 213, 400, 25, WHITE);
-
-	Draw_Rect(0, 25, 400, 190, C2D_Color32(128, 128, 128, 255));
-	Draw_Rect(5, 30, 390, 180, C2D_Color32(0, 0, 0, 190));
-
-	Gui::DrawStringCentered(0, 0, 0.8f, BLACK, "Universal-Manager", 380);
-
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Oh no, an error occured!"))/2, 40, 0.8f, WHITE, "Oh no, an error occured!", 400);
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Description: "+ message))/2, 155, 0.8f, WHITE, "Description: "+message, 400);
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Press Start to exit."))/2, 213, 0.8f, BLACK, "Press Start to exit.", 400);
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, "Error during Startup: "+errorMsg))/2, 80, 0.8f, WHITE, "Error during Startup: "+errorMsg, 400);
-	set_screen(bottom);
-	Draw_Rect(0, 0, 320, 25, WHITE);
-	Draw_Rect(0, 25, 320, 190, GRAY);
-	Draw_Rect(0, 215, 320, 25, WHITE);
-	C3D_FrameEnd(0);
-
-	// For the Log.
-	std::string error = message;
-	error += ", ";
-	error += std::to_string(res);
-	Logging::writeToLog(error.c_str());
-
-	gspWaitForVBlank();
-	while (aptMainLoop() && !(hidKeysDown() & KEY_START))
-	{
-		hidScanInput();
-	}
-	return res;
-}
-
-void loadMessage(std::string Message) {
-	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-	C2D_TargetClear(top, BLACK);
-	C2D_TargetClear(bottom, BLACK);
-	Gui::clearTextBufs();
-	set_screen(top);
-	Draw_Rect(0, 0, 400, 25, WHITE);
-	Draw_Rect(0, 213, 400, 25, WHITE);
-
-	Draw_Rect(0, 25, 400, 190, C2D_Color32(128, 128, 128, 255));
-	Draw_Rect(5, 30, 390, 180, C2D_Color32(0, 0, 0, 190));
-
-	Gui::DrawStringCentered(0, 0, 0.8f, BLACK, "Universal-Manager", 380);
-
-	
-	Gui::DrawString((400-Gui::GetStringWidth(0.8f, Message))/2, 40, 0.8f, WHITE, Message, 400);
-	set_screen(bottom);
-	Draw_Rect(0, 0, 320, 25, WHITE);
-	Draw_Rect(0, 25, 320, 190, GRAY);
-	Draw_Rect(0, 215, 320, 25, WHITE);
-	C3D_FrameEnd(0);
-}
-
 int main()
 {
+	// Init everything.
 	gfxInitDefault();
-	Result res;
+	romfsInit();
+	sdmcInit();
+	cfguInit();
 
-	Gui::init();
-	loadMessage("Initialize everything.. please wait.");
-
-	if (R_FAILED(res = romfsInit())) {
-		return DisplayStartupError("romfsInit failed.", res);
-	}
-
-	if (R_FAILED(res = sdmcInit())) {
-		return DisplayStartupError("sdmcInit failed.", res);
-	}
-
-	Gui::loadSheetsAndFont();
-
-	Logging::createLogFile(); // Create Log File, if it doesn't exists already.
-
-	if (R_FAILED(res = acInit())) {
-		return DisplayStartupError("acInit failed.", res);
-	}
-
-	if (R_FAILED(res = amInit())) {
-		return DisplayStartupError("amInit failed.", res);
-	}
-
-	// For battery status
-	if (R_FAILED(res = ptmuInit())) {
-		return DisplayStartupError("ptmuInit failed.", res);
-	}
-
-	// For AC adapter status
-	if (R_FAILED(res = ptmuxInit())) {
-		return DisplayStartupError("ptmuxInit failed.", res);
-	}
-
-	Config::loadConfig();
-	Lang::loadLangStrings(1);
-
-	if (isCitra == false) {
-		mcuInit();
-	} else if (isCitra == true) {
-	}
-
-	if (R_FAILED(res = cfguInit())) {
-		return DisplayStartupError("cfguInit failed.", res);
-	}
-
-	srand(time(NULL));
-	getCurrentUsage();
-
-	char path[PATH_MAX];
-	getcwd(path, PATH_MAX);
-	if (is3dsx == true) {
-			path3dsx = path;
-			if (path3dsx == "sdmc:/") {
-				path3dsx = path3dsx.substr(5, path3dsx.size());
-			} else {
-		}
-	}
-
-
-	if (Config::Credits == 0) { // Credits Screen if 1 and mainScreen if 0.
-		Gui::setScreen(std::make_unique<MainMenu>());
-	} else if (Config::Credits == 1) {
-		Gui::setScreen(std::make_unique<Credits>());
-	}
+	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
+	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
+	C2D_Prepare();
+	Top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
+	Bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
 	osSetSpeedupEnable(true);	// Enable speed-up for New 3DS users
-
-
-	// make folders if they don't exist
-	mkdir("sdmc:/3ds", 0777);	// For DSP dump
-	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
-
- 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
-		ndspInit();
-		dspfirmfound = true;
-	 }
-
-	loadSoundEffects();
-
-	// We write a successfull Message, because it launched Successfully. Lol.
-	Logging::writeToLog("Universal-Manager launched successfully!");
 
 	// Loop as long as the status is not exit
 	while (aptMainLoop() && !exiting)
@@ -286,75 +59,27 @@ int main()
 		u32 hDown = hidKeysDown();
 		hidTouchRead(&touch);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, BLACK);
-		C2D_TargetClear(bottom, BLACK);
-		Gui::clearTextBufs();
-		Gui::mainLoop(hDown, hHeld, touch);
-		displayBatteryNearlyToDead();
+		C2D_TargetClear(Top, C2D_Color32(0, 0, 0, 255));
+		C2D_TargetClear(Bottom, C2D_Color32(0, 0, 0, 255));
+
+		// Draw Blue Screen haha.
+		C2D_SceneBegin(Top);
+		C2D_DrawRectSolid(0, 0, 0.5f, 400, 240, C2D_Color32(0, 0, 255, 255));
+		C2D_SceneBegin(Bottom);
+		C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, C2D_Color32(0, 0, 255, 255));
+
 		C3D_FrameEnd(0);
 
-		if (isDownloadMode == true) {
-			if (songIsFound == true) {
-				playMusic();
-			}
-		}
-
-		if (isDownloadMode == false) {
-			if (songIsFound == true) {
-				stopMusic();
-			}
-		}
-
-		if (fadein == true) {
-			fadealpha -= 3;
-			if (fadealpha < 0) {
-				fadealpha = 0;
-				fadein = false;
-			}
-		}
-
-		if (isPlaying()) {
-			MusicPlays = true;
-		} else if (!isPlaying()) {
-			MusicPlays = false;
-		}
-
-		if (Is3dsxUpdated == true) {
-			break;
-		}
-
-		if (!isPlaying() && ((int)nowPlayingList.size()-1 > locInPlaylist || ((int)nowPlayingList.size() > 0 && musicRepeat))) {
-			if (locInPlaylist > (int)nowPlayingList.size()-2 && musicRepeat != 2)	locInPlaylist = -1;
-			if (musicRepeat != 2 && !firstSong) {
-				locInPlaylist++;
-			}
-			firstSong = false;
-			currentSong = nowPlayingList[locInPlaylist].name;
-			playbackInfo_t playbackInfo;
-			changeFile(currentSong.c_str(), &playbackInfo);
-		} else if (isPlaying() && currentSong == "") {
-			stopPlayback();
-		} else if (!isPlaying() && currentSong != "") {
-			currentSong = "";
+		if (hDown & KEY_START) {
+			exiting = true;
 		}
 	}
-
-	delete sfx_scroll;
-	delete sfx_pong;
-	delete sfx_score;
-	delete easteregg;
-	delete downloadMusic;
-	stopPlayback();
-	if (dspfirmfound == true) {
-		ndspExit();
-	}
-	Gui::exit();
+	// Exit everything.
+	C2D_Fini();
+	C3D_Fini();
 	gfxExit();
 	cfguExit();
 	romfsExit();
-	acExit();
-	amExit();
-	Logging::writeToLog("Universal-Manager closing successfully!");
 	sdmcExit();
 	return 0;
 }
