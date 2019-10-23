@@ -1,7 +1,7 @@
 trigger:
   branches:
     include: ['*']
-    exclude: [leafedit-changes, cleanup]
+    exclude: [leafedit-changes, cleanup, complete-rewrite]
   tags:
     include: ['*']
 
