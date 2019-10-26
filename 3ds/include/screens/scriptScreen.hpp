@@ -24,15 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "structs.hpp"
 #include "screens/screen.hpp"
-#include "utils/fileBrowse.h"
-
-#include <algorithm>
-#include <fstream>
-#include <string>
-#include <unistd.h>
-#include <vector>
 
 class Script : public SCREEN
 {
@@ -41,39 +33,4 @@ public:
 	void Logic(u32 hDown, u32 hHeld, touchPosition touch) override;
 
 private:
-	int ScriptMode = 0;
-	int Selection = 0;
-	int ScriptPage = 1;
-	uint selectedFile = 0;
-	int keyRepeatDelay = 0;
-	int fastMode = false;
-	mutable bool refresh = true;
-	mutable bool dirChanged = false;
-	std::vector<DirEntry> dirContents;
-	std::ofstream scpt;
-
-		// Structs.
-	std::vector<Structs::ButtonPos> Functions = {
-		// First Page.
-		{0, 25, 149, 52, -1}, // 0
-		{170, 25, 149, 52, -1}, // 1
-		{0, 90, 149, 52, -1}, // 2
-		{170, 90, 149, 52, -1}, // 3
-		{0, 150, 149, 52, -1}, // 4
-		{170, 150, 149, 52, -1}, // 5
-		// Second Page.
-		{0, 25, 149, 52, -1}, // 6
-	};
-
-	void DrawScriptBrowse(void) const;
-	void ScriptBrowseLogic(u32 hDown, u32 hHeld, touchPosition touch);
-
-
-	void DrawScriptCreator(void) const;
-	void DrawBottom(void) const;
-	void DrawSelection(void) const;
-	void DrawCurrentPage(void) const;
-
-	void ScriptCreatorSelectionLogic(u32 hDown, u32 hHeld);
-	void ScriptCreatorLogic(u32 hDown, u32 hHeld, touchPosition touch);
 };
