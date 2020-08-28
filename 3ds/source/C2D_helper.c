@@ -19,8 +19,6 @@
 #define BYTES_PER_PIXEL 4
 #define TRANSPARENT_COLOR 0xFFFFFFFF
 
-FS_Archive archive, sdmc_archive, nand_archive;
-
 static u64 FSFILE_FRead(void *dst, u32 size, Handle file) {
 	Result ret = 0;
 	u32 bytes_read = 0;

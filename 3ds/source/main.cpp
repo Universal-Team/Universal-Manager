@@ -92,6 +92,7 @@ void playMusic(void) {
 	if (isPlaying()) {
 		stopPlayback();
 	}
+
 	downloadMusic->play();
 }
 
@@ -126,10 +127,7 @@ void getCurrentUsage(){
 
 // If an Error while startup appears, Return this!
 
-// If an Error while startup appears, Return this!
-
-static Result DisplayStartupError(std::string message, Result res)
-{
+static Result DisplayStartupError(std::string message, Result res) {
 	std::string errorMsg = std::to_string(res);
 	C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 	C2D_TargetClear(top, BLACK);
@@ -161,10 +159,10 @@ static Result DisplayStartupError(std::string message, Result res)
 	Logging::writeToLog(error.c_str());
 
 	gspWaitForVBlank();
-	while (aptMainLoop() && !(hidKeysDown() & KEY_START))
-	{
+	while (aptMainLoop() && !(hidKeysDown() & KEY_START)) {
 		hidScanInput();
 	}
+
 	return res;
 }
 
@@ -191,8 +189,7 @@ void loadMessage(std::string Message) {
 	C3D_FrameEnd(0);
 }
 
-int main()
-{
+int main() {
 	gfxInitDefault();
 	Result res;
 
@@ -201,10 +198,6 @@ int main()
 
 	if (R_FAILED(res = romfsInit())) {
 		return DisplayStartupError("romfsInit failed.", res);
-	}
-
-	if (R_FAILED(res = sdmcInit())) {
-		return DisplayStartupError("sdmcInit failed.", res);
 	}
 
 	Gui::loadSheetsAndFont();
@@ -234,7 +227,6 @@ int main()
 
 	if (isCitra == false) {
 		mcuInit();
-	} else if (isCitra == true) {
 	}
 
 	if (R_FAILED(res = cfguInit())) {
@@ -246,11 +238,10 @@ int main()
 
 	char path[PATH_MAX];
 	getcwd(path, PATH_MAX);
-	if (is3dsx == true) {
-			path3dsx = path;
-			if (path3dsx == "sdmc:/") {
-				path3dsx = path3dsx.substr(5, path3dsx.size());
-			} else {
+	if (is3dsx) {
+		path3dsx = path;
+		if (path3dsx == "sdmc:/") {
+			path3dsx = path3dsx.substr(5, path3dsx.size());
 		}
 	}
 
@@ -268,10 +259,10 @@ int main()
 	mkdir("sdmc:/3ds", 0777);	// For DSP dump
 	mkdir("sdmc:/Universal-Manager", 0777); // main Path.
 
- 	if( access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1 ) {
+ 	if (access( "sdmc:/3ds/dspfirm.cdc", F_OK ) != -1) {
 		ndspInit();
 		dspfirmfound = true;
-	 }
+	}
 
 	loadSoundEffects();
 
@@ -279,8 +270,7 @@ int main()
 	Logging::writeToLog("Universal-Manager launched successfully!");
 
 	// Loop as long as the status is not exit
-	while (aptMainLoop() && !exiting)
-	{
+	while (aptMainLoop() && !exiting) {
 		hidScanInput();
 		u32 hHeld = hidKeysHeld();
 		u32 hDown = hidKeysDown();
@@ -293,19 +283,19 @@ int main()
 		displayBatteryNearlyToDead();
 		C3D_FrameEnd(0);
 
-		if (isDownloadMode == true) {
-			if (songIsFound == true) {
+		if (isDownloadMode) {
+			if (songIsFound) {
 				playMusic();
 			}
 		}
 
-		if (isDownloadMode == false) {
-			if (songIsFound == true) {
+		if (!isDownloadMode) {
+			if (songIsFound) {
 				stopMusic();
 			}
 		}
 
-		if (fadein == true) {
+		if (fadein) {
 			fadealpha -= 3;
 			if (fadealpha < 0) {
 				fadealpha = 0;
@@ -319,7 +309,7 @@ int main()
 			MusicPlays = false;
 		}
 
-		if (Is3dsxUpdated == true) {
+		if (Is3dsxUpdated) {
 			break;
 		}
 
@@ -328,6 +318,7 @@ int main()
 			if (musicRepeat != 2 && !firstSong) {
 				locInPlaylist++;
 			}
+
 			firstSong = false;
 			currentSong = nowPlayingList[locInPlaylist].name;
 			playbackInfo_t playbackInfo;
@@ -345,9 +336,10 @@ int main()
 	delete easteregg;
 	delete downloadMusic;
 	stopPlayback();
-	if (dspfirmfound == true) {
+	if (dspfirmfound) {
 		ndspExit();
 	}
+
 	Gui::exit();
 	gfxExit();
 	cfguExit();
@@ -355,6 +347,5 @@ int main()
 	acExit();
 	amExit();
 	Logging::writeToLog("Universal-Manager closing successfully!");
-	sdmcExit();
 	return 0;
 }
